@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { PlayDetail } from '../_components/play-detail.coffee'
+
 {div, h2, h3, ul, li, a, p, pre, span} = ReactDOMFactories
 el = React.createElement
 

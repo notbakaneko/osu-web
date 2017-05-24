@@ -47,7 +47,22 @@ let webpackConfig = {
       },
       {
         test: /\.coffee$/,
+        include: [
+          path.resolve(__dirname, "resources/assets/coffee/_legacy/"),
+          path.resolve(__dirname, "resources/assets/coffee/_classes/"),
+        ],
         use: ['imports-loader?this=>window', 'coffee-loader']
+      },
+      {
+        test: /\.coffee$/,
+        include: [
+          path.resolve(__dirname, "resources/assets/coffee"),
+        ],
+        exclude: [
+          path.resolve(__dirname, "resources/assets/coffee/_legacy/"),
+          path.resolve(__dirname, "resources/assets/coffee/_classes/"),
+        ],
+        use: ['coffee-loader']
       }
     ]
   }
@@ -89,39 +104,30 @@ mix
   'resources/assets/app.js'
 ], 'js/app.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/profile-page/*.coffee'),
   'resources/assets/coffee/react/profile-page.coffee',
 ], 'js/react/profile-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmaps/*.coffee'),
-  'resources/assets/coffee/react/beatmaps.coffee',
+  'resources/assets/coffee/react/beatmaps.coffee'
 ], 'js/react/beatmaps.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/status-page/*.coffee'),
-  'resources/assets/coffee/react/status-page.coffee',
+  'resources/assets/coffee/react/status-page.coffee'
 ], 'js/react/status-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmap-discussions/*.coffee'),
-  'resources/assets/coffee/react/beatmap-discussions.coffee',
+  'resources/assets/coffee/react/beatmap-discussions.coffee'
 ], 'js/react/beatmap-discussions.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmapset-page/*.coffee'),
-  'resources/assets/coffee/react/beatmapset-page.coffee',
+  'resources/assets/coffee/react/beatmapset-page.coffee'
 ], 'js/react/beatmapset-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/mp-history/*.coffee'),
-  'resources/assets/coffee/react/mp-history.coffee',
+  'resources/assets/coffee/react/mp-history.coffee'
 ], 'js/react/mp-history.js')
 .js([
   'resources/assets/coffee/react/artist-page.coffee',
 ], 'js/react/artist-page.js')
 .js([
-  // 'resources/assets/coffee/react/contest/voting/_base-entry-list.coffee',
-  ...glob.sync('resources/assets/coffee/react/contest/voting/*.coffee'),
   'resources/assets/coffee/react/contest-voting.coffee',
 ], 'js/react/contest-voting.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/contest/entry/*.coffee'),
   'resources/assets/coffee/react/contest-entry.coffee',
 ], 'js/react/contest-entry.js')
 .copy('node_modules/font-awesome/fonts', 'public/vendor/fonts/font-awesome')

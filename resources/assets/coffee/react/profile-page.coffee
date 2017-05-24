@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import './profile-page/*.coffee'
+
 propsFunction = =>
   user = osu.parseJson('json-user')
 
@@ -35,4 +37,4 @@ propsFunction = =>
   recentlyReceivedKudosu: user.recentlyReceivedKudosu
   achievements: _.keyBy osu.parseJson('json-achievements'), 'id'
 
-reactTurbolinks.register 'profile-page', ProfilePage.Main, propsFunction
+window.reactTurbolinks.register 'profile-page', ProfilePage.Main, propsFunction

@@ -18,7 +18,7 @@
 
 {div} = ReactDOMFactories
 
-@Mod = ({modifiers = [], mod}) ->
+export Mod = ({modifiers = [], mod}) ->
     blockClass = 'mod'
     blockClass += " mod--#{m}" for m in modifiers
     blockClass += " mod--#{mod}"

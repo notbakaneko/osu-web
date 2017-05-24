@@ -16,6 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapBasicStats } from '../_components/beatmap-basic-stats.coffee'
+import { Icon } from '../_components/icon.coffee'
+
 {a, div, span, table, tbody, td, th, tr} = ReactDOMFactories
 el = React.createElement
 

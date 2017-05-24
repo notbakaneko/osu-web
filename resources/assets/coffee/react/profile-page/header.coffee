@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { PlaymodeTabs } from '../_components/playmode-tabs.coffee'
+
 {div} = ReactDOMFactories
 el = React.createElement
 

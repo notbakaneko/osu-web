@@ -16,6 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ScrollingPageMixin } from '../_mixins/scrolling-page.coffee'
+import { StickyTabsMixin } from '../_mixins/sticky-tabs.coffee'
+
 {div, h2, li, ul} = ReactDOMFactories
 el = React.createElement
 

@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@StickyTabsMixin =
+export StickyTabsMixin =
   _tabsStick: (_e, target) ->
     newState = (target == 'page-extra-tabs')
     @setState(tabsSticky: newState) if newState != @state.tabsSticky

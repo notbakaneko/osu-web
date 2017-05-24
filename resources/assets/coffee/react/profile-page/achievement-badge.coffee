@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Img2x } from '../_components/img2x.coffee'
+
 {div, img} = ReactDOMFactories
 el = React.createElement
 

@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapIcon } from '../_components/beatmap-icon.coffee'
+
 {a} = ReactDOMFactories
 el = React.createElement
 

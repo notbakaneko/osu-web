@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapIcon } from './beatmap-icon.coffee'
+import { Icon } from './icon.coffee'
+
 {div,a,i,span} = ReactDOMFactories
 el = React.createElement
 
-class @BeatmapsetPanel extends React.PureComponent
+export class BeatmapsetPanel extends React.PureComponent
   constructor: (props) ->
     super props
 

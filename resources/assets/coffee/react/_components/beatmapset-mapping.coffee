@@ -21,7 +21,7 @@ el = React.createElement
 
 bn = 'beatmapset-mapping'
 
-@BeatmapsetMapping = ({user, beatmapset}) ->
+export BeatmapsetMapping = ({user, beatmapset}) ->
   dateFormat = 'MMM D, YYYY'
   user ?= beatmapset.user
 

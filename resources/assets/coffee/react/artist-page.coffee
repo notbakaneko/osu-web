@@ -16,7 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import './_components/tracklist.coffee'
+
 propsFunction = (target) ->
   tracks: osu.parseJson target.dataset.src
 
-reactTurbolinks.register 'artistTracklist', Tracklist, propsFunction
+window.reactTurbolinks.register 'artistTracklist', Tracklist, propsFunction

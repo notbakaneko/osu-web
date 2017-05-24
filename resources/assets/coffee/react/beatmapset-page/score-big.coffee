@@ -16,6 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { FlagCountry } from '../_components/flag-country.coffee'
+import { Mods } from '../_components/mods.coffee'
+
 {div, a} = ReactDOMFactories
 el = React.createElement
 bn = 'beatmap-score-big'

@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, a, i} = ReactDOMFactories
-el = React.createElement
+import { Icon } from './icon.coffee'
 
-class @TrackPreview extends React.Component
+{div, a, i} = ReactDOMFactories
+
+el = React.createElement
+export class TrackPreview extends React.Component
   constructor: (props) ->
     super props
 

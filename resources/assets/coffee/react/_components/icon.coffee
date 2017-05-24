@@ -18,7 +18,7 @@
 
 {span} = ReactDOMFactories
 
-@Icon = ({name, modifiers = [], parentClass, title}) ->
+export Icon = ({name, modifiers = [], parentClass, title}) ->
   className = "fa fa-#{name}"
   className += " fa-#{m}" for m in modifiers
 

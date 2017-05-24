@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from '../_components/icon.coffee'
+
 {div,a,span,i} = ReactDOMFactories
 el = React.createElement
 

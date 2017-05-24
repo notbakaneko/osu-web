@@ -20,7 +20,7 @@
 
 bn = 'avatar'
 
-@UserAvatar = (props) ->
+export UserAvatar = (props) ->
   modifiers = props
     .modifiers
     .map (m) => "#{bn}--#{m}"

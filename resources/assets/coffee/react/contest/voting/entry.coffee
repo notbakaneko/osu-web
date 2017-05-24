@@ -16,6 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from '../../_components/icon.coffee'
+import { TrackPreview } from '../../_components/track-preview.coffee'
+
 {a,i,div} = ReactDOMFactories
 el = React.createElement
 

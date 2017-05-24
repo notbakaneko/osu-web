@@ -21,7 +21,7 @@ el = React.createElement
 
 bn = 'flag-country'
 
-@FlagCountry = ({country, classModifiers = []}) ->
+export FlagCountry = ({country, classModifiers = []}) ->
   return span() if !country.code?
 
   blockClass = bn

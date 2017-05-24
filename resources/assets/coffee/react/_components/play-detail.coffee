@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Mods } from './mods.coffee'
+
 {a, div, img, small, span} = ReactDOMFactories
 el = React.createElement
 
-@PlayDetail = ({score, shown}) ->
+export PlayDetail = ({score, shown}) ->
   modsText =
     if score.mods.length
       " +#{(mod.shortName for mod in score.mods).join(',')} "

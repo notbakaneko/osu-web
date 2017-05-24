@@ -16,6 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPanel } from '../_components/beatmapset-panel.coffee'
+import { Img2x } from '../_components/img2x.coffee'
+
 {div} = ReactDOMFactories
 el = React.createElement
 

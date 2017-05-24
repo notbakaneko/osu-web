@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Mod } from './mod.coffee'
+
 el = React.createElement
 {div, img} = ReactDOMFactories
 
-@Mods = ({modifiers = [], mods = []}) ->
+export Mods = ({modifiers = [], mods = []}) ->
     blockClass = 'mods'
     blockClass += " mods--#{mod}" for mod in modifiers
 

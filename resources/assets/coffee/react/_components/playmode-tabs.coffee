@@ -18,7 +18,7 @@
 
 {a, li, span, ul} = ReactDOMFactories
 
-class @PlaymodeTabs extends React.Component
+export class PlaymodeTabs extends React.Component
   render: =>
     ul className: 'page-mode',
       for mode in BeatmapHelper.modes
