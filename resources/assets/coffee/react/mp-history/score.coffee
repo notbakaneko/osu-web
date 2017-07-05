@@ -22,7 +22,7 @@ import { Mods } from '../_components/mods.coffee'
 {div, span, a} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Score extends React.Component
+export class Score extends React.Component
   firstRow: ['combo', 'accuracy', 'score']
   secondRow: ['count_geki', 'count_300', 'count_katu', 'count_100', 'count_50', 'count_miss']
 

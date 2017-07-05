@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { MPHistory } from './_index.coffee'
+
 {div, a} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Content extends React.Component
+export class Content extends React.Component
   teamScores: (eventIndex) ->
     return if !@props.events[eventIndex].game?
 

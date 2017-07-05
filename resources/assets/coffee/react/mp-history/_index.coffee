@@ -16,6 +16,20 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@ProfilePage = {}
-@Ranking = {}
-@Status = {}
+import { Content } from './content.coffee'
+import { Event } from './event.coffee'
+import { GameHeader } from './game-header.coffee'
+import { Game } from './game.coffee'
+import { Header } from './header.coffee'
+import { Main } from './main.coffee'
+import { Score } from './score.coffee'
+
+export MPHistory = {
+  Content
+  Event
+  GameHeader
+  Game
+  Header
+  Main
+  Score
+}

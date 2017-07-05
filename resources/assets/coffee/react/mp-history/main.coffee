@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { MPHistory } from './_index.coffee'
+
 {div} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Main extends React.Component
+export class Main extends React.Component
   refreshTimeout: 10000
 
   constructor: (props) ->

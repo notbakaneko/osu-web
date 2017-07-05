@@ -21,7 +21,7 @@ import { Icon } from '../_components/icon.coffee'
 {div, span, a} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Event extends React.Component
+export class Event extends React.Component
   icons:
     'player-left': ['arrow-left', 'circle-o']
     'player-joined': ['arrow-right', 'circle-o']
