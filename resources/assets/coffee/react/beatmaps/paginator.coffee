@@ -16,12 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Beatmaps } from './_index.coffee'
 import { Icon } from '../_components/icon.coffee'
 
 {div,a,span,i} = ReactDOMFactories
 el = React.createElement
 
-class Beatmaps.Paginator extends React.PureComponent
+export class Paginator extends React.PureComponent
   constructor: (props) ->
     super props
 

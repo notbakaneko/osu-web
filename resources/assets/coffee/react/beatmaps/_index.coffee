@@ -16,12 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@BeatmapDiscussions = {}
-@BeatmapsetPage = {}
-@Contest = {}
-@Contest.Entry = {}
-@Contest.Voting = {}
-@MPHistory = {}
-@ProfilePage = {}
-@Ranking = {}
-@Status = {}
+import { Main } from './main.coffee'
+import { Paginator } from './paginator.coffee'
+import { SearchFilter } from './search-filter.coffee'
+import { SearchPanel } from './search-panel.coffee'
+import { SearchSort } from './search-sort.coffee'
+
+export Beatmaps = {
+  Main
+  Paginator
+  SearchFilter
+  SearchPanel
+  SearchSort
+}

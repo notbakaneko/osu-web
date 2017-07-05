@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import './beatmaps/*.coffee'
+import { Beatmaps } from './beatmaps/_index.coffee'
 
 window.reactTurbolinks.registerPersistent 'beatmaps', Beatmaps.Main, true, (el) ->
   container: el
