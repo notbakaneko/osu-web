@@ -22,7 +22,7 @@ import { Mods } from '../_components/mods.coffee'
 {div, a} = ReactDOMFactories
 el = React.createElement
 
-BeatmapsetPage.Score = (props) ->
+export Score = (props) ->
   hits = Hits.generate score: props.score, playmode: props.playmode
 
   div className: 'beatmapset-score',

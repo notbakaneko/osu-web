@@ -16,6 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './_index.coffee'
 import { BeatmapsetMapping } from '../_components/beatmapset-mapping.coffee'
 import { BigButton } from '../_components/big-button.coffee'
 import { Icon } from '../_components/icon.coffee'
@@ -24,7 +25,7 @@ import { PlaymodeTabs } from '../_components/playmode-tabs.coffee'
 {div, span, a, ol, li} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Header extends React.Component
+export class Header extends React.Component
   render: ->
     dateFormat = 'MMM D, YYYY'
     favouriteButton =

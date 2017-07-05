@@ -22,7 +22,7 @@ import { Icon } from '../_components/icon.coffee'
 {a, div, span, table, tbody, td, th, tr} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Stats extends React.Component
+export class Stats extends React.Component
   constructor: (props) ->
     super props
 

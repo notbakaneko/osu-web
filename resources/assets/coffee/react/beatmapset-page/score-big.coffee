@@ -23,7 +23,7 @@ import { Mods } from '../_components/mods.coffee'
 el = React.createElement
 bn = 'beatmap-score-big'
 
-BeatmapsetPage.ScoreBig = (props) ->
+export ScoreBig = (props) ->
   hits = Hits.generate score: props.score, playmode: props.playmode
 
   div className: bn,

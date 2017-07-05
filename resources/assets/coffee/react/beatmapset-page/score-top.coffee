@@ -23,7 +23,7 @@ import { Mods } from '../_components/mods.coffee'
 el = React.createElement
 bn = 'beatmap-score-top'
 
-BeatmapsetPage.ScoreTop = (props) ->
+export ScoreTop = (props) ->
   topClasses = (props.modifiers ? [])
     .map (m) -> "#{bn}--#{m}"
     .join ' '

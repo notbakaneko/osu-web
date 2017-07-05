@@ -21,7 +21,7 @@ import { BeatmapIcon } from '../_components/beatmap-icon.coffee'
 {a} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.BeatmapSelection extends React.Component
+export class BeatmapSelection extends React.Component
   onClick: (e) =>
     e.preventDefault()
 

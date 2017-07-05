@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './_index.coffee'
+
 {div, h2, p} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Scoreboard extends React.Component
+export class Scoreboard extends React.Component
   constructor: (props) ->
     super props
 
