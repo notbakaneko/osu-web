@@ -16,14 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Contest } from './contest/_index.coffee'
+import { Uploader } from './uploader.coffee'
+import { UserEntryList } from './user-entry-list.coffee'
+import { UserEntry } from './user-entry.coffee'
 
-propsFunction = ->
-  data = osu.parseJson('json-contest')
-  userEntries = osu.parseJson('json-userEntries')
-  return {
-    contest: data.contest
-    userEntries: userEntries
-  }
-
-window.reactTurbolinks.register 'userContestEntry', Contest.Entry.UserEntryList, propsFunction
+export Entry = {
+  Uploader
+  UserEntryList
+  UserEntry
+}

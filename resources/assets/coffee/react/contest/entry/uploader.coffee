@@ -19,7 +19,7 @@
 {div, form, input, i} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Entry.Uploader extends React.Component
+export class Uploader extends React.Component
   constructor: (props) ->
     super props
     @state =

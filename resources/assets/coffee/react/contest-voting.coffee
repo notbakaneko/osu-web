@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import './contest/voting/*.coffee'
+import { Contest } from './contest/_index.coffee'
 
 propsFunction = (target) ->
   data = osu.parseJson target.dataset.src

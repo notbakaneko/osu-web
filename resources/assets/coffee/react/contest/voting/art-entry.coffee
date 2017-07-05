@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Contest } from '../_index.coffee'
+
 {div, span, a, i} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Voting.ArtEntry extends React.Component
+export class ArtEntry extends React.Component
   render: ->
     votingOver = moment(@props.contest.voting_ends_at).diff() <= 0
     selected = _.includes @props.selected, @props.entry.id

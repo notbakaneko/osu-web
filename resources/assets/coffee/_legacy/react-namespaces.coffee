@@ -16,9 +16,6 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@Contest = {}
-@Contest.Entry = {}
-@Contest.Voting = {}
 @MPHistory = {}
 @ProfilePage = {}
 @Ranking = {}

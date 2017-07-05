@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Contest } from '../_index.coffee'
+import { BaseEntryList } from './_base-entry-list.coffee'
+
 {div,span} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Voting.ArtEntryList extends Contest.Voting.BaseEntryList
+export class ArtEntryList extends BaseEntryList
   render: ->
     return null unless @state.contest.entries.length > 0
 
