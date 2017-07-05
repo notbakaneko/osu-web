@@ -16,6 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index.coffee'
 import { Icon } from '../_components/icon.coffee'
 import { IconExpand } from '../_components/icon-expand.coffee'
 
@@ -25,7 +26,7 @@ el = React.createElement
 bn = 'beatmap-discussions'
 lp = 'beatmaps.discussions'
 
-class BeatmapDiscussions.Discussions extends React.PureComponent
+export class Discussions extends React.PureComponent
   render: =>
     discussions = @props.currentDiscussions[@props.mode]
 

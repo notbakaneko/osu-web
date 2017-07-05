@@ -24,7 +24,7 @@ el = React.createElement
 
 bn = 'beatmap-discussion-new'
 
-class BeatmapDiscussions.NewDiscussion extends React.PureComponent
+export class NewDiscussion extends React.PureComponent
   constructor: (props) ->
     super props
 

@@ -19,7 +19,7 @@
 {a, div, li, span, ul} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapDiscussions.ModeSwitcher extends React.PureComponent
+export class ModeSwitcher extends React.PureComponent
   constructor: (props) ->
     super props
 

@@ -16,12 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index.coffee'
+
 {a, div} = ReactDOMFactories
 el = React.createElement
 
 bn = 'beatmap-list'
 
-class BeatmapDiscussions.BeatmapList extends React.PureComponent
+export class BeatmapList extends React.PureComponent
   constructor: (props) ->
     super props
 

@@ -24,7 +24,7 @@ el = React.createElement
 
 bn = 'beatmap-list-item'
 
-BeatmapDiscussions.BeatmapListItem = (props) ->
+export BeatmapListItem = (props) ->
   topClasses = bn
   topClasses += " #{bn}--large" if props.large
 

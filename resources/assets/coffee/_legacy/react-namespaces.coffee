@@ -16,7 +16,6 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@BeatmapDiscussions = {}
 @BeatmapsetPage = {}
 @Contest = {}
 @Contest.Entry = {}

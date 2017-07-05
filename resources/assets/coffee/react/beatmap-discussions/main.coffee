@@ -16,12 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index.coffee'
+
 {a, div, h1, p} = ReactDOMFactories
 el = React.createElement
 
 modeSwitcher = document.getElementsByClassName('js-mode-switcher')
 
-class BeatmapDiscussions.Main extends React.PureComponent
+export class Main extends React.PureComponent
   constructor: (props) ->
     super props
 

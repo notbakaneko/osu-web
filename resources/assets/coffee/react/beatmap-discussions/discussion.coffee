@@ -16,6 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index.coffee'
 import { Icon } from '../_components/icon.coffee'
 
 {button, div, span} = ReactDOMFactories
@@ -23,7 +24,7 @@ el = React.createElement
 
 bn = 'beatmap-discussion'
 
-class BeatmapDiscussions.Discussion extends React.PureComponent
+export class Discussion extends React.PureComponent
   constructor: (props) ->
     super props
 
