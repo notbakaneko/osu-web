@@ -16,11 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
+
 {form, input} = ReactDOMFactories
 el = React.createElement
 
 
-class ProfilePage.CoverUploader extends React.Component
+export class CoverUploader extends React.Component
   componentDidMount: =>
     $dropzone = $('.js-profile-cover-upload--dropzone')
 

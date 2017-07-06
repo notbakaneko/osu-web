@@ -20,7 +20,7 @@ import { Icon } from '../_components/icon.coffee'
 
 el = React.createElement
 
-class ProfilePage.Rank extends React.Component
+export class Rank extends React.Component
   render: =>
     return el('div') unless @props.rank.is_ranked
 

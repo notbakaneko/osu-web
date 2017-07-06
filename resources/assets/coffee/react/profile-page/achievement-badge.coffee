@@ -21,7 +21,7 @@ import { Img2x } from '../_components/img2x.coffee'
 {div, img} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.AchievementBadge extends React.Component
+export class AchievementBadge extends React.Component
   onMouseOver: (event) =>
     elem = event.currentTarget
 

@@ -16,12 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
 import { PlayDetail } from '../_components/play-detail.coffee'
 
 {a, div, h2, h3, img, p, small, span} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.Historical extends React.PureComponent
+export class Historical extends React.PureComponent
   constructor: (props) ->
     super props
 

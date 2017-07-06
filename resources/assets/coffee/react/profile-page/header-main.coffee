@@ -16,12 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
 import { Icon } from '../_components/icon.coffee'
 
 {a, div} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.HeaderMain extends React.Component
+export class HeaderMain extends React.Component
   constructor: (props) ->
     super props
 

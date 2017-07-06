@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
+
 {div, li, p, ul} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.RecentActivities extends React.PureComponent
+export class RecentActivities extends React.PureComponent
   render: =>
     div
       className: 'page-extra'

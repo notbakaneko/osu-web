@@ -26,7 +26,7 @@ bn = 'profile-header-extra'
 rowValue = (value) ->
   "<strong>#{value}</strong>"
 
-class ProfilePage.HeaderExtra extends React.Component
+export class HeaderExtra extends React.Component
   constructor: (props) ->
     super props
 

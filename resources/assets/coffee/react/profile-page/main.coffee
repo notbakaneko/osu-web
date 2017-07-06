@@ -16,6 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
 import { ScrollingPageMixin } from '../_mixins/scrolling-page.coffee'
 import { StickyTabsMixin } from '../_mixins/sticky-tabs.coffee'
 
@@ -29,7 +30,7 @@ currentLocation = ->
   "#{document.location.pathname}#{document.location.search}"
 
 
-class ProfilePage.Main extends React.PureComponent
+export class Main extends React.PureComponent
   constructor: (props) ->
     super props
 

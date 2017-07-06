@@ -16,6 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index.coffee'
 import { PlaymodeTabs } from '../_components/playmode-tabs.coffee'
 
 {div} = ReactDOMFactories
@@ -26,7 +27,7 @@ playmodeTabsHrefFunc = (mode) ->
   ProfilePageHash.generate mode: mode
 
 
-ProfilePage.Header = (props) ->
+export Header = (props) ->
   div null,
     div className: 'osu-page osu-page--users-show-header',
       el PlaymodeTabs,

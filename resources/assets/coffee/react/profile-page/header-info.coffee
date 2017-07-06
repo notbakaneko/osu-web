@@ -23,7 +23,7 @@ import { UserAvatar } from '../_components/user-avatar.coffee'
 {div, h1, span} = ReactDOMFactories
 el = React.createElement
 
-ProfilePage.HeaderInfo = ({user}) ->
+export HeaderInfo = ({user}) ->
   div className: 'profile-info',
     el UserAvatar, user: user, modifiers: ['profile']
     div className: 'profile-info__details',

@@ -16,9 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import './profile-page/*.coffee'
+import { ProfilePage } from './profile-page/_index.coffee'
 
-propsFunction = =>
+propsFunction = ->
   user = osu.parseJson('json-user')
 
   user: user

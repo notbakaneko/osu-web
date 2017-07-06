@@ -20,7 +20,7 @@ import { FlagCountry } from '../_components/flag-country.coffee'
 
 el = React.createElement
 
-class ProfilePage.HeaderFlags extends React.Component
+export class HeaderFlags extends React.Component
   render: =>
     if @props.user.profile_colour
       style = backgroundColor: "##{@props.user.profile_colour}"

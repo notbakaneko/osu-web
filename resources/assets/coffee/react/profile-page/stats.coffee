@@ -26,7 +26,7 @@ simpleEntry = ({key, value}) ->
     dd className: 'profile-stats__value', value
 
 
-ProfilePage.Stats = ({stats}) ->
+export Stats = ({stats}) ->
   elements = ['ranked-score', 'accuracy', 'playcount', 'total-score', 'hits', 'max_combo', 'replays-watched']
 
   rankCountEntry = (name) ->
