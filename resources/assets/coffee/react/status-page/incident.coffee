@@ -19,7 +19,7 @@
 {div, span} = ReactDOMFactories
 el = React.createElement
 
-class Status.Incident extends React.Component
+export class Incident extends React.Component
   propTypes =
     description: React.PropTypes.string.isRequired
     active : React.PropTypes.bool.isRequired

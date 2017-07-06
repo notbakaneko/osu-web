@@ -19,7 +19,7 @@
 {div, h1, h5} = ReactDOMFactories
 el = React.createElement
 
-class Status.Uptime extends React.Component
+export class Uptime extends React.Component
   constructor: (props) ->
     super props
     @state =

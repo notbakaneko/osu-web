@@ -19,7 +19,7 @@
 {div, span} = ReactDOMFactories
 el = React.createElement
 
-class Status.Map extends React.Component
+export class Map extends React.Component
   constructor: (props) ->
     super props
 

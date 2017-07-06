@@ -16,4 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@Ranking = {}
+import { Incident } from './incident.coffee'
+import { Incidents } from './incidents.coffee'
+import { Map } from './map.coffee'
+import { Page } from './page.coffee'
+import { Uptime } from './uptime.coffee'
+
+export Status = {
+  Incident
+  Incidents
+  Map
+  Page
+  Uptime
+}
