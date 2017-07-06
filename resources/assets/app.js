@@ -1,5 +1,4 @@
-// import-glob-loader doesn't seem to work with resolve: {}?
-import './coffee/_classes/*.coffee';
+import './coffee/_legacy/_classes/*.coffee';
 
 import '_legacy/react-namespaces.coffee';
 

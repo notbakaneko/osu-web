@@ -49,7 +49,6 @@ let webpackConfig = {
         test: /\.coffee$/,
         include: [
           path.resolve(__dirname, "resources/assets/coffee/_legacy/"),
-          path.resolve(__dirname, "resources/assets/coffee/_classes/"),
         ],
         use: ['imports-loader?this=>window', 'coffee-loader']
       },
@@ -60,7 +59,6 @@ let webpackConfig = {
         ],
         exclude: [
           path.resolve(__dirname, "resources/assets/coffee/_legacy/"),
-          path.resolve(__dirname, "resources/assets/coffee/_classes/"),
         ],
         use: ['coffee-loader']
       }
