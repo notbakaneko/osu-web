@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-class @StatusMap
+export class StatusMap
   constructor: (element) ->
     @circleSize = 8
     offset = 40

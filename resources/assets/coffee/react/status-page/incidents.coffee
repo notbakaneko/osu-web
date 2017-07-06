@@ -16,13 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-<<<<<<< HEAD
-{div, h1, h5} = ReactDOMFactories
-=======
 import { Status } from './_index.coffee'
 
 {div, h1, h5} = ReactDOMFactories
->>>>>>> move Status to export
 el = React.createElement
 
 export class Incidents extends React.Component

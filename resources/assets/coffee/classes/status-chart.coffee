@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-class @StatusChart
+export class StatusChart
   constructor: (element, name) ->
     @ratio = 2 * Math.PI
     width = $(element).width()
