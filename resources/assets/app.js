@@ -1,20 +1,20 @@
-import './coffee/_legacy/_classes/*.coffee';
+import './coffee/_global/_classes/*.coffee';
 
-import '_legacy/react-namespaces.coffee';
+import '_global/react-namespaces.coffee';
 
-import '_legacy/jquery-pubsub.coffee';
-import '_legacy/osu_common.coffee';
+import '_global/jquery-pubsub.coffee';
+import '_global/osu_common.coffee';
 
-import '_legacy/navbar-mobile.coffee';
-import '_legacy/spoilerbox.coffee';
-import '_legacy/store.coffee';
-import '_legacy/store-username-change.coffee';
-import '_legacy/forum/post-box.coffee';
-import '_legacy/forum/topic-ajax.coffee';
-import '_legacy/ujs-common.coffee';
-import '_legacy/bootstrap-modal.coffee';
-import '_legacy/logout.coffee';
-import '_legacy/shared.coffee';
-import '_legacy/turbolinks-overrides.coffee';
+import '_global/navbar-mobile.coffee';
+import '_global/spoilerbox.coffee';
+import '_global/store.coffee';
+import '_global/store-username-change.coffee';
+import '_global/forum/post-box.coffee';
+import '_global/forum/topic-ajax.coffee';
+import '_global/ujs-common.coffee';
+import '_global/bootstrap-modal.coffee';
+import '_global/logout.coffee';
+import '_global/shared.coffee';
+import '_global/turbolinks-overrides.coffee';
 
 import 'main.coffee';
