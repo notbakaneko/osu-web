@@ -21,7 +21,7 @@ import { TracklistTrack } from './tracklist-track.coffee'
 {div, table, thead, tbody, tr, th} = ReactDOMFactories
 el = React.createElement
 
-class Tracklist extends React.Component
+export class Tracklist extends React.Component
   render: ->
     return null unless @props.tracks.length > 0
 
