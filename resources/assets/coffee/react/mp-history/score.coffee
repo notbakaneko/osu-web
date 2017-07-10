@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { FlagCountry } from 'react/_components/flag-country.coffee'
-import { Mods } from 'react/_components/mods.coffee'
+import { FlagCountry } from 'react/_components/flag-country'
+import { Mods } from 'react/_components/mods'
 
 {div, span, a} = ReactDOMFactories
 el = React.createElement

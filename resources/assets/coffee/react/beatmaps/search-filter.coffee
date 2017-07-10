@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Beatmaps } from './_index.coffee'
+import { Beatmaps } from './_index'
 
 {div,a,span} = ReactDOMFactories
 el = React.createElement

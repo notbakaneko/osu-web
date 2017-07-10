@@ -16,13 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BaseEntryList } from './_base-entry-list.coffee'
-import { ArtEntryList } from './art-entry-list.coffee'
-import { ArtEntry } from './art-entry.coffee'
-import { EntryList } from './entry-list.coffee'
-import { Entry } from './entry.coffee'
-import { VoteSummary } from './vote-summary.coffee'
-import { Voter } from './voter.coffee'
+import { BaseEntryList } from './_base-entry-list'
+import { ArtEntryList } from './art-entry-list'
+import { ArtEntry } from './art-entry'
+import { EntryList } from './entry-list'
+import { Entry } from './entry'
+import { VoteSummary } from './vote-summary'
+import { Voter } from './voter'
 
 export Voting = {
   BaseEntryList

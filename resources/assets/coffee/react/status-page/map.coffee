@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { StatusMap } from 'status-map.coffee'
+import { StatusMap } from 'status-map'
 
 {div, span} = ReactDOMFactories
 el = React.createElement

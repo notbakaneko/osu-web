@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BeatmapsetPage } from './beatmapset-page/_index.coffee'
+import { BeatmapsetPage } from './beatmapset-page/_index'
 
 propsFunction = =>
   beatmapset: osu.parseJson('json-beatmapset')

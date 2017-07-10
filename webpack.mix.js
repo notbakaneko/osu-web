@@ -37,7 +37,8 @@ let webpackConfig = {
       path.resolve(__dirname, 'resources/assets/coffee'),
       path.resolve(__dirname, 'resources/assets/coffee/_global'),
       path.resolve(__dirname, 'resources/assets/coffee/classes'),
-    ]
+    ],
+    extensions: ['*', '.js', '.coffee']
   },
   module: {
     rules: [

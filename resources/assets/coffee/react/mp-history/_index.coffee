@@ -16,13 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Content } from './content.coffee'
-import { Event } from './event.coffee'
-import { GameHeader } from './game-header.coffee'
-import { Game } from './game.coffee'
-import { Header } from './header.coffee'
-import { Main } from './main.coffee'
-import { Score } from './score.coffee'
+import { Content } from './content'
+import { Event } from './event'
+import { GameHeader } from './game-header'
+import { Game } from './game'
+import { Header } from './header'
+import { Main } from './main'
+import { Score } from './score'
 
 export MPHistory = {
   Content

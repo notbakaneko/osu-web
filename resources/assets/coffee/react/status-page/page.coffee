@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Status } from './_index.coffee'
+import { Status } from './_index'
 
 {div, span, br, strong, h1, h4, h5} = ReactDOMFactories
 el = React.createElement

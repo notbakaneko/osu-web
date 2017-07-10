@@ -16,11 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Main } from './main.coffee'
-import { Paginator } from './paginator.coffee'
-import { SearchFilter } from './search-filter.coffee'
-import { SearchPanel } from './search-panel.coffee'
-import { SearchSort } from './search-sort.coffee'
+import { Main } from './main'
+import { Paginator } from './paginator'
+import { SearchFilter } from './search-filter'
+import { SearchPanel } from './search-panel'
+import { SearchSort } from './search-sort'
 
 export Beatmaps = {
   Main

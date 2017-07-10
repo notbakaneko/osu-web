@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { ProfilePage } from './_index.coffee'
+import { ProfilePage } from './_index'
 
 {div, li, p, ul} = ReactDOMFactories
 el = React.createElement

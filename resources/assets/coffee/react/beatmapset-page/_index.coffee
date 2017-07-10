@@ -16,18 +16,18 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BeatmapPicker } from './beatmap-picker.coffee'
-import { BeatmapSelection } from './beatmap-selection.coffee'
-import { Header } from './header.coffee'
-import { Info } from './info.coffee'
-import { Main } from './main.coffee'
-import { ScoreBig } from './score-big.coffee'
-import { ScoreTop } from './score-top.coffee'
-import { Score } from './score.coffee'
-import { ScoreboardMod } from './scoreboard-mod.coffee'
-import { ScoreboardTab } from './scoreboard-tab.coffee'
-import { Scoreboard } from './scoreboard.coffee'
-import { Stats } from './stats.coffee'
+import { BeatmapPicker } from './beatmap-picker'
+import { BeatmapSelection } from './beatmap-selection'
+import { Header } from './header'
+import { Info } from './info'
+import { Main } from './main'
+import { ScoreBig } from './score-big'
+import { ScoreTop } from './score-top'
+import { Score } from './score'
+import { ScoreboardMod } from './scoreboard-mod'
+import { ScoreboardTab } from './scoreboard-tab'
+import { Scoreboard } from './scoreboard'
+import { Stats } from './stats'
 
 export BeatmapsetPage = {
   BeatmapPicker

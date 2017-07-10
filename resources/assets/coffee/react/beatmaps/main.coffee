@@ -16,9 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Beatmaps } from './_index.coffee'
-import { BeatmapsetPanel } from 'react/_components/beatmapset-panel.coffee'
-import { Img2x } from 'react/_components/img2x.coffee'
+import { Beatmaps } from './_index'
+import { BeatmapsetPanel } from 'react/_components/beatmapset-panel'
+import { Img2x } from 'react/_components/img2x'
 
 {div} = ReactDOMFactories
 el = React.createElement

@@ -16,11 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Incident } from './incident.coffee'
-import { Incidents } from './incidents.coffee'
-import { Map } from './map.coffee'
-import { Page } from './page.coffee'
-import { Uptime } from './uptime.coffee'
+import { Incident } from './incident'
+import { Incidents } from './incidents'
+import { Map } from './map'
+import { Page } from './page'
+import { Uptime } from './uptime'
 
 export Status = {
   Incident

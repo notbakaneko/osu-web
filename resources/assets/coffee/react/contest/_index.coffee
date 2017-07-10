@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Entry } from './entry/_index.coffee'
-import { Voting } from './voting/_index.coffee'
+import { Entry } from './entry/_index'
+import { Voting } from './voting/_index'
 
 export Contest = {
   Entry

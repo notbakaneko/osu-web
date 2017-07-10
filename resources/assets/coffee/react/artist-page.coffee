@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Tracklist } from './_components/tracklist.coffee'
+import { Tracklist } from './_components/tracklist'
 
 propsFunction = (target) ->
   tracks: osu.parseJson target.dataset.src

@@ -16,18 +16,18 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BeatmapListItem } from './beatmap-list-item.coffee'
-import { BeatmapList } from './beatmap-list.coffee'
-import { Discussion } from './discussion.coffee'
-import { Discussions } from './discussions.coffee'
-import { Header } from './header.coffee'
-import { Main } from './main.coffee'
-import { ModeSwitcher } from './mode-switcher.coffee'
-import { NewDiscussion } from './new-discussion.coffee'
-import { NewReply } from './new-reply.coffee'
-import { Nominations } from './nominations.coffee'
-import { Post } from './post.coffee'
-import { SystemPost } from './system-post.coffee'
+import { BeatmapListItem } from './beatmap-list-item'
+import { BeatmapList } from './beatmap-list'
+import { Discussion } from './discussion'
+import { Discussions } from './discussions'
+import { Header } from './header'
+import { Main } from './main'
+import { ModeSwitcher } from './mode-switcher'
+import { NewDiscussion } from './new-discussion'
+import { NewReply } from './new-reply'
+import { Nominations } from './nominations'
+import { Post } from './post'
+import { SystemPost } from './system-post'
 
 export BeatmapDiscussions = {
   BeatmapListItem

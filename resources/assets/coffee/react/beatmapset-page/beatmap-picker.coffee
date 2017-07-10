@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BeatmapsetPage } from './_index.coffee'
+import { BeatmapsetPage } from './_index'
 
 {div} = ReactDOMFactories
 el = React.createElement

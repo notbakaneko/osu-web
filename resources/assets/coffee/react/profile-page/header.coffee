@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { ProfilePage } from './_index.coffee'
-import { PlaymodeTabs } from 'react/_components/playmode-tabs.coffee'
+import { ProfilePage } from './_index'
+import { PlaymodeTabs } from 'react/_components/playmode-tabs'
 
 {div} = ReactDOMFactories
 el = React.createElement

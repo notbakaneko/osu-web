@@ -16,11 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BeatmapsetPage } from './_index.coffee'
-import { BeatmapsetMapping } from 'react/_components/beatmapset-mapping.coffee'
-import { BigButton } from 'react/_components/big-button.coffee'
-import { Icon } from 'react/_components/icon.coffee'
-import { PlaymodeTabs } from 'react/_components/playmode-tabs.coffee'
+import { BeatmapsetPage } from './_index'
+import { BeatmapsetMapping } from 'react/_components/beatmapset-mapping'
+import { BigButton } from 'react/_components/big-button'
+import { Icon } from 'react/_components/icon'
+import { PlaymodeTabs } from 'react/_components/playmode-tabs'
 
 {div, span, a, ol, li} = ReactDOMFactories
 el = React.createElement

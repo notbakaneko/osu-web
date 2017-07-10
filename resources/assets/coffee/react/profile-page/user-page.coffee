@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { ProfilePage } from './_index.coffee'
-import { Icon } from 'react/_components/icon.coffee'
+import { ProfilePage } from './_index'
+import { Icon } from 'react/_components/icon'
 
 {button, div, p} = ReactDOMFactories
 el = React.createElement

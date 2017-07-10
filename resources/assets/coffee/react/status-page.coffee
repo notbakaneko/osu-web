@@ -16,6 +16,6 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Status } from './status-page/_index.coffee'
+import { Status } from './status-page/_index'
 
 window.reactTurbolinks.register 'status-page', Status.Page

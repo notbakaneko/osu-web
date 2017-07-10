@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BigButton } from 'react/_components/big-button.coffee'
+import { BigButton } from 'react/_components/big-button'
 
 {a, button, div, p, span} = ReactDOMFactories
 el = React.createElement

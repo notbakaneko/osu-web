@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Contest } from '../_index.coffee'
-import { BaseEntryList } from './_base-entry-list.coffee'
+import { Contest } from '../_index'
+import { BaseEntryList } from './_base-entry-list'
 
 {div,span} = ReactDOMFactories
 el = React.createElement

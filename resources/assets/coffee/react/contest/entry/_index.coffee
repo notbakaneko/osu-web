@@ -16,9 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Uploader } from './uploader.coffee'
-import { UserEntryList } from './user-entry-list.coffee'
-import { UserEntry } from './user-entry.coffee'
+import { Uploader } from './uploader'
+import { UserEntryList } from './user-entry-list'
+import { UserEntry } from './user-entry'
 
 export Entry = {
   Uploader
