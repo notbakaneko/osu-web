@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { FlagCountry } from '../_components/flag-country.coffee'
+import { FlagCountry } from 'react/_components/flag-country.coffee'
 
 el = React.createElement
 

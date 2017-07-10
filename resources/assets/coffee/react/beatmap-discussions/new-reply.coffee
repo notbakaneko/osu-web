@@ -16,9 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { BigButton } from '../_components/big-button.coffee'
-import { Icon } from '../_components/icon.coffee'
-import { UserAvatar } from '../_components/user-avatar.coffee'
+import { BigButton } from 'react/_components/big-button.coffee'
+import { Icon } from 'react/_components/icon.coffee'
+import { UserAvatar } from 'react/_components/user-avatar.coffee'
 
 {button, div, form, input, label, span, textarea} = ReactDOMFactories
 el = React.createElement

@@ -17,7 +17,7 @@
 ###
 
 import { BeatmapDiscussions } from './_index.coffee'
-import { Icon } from '../_components/icon.coffee'
+import { Icon } from 'react/_components/icon.coffee'
 
 {button, div, span} = ReactDOMFactories
 el = React.createElement

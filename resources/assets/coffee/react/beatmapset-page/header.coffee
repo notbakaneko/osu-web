@@ -17,10 +17,10 @@
 ###
 
 import { BeatmapsetPage } from './_index.coffee'
-import { BeatmapsetMapping } from '../_components/beatmapset-mapping.coffee'
-import { BigButton } from '../_components/big-button.coffee'
-import { Icon } from '../_components/icon.coffee'
-import { PlaymodeTabs } from '../_components/playmode-tabs.coffee'
+import { BeatmapsetMapping } from 'react/_components/beatmapset-mapping.coffee'
+import { BigButton } from 'react/_components/big-button.coffee'
+import { Icon } from 'react/_components/icon.coffee'
+import { PlaymodeTabs } from 'react/_components/playmode-tabs.coffee'
 
 {div, span, a, ol, li} = ReactDOMFactories
 el = React.createElement

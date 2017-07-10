@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index.coffee'
-import { BeatmapsetPanel } from '../_components/beatmapset-panel.coffee'
+import { BeatmapsetPanel } from 'react/_components/beatmapset-panel.coffee'
 
 {div, h2, h3, ul, li, a, p, pre, span} = ReactDOMFactories
 el = React.createElement

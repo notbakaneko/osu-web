@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index.coffee'
-import { PlayDetail } from '../_components/play-detail.coffee'
+import { PlayDetail } from 'react/_components/play-detail.coffee'
 
 {a, div, h2, h3, img, p, small, span} = ReactDOMFactories
 el = React.createElement
