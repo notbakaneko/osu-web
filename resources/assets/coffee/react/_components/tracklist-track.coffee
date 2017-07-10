@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { TrackPreview } from './track-preview'
+import { TrackPreview } from 'app-components/track-preview'
 
 {a, i, span, tr, td} = ReactDOMFactories
 el = React.createElement

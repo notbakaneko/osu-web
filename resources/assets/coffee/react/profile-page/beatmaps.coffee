@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index'
-import { BeatmapsetPanel } from 'react/_components/beatmapset-panel'
+import { BeatmapsetPanel } from 'app-components/beatmapset-panel'
 
 {div, h2, h3, ul, li, a, p, pre, span} = ReactDOMFactories
 el = React.createElement

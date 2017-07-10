@@ -17,9 +17,9 @@
 ###
 
 import { BeatmapDiscussions } from './_index'
-import { BeatmapBasicStats } from 'react/_components/beatmap-basic-stats'
-import { BeatmapsetMapping } from 'react/_components/beatmapset-mapping'
-import { PlaymodeTabs } from 'react/_components/playmode-tabs'
+import { BeatmapBasicStats } from 'app-components/beatmap-basic-stats'
+import { BeatmapsetMapping } from 'app-components/beatmapset-mapping'
+import { PlaymodeTabs } from 'app-components/playmode-tabs'
 
 {a, div, h1, h2, p} = ReactDOMFactories
 el = React.createElement

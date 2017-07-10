@@ -17,8 +17,8 @@
 ###
 
 import { BeatmapDiscussions } from './_index'
-import { Icon } from 'react/_components/icon'
-import { IconExpand } from 'react/_components/icon-expand'
+import { Icon } from 'app-components/icon'
+import { IconExpand } from 'app-components/icon-expand'
 
 {a, button, div, p, span} = ReactDOMFactories
 el = React.createElement

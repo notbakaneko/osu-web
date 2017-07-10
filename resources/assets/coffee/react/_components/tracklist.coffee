@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { TracklistTrack } from './tracklist-track'
+import { TracklistTrack } from 'app-components/tracklist-track'
 
 {div, table, thead, tbody, tr, th} = ReactDOMFactories
 el = React.createElement

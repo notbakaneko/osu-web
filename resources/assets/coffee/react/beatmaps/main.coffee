@@ -17,8 +17,8 @@
 ###
 
 import { Beatmaps } from './_index'
-import { BeatmapsetPanel } from 'react/_components/beatmapset-panel'
-import { Img2x } from 'react/_components/img2x'
+import { BeatmapsetPanel } from 'app-components/beatmapset-panel'
+import { Img2x } from 'app-components/img2x'
 
 {div} = ReactDOMFactories
 el = React.createElement

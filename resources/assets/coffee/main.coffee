@@ -16,8 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { CountdownTimer } from 'react/_components/countdown-timer'
-import { BeatmapsetPanel } from 'react/_components/beatmapset-panel'
+import { CountdownTimer } from 'app-components/countdown-timer'
+import { BeatmapsetPanel } from 'app-components/beatmapset-panel'
 
 window.polyfills ?= new Polyfills
 Lang.setLocale(currentLocale)

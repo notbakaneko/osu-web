@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Mod } from 'react/_components/mod'
+import { Mod } from 'app-components/mod'
 
 el = React.createElement
 {img, div} = ReactDOMFactories

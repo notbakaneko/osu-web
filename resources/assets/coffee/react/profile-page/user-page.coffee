@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index'
-import { Icon } from 'react/_components/icon'
+import { Icon } from 'app-components/icon'
 
 {button, div, p} = ReactDOMFactories
 el = React.createElement

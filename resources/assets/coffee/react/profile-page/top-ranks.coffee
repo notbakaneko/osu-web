@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index'
-import { PlayDetail } from 'react/_components/play-detail'
+import { PlayDetail } from 'app-components/play-detail'
 
 {div, h2, h3, ul, li, a, p, pre, span} = ReactDOMFactories
 el = React.createElement

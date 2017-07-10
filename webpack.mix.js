@@ -38,6 +38,9 @@ let webpackConfig = {
       path.resolve(__dirname, 'resources/assets/coffee/_global'),
       path.resolve(__dirname, 'resources/assets/coffee/classes'),
     ],
+    alias: {
+      'app-components': 'react/_components'
+    },
     extensions: ['*', '.js', '.coffee']
   },
   module: {

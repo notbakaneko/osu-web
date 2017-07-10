@@ -17,10 +17,10 @@
 ###
 
 import { BeatmapsetPage } from './_index'
-import { BeatmapsetMapping } from 'react/_components/beatmapset-mapping'
-import { BigButton } from 'react/_components/big-button'
-import { Icon } from 'react/_components/icon'
-import { PlaymodeTabs } from 'react/_components/playmode-tabs'
+import { BeatmapsetMapping } from 'app-components/beatmapset-mapping'
+import { BigButton } from 'app-components/big-button'
+import { Icon } from 'app-components/icon'
+import { PlaymodeTabs } from 'app-components/playmode-tabs'
 
 {div, span, a, ol, li} = ReactDOMFactories
 el = React.createElement

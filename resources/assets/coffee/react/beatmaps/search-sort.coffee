@@ -17,7 +17,7 @@
 ###
 
 import { Beatmaps } from './_index'
-import { Icon } from 'react/_components/icon'
+import { Icon } from 'app-components/icon'
 
 {div, a, span} = ReactDOMFactories
 el = React.createElement

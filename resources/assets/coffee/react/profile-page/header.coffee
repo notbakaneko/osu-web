@@ -17,7 +17,7 @@
 ###
 
 import { ProfilePage } from './_index'
-import { PlaymodeTabs } from 'react/_components/playmode-tabs'
+import { PlaymodeTabs } from 'app-components/playmode-tabs'
 
 {div} = ReactDOMFactories
 el = React.createElement

@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { Icon } from 'react/_components/icon'
+import { Icon } from 'app-components/icon'
 
 el = React.createElement
 
