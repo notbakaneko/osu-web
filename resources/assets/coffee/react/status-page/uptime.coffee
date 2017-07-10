@@ -16,7 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-import { StatusChart } from 'classes/status-chart.coffee'
+import { StatusChart } from 'status-chart.coffee'
 
 {div, h1, h5} = ReactDOMFactories
 el = React.createElement
