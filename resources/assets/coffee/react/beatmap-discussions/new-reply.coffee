@@ -16,12 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BigButton } from 'app-components/big-button'
+import { Icon } from 'app-components/icon'
+import { UserAvatar } from 'app-components/user-avatar'
+
 {button, div, form, input, label, span, textarea} = ReactDOMFactories
 el = React.createElement
 
 bn = 'beatmap-discussion-post'
 
-class BeatmapDiscussions.NewReply extends React.PureComponent
+export class NewReply extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -43,8 +47,9 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
 
       div
         className: "#{bn}__content"
-        div className: "#{bn}__avatar",
-          el UserAvatar, user: @props.currentUser, modifiers: ['full-rounded']
+        div className: "#{bn}__avatar-container",
+          div className: "#{bn}__avatar",
+            el UserAvatar, user: @props.currentUser, modifiers: ['full-rounded']
 
         div className: "#{bn}__message-container",
           textarea

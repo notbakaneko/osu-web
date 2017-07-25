@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { FlagCountry } from 'app-components/flag-country'
+import { Mods } from 'app-components/mods'
+
 {div, span, a} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Score extends React.Component
+export class Score extends React.Component
   firstRow: ['combo', 'accuracy', 'score']
   secondRow: ['count_geki', 'count_300', 'count_katu', 'count_100', 'count_50', 'count_miss']
 

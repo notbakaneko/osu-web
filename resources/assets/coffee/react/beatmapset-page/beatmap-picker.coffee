@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './_index'
+
 {div} = ReactDOMFactories
 el = React.createElement
 
-BeatmapsetPage.BeatmapPicker = ({beatmaps, currentBeatmap}) ->
+export BeatmapPicker = ({beatmaps, currentBeatmap}) ->
   div className: 'beatmapset-beatmap-picker',
     for beatmap in beatmaps
       el BeatmapsetPage.BeatmapSelection,

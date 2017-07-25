@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapIcon } from 'app-components/beatmap-icon'
+
 {a} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.BeatmapSelection extends React.Component
+export class BeatmapSelection extends React.Component
   onClick: (e) =>
     e.preventDefault()
 

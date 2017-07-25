@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index'
+import { Icon } from 'app-components/icon'
+
 {button, div, p} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.UserPage extends React.Component
+export class UserPage extends React.Component
   render: =>
     div className: 'page-extra',
       el ProfilePage.ExtraHeader, name: @props.name, withEdit: @props.withEdit

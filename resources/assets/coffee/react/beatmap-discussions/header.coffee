@@ -16,10 +16,15 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index'
+import { BeatmapBasicStats } from 'app-components/beatmap-basic-stats'
+import { BeatmapsetMapping } from 'app-components/beatmapset-mapping'
+import { PlaymodeTabs } from 'app-components/playmode-tabs'
+
 {a, div, h1, h2, p} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapDiscussions.Header extends React.PureComponent
+export class Header extends React.PureComponent
   componentDidMount: =>
     @updateChart()
 

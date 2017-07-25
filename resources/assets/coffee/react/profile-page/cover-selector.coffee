@@ -16,9 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index'
+
 el = React.createElement
 
-class ProfilePage.CoverSelector extends React.Component
+export class CoverSelector extends React.Component
   constructor: (props) ->
     super props
 

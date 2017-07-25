@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Status } from './_index'
+
 {div, h1, h5} = ReactDOMFactories
 el = React.createElement
 
-class Status.Incidents extends React.Component
+export class Incidents extends React.Component
   constructor: (props) ->
     super props
     @state =

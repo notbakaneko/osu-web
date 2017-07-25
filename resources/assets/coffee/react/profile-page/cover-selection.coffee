@@ -18,7 +18,7 @@
 
 el = React.createElement
 
-class ProfilePage.CoverSelection extends React.Component
+export class CoverSelection extends React.Component
   onClick: (e) =>
     return if !@props.url?
 

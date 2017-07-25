@@ -16,12 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index'
+
 {a, div, h1, p} = ReactDOMFactories
 el = React.createElement
 
 modeSwitcher = document.getElementsByClassName('js-mode-switcher')
 
-class BeatmapDiscussions.Main extends React.PureComponent
+export class Main extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -58,6 +60,7 @@ class BeatmapDiscussions.Main extends React.PureComponent
     $.subscribe 'beatmapDiscussionPost:markRead.beatmapDiscussions', @markPostRead
     $.subscribe 'beatmapDiscussion:filter.beatmapDiscussions', @setFilter
     $(document).on 'ajax:success.beatmapDiscussions', '.js-beatmapset-discussion-update', @ujsDiscussionUpdate
+    $(document).on 'click.beatmapDiscussions', '.js-beatmap-discussion--jump', @jumpToClick
 
     @jumpByHash()
     @checkNewTimeout = Timeout.set @checkNewTimeoutDefault, @checkNew
@@ -96,6 +99,7 @@ class BeatmapDiscussions.Main extends React.PureComponent
         el BeatmapDiscussions.NewDiscussion,
           currentUser: @state.currentUser
           currentBeatmap: @state.currentBeatmap
+          currentDiscussions: @currentDiscussions()
           mode: @state.mode
 
         el BeatmapDiscussions.Discussions,
@@ -218,6 +222,15 @@ class BeatmapDiscussions.Main extends React.PureComponent
             offset: modeSwitcher[0].getBoundingClientRect().height * -1
 
 
+  jumpToClick: (e) =>
+    e.preventDefault()
+    url = e.currentTarget.getAttribute('href')
+
+    id = BeatmapDiscussionHelper.hashParse(url).discussionId
+
+    @jumpTo null, {id}
+
+
   markPostRead: (_e, {id}) =>
     return if _.includes @state.readPostIds, id
 
@@ -261,9 +274,18 @@ class BeatmapDiscussions.Main extends React.PureComponent
 
 
   setMode: (_e, mode, callback) =>
-    return callback?() if mode == @state.mode
+    newState = mode: mode
 
-    @setState mode: mode, callback
+    if mode == 'timeline'
+      currentFilter = @state.currentFilter
+      filter = 'total'
+      newState.currentFilter = filter
+    else
+      currentFilter = filter = null
+
+    return callback?() if mode == @state.mode && filter == currentFilter
+
+    @setState newState, callback
 
 
   users: =>

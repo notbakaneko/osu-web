@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapIcon } from 'app-components/beatmap-icon'
+import { Icon } from 'app-components/icon'
+
 {div,a,i,span} = ReactDOMFactories
 el = React.createElement
 
-class @BeatmapsetPanel extends React.PureComponent
+export class BeatmapsetPanel extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -38,6 +41,7 @@ class @BeatmapsetPanel extends React.PureComponent
 
 
   componentWillUnmount: =>
+    @previewStop()
     $.unsubscribe ".#{@eventId}"
     $(document).off ".#{@eventId}"
 
@@ -49,14 +53,23 @@ class @BeatmapsetPanel extends React.PureComponent
     # arbitrary number
     maxDisplayedDifficulty = 10
 
-    difficulties = beatmapset.beatmaps[..maxDisplayedDifficulty - 1].map (b) =>
-      div
-        className: 'beatmapset-panel__difficulty-icon'
-        key: b.id
-        el BeatmapIcon, beatmap: b
+    condenseDifficulties = beatmapset.beatmaps.length > maxDisplayedDifficulty
 
-    if beatmapset.beatmaps.length > maxDisplayedDifficulty
-      difficulties.push span key: 'over', "+#{(beatmapset.beatmaps.length - maxDisplayedDifficulty)}"
+    difficulties =
+      for own mode, beatmaps of BeatmapHelper.group beatmapset.beatmaps
+        if condenseDifficulties
+          [
+            el BeatmapIcon, key: "#{mode}-icon", beatmap: _.last(beatmaps), showTitle: false
+            span
+              className: 'beatmapset-panel__difficulty-count'
+              key: "#{(mode)}-count", beatmaps.length
+          ]
+        else
+          for b in beatmaps
+            div
+              className: 'beatmapset-panel__difficulty-icon'
+              key: b.id
+              el BeatmapIcon, beatmap: b
 
     div
       className: "beatmapset-panel #{'beatmapset-panel--previewing' if @state.preview != 'ended'}"
@@ -99,8 +112,10 @@ class @BeatmapsetPanel extends React.PureComponent
                     osu.trans 'beatmaps.listing.mapped-by',
                       mapper:
                         laroute.link_to_route 'users.show',
-                          beatmapset.creator
-                          user: beatmapset.user_id
+                            beatmapset.creator,
+                            user: beatmapset.user_id,
+                              'class': 'js-usercard'
+                              'data-user-id': beatmapset.user_id
               div
                 className: 'u-ellipsis-overflow'
                 beatmapset.source

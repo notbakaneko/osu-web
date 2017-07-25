@@ -18,7 +18,7 @@
 
 {div} = ReactDOMFactories
 
-BeatmapsetPage.ScoreboardTab = (props) ->
+export ScoreboardTab = (props) ->
   className = 'page-tabs__tab'
   className += ' page-tabs__tab--active' if props.active
 

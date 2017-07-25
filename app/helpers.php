@@ -72,7 +72,7 @@ function get_valid_locale($requestedLocale)
 
     return array_first(
         config('app.available_locales'),
-        function ($_key, $value) use ($requestedLocale) {
+        function ($value) use ($requestedLocale) {
             return starts_with($requestedLocale, $value);
         },
         config('app.fallback_locale')
@@ -111,6 +111,19 @@ function locale_flag($locale)
 function locale_name($locale)
 {
     return App\Libraries\LocaleMeta::nameFor($locale);
+}
+
+function locale_for_moment($locale)
+{
+    if ($locale === 'en') {
+        return;
+    }
+
+    if ($locale === 'zh') {
+        return 'zh-cn';
+    }
+
+    return $locale;
 }
 
 function locale_for_timeago($locale)
@@ -196,6 +209,21 @@ function search_total_display($total)
 
     return (string) $total;
 }
+
+function to_sentence($array, $key = 'common.array_and')
+{
+    switch (count($array)) {
+        case 0:
+            return '';
+        case 1:
+            return (string) $array[0];
+        case 2:
+            return implode(trans("{$key}.two_words_connector"), $array);
+        default:
+            return implode(trans("{$key}.words_connector"), array_slice($array, 0, -1)).trans("{$key}.last_word_connector").array_last($array);
+    }
+}
+
 function obscure_email($email)
 {
     $email = explode('@', $email);
@@ -300,7 +328,7 @@ function link_to_user($user_id, $user_name, $user_color)
     if ($user_id) {
         $user_url = e(route('users.show', $user_id));
 
-        return "<a class='user-name' href='{$user_url}' style='{$style}'>{$user_name}</a>";
+        return "<a class='user-name js-usercard' data-user-id='{$user_id}' href='{$user_url}' style='{$style}'>{$user_name}</a>";
     } else {
         return "<span class='user-name'>{$user_name}</span>";
     }
@@ -392,8 +420,10 @@ function nav_links()
 
     $links['home'] = [
         'news-index' => route('news.index'),
+        'friends' => route('friends.index'),
         'getChangelog' => route('changelog'),
         'getDownload' => route('download'),
+        'search' => route('search'),
     ];
     $links['help'] = [
         'getWiki' => wiki_url('Welcome'),
@@ -410,6 +440,7 @@ function nav_links()
     $links['beatmaps'] = [
         'index' => route('beatmapsets.index'),
         'artists' => route('artists.index'),
+        'packs' => route('packs.index'),
     ];
     $links['community'] = [
         'forum-forums-index' => route('forum.forums.index'),
@@ -692,7 +723,7 @@ function get_model_basename($model)
 function ci_file_search($fileName)
 {
     if (file_exists($fileName)) {
-        return $fileName;
+        return is_file($fileName) ? $fileName : false;
     }
 
     $directoryName = dirname($fileName);
@@ -700,7 +731,7 @@ function ci_file_search($fileName)
     $fileNameLowerCase = strtolower($fileName);
     foreach ($fileArray as $file) {
         if (strtolower($file) === $fileNameLowerCase) {
-            return $file;
+            return is_file($file) ? $file : false;
         }
     }
 
@@ -886,7 +917,7 @@ function clamp($number, $min, $max)
 // e.g. 100634983048665 -> 100.63 trillion
 function suffixed_number_format($number)
 {
-    $suffixes = ['', 'k', 'millon', 'billion', 'trillion']; // TODO: localize
+    $suffixes = ['', 'k', 'million', 'billion', 'trillion']; // TODO: localize
     $k = 1000;
 
     if ($number < $k) {
@@ -908,4 +939,22 @@ function suffixed_number_format_tag($number)
 function format_percentage($number, $precision = 2)
 {
     return sprintf("%.{$precision}f%%", round($number, $precision));
+}
+
+function group_users_by_online_state($users)
+{
+    $online = $offline = [];
+
+    foreach ($users as $user) {
+        if ($user->isOnline()) {
+            $online[] = $user;
+        } else {
+            $offline[] = $user;
+        }
+    }
+
+    return [
+        'online' => $online,
+        'offline' => $offline,
+    ];
 }

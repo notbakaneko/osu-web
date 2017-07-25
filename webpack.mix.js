@@ -18,6 +18,7 @@
 
 const { mix } = require('laravel-mix');
 const path = require('path');
+const SentryPlugin = require('webpack-sentry-plugin');
 
 // .js doesn't support globbing by itself, so we need to glob
 // and spread the values in.
@@ -34,7 +35,13 @@ let webpackConfig = {
   resolve: {
     modules: [
       path.resolve(__dirname, 'resources/assets/coffee'),
-    ]
+      path.resolve(__dirname, 'resources/assets/coffee/_global'),
+      path.resolve(__dirname, 'resources/assets/coffee/classes'),
+    ],
+    alias: {
+      'app-components': 'react/_components'
+    },
+    extensions: ['*', '.js', '.coffee']
   },
   module: {
     rules: [
@@ -46,11 +53,47 @@ let webpackConfig = {
       },
       {
         test: /\.coffee$/,
+        include: [
+          path.resolve(__dirname, "resources/assets/coffee/_global/"),
+        ],
         use: ['imports-loader?this=>window', 'coffee-loader']
+      },
+      {
+        test: /\.coffee$/,
+        include: [
+          path.resolve(__dirname, "resources/assets/coffee"),
+        ],
+        exclude: [
+          path.resolve(__dirname, "resources/assets/coffee/_global/"),
+        ],
+        use: ['coffee-loader']
       }
     ]
   }
 };
+
+if (!mix.inProduction() || process.env.SENTRY_RELEASE == 1) {
+  webpackConfig['devtool'] = '#source-map';
+}
+
+if (process.env.SENTRY_RELEASE == 1) {
+  webpackConfig['plugins'] = [
+    new SentryPlugin({
+      organisation: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJ,
+      apiKey: process.env.SENTRY_API_KEY,
+
+      deleteAfterCompile: true,
+      exclude: /\.css(\.map)?$/,
+      release: function() {
+        return process.env.GIT_SHA
+      },
+      filenameTransform: function(filename) {
+        return '~' + filename
+      }
+    })
+  ]
+}
 
 // use polling if watcher is bugged.
 if (process.env.WEBPACK_POLL == 1) {
@@ -65,44 +108,36 @@ mix
   'resources/assets/app.js'
 ], 'js/app.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/profile-page/*.coffee'),
   'resources/assets/coffee/react/profile-page.coffee',
 ], 'js/react/profile-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmaps/*.coffee'),
-  'resources/assets/coffee/react/beatmaps.coffee',
+  'resources/assets/coffee/react/beatmaps.coffee'
 ], 'js/react/beatmaps.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/status-page/*.coffee'),
-  'resources/assets/coffee/react/status-page.coffee',
+  'resources/assets/coffee/react/status-page.coffee'
 ], 'js/react/status-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmap-discussions/*.coffee'),
-  'resources/assets/coffee/react/beatmap-discussions.coffee',
+  'resources/assets/coffee/react/beatmap-discussions.coffee'
 ], 'js/react/beatmap-discussions.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/beatmapset-page/*.coffee'),
-  'resources/assets/coffee/react/beatmapset-page.coffee',
+  'resources/assets/coffee/react/beatmapset-page.coffee'
 ], 'js/react/beatmapset-page.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/mp-history/*.coffee'),
-  'resources/assets/coffee/react/mp-history.coffee',
+  'resources/assets/coffee/react/mp-history.coffee'
 ], 'js/react/mp-history.js')
 .js([
   'resources/assets/coffee/react/artist-page.coffee',
 ], 'js/react/artist-page.js')
 .js([
-  // 'resources/assets/coffee/react/contest/voting/_base-entry-list.coffee',
-  ...glob.sync('resources/assets/coffee/react/contest/voting/*.coffee'),
   'resources/assets/coffee/react/contest-voting.coffee',
 ], 'js/react/contest-voting.js')
 .js([
-  ...glob.sync('resources/assets/coffee/react/contest/entry/*.coffee'),
   'resources/assets/coffee/react/contest-entry.coffee',
 ], 'js/react/contest-entry.js')
 .copy('node_modules/font-awesome/fonts', 'public/vendor/fonts/font-awesome')
 .copy('node_modules/photoswipe/dist/default-skin', 'public/vendor/_photoswipe-default-skin')
 .copy('node_modules/timeago/locales', 'public/vendor/js/timeago-locales')
+.copy('node_modules/moment/locale', 'public/vendor/js/moment-locales')
 .less('resources/assets/less/app.less', 'public/css')
 .scripts([
   'resources/assets/js/ga.js',
@@ -137,12 +172,12 @@ mix
   path.join(node_root, 'd3/build/d3' + min + '.js'),
   path.join(node_root, 'moment/moment.js'),
   path.join(node_root, 'js-cookie/src/js.cookie.js'),
+  path.join(node_root, 'imagesloaded/imagesloaded.pkgd' + min + '.js'),
 
   path.join(node_root, 'react-height/build/react-height' + min + '.js'),
   path.join(node_root, 'react-motion/build/react-motion.js'),
   path.join(node_root, 'react-collapse/build/react-collapse' + min + '.js'),
-], 'public/js/vendor.js')
-.sourceMaps(!mix.inProduction());
+], 'public/js/vendor.js');
 
 if (mix.inProduction()) {
   mix.version();

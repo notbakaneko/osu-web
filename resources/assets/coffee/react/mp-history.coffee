@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-reactTurbolinks.register 'mp-history', MPHistory.Main, ->
+import { MPHistory } from './mp-history/_index'
+
+window.reactTurbolinks.register 'mp-history', MPHistory.Main, ->
   match: osu.parseJson('json-match')
   full: full

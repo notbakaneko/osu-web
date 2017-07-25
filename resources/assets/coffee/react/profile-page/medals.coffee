@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index'
+
 {div, h2, h3} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.Medals extends React.PureComponent
+export class Medals extends React.PureComponent
   componentWillReceiveProps: =>
     @_userAchievements = null
 

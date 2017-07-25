@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './_index'
+
 {div} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Main extends React.Component
+export class Main extends React.Component
   constructor: (props) ->
     super props
 

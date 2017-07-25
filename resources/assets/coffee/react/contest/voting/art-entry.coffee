@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Contest } from '../_index'
+
 {div, span, a, i} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Voting.ArtEntry extends React.Component
+export class ArtEntry extends React.Component
   render: ->
     votingOver = moment(@props.contest.voting_ends_at).diff() <= 0
     selected = _.includes @props.selected, @props.entry.id
@@ -77,7 +79,11 @@ class Contest.Voting.ArtEntry extends React.Component
                 i className: "fa fa-fw fa-trophy contest-art-entry__trophy--#{place}"
               span {}, "##{place}"
             if @props.entry.results.user_id
-              a className: 'contest-art-entry__entrant', href: laroute.route('users.show', user: @props.entry.results.user_id), @props.entry.results.username
+              a
+                className: 'contest-art-entry__entrant js-usercard',
+                'data-user-id': @props.entry.results.user_id,
+                href: laroute.route('users.show', user: @props.entry.results.user_id),
+                  @props.entry.results.username
             else
               span className: 'contest-art-entry__entrant', @props.entry.results.actual_name
           div className: 'contest-art-entry__result-pane',

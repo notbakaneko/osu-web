@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Contest } from './contest/_index'
+
 propsFunction = (target) ->
   data = osu.parseJson target.dataset.src
 
@@ -27,5 +29,5 @@ propsFunction = (target) ->
       showLink: data.contest['type'] == 'beatmap' && _.some(data.contest.entries, 'preview')
   }
 
-reactTurbolinks.register 'contestArtList', Contest.Voting.ArtEntryList, propsFunction
-reactTurbolinks.register 'contestList', Contest.Voting.EntryList, propsFunction
+window.reactTurbolinks.register 'contestArtList', Contest.Voting.ArtEntryList, propsFunction
+window.reactTurbolinks.register 'contestList', Contest.Voting.EntryList, propsFunction

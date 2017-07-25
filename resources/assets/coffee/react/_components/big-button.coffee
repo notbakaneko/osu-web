@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from 'app-components/icon'
+
 {a, button, div, span} = ReactDOMFactories
 el = React.createElement
 
-@BigButton = ({modifiers = [], text, icon, props = {}}) ->
+export BigButton = ({modifiers = [], text, icon, props = {}}) ->
   props.className = 'btn-osu-big'
   props.className += " btn-osu-big--#{mod}" for mod in modifiers
 

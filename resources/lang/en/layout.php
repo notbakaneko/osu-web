@@ -27,15 +27,18 @@ return [
         'home' => [
             '_' => 'home',
             'account-edit' => 'settings',
+            'friends' => 'friends',
+            'friends-index' => 'friends',
             'getChangelog' => 'changelog',
             'getDownload' => 'download',
             'getIcons' => 'icons',
+            'groups-show' => 'groups',
             'index' => 'osu!',
             'legal-show' => 'information',
             'news-index' => 'news',
             'news-show' => 'news',
             'password-reset-index' => 'reset password',
-            'search' => 'Search',
+            'search' => 'search',
             'supportTheGame' => 'support the game',
         ],
         'help' => [
@@ -50,7 +53,7 @@ return [
             'show' => 'info',
             'index' => 'listing',
             'artists' => 'featured artists',
-            // 'getPacks' => 'packs',
+            'packs' => 'packs',
             // 'getCharts' => 'charts',
         ],
         'beatmapsets' => [
@@ -241,6 +244,7 @@ return [
     'popup_user' => [
         'links' => [
             'account-edit' => 'Settings',
+            'friends' => 'Friends',
             'logout' => 'Log Out',
             'profile' => 'My Profile',
         ],

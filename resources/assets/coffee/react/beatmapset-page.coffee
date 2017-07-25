@@ -16,8 +16,10 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './beatmapset-page/_index'
+
 propsFunction = =>
   beatmapset: osu.parseJson('json-beatmapset')
   countries: _.keyBy osu.parseJson('json-countries'), 'code'
 
-reactTurbolinks.register 'beatmapset-page', BeatmapsetPage.Main, propsFunction
+window.reactTurbolinks.register 'beatmapset-page', BeatmapsetPage.Main, propsFunction

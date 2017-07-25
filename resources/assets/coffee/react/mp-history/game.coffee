@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { MPHistory } from './_index'
+
 {div, span} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Game extends React.Component
+export class Game extends React.Component
   render: ->
     game = @props.event.game
 

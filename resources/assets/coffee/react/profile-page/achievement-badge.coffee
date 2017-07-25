@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Img2x } from 'app-components/img2x'
+
 {div, img} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.AchievementBadge extends React.Component
+export class AchievementBadge extends React.Component
   onMouseOver: (event) =>
     elem = event.currentTarget
 

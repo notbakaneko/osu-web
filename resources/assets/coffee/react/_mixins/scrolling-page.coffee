@@ -22,7 +22,7 @@ pagesOffset = document.getElementsByClassName("js-switchable-mode-page--scrollsp
 currentLocation = =>
   "#{document.location.pathname}#{document.location.search}"
 
-@ScrollingPageMixin =
+export ScrollingPageMixin =
   componentDidMount: ->
     @modeScrollUrl = currentLocation()
 

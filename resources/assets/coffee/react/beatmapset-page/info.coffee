@@ -19,7 +19,7 @@
 {a, div, h3, span} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Info extends React.Component
+export class Info extends React.Component
   componentDidMount: ->
     @renderChart()
 

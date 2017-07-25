@@ -16,5 +16,7 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-reactTurbolinks.register 'beatmap-discussions', BeatmapDiscussions.Main, ->
+import { BeatmapDiscussions } from './beatmap-discussions/_index'
+
+window.reactTurbolinks.register 'beatmap-discussions', BeatmapDiscussions.Main, ->
   initial: osu.parseJson 'json-beatmapset-discussion'

@@ -19,7 +19,7 @@
 {a, span} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.ExtraTab extends React.Component
+export class ExtraTab extends React.Component
   pageSwitch: (e) =>
     e.preventDefault()
 

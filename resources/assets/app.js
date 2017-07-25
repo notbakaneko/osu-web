@@ -1,23 +1,20 @@
-// import-glob-loader doesn't seem to work with resolve: {}?
-import './coffee/_classes/*.coffee';
+import './coffee/_global/_classes/*.coffee';
 
-import 'react-namespaces.coffee';
-import './coffee/react/_components/*.coffee';
-import './coffee/react/_mixins/*.coffee';
+import 'react-namespaces';
 
-import 'jquery-pubsub.coffee';
-import 'osu_common.coffee';
+import 'jquery-pubsub';
+import 'osu_common';
 
-import 'navbar-mobile.coffee';
-import 'spoilerbox.coffee';
-import 'store.coffee';
-import 'store-username-change.coffee';
-import 'forum/post-box.coffee';
-import 'forum/topic-ajax.coffee';
-import 'ujs-common.coffee';
-import 'bootstrap-modal.coffee';
-import 'logout.coffee';
-import 'shared.coffee';
-import 'turbolinks-overrides.coffee';
+import 'navbar-mobile';
+import 'spoilerbox';
+import 'store';
+import 'store-username-change';
+import 'forum/post-box';
+import 'forum/topic-ajax';
+import 'ujs-common';
+import 'bootstrap-modal';
+import 'logout';
+import 'shared';
+import 'turbolinks-overrides';
 
-import 'main.coffee';
+import 'main';

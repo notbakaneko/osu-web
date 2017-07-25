@@ -16,9 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { FlagCountry } from 'app-components/flag-country'
+
 el = React.createElement
 
-class ProfilePage.HeaderFlags extends React.Component
+export class HeaderFlags extends React.Component
   render: =>
     if @props.user.profile_colour
       style = backgroundColor: "##{@props.user.profile_colour}"

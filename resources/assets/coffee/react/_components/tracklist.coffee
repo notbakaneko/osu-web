@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { TracklistTrack } from 'app-components/tracklist-track'
+
 {div, table, thead, tbody, tr, th} = ReactDOMFactories
 el = React.createElement
 
-class @Tracklist extends React.Component
+export class Tracklist extends React.Component
   render: ->
     return null unless @props.tracks.length > 0
 

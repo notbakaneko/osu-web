@@ -16,9 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from 'app-components/icon'
+
 el = React.createElement
 
-class ProfilePage.Rank extends React.Component
+export class Rank extends React.Component
   render: =>
     return el('div') unless @props.rank.is_ranked
 

@@ -16,9 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@polyfills ?= new Polyfills
+import { CountdownTimer } from 'app-components/countdown-timer'
+import { BeatmapsetPanel } from 'app-components/beatmapset-panel'
+
+window.polyfills ?= new Polyfills
 Lang.setLocale(currentLocale)
 Lang.setFallback(fallbackLocale)
+jQuery.timeago.settings.allowFuture = true
+
 
 # loading animation overlay
 # fired from turbolinks
@@ -29,55 +34,58 @@ $(document).on 'submit', 'form', (e) ->
   LoadingOverlay.show() if e.currentTarget.dataset.loadingOverlay != '0'
 
 $(document).on 'turbolinks:load', ->
+  BeatmapPack.initialize()
   StoreSupporterTag.initialize()
 
-@accountEdit ?= new AccountEdit
-@accountEditPlaystyle ?= new AccountEditPlaystyle
-@accountEditAvatar ?= new AccountEditAvatar
-@checkboxValidation ?= new CheckboxValidation
-@currentUserObserver ?= new CurrentUserObserver
-@editorZoom ?= new EditorZoom
-@fancyGraph ?= new FancyGraph
-@formClear ?= new FormClear
-@formError ?= new FormError
-@formPlaceholderHide ?= new FormPlaceholderHide
-@formToggle ?= new FormToggle
-@forum ?= new Forum
-@forumAutoClick ?= new ForumAutoClick
-@forumCover ?= new ForumCover
-@gallery ?= new Gallery
-@globalDrag ?= new GlobalDrag
-@landingGraph ?= new LandingGraph
-@landingHero ?= new LandingHero
-@menu ?= new Menu
-@nav ?= new Nav
-@navSearch ?= new NavSearch
-@osuAudio ?= new OsuAudio
-@osuLayzr ?= new OsuLayzr
-@parentFocus ?= new ParentFocus
-@postPreview ?= new PostPreview
-@reactTurbolinks ||= new ReactTurbolinks
-@replyPreview ?= new ReplyPreview
-@scale ?= new Scale
-@stickyFooter ?= new StickyFooter
-@stickyHeader ?= new StickyHeader
-@syncHeight ?= new SyncHeight
-@throttledWindowEvents ?= new ThrottledWindowEvents
-@timeago ?= new Timeago
-@tooltipDefault ?= new TooltipDefault
-@turbolinksDisable ?= new TurbolinksDisable
-@turbolinksDisqus ?= new TurbolinksDisqus
-@turbolinksReload ?= new TurbolinksReload
-@twitchPlayer ?= new TwitchPlayer
-@wiki ?= new Wiki
+window.accountEdit ?= new AccountEdit
+window.accountEditPlaystyle ?= new AccountEditPlaystyle
+window.accountEditAvatar ?= new AccountEditAvatar
+window.checkboxValidation ?= new CheckboxValidation
+window.currentUserObserver ?= new CurrentUserObserver
+window.editorZoom ?= new EditorZoom
+window.fancyGraph ?= new FancyGraph
+window.formClear ?= new FormClear
+window.formError ?= new FormError
+window.formPlaceholderHide ?= new FormPlaceholderHide
+window.formToggle ?= new FormToggle
+window.forum ?= new Forum
+window.forumAutoClick ?= new ForumAutoClick
+window.forumCover ?= new ForumCover
+window.gallery ?= new Gallery
+window.globalDrag ?= new GlobalDrag
+window.landingGraph ?= new LandingGraph
+window.landingHero ?= new LandingHero
+window.menu ?= new Menu
+window.nav ?= new Nav
+window.navSearch ?= new NavSearch
+window.osuAudio ?= new OsuAudio
+window.osuLayzr ?= new OsuLayzr
+window.parentFocus ?= new ParentFocus
+window.postPreview ?= new PostPreview
+window.reactTurbolinks ?= new ReactTurbolinks
+window.replyPreview ?= new ReplyPreview
+window.scale ?= new Scale
+window.search ?= new Search
+window.stickyFooter ?= new StickyFooter
+window.stickyHeader ?= new StickyHeader
+window.syncHeight ?= new SyncHeight
+window.throttledWindowEvents ?= new ThrottledWindowEvents
+window.timeago ?= new Timeago
+window.tooltipDefault ?= new TooltipDefault
+window.turbolinksDisable ?= new TurbolinksDisable
+window.turbolinksDisqus ?= new TurbolinksDisqus
+window.turbolinksReload ?= new TurbolinksReload
+window.twitchPlayer ?= new TwitchPlayer
+window.wiki ?= new Wiki
+window.userCard ?= new UserCard
 
-@formConfirmation ?= new FormConfirmation(@formError)
-@forumPostsSeek ?= new ForumPostsSeek(@forum)
-@forumSearchModal ?= new ForumSearchModal(@forum)
-@forumTopicPostJump ?= new ForumTopicPostJump(@forum)
-@forumTopicReply ?= new ForumTopicReply(@forum, @stickyFooter)
-@userLogin ?= new UserLogin(@nav)
-@userVerification ?= new UserVerification(@nav)
+window.formConfirmation ?= new FormConfirmation(window.formError)
+window.forumPostsSeek ?= new ForumPostsSeek(window.forum)
+window.forumSearchModal ?= new ForumSearchModal(window.forum)
+window.forumTopicPostJump ?= new ForumTopicPostJump(window.forum)
+window.forumTopicReply ?= new ForumTopicReply(window.forum, window.stickyFooter)
+window.userLogin ?= new UserLogin(window.nav)
+window.userVerification ?= new UserVerification(window.nav)
 
 
 $(document).on 'change', '.js-url-selector', (e) ->
@@ -91,14 +99,17 @@ $(document).on 'keydown', (e) ->
 reactTurbolinks.register 'countdownTimer', CountdownTimer, (e) ->
   deadline: e.dataset.deadline
 
+# Globally init friend buttons
+reactTurbolinks.register 'friendButton', FriendButton, (target) ->
+  container: target
+  user_id: parseInt(target.dataset.target)
+
 reactTurbolinks.register 'beatmapset-panel', BeatmapsetPanel, (el) ->
   JSON.parse(el.dataset.beatmapsetPanel)
 
 rootUrl = "#{document.location.protocol}//#{document.location.host}"
 rootUrl += ":#{document.location.port}" if document.location.port
 rootUrl += '/'
-
-jQuery.timeago.settings.allowFuture = true
 
 # Internal Helper
 $.expr[':'].internal = (obj, index, meta, stack) ->

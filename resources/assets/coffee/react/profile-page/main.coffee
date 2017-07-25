@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { ProfilePage } from './_index'
+
 {div, h2, li, ul} = ReactDOMFactories
 el = React.createElement
 
@@ -26,13 +28,14 @@ currentLocation = ->
   "#{document.location.pathname}#{document.location.search}"
 
 
-class ProfilePage.Main extends React.PureComponent
+export class Main extends React.PureComponent
   constructor: (props) ->
     super props
 
     savedStateString = document.body.dataset.profilePageState
     if savedStateString?
-      return JSON.parse(savedStateString)
+      @state = JSON.parse(savedStateString)
+      return
 
     optionsHash = ProfilePageHash.parse location.hash
     @initialPage = optionsHash.page
@@ -311,8 +314,9 @@ class ProfilePage.Main extends React.PureComponent
 
 
   userUpdate: (_e, user) =>
-    return if !user?
-    @setState user: user
+    return if user?.id != @state.user.id
+    # this component needs full user object but sometimes this event only sends part of it
+    @setState user: _.assign({}, @state.user, user)
 
 
   userPageUpdate: (_e, newUserPage) =>

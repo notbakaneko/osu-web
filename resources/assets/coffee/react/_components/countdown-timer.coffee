@@ -21,7 +21,7 @@ el = React.createElement
 
 bn = 'countdown-timer'
 
-class @CountdownTimer extends React.Component
+export class CountdownTimer extends React.Component
   constructor: (props) ->
     super props
 

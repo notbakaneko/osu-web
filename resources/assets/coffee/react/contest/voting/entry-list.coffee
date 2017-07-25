@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Contest } from '../_index'
+import { BaseEntryList } from './_base-entry-list'
+
 {div,a,i,span} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Voting.EntryList extends Contest.Voting.BaseEntryList
+export class EntryList extends BaseEntryList
   render: ->
     if @state.contest.best_of && @state.contest.entries.length == 0
       return div className: 'contest__voting-notice',

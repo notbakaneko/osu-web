@@ -16,10 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapsetPage } from './_index'
+import { BeatmapsetMapping } from 'app-components/beatmapset-mapping'
+import { BigButton } from 'app-components/big-button'
+import { Icon } from 'app-components/icon'
+import { PlaymodeTabs } from 'app-components/playmode-tabs'
+
 {div, span, a, ol, li} = ReactDOMFactories
 el = React.createElement
 
-class BeatmapsetPage.Header extends React.Component
+export class Header extends React.Component
   render: ->
     dateFormat = 'MMM D, YYYY'
     favouriteButton =

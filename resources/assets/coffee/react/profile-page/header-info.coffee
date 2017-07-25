@@ -16,10 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { FlagCountry } from 'app-components/flag-country'
+import { Icon } from 'app-components/icon'
+import { UserAvatar } from 'app-components/user-avatar'
+
 {div, h1, span} = ReactDOMFactories
 el = React.createElement
 
-ProfilePage.HeaderInfo = ({user}) ->
+export HeaderInfo = ({user}) ->
   div className: 'profile-info',
     el UserAvatar, user: user, modifiers: ['profile']
     div className: 'profile-info__details',

@@ -16,6 +16,8 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from 'app-components/icon'
+
 {span} = ReactDOMFactories
 el = React.createElement
 
@@ -25,7 +27,7 @@ elem = ({position, icon}) ->
     className: "icon-stack__icon icon-stack__icon--#{position}"
     el Icon, name: icon, modifiers: ['fw']
 
-@IconExpand = ({expand = true}) ->
+export IconExpand = ({expand = true}) ->
   span
     className: 'icon-stack'
     span className: 'icon-stack__base',

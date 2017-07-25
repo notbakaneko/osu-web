@@ -19,7 +19,7 @@
 {div} = ReactDOMFactories
 el = React.createElement
 
-class ProfilePage.UserPageEditor extends React.Component
+export class UserPageEditor extends React.Component
   componentDidMount: =>
     @refs.body.selectionStart = @props.userPage.selection[0]
     @refs.body.selectionEnd = @props.userPage.selection[1]

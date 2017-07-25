@@ -19,7 +19,7 @@
 {div,i} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Voting.VoteSummary extends React.Component
+export class VoteSummary extends React.Component
   render: ->
     classes = [
       'contest__voting-star',

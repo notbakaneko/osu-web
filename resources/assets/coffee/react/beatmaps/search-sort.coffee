@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Beatmaps } from './_index'
+import { Icon } from 'app-components/icon'
+
 {div, a, span} = ReactDOMFactories
 el = React.createElement
 
-class Beatmaps.SearchSort extends React.PureComponent
+export class SearchSort extends React.PureComponent
   render: =>
     div className: 'beatmapsets-sorting',
       for field in ['title', 'artist', 'difficulty', 'ranked', 'rating', 'plays']

@@ -16,11 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { FlagCountry } from 'app-components/flag-country'
+import { Mods } from 'app-components/mods'
+
 {div, a} = ReactDOMFactories
 el = React.createElement
 bn = 'beatmap-score-big'
 
-BeatmapsetPage.ScoreBig = (props) ->
+export ScoreBig = (props) ->
   hits = Hits.generate score: props.score, playmode: props.playmode
 
   div className: bn,

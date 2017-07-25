@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Mods } from 'app-components/mods'
+
 {div, a, span, h1, h2} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.GameHeader extends React.Component
+export class GameHeader extends React.Component
   timeFormat: 'HH:mm:ss'
 
   render: ->

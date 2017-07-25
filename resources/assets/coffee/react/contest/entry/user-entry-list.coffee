@@ -19,7 +19,7 @@
 {div} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Entry.UserEntryList extends React.Component
+export class UserEntryList extends React.Component
   constructor: (props) ->
     super props
 

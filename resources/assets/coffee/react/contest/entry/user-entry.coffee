@@ -19,7 +19,7 @@
 {div, a, i} = ReactDOMFactories
 el = React.createElement
 
-class Contest.Entry.UserEntry extends React.Component
+export class UserEntry extends React.Component
   delete: (e) =>
     e.preventDefault()
 

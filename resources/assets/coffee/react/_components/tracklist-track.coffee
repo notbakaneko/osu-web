@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { TrackPreview } from 'app-components/track-preview'
+
 {a, i, span, tr, td} = ReactDOMFactories
 el = React.createElement
 
-class @TracklistTrack extends React.Component
+export class TracklistTrack extends React.Component
   render: ->
     tr className: "tracklist__row#{if @props.track.selected then ' tracklist__row--selected' else ''}",
       td {},

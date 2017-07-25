@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from 'app-components/icon'
+
 {div, span, a} = ReactDOMFactories
 el = React.createElement
 
-class MPHistory.Event extends React.Component
+export class Event extends React.Component
   icons:
     'player-left': ['arrow-left', 'circle-o']
     'player-joined': ['arrow-right', 'circle-o']

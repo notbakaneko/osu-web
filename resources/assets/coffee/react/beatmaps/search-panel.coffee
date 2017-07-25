@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Beatmaps } from './_index'
+import { Icon } from 'app-components/icon'
+
 {div,a,i,input,h1,h2} = ReactDOMFactories
 el = React.createElement
 
-class Beatmaps.SearchPanel extends React.PureComponent
+export class SearchPanel extends React.PureComponent
   constructor: (props) ->
     super props
 

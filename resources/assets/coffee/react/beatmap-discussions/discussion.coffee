@@ -16,12 +16,15 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { BeatmapDiscussions } from './_index'
+import { Icon } from 'app-components/icon'
+
 {button, div, span} = ReactDOMFactories
 el = React.createElement
 
 bn = 'beatmap-discussion'
 
-class BeatmapDiscussions.Discussion extends React.PureComponent
+export class Discussion extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -151,6 +154,7 @@ class BeatmapDiscussions.Discussion extends React.PureComponent
 
     el BeatmapDiscussions[elementName],
       key: post.id
+      beatmapset: @props.beatmapset
       discussion: @props.discussion
       post: post
       type: type

@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Icon } from 'app-components/icon'
+
 {div, h2, span} = ReactDOMFactories
 el = React.createElement
 
-ProfilePage.ExtraHeader = (props) ->
+export ExtraHeader = (props) ->
   div
     key: 'header'
     h2 className: 'page-extra__title', osu.trans("users.show.extra.#{props.name}.title")

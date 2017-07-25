@@ -331,6 +331,11 @@ class User extends Model implements AuthenticatableContract, Messageable
         return $this->user_birthday->age ?? null;
     }
 
+    public function cover()
+    {
+        return $this->userProfileCustomization ? $this->userProfileCustomization->cover()->url() : null;
+    }
+
     public function getUserTwitterAttribute($value)
     {
         return presence(ltrim($value, '@'));
@@ -458,6 +463,11 @@ class User extends Model implements AuthenticatableContract, Messageable
         return $this->user_lastvisit > Carbon::now()->subMonth();
     }
 
+    public function isOnline()
+    {
+        return $this->user_lastvisit > Carbon::now()->subMinutes(config('osu.user.online_window'));
+    }
+
     public function isPrivileged()
     {
         return $this->isAdmin()
@@ -494,7 +504,11 @@ class User extends Model implements AuthenticatableContract, Messageable
     public function groupIds()
     {
         if ($this->groupIds === null) {
-            $this->groupIds = model_pluck($this->userGroups(), 'group_id');
+            if (isset($this->relations['userGroups'])) {
+                $this->groupIds = $this->userGroups->pluck('group_id');
+            } else {
+                $this->groupIds = model_pluck($this->userGroups(), 'group_id');
+            }
         }
 
         return $this->groupIds;
@@ -770,7 +784,9 @@ class User extends Model implements AuthenticatableContract, Messageable
 
     public function friends()
     {
-        return $this->relations()->where('friend', true);
+        // 'cuz hasManyThrough is derp
+
+        return self::whereIn('user_id', $this->relations()->friends()->pluck('zebra_id'));
     }
 
     public function foes()
@@ -897,7 +913,7 @@ class User extends Model implements AuthenticatableContract, Messageable
 
     public function defaultJson()
     {
-        return json_item($this, 'User', 'disqus_auth');
+        return json_item($this, 'User', ['disqus_auth', 'friends']);
     }
 
     public function supportLength()
@@ -960,12 +976,13 @@ class User extends Model implements AuthenticatableContract, Messageable
         ]);
     }
 
-    public function receiveMessage(User $sender, $body)
+    public function receiveMessage(User $sender, $body, $isAction = false)
     {
         $message = new PrivateMessage();
         $message->user_id = $sender->user_id;
         $message->target_id = $this->user_id;
         $message->content = $body;
+        $message->is_action = $isAction;
         $message->save();
 
         return $message->fresh();
@@ -977,6 +994,11 @@ class User extends Model implements AuthenticatableContract, Messageable
             'user_warnings' => 0,
             'user_type' => 0,
         ]);
+    }
+
+    public function scopeOnline($query)
+    {
+        return $query->where('user_lastvisit', '>', Carbon::now()->subMinutes(config('osu.user.online_window')));
     }
 
     public function updatePassword($password)
