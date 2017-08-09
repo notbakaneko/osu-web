@@ -114,6 +114,7 @@ class User extends Model implements AuthenticatableContract, Messageable
             $this->updateUsername($this->username_previous);
             $this->save();
         });
+        \Log::debug("username reverted: {$this->username}");
     }
 
     public function changeUsername($newUsername)
@@ -131,6 +132,7 @@ class User extends Model implements AuthenticatableContract, Messageable
             $this->updateUsername($newUsername, $this->username);
             $this->save();
         });
+        \Log::debug("username changed: {$this->username}");
     }
 
     private function updateUsername($newUsername, $oldUsername = null)
