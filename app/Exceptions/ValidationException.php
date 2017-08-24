@@ -18,10 +18,27 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace App\Libraries\Fulfillments;
+namespace App\Exceptions;
 
-use App\Exceptions\ValidationException;
+use App\Libraries\ValidationErrors;
+use Exception;
 
-class FulfillmentException extends ValidationException
+class ValidationException extends Exception
 {
+    private $errors;
+
+    public function __construct(ValidationErrors $errors = null, Exception $previous = null)
+    {
+        if ($errors !== null) {
+            $message = implode($errors->allMessages(), "\n");
+        }
+
+        parent::__construct($message, 0, $previous);
+        $this->errors = $errors;
+    }
+
+    public function getValidationErrors()
+    {
+        return $this->errors;
+    }
 }
