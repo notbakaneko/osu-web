@@ -29,8 +29,9 @@ class ValidationException extends Exception
 
     public function __construct(ValidationErrors $errors = null, Exception $previous = null)
     {
+        $message = null;
         if ($errors !== null) {
-            $message = implode($errors->allMessages(), "\n");
+            $message = implode("\n", $errors->allMessages());
         }
 
         parent::__construct($message, 0, $previous);
