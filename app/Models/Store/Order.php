@@ -20,6 +20,7 @@
 
 namespace App\Models\Store;
 
+use App\Models\Country;
 use App\Models\SupporterTag;
 use App\Models\User;
 use DB;
@@ -313,6 +314,17 @@ class Order extends Model
                 $user = User::default()->where('user_id', $targetId)->firstOrFail();
                 $params['extraData']['username'] = $user->username;
                 $params['extraData']['duration'] = SupporterTag::getDuration($params['cost']);
+                break;
+
+            case 'cwc-supporter':
+            case 'mwc4-supporter':
+            case 'mwc7-supporter':
+            case 'owc-supporter':
+            case 'twc-supporter':
+                // much dodgy. wow.
+                $matches = [];
+                preg_match('/.+\((?<country>.+)\)$/', $product->name, $matches);
+                $params['extraData']['cc'] = Country::where('name', $matches['country'])->first()->acronym;
                 break;
         }
 
