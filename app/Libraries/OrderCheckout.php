@@ -176,16 +176,39 @@ class OrderCheckout
                 $itemErrors[$item->id] = $item->validationErrors()->allMessages();
             }
 
-            if ($item->product->custom_class === 'username-change') {
-                $changeUsername = new ChangeUsername($this->order->user, $item->extra_info, 'paid');
-                $messages = $changeUsername->validate()->allMessages();
-                if (!empty($messages)) {
-                    // merge with existing errors, if any.
-                    $itemErrors[$item->id] = array_merge(
-                        $itemErrors[$item->id] ?? [],
-                        $messages
-                    );
-                }
+            switch ($item->product->custom_class) {
+                case 'username-change':
+                    $changeUsername = new ChangeUsername($this->order->user, $item->extra_info, 'paid');
+                    $messages = $changeUsername->validate()->allMessages();
+                    if (!empty($messages)) {
+                        // merge with existing errors, if any.
+                        $itemErrors[$item->id] = array_merge(
+                            $itemErrors[$item->id] ?? [],
+                            $messages
+                        );
+                    }
+
+                    break;
+                case 'cwc-supporter':
+                case 'mwc4-supporter':
+                case 'mwc7-supporter':
+                case 'owc-supporter':
+                case 'twc-supporter':
+                    if (empty($item->extra_data['cc'] ?? null)) {
+                        $itemErrors[$item->id] = array_merge(
+                            $itemErrors[$item->id] ?? [],
+                            [trans('model_validation/order_checkout.banner_supporter.missing_country')]
+                        );
+                    }
+
+                    if (empty($item->extra_data['tournament_id'] ?? null)) {
+                        $itemErrors[$item->id] = array_merge(
+                            $itemErrors[$item->id] ?? [],
+                            [trans('model_validation/order_checkout.banner_supporter.missing_tournament')]
+                        );
+                    }
+
+                    break;
             }
         }
 
