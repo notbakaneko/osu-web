@@ -21,6 +21,7 @@
 namespace App\Models;
 
 use App\Exceptions\ModelNotSavedException;
+use App\Models\Callbacks\AfterCommit;
 use App\Traits\MacroableModel;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
@@ -57,6 +58,28 @@ abstract class Model extends BaseModel
         $values = array_map('strval', $ids);
 
         $query->orderByRaw($string, $values);
+    }
+
+    public function delete(array $options = [])
+    {
+        $result = parent::delete($options);
+
+        if ($this instanceof AfterCommit) {
+            $this->afterCommit();
+        }
+
+        return $result;
+    }
+
+    public function save(array $options = [])
+    {
+        $result = parent::save($options);
+
+        if ($this instanceof AfterCommit) {
+            $this->afterCommit();
+        }
+
+        return $result;
     }
 
     public function saveOrExplode($options = [])
