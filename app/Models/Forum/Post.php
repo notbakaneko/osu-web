@@ -21,6 +21,7 @@
 namespace App\Models\Forum;
 
 use App\Libraries\BBCodeForDB;
+use App\Models\Callbacks\AfterCommit;
 use App\Models\DeletedUser;
 use App\Models\Elasticsearch;
 use App\Models\User;
@@ -29,7 +30,7 @@ use DB;
 use Es;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Post extends Model implements AfterCommit
 {
     use Elasticsearch\PostTrait, SoftDeletes;
 
@@ -304,6 +305,15 @@ class Post extends Model
     {
         if ($showDeleted) {
             $query->withTrashed();
+        }
+    }
+
+    public function afterCommit()
+    {
+        if ($this->trashed()) {
+            $this->esDeleteDocument();
+        } else {
+            $this->esIndexDocument();
         }
     }
 }

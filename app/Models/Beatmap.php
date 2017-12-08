@@ -20,10 +20,11 @@
 
 namespace App\Models;
 
+use App\Models\Callbacks\AfterCommit;
 use App\Exceptions\ScoreRetrievalException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Beatmap extends Model
+class Beatmap extends Model implements AfterCommit
 {
     use SoftDeletes;
 
@@ -129,5 +130,10 @@ class Beatmap extends Model
     public function status()
     {
         return array_search($this->approved, Beatmapset::STATES, true);
+    }
+
+    public function afterCommit()
+    {
+        return $this->beatmapset->afterCommit();
     }
 }

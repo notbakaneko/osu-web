@@ -24,6 +24,7 @@ use App\Exceptions\BeatmapProcessorException;
 use App\Libraries\BBCodeFromDB;
 use App\Libraries\ImageProcessorService;
 use App\Libraries\StorageWithUrl;
+use App\Models\Callbacks\AfterCommit;
 use App\Transformers\BeatmapsetTransformer;
 use Cache;
 use Carbon\Carbon;
@@ -34,7 +35,7 @@ use Es;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
 
-class Beatmapset extends Model
+class Beatmapset extends Model implements AfterCommit
 {
     use Elasticsearch\BeatmapsetTrait, SoftDeletes;
 
@@ -1252,5 +1253,14 @@ class Beatmapset extends Model
         }
 
         return Forum\Post::find($topic->topic_first_post_id);
+    }
+
+    public function afterCommit()
+    {
+        if ($this->trashed()) {
+            $this->esDeleteDocument();
+        } else {
+            $this->esIndexDocument();
+        }
     }
 }
