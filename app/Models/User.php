@@ -126,7 +126,7 @@ class User extends Model implements AuthenticatableContract, Messageable
     public function usernameChangeCost()
     {
         $changesToDate = $this->usernameChangeHistory()
-            ->whereIn('type', ['support', 'paid'])
+            ->paidChanges()
             ->count();
 
         switch ($changesToDate) {
