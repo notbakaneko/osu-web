@@ -58,20 +58,18 @@ export class TooltipDefault
 
 
   autoAddTooltip: (e) =>
-    # Automagically add qtips when text becomes truncated (and auto-removes
+    # Automagically add tooltips when text becomes truncated (and auto-removes
     # them when text becomes... un-truncated)
     target = e.currentTarget
-    $target = $(target)
-    api = $target.qtip('api')
 
     if (target.offsetWidth < target.scrollWidth)
-      if (api)
-        api.enable()
+      if target._tippy
+        target._tippy?.enable()
       else
-        $target.attr 'title', $target.text()
-        $target.trigger('mouseover') # immediately trigger qtip magic
+        target.title = target.textContent
+        tippy(target)
     else
-      api?.disable()
+      target._tippy?.disable()
 
 
   rollback: =>
