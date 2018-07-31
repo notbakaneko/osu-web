@@ -21,6 +21,7 @@
 import { StoreCheckout } from 'store-checkout'
 import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
+import { TooltipBeatmap } from 'tooltip-beatmap'
 import { TooltipDefault } from 'tooltip-default'
 import VirtualList from 'react-virtual-list'
 
@@ -30,4 +31,5 @@ window.Promise ?= Promise
 window.StoreCheckout = StoreCheckout
 window.TextareaAutosize = TextareaAutosize
 window.VirtualList = VirtualList
+window.tooltipBeatmap ?= new TooltipBeatmap
 window.tooltipDefault ?= new TooltipDefault

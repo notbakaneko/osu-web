@@ -75,7 +75,6 @@ $(document).on 'turbolinks:load', ->
 @syncHeight ?= new SyncHeight
 @throttledWindowEvents ?= new ThrottledWindowEvents
 @timeago ?= new Timeago
-@tooltipBeatmap ?= new TooltipBeatmap
 @turbolinksReload ?= new TurbolinksReload
 @userCard ?= new UserCard
 @userLogin ?= new UserLogin
