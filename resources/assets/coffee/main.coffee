@@ -76,7 +76,6 @@ $(document).on 'turbolinks:load', ->
 @throttledWindowEvents ?= new ThrottledWindowEvents
 @timeago ?= new Timeago
 @turbolinksReload ?= new TurbolinksReload
-@userCard ?= new UserCard
 @userLogin ?= new UserLogin
 @userVerification ?= new UserVerification
 @wiki ?= new Wiki

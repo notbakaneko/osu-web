@@ -23,6 +23,7 @@ import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
 import { TooltipBeatmap } from 'tooltip-beatmap'
 import { TooltipDefault } from 'tooltip-default'
+import { UserCard } from 'user-card'
 import VirtualList from 'react-virtual-list'
 
 # polyfill non-Edge IE
@@ -33,3 +34,4 @@ window.TextareaAutosize = TextareaAutosize
 window.VirtualList = VirtualList
 window.tooltipBeatmap ?= new TooltipBeatmap
 window.tooltipDefault ?= new TooltipDefault
+window.userCard ?= new UserCard
