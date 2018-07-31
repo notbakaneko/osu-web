@@ -98,6 +98,3 @@ export class TooltipDefault
         time.format('Z')
 
     "UTC#{offsetString}"
-
-
-window.tooltipDefault ?= new TooltipDefault()

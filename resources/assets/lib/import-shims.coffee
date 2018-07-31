@@ -21,6 +21,7 @@
 import { StoreCheckout } from 'store-checkout'
 import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
+import { TooltipDefault } from 'tooltip-default'
 import VirtualList from 'react-virtual-list'
 
 # polyfill non-Edge IE
@@ -29,3 +30,4 @@ window.Promise ?= Promise
 window.StoreCheckout = StoreCheckout
 window.TextareaAutosize = TextareaAutosize
 window.VirtualList = VirtualList
+window.tooltipDefault ?= new TooltipDefault
