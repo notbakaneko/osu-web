@@ -22,7 +22,6 @@ export class TooltipDefault
   constructor: ->
     $(document).on 'mouseover', '[title]:not(iframe)', @onMouseOver
     $(document).on 'mouseenter touchstart', '.u-ellipsis-overflow, .u-ellipsis-overflow-desktop', @autoAddTooltip
-    $(document).on 'turbolinks:before-cache', @rollback
 
 
   onMouseOver: (event) =>
@@ -70,13 +69,6 @@ export class TooltipDefault
         tippy(target)
     else
       target._tippy?.disable()
-
-
-  rollback: =>
-    $('.qtip').remove()
-
-    for el in document.querySelectorAll('[data-orig-title]')
-      el.setAttribute 'title', el.dataset.origTitle
 
 
   timeagoTip: (el, title) =>
