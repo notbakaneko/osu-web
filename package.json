@@ -29,7 +29,6 @@
     "photoswipe": "^4.1.1",
     "promise-polyfill": "^6.0.2",
     "prop-types": "^15.6.0",
-    "qtip2": "notbakaneko/qTip2#e3278ba",
     "react": "^16.4.1",
     "react-autosize-textarea": "*",
     "react-dom": "^16.4.1",
@@ -38,6 +37,7 @@
     "require-dir": "^0.3.2",
     "retina.js": "^1.1.0",
     "timeago": "^1.5.0",
+    "tippy.js": "^2.5.4",
     "turbolinks": "^5.1.1",
     "url-polyfill": "^1.0.10",
     "webpack-sentry-plugin": "^1.9.2"

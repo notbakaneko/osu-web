@@ -45,7 +45,6 @@ const vendor = [
   path.join(node_root, 'turbolinks/dist/turbolinks.js'),
   path.join(node_root, `jquery/dist/jquery${min}.js`),
   path.join(node_root, 'jquery-ujs/src/rails.js'),
-  path.join(node_root, `qtip2/dist/jquery.qtip${min}.js`),
   path.join(node_root, 'jquery.scrollto/jquery.scrollTo.js'),
   path.join(node_root, 'jquery-ui/ui/data.js'),
   path.join(node_root, 'jquery-ui/ui/scroll-parent.js'),
