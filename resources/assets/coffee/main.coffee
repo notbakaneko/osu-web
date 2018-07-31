@@ -76,7 +76,6 @@ $(document).on 'turbolinks:load', ->
 @throttledWindowEvents ?= new ThrottledWindowEvents
 @timeago ?= new Timeago
 @tooltipBeatmap ?= new TooltipBeatmap
-@tooltipDefault ?= new TooltipDefault
 @turbolinksReload ?= new TurbolinksReload
 @userCard ?= new UserCard
 @userLogin ?= new UserLogin

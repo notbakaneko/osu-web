@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright 2015-2018 ppy Pty. Ltd.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,7 +16,9 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-class @TooltipDefault
+import tippy from 'tippy.js'
+
+export class TooltipDefault
   constructor: ->
     $(document).on 'mouseover', '[title]:not(iframe)', @onMouseOver
     $(document).on 'mouseenter touchstart', '.u-ellipsis-overflow, .u-ellipsis-overflow-desktop', @autoAddTooltip
@@ -26,64 +28,33 @@ class @TooltipDefault
   onMouseOver: (event) =>
     el = event.currentTarget
 
-    title = el.getAttribute 'title'
-    el.removeAttribute 'title'
+    title = el.title
 
     return if _.size(title) == 0
 
     isTime = el.classList.contains('timeago') || el.classList.contains('js-tooltip-time')
 
-    $content =
+    content = (
       if isTime
         @timeagoTip el, title
       else
         $('<span>').text(title)
+    ).get(0)
 
-    if el._tooltip
-      $(el).qtip 'set', 'content.text': $content
+    if el._tippy
+      el._tippy.popper.querySelector('.tippy-content').innerHTML = content
       return
 
-    el._tooltip = true
-
-    at = el.dataset.tooltipPosition ? 'top center'
-
-    my = switch at
-      when 'top center' then 'bottom center'
-      when 'left center' then 'right center'
-      when 'right center' then 'left center'
-      when 'bottom center' then 'top center'
-
-    classes = 'qtip tooltip-default'
-    if el.dataset.tooltipFloat == 'fixed'
-      classes += ' tooltip-default--fixed'
-    if el.dataset.tooltipModifiers?
-      classes += " tooltip-default--#{el.dataset.tooltipModifiers}"
+    at = el.dataset.tooltipPosition ? 'top-center'
 
     options =
-      overwrite: false
-      content: $content
-      position:
-        my: my
-        at: at
-        viewport: $(window)
-      show:
-        event: event.type
-        ready: true
-      hide:
-        inactive: 3000
-      style:
-        classes: classes
-        tip:
-          width: 10
-          height: 8
-
-    # if enabled, prevents tooltip from changing position
-    if el.dataset.tooltipPinPosition
-      options.position.effect = false
+      html: content
+      arrow: true
+      placement: at
 
     el.dataset.origTitle = title
 
-    $(el).qtip options, event
+    tippy el, options
 
 
   autoAddTooltip: (e) =>
@@ -137,3 +108,6 @@ class @TooltipDefault
         time.format('Z')
 
     "UTC#{offsetString}"
+
+
+window.tooltipDefault ?= new TooltipDefault()

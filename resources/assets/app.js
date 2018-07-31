@@ -20,6 +20,8 @@ import 'bootstrap-modal.coffee';
 import 'logout.coffee';
 import 'shared.coffee';
 import 'turbolinks-overrides.coffee';
+import 'tooltip-default.coffee'
 
 import 'import-shims';  // shim imports to window
 import 'main.coffee';
+

@@ -21,7 +21,6 @@
 import { StoreCheckout } from 'store-checkout'
 import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
-import tippy from 'tippy.js'
 import VirtualList from 'react-virtual-list'
 
 # polyfill non-Edge IE
@@ -29,5 +28,4 @@ window.Promise ?= Promise
 
 window.StoreCheckout = StoreCheckout
 window.TextareaAutosize = TextareaAutosize
-window.tippy = tippy
 window.VirtualList = VirtualList
