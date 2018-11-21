@@ -98,10 +98,12 @@ class AnnotateModels extends Command
             return;
         }
 
-        static::annotateClass(new $class);
+        $properties = static::getClassAnnotations(new $class);
+
+        static::addAnnotationsToFile($file, $properties);
     }
 
-    public static function annotateClass(Model $instance)
+    public static function getClassAnnotations(Model $instance)
     {
         $columns = static::describeTable($instance);
 
@@ -110,7 +112,28 @@ class AnnotateModels extends Command
             $properties[] = static::parseColumn($column);
         }
 
-        echo(print_r($properties, true));
+        // echo(print_r($properties, true));
+
+        return $properties;
+    }
+
+    public static function addAnnotationsToFile(SplFileInfo $file, array $properties)
+    {
+        // $text = "\n\n{$file->getFilename()}\n";
+        $text = "/**\n";
+        foreach ($properties as $property) {
+            $text .= " * @property {$property}\n";
+        }
+        $text .= " */\n";
+
+        // echo($text);
+        $content = $file->getContents();
+        if (preg_match("/^class ([a-zA-Z]+) extends/m", $content, $matches)) {
+            $newContent = str_replace_first($matches[0], $text.$matches[0], $content);
+            File::put($file->getRealPath(), $newContent);
+        } else {
+            echo("No matches found in {$file->getFilename()}!\n");
+        }
     }
 
     // Field, Type, Null, Key, Default, Extra
@@ -118,7 +141,7 @@ class AnnotateModels extends Command
     {
         $type = static::parseType($column);
 
-        return "@property \${$column->Field} {$type}";
+        return "\${$column->Field} {$type}";
     }
 
     /**
