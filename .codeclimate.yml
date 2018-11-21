@@ -1,0 +1,7 @@
+plugins:
+  coffeelint:
+    enabled: true
+
+  tslint:
+    enabled: true
+    config: tslint.json
