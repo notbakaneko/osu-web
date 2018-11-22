@@ -20,23 +20,12 @@
 
 namespace App\Console\Commands;
 
-use DB;
+use App\Libraries\AnnotateModel;
 use Illuminate\Console\Command;
-use Log;
-use ReflectionClass;
-use App\Libraries\HasDynamicTable;
-use App\Models\Model;
-use Symfony\Component\Finder\SplFileInfo;
 use File;
-
 
 class AnnotateModels extends Command
 {
-    const STRING_TYPES = ['char', 'varchar', 'text'];
-    const INT_TYPES = ['int', 'smallint', 'mediumint', 'bigint', 'tinyint'];
-    const FLOAT_TYPES = ['decimal', 'float', 'double'];
-    const DATE_TYPES = ['date', 'timestamp'];
-
     /**
      * The name and signature of the console command.
      *
@@ -51,28 +40,6 @@ class AnnotateModels extends Command
      */
     protected $description = 'Annotates models';
 
-    public static function describeTable(Model $instance)
-    {
-        $table = $instance->getTable();
-        return $instance->getConnection()->select("DESCRIBE `{$table}`");
-    }
-
-    public static function getTables(string $connectionName = null)
-    {
-        return DB::connection($connectionName)->select('SHOW TABLES');
-    }
-
-    public static function classFromFileInfo(SplFileInfo $fileInfo)
-    {
-        $baseName = $fileInfo->getBasename(".{$fileInfo->getExtension()}");
-        $namespace = str_replace('/', '\\', $fileInfo->getRelativePath());
-        if (mb_strlen($fileInfo->getRelativePath()) !== 0) {
-            $namespace .= '\\';
-        }
-
-        return "\\App\\Models\\{$namespace}{$baseName}";
-    }
-
     /**
      * Execute the console command.
      *
@@ -82,104 +49,8 @@ class AnnotateModels extends Command
     {
         $files = File::allFiles(app_path().'/Models');
         foreach ($files as $file) {
-            $this->annotateFile($file);
+            // $this->annotateFile($file);
+            (new AnnotateModel($file))->annotate();
         }
-    }
-
-    public function annotateFile(SplFileInfo $file)
-    {
-        $class = static::classFromFileInfo($file);
-        $reflectionClass = new ReflectionClass($class);
-        if (
-            $reflectionClass->isAbstract() ||
-            !$reflectionClass->isSubclassOf(Model::class) ||
-            $reflectionClass->implementsInterface(HasDynamicTable::class)
-        ) {
-            return;
-        }
-
-        $properties = static::getClassAnnotations(new $class);
-
-        static::addAnnotationsToFile($file, $properties);
-    }
-
-    public static function getClassAnnotations(Model $instance)
-    {
-        $columns = static::describeTable($instance);
-
-        $properties = [];
-        foreach ($columns as $column) {
-            $properties[] = static::parseColumn($column);
-        }
-
-        // echo(print_r($properties, true));
-
-        return $properties;
-    }
-
-    public static function addAnnotationsToFile(SplFileInfo $file, array $properties)
-    {
-        // $text = "\n\n{$file->getFilename()}\n";
-        $text = "/**\n";
-        foreach ($properties as $property) {
-            $text .= " * @property {$property}\n";
-        }
-        $text .= " */\n";
-
-        // echo($text);
-        $content = $file->getContents();
-        if (preg_match("/^class ([a-zA-Z]+) extends/m", $content, $matches)) {
-            $newContent = str_replace_first($matches[0], $text.$matches[0], $content);
-            File::put($file->getRealPath(), $newContent);
-        } else {
-            echo("No matches found in {$file->getFilename()}!\n");
-        }
-    }
-
-    // Field, Type, Null, Key, Default, Extra
-    public static function parseColumn($column)
-    {
-        $type = static::parseType($column);
-
-        return "\${$column->Field} {$type}";
-    }
-
-    /**
-     * Budget hacky type parser
-     *
-     * @param string $type
-     * @return string
-     */
-    public static function parseType($column) : string
-    {
-        $type = static::castType($column->Type);
-
-        if ($column->Null !== "NO") {
-            $type = $type.'|null';
-        }
-
-        return $type;
-    }
-
-    // TODO: needs to also check against casting rules in model.
-    public static function castType(string $type) : string
-    {
-        if (starts_with($type, static::STRING_TYPES)) {
-            return 'string';
-        }
-
-        if (starts_with($type, static::INT_TYPES)) {
-            return 'int';
-        }
-
-        if (starts_with($type, static::FLOAT_TYPES)) {
-            return 'float';
-        }
-
-        if (starts_with($type, static::DATE_TYPES)) {
-            return 'Carbon\Carbon';
-        }
-
-        return 'mixed';
     }
 }
