@@ -25,6 +25,23 @@ use Cache;
 use Carbon\Carbon;
 use DB;
 
+/**
+ *
+ * @property int $id
+ * @property int $beatmapset_id
+ * @property int|null $beatmap_id
+ * @property int|null $user_id
+ * @property int|null $message_type
+ * @property int|null $timestamp
+ * @property boolean $resolved
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property int|null $resolver_id
+ * @property Carbon\Carbon|null $deleted_at
+ * @property int|null $deleted_by_id
+ * @property boolean $kudosu_denied
+ * @property int|null $kudosu_denied_by_id
+ */
 class BeatmapDiscussion extends Model
 {
     use Validatable;

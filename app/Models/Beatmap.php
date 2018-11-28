@@ -23,6 +23,34 @@ namespace App\Models;
 use App\Exceptions\ScoreRetrievalException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $beatmap_id
+ * @property int|null $beatmapset_id
+ * @property int $user_id
+ * @property string|null $filename
+ * @property string|null $checksum
+ * @property string $version
+ * @property int $total_length
+ * @property int $hit_length
+ * @property int $countTotal
+ * @property int $countNormal
+ * @property int $countSlider
+ * @property int $countSpinner
+ * @property float $diff_drain
+ * @property float $diff_size
+ * @property float $diff_overall
+ * @property float $diff_approach
+ * @property int $playmode
+ * @property int $approved
+ * @property Carbon\Carbon $last_update
+ * @property float $difficultyrating
+ * @property int $playcount
+ * @property int $passcount
+ * @property boolean $orphaned
+ * @property string|null $youtube_preview
+ * @property Carbon\Carbon|null $deleted_at
+ */
 class Beatmap extends Model
 {
     use SoftDeletes;

@@ -20,6 +20,16 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property int $contest_id
+ * @property int $user_id
+ * @property int $contest_entry_id
+ * @property float $weight
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class ContestVote extends Model
 {
     public function entry()

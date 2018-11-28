@@ -20,6 +20,16 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property int|null $stream_id
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property boolean $build_on_tag
+ * @property string|null $default_category
+ */
 class Repository extends Model
 {
     protected $casts = [

@@ -20,6 +20,13 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $user_id
+ * @property string $image
+ * @property string $description
+ * @property Carbon\Carbon|null $awarded
+ */
 class UserBadge extends Model
 {
     protected $table = 'osu_badges';

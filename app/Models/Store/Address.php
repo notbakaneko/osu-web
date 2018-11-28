@@ -24,6 +24,22 @@ use App\Models\Country;
 use App\Models\User;
 use Auth;
 
+/**
+ *
+ * @property int $address_id
+ * @property int|null $user_id
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property string|null $street
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $zip
+ * @property string|null $country_code
+ * @property string|null $phone
+ * @property Carbon\Carbon $created_at
+ * @property Carbon\Carbon|null $deleted_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class Address extends Model
 {
     protected $primaryKey = 'address_id';

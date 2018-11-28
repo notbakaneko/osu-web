@@ -20,6 +20,13 @@
 
 namespace App\Models\Forum;
 
+/**
+ *
+ * @property int $user_id
+ * @property int $topic_id
+ * @property int $forum_id
+ * @property int $mark_time
+ */
 class TopicTrack extends Model
 {
     protected $table = 'phpbb_topics_track';

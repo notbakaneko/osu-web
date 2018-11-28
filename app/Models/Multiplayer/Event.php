@@ -22,6 +22,15 @@ namespace App\Models\Multiplayer;
 
 use App\Models\User;
 
+/**
+ *
+ * @property int $event_id
+ * @property int $match_id
+ * @property int|null $game_id
+ * @property int|null $user_id
+ * @property string|null $text
+ * @property Carbon\Carbon|null $timestamp
+ */
 class Event extends Model
 {
     protected $primaryKey = 'event_id';

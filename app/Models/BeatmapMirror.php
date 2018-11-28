@@ -22,6 +22,21 @@ namespace App\Models;
 
 use Auth;
 
+/**
+ *
+ * @property int $mirror_id
+ * @property string $base_url
+ * @property int $traffic_used
+ * @property int $traffic_limit
+ * @property string $secret_key
+ * @property int $provider_user_id
+ * @property int $enabled
+ * @property float|null $version
+ * @property string $pending_purge
+ * @property int $perform_updates
+ * @property string|null $regions
+ * @property int|null $disk_space_free
+ */
 class BeatmapMirror extends Model
 {
     protected $table = 'osu_mirrors';

@@ -26,6 +26,18 @@ use App\Libraries\OsuWiki;
 use Carbon\Carbon;
 use Exception;
 
+/**
+ *
+ * @property int $id
+ * @property string|null $version
+ * @property string $slug
+ * @property string|null $hash
+ * @property string|null $tumblr_id
+ * @property array|null $page
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property Carbon\Carbon|null $published_at
+ */
 class NewsPost extends Model
 {
     // in minutes

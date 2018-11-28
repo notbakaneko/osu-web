@@ -22,6 +22,13 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $stream_id
+ * @property string $name
+ * @property string|null $pretty_name
+ * @property string|null $repository
+ */
 class UpdateStream extends Model
 {
     public $timestamps = false;

@@ -23,6 +23,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use DB;
 
+/**
+ *
+ * @property int $id
+ * @property int $build_id
+ * @property int $user_count
+ * @property Carbon\Carbon $created_at
+ */
 class BuildPropagationHistory extends Model
 {
     public $timestamps = false;

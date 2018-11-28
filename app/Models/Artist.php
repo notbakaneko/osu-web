@@ -20,6 +20,27 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property int|null $label_id
+ * @property int $visible
+ * @property string|null $twitter
+ * @property string|null $facebook
+ * @property string|null $soundcloud
+ * @property string|null $bandcamp
+ * @property string|null $patreon
+ * @property string|null $spotify
+ * @property string|null $youtube
+ * @property string|null $website
+ * @property int|null $user_id
+ * @property string|null $cover_url
+ * @property string|null $header_url
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class Artist extends Model
 {
     public function label()

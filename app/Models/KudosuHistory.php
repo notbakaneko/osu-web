@@ -22,6 +22,19 @@ namespace App\Models;
 
 use DB;
 
+/**
+ *
+ * @property int $exchange_id
+ * @property int|null $giver_id
+ * @property int $receiver_id
+ * @property int|null $post_id
+ * @property mixed $action
+ * @property int $amount
+ * @property Carbon\Carbon $date
+ * @property string|null $kudosuable_type
+ * @property int|null $kudosuable_id
+ * @property array|null $details
+ */
 class KudosuHistory extends Model
 {
     protected $table = 'osu_kudos_exchange';

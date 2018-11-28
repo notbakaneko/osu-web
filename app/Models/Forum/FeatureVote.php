@@ -24,6 +24,14 @@ use App\Models\User;
 use App\Traits\Validatable;
 use DB;
 
+/**
+ *
+ * @property int $star_id
+ * @property int $topic_id
+ * @property int $user_id
+ * @property mixed $type
+ * @property Carbon\Carbon $date
+ */
 class FeatureVote extends Model
 {
     use Validatable;

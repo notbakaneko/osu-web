@@ -35,6 +35,46 @@ use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
 
+/**
+ *
+ * @property int $topic_id
+ * @property int $forum_id
+ * @property int $icon_id
+ * @property int $topic_attachment
+ * @property boolean $topic_approved
+ * @property int $topic_reported
+ * @property string $topic_title
+ * @property int $topic_poster
+ * @property int $topic_time
+ * @property int $topic_time_limit
+ * @property int $topic_views
+ * @property int $topic_replies
+ * @property int $topic_replies_real
+ * @property int $topic_status
+ * @property int $topic_type
+ * @property int $topic_first_post_id
+ * @property string $topic_first_poster_name
+ * @property string $topic_first_poster_colour
+ * @property int $topic_last_post_id
+ * @property int $topic_last_poster_id
+ * @property string $topic_last_poster_name
+ * @property string $topic_last_poster_colour
+ * @property string $topic_last_post_subject
+ * @property int $topic_last_post_time
+ * @property int $topic_last_view_time
+ * @property int $topic_moved_id
+ * @property int $topic_bumped
+ * @property int $topic_bumper
+ * @property string $poll_title
+ * @property int $poll_start
+ * @property int $poll_length
+ * @property int $poll_max_options
+ * @property int $poll_last_vote
+ * @property boolean $poll_vote_change
+ * @property int $osu_starpriority
+ * @property mixed $osu_lastreplytype
+ * @property Carbon\Carbon|null $deleted_at
+ */
 class Topic extends Model implements AfterCommit
 {
     use Elasticsearch\TopicTrait, SoftDeletes, Validatable;

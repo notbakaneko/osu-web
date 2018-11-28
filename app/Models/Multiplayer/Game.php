@@ -23,6 +23,19 @@ namespace App\Models\Multiplayer;
 use App\Libraries\ModsHelper;
 use App\Models\Beatmap;
 
+/**
+ *
+ * @property int $game_id
+ * @property int|null $match_id
+ * @property Carbon\Carbon|null $start_time
+ * @property Carbon\Carbon|null $end_time
+ * @property int|null $beatmap_id
+ * @property int|null $play_mode
+ * @property int|null $match_type
+ * @property int|null $scoring_type
+ * @property int|null $team_type
+ * @property int|null $mods
+ */
 class Game extends Model
 {
     protected $primaryKey = 'game_id';

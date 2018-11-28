@@ -20,6 +20,25 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $artist_id
+ * @property int|null $album_id
+ * @property int|null $display_order
+ * @property string $title
+ * @property string|null $title_romanized
+ * @property string|null $version
+ * @property string $genre
+ * @property float $bpm
+ * @property int $length
+ * @property int $exclusive
+ * @property string|null $cover_url
+ * @property string $preview
+ * @property string $osz
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class ArtistTrack extends Model
 {
     public function artist()

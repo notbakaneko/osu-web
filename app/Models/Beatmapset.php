@@ -34,6 +34,55 @@ use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
 
+/**
+ *
+ * @property int $beatmapset_id
+ * @property int $user_id
+ * @property int $thread_id
+ * @property string $artist
+ * @property string|null $artist_unicode
+ * @property string $title
+ * @property string|null $title_unicode
+ * @property string $creator
+ * @property string $source
+ * @property string $tags
+ * @property boolean $video
+ * @property boolean $storyboard
+ * @property boolean $epilepsy
+ * @property float $bpm
+ * @property int $versions_available
+ * @property int $approved
+ * @property int|null $approvedby_id
+ * @property Carbon\Carbon|null $approved_date
+ * @property Carbon\Carbon|null $submit_date
+ * @property Carbon\Carbon $last_update
+ * @property string|null $filename
+ * @property boolean $active
+ * @property float $rating
+ * @property int $offset
+ * @property string $displaytitle
+ * @property int $genre_id
+ * @property int $language_id
+ * @property int $star_priority
+ * @property int $filesize
+ * @property int|null $filesize_novideo
+ * @property mixed|null $body_hash
+ * @property mixed|null $header_hash
+ * @property mixed|null $osz2_hash
+ * @property boolean $download_disabled
+ * @property string|null $download_disabled_url
+ * @property Carbon\Carbon|null $thread_icon_date
+ * @property int $favourite_count
+ * @property int $play_count
+ * @property string|null $difficulty_names
+ * @property Carbon\Carbon|null $cover_updated_at
+ * @property boolean $discussion_enabled
+ * @property Carbon\Carbon|null $deleted_at
+ * @property int $hype
+ * @property int $nominations
+ * @property int $previous_queue_duration
+ * @property Carbon\Carbon|null $queued_at
+ */
 class Beatmapset extends Model implements AfterCommit
 {
     use Elasticsearch\BeatmapsetTrait, SoftDeletes;

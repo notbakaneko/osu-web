@@ -25,6 +25,19 @@ use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 
+/**
+ *
+ * @property int $id
+ * @property string|null $original_filename
+ * @property string|null $hash
+ * @property string|null $ext
+ * @property int|null $filesize
+ * @property int|null $user_id
+ * @property int|null $contest_id
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property Carbon\Carbon|null $deleted_at
+ */
 class UserContestEntry extends Model
 {
     use SoftDeletes;

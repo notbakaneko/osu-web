@@ -22,6 +22,17 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $ban_id
+ * @property int|null $user_id
+ * @property string|null $reason
+ * @property string|null $supporting_url
+ * @property int|null $ban_status
+ * @property int $period
+ * @property Carbon\Carbon|null $timestamp
+ * @property int|null $banner_id
+ */
 class UserAccountHistory extends Model
 {
     protected $table = 'osu_user_banhistory';

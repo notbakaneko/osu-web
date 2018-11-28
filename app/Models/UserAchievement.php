@@ -20,6 +20,12 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $user_id
+ * @property int $achievement_id
+ * @property Carbon\Carbon $date
+ */
 class UserAchievement extends Model
 {
     protected $table = 'osu_user_achievements';

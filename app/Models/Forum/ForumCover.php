@@ -25,6 +25,17 @@ use App\Models\User;
 use App\Traits\Imageable;
 use DB;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $forum_id
+ * @property int|null $user_id
+ * @property string|null $hash
+ * @property string|null $ext
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property array|null $default_topic_cover_json
+ */
 class ForumCover extends Model
 {
     use Imageable;

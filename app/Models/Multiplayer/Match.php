@@ -20,6 +20,15 @@
 
 namespace App\Models\Multiplayer;
 
+/**
+ *
+ * @property int $match_id
+ * @property Carbon\Carbon|null $start_time
+ * @property Carbon\Carbon|null $end_time
+ * @property string $name
+ * @property mixed $private
+ * @property mixed $keep_forever
+ */
 class Match extends Model
 {
     protected $primaryKey = 'match_id';

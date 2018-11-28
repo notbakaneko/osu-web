@@ -20,6 +20,13 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $banner_id
+ * @property int $user_id
+ * @property int $tournament_id
+ * @property string $country_acronym
+ */
 class ProfileBanner extends Model
 {
     protected $table = 'osu_profile_banners';

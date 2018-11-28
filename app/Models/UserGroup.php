@@ -20,6 +20,13 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $group_id
+ * @property int $user_id
+ * @property int $group_leader
+ * @property int $user_pending
+ */
 class UserGroup extends Model
 {
     protected $table = 'phpbb_user_group';

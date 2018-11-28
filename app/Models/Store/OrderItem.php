@@ -27,6 +27,20 @@ use App\Traits\Validatable;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $id
+ * @property int $order_id
+ * @property int $product_id
+ * @property int $quantity
+ * @property Carbon\Carbon $created_at
+ * @property Carbon\Carbon|null $deleted_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property float|null $cost
+ * @property string|null $extra_info
+ * @property array|null $extra_data
+ * @property boolean $reserved
+ */
 class OrderItem extends Model
 {
     use SoftDeletes, Validatable;

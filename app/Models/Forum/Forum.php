@@ -23,6 +23,51 @@ namespace App\Models\Forum;
 use App\Models\User;
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $forum_id
+ * @property int $parent_id
+ * @property int $left_id
+ * @property int $right_id
+ * @property mixed $forum_parents
+ * @property string $forum_name
+ * @property string $forum_desc
+ * @property string $forum_desc_bitfield
+ * @property int $forum_desc_options
+ * @property string $forum_desc_uid
+ * @property string $forum_link
+ * @property string $forum_password
+ * @property int $forum_style
+ * @property string $forum_image
+ * @property string $forum_rules
+ * @property string $forum_rules_link
+ * @property string $forum_rules_bitfield
+ * @property int $forum_rules_options
+ * @property string $forum_rules_uid
+ * @property int $forum_topics_per_page
+ * @property int $forum_type
+ * @property int $forum_status
+ * @property int $forum_posts
+ * @property int $forum_topics
+ * @property int $forum_topics_real
+ * @property int $forum_last_post_id
+ * @property int $forum_last_poster_id
+ * @property string $forum_last_post_subject
+ * @property int $forum_last_post_time
+ * @property string $forum_last_poster_name
+ * @property string $forum_last_poster_colour
+ * @property int $forum_flags
+ * @property int $display_on_index
+ * @property boolean $enable_indexing
+ * @property int $enable_icons
+ * @property int $enable_prune
+ * @property boolean $enable_sigs
+ * @property int $prune_next
+ * @property int $prune_days
+ * @property int $prune_viewed
+ * @property int $prune_freq
+ * @property array|null $moderator_groups
+ */
 class Forum extends Model
 {
     protected $table = 'phpbb_forums';

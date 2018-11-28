@@ -20,6 +20,17 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property string $acronym
+ * @property string $name
+ * @property int $rankedscore
+ * @property int $playcount
+ * @property int $usercount
+ * @property int $pp
+ * @property int $display
+ * @property float $shipping_rate
+ */
 class Country extends Model
 {
     protected $table = 'osu_countries';

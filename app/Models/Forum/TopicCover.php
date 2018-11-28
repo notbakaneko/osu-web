@@ -25,6 +25,16 @@ use App\Traits\Imageable;
 use DB;
 use Exception;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $topic_id
+ * @property int|null $user_id
+ * @property string|null $hash
+ * @property string|null $ext
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class TopicCover extends Model
 {
     use Imageable;

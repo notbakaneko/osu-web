@@ -22,6 +22,15 @@ namespace App\Models;
 
 use App\Libraries\ProfileCover;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $user_id
+ * @property array|null $cover_json
+ * @property Carbon\Carbon $created_at
+ * @property Carbon\Carbon $updated_at
+ * @property string|null $extras_order
+ */
 class UserProfileCustomization extends Model
 {
     /**

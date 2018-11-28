@@ -25,6 +25,26 @@ use App\Transformers\ContestTransformer;
 use App\Transformers\UserContestEntryTransformer;
 use Cache;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $description_enter
+ * @property string|null $description_voting
+ * @property mixed $type
+ * @property int $max_entries
+ * @property int $max_votes
+ * @property string $header_url
+ * @property boolean $visible
+ * @property int $show_votes
+ * @property json|null $extra_options
+ * @property Carbon\Carbon|null $entry_starts_at
+ * @property Carbon\Carbon|null $entry_ends_at
+ * @property Carbon\Carbon|null $voting_starts_at
+ * @property Carbon\Carbon|null $voting_ends_at
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class Contest extends Model
 {
     protected $dates = ['entry_starts_at', 'entry_ends_at', 'voting_starts_at', 'voting_ends_at'];

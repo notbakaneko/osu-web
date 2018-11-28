@@ -24,6 +24,22 @@ use Carbon\Carbon;
 use Exception;
 use Markdown;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $repository_id
+ * @property int|null $github_pull_request_id
+ * @property string|null $type
+ * @property string|null $category
+ * @property string|null $title
+ * @property string|null $message
+ * @property int|null $github_user_id
+ * @property boolean $private
+ * @property boolean $major
+ * @property string|null $url
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class ChangelogEntry extends Model
 {
     protected $casts = [

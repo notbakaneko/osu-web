@@ -20,6 +20,11 @@
 
 namespace App\Models\ReplayViewCount;
 
+/**
+ *
+ * @property int $score_id
+ * @property int $play_count
+ */
 class Taiko extends Model
 {
     protected $table = 'osu_replays_taiko';

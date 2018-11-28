@@ -33,6 +33,36 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $post_id
+ * @property int $topic_id
+ * @property int $forum_id
+ * @property int $poster_id
+ * @property int $icon_id
+ * @property string $poster_ip
+ * @property int $post_time
+ * @property boolean $post_approved
+ * @property int $post_reported
+ * @property int $enable_bbcode
+ * @property int $enable_smilies
+ * @property int $enable_magic_url
+ * @property int $enable_sig
+ * @property string $post_username
+ * @property string $post_subject
+ * @property mixed $post_text
+ * @property int $post_attachment
+ * @property string $bbcode_bitfield
+ * @property string $bbcode_uid
+ * @property int $post_postcount
+ * @property int $post_edit_time
+ * @property string $post_edit_reason
+ * @property int $post_edit_user
+ * @property int $post_edit_count
+ * @property boolean $post_edit_locked
+ * @property int $osu_kudosobtained
+ * @property Carbon\Carbon|null $deleted_at
+ */
 class Post extends Model implements AfterCommit
 {
     use Elasticsearch\PostTrait, SoftDeletes, Validatable;

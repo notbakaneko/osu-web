@@ -20,6 +20,12 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $user_id
+ * @property int $beatmapset_id
+ * @property Carbon\Carbon $dateadded
+ */
 class FavouriteBeatmapset extends Model
 {
     protected $table = 'osu_favouritemaps';

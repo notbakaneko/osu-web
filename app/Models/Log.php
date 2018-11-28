@@ -20,6 +20,19 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $log_id
+ * @property int $log_type
+ * @property int $user_id
+ * @property int $forum_id
+ * @property int $topic_id
+ * @property int $reportee_id
+ * @property string $log_ip
+ * @property int $log_time
+ * @property string $log_operation
+ * @property mixed $log_data
+ */
 class Log extends Model
 {
     const LOG_FORUM_ADMIN = 0;

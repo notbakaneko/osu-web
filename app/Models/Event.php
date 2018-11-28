@@ -23,6 +23,18 @@ namespace App\Models;
 use Carbon\Carbon;
 use Sentry;
 
+/**
+ *
+ * @property int $event_id
+ * @property string $text
+ * @property string|null $text_clean
+ * @property int|null $beatmap_id
+ * @property int|null $beatmapset_id
+ * @property int|null $user_id
+ * @property Carbon\Carbon $date
+ * @property int $epicfactor
+ * @property int $private
+ */
 class Event extends Model
 {
     public $parsed = false;

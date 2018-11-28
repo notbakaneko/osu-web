@@ -24,6 +24,12 @@ use App\Models\User;
 use App\Models\UserRelation;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ *
+ * @property int $user_id
+ * @property int $channel_id
+ * @property int|null $last_read_id
+ */
 class UserChannel extends Model
 {
     protected $guarded = [];

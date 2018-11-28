@@ -22,6 +22,12 @@ namespace App\Models;
 
 use App\Transformers\LanguageTransformer;
 
+/**
+ *
+ * @property int $language_id
+ * @property string $name
+ * @property int $display_order
+ */
 class Language extends Model
 {
     protected $table = 'osu_languages';

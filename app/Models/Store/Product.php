@@ -22,6 +22,32 @@ namespace App\Models\Store;
 
 use App\Exceptions\InsufficientStockException;
 
+/**
+ *
+ * @property int $product_id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $image
+ * @property float|null $cost
+ * @property int|null $weight
+ * @property float $base_shipping
+ * @property float $next_shipping
+ * @property int|null $stock
+ * @property int $max_quantity
+ * @property Carbon\Carbon $created_at
+ * @property Carbon\Carbon|null $deleted_at
+ * @property Carbon\Carbon|null $updated_at
+ * @property boolean $promoted
+ * @property int $display_order
+ * @property string|null $header_description
+ * @property string|null $header_image
+ * @property string|null $images_json
+ * @property int|null $master_product_id
+ * @property string|null $type_mappings_json
+ * @property string|null $custom_class
+ * @property boolean $enabled
+ * @property boolean $allow_multiple
+ */
 class Product extends Model
 {
     protected $primaryKey = 'product_id';

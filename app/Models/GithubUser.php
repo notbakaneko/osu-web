@@ -20,6 +20,15 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $canonical_id
+ * @property string|null $username
+ * @property int|null $user_id
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class GithubUser extends Model
 {
     public static function importFromGithub($data)

@@ -20,6 +20,11 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $name
+ * @property int $count
+ */
 class Count extends Model
 {
     protected $table = 'osu_counts';

@@ -20,6 +20,28 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $group_id
+ * @property int $group_type
+ * @property int $group_founder_manage
+ * @property string $group_name
+ * @property string $group_desc
+ * @property string $group_desc_bitfield
+ * @property int $group_desc_options
+ * @property string $group_desc_uid
+ * @property int $group_display
+ * @property string $group_avatar
+ * @property int $group_avatar_type
+ * @property int $group_avatar_width
+ * @property int $group_avatar_height
+ * @property int $group_rank
+ * @property string $group_colour
+ * @property int $group_sig_chars
+ * @property int $group_receive_pm
+ * @property int $group_message_limit
+ * @property int $group_legend
+ */
 class Group extends Model
 {
     protected $table = 'phpbb_groups';

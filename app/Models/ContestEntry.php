@@ -20,6 +20,17 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $masked_name
+ * @property string|null $entry_url
+ * @property int|null $user_id
+ * @property int $contest_id
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class ContestEntry extends Model
 {
     public function contest()

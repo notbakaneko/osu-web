@@ -23,6 +23,13 @@ namespace App\Models\Forum;
 use App\Libraries\BBCodeForDB;
 use DB;
 
+/**
+ *
+ * @property int $poll_option_id
+ * @property int $topic_id
+ * @property string $poll_option_text
+ * @property int $poll_option_total
+ */
 class PollOption extends Model
 {
     protected $table = 'phpbb_poll_options';

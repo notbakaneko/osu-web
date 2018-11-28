@@ -22,6 +22,12 @@ namespace App\Models\BeatmapLeader;
 
 use App\Models\Score;
 
+/**
+ *
+ * @property int $beatmap_id
+ * @property int $user_id
+ * @property int|null $score_id
+ */
 class Fruits extends Model
 {
     protected $table = 'osu_leaders_fruits';

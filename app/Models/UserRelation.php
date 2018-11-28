@@ -4,6 +4,13 @@ namespace App\Models;
 
 use DB;
 
+/**
+ *
+ * @property int $user_id
+ * @property int $zebra_id
+ * @property boolean $friend
+ * @property boolean $foe
+ */
 class UserRelation extends Model
 {
     protected $table = 'phpbb_zebra';

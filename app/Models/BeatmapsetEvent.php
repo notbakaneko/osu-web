@@ -22,6 +22,16 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $id
+ * @property int $beatmapset_id
+ * @property int|null $user_id
+ * @property mixed|null $type
+ * @property string|null $comment
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class BeatmapsetEvent extends Model
 {
     const NOMINATE = 'nominate';

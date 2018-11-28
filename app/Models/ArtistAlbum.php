@@ -20,6 +20,18 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property int|null $artist_id
+ * @property string $title
+ * @property string|null $title_romanized
+ * @property string $genre
+ * @property string|null $cover_url
+ * @property int $visible
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class ArtistAlbum extends Model
 {
     public function artist()

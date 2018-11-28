@@ -22,6 +22,19 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $build_id
+ * @property string|null $version
+ * @property mixed|null $hash
+ * @property mixed|null $last_hash
+ * @property Carbon\Carbon $date
+ * @property int $allow_ranking
+ * @property boolean $allow_bancho
+ * @property int $test_build
+ * @property int $users
+ * @property int|null $stream_id
+ */
 class Build extends Model
 {
     public $timestamps = false;

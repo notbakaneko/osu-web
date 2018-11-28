@@ -20,6 +20,28 @@
 
 namespace App\Models\Score\Best;
 
+/**
+ *
+ * @property int $score_id
+ * @property int $beatmap_id
+ * @property int $user_id
+ * @property int $score
+ * @property int $maxcombo
+ * @property mixed $rank
+ * @property int $count50
+ * @property int $count100
+ * @property int $count300
+ * @property int $countmiss
+ * @property int $countgeki
+ * @property int $countkatu
+ * @property boolean $perfect
+ * @property int $enabled_mods
+ * @property Carbon\Carbon $date
+ * @property float|null $pp
+ * @property boolean $replay
+ * @property int $hidden
+ * @property string $country_acronym
+ */
 class Osu extends Model
 {
     protected $table = 'osu_scores_high';

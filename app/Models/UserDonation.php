@@ -24,7 +24,17 @@ use Carbon\Carbon;
 use DB;
 use Log;
 
-// FIXME: should validate donation is a positive value on save.
+/**
+ * FIXME: should validate donation is a positive value on save.
+ *
+ * @property int $user_id
+ * @property string $transaction_id
+ * @property int $target_user_id
+ * @property int $length
+ * @property int $amount
+ * @property Carbon\Carbon $timestamp
+ * @property boolean $cancel
+ */
 class UserDonation extends Model
 {
     protected $table = 'osu_user_donations';

@@ -24,6 +24,16 @@ use App\Exceptions\API;
 use App\Models\User;
 use Carbon\Carbon;
 
+/**
+ *
+ * @property int $channel_id
+ * @property string $name
+ * @property string $description
+ * @property Carbon\Carbon $creation_time
+ * @property mixed $type
+ * @property string|null $allowed_groups
+ * @property int $moderated
+ */
 class Channel extends Model
 {
     protected $primaryKey = 'channel_id';

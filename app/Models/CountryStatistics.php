@@ -22,6 +22,19 @@ namespace App\Models;
 
 use DB;
 
+/**
+ *
+ * @property int $id
+ * @property string $country_code
+ * @property int $mode
+ * @property int $ranked_score
+ * @property int $play_count
+ * @property int $user_count
+ * @property int $performance
+ * @property int $display
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class CountryStatistics extends Model
 {
     public function country()

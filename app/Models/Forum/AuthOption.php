@@ -20,6 +20,14 @@
 
 namespace App\Models\Forum;
 
+/**
+ *
+ * @property int $auth_option_id
+ * @property string $auth_option
+ * @property int $is_global
+ * @property int $is_local
+ * @property int $founder_only
+ */
 class AuthOption extends Model
 {
     protected $table = 'phpbb_acl_options';

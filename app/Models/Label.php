@@ -20,6 +20,18 @@
 
 namespace App\Models;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $icon_url
+ * @property string $header_url
+ * @property string|null $soundcloud
+ * @property string|null $website
+ * @property Carbon\Carbon|null $created_at
+ * @property Carbon\Carbon|null $updated_at
+ */
 class Label extends Model
 {
     public function artists()
