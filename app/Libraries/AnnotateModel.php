@@ -95,7 +95,7 @@ class AnnotateModel
     {
         $type = $this->parseType($column);
 
-        return "\${$column->Field} {$type}";
+        return "{$type} \${$column->Field}";
     }
 
     /**
