@@ -8,13 +8,19 @@
     "email": "support@ppy.sh",
     "issues": "https://github.com/ppy/osu-web/issues"
   },
+  "minimum-stability": "dev",
   "repositories": [
     {
       "type": "vcs",
       "url": "https://github.com/nanaya/slack-php"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Microsoft/tolerant-php-parser.git"
     }
   ],
   "require": {
+    "Microsoft/tolerant-php-parser": "master",
     "chaseconey/laravel-datadog-helper": "*",
     "doctrine/dbal": "*",
     "egulias/email-validator": "*",
