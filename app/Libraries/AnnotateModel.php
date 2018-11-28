@@ -25,6 +25,8 @@ use DB;
 use ReflectionClass;
 use App\Libraries\HasDynamicTable;
 use App\Models\Model;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Parser;
 use Symfony\Component\Finder\SplFileInfo;
 use File;
 
@@ -162,7 +164,7 @@ class AnnotateModel
     public function addAnnotationsToFile()
     {
         // $text = "\n\n{$file->getFilename()}\n";
-        $text = "/**\n";
+        $text = "\n\n/**\n";
         foreach ($this->properties as $property) {
             $text .= " * @property {$property}\n";
         }
@@ -170,11 +172,25 @@ class AnnotateModel
 
         // echo($text);
         $content = $this->file->getContents();
-        if (preg_match("/^class ([a-zA-Z]+) extends/m", $content, $matches)) {
-            $newContent = str_replace_first($matches[0], $text.$matches[0], $content);
-            File::put($this->file->getRealPath(), $newContent);
-        } else {
-            echo("No matches found in {$this->file->getFilename()}!\n");
+        $parser = new Parser();
+        $astNode = $parser->parseSourceFile($content);
+
+        $node = null;
+        foreach ($astNode->statementList as $statement) {
+            if ($statement instanceof ClassDeclaration) {
+                $node = $statement;
+                break;
+            }
         }
+
+        if ($node === null) {
+            echo("Could not find class declaration in {$this->file->getFilename()}!");
+
+            return;
+        }
+
+        $commentLength = strlen($node->getLeadingCommentAndWhitespaceText());
+        $newContent = substr_replace($content, $text, $node->getStart() - $commentLength, $commentLength);
+        File::put($this->file->getRealPath(), $newContent);
     }
 }

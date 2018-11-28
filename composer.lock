@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2beb41f08e326890ad96be0719dd674",
+    "content-hash": "cdf86f67ce1a1af065fbdb435ee9a075",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -4702,6 +4702,51 @@
                 "source": "https://github.com/rmariuzzo/laravel-js-localization"
             },
             "time": "2021-03-06T18:25:22+00:00"
+        },
+        {
+            "name": "microsoft/tolerant-php-parser",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/microsoft/tolerant-php-parser.git",
+                "reference": "3eccfd273323aaf69513e2f1c888393f5947804b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/3eccfd273323aaf69513e2f1c888393f5947804b",
+                "reference": "3eccfd273323aaf69513e2f1c888393f5947804b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.15"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Microsoft\\PhpParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Lourens",
+                    "email": "roblou@microsoft.com"
+                }
+            ],
+            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+            "support": {
+                "source": "https://github.com/microsoft/tolerant-php-parser/tree/v0.1.2",
+                "issues": "https://github.com/microsoft/tolerant-php-parser/issues"
+            },
+            "time": "2022-10-05T17:30:19+00:00"
         },
         {
             "name": "mnapoli/front-yaml",
@@ -14012,7 +14057,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "microsoft/tolerant-php-parser": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

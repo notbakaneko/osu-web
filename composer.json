@@ -36,6 +36,7 @@
     "league/oauth2-server": "^8.3",
     "maennchen/zipstream-php": "^2.1",
     "mariuzzo/laravel-js-localization": "*",
+    "microsoft/tolerant-php-parser": "dev-main",
     "paypal/paypal-checkout-sdk": "*",
     "php-ds/php-ds": "^1.3",
     "sentry/sentry-laravel": "^2.8",
@@ -96,6 +97,12 @@
   "extra": {
     "laravel": {
       "dont-discover": []
+    }
+  },
+  "repositories": {
+    "repo-name": {
+      "type": "vcs",
+      "url": "https://github.com/Microsoft/tolerant-php-parser"
     }
   }
 }
