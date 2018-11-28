@@ -194,11 +194,18 @@ class AnnotateModel
         $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
         if ($blockExists) {
             $lines = explode("\n", $existingComment);
-            $lines = array_filter($lines, function ($line) {
+            $lines = array_values(array_filter($lines, function ($line) {
                 return !(starts_with($line, ' * @property') || starts_with($line, ' */'));
-            });
+            }));
 
-            $text = implode("\n", $lines)." *\n".$text." */\n";
+            // hack to prevent more empty lines from being added each run.
+            $numLines = count($lines);
+            if ($numLines >= 2 && trim($lines[$numLines - 2]) === '*') {
+                array_pop($lines);
+                array_pop($lines);
+            }
+
+            $text = implode("\n", $lines)."\n *\n".$text." */\n";
         } else {
             $text = "\n\n/**\n *\n".$text." */\n";
         }
