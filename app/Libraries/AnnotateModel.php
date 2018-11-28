@@ -163,14 +163,13 @@ class AnnotateModel
 
     public function addAnnotationsToFile()
     {
-        // $text = "\n\n{$file->getFilename()}\n";
-        $text = "\n\n/**\n";
+        // $text = "\n\n/**\n";
+        $text = '';
         foreach ($this->properties as $property) {
             $text .= " * @property {$property}\n";
         }
-        $text .= " */\n";
+        // $text .= " */\n";
 
-        // echo($text);
         $content = $this->file->getContents();
         $parser = new Parser();
         $astNode = $parser->parseSourceFile($content);
@@ -189,8 +188,22 @@ class AnnotateModel
             return;
         }
 
-        $commentLength = strlen($node->getLeadingCommentAndWhitespaceText());
-        $newContent = substr_replace($content, $text, $node->getStart() - $commentLength, $commentLength);
+        $existingComment = $node->getLeadingCommentAndWhitespaceText();
+        $existingCommentLength = strlen($existingComment);
+
+        $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
+        if ($blockExists) {
+            $lines = explode("\n", $existingComment);
+            $lines = array_filter($lines, function ($line) {
+                return !(starts_with($line, ' * @property') || starts_with($line, ' */'));
+            });
+
+            $text = implode("\n", $lines)." *\n".$text." */\n";
+        } else {
+            $text = "\n\n/**\n *\n".$text." */\n";
+        }
+
+        $newContent = substr_replace($content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
         File::put($this->file->getRealPath(), $newContent);
     }
 }
