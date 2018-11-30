@@ -25,6 +25,7 @@ use DB;
 use ReflectionClass;
 use App\Libraries\HasDynamicTable;
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Parser;
@@ -88,6 +89,16 @@ class AnnotateModel
         $this->file = $file;
 
         $class = static::classFromFileInfo($file);
+        $reflectionClass = new ReflectionClass($class);
+        if (
+            $reflectionClass->isAbstract() ||
+            !$reflectionClass->isSubclassOf(Model::class) ||
+            $reflectionClass->implementsInterface(HasDynamicTable::class)
+        ) {
+            return;
+        }
+
+        $this->instance = new $class;
         $this->parser = new Parser();
     }
 
@@ -179,19 +190,22 @@ class AnnotateModel
 
     public function annotate()
     {
-        $class = static::classFromFileInfo($this->file);
-        $reflectionClass = new ReflectionClass($class);
-        if (
-            $reflectionClass->isAbstract() ||
-            !$reflectionClass->isSubclassOf(Model::class) ||
-            $reflectionClass->implementsInterface(HasDynamicTable::class)
-        ) {
+        if ($this->instance === null) {
             return;
         }
 
-        $this->instance = new $class;
-        $this->properties = $this->getClassAnnotations();
+        $this->astNode = $this->parse();
 
+        $directProperties = $this->getClassAnnotations();
+        $methodProperties = array_map(function ($method) {
+            return ['type' => 'mixed', 'name' => $method];
+        }, $this->findPropertiesFromMethods());
+
+        $attributeProperties = array_map(function ($method) {
+            return ['type' => 'mixed', 'name' => $method];
+        }, $this->attributeNames);
+
+        $this->properties = array_merge($directProperties, $attributeProperties, $methodProperties);
         $this->addAnnotationsToFile();
     }
 
@@ -211,9 +225,18 @@ class AnnotateModel
         }
 
         $this->methodDeclarations = $this->parseMethodDeclarations();
-        $this->methodNames = array_map(function ($item) {
+        $this->methodNames = collect($this->methodDeclarations)->filter(function ($item) {
+            return !ends_with($item->getName(), 'Attribute') && $item->parameters === null;
+        })->map(function ($item) {
             return $item->getName();
-        }, $this->methodDeclarations);
+        })->all();
+
+        $this->attributeNames = collect($this->methodDeclarations)->filter(function ($item) {
+            return ends_with($item->getName(), 'Attribute');
+        })->map(function ($item) {
+            $name = $item->getName();
+            return snake_case(substr(substr($name, 3), 0, -9));
+        })->all();
 
         return $astNode;
     }
@@ -231,14 +254,29 @@ class AnnotateModel
         return $methods;
     }
 
+    public function findPropertiesFromMethods()
+    {
+        $properties = [];
+        // poke every method to find out if it's a relationship.
+        foreach ($this->methodNames as $methodName) {
+            try {
+                $value = $this->instance->getRelationValue($methodName);
+                if ($value instanceof Collection) {
+                    $properties[] = $methodName;
+                }
+            } catch (\Throwable $ex) {
+            }
+        }
+
+        return $properties;
+    }
+
     public function addAnnotationsToFile()
     {
         $text = '';
         foreach ($this->properties as $property) {
             $text .= " * @property {$property['type']} \${$property['name']}\n";
         }
-
-        $astNode = $this->parse();
 
         $node = $this->classDeclaration;
 
