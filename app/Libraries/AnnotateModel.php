@@ -97,7 +97,7 @@ class AnnotateModel
     {
         $type = $this->parseType($column);
 
-        return "{$type} \${$column->Field}";
+        return ['type' => $type, 'name' => $column->Field];
     }
 
     /**
@@ -166,7 +166,7 @@ class AnnotateModel
         // $text = "\n\n/**\n";
         $text = '';
         foreach ($this->properties as $property) {
-            $text .= " * @property {$property}\n";
+            $text .= " * @property {$property['type']} \${$property['name']}\n";
         }
         // $text .= " */\n";
 
