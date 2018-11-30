@@ -50,6 +50,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property boolean $orphaned
  * @property string|null $youtube_preview
  * @property Carbon\Carbon|null $deleted_at
+ * @property mixed $mode
+ * @property mixed $diff_size
+ * @property mixed $version
+ * @property mixed $beatmapDiscussions
+ * @property mixed $difficulty
+ * @property mixed $difficultyAttribs
+ * @property mixed $failtimes
  */
 class Beatmap extends Model
 {

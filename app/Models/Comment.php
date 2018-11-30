@@ -43,6 +43,9 @@ use Carbon\Carbon;
  * @property int|null $deleted_by_id
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $commentable_type
+ * @property mixed $replies
+ * @property mixed $votes
  */
 class Comment extends Model
 {

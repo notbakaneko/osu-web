@@ -30,6 +30,7 @@ namespace App\Models;
  * @property int $pp
  * @property int $display
  * @property float $shipping_rate
+ * @property mixed $profileBanners
  */
 class Country extends Model
 {

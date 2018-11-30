@@ -82,6 +82,17 @@ use Illuminate\Database\QueryException;
  * @property int $nominations
  * @property int $previous_queue_duration
  * @property Carbon\Carbon|null $queued_at
+ * @property mixed $beatmapDiscussions
+ * @property mixed $watches
+ * @property mixed $beatmaps
+ * @property mixed $allBeatmaps
+ * @property mixed $events
+ * @property mixed $comments
+ * @property mixed $eventsSinceReset
+ * @property mixed $nominationsSinceReset
+ * @property mixed $defaultBeatmaps
+ * @property mixed $userRatings
+ * @property mixed $favourites
  */
 class Beatmapset extends Model implements AfterCommit
 {

@@ -30,6 +30,7 @@ namespace App\Models;
  * @property int $contest_id
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $votes
  */
 class ContestEntry extends Model
 {

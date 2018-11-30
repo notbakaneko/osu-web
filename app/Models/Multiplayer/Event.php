@@ -30,6 +30,7 @@ use App\Models\User;
  * @property int|null $user_id
  * @property string|null $text
  * @property Carbon\Carbon|null $timestamp
+ * @property mixed $detail
  */
 class Event extends Model
 {

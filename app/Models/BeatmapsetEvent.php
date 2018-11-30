@@ -31,6 +31,8 @@ use Carbon\Carbon;
  * @property string|null $comment
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $comment
+ * @property mixed $comment
  */
 class BeatmapsetEvent extends Model
 {

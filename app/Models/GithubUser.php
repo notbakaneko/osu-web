@@ -28,6 +28,7 @@ namespace App\Models;
  * @property int|null $user_id
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $changelogEntries
  */
 class GithubUser extends Model
 {

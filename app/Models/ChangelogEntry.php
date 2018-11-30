@@ -39,6 +39,10 @@ use Markdown;
  * @property string|null $url
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $type
+ * @property mixed $category
+ * @property mixed $url
+ * @property mixed $builds
  */
 class ChangelogEntry extends Model
 {

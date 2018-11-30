@@ -114,6 +114,8 @@ namespace App\Models;
  * @property int $r87
  * @property int $r88
  * @property int $r89
+ * @property mixed $data
+ * @property mixed $mode
  */
 class RankHistory extends Model
 {

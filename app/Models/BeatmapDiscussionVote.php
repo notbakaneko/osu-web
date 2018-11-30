@@ -30,6 +30,7 @@ use Carbon\Carbon;
  * @property int $score
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $score
  */
 class BeatmapDiscussionVote extends Model
 {

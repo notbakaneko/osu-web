@@ -31,6 +31,7 @@ namespace App\Models;
  * @property int $visible
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $tracks
  */
 class ArtistAlbum extends Model
 {

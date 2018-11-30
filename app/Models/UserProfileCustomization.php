@@ -30,6 +30,8 @@ use App\Libraries\ProfileCover;
  * @property Carbon\Carbon $created_at
  * @property Carbon\Carbon $updated_at
  * @property string|null $extras_order
+ * @property mixed $extras_order
+ * @property mixed $extras_order
  */
 class UserProfileCustomization extends Model
 {

@@ -29,6 +29,8 @@ namespace App\Models;
  * @property Carbon\Carbon|null $updated_at
  * @property boolean $build_on_tag
  * @property string|null $default_category
+ * @property mixed $updateStreams
+ * @property mixed $changelogEntries
  */
 class Repository extends Model
 {

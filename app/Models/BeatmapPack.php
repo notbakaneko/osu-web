@@ -29,6 +29,7 @@ namespace App\Models;
  * @property string $tag
  * @property Carbon\Carbon $date
  * @property int|null $playmode
+ * @property mixed $items
  */
 class BeatmapPack extends Model
 {

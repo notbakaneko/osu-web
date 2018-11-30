@@ -37,6 +37,7 @@ use Exception;
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
  * @property Carbon\Carbon|null $published_at
+ * @property mixed $comments
  */
 class NewsPost extends Model
 {

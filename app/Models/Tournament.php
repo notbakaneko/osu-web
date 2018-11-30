@@ -39,6 +39,8 @@ use Carbon\Carbon;
  * @property Carbon\Carbon|null $updated_at
  * @property int|null $tournament_banner_product_id
  * @property string|null $info_url
+ * @property mixed $profileBanners
+ * @property mixed $registrations
  */
 class Tournament extends Model
 {

@@ -28,6 +28,8 @@ namespace App\Models\Multiplayer;
  * @property string $name
  * @property mixed $private
  * @property mixed $keep_forever
+ * @property mixed $games
+ * @property mixed $events
  */
 class Match extends Model
 {

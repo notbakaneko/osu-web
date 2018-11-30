@@ -34,6 +34,12 @@ use Carbon\Carbon;
  * @property int $test_build
  * @property int $users
  * @property int|null $stream_id
+ * @property mixed $changelogs
+ * @property mixed $defaultChangelogs
+ * @property mixed $changelogEntries
+ * @property mixed $defaultChangelogEntries
+ * @property mixed $comments
+ * @property mixed $propagationHistories
  */
 class Build extends Model
 {

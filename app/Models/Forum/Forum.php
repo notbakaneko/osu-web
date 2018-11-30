@@ -67,6 +67,14 @@ use Carbon\Carbon;
  * @property int $prune_viewed
  * @property int $prune_freq
  * @property array|null $moderator_groups
+ * @property mixed $forum_parents
+ * @property mixed $forum_parents
+ * @property mixed $forum_last_poster_colour
+ * @property mixed $forum_last_poster_colour
+ * @property mixed $forum_last_post_time
+ * @property mixed $forum_last_post_time
+ * @property mixed $topics
+ * @property mixed $subforums
  */
 class Forum extends Model
 {

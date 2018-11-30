@@ -55,6 +55,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $last_tracking_state
  * @property float|null $shipping
  * @property string|null $transaction_id
+ * @property mixed $items
+ * @property mixed $payments
  */
 class Order extends Model
 {

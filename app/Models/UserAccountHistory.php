@@ -32,6 +32,7 @@ use Carbon\Carbon;
  * @property int $period
  * @property Carbon\Carbon|null $timestamp
  * @property int|null $banner_id
+ * @property mixed $type
  */
 class UserAccountHistory extends Model
 {

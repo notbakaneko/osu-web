@@ -35,6 +35,9 @@ use DB;
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
  * @property array|null $default_topic_cover_json
+ * @property mixed $default_topic_cover
+ * @property mixed $main_cover
+ * @property mixed $default_topic_cover
  */
 class ForumCover extends Model
 {

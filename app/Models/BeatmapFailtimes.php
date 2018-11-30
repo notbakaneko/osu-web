@@ -124,6 +124,7 @@ namespace App\Models;
  * @property int $p98
  * @property int $p99
  * @property int $p100
+ * @property mixed $data
  */
 class BeatmapFailtimes extends Model
 {

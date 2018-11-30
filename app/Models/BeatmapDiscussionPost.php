@@ -37,6 +37,8 @@ use DB;
  * @property boolean $system
  * @property Carbon\Carbon|null $deleted_at
  * @property int|null $deleted_by_id
+ * @property mixed $message
+ * @property mixed $message
  */
 class BeatmapDiscussionPost extends Model
 {

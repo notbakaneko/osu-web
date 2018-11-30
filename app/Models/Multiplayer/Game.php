@@ -35,6 +35,12 @@ use App\Models\Beatmap;
  * @property int|null $scoring_type
  * @property int|null $team_type
  * @property int|null $mods
+ * @property mixed $mods
+ * @property mixed $mode
+ * @property mixed $scoring_type
+ * @property mixed $team_type
+ * @property mixed $scores
+ * @property mixed $events
  */
 class Game extends Model
 {

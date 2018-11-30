@@ -74,6 +74,29 @@ use Illuminate\Database\QueryException;
  * @property int $osu_starpriority
  * @property mixed $osu_lastreplytype
  * @property Carbon\Carbon|null $deleted_at
+ * @property mixed $poll_last_vote
+ * @property mixed $poll_last_vote
+ * @property mixed $poll_length_days
+ * @property mixed $poll_start
+ * @property mixed $poll_start
+ * @property mixed $topic_last_post_time
+ * @property mixed $topic_last_post_time
+ * @property mixed $topic_last_view_time
+ * @property mixed $topic_last_view_time
+ * @property mixed $topic_time
+ * @property mixed $topic_time
+ * @property mixed $topic_first_poster_colour
+ * @property mixed $topic_first_poster_colour
+ * @property mixed $topic_last_poster_colour
+ * @property mixed $topic_last_poster_colour
+ * @property mixed $poll_title
+ * @property mixed $posts
+ * @property mixed $userTracks
+ * @property mixed $logs
+ * @property mixed $featureVotes
+ * @property mixed $pollOptions
+ * @property mixed $pollVotes
+ * @property mixed $watches
  */
 class Topic extends Model implements AfterCommit
 {

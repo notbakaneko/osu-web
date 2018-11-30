@@ -32,6 +32,8 @@ namespace App\Models;
  * @property int $log_time
  * @property string $log_operation
  * @property mixed $log_data
+ * @property mixed $log_data
+ * @property mixed $log_data
  */
 class Log extends Model
 {

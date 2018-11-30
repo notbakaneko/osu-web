@@ -44,6 +44,14 @@ use Cache;
  * @property Carbon\Carbon|null $voting_ends_at
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $entry_shape
+ * @property mixed $entry_shape
+ * @property mixed $unmasked
+ * @property mixed $unmasked
+ * @property mixed $link_icon
+ * @property mixed $link_icon
+ * @property mixed $entries
+ * @property mixed $votes
  */
 class Contest extends Model
 {

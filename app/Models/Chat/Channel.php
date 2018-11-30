@@ -33,6 +33,9 @@ use Carbon\Carbon;
  * @property mixed $type
  * @property string|null $allowed_groups
  * @property int $moderated
+ * @property mixed $allowed_groups
+ * @property mixed $messages
+ * @property mixed $filteredMessages
  */
 class Channel extends Model
 {

@@ -31,6 +31,7 @@ namespace App\Models;
  * @property string|null $website
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $artists
  */
 class Label extends Model
 {

@@ -34,6 +34,7 @@ namespace App\Models;
  * @property string|null $quest_instructions
  * @property boolean $enabled
  * @property int|null $mode
+ * @property mixed $mode
  */
 class Achievement extends Model
 {

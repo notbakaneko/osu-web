@@ -36,6 +36,7 @@ namespace App\Models;
  * @property int|null $thread_id
  * @property string|null $url
  * @property int|null $stream_id
+ * @property mixed $prefix
  */
 class Changelog extends Model
 {

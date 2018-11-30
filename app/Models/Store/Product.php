@@ -47,6 +47,11 @@ use App\Exceptions\InsufficientStockException;
  * @property string|null $custom_class
  * @property boolean $enabled
  * @property boolean $allow_multiple
+ * @property mixed $header_image
+ * @property mixed $header_description
+ * @property mixed $description
+ * @property mixed $variations
+ * @property mixed $notificationRequests
  */
 class Product extends Model
 {

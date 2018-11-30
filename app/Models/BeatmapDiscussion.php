@@ -41,6 +41,13 @@ use DB;
  * @property int|null $deleted_by_id
  * @property boolean $kudosu_denied
  * @property int|null $kudosu_denied_by_id
+ * @property mixed $message_type
+ * @property mixed $message_type
+ * @property mixed $resolved
+ * @property mixed $resolved
+ * @property mixed $beatmapDiscussionPosts
+ * @property mixed $beatmapDiscussionVotes
+ * @property mixed $kudosuHistory
  */
 class BeatmapDiscussion extends Model
 {

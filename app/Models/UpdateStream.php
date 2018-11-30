@@ -28,6 +28,9 @@ use Carbon\Carbon;
  * @property string $name
  * @property string|null $pretty_name
  * @property string|null $repository
+ * @property mixed $builds
+ * @property mixed $changelogs
+ * @property mixed $changelogEntries
  */
 class UpdateStream extends Model
 {
