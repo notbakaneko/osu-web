@@ -75,6 +75,7 @@ use Carbon\Carbon;
  * @property mixed $forum_last_post_time
  * @property mixed $topics
  * @property mixed $subforums
+ * @property mixed $lastPost
  */
 class Forum extends Model
 {

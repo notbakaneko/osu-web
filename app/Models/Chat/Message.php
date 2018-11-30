@@ -30,6 +30,7 @@ use App\Models\User;
  * @property string $content
  * @property boolean $is_action
  * @property Carbon\Carbon $timestamp
+ * @property mixed $channel
  */
 class Message extends Model
 {

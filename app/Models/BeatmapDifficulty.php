@@ -27,6 +27,7 @@ namespace App\Models;
  * @property int $mods
  * @property float $diff_unified
  * @property Carbon\Carbon $last_update
+ * @property mixed $beatmap
  */
 class BeatmapDifficulty extends Model
 {

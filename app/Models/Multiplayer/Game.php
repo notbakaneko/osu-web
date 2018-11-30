@@ -41,6 +41,7 @@ use App\Models\Beatmap;
  * @property mixed $team_type
  * @property mixed $scores
  * @property mixed $events
+ * @property mixed $match
  */
 class Game extends Model
 {

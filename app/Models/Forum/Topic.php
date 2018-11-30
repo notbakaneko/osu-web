@@ -90,7 +90,9 @@ use Illuminate\Database\QueryException;
  * @property mixed $topic_last_poster_colour
  * @property mixed $topic_last_poster_colour
  * @property mixed $poll_title
+ * @property mixed $beatmapset
  * @property mixed $posts
+ * @property mixed $forum
  * @property mixed $userTracks
  * @property mixed $logs
  * @property mixed $featureVotes

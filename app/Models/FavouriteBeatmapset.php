@@ -25,6 +25,8 @@ namespace App\Models;
  * @property int $user_id
  * @property int $beatmapset_id
  * @property Carbon\Carbon $dateadded
+ * @property mixed $user
+ * @property mixed $beatmapset
  */
 class FavouriteBeatmapset extends Model
 {

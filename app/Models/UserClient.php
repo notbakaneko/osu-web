@@ -29,6 +29,7 @@ namespace App\Models;
  * @property mixed $mac_md5
  * @property Carbon\Carbon $timestamp
  * @property int $verified
+ * @property mixed $build
  */
 class UserClient extends Model
 {

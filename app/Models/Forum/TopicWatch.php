@@ -28,6 +28,8 @@ use App\Models\User;
  * @property int $topic_id
  * @property boolean $notify_status
  * @property boolean $mail
+ * @property mixed $topic
+ * @property mixed $user
  */
 class TopicWatch extends Model
 {

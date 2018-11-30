@@ -26,6 +26,9 @@ namespace App\Models;
  * @property int $user_id
  * @property int $tournament_id
  * @property string $country_acronym
+ * @property mixed $user
+ * @property mixed $tournament
+ * @property mixed $country
  */
 class ProfileBanner extends Model
 {

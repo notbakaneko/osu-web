@@ -26,6 +26,7 @@ namespace App\Models;
  * @property int $user_id
  * @property int $group_leader
  * @property int $user_pending
+ * @property mixed $user
  */
 class UserGroup extends Model
 {

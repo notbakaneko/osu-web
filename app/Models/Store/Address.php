@@ -39,6 +39,8 @@ use Auth;
  * @property Carbon\Carbon $created_at
  * @property Carbon\Carbon|null $deleted_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $user
+ * @property mixed $country
  */
 class Address extends Model
 {

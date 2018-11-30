@@ -72,6 +72,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $body_h_t_m_l
  * @property mixed $body_h_t_m_l_without_image_dimensions
  * @property mixed $body_raw
+ * @property mixed $forum
+ * @property mixed $user
  */
 class Post extends Model implements AfterCommit
 {

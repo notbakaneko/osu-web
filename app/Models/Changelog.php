@@ -37,6 +37,7 @@ namespace App\Models;
  * @property string|null $url
  * @property int|null $stream_id
  * @property mixed $prefix
+ * @property mixed $updateStream
  */
 class Changelog extends Model
 {

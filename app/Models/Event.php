@@ -34,6 +34,9 @@ use Sentry;
  * @property Carbon\Carbon $date
  * @property int $epicfactor
  * @property int $private
+ * @property mixed $user
+ * @property mixed $beatmap
+ * @property mixed $beatmapset
  */
 class Event extends Model
 {

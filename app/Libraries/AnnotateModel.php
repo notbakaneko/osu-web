@@ -98,7 +98,7 @@ class AnnotateModel
             return;
         }
 
-        $this->instance = new $class;
+        $this->instance = $class::first() ?? new $class;
         $this->parser = new Parser();
     }
 
@@ -261,7 +261,7 @@ class AnnotateModel
         foreach ($this->methodNames as $methodName) {
             try {
                 $value = $this->instance->getRelationValue($methodName);
-                if ($value instanceof Collection) {
+                if ($value instanceof Collection || $value instanceof Model) {
                     $properties[] = $methodName;
                 }
             } catch (\Throwable $ex) {

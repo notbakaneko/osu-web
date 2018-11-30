@@ -36,6 +36,9 @@ use App\Traits\Validatable;
  * @property string|null $comments
  * @property Carbon\Carbon $timestamp
  * @property mixed $score_type
+ * @property mixed $reporter
+ * @property mixed $score
+ * @property mixed $user
  */
 class UserReport extends Model
 {

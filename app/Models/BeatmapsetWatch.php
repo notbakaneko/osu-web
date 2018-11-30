@@ -31,6 +31,8 @@ use Carbon\Carbon;
  * @property Carbon\Carbon|null $last_notified
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
+ * @property mixed $beatmapset
+ * @property mixed $user
  */
 class BeatmapsetWatch extends Model
 {

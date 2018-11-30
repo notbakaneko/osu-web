@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $extra_info
  * @property array|null $extra_data
  * @property boolean $reserved
+ * @property mixed $order
+ * @property mixed $product
  */
 class OrderItem extends Model
 {

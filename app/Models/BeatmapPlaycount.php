@@ -25,6 +25,8 @@ namespace App\Models;
  * @property int $user_id
  * @property int $beatmap_id
  * @property int $playcount
+ * @property mixed $beatmap
+ * @property mixed $user
  */
 class BeatmapPlaycount extends Model
 {

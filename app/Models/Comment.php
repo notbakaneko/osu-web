@@ -44,6 +44,8 @@ use Carbon\Carbon;
  * @property Carbon\Carbon|null $created_at
  * @property Carbon\Carbon|null $updated_at
  * @property mixed $commentable_type
+ * @property mixed $commentable
+ * @property mixed $user
  * @property mixed $replies
  * @property mixed $votes
  */

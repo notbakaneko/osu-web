@@ -39,6 +39,9 @@ use DB;
  * @property int|null $deleted_by_id
  * @property mixed $message
  * @property mixed $message
+ * @property mixed $beatmapset
+ * @property mixed $beatmapDiscussion
+ * @property mixed $user
  */
 class BeatmapDiscussionPost extends Model
 {

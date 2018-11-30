@@ -87,10 +87,13 @@ use Illuminate\Database\QueryException;
  * @property mixed $beatmaps
  * @property mixed $allBeatmaps
  * @property mixed $events
+ * @property mixed $genre
+ * @property mixed $language
  * @property mixed $comments
  * @property mixed $eventsSinceReset
  * @property mixed $nominationsSinceReset
  * @property mixed $defaultBeatmaps
+ * @property mixed $user
  * @property mixed $userRatings
  * @property mixed $favourites
  */

@@ -45,8 +45,14 @@ use DB;
  * @property mixed $message_type
  * @property mixed $resolved
  * @property mixed $resolved
+ * @property mixed $beatmap
+ * @property mixed $visibleBeatmap
+ * @property mixed $beatmapset
+ * @property mixed $visibleBeatmapset
  * @property mixed $beatmapDiscussionPosts
+ * @property mixed $startingPost
  * @property mixed $beatmapDiscussionVotes
+ * @property mixed $user
  * @property mixed $kudosuHistory
  */
 class BeatmapDiscussion extends Model

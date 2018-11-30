@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $mode
  * @property mixed $diff_size
  * @property mixed $version
+ * @property mixed $beatmapset
  * @property mixed $beatmapDiscussions
  * @property mixed $difficulty
  * @property mixed $difficultyAttribs

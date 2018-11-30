@@ -34,6 +34,8 @@ use DB;
  * @property string|null $kudosuable_type
  * @property int|null $kudosuable_id
  * @property array|null $details
+ * @property mixed $receiver
+ * @property mixed $kudosuable
  */
 class KudosuHistory extends Model
 {

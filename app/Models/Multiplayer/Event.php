@@ -31,6 +31,8 @@ use App\Models\User;
  * @property string|null $text
  * @property Carbon\Carbon|null $timestamp
  * @property mixed $detail
+ * @property mixed $match
+ * @property mixed $game
  */
 class Event extends Model
 {

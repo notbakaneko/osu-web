@@ -177,6 +177,7 @@ use Request;
  * @property mixed $profileBanners
  * @property mixed $storeAddresses
  * @property mixed $rankHistories
+ * @property mixed $country
  * @property mixed $scoresOsu
  * @property mixed $scoresFruits
  * @property mixed $scoresMania
@@ -189,6 +190,7 @@ use Request;
  * @property mixed $scoresBestFruits
  * @property mixed $scoresBestMania
  * @property mixed $scoresBestTaiko
+ * @property mixed $userProfileCustomization
  * @property mixed $accountHistories
  * @property mixed $userAchievements
  * @property mixed $usernameChangeHistory

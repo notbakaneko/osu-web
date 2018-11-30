@@ -10,6 +10,7 @@ use DB;
  * @property int $zebra_id
  * @property boolean $friend
  * @property boolean $foe
+ * @property mixed $user
  */
 class UserRelation extends Model
 {
