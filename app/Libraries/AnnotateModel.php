@@ -25,6 +25,7 @@ use DB;
 use ReflectionClass;
 use App\Libraries\HasDynamicTable;
 use App\Models\Model;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Parser;
 use Symfony\Component\Finder\SplFileInfo;
@@ -47,6 +48,18 @@ class AnnotateModel
 
     /** @var Model */
     private $instance;
+
+    private $parser;
+    private $astNode;
+    private $content;
+
+    public static function fromClass($class)
+    {
+        $reflectionClass = new ReflectionClass($class);
+        $file = new SplFileInfo($reflectionClass->getFilename(), '', '');
+
+        return new static($file);
+    }
 
     public static function classFromFileInfo(SplFileInfo $fileInfo)
     {
@@ -75,6 +88,27 @@ class AnnotateModel
         $this->file = $file;
 
         $class = static::classFromFileInfo($file);
+        $this->parser = new Parser();
+    }
+
+    public function getClassDeclaration()
+    {
+        return $this->classDeclaration;
+    }
+
+    public function getClassName()
+    {
+        return $this->className;
+    }
+
+    public function getMethodDeclarations()
+    {
+        return $this->methodDeclarations;
+    }
+
+    public function getMethodNames()
+    {
+        return $this->methodNames;
     }
 
     public function getClassAnnotations()
@@ -161,26 +195,52 @@ class AnnotateModel
         $this->addAnnotationsToFile();
     }
 
+    public function parse()
+    {
+        $this->content = $this->file->getContents();
+        $astNode = $this->parser->parseSourceFile($this->content);
+
+        $this->classDeclaration = null;
+        foreach ($astNode->statementList as $statement) {
+            if ($statement instanceof ClassDeclaration) {
+                $this->className = $statement->getNameParts()[0]->getText($this->content);
+
+                $this->classDeclaration = $statement;
+                break;
+            }
+        }
+
+        $this->methodDeclarations = $this->parseMethodDeclarations();
+        $this->methodNames = array_map(function ($item) {
+            return $item->getName();
+        }, $this->methodDeclarations);
+
+        return $astNode;
+    }
+
+    public function parseMethodDeclarations()
+    {
+        $methods = [];
+        $classMemberDeclarations = $this->classDeclaration->classMembers->classMemberDeclarations;
+        foreach ($classMemberDeclarations as $declaration) {
+            if ($declaration instanceof MethodDeclaration) {
+                $methods[] = $declaration;
+            }
+        }
+
+        return $methods;
+    }
+
     public function addAnnotationsToFile()
     {
-        // $text = "\n\n/**\n";
         $text = '';
         foreach ($this->properties as $property) {
             $text .= " * @property {$property['type']} \${$property['name']}\n";
         }
-        // $text .= " */\n";
 
-        $content = $this->file->getContents();
-        $parser = new Parser();
-        $astNode = $parser->parseSourceFile($content);
+        $astNode = $this->parse();
 
-        $node = null;
-        foreach ($astNode->statementList as $statement) {
-            if ($statement instanceof ClassDeclaration) {
-                $node = $statement;
-                break;
-            }
-        }
+        $node = $this->classDeclaration;
 
         if ($node === null) {
             echo("Could not find class declaration in {$this->file->getFilename()}!");
@@ -210,7 +270,7 @@ class AnnotateModel
             $text = "\n\n/**\n *\n".$text." */\n";
         }
 
-        $newContent = substr_replace($content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
+        $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
         File::put($this->file->getRealPath(), $newContent);
     }
 }
