@@ -133,6 +133,7 @@ class OsuMarkdownProcessor implements DocumentProcessorInterface, ConfigurationA
                 $this->setTitle();
             }
             $this->loadToc();
+            $this->addAnchors();
             $this->parseFigure();
 
             // last to prevent possible conflict
@@ -218,6 +219,24 @@ class OsuMarkdownProcessor implements DocumentProcessorInterface, ConfigurationA
         }
 
         return presence($text);
+    }
+
+    public function addAnchors()
+    {
+        if (!$this->node instanceof Block\Heading || !$this->event->isEntering()) {
+            return;
+        }
+
+        $child = $this->node->firstChild();
+        if (!$child instanceof Inline\Text) {
+            return;
+        }
+
+        $text = $this->getText($this->node);
+        if (preg_match('/^(?<title>.+) {#(?<anchor>\w{0,256})}/', $text, $matches)) {
+            $this->node->data['attributes']['id'] = $matches['anchor'];
+            $child->setContent($matches['title']);
+        }
     }
 
     public function loadToc()
