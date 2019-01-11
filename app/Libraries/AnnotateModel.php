@@ -23,14 +23,24 @@ namespace App\Libraries;
 use DB;
 
 use ReflectionClass;
+use ReflectionMethod;
 use App\Libraries\HasDynamicTable;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\StringLiteral;
+use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\ReturnStatement;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Parser;
 use Symfony\Component\Finder\SplFileInfo;
 use File;
+use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
 
 class AnnotateModel
 {
@@ -53,6 +63,8 @@ class AnnotateModel
     private $parser;
     private $astNode;
     private $content;
+
+    private $methodDeclarations;
 
     public static function fromClass($class)
     {
@@ -82,6 +94,22 @@ class AnnotateModel
     public static function getTables(string $connectionName = null)
     {
         return DB::connection($connectionName)->select('SHOW TABLES');
+    }
+
+    public static function relationshipMethods()
+    {
+        static $methods = null;
+
+        if ($methods === null) {
+            // extract names of eloquent relationship methods
+            $reflectionClass = new ReflectionClass('Illuminate\Database\Eloquent\Concerns\HasRelationships');
+            $methods = collect($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC))
+                ->map(function ($method) {
+                    return $method->name;
+                })->all();
+        }
+
+        return $methods;
     }
 
     public function __construct(SplFileInfo $file)
@@ -197,9 +225,7 @@ class AnnotateModel
         $this->astNode = $this->parse();
 
         $directProperties = $this->getClassAnnotations();
-        $methodProperties = array_map(function ($method) {
-            return ['type' => 'mixed', 'name' => $method];
-        }, $this->findPropertiesFromMethods());
+        $methodProperties = $this->findPropertiesFromMethods();
 
         $attributeProperties = array_map(function ($method) {
             return ['type' => 'mixed', 'name' => $method];
@@ -225,11 +251,6 @@ class AnnotateModel
         }
 
         $this->methodDeclarations = $this->parseMethodDeclarations();
-        $this->methodNames = collect($this->methodDeclarations)->filter(function ($item) {
-            return !ends_with($item->getName(), 'Attribute') && $item->parameters === null;
-        })->map(function ($item) {
-            return $item->getName();
-        })->all();
 
         $this->attributeNames = collect($this->methodDeclarations)->filter(function ($item) {
             return ends_with($item->getName(), 'Attribute');
@@ -254,22 +275,123 @@ class AnnotateModel
         return $methods;
     }
 
+    private function walkCallExpression(Node $expression) {
+        $nodes = $expression->getDescendantNodes();
+        $this->texify($expression);
+        foreach ($nodes as $node) {
+            // $this->texify($node);
+            $relationship = $this->tryFindRelationship($node);
+            if ($relationship !== null) {
+                return $relationship;
+            }
+        }
+    }
+
+    private function tryFindRelationship(Node $node) : ?array {
+        // $this->texify($node);
+        // keep going until probable relationship method.
+        if ($node->getNodeKindName() !== 'MemberAccessExpression') {
+            return null;
+        }
+        // $this->texify($node);
+
+        $children = iterator_to_array($node->getChildNodesAndTokens());
+        $maybeThis = array_first($children);
+        $maybeFunctionName = array_last($children);
+
+        if ($maybeThis === null
+            || $maybeFunctionName === null
+            || !($maybeThis instanceof Variable)
+            || !($maybeFunctionName instanceof Token)
+            || $maybeFunctionName->kind !== TokenKind::Name
+            || $maybeThis->getName() !== 'this'
+        ) {
+            return null;
+        }
+
+        $functionName = $maybeFunctionName->getText($node->getFileContents());
+        if (!in_array($functionName, static::relationshipMethods(), true)) {
+            return null;
+        }
+
+        $parent = $node->getParent();
+        if ($parent->getNodeKindName() !== 'CallExpression') {
+            // TODO: should probably log message
+            return null;
+        }
+
+        $expressionList = $parent->getFirstChildNode(ArgumentExpressionList::class);
+        if ($expressionList === null) {
+            return null;
+        }
+
+        $argumentExpression = $expressionList->getFirstChildNode(ArgumentExpression::class);
+        if ($argumentExpression === null) {
+            return null;
+        }
+
+        $className = $argumentExpression->getFirstDescendantNode(QualifiedName::class, StringLiteral::class);
+        if ($className === null) {
+            return null;
+        }
+
+        return [$functionName, $className->getText()];
+    }
+
     public function findPropertiesFromMethods()
     {
         $properties = [];
-        // poke every method to find out if it's a relationship.
-        foreach ($this->methodNames as $methodName) {
-            try {
-                $value = $this->instance->getRelationValue($methodName);
-                if ($value instanceof Collection || $value instanceof Model) {
-                    $properties[] = $methodName;
+
+        foreach ($this->methodDeclarations as $declaration) {
+            if ($this->tryExtractRelationship($declaration) !== null) {
+                /** @var Node[] $statements */
+                $statements = $declaration->compoundStatementOrSemicolon->statements;
+
+                // only consider methods with only single return statement for now.
+                if (count($statements) !== 1) {
+                    continue;
                 }
-            } catch (\Throwable $ex) {
+
+                /** @var Node $statement */
+                $statement = $statements[0];
+                if ($statement->getNodeKindName() !== 'ReturnStatement') {
+                    continue;
+                }
+
+                $nodes = $statement->getChildNodes();
+                foreach ($nodes as $node) {
+                    if ($node->getNodeKindName() !== 'CallExpression') {
+                        continue;
+                    }
+
+                    // print_r($node->getText());
+                    // print_r("\n");
+                    [$function, $className] = $this->walkCallExpression($node);
+
+                    if ($className !== null) {
+                        $properties[] = [
+                            'name' => $declaration->getName(),
+                            'type' => $className,
+                        ];
+                    }
+                }
+
+                // echo "-----\n";
             }
         }
 
         return $properties;
     }
+
+    private function tryExtractRelationship(MethodDeclaration $declaration)
+    {
+        if (ends_with($declaration->getName(), 'Attribute') || $declaration->parameters !== null) {
+            return null;
+        }
+
+        return $declaration;
+    }
+
 
     public function addAnnotationsToFile()
     {
@@ -310,5 +432,18 @@ class AnnotateModel
 
         $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
         File::put($this->file->getRealPath(), $newContent);
+    }
+
+    public function texify($node) {
+        if ($node instanceof Node) {
+            print_r($node->getText());
+            print_r(' ;Node;  '.get_class($node));//->getNodeKindName());
+            // print_r($node->getChildNames());
+            print_r("\n");
+        } elseif ($node instanceof Token) {
+            print_r($node->getText());
+            print_r(' ;Token;  '.print_r($node->jsonSerialize(), true));
+            print_r("\n");
+        }
     }
 }
