@@ -388,9 +388,12 @@ class AnnotateModel
                     [$function, $className] = $this->walkCallExpression($node);
 
                     if ($className !== null) {
+                        $isCollection = in_array($function, static::collectionRelationshipMethods(), true);
                         $properties[] = [
                             'name' => $declaration->getName(),
-                            'type' => in_array($function, static::collectionRelationshipMethods(), true) ? $className.'[]' : $className,
+                            // PSR-5 removed generics recently, so no standard typehint format for typed collections
+                            'type' => $isCollection ? '\Illuminate\Database\Eloquent\Collection' : $className,
+                            'text' => $isCollection ? $className : null,
                         ];
                     }
                 }
@@ -416,7 +419,12 @@ class AnnotateModel
     {
         $text = '';
         foreach ($this->properties as $property) {
-            $text .= " * @property {$property['type']} \${$property['name']}\n";
+            $text .= " * @property {$property['type']} \${$property['name']}";
+            if (!empty($property['text'])) {
+                $text .= " {$property['text']}";
+            }
+
+            $text .= "\n";
         }
 
         $node = $this->classDeclaration;
