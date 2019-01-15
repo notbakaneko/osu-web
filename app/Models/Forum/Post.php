@@ -61,7 +61,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $post_edit_count
  * @property boolean $post_edit_locked
  * @property int $osu_kudosobtained
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property mixed $post_text
  * @property mixed $post_time
  * @property mixed $post_time
@@ -69,11 +69,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $post_edit_time
  * @property mixed $search_content
  * @property mixed $post_position
- * @property mixed $body_h_t_m_l
- * @property mixed $body_h_t_m_l_without_image_dimensions
  * @property mixed $body_raw
- * @property mixed $forum
- * @property mixed $user
+ * @property Forum $forum
+ * @property Topic $topic
+ * @property User $user
+ * @property User $lastEditor
  */
 class Post extends Model implements AfterCommit
 {

@@ -37,12 +37,14 @@ use Markdown;
  * @property boolean $private
  * @property boolean $major
  * @property string|null $url
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property mixed $type
  * @property mixed $category
  * @property mixed $url
- * @property mixed $builds
+ * @property \Illuminate\Database\Eloquent\Collection $builds Build
+ * @property GithubUser $githubUser
+ * @property Repository $repository
  */
 class ChangelogEntry extends Model
 {

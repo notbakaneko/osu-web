@@ -73,7 +73,7 @@ use Illuminate\Database\QueryException;
  * @property boolean $poll_vote_change
  * @property int $osu_starpriority
  * @property mixed $osu_lastreplytype
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property mixed $poll_last_vote
  * @property mixed $poll_last_vote
  * @property mixed $poll_length_days
@@ -90,15 +90,16 @@ use Illuminate\Database\QueryException;
  * @property mixed $topic_last_poster_colour
  * @property mixed $topic_last_poster_colour
  * @property mixed $poll_title
- * @property mixed $beatmapset
- * @property mixed $posts
- * @property mixed $forum
- * @property mixed $userTracks
- * @property mixed $logs
- * @property mixed $featureVotes
- * @property mixed $pollOptions
- * @property mixed $pollVotes
- * @property mixed $watches
+ * @property Beatmapset $beatmapset
+ * @property \Illuminate\Database\Eloquent\Collection $posts Post
+ * @property Forum $forum
+ * @property TopicCover $cover
+ * @property \Illuminate\Database\Eloquent\Collection $userTracks TopicTrack
+ * @property \Illuminate\Database\Eloquent\Collection $logs Log
+ * @property \Illuminate\Database\Eloquent\Collection $featureVotes FeatureVote
+ * @property \Illuminate\Database\Eloquent\Collection $pollOptions PollOption
+ * @property \Illuminate\Database\Eloquent\Collection $pollVotes PollVote
+ * @property \Illuminate\Database\Eloquent\Collection $watches TopicWatch
  */
 class Topic extends Model implements AfterCommit
 {

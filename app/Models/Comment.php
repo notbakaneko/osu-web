@@ -37,17 +37,19 @@ use Carbon\Carbon;
  * @property int|null $disqus_parent_id
  * @property string|null $disqus_thread_id
  * @property array|null $disqus_user_data
- * @property Carbon\Carbon|null $edited_at
+ * @property \Carbon\Carbon|null $edited_at
  * @property int|null $edited_by_id
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property int|null $deleted_by_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property mixed $commentable_type
  * @property mixed $commentable
- * @property mixed $user
- * @property mixed $replies
- * @property mixed $votes
+ * @property User $editor
+ * @property User $user
+ * @property static $parent
+ * @property \Illuminate\Database\Eloquent\Collection $replies static
+ * @property \Illuminate\Database\Eloquent\Collection $votes CommentVote
  */
 class Comment extends Model
 {

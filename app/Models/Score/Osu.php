@@ -39,7 +39,7 @@ namespace App\Models\Score;
  * @property boolean $perfect
  * @property int $enabled_mods
  * @property int $pass
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property int|null $high_score_id
  */
 class Osu extends Model

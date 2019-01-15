@@ -73,9 +73,11 @@ use Carbon\Carbon;
  * @property mixed $forum_last_poster_colour
  * @property mixed $forum_last_post_time
  * @property mixed $forum_last_post_time
- * @property mixed $topics
- * @property mixed $subforums
- * @property mixed $lastPost
+ * @property \Illuminate\Database\Eloquent\Collection $topics Topic
+ * @property static $parentForum
+ * @property \Illuminate\Database\Eloquent\Collection $subforums static
+ * @property Post $lastPost
+ * @property ForumCover $cover
  */
 class Forum extends Model
 {

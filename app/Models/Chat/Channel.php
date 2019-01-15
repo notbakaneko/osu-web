@@ -29,13 +29,12 @@ use Carbon\Carbon;
  * @property int $channel_id
  * @property string $name
  * @property string $description
- * @property Carbon\Carbon $creation_time
+ * @property \Carbon\Carbon $creation_time
  * @property mixed $type
  * @property string|null $allowed_groups
  * @property int $moderated
  * @property mixed $allowed_groups
- * @property mixed $messages
- * @property mixed $filteredMessages
+ * @property \Illuminate\Database\Eloquent\Collection $messages Message
  */
 class Channel extends Model
 {

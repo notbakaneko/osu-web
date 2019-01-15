@@ -115,7 +115,7 @@ use Request;
  * @property float $osu_mapperrank
  * @property int $osu_testversion
  * @property boolean $osu_subscriber
- * @property Carbon\Carbon|null $osu_subscriptionexpiry
+ * @property \Carbon\Carbon|null $osu_subscriptionexpiry
  * @property int $osu_kudosavailable
  * @property int $osu_kudosdenied
  * @property int $osu_kudostotal
@@ -159,57 +159,45 @@ use Request;
  * @property mixed $password
  * @property mixed $current_password
  * @property mixed $user_email_confirmation
- * @property mixed $badges
- * @property mixed $githubUsers
- * @property mixed $monthlyPlaycounts
- * @property mixed $replaysWatchedCounts
- * @property mixed $reportedIn
- * @property mixed $reportsMade
- * @property mixed $userGroups
- * @property mixed $beatmapDiscussionVotes
- * @property mixed $beatmapDiscussions
- * @property mixed $beatmapsets
- * @property mixed $beatmapsetWatches
- * @property mixed $clients
- * @property mixed $favourites
- * @property mixed $beatmapsetNominations
- * @property mixed $beatmapPlaycounts
- * @property mixed $profileBanners
- * @property mixed $storeAddresses
- * @property mixed $rankHistories
- * @property mixed $country
- * @property mixed $scoresOsu
- * @property mixed $scoresFruits
- * @property mixed $scoresMania
- * @property mixed $scoresTaiko
- * @property mixed $scoresFirstOsu
- * @property mixed $scoresFirstFruits
- * @property mixed $scoresFirstMania
- * @property mixed $scoresFirstTaiko
- * @property mixed $scoresBestOsu
- * @property mixed $scoresBestFruits
- * @property mixed $scoresBestMania
- * @property mixed $scoresBestTaiko
- * @property mixed $userProfileCustomization
- * @property mixed $accountHistories
- * @property mixed $userAchievements
- * @property mixed $usernameChangeHistory
- * @property mixed $relations
- * @property mixed $blocks
- * @property mixed $friends
- * @property mixed $channels
- * @property mixed $events
- * @property mixed $beatmapsetRatings
- * @property mixed $givenKudosu
- * @property mixed $receivedKudosu
- * @property mixed $supporterTags
- * @property mixed $supporterTagPurchases
- * @property mixed $forumPosts
- * @property mixed $changelogs
- * @property mixed $profileBeatmapsetsRankedAndApproved
- * @property mixed $profileBeatmapsetsUnranked
- * @property mixed $profileBeatmapsetsGraveyard
- * @property mixed $profileBeatmapsetsLoved
+ * @property \Illuminate\Database\Eloquent\Collection $badges UserBadge
+ * @property \Illuminate\Database\Eloquent\Collection $githubUsers GithubUser
+ * @property \Illuminate\Database\Eloquent\Collection $monthlyPlaycounts UserMonthlyPlaycount
+ * @property \Illuminate\Database\Eloquent\Collection $replaysWatchedCounts UserReplaysWatchedCount
+ * @property UserReport $reportedIn
+ * @property \Illuminate\Database\Eloquent\Collection $reportsMade UserReport
+ * @property \Illuminate\Database\Eloquent\Collection $userGroups UserGroup
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionVotes BeatmapDiscussionVote
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapsets Beatmapset
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapsetWatches BeatmapsetWatch
+ * @property \Illuminate\Database\Eloquent\Collection $beatmaps Beatmap
+ * @property \Illuminate\Database\Eloquent\Collection $clients UserClient
+ * @property \Illuminate\Database\Eloquent\Collection $favourites FavouriteBeatmapset
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapsetNominations BeatmapsetEvent
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapPlaycounts BeatmapPlaycount
+ * @property ApiKey $apiKey
+ * @property \Illuminate\Database\Eloquent\Collection $profileBanners ProfileBanner
+ * @property \Illuminate\Database\Eloquent\Collection $storeAddresses Store\Address
+ * @property Rank $rank
+ * @property \Illuminate\Database\Eloquent\Collection $rankHistories RankHistory
+ * @property Country $country
+ * @property UserProfileCustomization $userProfileCustomization
+ * @property \Illuminate\Database\Eloquent\Collection $accountHistories UserAccountHistory
+ * @property Forum\Post $userPage
+ * @property \Illuminate\Database\Eloquent\Collection $userAchievements UserAchievement
+ * @property \Illuminate\Database\Eloquent\Collection $usernameChangeHistory UsernameChangeHistory
+ * @property \Illuminate\Database\Eloquent\Collection $relations UserRelation
+ * @property \Illuminate\Database\Eloquent\Collection $blocks static
+ * @property \Illuminate\Database\Eloquent\Collection $friends static
+ * @property \Illuminate\Database\Eloquent\Collection $channels Chat\Channel
+ * @property \Illuminate\Database\Eloquent\Collection $events Event
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapsetRatings BeatmapsetUserRating
+ * @property \Illuminate\Database\Eloquent\Collection $givenKudosu KudosuHistory
+ * @property \Illuminate\Database\Eloquent\Collection $receivedKudosu KudosuHistory
+ * @property \Illuminate\Database\Eloquent\Collection $supporterTags UserDonation
+ * @property \Illuminate\Database\Eloquent\Collection $supporterTagPurchases UserDonation
+ * @property \Illuminate\Database\Eloquent\Collection $forumPosts Forum\Post
+ * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
  */
 class User extends Model implements AuthenticatableContract
 {

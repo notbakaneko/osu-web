@@ -95,7 +95,7 @@ namespace App\Models;
  * @property float $osu_mapperrank
  * @property int $osu_testversion
  * @property boolean $osu_subscriber
- * @property Carbon\Carbon|null $osu_subscriptionexpiry
+ * @property \Carbon\Carbon|null $osu_subscriptionexpiry
  * @property int $osu_kudosavailable
  * @property int $osu_kudosdenied
  * @property int $osu_kudostotal

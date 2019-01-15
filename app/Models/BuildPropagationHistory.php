@@ -28,7 +28,8 @@ use DB;
  * @property int $id
  * @property int $build_id
  * @property int $user_count
- * @property Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $created_at
+ * @property Build $build
  */
 class BuildPropagationHistory extends Model
 {

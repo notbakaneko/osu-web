@@ -26,9 +26,10 @@ namespace App\Models;
  * @property int|null $canonical_id
  * @property string|null $username
  * @property int|null $user_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $changelogEntries
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  */
 class GithubUser extends Model
 {

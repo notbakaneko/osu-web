@@ -29,16 +29,19 @@ use App\Traits\Validatable;
  *
  * @property int $report_id
  * @property int $user_id
+ * @property mixed|null $reportable_type
+ * @property int|null $reportable_id
  * @property int $score_id
  * @property int $mode
  * @property mixed $reason
  * @property int $reporter_id
- * @property string|null $comments
- * @property Carbon\Carbon $timestamp
+ * @property string $comments
+ * @property \Carbon\Carbon $timestamp
  * @property mixed $score_type
- * @property mixed $reporter
+ * @property mixed $reportable
+ * @property User $reporter
  * @property mixed $score
- * @property mixed $user
+ * @property User $user
  */
 class UserReport extends Model
 {

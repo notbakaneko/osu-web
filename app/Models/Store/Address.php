@@ -36,11 +36,11 @@ use Auth;
  * @property string|null $zip
  * @property string|null $country_code
  * @property string|null $phone
- * @property Carbon\Carbon $created_at
- * @property Carbon\Carbon|null $deleted_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $user
- * @property mixed $country
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property User $user
+ * @property Country $country
  */
 class Address extends Model
 {

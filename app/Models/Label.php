@@ -29,9 +29,9 @@ namespace App\Models;
  * @property string $header_url
  * @property string|null $soundcloud
  * @property string|null $website
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $artists
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection $artists Artist
  */
 class Label extends Model
 {

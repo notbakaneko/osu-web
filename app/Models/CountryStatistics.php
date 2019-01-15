@@ -32,8 +32,9 @@ use DB;
  * @property int $user_count
  * @property int $performance
  * @property int $display
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Country $country
  */
 class CountryStatistics extends Model
 {

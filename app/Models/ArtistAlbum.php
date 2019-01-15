@@ -29,9 +29,10 @@ namespace App\Models;
  * @property string $genre
  * @property string|null $cover_url
  * @property int $visible
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $tracks
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Artist $artist
+ * @property \Illuminate\Database\Eloquent\Collection $tracks ArtistTrack
  */
 class ArtistAlbum extends Model
 {

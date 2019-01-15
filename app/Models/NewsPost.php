@@ -34,10 +34,10 @@ use Exception;
  * @property string|null $hash
  * @property string|null $tumblr_id
  * @property array|null $page
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property Carbon\Carbon|null $published_at
- * @property mixed $comments
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $published_at
+ * @property Comment $comments
  */
 class NewsPost extends Model
 {

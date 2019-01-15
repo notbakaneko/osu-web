@@ -38,10 +38,11 @@ namespace App\Models;
  * @property int|null $user_id
  * @property string|null $cover_url
  * @property string|null $header_url
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $albums
- * @property mixed $tracks
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Label $label
+ * @property \Illuminate\Database\Eloquent\Collection $albums ArtistAlbum
+ * @property \Illuminate\Database\Eloquent\Collection $tracks ArtistTrack
  */
 class Artist extends Model
 {

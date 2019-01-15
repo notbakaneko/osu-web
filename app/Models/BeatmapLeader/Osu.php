@@ -27,7 +27,7 @@ use App\Models\Score;
  * @property int $beatmap_id
  * @property int $user_id
  * @property int|null $score_id
- * @property mixed $score
+ * @property Score\Osu $score
  */
 class Osu extends Model
 {

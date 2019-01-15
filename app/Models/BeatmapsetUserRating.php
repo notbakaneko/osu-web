@@ -7,7 +7,9 @@ namespace App\Models;
  * @property int $user_id
  * @property int $beatmapset_id
  * @property int $rating
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
+ * @property Beatmapset $beatmapset
+ * @property User $user
  */
 class BeatmapsetUserRating extends Model
 {

@@ -30,9 +30,11 @@ use Carbon\Carbon;
  * @property string|null $supporting_url
  * @property int|null $ban_status
  * @property int $period
- * @property Carbon\Carbon|null $timestamp
+ * @property \Carbon\Carbon|null $timestamp
  * @property int|null $banner_id
  * @property mixed $type
+ * @property User $user
+ * @property User $actor
  */
 class UserAccountHistory extends Model
 {

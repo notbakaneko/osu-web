@@ -33,15 +33,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $order_id
  * @property int $product_id
  * @property int $quantity
- * @property Carbon\Carbon $created_at
- * @property Carbon\Carbon|null $deleted_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property float|null $cost
  * @property string|null $extra_info
  * @property array|null $extra_data
  * @property boolean $reserved
- * @property mixed $order
- * @property mixed $product
+ * @property Order $order
+ * @property Product $product
  */
 class OrderItem extends Model
 {

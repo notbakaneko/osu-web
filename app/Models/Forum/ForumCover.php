@@ -32,12 +32,14 @@ use DB;
  * @property int|null $user_id
  * @property string|null $hash
  * @property string|null $ext
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property array|null $default_topic_cover_json
  * @property mixed $default_topic_cover
  * @property mixed $main_cover
  * @property mixed $default_topic_cover
+ * @property Forum $forum
+ * @property User $user
  */
 class ForumCover extends Model
 {

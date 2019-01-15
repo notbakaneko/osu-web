@@ -27,9 +27,9 @@ namespace App\Models;
  * @property string $name
  * @property string $author
  * @property string $tag
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property int|null $playmode
- * @property mixed $items
+ * @property \Illuminate\Database\Eloquent\Collection $items BeatmapPackItem
  */
 class BeatmapPack extends Model
 {

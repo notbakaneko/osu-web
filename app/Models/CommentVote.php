@@ -25,10 +25,10 @@ namespace App\Models;
  * @property int $id
  * @property int $comment_id
  * @property int $user_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $comment
- * @property mixed $user
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Comment $comment
+ * @property User $user
  */
 class CommentVote extends Model
 {

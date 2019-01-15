@@ -29,8 +29,8 @@ use DB;
  * @property int $total_attempts
  * @property int $unique_ids
  * @property string $failed_ids
- * @property Carbon\Carbon|null $last_attempt
- * @property Carbon\Carbon $created_date
+ * @property \Carbon\Carbon|null $last_attempt
+ * @property \Carbon\Carbon $created_date
  */
 class LoginAttempt extends Model
 {

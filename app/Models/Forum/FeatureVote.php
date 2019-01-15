@@ -30,7 +30,9 @@ use DB;
  * @property int $topic_id
  * @property int $user_id
  * @property mixed $type
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
+ * @property Topic $topic
+ * @property User $user
  */
 class FeatureVote extends Model
 {

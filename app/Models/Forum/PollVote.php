@@ -29,8 +29,8 @@ use App\Traits\Validatable;
  * @property int $poll_option_id
  * @property int $vote_user_id
  * @property string $vote_user_ip
- * @property mixed $pollOption
- * @property mixed $user
+ * @property PollOption $pollOption
+ * @property User $user
  */
 class PollVote extends Model
 {

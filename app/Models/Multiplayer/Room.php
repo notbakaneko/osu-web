@@ -27,6 +27,24 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property int|null $channel_id
+ * @property \Carbon\Carbon $starts_at
+ * @property \Carbon\Carbon $ends_at
+ * @property int|null $max_attempts
+ * @property int $participant_count
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property Channel $channel
+ * @property User $host
+ * @property \Illuminate\Database\Eloquent\Collection $playlist PlaylistItem
+ * @property \Illuminate\Database\Eloquent\Collection $scores RoomScore
+ */
 class Room extends Model
 {
     use SoftDeletes;

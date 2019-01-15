@@ -24,7 +24,7 @@ namespace App\Models;
  *
  * @property int $ip
  * @property int|null $user_id
- * @property Carbon\Carbon $timestamp
+ * @property \Carbon\Carbon $timestamp
  * @property int $length
  * @property int $active
  */

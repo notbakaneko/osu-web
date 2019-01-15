@@ -29,12 +29,12 @@ use Carbon\Carbon;
  * @property int|null $user_id
  * @property mixed|null $type
  * @property string|null $comment
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property mixed $comment
  * @property mixed $comment
- * @property mixed $beatmapset
- * @property mixed $user
+ * @property Beatmapset $beatmapset
+ * @property User $user
  */
 class BeatmapsetEvent extends Model
 {

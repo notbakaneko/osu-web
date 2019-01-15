@@ -29,10 +29,11 @@ use App\Models\User;
  * @property int|null $game_id
  * @property int|null $user_id
  * @property string|null $text
- * @property Carbon\Carbon|null $timestamp
+ * @property \Carbon\Carbon|null $timestamp
  * @property mixed $detail
- * @property mixed $match
- * @property mixed $game
+ * @property Match $match
+ * @property Game $game
+ * @property User $user
  */
 class Event extends Model
 {

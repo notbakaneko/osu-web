@@ -32,7 +32,7 @@ use Log;
  * @property int $target_user_id
  * @property int $length
  * @property int $amount
- * @property Carbon\Carbon $timestamp
+ * @property \Carbon\Carbon $timestamp
  * @property boolean $cancel
  */
 class UserDonation extends Model

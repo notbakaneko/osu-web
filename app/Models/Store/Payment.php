@@ -28,11 +28,11 @@ namespace App\Models\Store;
  * @property boolean $cancelled
  * @property string $transaction_id
  * @property string $provider
- * @property Carbon\Carbon $paid_at
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon $paid_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property string|null $country_code
- * @property mixed $order
+ * @property Order $order
  */
 class Payment extends Model
 {

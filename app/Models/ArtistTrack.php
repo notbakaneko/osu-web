@@ -36,8 +36,10 @@ namespace App\Models;
  * @property string|null $cover_url
  * @property string $preview
  * @property string $osz
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Artist $artist
+ * @property ArtistAlbum $album
  */
 class ArtistTrack extends Model
 {

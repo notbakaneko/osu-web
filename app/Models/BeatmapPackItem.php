@@ -25,7 +25,8 @@ namespace App\Models;
  * @property int $item_id
  * @property int $pack_id
  * @property int $beatmapset_id
- * @property mixed $pack
+ * @property BeatmapPack $pack
+ * @property Beatmapset $beatmapset
  */
 class BeatmapPackItem extends Model
 {

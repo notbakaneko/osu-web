@@ -27,8 +27,11 @@ namespace App\Models;
  * @property int $user_id
  * @property int $contest_entry_id
  * @property float $weight
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property ContestEntry $entry
+ * @property Contest $contest
+ * @property User $user
  */
 class ContestVote extends Model
 {

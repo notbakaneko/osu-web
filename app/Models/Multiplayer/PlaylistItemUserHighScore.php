@@ -24,6 +24,17 @@ use App\Models\Model;
 
 /**
  * Dumb persistence model for UserScoreAggregate.
+
+ *
+ * @property int $id
+ * @property int $score_id
+ * @property int $user_id
+ * @property int $playlist_item_id
+ * @property int $total_score
+ * @property float $accuracy
+ * @property float|null $pp
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  */
 class PlaylistItemUserHighScore extends Model
 {

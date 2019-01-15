@@ -36,7 +36,7 @@ namespace App\Models\Score\Best;
  * @property int $countkatu
  * @property boolean $perfect
  * @property int $enabled_mods
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property float|null $pp
  * @property boolean $replay
  * @property int $hidden

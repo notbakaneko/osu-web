@@ -28,9 +28,11 @@ namespace App\Models;
  * @property string|null $entry_url
  * @property int|null $user_id
  * @property int $contest_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property mixed $votes
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property Contest $contest
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $votes ContestVote
  */
 class ContestEntry extends Model
 {

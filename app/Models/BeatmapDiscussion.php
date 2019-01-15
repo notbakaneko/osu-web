@@ -34,10 +34,10 @@ use DB;
  * @property int|null $message_type
  * @property int|null $timestamp
  * @property boolean $resolved
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property int|null $resolver_id
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property int|null $deleted_by_id
  * @property boolean $kudosu_denied
  * @property int|null $kudosu_denied_by_id
@@ -45,15 +45,13 @@ use DB;
  * @property mixed $message_type
  * @property mixed $resolved
  * @property mixed $resolved
- * @property mixed $beatmap
- * @property mixed $visibleBeatmap
- * @property mixed $beatmapset
- * @property mixed $visibleBeatmapset
- * @property mixed $beatmapDiscussionPosts
- * @property mixed $startingPost
- * @property mixed $beatmapDiscussionVotes
- * @property mixed $user
- * @property mixed $kudosuHistory
+ * @property Beatmap $visibleBeatmap
+ * @property Beatmapset $visibleBeatmapset
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionPosts BeatmapDiscussionPost
+ * @property BeatmapDiscussionPost $startingPost
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionVotes BeatmapDiscussionVote
+ * @property User $user
+ * @property KudosuHistory $kudosuHistory
  */
 class BeatmapDiscussion extends Model
 {

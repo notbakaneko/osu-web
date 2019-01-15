@@ -27,6 +27,9 @@ namespace App\Models;
  * @property int $beatmapset_id
  * @property int $fulfilled
  * @property int $mirror_id
+ * @property Beatmapset $beatmapset
+ * @property BeatmapMirror $mirror
+ * @property User $user
  */
 class BeatmapDownload extends Model
 {

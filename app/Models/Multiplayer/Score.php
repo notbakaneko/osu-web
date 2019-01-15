@@ -43,6 +43,7 @@ use App\Traits\Scoreable;
  * @property int $frame
  * @property int|null $enabled_mods
  * @property mixed $team
+ * @property Game $game
  */
 class Score extends Model
 {

@@ -30,11 +30,13 @@ use DB;
  * @property int|null $post_id
  * @property mixed $action
  * @property int $amount
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property string|null $kudosuable_type
  * @property int|null $kudosuable_id
  * @property array|null $details
- * @property mixed $receiver
+ * @property User $giver
+ * @property User $receiver
+ * @property Forum\Post $post
  * @property mixed $kudosuable
  */
 class KudosuHistory extends Model

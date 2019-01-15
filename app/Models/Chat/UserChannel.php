@@ -29,7 +29,9 @@ use Illuminate\Database\Eloquent\Builder;
  * @property int $user_id
  * @property int $channel_id
  * @property int|null $last_read_id
- * @property mixed $channel
+ * @property User $user
+ * @property User $userScoped
+ * @property Channel $channel
  */
 class UserChannel extends Model
 {

@@ -28,6 +28,30 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $room_id
+ * @property int $playlist_item_id
+ * @property int $beatmap_id
+ * @property mixed|null $rank
+ * @property int|null $total_score
+ * @property float|null $accuracy
+ * @property float|null $pp
+ * @property int|null $max_combo
+ * @property array|null $mods
+ * @property array|null $statistics
+ * @property \Carbon\Carbon $started_at
+ * @property \Carbon\Carbon|null $ended_at
+ * @property boolean|null $passed
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property PlaylistItem $playlistItem
+ * @property Room $room
+ * @property User $user
+ */
 class RoomScore extends Model
 {
     use SoftDeletes;

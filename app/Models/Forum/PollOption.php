@@ -30,8 +30,9 @@ use DB;
  * @property string $poll_option_text
  * @property int $poll_option_total
  * @property mixed $poll_option_text
- * @property mixed $post
- * @property mixed $votes
+ * @property Post $post
+ * @property Topic $topic
+ * @property \Illuminate\Database\Eloquent\Collection $votes PollVote
  */
 class PollOption extends Model
 {

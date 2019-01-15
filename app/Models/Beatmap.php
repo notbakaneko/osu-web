@@ -43,21 +43,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $diff_approach
  * @property int $playmode
  * @property int $approved
- * @property Carbon\Carbon $last_update
+ * @property \Carbon\Carbon $last_update
  * @property float $difficultyrating
  * @property int $playcount
  * @property int $passcount
  * @property boolean $orphaned
  * @property string|null $youtube_preview
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property mixed $mode
  * @property mixed $diff_size
  * @property mixed $version
- * @property mixed $beatmapset
- * @property mixed $beatmapDiscussions
- * @property mixed $difficulty
- * @property mixed $difficultyAttribs
- * @property mixed $failtimes
+ * @property Beatmapset $beatmapset
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
+ * @property \Illuminate\Database\Eloquent\Collection $difficulty BeatmapDifficulty
+ * @property \Illuminate\Database\Eloquent\Collection $difficultyAttribs BeatmapDifficultyAttrib
+ * @property \Illuminate\Database\Eloquent\Collection $failtimes BeatmapFailtimes
  */
 class Beatmap extends Model
 {

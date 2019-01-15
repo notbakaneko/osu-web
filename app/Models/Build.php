@@ -28,18 +28,17 @@ use Carbon\Carbon;
  * @property string|null $version
  * @property mixed|null $hash
  * @property mixed|null $last_hash
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property int $allow_ranking
  * @property boolean $allow_bancho
  * @property int $test_build
  * @property int $users
  * @property int|null $stream_id
- * @property mixed $changelogs
- * @property mixed $defaultChangelogs
- * @property mixed $changelogEntries
- * @property mixed $defaultChangelogEntries
- * @property mixed $comments
- * @property mixed $propagationHistories
+ * @property UpdateStream $updateStream
+ * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property Comment $comments
+ * @property \Illuminate\Database\Eloquent\Collection $propagationHistories BuildPropagationHistory
  */
 class Build extends Model
 {

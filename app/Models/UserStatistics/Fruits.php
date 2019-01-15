@@ -48,8 +48,8 @@ namespace App\Models\UserStatistics;
  * @property float $rank_score
  * @property int $rank_score_index
  * @property float $accuracy_new
- * @property Carbon\Carbon $last_update
- * @property Carbon\Carbon $last_played
+ * @property \Carbon\Carbon $last_update
+ * @property \Carbon\Carbon $last_played
  */
 class Fruits extends Model
 {

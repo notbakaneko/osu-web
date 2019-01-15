@@ -53,9 +53,9 @@ use Illuminate\Database\QueryException;
  * @property int $versions_available
  * @property int $approved
  * @property int|null $approvedby_id
- * @property Carbon\Carbon|null $approved_date
- * @property Carbon\Carbon|null $submit_date
- * @property Carbon\Carbon $last_update
+ * @property \Carbon\Carbon|null $approved_date
+ * @property \Carbon\Carbon|null $submit_date
+ * @property \Carbon\Carbon $last_update
  * @property string|null $filename
  * @property boolean $active
  * @property float $rating
@@ -71,31 +71,30 @@ use Illuminate\Database\QueryException;
  * @property mixed|null $osz2_hash
  * @property boolean $download_disabled
  * @property string|null $download_disabled_url
- * @property Carbon\Carbon|null $thread_icon_date
+ * @property \Carbon\Carbon|null $thread_icon_date
  * @property int $favourite_count
  * @property int $play_count
  * @property string|null $difficulty_names
- * @property Carbon\Carbon|null $cover_updated_at
+ * @property \Carbon\Carbon|null $cover_updated_at
  * @property boolean $discussion_enabled
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property int $hype
  * @property int $nominations
  * @property int $previous_queue_duration
- * @property Carbon\Carbon|null $queued_at
- * @property mixed $beatmapDiscussions
- * @property mixed $watches
- * @property mixed $beatmaps
- * @property mixed $allBeatmaps
- * @property mixed $events
- * @property mixed $genre
- * @property mixed $language
- * @property mixed $comments
- * @property mixed $eventsSinceReset
- * @property mixed $nominationsSinceReset
- * @property mixed $defaultBeatmaps
- * @property mixed $user
- * @property mixed $userRatings
- * @property mixed $favourites
+ * @property \Carbon\Carbon|null $queued_at
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
+ * @property \Illuminate\Database\Eloquent\Collection $watches BeatmapsetWatch
+ * @property \Illuminate\Database\Eloquent\Collection $beatmaps Beatmap
+ * @property \Illuminate\Database\Eloquent\Collection $allBeatmaps Beatmap
+ * @property \Illuminate\Database\Eloquent\Collection $events BeatmapsetEvent
+ * @property Genre $genre
+ * @property Language $language
+ * @property Comment $comments
+ * @property \Illuminate\Database\Eloquent\Collection $defaultBeatmaps Beatmap
+ * @property User $user
+ * @property User $approver
+ * @property \Illuminate\Database\Eloquent\Collection $userRatings BeatmapsetUserRating
+ * @property \Illuminate\Database\Eloquent\Collection $favourites FavouriteBeatmapset
  */
 class Beatmapset extends Model implements AfterCommit
 {

@@ -24,7 +24,9 @@ namespace App\Models;
  *
  * @property int $user_id
  * @property int $achievement_id
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
+ * @property User $user
+ * @property Achievement $achievement
  */
 class UserAchievement extends Model
 {

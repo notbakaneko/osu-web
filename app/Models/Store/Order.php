@@ -41,24 +41,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *  successfully sent to the payment provider.
  * i.e. it should not be cleared immediately on checking out.
  *
- * @property User $user
  * @property int $order_id
  * @property int $user_id
  * @property mixed $status
  * @property int|null $address_id
  * @property string|null $tracking_code
- * @property Carbon\Carbon|null $paid_at
- * @property Carbon\Carbon|null $shipped_at
- * @property Carbon\Carbon $created_at
- * @property Carbon\Carbon|null $deleted_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $paid_at
+ * @property \Carbon\Carbon|null $shipped_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property string|null $last_tracking_state
  * @property float|null $shipping
  * @property string|null $transaction_id
- * @property mixed $items
- * @property mixed $address
- * @property mixed $payments
- * @property mixed $user
+ * @property \Illuminate\Database\Eloquent\Collection $items OrderItem
+ * @property Address $address
+ * @property \Illuminate\Database\Eloquent\Collection $payments Payment
+ * @property User $user
  */
 class Order extends Model
 {

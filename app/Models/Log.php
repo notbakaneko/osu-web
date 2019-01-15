@@ -34,9 +34,10 @@ namespace App\Models;
  * @property mixed $log_data
  * @property mixed $log_data
  * @property mixed $log_data
- * @property mixed $forum
- * @property mixed $topic
- * @property mixed $user
+ * @property Forum\Forum $forum
+ * @property Forum\Topic $topic
+ * @property User $user
+ * @property User $reportee
  */
 class Log extends Model
 {

@@ -34,9 +34,11 @@ use Illuminate\Http\UploadedFile;
  * @property int|null $filesize
  * @property int|null $user_id
  * @property int|null $contest_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property User $user
+ * @property Contest $contest
  */
 class UserContestEntry extends Model
 {

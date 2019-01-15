@@ -38,20 +38,20 @@ use Cache;
  * @property boolean $visible
  * @property int $show_votes
  * @property json|null $extra_options
- * @property Carbon\Carbon|null $entry_starts_at
- * @property Carbon\Carbon|null $entry_ends_at
- * @property Carbon\Carbon|null $voting_starts_at
- * @property Carbon\Carbon|null $voting_ends_at
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $entry_starts_at
+ * @property \Carbon\Carbon|null $entry_ends_at
+ * @property \Carbon\Carbon|null $voting_starts_at
+ * @property \Carbon\Carbon|null $voting_ends_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property mixed $entry_shape
  * @property mixed $entry_shape
  * @property mixed $unmasked
  * @property mixed $unmasked
  * @property mixed $link_icon
  * @property mixed $link_icon
- * @property mixed $entries
- * @property mixed $votes
+ * @property \Illuminate\Database\Eloquent\Collection $entries ContestEntry
+ * @property \Illuminate\Database\Eloquent\Collection $votes ContestVote
  */
 class Contest extends Model
 {

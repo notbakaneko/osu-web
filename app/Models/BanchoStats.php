@@ -26,7 +26,7 @@ namespace App\Models;
  * @property int $users_irc
  * @property int $users_osu
  * @property int $multiplayer_games
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  */
 class BanchoStats extends Model
 {

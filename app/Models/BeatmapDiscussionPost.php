@@ -30,18 +30,17 @@ use DB;
  * @property int $id
  * @property int $beatmap_discussion_id
  * @property int|null $user_id
- * @property Carbon\Carbon|null $created_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property string $message
  * @property int|null $last_editor_id
  * @property boolean $system
- * @property Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property int|null $deleted_by_id
  * @property mixed $message
  * @property mixed $message
- * @property mixed $beatmapset
- * @property mixed $beatmapDiscussion
- * @property mixed $user
+ * @property BeatmapDiscussion $beatmapDiscussion
+ * @property User $user
  */
 class BeatmapDiscussionPost extends Model
 {

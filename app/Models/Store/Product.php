@@ -34,9 +34,9 @@ use App\Exceptions\InsufficientStockException;
  * @property float $next_shipping
  * @property int|null $stock
  * @property int $max_quantity
- * @property Carbon\Carbon $created_at
- * @property Carbon\Carbon|null $deleted_at
- * @property Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property boolean $promoted
  * @property int $display_order
  * @property string|null $header_description
@@ -47,11 +47,14 @@ use App\Exceptions\InsufficientStockException;
  * @property string|null $custom_class
  * @property boolean $enabled
  * @property boolean $allow_multiple
+ * @property int|null $tournament_id
  * @property mixed $header_image
  * @property mixed $header_description
  * @property mixed $description
- * @property mixed $variations
- * @property mixed $notificationRequests
+ * @property self $masterProduct
+ * @property \Illuminate\Database\Eloquent\Collection $variations static
+ * @property 'Category' $category
+ * @property \Illuminate\Database\Eloquent\Collection $notificationRequests NotificationRequest
  */
 class Product extends Model
 {

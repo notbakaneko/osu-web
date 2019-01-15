@@ -28,7 +28,7 @@ namespace App\Models;
  * @property string $category
  * @property string $message
  * @property string $checksum
- * @property Carbon\Carbon $date
+ * @property \Carbon\Carbon $date
  * @property boolean $private
  * @property boolean $major
  * @property int $tweet
@@ -37,7 +37,9 @@ namespace App\Models;
  * @property string|null $url
  * @property int|null $stream_id
  * @property mixed $prefix
- * @property mixed $updateStream
+ * @property User $user
+ * @property UpdateStream $updateStream
+ * @property Build $gameBuild
  */
 class Changelog extends Model
 {
