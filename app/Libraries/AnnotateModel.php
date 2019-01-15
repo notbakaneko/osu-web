@@ -328,6 +328,11 @@ class AnnotateModel
             return null;
         }
 
+        // morphTo can be anything :v
+        if ($functionName === 'morphTo') {
+            return [$functionName, 'mixed'];
+        }
+
         $parent = $node->getParent();
         if ($parent->getNodeKindName() !== 'CallExpression') {
             // TODO: should probably log message
