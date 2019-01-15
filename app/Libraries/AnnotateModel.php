@@ -112,6 +112,20 @@ class AnnotateModel
         return $methods;
     }
 
+    public static function collectionRelationshipMethods()
+    {
+        static $methods = null;
+
+        if ($methods === null) {
+            $methods = array_values(array_intersect(
+                static::relationshipMethods(),
+                ['belongsToMany', 'hasMany', 'hasManyThrough', 'morphToMany', 'morphedByMany']
+            ));
+        }
+
+        return $methods;
+    }
+
     public function __construct(SplFileInfo $file)
     {
         $this->file = $file;
@@ -371,7 +385,7 @@ class AnnotateModel
                     if ($className !== null) {
                         $properties[] = [
                             'name' => $declaration->getName(),
-                            'type' => $className,
+                            'type' => in_array($function, static::collectionRelationshipMethods(), true) ? $className.'[]' : $className,
                         ];
                     }
                 }
