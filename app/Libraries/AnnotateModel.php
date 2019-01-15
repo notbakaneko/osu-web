@@ -224,7 +224,7 @@ class AnnotateModel
         }
 
         if (starts_with($type, static::DATE_TYPES)) {
-            return 'Carbon\Carbon';
+            return '\Carbon\Carbon';
         }
 
         return 'mixed';
