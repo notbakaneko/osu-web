@@ -190,6 +190,7 @@ class AnnotateModel
         $this->findPropertiesFromMethods();
         $this->findPropertiesFromAttributes();
 
+        ksort($this->properties);
         $this->addAnnotationsToFile();
     }
 
