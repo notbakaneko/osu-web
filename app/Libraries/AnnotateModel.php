@@ -244,20 +244,10 @@ class AnnotateModel
 
     private function addAnnotationsToFile()
     {
-        $text = '';
-        foreach ($this->properties as $name => $property) {
-            $text .= " * @property {$property['type']} \${$name}";
-            if (!empty($property['text'])) {
-                $text .= " {$property['text']}";
-            }
-
-            $text .= "\n";
-        }
-
         $node = $this->classDeclaration;
 
         if ($node === null) {
-            echo("Could not find class declaration in {$this->file->getFilename()}!");
+            echo("Could not find class declaration in {$this->file->getFilename()}!\n");
 
             return;
         }
@@ -266,23 +256,61 @@ class AnnotateModel
         $existingCommentLength = strlen($existingComment);
 
         $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
+        if (!$blockExists && empty($this->properties)) {
+            echo("Nothing to annotate in {$this->file->getFilename()}\n");
+
+            return;
+        }
+
         if ($blockExists) {
             $lines = explode("\n", $existingComment);
-            $lines = array_values(array_filter($lines, function ($line) {
+            // remove every line with a @property and the block end
+            $lines = array_filter($lines, function ($line) {
                 return !(starts_with($line, ' * @property') || starts_with($line, ' */'));
-            }));
+            });
 
-            // hack to prevent more empty lines from being added each run.
+            // remove blank lines
+            $lines = array_filter($lines, function ($line) {
+                return strlen(trim($line)) > 0;
+            });
+
+            // reset indices
+            $lines = array_values($lines);
+
+            // figure out if there was an existing doc block that needs preserving
+            $preserve = false;
             $numLines = count($lines);
-            if ($numLines >= 2 && trim($lines[$numLines - 2]) === '*') {
-                array_pop($lines);
-                array_pop($lines);
+            // first line should be '/**'
+            if ($numLines > 1) {
+                for ($i = 1; $i < $numLines; ++$i) {
+                    if (trim($lines[$i]) !== '*') {
+                        $preserve = true;
+                        break;
+                    }
+                }
             }
 
-            $text = implode("\n", $lines)."\n *\n".$text." */\n";
+            // reset or add a spacer
+            if (!$preserve) {
+                $lines = ['/**'];
+            } elseif (trim(array_last($lines)) !== '*') {
+                $lines[] = ' *';
+            }
         } else {
-            $text = "\n\n/**\n *\n".$text." */\n";
+            $lines = ['/**'];
         }
+
+        foreach ($this->properties as $name => $property) {
+            $propertyText = " * @property {$property['type']} \${$name}";
+            if (!empty($property['text'])) {
+                $propertyText .= " {$property['text']}";
+            }
+
+            $lines[] = $propertyText;
+        }
+
+        $lines[] = ' */';
+        $text = "\n\n".implode("\n", $lines)."\n";
 
         $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
         File::put($this->file->getRealPath(), $newContent);
