@@ -20,30 +20,27 @@
 
 namespace App\Libraries;
 
-use DB;
-
-use ReflectionClass;
-use ReflectionMethod;
-use App\Libraries\HasDynamicTable;
 use App\Models\Model;
-use Illuminate\Database\Eloquent\Collection;
+use DB;
+use File;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
-use Microsoft\PhpParser\Node\StringLiteral;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
-use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Parser;
-use Symfony\Component\Finder\SplFileInfo;
-use File;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
+use ReflectionClass;
+use ReflectionMethod;
+use Symfony\Component\Finder\SplFileInfo;
 
 class AnnotateModel
 {
@@ -83,12 +80,13 @@ class AnnotateModel
     private $reflectionClass;
 
     /**
-     * Debugging helper; prints some information about the node via print_r
+     * Debugging helper; prints some information about the node via print_r.
      *
      * @param Node|Token|null $node
      * @return void
      */
-    public static function dumpText($node) {
+    public static function dumpText($node)
+    {
         if ($node instanceof Node) {
             print_r($node->getText());
             print_r(' ;Node;  '.get_class($node));
@@ -238,6 +236,7 @@ class AnnotateModel
             return ends_with($item->getName(), 'Attribute');
         })->map(function ($item) {
             $name = $item->getName();
+
             return snake_case(substr(substr($name, 3), 0, -9));
         })->all();
     }
@@ -247,7 +246,7 @@ class AnnotateModel
         $node = $this->classDeclaration;
 
         if ($node === null) {
-            echo("Could not find class declaration in {$this->file->getFilename()}!\n");
+            echo "Could not find class declaration in {$this->file->getFilename()}!\n";
 
             return;
         }
@@ -257,7 +256,7 @@ class AnnotateModel
 
         $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
         if (!$blockExists && empty($this->properties)) {
-            echo("Nothing to annotate in {$this->file->getFilename()}\n");
+            echo "Nothing to annotate in {$this->file->getFilename()}\n";
 
             return;
         }
@@ -282,7 +281,7 @@ class AnnotateModel
             $numLines = count($lines);
             // first line should be '/**'
             if ($numLines > 1) {
-                for ($i = 1; $i < $numLines; ++$i) {
+                for ($i = 1; $i < $numLines; $i++) {
                     if (trim($lines[$i]) !== '*') {
                         $preserve = true;
                         break;
@@ -422,7 +421,7 @@ class AnnotateModel
     }
 
     /**
-     * Budget hacky type parser
+     * Budget hacky type parser.
      *
      * @param string $type
      * @return string
