@@ -306,7 +306,10 @@ class AnnotateModel
     private function castType(string $field, string $type) : string
     {
         $cast = $this->instance->getCasts()[$field] ?? null;
-        if ($cast !== null) {
+        if ($cast === 'boolean') {
+            // why.jpg
+            return 'bool';
+        } elseif ($cast !== null) {
             return $cast;
         }
 
