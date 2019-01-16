@@ -65,7 +65,7 @@ class AnnotateModel
     private $file;
 
     /** @var array */
-    private $properties;
+    private $properties = [];
 
     /** @var Model */
     private $instance;
@@ -78,6 +78,9 @@ class AnnotateModel
 
     /** @var array */
     private $methodDeclarations;
+
+    /** @var ReflectionClass */
+    private $reflectionClass;
 
     /**
      * Debugging helper; prints some information about the node via print_r
@@ -163,18 +166,19 @@ class AnnotateModel
 
     public function __construct($class)
     {
-        $reflectionClass = new ReflectionClass($class);
-        $this->file = new SplFileInfo($reflectionClass->getFilename(), '', '');
+        $this->reflectionClass = new ReflectionClass($class);
+        $this->file = new SplFileInfo($this->reflectionClass->getFilename(), '', '');
 
         if (
-            $reflectionClass->isAbstract() ||
-            !$reflectionClass->isSubclassOf(Model::class) ||
-            $reflectionClass->implementsInterface(HasDynamicTable::class)
+            !$this->reflectionClass->isSubclassOf(Model::class) ||
+            $this->reflectionClass->implementsInterface(HasDynamicTable::class)
         ) {
             return;
         }
 
-        $this->instance = $class::first() ?? new $class;
+        if (!$this->reflectionClass->isAbstract()) {
+            $this->instance = $class::first() ?? new $class;
+        }
     }
 
     public function addProperty(string $name, string $type, ?string $text = null)
@@ -189,18 +193,19 @@ class AnnotateModel
 
     public function annotate()
     {
-        if ($this->instance === null) {
-            return;
+        if ($this->isAnnotable()) {
+            $this->parse();
+            $this->extractProperties();
+            $this->addAnnotationsToFile();
         }
-
-        $this->parse();
-        $this->extractProperties();
-        $this->addAnnotationsToFile();
     }
 
     public function extractProperties()
     {
-        $this->findDirectProperties();
+        if ($this->instance !== null) {
+            $this->findDirectProperties();
+        }
+
         $this->findPropertiesFromMethods();
         $this->findPropertiesFromAttributes();
 
@@ -212,6 +217,11 @@ class AnnotateModel
     public function getProperties()
     {
         return $this->properties;
+    }
+
+    public function isAnnotable()
+    {
+        return $this->reflectionClass->isSubclassOf(Model::class) && !$this->reflectionClass->implementsInterface(HasDynamicTable::class);
     }
 
     public function parse()
@@ -342,8 +352,14 @@ class AnnotateModel
         /** @var MethodDeclaration $declaration */
         foreach ($this->methodDeclarations as $declaration) {
             if ($this->tryExtractRelationship($declaration) !== null) {
-                /** @var Node[] $statements */
-                $statements = $declaration->compoundStatementOrSemicolon->statements;
+                /** @var CompoundStatementNode|Token $statements */
+                $statements = $declaration->compoundStatementOrSemicolon;
+                // FIXME: check for abstract declaration instead.
+                if ($statements instanceof Token) {
+                    continue;
+                }
+
+                $statements = $statements->statements;
 
                 // only consider methods with only single return statement for now.
                 if (count($statements) !== 1) {
