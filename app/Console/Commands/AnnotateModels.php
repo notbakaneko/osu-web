@@ -23,6 +23,7 @@ namespace App\Console\Commands;
 use App\Libraries\AnnotateModel;
 use Illuminate\Console\Command;
 use File;
+use Symfony\Component\Finder\SplFileInfo;
 
 class AnnotateModels extends Command
 {
@@ -50,7 +51,20 @@ class AnnotateModels extends Command
         $files = File::allFiles(app_path().'/Models');
         foreach ($files as $file) {
             $this->line($file->getRelativePathname());
-            (new AnnotateModel($file))->annotate();
+            $class = static::classFromFileInfo($file);
+            (new AnnotateModel($class))->annotate();
         }
     }
+
+    public static function classFromFileInfo(SplFileInfo $fileInfo)
+    {
+        $baseName = $fileInfo->getBasename(".{$fileInfo->getExtension()}");
+        $namespace = str_replace('/', '\\', $fileInfo->getRelativePath());
+        if (mb_strlen($fileInfo->getRelativePath()) !== 0) {
+            $namespace .= '\\';
+        }
+
+        return "\\App\\Models\\{$namespace}{$baseName}";
+    }
+
 }
