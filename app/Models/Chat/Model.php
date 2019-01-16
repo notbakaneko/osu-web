@@ -22,6 +22,9 @@ namespace App\Models\Chat;
 
 use App\Models\Model as BaseModel;
 
+/**
+ *
+ */
 abstract class Model extends BaseModel
 {
     protected $connection = 'mysql-chat';

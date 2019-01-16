@@ -22,6 +22,9 @@ namespace App\Models\Forum;
 
 use App\Models\Model as BaseModel;
 
+/**
+ *
+ */
 abstract class Model extends BaseModel
 {
 }

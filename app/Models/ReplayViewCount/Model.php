@@ -24,6 +24,9 @@ use App\Libraries\ReplayFile;
 use App\Models\Model as BaseModel;
 use App\Models\Score\Best as ScoreBest;
 
+/**
+ *
+ */
 abstract class Model extends BaseModel
 {
     protected $primaryKey = 'score_id';
