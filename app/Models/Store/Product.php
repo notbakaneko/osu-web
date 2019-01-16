@@ -26,7 +26,7 @@ use App\Exceptions\InsufficientStockException;
  *
  * @property boolean $allow_multiple
  * @property float $base_shipping
- * @property 'Category' $category
+ * @property Category $category
  * @property float|null $cost
  * @property \Carbon\Carbon $created_at
  * @property string|null $custom_class
