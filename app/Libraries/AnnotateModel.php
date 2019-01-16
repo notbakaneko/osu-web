@@ -52,18 +52,22 @@ class AnnotateModel
     /** @var SplFileInfo */
     private $file;
 
-    private $class;
-
     /** @var array */
     private $properties;
 
     /** @var Model */
     private $instance;
 
+    /** @var Parser */
     private $parser;
+
+    /** @var Node */
     private $astNode;
+
+    /** @var string */
     private $content;
 
+    /** @var array */
     private $methodDeclarations;
 
     public static function fromClass($class)
@@ -144,6 +148,16 @@ class AnnotateModel
         $this->parser = new Parser();
     }
 
+    public function addProperty(string $name, string $type, ?string $text = null)
+    {
+        $existingType = $this->properties[$name]['type'] ?? null;
+
+        // override existing property if doesn't exist or mixed
+        if ($existingType === null || $existingType === 'mixed') {
+            $this->properties[$name] = ['type' => $type, 'text' => $text];
+        }
+    }
+
     public function getClassDeclaration()
     {
         return $this->classDeclaration;
@@ -164,72 +178,6 @@ class AnnotateModel
         return $this->methodNames;
     }
 
-    public function getClassAnnotations()
-    {
-        $columns = static::describeTable($this->instance);
-
-        $properties = [];
-        foreach ($columns as $column) {
-            $properties[] = $this->parseColumn($column);
-        }
-
-        // echo(print_r($properties, true));
-
-        return $properties;
-    }
-
-
-    // Field, Type, Null, Key, Default, Extra
-    public function parseColumn($column)
-    {
-        $type = $this->parseType($column);
-
-        return ['type' => $type, 'name' => $column->Field];
-    }
-
-    /**
-     * Budget hacky type parser
-     *
-     * @param string $type
-     * @return string
-     */
-    public function parseType($column) : string
-    {
-        $type = $this->castType($column->Field, $column->Type);
-
-        if ($column->Null !== "NO") {
-            $type = $type.'|null';
-        }
-
-        return $type;
-    }
-
-    public function castType(string $field, string $type) : string
-    {
-        $cast = $this->instance->getCasts()[$field] ?? null;
-        if ($cast !== null) {
-            return $cast;
-        }
-
-        if (starts_with($type, static::STRING_TYPES)) {
-            return 'string';
-        }
-
-        if (starts_with($type, static::INT_TYPES)) {
-            return 'int';
-        }
-
-        if (starts_with($type, static::FLOAT_TYPES)) {
-            return 'float';
-        }
-
-        if (starts_with($type, static::DATE_TYPES)) {
-            return '\Carbon\Carbon';
-        }
-
-        return 'mixed';
-    }
-
     public function annotate()
     {
         if ($this->instance === null) {
@@ -238,14 +186,10 @@ class AnnotateModel
 
         $this->astNode = $this->parse();
 
-        $directProperties = $this->getClassAnnotations();
-        $methodProperties = $this->findPropertiesFromMethods();
+        $this->findDirectProperties();
+        $this->findPropertiesFromMethods();
+        $this->findPropertiesFromAttributes();
 
-        $attributeProperties = array_map(function ($method) {
-            return ['type' => 'mixed', 'name' => $method];
-        }, $this->attributeNames);
-
-        $this->properties = array_merge($directProperties, $attributeProperties, $methodProperties);
         $this->addAnnotationsToFile();
     }
 
@@ -289,16 +233,190 @@ class AnnotateModel
         return $methods;
     }
 
-    private function walkCallExpression(Node $expression) {
-        $nodes = $expression->getDescendantNodes();
-        $this->texify($expression);
-        foreach ($nodes as $node) {
-            // $this->texify($node);
-            $relationship = $this->tryFindRelationship($node);
-            if ($relationship !== null) {
-                return $relationship;
+    public function findDirectProperties()
+    {
+        $columns = static::describeTable($this->instance);
+
+        foreach ($columns as $column) {
+            [$name, $type] = $this->parseColumn($column);
+            $this->addProperty($name, $type);
+        }
+    }
+
+    public function findPropertiesFromAttributes()
+    {
+        foreach ($this->attributeNames as $name) {
+            // TODO: should check the types and see if it needs to be overridden or not.
+            $this->addProperty($name, 'mixed');
+        }
+    }
+
+    public function findPropertiesFromMethods()
+    {
+        $properties = [];
+
+        foreach ($this->methodDeclarations as $declaration) {
+            if ($this->tryExtractRelationship($declaration) !== null) {
+                /** @var Node[] $statements */
+                $statements = $declaration->compoundStatementOrSemicolon->statements;
+
+                // only consider methods with only single return statement for now.
+                if (count($statements) !== 1) {
+                    continue;
+                }
+
+                /** @var Node $statement */
+                $statement = $statements[0];
+                if ($statement->getNodeKindName() !== 'ReturnStatement') {
+                    continue;
+                }
+
+                $nodes = $statement->getChildNodes();
+                foreach ($nodes as $node) {
+                    if ($node->getNodeKindName() !== 'CallExpression') {
+                        continue;
+                    }
+
+                    // print_r($node->getText());
+                    // print_r("\n");
+                    [$function, $className] = $this->walkCallExpression($node);
+
+                    if ($className !== null) {
+                        $isCollection = in_array($function, static::collectionRelationshipMethods(), true);
+                        $this->addProperty(
+                            $declaration->getName(),
+                            // PSR-5 removed generics recently, so no standard typehint format for typed collections
+                            $isCollection ? '\Illuminate\Database\Eloquent\Collection' : $className,
+                            $isCollection ? $className : null
+                        );
+                    }
+                }
+
+                // echo "-----\n";
             }
         }
+
+        return $properties;
+    }
+
+    private function tryExtractRelationship(MethodDeclaration $declaration)
+    {
+        if (ends_with($declaration->getName(), 'Attribute') || $declaration->parameters !== null) {
+            return null;
+        }
+
+        return $declaration;
+    }
+
+
+    public function addAnnotationsToFile()
+    {
+        $text = '';
+        foreach ($this->properties as $name => $property) {
+            $text .= " * @property {$property['type']} \${$name}";
+            if (!empty($property['text'])) {
+                $text .= " {$property['text']}";
+            }
+
+            $text .= "\n";
+        }
+
+        $node = $this->classDeclaration;
+
+        if ($node === null) {
+            echo("Could not find class declaration in {$this->file->getFilename()}!");
+
+            return;
+        }
+
+        $existingComment = $node->getLeadingCommentAndWhitespaceText();
+        $existingCommentLength = strlen($existingComment);
+
+        $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
+        if ($blockExists) {
+            $lines = explode("\n", $existingComment);
+            $lines = array_values(array_filter($lines, function ($line) {
+                return !(starts_with($line, ' * @property') || starts_with($line, ' */'));
+            }));
+
+            // hack to prevent more empty lines from being added each run.
+            $numLines = count($lines);
+            if ($numLines >= 2 && trim($lines[$numLines - 2]) === '*') {
+                array_pop($lines);
+                array_pop($lines);
+            }
+
+            $text = implode("\n", $lines)."\n *\n".$text." */\n";
+        } else {
+            $text = "\n\n/**\n *\n".$text." */\n";
+        }
+
+        $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
+        File::put($this->file->getRealPath(), $newContent);
+    }
+
+    public function texify($node) {
+        if ($node instanceof Node) {
+            print_r($node->getText());
+            print_r(' ;Node;  '.get_class($node));//->getNodeKindName());
+            // print_r($node->getChildNames());
+            print_r("\n");
+        } elseif ($node instanceof Token) {
+            print_r($node->getText());
+            print_r(' ;Token;  '.print_r($node->jsonSerialize(), true));
+            print_r("\n");
+        }
+    }
+
+    private function castType(string $field, string $type) : string
+    {
+        $cast = $this->instance->getCasts()[$field] ?? null;
+        if ($cast !== null) {
+            return $cast;
+        }
+
+        if (starts_with($type, static::STRING_TYPES)) {
+            return 'string';
+        }
+
+        if (starts_with($type, static::INT_TYPES)) {
+            return 'int';
+        }
+
+        if (starts_with($type, static::FLOAT_TYPES)) {
+            return 'float';
+        }
+
+        if (starts_with($type, static::DATE_TYPES)) {
+            return '\Carbon\Carbon';
+        }
+
+        return 'mixed';
+    }
+
+    // Field, Type, Null, Key, Default, Extra
+    private function parseColumn($column)
+    {
+        $type = $this->parseType($column);
+
+        return [$column->Field, $type];
+    }
+
+    /**
+     * Budget hacky type parser
+     *
+     * @param string $type
+     * @return string
+     */
+    private function parseType($column) : string
+    {
+        $type = $this->castType($column->Field, $column->Type);
+
+        if ($column->Null !== "NO") {
+            $type = $type.'|null';
+        }
+
+        return $type;
     }
 
     private function tryFindRelationship(Node $node) : ?array {
@@ -357,120 +475,15 @@ class AnnotateModel
         return [$functionName, $className->getText()];
     }
 
-    public function findPropertiesFromMethods()
-    {
-        $properties = [];
-
-        foreach ($this->methodDeclarations as $declaration) {
-            if ($this->tryExtractRelationship($declaration) !== null) {
-                /** @var Node[] $statements */
-                $statements = $declaration->compoundStatementOrSemicolon->statements;
-
-                // only consider methods with only single return statement for now.
-                if (count($statements) !== 1) {
-                    continue;
-                }
-
-                /** @var Node $statement */
-                $statement = $statements[0];
-                if ($statement->getNodeKindName() !== 'ReturnStatement') {
-                    continue;
-                }
-
-                $nodes = $statement->getChildNodes();
-                foreach ($nodes as $node) {
-                    if ($node->getNodeKindName() !== 'CallExpression') {
-                        continue;
-                    }
-
-                    // print_r($node->getText());
-                    // print_r("\n");
-                    [$function, $className] = $this->walkCallExpression($node);
-
-                    if ($className !== null) {
-                        $isCollection = in_array($function, static::collectionRelationshipMethods(), true);
-                        $properties[] = [
-                            'name' => $declaration->getName(),
-                            // PSR-5 removed generics recently, so no standard typehint format for typed collections
-                            'type' => $isCollection ? '\Illuminate\Database\Eloquent\Collection' : $className,
-                            'text' => $isCollection ? $className : null,
-                        ];
-                    }
-                }
-
-                // echo "-----\n";
+    private function walkCallExpression(Node $expression) {
+        $nodes = $expression->getDescendantNodes();
+        $this->texify($expression);
+        foreach ($nodes as $node) {
+            // $this->texify($node);
+            $relationship = $this->tryFindRelationship($node);
+            if ($relationship !== null) {
+                return $relationship;
             }
-        }
-
-        return $properties;
-    }
-
-    private function tryExtractRelationship(MethodDeclaration $declaration)
-    {
-        if (ends_with($declaration->getName(), 'Attribute') || $declaration->parameters !== null) {
-            return null;
-        }
-
-        return $declaration;
-    }
-
-
-    public function addAnnotationsToFile()
-    {
-        $text = '';
-        foreach ($this->properties as $property) {
-            $text .= " * @property {$property['type']} \${$property['name']}";
-            if (!empty($property['text'])) {
-                $text .= " {$property['text']}";
-            }
-
-            $text .= "\n";
-        }
-
-        $node = $this->classDeclaration;
-
-        if ($node === null) {
-            echo("Could not find class declaration in {$this->file->getFilename()}!");
-
-            return;
-        }
-
-        $existingComment = $node->getLeadingCommentAndWhitespaceText();
-        $existingCommentLength = strlen($existingComment);
-
-        $blockExists = starts_with(trim($existingComment), '/**') && ends_with(trim($existingComment), '*/');
-        if ($blockExists) {
-            $lines = explode("\n", $existingComment);
-            $lines = array_values(array_filter($lines, function ($line) {
-                return !(starts_with($line, ' * @property') || starts_with($line, ' */'));
-            }));
-
-            // hack to prevent more empty lines from being added each run.
-            $numLines = count($lines);
-            if ($numLines >= 2 && trim($lines[$numLines - 2]) === '*') {
-                array_pop($lines);
-                array_pop($lines);
-            }
-
-            $text = implode("\n", $lines)."\n *\n".$text." */\n";
-        } else {
-            $text = "\n\n/**\n *\n".$text." */\n";
-        }
-
-        $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
-        File::put($this->file->getRealPath(), $newContent);
-    }
-
-    public function texify($node) {
-        if ($node instanceof Node) {
-            print_r($node->getText());
-            print_r(' ;Node;  '.get_class($node));//->getNodeKindName());
-            // print_r($node->getChildNames());
-            print_r("\n");
-        } elseif ($node instanceof Token) {
-            print_r($node->getText());
-            print_r(' ;Token;  '.print_r($node->jsonSerialize(), true));
-            print_r("\n");
         }
     }
 }
