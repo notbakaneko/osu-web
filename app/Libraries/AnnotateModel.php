@@ -431,14 +431,14 @@ class AnnotateModel
     {
         $type = $this->castType($column->Field, $column->Type);
 
-        if ($column->Null !== "NO") {
+        if ($column->Null !== 'NO') {
             $type = $type.'|null';
         }
 
         return $type;
     }
 
-    private function tryExtractRelationship(MethodDeclaration $declaration)
+    private function tryExtractRelationship(MethodDeclaration $declaration) : ?MethodDeclaration
     {
         if (ends_with($declaration->getName(), 'Attribute') || $declaration->parameters !== null) {
             return null;
@@ -447,7 +447,7 @@ class AnnotateModel
         return $declaration;
     }
 
-    private function tryFindRelationshipFromCallExpression(CallExpression $expression)
+    private function tryFindRelationshipFromCallExpression(CallExpression $expression) : ?array
     {
         $nodes = $expression->getDescendantNodes();
 
@@ -457,6 +457,8 @@ class AnnotateModel
                 return $relationship;
             }
         }
+
+        return null;
     }
 
     private function tryFindRelationshipFromNode(Node $node) : ?array
