@@ -21,7 +21,7 @@
 namespace App\Models\Forum;
 
 /**
- * temporary class until simpler acl is implemented
+ * temporary class until simpler acl is implemented.
  *
  * @property int $auth_option_id
  * @property int $auth_role_id

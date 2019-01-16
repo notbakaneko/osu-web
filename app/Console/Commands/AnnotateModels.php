@@ -21,8 +21,8 @@
 namespace App\Console\Commands;
 
 use App\Libraries\AnnotateModel;
-use Illuminate\Console\Command;
 use File;
+use Illuminate\Console\Command;
 use Symfony\Component\Finder\SplFileInfo;
 
 class AnnotateModels extends Command
@@ -66,5 +66,4 @@ class AnnotateModels extends Command
 
         return "\\App\\Models\\{$namespace}{$baseName}";
     }
-
 }
