@@ -91,7 +91,7 @@ class AnnotateModel
             print_r(' ;Node;  '.get_class($node));
             print_r("\n");
         } elseif ($node instanceof Token) {
-            print_r($node->getText());
+            print_r($node->getText($this->content));
             print_r(' ;Token;  '.print_r($node->jsonSerialize(), true));
             print_r("\n");
         }
