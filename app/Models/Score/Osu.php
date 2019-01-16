@@ -35,7 +35,7 @@ namespace App\Models\Score;
  * @property int|null $high_score_id
  * @property int $maxcombo
  * @property int $pass
- * @property boolean $perfect
+ * @property bool $perfect
  * @property mixed $rank
  * @property int $score
  * @property int $score_id

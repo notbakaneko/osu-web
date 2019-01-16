@@ -55,9 +55,9 @@ use Illuminate\Database\QueryException;
  * @property int $poll_max_options
  * @property int $poll_start
  * @property string $poll_title
- * @property boolean $poll_vote_change
+ * @property bool $poll_vote_change
  * @property \Illuminate\Database\Eloquent\Collection $posts Post
- * @property boolean $topic_approved
+ * @property bool $topic_approved
  * @property int $topic_attachment
  * @property int $topic_bumped
  * @property int $topic_bumper

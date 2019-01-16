@@ -24,7 +24,7 @@ use Carbon\Carbon;
 
 /**
  *
- * @property boolean $allow_bancho
+ * @property bool $allow_bancho
  * @property int $allow_ranking
  * @property int $build_id
  * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry

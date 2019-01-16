@@ -24,7 +24,7 @@ namespace App\Models;
  *
  * @property int $achievement_id
  * @property string|null $description
- * @property boolean $enabled
+ * @property bool $enabled
  * @property string $grouping
  * @property string|null $image
  * @property int|null $mode

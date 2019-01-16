@@ -45,7 +45,7 @@ use Cache;
  * @property mixed $type
  * @property mixed $unmasked
  * @property \Carbon\Carbon|null $updated_at
- * @property boolean $visible
+ * @property bool $visible
  * @property \Illuminate\Database\Eloquent\Collection $votes ContestVote
  * @property \Carbon\Carbon|null $voting_ends_at
  * @property \Carbon\Carbon|null $voting_starts_at

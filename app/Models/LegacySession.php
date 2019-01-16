@@ -22,8 +22,8 @@ namespace App\Models;
 
 /**
  *
- * @property boolean $session_admin
- * @property boolean $session_autologin
+ * @property bool $session_admin
+ * @property bool $session_autologin
  * @property string $session_forwarded_for
  * @property string $session_id
  * @property string $session_ip
@@ -32,8 +32,8 @@ namespace App\Models;
  * @property int $session_start
  * @property int $session_time
  * @property int $session_user_id
- * @property boolean $session_viewonline
- * @property boolean $verified
+ * @property bool $session_viewonline
+ * @property bool $verified
  */
 class LegacySession extends Model
 {

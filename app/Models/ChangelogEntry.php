@@ -33,9 +33,9 @@ use Markdown;
  * @property int|null $github_pull_request_id
  * @property int|null $github_user_id
  * @property int $id
- * @property boolean $major
+ * @property bool $major
  * @property string|null $message
- * @property boolean $private
+ * @property bool $private
  * @property Repository $repository
  * @property int|null $repository_id
  * @property string|null $title

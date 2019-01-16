@@ -36,10 +36,10 @@ use DB;
  * @property int|null $deleted_by_id
  * @property int $id
  * @property KudosuHistory $kudosuHistory
- * @property boolean $kudosu_denied
+ * @property bool $kudosu_denied
  * @property int|null $kudosu_denied_by_id
  * @property int|null $message_type
- * @property boolean $resolved
+ * @property bool $resolved
  * @property int|null $resolver_id
  * @property BeatmapDiscussionPost $startingPost
  * @property int|null $timestamp

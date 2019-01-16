@@ -23,7 +23,7 @@ namespace App\Models\Store;
 /**
  * Records transaction data from payment providers.
  *
- * @property boolean $cancelled
+ * @property bool $cancelled
  * @property string|null $country_code
  * @property \Carbon\Carbon|null $created_at
  * @property int $id

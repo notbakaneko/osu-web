@@ -28,9 +28,9 @@ use Carbon\Carbon;
  * @property ForumCover $cover
  * @property int $display_on_index
  * @property int $enable_icons
- * @property boolean $enable_indexing
+ * @property bool $enable_indexing
  * @property int $enable_prune
- * @property boolean $enable_sigs
+ * @property bool $enable_sigs
  * @property string $forum_desc
  * @property string $forum_desc_bitfield
  * @property int $forum_desc_options

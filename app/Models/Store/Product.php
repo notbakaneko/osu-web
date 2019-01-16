@@ -24,7 +24,7 @@ use App\Exceptions\InsufficientStockException;
 
 /**
  *
- * @property boolean $allow_multiple
+ * @property bool $allow_multiple
  * @property float $base_shipping
  * @property Category $category
  * @property float|null $cost
@@ -33,7 +33,7 @@ use App\Exceptions\InsufficientStockException;
  * @property \Carbon\Carbon|null $deleted_at
  * @property string|null $description
  * @property int $display_order
- * @property boolean $enabled
+ * @property bool $enabled
  * @property string|null $header_description
  * @property string|null $header_image
  * @property string|null $image
@@ -45,7 +45,7 @@ use App\Exceptions\InsufficientStockException;
  * @property float $next_shipping
  * @property \Illuminate\Database\Eloquent\Collection $notificationRequests NotificationRequest
  * @property int $product_id
- * @property boolean $promoted
+ * @property bool $promoted
  * @property int|null $stock
  * @property int|null $tournament_id
  * @property string|null $type_mappings_json

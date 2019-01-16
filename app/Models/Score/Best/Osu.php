@@ -34,10 +34,10 @@ namespace App\Models\Score\Best;
  * @property int $enabled_mods
  * @property int $hidden
  * @property int $maxcombo
- * @property boolean $perfect
+ * @property bool $perfect
  * @property float|null $pp
  * @property mixed $rank
- * @property boolean $replay
+ * @property bool $replay
  * @property int $score
  * @property int $score_id
  * @property int $user_id

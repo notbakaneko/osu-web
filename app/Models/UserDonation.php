@@ -28,7 +28,7 @@ use Log;
  * FIXME: should validate donation is a positive value on save.
  *
  * @property int $amount
- * @property boolean $cancel
+ * @property bool $cancel
  * @property int $length
  * @property int $target_user_id
  * @property \Carbon\Carbon $timestamp

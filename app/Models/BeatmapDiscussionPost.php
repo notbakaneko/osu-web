@@ -35,7 +35,7 @@ use DB;
  * @property int $id
  * @property int|null $last_editor_id
  * @property string $message
- * @property boolean $system
+ * @property bool $system
  * @property \Carbon\Carbon|null $updated_at
  * @property User $user
  * @property int|null $user_id

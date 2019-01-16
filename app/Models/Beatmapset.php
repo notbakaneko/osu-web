@@ -36,7 +36,7 @@ use Illuminate\Database\QueryException;
 
 /**
  *
- * @property boolean $active
+ * @property bool $active
  * @property \Illuminate\Database\Eloquent\Collection $allBeatmaps Beatmap
  * @property int $approved
  * @property \Carbon\Carbon|null $approved_date
@@ -55,11 +55,11 @@ use Illuminate\Database\QueryException;
  * @property \Illuminate\Database\Eloquent\Collection $defaultBeatmaps Beatmap
  * @property \Carbon\Carbon|null $deleted_at
  * @property string|null $difficulty_names
- * @property boolean $discussion_enabled
+ * @property bool $discussion_enabled
  * @property string $displaytitle
- * @property boolean $download_disabled
+ * @property bool $download_disabled
  * @property string|null $download_disabled_url
- * @property boolean $epilepsy
+ * @property bool $epilepsy
  * @property \Illuminate\Database\Eloquent\Collection $events BeatmapsetEvent
  * @property int $favourite_count
  * @property \Illuminate\Database\Eloquent\Collection $favourites FavouriteBeatmapset
@@ -82,7 +82,7 @@ use Illuminate\Database\QueryException;
  * @property float $rating
  * @property string $source
  * @property int $star_priority
- * @property boolean $storyboard
+ * @property bool $storyboard
  * @property \Carbon\Carbon|null $submit_date
  * @property string $tags
  * @property \Carbon\Carbon|null $thread_icon_date
@@ -93,7 +93,7 @@ use Illuminate\Database\QueryException;
  * @property \Illuminate\Database\Eloquent\Collection $userRatings BeatmapsetUserRating
  * @property int $user_id
  * @property int $versions_available
- * @property boolean $video
+ * @property bool $video
  * @property \Illuminate\Database\Eloquent\Collection $watches BeatmapsetWatch
  */
 class Beatmapset extends Model implements AfterCommit

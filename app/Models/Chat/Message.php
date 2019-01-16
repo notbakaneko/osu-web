@@ -27,7 +27,7 @@ use App\Models\User;
  * @property Channel $channel
  * @property int $channel_id
  * @property string $content
- * @property boolean $is_action
+ * @property bool $is_action
  * @property int $message_id
  * @property User $sender
  * @property \Carbon\Carbon $timestamp

@@ -77,7 +77,7 @@ use Request;
  * @property float $osu_mapperrank
  * @property int $osu_playmode
  * @property int $osu_playstyle
- * @property boolean $osu_subscriber
+ * @property bool $osu_subscriber
  * @property \Carbon\Carbon|null $osu_subscriptionexpiry
  * @property int $osu_testversion
  * @property mixed $password
@@ -102,9 +102,9 @@ use Request;
  * @property UserProfileCustomization $userProfileCustomization
  * @property string $user_actkey
  * @property int $user_allow_massemail
- * @property boolean $user_allow_pm
+ * @property bool $user_allow_pm
  * @property int $user_allow_viewemail
- * @property boolean $user_allow_viewonline
+ * @property bool $user_allow_viewonline
  * @property string $user_avatar
  * @property int $user_avatar_height
  * @property int $user_avatar_type

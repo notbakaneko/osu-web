@@ -38,7 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int|null $max_combo
  * @property array|null $mods
- * @property boolean|null $passed
+ * @property bool|null $passed
  * @property PlaylistItem $playlistItem
  * @property int $playlist_item_id
  * @property float|null $pp

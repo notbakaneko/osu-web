@@ -40,7 +40,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Product $product
  * @property int $product_id
  * @property int $quantity
- * @property boolean $reserved
+ * @property bool $reserved
  * @property \Carbon\Carbon|null $updated_at
  */
 class OrderItem extends Model

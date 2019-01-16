@@ -28,11 +28,11 @@ use Schema;
 /**
  *
  * @property string $acronym
- * @property boolean $active
+ * @property bool $active
  * @property int $chart_id
  * @property \Carbon\Carbon|null $chart_month
  * @property \Carbon\Carbon|null $end_date
- * @property boolean $mode_specific
+ * @property bool $mode_specific
  * @property string $name
  * @property \Carbon\Carbon|null $start_date
  * @property string $type

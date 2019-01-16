@@ -48,7 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $hit_length
  * @property \Carbon\Carbon $last_update
  * @property mixed $mode
- * @property boolean $orphaned
+ * @property bool $orphaned
  * @property int $passcount
  * @property int $playcount
  * @property int $playmode

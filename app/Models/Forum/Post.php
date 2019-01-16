@@ -48,10 +48,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $icon_id
  * @property User $lastEditor
  * @property int $osu_kudosobtained
- * @property boolean $post_approved
+ * @property bool $post_approved
  * @property int $post_attachment
  * @property int $post_edit_count
- * @property boolean $post_edit_locked
+ * @property bool $post_edit_locked
  * @property string $post_edit_reason
  * @property int $post_edit_time
  * @property int $post_edit_user

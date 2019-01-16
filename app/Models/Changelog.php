@@ -28,10 +28,10 @@ namespace App\Models;
  * @property string $checksum
  * @property \Carbon\Carbon $date
  * @property Build $gameBuild
- * @property boolean $major
+ * @property bool $major
  * @property string $message
  * @property string $prefix
- * @property boolean $private
+ * @property bool $private
  * @property int|null $stream_id
  * @property int|null $thread_id
  * @property int $tweet

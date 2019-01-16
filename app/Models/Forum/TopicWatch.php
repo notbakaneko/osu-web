@@ -24,8 +24,8 @@ use App\Models\User;
 
 /**
  *
- * @property boolean $mail
- * @property boolean $notify_status
+ * @property bool $mail
+ * @property bool $notify_status
  * @property Topic $topic
  * @property int $topic_id
  * @property User $user

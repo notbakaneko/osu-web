@@ -22,7 +22,7 @@ namespace App\Models;
 
 /**
  *
- * @property boolean $build_on_tag
+ * @property bool $build_on_tag
  * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  * @property \Carbon\Carbon|null $created_at
  * @property string|null $default_category

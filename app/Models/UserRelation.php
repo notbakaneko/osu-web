@@ -6,8 +6,8 @@ use DB;
 
 /**
  *
- * @property boolean $foe
- * @property boolean $friend
+ * @property bool $foe
+ * @property bool $friend
  * @property User $target
  * @property User $user
  * @property int $user_id
