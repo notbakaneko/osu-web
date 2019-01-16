@@ -194,13 +194,24 @@ class AnnotateModel
         }
 
         $this->parse();
+        $this->extractProperties();
+        $this->addAnnotationsToFile();
+    }
 
+    public function extractProperties()
+    {
         $this->findDirectProperties();
         $this->findPropertiesFromMethods();
         $this->findPropertiesFromAttributes();
 
         ksort($this->properties);
-        $this->addAnnotationsToFile();
+
+        return $this->properties;
+    }
+
+    public function getProperties()
+    {
+        return $this->properties;
     }
 
     public function parse()
