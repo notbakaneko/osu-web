@@ -364,7 +364,8 @@ class AnnotateModel
         $columns = static::describeTable($this->instance);
 
         foreach ($columns as $column) {
-            [$name, $type] = $this->parseColumn($column);
+            $columnAsArray = json_decode(json_encode($column), true); // This garbage is because StyleCI doesn't like ->Null.
+            [$name, $type] = $this->parseColumn($columnAsArray);
             $this->addProperty($name, $type);
         }
     }
@@ -417,7 +418,7 @@ class AnnotateModel
     {
         $type = $this->parseType($column);
 
-        return [$column->Field, $type];
+        return [$column['Field'], $type];
     }
 
     /**
@@ -428,9 +429,9 @@ class AnnotateModel
      */
     private function parseType($column) : string
     {
-        $type = $this->castType($column->Field, $column->Type);
+        $type = $this->castType($column['Field'], $column['Type']);
 
-        if ($column->Null !== 'NO') {
+        if ($column['Null'] !== 'NO') {
             $type = $type.'|null';
         }
 
