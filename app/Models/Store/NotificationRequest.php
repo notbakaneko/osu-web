@@ -3,7 +3,6 @@
 namespace App\Models\Store;
 
 /**
- *
  * @property \Carbon\Carbon|null $created_at
  * @property int $id
  * @property int $product_id

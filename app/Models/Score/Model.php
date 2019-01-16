@@ -26,7 +26,6 @@ use App\Models\User;
 use App\Traits\Scoreable;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property User $user
  */

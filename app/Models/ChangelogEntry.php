@@ -25,7 +25,6 @@ use Exception;
 use Markdown;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $builds Build
  * @property string|null $category
  * @property \Carbon\Carbon|null $created_at

@@ -21,7 +21,6 @@
 namespace App\Models\Multiplayer;
 
 /**
- *
  * @property \Carbon\Carbon|null $end_time
  * @property \Illuminate\Database\Eloquent\Collection $events Event
  * @property \Illuminate\Database\Eloquent\Collection $games Game

@@ -27,7 +27,6 @@ use App\Models\Beatmap;
 use App\Models\Model;
 
 /**
- *
  * @property json|null $allowed_mods
  * @property Beatmap $beatmap
  * @property int $beatmap_id

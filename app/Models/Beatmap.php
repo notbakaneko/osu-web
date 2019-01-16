@@ -24,7 +24,6 @@ use App\Exceptions\ScoreRetrievalException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
  * @property int $approved
  * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
  * @property int $beatmap_id

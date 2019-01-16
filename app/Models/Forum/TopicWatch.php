@@ -23,7 +23,6 @@ namespace App\Models\Forum;
 use App\Models\User;
 
 /**
- *
  * @property bool $mail
  * @property bool $notify_status
  * @property Topic $topic

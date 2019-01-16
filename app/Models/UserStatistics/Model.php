@@ -24,7 +24,6 @@ use App\Models\Model as BaseModel;
 use App\Models\User;
 
 /**
- *
  * @property mixed $country_acronym
  * @property User $user
  */

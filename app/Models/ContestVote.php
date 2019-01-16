@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Contest $contest
  * @property int $contest_entry_id
  * @property int $contest_id

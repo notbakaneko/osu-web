@@ -26,7 +26,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Schema;
 
 /**
- *
  * @property string $acronym
  * @property bool $active
  * @property int $chart_id

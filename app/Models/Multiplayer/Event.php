@@ -23,7 +23,6 @@ namespace App\Models\Multiplayer;
 use App\Models\User;
 
 /**
- *
  * @property mixed $detail
  * @property int $event_id
  * @property Game $game

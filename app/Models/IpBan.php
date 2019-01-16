@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $active
  * @property int $ip
  * @property int $length

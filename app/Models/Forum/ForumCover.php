@@ -26,7 +26,6 @@ use App\Traits\Imageable;
 use DB;
 
 /**
- *
  * @property \Carbon\Carbon|null $created_at
  * @property mixed $default_topic_cover
  * @property array|null $default_topic_cover_json

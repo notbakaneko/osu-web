@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property \Carbon\Carbon|null $awarded
  * @property string $description
  * @property string $image

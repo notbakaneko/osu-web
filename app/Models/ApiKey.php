@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string $api_key
  * @property string $app_name
  * @property string $app_url

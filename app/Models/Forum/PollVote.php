@@ -24,7 +24,6 @@ use App\Models\User;
 use App\Traits\Validatable;
 
 /**
- *
  * @property PollOption $pollOption
  * @property int $poll_option_id
  * @property int $topic_id

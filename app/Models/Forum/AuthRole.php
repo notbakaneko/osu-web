@@ -21,7 +21,6 @@
 namespace App\Models\Forum;
 
 /**
- *
  * @property int $auth_option_id
  * @property int $auth_setting
  * @property int $role_id

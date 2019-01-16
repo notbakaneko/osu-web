@@ -26,7 +26,6 @@ use App\Transformers\UserContestEntryTransformer;
 use Cache;
 
 /**
- *
  * @property \Carbon\Carbon|null $created_at
  * @property string $description_enter
  * @property string|null $description_voting

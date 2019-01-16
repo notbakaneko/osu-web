@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Forum\Forum $forum
  * @property int $forum_id
  * @property mixed $log_data

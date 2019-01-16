@@ -23,7 +23,6 @@ namespace App\Models;
 use DB;
 
 /**
- *
  * @property mixed $hash
  */
 class WeakPassword extends Model

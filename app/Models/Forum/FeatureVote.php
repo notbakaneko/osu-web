@@ -25,7 +25,6 @@ use App\Traits\Validatable;
 use DB;
 
 /**
- *
  * @property \Carbon\Carbon $date
  * @property int $star_id
  * @property Topic $topic

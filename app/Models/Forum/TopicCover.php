@@ -26,7 +26,6 @@ use DB;
 use Exception;
 
 /**
- *
  * @property \Carbon\Carbon|null $created_at
  * @property string|null $ext
  * @property string|null $hash

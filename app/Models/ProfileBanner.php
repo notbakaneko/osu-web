@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $banner_id
  * @property Country $country
  * @property string $country_acronym

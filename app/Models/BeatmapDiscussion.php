@@ -26,7 +26,6 @@ use Carbon\Carbon;
 use DB;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionPosts BeatmapDiscussionPost
  * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionVotes BeatmapDiscussionVote
  * @property int|null $beatmap_id

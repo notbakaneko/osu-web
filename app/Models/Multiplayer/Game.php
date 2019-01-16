@@ -24,7 +24,6 @@ use App\Libraries\ModsHelper;
 use App\Models\Beatmap;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property int|null $beatmap_id
  * @property \Carbon\Carbon|null $end_time

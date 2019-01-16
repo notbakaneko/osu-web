@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $albums ArtistAlbum
  * @property string|null $bandcamp
  * @property string|null $cover_url

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property bool $session_admin
  * @property bool $session_autologin
  * @property string $session_forwarded_for

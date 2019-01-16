@@ -23,7 +23,6 @@ namespace App\Models\BeatmapLeader;
 use App\Models\Score;
 
 /**
- *
  * @property int $beatmap_id
  * @property Score\Osu $score
  * @property int|null $score_id

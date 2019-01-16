@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property \Carbon\Carbon|null $created_at
  * @property int $registration_id
  * @property Tournament $tournament

@@ -26,7 +26,6 @@ use App\Models\Score\Best\Model as BestModel;
 use App\Traits\Validatable;
 
 /**
- *
  * @property string $comments
  * @property int $mode
  * @property mixed $reason

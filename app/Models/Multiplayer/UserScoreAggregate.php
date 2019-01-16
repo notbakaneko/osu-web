@@ -23,7 +23,6 @@ namespace App\Models\Multiplayer;
 use App\Models\User;
 
 /**
- *
  * @property float $accuracy
  * @property int $attempts
  * @property int $completed

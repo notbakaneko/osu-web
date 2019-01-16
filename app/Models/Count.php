@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $count
  * @property int $name
  */

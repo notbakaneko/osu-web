@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string|null $build
  * @property string $category
  * @property int $changelog_id

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Artist $artist
  * @property int|null $artist_id
  * @property string|null $cover_url

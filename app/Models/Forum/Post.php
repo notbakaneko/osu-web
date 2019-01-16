@@ -34,7 +34,6 @@ use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
  * @property string $bbcode_bitfield
  * @property string $bbcode_uid
  * @property mixed $body_raw

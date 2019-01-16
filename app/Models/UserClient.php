@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Build $build
  * @property mixed $disk_md5
  * @property mixed $mac_md5

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string $country_acronym
  * @property int $group_id
  * @property int $osu_featurevotes

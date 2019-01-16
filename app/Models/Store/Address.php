@@ -25,7 +25,6 @@ use App\Models\User;
 use Auth;
 
 /**
- *
  * @property int $address_id
  * @property string|null $city
  * @property Country $country

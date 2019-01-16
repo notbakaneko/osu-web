@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $builds Build
  * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog

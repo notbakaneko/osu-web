@@ -23,7 +23,6 @@ namespace App\Models;
 use DB;
 
 /**
- *
  * @property mixed $action
  * @property int $amount
  * @property \Carbon\Carbon $date

@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property bool $allow_bancho
  * @property int $allow_ranking
  * @property int $build_id

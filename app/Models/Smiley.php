@@ -24,7 +24,6 @@ use Cache;
 use DB;
 
 /**
- *
  * @property string $code
  * @property int $display_on_posting
  * @property string $emotion

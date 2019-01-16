@@ -25,7 +25,6 @@ use App\Models\UserRelation;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- *
  * @property Channel $channel
  * @property int $channel_id
  * @property int|null $last_read_id

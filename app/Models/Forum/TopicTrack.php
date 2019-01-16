@@ -21,7 +21,6 @@
 namespace App\Models\Forum;
 
 /**
- *
  * @property int $forum_id
  * @property int $mark_time
  * @property int $topic_id

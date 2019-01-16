@@ -35,7 +35,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
 
 /**
- *
  * @property bool $active
  * @property \Illuminate\Database\Eloquent\Collection $allBeatmaps Beatmap
  * @property int $approved

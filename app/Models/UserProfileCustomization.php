@@ -23,7 +23,6 @@ namespace App\Models;
 use App\Libraries\ProfileCover;
 
 /**
- *
  * @property array|null $cover_json
  * @property \Carbon\Carbon $created_at
  * @property string|null $extras_order

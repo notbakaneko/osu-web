@@ -24,7 +24,6 @@ use App\Traits\Validatable;
 use Carbon\Carbon;
 
 /**
- *
  * @property mixed $commentable
  * @property int|null $commentable_id
  * @property mixed|null $commentable_type

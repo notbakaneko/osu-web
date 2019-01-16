@@ -21,7 +21,6 @@
 namespace App\Models\UserStatistics;
 
 /**
- *
  * @property int $a_rank_count
  * @property float $accuracy
  * @property int $accuracy_count

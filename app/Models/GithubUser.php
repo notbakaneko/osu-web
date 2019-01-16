@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int|null $canonical_id
  * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  * @property \Carbon\Carbon|null $created_at

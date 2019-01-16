@@ -29,7 +29,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
  * @property float|null $accuracy
  * @property int $beatmap_id
  * @property \Carbon\Carbon|null $created_at

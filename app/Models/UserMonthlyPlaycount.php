@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property int $playcount
  * @property int $user_id
  * @property string $year_month

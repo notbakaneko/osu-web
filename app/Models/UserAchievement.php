@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Achievement $achievement
  * @property int $achievement_id
  * @property \Carbon\Carbon $date

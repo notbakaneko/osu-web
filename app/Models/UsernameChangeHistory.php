@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $change_id
  * @property \Carbon\Carbon|null $timestamp
  * @property mixed $type

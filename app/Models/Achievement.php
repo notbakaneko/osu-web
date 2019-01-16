@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $achievement_id
  * @property string|null $description
  * @property bool $enabled

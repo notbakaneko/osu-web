@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $banchostats_id
  * @property \Carbon\Carbon $date
  * @property int $multiplayer_games

@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property BeatmapDiscussion $beatmapDiscussion
  * @property int $beatmap_discussion_id
  * @property \Carbon\Carbon|null $created_at

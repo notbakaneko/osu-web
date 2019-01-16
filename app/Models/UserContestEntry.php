@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 
 /**
- *
  * @property Contest $contest
  * @property int|null $contest_id
  * @property \Carbon\Carbon|null $created_at

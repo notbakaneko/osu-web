@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string $group_avatar
  * @property int $group_avatar_height
  * @property int $group_avatar_type

@@ -25,7 +25,6 @@ use App\Models\Model as BaseModel;
 use App\Models\User;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property User $user
  */

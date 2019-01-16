@@ -23,7 +23,6 @@ namespace App\Models;
 use DB;
 
 /**
- *
  * @property Country $country
  * @property string $country_code
  * @property \Carbon\Carbon|null $created_at

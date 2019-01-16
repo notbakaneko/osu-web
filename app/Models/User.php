@@ -41,7 +41,6 @@ use Laravel\Passport\HasApiTokens;
 use Request;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $accountHistories UserAccountHistory
  * @property ApiKey $apiKey
  * @property \Illuminate\Database\Eloquent\Collection $badges UserBadge

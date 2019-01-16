@@ -23,7 +23,6 @@ namespace App\Models\Chat;
 use App\Models\User;
 
 /**
- *
  * @property Channel $channel
  * @property int $channel_id
  * @property string $content

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property int $beatmap_id
  * @property float $diff_unified

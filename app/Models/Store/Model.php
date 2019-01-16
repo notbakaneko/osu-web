@@ -22,9 +22,6 @@ namespace App\Models\Store;
 
 use App\Models\Model as BaseModel;
 
-/**
- *
- */
 abstract class Model extends BaseModel
 {
     protected $connection = 'mysql-store';

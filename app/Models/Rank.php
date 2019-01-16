@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property int $rank_id
  * @property string $rank_image
  * @property int $rank_min

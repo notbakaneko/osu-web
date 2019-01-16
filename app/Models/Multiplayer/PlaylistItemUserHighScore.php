@@ -24,7 +24,6 @@ use App\Models\Model;
 
 /**
  * Dumb persistence model for UserScoreAggregate.
-
  *
  * @property float $accuracy
  * @property \Carbon\Carbon $created_at

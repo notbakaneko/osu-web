@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property bool $build_on_tag
  * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  * @property \Carbon\Carbon|null $created_at

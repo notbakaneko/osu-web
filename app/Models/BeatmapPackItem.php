@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
  * @property int $item_id

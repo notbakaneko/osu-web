@@ -23,7 +23,6 @@ namespace App\Models;
 use Auth;
 
 /**
- *
  * @property string $base_url
  * @property int|null $disk_space_free
  * @property int $enabled

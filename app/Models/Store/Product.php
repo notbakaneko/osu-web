@@ -23,10 +23,8 @@ namespace App\Models\Store;
 use App\Exceptions\InsufficientStockException;
 
 /**
- *
  * @property bool $allow_multiple
  * @property float $base_shipping
- * @property Category $category
  * @property float|null $cost
  * @property \Carbon\Carbon $created_at
  * @property string|null $custom_class

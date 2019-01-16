@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Group $group
  * @property int $group_id
  * @property int $group_leader

@@ -26,7 +26,6 @@ use Carbon\Carbon;
 use DB;
 
 /**
- *
  * @property BeatmapDiscussion $beatmapDiscussion
  * @property int $beatmap_discussion_id
  * @property \Carbon\Carbon|null $created_at

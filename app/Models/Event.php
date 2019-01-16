@@ -24,7 +24,6 @@ use Carbon\Carbon;
 use Sentry;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property int|null $beatmap_id
  * @property Beatmapset $beatmapset

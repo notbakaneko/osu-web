@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Beatmap $beatmap
  * @property int $beatmap_id
  * @property mixed $data

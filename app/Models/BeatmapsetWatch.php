@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
  * @property \Carbon\Carbon|null $created_at

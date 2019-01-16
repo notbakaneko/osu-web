@@ -25,7 +25,6 @@ use App\Models\User;
 
 /**
  * Dumb persistence model for UserScoreAggregate.
-
  *
  * @property float $accuracy
  * @property int $attempts

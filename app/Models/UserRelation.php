@@ -5,7 +5,6 @@ namespace App\Models;
 use DB;
 
 /**
- *
  * @property bool $foe
  * @property bool $friend
  * @property User $target

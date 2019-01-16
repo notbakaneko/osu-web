@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property \Illuminate\Database\Eloquent\Collection $artists Artist
  * @property \Carbon\Carbon|null $created_at
  * @property string $description

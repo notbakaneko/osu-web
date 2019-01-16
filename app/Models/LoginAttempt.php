@@ -23,7 +23,6 @@ namespace App\Models;
 use DB;
 
 /**
- *
  * @property \Carbon\Carbon $created_date
  * @property int $failed_attempts
  * @property string $failed_ids

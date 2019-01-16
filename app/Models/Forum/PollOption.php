@@ -24,7 +24,6 @@ use App\Libraries\BBCodeForDB;
 use DB;
 
 /**
- *
  * @property int $poll_option_id
  * @property string $poll_option_text
  * @property int $poll_option_total

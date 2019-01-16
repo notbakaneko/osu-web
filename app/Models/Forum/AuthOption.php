@@ -21,7 +21,6 @@
 namespace App\Models\Forum;
 
 /**
- *
  * @property string $auth_option
  * @property int $auth_option_id
  * @property int $founder_only

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string $author
  * @property \Carbon\Carbon $date
  * @property \Illuminate\Database\Eloquent\Collection $items BeatmapPackItem

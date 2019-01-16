@@ -24,7 +24,6 @@ use App\Models\User;
 use Carbon\Carbon;
 
 /**
- *
  * @property ForumCover $cover
  * @property int $display_on_index
  * @property int $enable_icons

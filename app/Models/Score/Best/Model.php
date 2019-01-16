@@ -30,7 +30,6 @@ use App\Models\User;
 use DB;
 
 /**
- *
  * @property User $user
  */
 abstract class Model extends BaseModel

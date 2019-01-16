@@ -21,7 +21,6 @@
 namespace App\Models\Score\Best;
 
 /**
- *
  * @property int $beatmap_id
  * @property int $count100
  * @property int $count300

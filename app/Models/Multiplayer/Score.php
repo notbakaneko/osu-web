@@ -24,7 +24,6 @@ use App\Models\Beatmap;
 use App\Traits\Scoreable;
 
 /**
- *
  * @property int $count100
  * @property int $count300
  * @property int $count50

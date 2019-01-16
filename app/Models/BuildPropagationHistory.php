@@ -24,7 +24,6 @@ use Carbon\Carbon;
 use DB;
 
 /**
- *
  * @property Build $build
  * @property int $build_id
  * @property \Carbon\Carbon $created_at

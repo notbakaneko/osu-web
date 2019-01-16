@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property ArtistAlbum $album
  * @property int|null $album_id
  * @property Artist $artist

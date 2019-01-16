@@ -36,7 +36,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
 
 /**
- *
  * @property Beatmapset $beatmapset
  * @property TopicCover $cover
  * @property \Carbon\Carbon|null $deleted_at

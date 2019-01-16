@@ -28,7 +28,6 @@ use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
  * @property float|null $cost
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon|null $deleted_at

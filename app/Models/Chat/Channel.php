@@ -25,7 +25,6 @@ use App\Models\User;
 use Carbon\Carbon;
 
 /**
- *
  * @property string|null $allowed_groups
  * @property int $channel_id
  * @property \Carbon\Carbon $creation_time

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property mixed $data
  * @property int $mode
  * @property int $r0

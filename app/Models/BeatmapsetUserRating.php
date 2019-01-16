@@ -3,7 +3,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
  * @property \Carbon\Carbon $date

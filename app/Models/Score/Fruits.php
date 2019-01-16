@@ -21,7 +21,6 @@
 namespace App\Models\Score;
 
 /**
- *
  * @property int $beatmap_id
  * @property int $beatmapset_id
  * @property int $count100

@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property string $acronym
  * @property int $display
  * @property string $name

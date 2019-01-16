@@ -21,7 +21,6 @@
 namespace App\Models;
 
 /**
- *
  * @property Comment $comment
  * @property int $comment_id
  * @property \Carbon\Carbon|null $created_at

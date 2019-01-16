@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- *
  * @property User $actor
  * @property int $ban_id
  * @property int|null $ban_status
