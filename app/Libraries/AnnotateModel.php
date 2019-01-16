@@ -447,12 +447,14 @@ class AnnotateModel
             return null;
         }
 
-        $className = $argumentExpression->getFirstDescendantNode(QualifiedName::class, StringLiteral::class);
-        if ($className === null) {
+        $classNode = $argumentExpression->getFirstDescendantNode(QualifiedName::class, StringLiteral::class);
+        if ($classNode === null) {
             return null;
         }
 
-        return [$functionName, $className->getText()];
+        $className = $classNode instanceof StringLiteral ? $classNode->getStringContentsText() : $classNode->getText();
+
+        return [$functionName, $className];
     }
 
     private function walkCallExpression(Node $expression)
