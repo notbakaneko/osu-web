@@ -97,25 +97,6 @@ class AnnotateModel
         }
     }
 
-    public static function fromClass($class)
-    {
-        $reflectionClass = new ReflectionClass($class);
-        $file = new SplFileInfo($reflectionClass->getFilename(), '', '');
-
-        return new static($file);
-    }
-
-    public static function classFromFileInfo(SplFileInfo $fileInfo)
-    {
-        $baseName = $fileInfo->getBasename(".{$fileInfo->getExtension()}");
-        $namespace = str_replace('/', '\\', $fileInfo->getRelativePath());
-        if (mb_strlen($fileInfo->getRelativePath()) !== 0) {
-            $namespace .= '\\';
-        }
-
-        return "\\App\\Models\\{$namespace}{$baseName}";
-    }
-
     public static function collectionRelationshipMethods()
     {
         static $methods = null;
@@ -180,12 +161,11 @@ class AnnotateModel
         return null;
     }
 
-    public function __construct(SplFileInfo $file)
+    public function __construct($class)
     {
-        $this->file = $file;
-
-        $class = static::classFromFileInfo($file);
         $reflectionClass = new ReflectionClass($class);
+        $this->file = new SplFileInfo($reflectionClass->getFilename(), '', '');
+
         if (
             $reflectionClass->isAbstract() ||
             !$reflectionClass->isSubclassOf(Model::class) ||
