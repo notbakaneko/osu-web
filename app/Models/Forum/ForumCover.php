@@ -27,19 +27,18 @@ use DB;
 
 /**
  *
- * @property int $id
- * @property int|null $forum_id
- * @property int|null $user_id
- * @property string|null $hash
- * @property string|null $ext
  * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property mixed $default_topic_cover
  * @property array|null $default_topic_cover_json
- * @property mixed $default_topic_cover
- * @property mixed $main_cover
- * @property mixed $default_topic_cover
+ * @property string|null $ext
  * @property Forum $forum
+ * @property int|null $forum_id
+ * @property string|null $hash
+ * @property int $id
+ * @property mixed $main_cover
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
+ * @property int|null $user_id
  */
 class ForumCover extends Model
 {

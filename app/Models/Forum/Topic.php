@@ -37,68 +37,53 @@ use Illuminate\Database\QueryException;
 
 /**
  *
- * @property int $topic_id
+ * @property Beatmapset $beatmapset
+ * @property TopicCover $cover
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection $featureVotes FeatureVote
+ * @property Forum $forum
  * @property int $forum_id
  * @property int $icon_id
- * @property int $topic_attachment
- * @property boolean $topic_approved
- * @property int $topic_reported
- * @property string $topic_title
- * @property int $topic_poster
- * @property int $topic_time
- * @property int $topic_time_limit
- * @property int $topic_views
- * @property int $topic_replies
- * @property int $topic_replies_real
- * @property int $topic_status
- * @property int $topic_type
- * @property int $topic_first_post_id
- * @property string $topic_first_poster_name
- * @property string $topic_first_poster_colour
- * @property int $topic_last_post_id
- * @property int $topic_last_poster_id
- * @property string $topic_last_poster_name
- * @property string $topic_last_poster_colour
- * @property string $topic_last_post_subject
- * @property int $topic_last_post_time
- * @property int $topic_last_view_time
- * @property int $topic_moved_id
- * @property int $topic_bumped
- * @property int $topic_bumper
- * @property string $poll_title
- * @property int $poll_start
- * @property int $poll_length
- * @property int $poll_max_options
- * @property int $poll_last_vote
- * @property boolean $poll_vote_change
- * @property int $osu_starpriority
- * @property mixed $osu_lastreplytype
- * @property \Carbon\Carbon|null $deleted_at
- * @property mixed $poll_last_vote
- * @property mixed $poll_last_vote
- * @property mixed $poll_length_days
- * @property mixed $poll_start
- * @property mixed $poll_start
- * @property mixed $topic_last_post_time
- * @property mixed $topic_last_post_time
- * @property mixed $topic_last_view_time
- * @property mixed $topic_last_view_time
- * @property mixed $topic_time
- * @property mixed $topic_time
- * @property mixed $topic_first_poster_colour
- * @property mixed $topic_first_poster_colour
- * @property mixed $topic_last_poster_colour
- * @property mixed $topic_last_poster_colour
- * @property mixed $poll_title
- * @property Beatmapset $beatmapset
- * @property \Illuminate\Database\Eloquent\Collection $posts Post
- * @property Forum $forum
- * @property TopicCover $cover
- * @property \Illuminate\Database\Eloquent\Collection $userTracks TopicTrack
  * @property \Illuminate\Database\Eloquent\Collection $logs Log
- * @property \Illuminate\Database\Eloquent\Collection $featureVotes FeatureVote
+ * @property mixed $osu_lastreplytype
+ * @property int $osu_starpriority
  * @property \Illuminate\Database\Eloquent\Collection $pollOptions PollOption
  * @property \Illuminate\Database\Eloquent\Collection $pollVotes PollVote
+ * @property int $poll_last_vote
+ * @property int $poll_length
+ * @property mixed $poll_length_days
+ * @property int $poll_max_options
+ * @property int $poll_start
+ * @property string $poll_title
+ * @property boolean $poll_vote_change
+ * @property \Illuminate\Database\Eloquent\Collection $posts Post
+ * @property boolean $topic_approved
+ * @property int $topic_attachment
+ * @property int $topic_bumped
+ * @property int $topic_bumper
+ * @property int $topic_first_post_id
+ * @property string $topic_first_poster_colour
+ * @property string $topic_first_poster_name
+ * @property int $topic_id
+ * @property int $topic_last_post_id
+ * @property string $topic_last_post_subject
+ * @property int $topic_last_post_time
+ * @property string $topic_last_poster_colour
+ * @property int $topic_last_poster_id
+ * @property string $topic_last_poster_name
+ * @property int $topic_last_view_time
+ * @property int $topic_moved_id
+ * @property int $topic_poster
+ * @property int $topic_replies
+ * @property int $topic_replies_real
+ * @property int $topic_reported
+ * @property int $topic_status
+ * @property int $topic_time
+ * @property int $topic_time_limit
+ * @property string $topic_title
+ * @property int $topic_type
+ * @property int $topic_views
+ * @property \Illuminate\Database\Eloquent\Collection $userTracks TopicTrack
  * @property \Illuminate\Database\Eloquent\Collection $watches TopicWatch
  */
 class Topic extends Model implements AfterCommit

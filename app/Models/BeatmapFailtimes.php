@@ -22,18 +22,12 @@ namespace App\Models;
 
 /**
  *
+ * @property Beatmap $beatmap
  * @property int $beatmap_id
- * @property mixed $type
+ * @property mixed $data
  * @property int $p1
- * @property int $p2
- * @property int $p3
- * @property int $p4
- * @property int $p5
- * @property int $p6
- * @property int $p7
- * @property int $p8
- * @property int $p9
  * @property int $p10
+ * @property int $p100
  * @property int $p11
  * @property int $p12
  * @property int $p13
@@ -43,6 +37,7 @@ namespace App\Models;
  * @property int $p17
  * @property int $p18
  * @property int $p19
+ * @property int $p2
  * @property int $p20
  * @property int $p21
  * @property int $p22
@@ -53,6 +48,7 @@ namespace App\Models;
  * @property int $p27
  * @property int $p28
  * @property int $p29
+ * @property int $p3
  * @property int $p30
  * @property int $p31
  * @property int $p32
@@ -63,6 +59,7 @@ namespace App\Models;
  * @property int $p37
  * @property int $p38
  * @property int $p39
+ * @property int $p4
  * @property int $p40
  * @property int $p41
  * @property int $p42
@@ -73,6 +70,7 @@ namespace App\Models;
  * @property int $p47
  * @property int $p48
  * @property int $p49
+ * @property int $p5
  * @property int $p50
  * @property int $p51
  * @property int $p52
@@ -83,6 +81,7 @@ namespace App\Models;
  * @property int $p57
  * @property int $p58
  * @property int $p59
+ * @property int $p6
  * @property int $p60
  * @property int $p61
  * @property int $p62
@@ -93,6 +92,7 @@ namespace App\Models;
  * @property int $p67
  * @property int $p68
  * @property int $p69
+ * @property int $p7
  * @property int $p70
  * @property int $p71
  * @property int $p72
@@ -103,6 +103,7 @@ namespace App\Models;
  * @property int $p77
  * @property int $p78
  * @property int $p79
+ * @property int $p8
  * @property int $p80
  * @property int $p81
  * @property int $p82
@@ -113,6 +114,7 @@ namespace App\Models;
  * @property int $p87
  * @property int $p88
  * @property int $p89
+ * @property int $p9
  * @property int $p90
  * @property int $p91
  * @property int $p92
@@ -123,9 +125,7 @@ namespace App\Models;
  * @property int $p97
  * @property int $p98
  * @property int $p99
- * @property int $p100
- * @property mixed $data
- * @property Beatmap $beatmap
+ * @property mixed $type
  */
 class BeatmapFailtimes extends Model
 {

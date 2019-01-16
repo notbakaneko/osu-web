@@ -25,9 +25,9 @@ use App\Models\Score;
 /**
  *
  * @property int $beatmap_id
- * @property int $user_id
- * @property int|null $score_id
  * @property Score\Taiko $score
+ * @property int|null $score_id
+ * @property int $user_id
  */
 class Taiko extends Model
 {

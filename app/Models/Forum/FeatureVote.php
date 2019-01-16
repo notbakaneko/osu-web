@@ -26,13 +26,13 @@ use DB;
 
 /**
  *
- * @property int $star_id
- * @property int $topic_id
- * @property int $user_id
- * @property mixed $type
  * @property \Carbon\Carbon $date
+ * @property int $star_id
  * @property Topic $topic
+ * @property int $topic_id
+ * @property mixed $type
  * @property User $user
+ * @property int $user_id
  */
 class FeatureVote extends Model
 {

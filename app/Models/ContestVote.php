@@ -22,16 +22,16 @@ namespace App\Models;
 
 /**
  *
- * @property int $id
- * @property int $contest_id
- * @property int $user_id
- * @property int $contest_entry_id
- * @property float $weight
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property ContestEntry $entry
  * @property Contest $contest
+ * @property int $contest_entry_id
+ * @property int $contest_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property ContestEntry $entry
+ * @property int $id
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
+ * @property int $user_id
+ * @property float $weight
  */
 class ContestVote extends Model
 {

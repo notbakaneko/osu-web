@@ -22,10 +22,10 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
- * @property string $image
- * @property string $description
  * @property \Carbon\Carbon|null $awarded
+ * @property string $description
+ * @property string $image
+ * @property int $user_id
  */
 class UserBadge extends Model
 {

@@ -27,18 +27,18 @@ use Illuminate\Http\UploadedFile;
 
 /**
  *
- * @property int $id
- * @property string|null $original_filename
- * @property string|null $hash
- * @property string|null $ext
- * @property int|null $filesize
- * @property int|null $user_id
+ * @property Contest $contest
  * @property int|null $contest_id
  * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
+ * @property string|null $ext
+ * @property int|null $filesize
+ * @property string|null $hash
+ * @property int $id
+ * @property string|null $original_filename
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
- * @property Contest $contest
+ * @property int|null $user_id
  */
 class UserContestEntry extends Model
 {

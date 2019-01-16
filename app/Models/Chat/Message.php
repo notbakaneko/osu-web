@@ -24,14 +24,14 @@ use App\Models\User;
 
 /**
  *
- * @property int $message_id
- * @property int $user_id
+ * @property Channel $channel
  * @property int $channel_id
  * @property string $content
  * @property boolean $is_action
- * @property \Carbon\Carbon $timestamp
- * @property Channel $channel
+ * @property int $message_id
  * @property User $sender
+ * @property \Carbon\Carbon $timestamp
+ * @property int $user_id
  */
 class Message extends Model
 {

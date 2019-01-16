@@ -24,16 +24,16 @@ use App\Models\User;
 
 /**
  *
+ * @property mixed $detail
  * @property int $event_id
- * @property int $match_id
+ * @property Game $game
  * @property int|null $game_id
- * @property int|null $user_id
+ * @property Match $match
+ * @property int $match_id
  * @property string|null $text
  * @property \Carbon\Carbon|null $timestamp
- * @property mixed $detail
- * @property Match $match
- * @property Game $game
  * @property User $user
+ * @property int|null $user_id
  */
 class Event extends Model
 {

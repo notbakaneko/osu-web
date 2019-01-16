@@ -22,25 +22,25 @@ namespace App\Models\Score;
 
 /**
  *
- * @property int $score_id
- * @property mixed $scorechecksum
  * @property int $beatmap_id
  * @property int $beatmapset_id
- * @property int $user_id
- * @property int $score
- * @property int $maxcombo
- * @property mixed $rank
- * @property int $count50
  * @property int $count100
  * @property int $count300
- * @property int $countmiss
+ * @property int $count50
  * @property int $countgeki
  * @property int $countkatu
- * @property boolean $perfect
- * @property int $enabled_mods
- * @property int $pass
+ * @property int $countmiss
  * @property \Carbon\Carbon $date
+ * @property int $enabled_mods
  * @property int|null $high_score_id
+ * @property int $maxcombo
+ * @property int $pass
+ * @property boolean $perfect
+ * @property mixed $rank
+ * @property int $score
+ * @property int $score_id
+ * @property mixed $scorechecksum
+ * @property int $user_id
  */
 class Osu extends Model
 {

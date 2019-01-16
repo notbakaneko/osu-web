@@ -25,24 +25,21 @@ use App\Models\Beatmap;
 
 /**
  *
- * @property int $game_id
- * @property int|null $match_id
- * @property \Carbon\Carbon|null $start_time
- * @property \Carbon\Carbon|null $end_time
- * @property int|null $beatmap_id
- * @property int|null $play_mode
- * @property int|null $match_type
- * @property int|null $scoring_type
- * @property int|null $team_type
- * @property int|null $mods
- * @property mixed $mods
- * @property mixed $mode
- * @property mixed $scoring_type
- * @property mixed $team_type
- * @property \Illuminate\Database\Eloquent\Collection $scores Score
- * @property \Illuminate\Database\Eloquent\Collection $events Event
- * @property Match $match
  * @property Beatmap $beatmap
+ * @property int|null $beatmap_id
+ * @property \Carbon\Carbon|null $end_time
+ * @property \Illuminate\Database\Eloquent\Collection $events Event
+ * @property int $game_id
+ * @property Match $match
+ * @property int|null $match_id
+ * @property int|null $match_type
+ * @property mixed $mode
+ * @property int|null $mods
+ * @property int|null $play_mode
+ * @property \Illuminate\Database\Eloquent\Collection $scores Score
+ * @property int|null $scoring_type
+ * @property \Carbon\Carbon|null $start_time
+ * @property int|null $team_type
  */
 class Game extends Model
 {

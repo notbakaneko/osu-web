@@ -27,31 +27,28 @@ use Cache;
 
 /**
  *
- * @property int $id
- * @property string $name
+ * @property \Carbon\Carbon|null $created_at
  * @property string $description_enter
  * @property string|null $description_voting
- * @property mixed $type
+ * @property \Illuminate\Database\Eloquent\Collection $entries ContestEntry
+ * @property \Carbon\Carbon|null $entry_ends_at
+ * @property mixed $entry_shape
+ * @property \Carbon\Carbon|null $entry_starts_at
+ * @property json|null $extra_options
+ * @property string $header_url
+ * @property int $id
+ * @property mixed $link_icon
  * @property int $max_entries
  * @property int $max_votes
- * @property string $header_url
- * @property boolean $visible
+ * @property string $name
  * @property int $show_votes
- * @property json|null $extra_options
- * @property \Carbon\Carbon|null $entry_starts_at
- * @property \Carbon\Carbon|null $entry_ends_at
- * @property \Carbon\Carbon|null $voting_starts_at
- * @property \Carbon\Carbon|null $voting_ends_at
- * @property \Carbon\Carbon|null $created_at
+ * @property mixed $type
+ * @property mixed $unmasked
  * @property \Carbon\Carbon|null $updated_at
- * @property mixed $entry_shape
- * @property mixed $entry_shape
- * @property mixed $unmasked
- * @property mixed $unmasked
- * @property mixed $link_icon
- * @property mixed $link_icon
- * @property \Illuminate\Database\Eloquent\Collection $entries ContestEntry
+ * @property boolean $visible
  * @property \Illuminate\Database\Eloquent\Collection $votes ContestVote
+ * @property \Carbon\Carbon|null $voting_ends_at
+ * @property \Carbon\Carbon|null $voting_starts_at
  */
 class Contest extends Model
 {

@@ -22,10 +22,10 @@ namespace App\Models;
 
 /**
  *
+ * @property int $attrib_id
  * @property int $beatmap_id
  * @property int $mode
  * @property int $mods
- * @property int $attrib_id
  * @property float|null $value
  */
 class BeatmapDifficultyAttrib extends Model

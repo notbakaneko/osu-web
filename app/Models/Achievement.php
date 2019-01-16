@@ -23,18 +23,17 @@ namespace App\Models;
 /**
  *
  * @property int $achievement_id
- * @property string $name
  * @property string|null $description
- * @property string $slug
- * @property string|null $image
+ * @property boolean $enabled
  * @property string $grouping
+ * @property string|null $image
+ * @property int|null $mode
+ * @property string $name
  * @property int $ordering
  * @property int $progression
- * @property int|null $quest_ordering
  * @property string|null $quest_instructions
- * @property boolean $enabled
- * @property int|null $mode
- * @property mixed $mode
+ * @property int|null $quest_ordering
+ * @property string $slug
  */
 class Achievement extends Model
 {

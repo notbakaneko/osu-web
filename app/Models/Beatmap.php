@@ -25,39 +25,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *
+ * @property int $approved
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
  * @property int $beatmap_id
+ * @property Beatmapset $beatmapset
  * @property int|null $beatmapset_id
- * @property int $user_id
- * @property string|null $filename
  * @property string|null $checksum
- * @property string $version
- * @property int $total_length
- * @property int $hit_length
- * @property int $countTotal
  * @property int $countNormal
  * @property int $countSlider
  * @property int $countSpinner
- * @property float $diff_drain
- * @property float $diff_size
- * @property float $diff_overall
- * @property float $diff_approach
- * @property int $playmode
- * @property int $approved
- * @property \Carbon\Carbon $last_update
- * @property float $difficultyrating
- * @property int $playcount
- * @property int $passcount
- * @property boolean $orphaned
- * @property string|null $youtube_preview
+ * @property int $countTotal
  * @property \Carbon\Carbon|null $deleted_at
- * @property mixed $mode
- * @property mixed $diff_size
- * @property mixed $version
- * @property Beatmapset $beatmapset
- * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussions BeatmapDiscussion
+ * @property float $diff_approach
+ * @property float $diff_drain
+ * @property float $diff_overall
+ * @property float $diff_size
  * @property \Illuminate\Database\Eloquent\Collection $difficulty BeatmapDifficulty
  * @property \Illuminate\Database\Eloquent\Collection $difficultyAttribs BeatmapDifficultyAttrib
+ * @property float $difficultyrating
  * @property \Illuminate\Database\Eloquent\Collection $failtimes BeatmapFailtimes
+ * @property string|null $filename
+ * @property int $hit_length
+ * @property \Carbon\Carbon $last_update
+ * @property mixed $mode
+ * @property boolean $orphaned
+ * @property int $passcount
+ * @property int $playcount
+ * @property int $playmode
+ * @property int $total_length
+ * @property int $user_id
+ * @property string $version
+ * @property string|null $youtube_preview
  */
 class Beatmap extends Model
 {

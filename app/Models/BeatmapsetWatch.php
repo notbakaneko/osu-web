@@ -24,15 +24,15 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $id
- * @property int $beatmapset_id
- * @property int $user_id
- * @property \Carbon\Carbon $last_read
- * @property \Carbon\Carbon|null $last_notified
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
  * @property Beatmapset $beatmapset
+ * @property int $beatmapset_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property int $id
+ * @property \Carbon\Carbon|null $last_notified
+ * @property \Carbon\Carbon $last_read
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
+ * @property int $user_id
  */
 class BeatmapsetWatch extends Model
 {

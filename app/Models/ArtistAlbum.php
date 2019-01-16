@@ -22,17 +22,17 @@ namespace App\Models;
 
 /**
  *
- * @property int $id
+ * @property Artist $artist
  * @property int|null $artist_id
+ * @property string|null $cover_url
+ * @property \Carbon\Carbon|null $created_at
+ * @property string $genre
+ * @property int $id
  * @property string $title
  * @property string|null $title_romanized
- * @property string $genre
- * @property string|null $cover_url
- * @property int $visible
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property Artist $artist
  * @property \Illuminate\Database\Eloquent\Collection $tracks ArtistTrack
+ * @property \Carbon\Carbon|null $updated_at
+ * @property int $visible
  */
 class ArtistAlbum extends Model
 {

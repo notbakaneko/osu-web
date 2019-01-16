@@ -22,24 +22,23 @@ namespace App\Models;
 
 /**
  *
- * @property int $changelog_id
- * @property int $user_id
- * @property string $prefix
+ * @property string|null $build
  * @property string $category
- * @property string $message
+ * @property int $changelog_id
  * @property string $checksum
  * @property \Carbon\Carbon $date
- * @property boolean $private
- * @property boolean $major
- * @property int $tweet
- * @property string|null $build
- * @property int|null $thread_id
- * @property string|null $url
- * @property int|null $stream_id
- * @property mixed $prefix
- * @property User $user
- * @property UpdateStream $updateStream
  * @property Build $gameBuild
+ * @property boolean $major
+ * @property string $message
+ * @property string $prefix
+ * @property boolean $private
+ * @property int|null $stream_id
+ * @property int|null $thread_id
+ * @property int $tweet
+ * @property UpdateStream $updateStream
+ * @property string|null $url
+ * @property User $user
+ * @property int $user_id
  */
 class Changelog extends Model
 {

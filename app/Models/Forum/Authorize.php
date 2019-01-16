@@ -23,11 +23,11 @@ namespace App\Models\Forum;
 /**
  * temporary class until simpler acl is implemented
  *
- * @property int $group_id
- * @property int $forum_id
  * @property int $auth_option_id
  * @property int $auth_role_id
  * @property int $auth_setting
+ * @property int $forum_id
+ * @property int $group_id
  */
 class Authorize extends Model
 {

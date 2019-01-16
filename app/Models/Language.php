@@ -24,9 +24,9 @@ use App\Transformers\LanguageTransformer;
 
 /**
  *
+ * @property int $display_order
  * @property int $language_id
  * @property string $name
- * @property int $display_order
  */
 class Language extends Model
 {

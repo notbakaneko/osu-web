@@ -22,14 +22,14 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
- * @property mixed $osu_md5
- * @property mixed $unique_md5
+ * @property Build $build
  * @property mixed $disk_md5
  * @property mixed $mac_md5
+ * @property mixed $osu_md5
  * @property \Carbon\Carbon $timestamp
+ * @property mixed $unique_md5
+ * @property int $user_id
  * @property int $verified
- * @property Build $build
  */
 class UserClient extends Model
 {

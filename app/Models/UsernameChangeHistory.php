@@ -23,10 +23,10 @@ namespace App\Models;
 /**
  *
  * @property int $change_id
+ * @property \Carbon\Carbon|null $timestamp
+ * @property mixed $type
  * @property int $user_id
  * @property string $username
- * @property mixed $type
- * @property \Carbon\Carbon|null $timestamp
  * @property string|null $username_last
  */
 class UsernameChangeHistory extends Model

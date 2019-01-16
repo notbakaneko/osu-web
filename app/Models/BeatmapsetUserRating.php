@@ -4,12 +4,12 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
- * @property int $beatmapset_id
- * @property int $rating
- * @property \Carbon\Carbon $date
  * @property Beatmapset $beatmapset
+ * @property int $beatmapset_id
+ * @property \Carbon\Carbon $date
+ * @property int $rating
  * @property User $user
+ * @property int $user_id
  */
 class BeatmapsetUserRating extends Model
 {

@@ -22,11 +22,11 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
+ * @property Beatmap $beatmap
  * @property int $beatmap_id
  * @property int $playcount
- * @property Beatmap $beatmap
  * @property User $user
+ * @property int $user_id
  */
 class BeatmapPlaycount extends Model
 {

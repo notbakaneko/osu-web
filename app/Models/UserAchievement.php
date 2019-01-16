@@ -22,11 +22,11 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
+ * @property Achievement $achievement
  * @property int $achievement_id
  * @property \Carbon\Carbon $date
  * @property User $user
- * @property Achievement $achievement
+ * @property int $user_id
  */
 class UserAchievement extends Model
 {

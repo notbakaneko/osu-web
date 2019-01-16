@@ -29,19 +29,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *
- * @property int $id
- * @property int $order_id
- * @property int $product_id
- * @property int $quantity
+ * @property float|null $cost
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon|null $deleted_at
- * @property \Carbon\Carbon|null $updated_at
- * @property float|null $cost
- * @property string|null $extra_info
  * @property array|null $extra_data
- * @property boolean $reserved
+ * @property string|null $extra_info
+ * @property int $id
  * @property Order $order
+ * @property int $order_id
  * @property Product $product
+ * @property int $product_id
+ * @property int $quantity
+ * @property boolean $reserved
+ * @property \Carbon\Carbon|null $updated_at
  */
 class OrderItem extends Model
 {

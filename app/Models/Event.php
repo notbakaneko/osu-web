@@ -25,18 +25,18 @@ use Sentry;
 
 /**
  *
- * @property int $event_id
- * @property string $text
- * @property string|null $text_clean
+ * @property Beatmap $beatmap
  * @property int|null $beatmap_id
+ * @property Beatmapset $beatmapset
  * @property int|null $beatmapset_id
- * @property int|null $user_id
  * @property \Carbon\Carbon $date
  * @property int $epicfactor
+ * @property int $event_id
  * @property int $private
+ * @property string $text
+ * @property string|null $text_clean
  * @property User $user
- * @property Beatmap $beatmap
- * @property Beatmapset $beatmapset
+ * @property int|null $user_id
  */
 class Event extends Model
 {

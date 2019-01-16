@@ -30,27 +30,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *
- * @property int $id
- * @property int $user_id
- * @property int $room_id
- * @property int $playlist_item_id
- * @property int $beatmap_id
- * @property mixed|null $rank
- * @property int|null $total_score
  * @property float|null $accuracy
- * @property float|null $pp
+ * @property int $beatmap_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null $ended_at
+ * @property int $id
  * @property int|null $max_combo
  * @property array|null $mods
- * @property array|null $statistics
- * @property \Carbon\Carbon $started_at
- * @property \Carbon\Carbon|null $ended_at
  * @property boolean|null $passed
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property \Carbon\Carbon|null $deleted_at
  * @property PlaylistItem $playlistItem
+ * @property int $playlist_item_id
+ * @property float|null $pp
+ * @property mixed|null $rank
  * @property Room $room
+ * @property int $room_id
+ * @property \Carbon\Carbon $started_at
+ * @property array|null $statistics
+ * @property int|null $total_score
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
+ * @property int $user_id
  */
 class RoomScore extends Model
 {

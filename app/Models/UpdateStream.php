@@ -24,13 +24,13 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $stream_id
+ * @property \Illuminate\Database\Eloquent\Collection $builds Build
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
  * @property string $name
  * @property string|null $pretty_name
  * @property string|null $repository
- * @property \Illuminate\Database\Eloquent\Collection $builds Build
- * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
- * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property int $stream_id
  */
 class UpdateStream extends Model
 {

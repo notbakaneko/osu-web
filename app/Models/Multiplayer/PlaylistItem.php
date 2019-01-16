@@ -28,18 +28,18 @@ use App\Models\Model;
 
 /**
  *
- * @property int $id
- * @property int $room_id
- * @property int $beatmap_id
- * @property int|null $ruleset_id
- * @property int|null $playlist_order
  * @property json|null $allowed_mods
- * @property json|null $required_mods
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property Room $room
  * @property Beatmap $beatmap
+ * @property int $beatmap_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property int $id
+ * @property int|null $playlist_order
+ * @property json|null $required_mods
+ * @property Room $room
+ * @property int $room_id
+ * @property int|null $ruleset_id
  * @property \Illuminate\Database\Eloquent\Collection $scores RoomScore
+ * @property \Carbon\Carbon|null $updated_at
  */
 class PlaylistItem extends Model
 {

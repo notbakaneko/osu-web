@@ -24,9 +24,9 @@ use Carbon\Carbon;
 
 /**
  *
+ * @property int $count
  * @property int $user_id
  * @property string $year_month
- * @property int $count
  */
 class UserReplaysWatchedCount extends Model
 {

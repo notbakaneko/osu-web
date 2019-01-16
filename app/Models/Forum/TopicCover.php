@@ -27,15 +27,15 @@ use Exception;
 
 /**
  *
- * @property int $id
- * @property int|null $topic_id
- * @property int|null $user_id
- * @property string|null $hash
- * @property string|null $ext
  * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $ext
+ * @property string|null $hash
+ * @property int $id
  * @property Topic $topic
+ * @property int|null $topic_id
+ * @property \Carbon\Carbon|null $updated_at
  * @property User $user
+ * @property int|null $user_id
  */
 class TopicCover extends Model
 {

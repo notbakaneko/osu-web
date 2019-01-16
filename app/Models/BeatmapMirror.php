@@ -24,18 +24,18 @@ use Auth;
 
 /**
  *
- * @property int $mirror_id
  * @property string $base_url
- * @property int $traffic_used
- * @property int $traffic_limit
- * @property string $secret_key
- * @property int $provider_user_id
+ * @property int|null $disk_space_free
  * @property int $enabled
- * @property float|null $version
+ * @property int $mirror_id
  * @property string $pending_purge
  * @property int $perform_updates
+ * @property int $provider_user_id
  * @property string|null $regions
- * @property int|null $disk_space_free
+ * @property string $secret_key
+ * @property int $traffic_limit
+ * @property int $traffic_used
+ * @property float|null $version
  */
 class BeatmapMirror extends Model
 {

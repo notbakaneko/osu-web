@@ -26,25 +26,22 @@ use Markdown;
 
 /**
  *
- * @property int $id
- * @property int|null $repository_id
- * @property int|null $github_pull_request_id
- * @property string|null $type
- * @property string|null $category
- * @property string|null $title
- * @property string|null $message
- * @property int|null $github_user_id
- * @property boolean $private
- * @property boolean $major
- * @property string|null $url
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property mixed $type
- * @property mixed $category
- * @property mixed $url
  * @property \Illuminate\Database\Eloquent\Collection $builds Build
+ * @property string|null $category
+ * @property \Carbon\Carbon|null $created_at
  * @property GithubUser $githubUser
+ * @property int|null $github_pull_request_id
+ * @property int|null $github_user_id
+ * @property int $id
+ * @property boolean $major
+ * @property string|null $message
+ * @property boolean $private
  * @property Repository $repository
+ * @property int|null $repository_id
+ * @property string|null $title
+ * @property string|null $type
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $url
  */
 class ChangelogEntry extends Model
 {

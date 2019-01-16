@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  *
- * @property int $user_id
+ * @property Channel $channel
  * @property int $channel_id
  * @property int|null $last_read_id
  * @property User $user
  * @property User $userScoped
- * @property Channel $channel
+ * @property int $user_id
  */
 class UserChannel extends Model
 {

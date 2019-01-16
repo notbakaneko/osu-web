@@ -22,11 +22,11 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
+ * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
  * @property \Carbon\Carbon $dateadded
  * @property User $user
- * @property Beatmapset $beatmapset
+ * @property int $user_id
  */
 class FavouriteBeatmapset extends Model
 {

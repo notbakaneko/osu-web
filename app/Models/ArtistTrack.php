@@ -22,24 +22,24 @@ namespace App\Models;
 
 /**
  *
- * @property int $id
- * @property int|null $artist_id
+ * @property ArtistAlbum $album
  * @property int|null $album_id
+ * @property Artist $artist
+ * @property int|null $artist_id
+ * @property float $bpm
+ * @property string|null $cover_url
+ * @property \Carbon\Carbon|null $created_at
  * @property int|null $display_order
+ * @property int $exclusive
+ * @property string $genre
+ * @property int $id
+ * @property int $length
+ * @property string $osz
+ * @property string $preview
  * @property string $title
  * @property string|null $title_romanized
- * @property string|null $version
- * @property string $genre
- * @property float $bpm
- * @property int $length
- * @property int $exclusive
- * @property string|null $cover_url
- * @property string $preview
- * @property string $osz
- * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property Artist $artist
- * @property ArtistAlbum $album
+ * @property string|null $version
  */
 class ArtistTrack extends Model
 {

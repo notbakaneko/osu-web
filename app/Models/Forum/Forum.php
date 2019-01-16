@@ -25,59 +25,53 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $forum_id
- * @property int $parent_id
- * @property int $left_id
- * @property int $right_id
- * @property mixed $forum_parents
- * @property string $forum_name
+ * @property ForumCover $cover
+ * @property int $display_on_index
+ * @property int $enable_icons
+ * @property boolean $enable_indexing
+ * @property int $enable_prune
+ * @property boolean $enable_sigs
  * @property string $forum_desc
  * @property string $forum_desc_bitfield
  * @property int $forum_desc_options
  * @property string $forum_desc_uid
- * @property string $forum_link
- * @property string $forum_password
- * @property int $forum_style
+ * @property int $forum_flags
+ * @property int $forum_id
  * @property string $forum_image
- * @property string $forum_rules
- * @property string $forum_rules_link
- * @property string $forum_rules_bitfield
- * @property int $forum_rules_options
- * @property string $forum_rules_uid
- * @property int $forum_topics_per_page
- * @property int $forum_type
- * @property int $forum_status
- * @property int $forum_posts
- * @property int $forum_topics
- * @property int $forum_topics_real
  * @property int $forum_last_post_id
- * @property int $forum_last_poster_id
  * @property string $forum_last_post_subject
  * @property int $forum_last_post_time
- * @property string $forum_last_poster_name
  * @property string $forum_last_poster_colour
- * @property int $forum_flags
- * @property int $display_on_index
- * @property boolean $enable_indexing
- * @property int $enable_icons
- * @property int $enable_prune
- * @property boolean $enable_sigs
- * @property int $prune_next
- * @property int $prune_days
- * @property int $prune_viewed
- * @property int $prune_freq
- * @property array|null $moderator_groups
+ * @property int $forum_last_poster_id
+ * @property string $forum_last_poster_name
+ * @property string $forum_link
+ * @property string $forum_name
  * @property mixed $forum_parents
- * @property mixed $forum_parents
- * @property mixed $forum_last_poster_colour
- * @property mixed $forum_last_poster_colour
- * @property mixed $forum_last_post_time
- * @property mixed $forum_last_post_time
- * @property \Illuminate\Database\Eloquent\Collection $topics Topic
- * @property static $parentForum
- * @property \Illuminate\Database\Eloquent\Collection $subforums static
+ * @property string $forum_password
+ * @property int $forum_posts
+ * @property string $forum_rules
+ * @property string $forum_rules_bitfield
+ * @property string $forum_rules_link
+ * @property int $forum_rules_options
+ * @property string $forum_rules_uid
+ * @property int $forum_status
+ * @property int $forum_style
+ * @property int $forum_topics
+ * @property int $forum_topics_per_page
+ * @property int $forum_topics_real
+ * @property int $forum_type
  * @property Post $lastPost
- * @property ForumCover $cover
+ * @property int $left_id
+ * @property array|null $moderator_groups
+ * @property static $parentForum
+ * @property int $parent_id
+ * @property int $prune_days
+ * @property int $prune_freq
+ * @property int $prune_next
+ * @property int $prune_viewed
+ * @property int $right_id
+ * @property \Illuminate\Database\Eloquent\Collection $subforums static
+ * @property \Illuminate\Database\Eloquent\Collection $topics Topic
  */
 class Forum extends Model
 {

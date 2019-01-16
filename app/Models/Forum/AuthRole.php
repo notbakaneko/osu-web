@@ -22,9 +22,9 @@ namespace App\Models\Forum;
 
 /**
  *
- * @property int $role_id
  * @property int $auth_option_id
  * @property int $auth_setting
+ * @property int $role_id
  */
 class AuthRole extends Model
 {

@@ -27,15 +27,15 @@ use Schema;
 
 /**
  *
- * @property int $chart_id
  * @property string $acronym
- * @property string $name
- * @property \Carbon\Carbon|null $start_date
+ * @property boolean $active
+ * @property int $chart_id
+ * @property \Carbon\Carbon|null $chart_month
  * @property \Carbon\Carbon|null $end_date
  * @property boolean $mode_specific
+ * @property string $name
+ * @property \Carbon\Carbon|null $start_date
  * @property string $type
- * @property boolean $active
- * @property \Carbon\Carbon|null $chart_month
  */
 class Spotlight extends Model
 {

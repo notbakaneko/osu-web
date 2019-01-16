@@ -22,15 +22,15 @@ namespace App\Models;
 
 /**
  *
+ * @property boolean $build_on_tag
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property \Carbon\Carbon|null $created_at
+ * @property string|null $default_category
  * @property int $id
+ * @property UpdateStream $mainUpdateStream
  * @property string $name
  * @property int|null $stream_id
- * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property boolean $build_on_tag
- * @property string|null $default_category
- * @property UpdateStream $mainUpdateStream
- * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  */
 class Repository extends Model
 {

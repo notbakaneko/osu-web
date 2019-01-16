@@ -22,14 +22,14 @@ namespace App\Models\Multiplayer;
 
 /**
  *
- * @property int $match_id
- * @property \Carbon\Carbon|null $start_time
  * @property \Carbon\Carbon|null $end_time
+ * @property \Illuminate\Database\Eloquent\Collection $events Event
+ * @property \Illuminate\Database\Eloquent\Collection $games Game
+ * @property mixed $keep_forever
+ * @property int $match_id
  * @property string $name
  * @property mixed $private
- * @property mixed $keep_forever
- * @property \Illuminate\Database\Eloquent\Collection $games Game
- * @property \Illuminate\Database\Eloquent\Collection $events Event
+ * @property \Carbon\Carbon|null $start_time
  */
 class Match extends Model
 {

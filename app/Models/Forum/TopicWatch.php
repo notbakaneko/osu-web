@@ -24,12 +24,12 @@ use App\Models\User;
 
 /**
  *
- * @property int $user_id
- * @property int $topic_id
- * @property boolean $notify_status
  * @property boolean $mail
+ * @property boolean $notify_status
  * @property Topic $topic
+ * @property int $topic_id
  * @property User $user
+ * @property int $user_id
  */
 class TopicWatch extends Model
 {

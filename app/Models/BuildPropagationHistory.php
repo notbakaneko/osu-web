@@ -25,11 +25,11 @@ use DB;
 
 /**
  *
- * @property int $id
- * @property int $build_id
- * @property int $user_count
- * @property \Carbon\Carbon $created_at
  * @property Build $build
+ * @property int $build_id
+ * @property \Carbon\Carbon $created_at
+ * @property int $id
+ * @property int $user_count
  */
 class BuildPropagationHistory extends Model
 {

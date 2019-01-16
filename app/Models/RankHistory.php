@@ -22,18 +22,10 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
+ * @property mixed $data
  * @property int $mode
  * @property int $r0
  * @property int $r1
- * @property int $r2
- * @property int $r3
- * @property int $r4
- * @property int $r5
- * @property int $r6
- * @property int $r7
- * @property int $r8
- * @property int $r9
  * @property int $r10
  * @property int $r11
  * @property int $r12
@@ -44,6 +36,7 @@ namespace App\Models;
  * @property int $r17
  * @property int $r18
  * @property int $r19
+ * @property int $r2
  * @property int $r20
  * @property int $r21
  * @property int $r22
@@ -54,6 +47,7 @@ namespace App\Models;
  * @property int $r27
  * @property int $r28
  * @property int $r29
+ * @property int $r3
  * @property int $r30
  * @property int $r31
  * @property int $r32
@@ -64,6 +58,7 @@ namespace App\Models;
  * @property int $r37
  * @property int $r38
  * @property int $r39
+ * @property int $r4
  * @property int $r40
  * @property int $r41
  * @property int $r42
@@ -74,6 +69,7 @@ namespace App\Models;
  * @property int $r47
  * @property int $r48
  * @property int $r49
+ * @property int $r5
  * @property int $r50
  * @property int $r51
  * @property int $r52
@@ -84,6 +80,7 @@ namespace App\Models;
  * @property int $r57
  * @property int $r58
  * @property int $r59
+ * @property int $r6
  * @property int $r60
  * @property int $r61
  * @property int $r62
@@ -94,6 +91,7 @@ namespace App\Models;
  * @property int $r67
  * @property int $r68
  * @property int $r69
+ * @property int $r7
  * @property int $r70
  * @property int $r71
  * @property int $r72
@@ -104,6 +102,7 @@ namespace App\Models;
  * @property int $r77
  * @property int $r78
  * @property int $r79
+ * @property int $r8
  * @property int $r80
  * @property int $r81
  * @property int $r82
@@ -114,9 +113,9 @@ namespace App\Models;
  * @property int $r87
  * @property int $r88
  * @property int $r89
- * @property mixed $data
- * @property mixed $mode
+ * @property int $r9
  * @property User $user
+ * @property int $user_id
  */
 class RankHistory extends Model
 {

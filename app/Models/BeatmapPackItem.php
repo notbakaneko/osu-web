@@ -22,11 +22,11 @@ namespace App\Models;
 
 /**
  *
- * @property int $item_id
- * @property int $pack_id
- * @property int $beatmapset_id
- * @property BeatmapPack $pack
  * @property Beatmapset $beatmapset
+ * @property int $beatmapset_id
+ * @property int $item_id
+ * @property BeatmapPack $pack
+ * @property int $pack_id
  */
 class BeatmapPackItem extends Model
 {

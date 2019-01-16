@@ -24,17 +24,15 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $id
+ * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
- * @property int|null $user_id
- * @property mixed|null $type
  * @property string|null $comment
  * @property \Carbon\Carbon|null $created_at
+ * @property int $id
+ * @property mixed|null $type
  * @property \Carbon\Carbon|null $updated_at
- * @property mixed $comment
- * @property mixed $comment
- * @property Beatmapset $beatmapset
  * @property User $user
+ * @property int|null $user_id
  */
 class BeatmapsetEvent extends Model
 {

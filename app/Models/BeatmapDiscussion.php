@@ -27,31 +27,27 @@ use DB;
 
 /**
  *
- * @property int $id
- * @property int $beatmapset_id
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionPosts BeatmapDiscussionPost
+ * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionVotes BeatmapDiscussionVote
  * @property int|null $beatmap_id
- * @property int|null $user_id
- * @property int|null $message_type
- * @property int|null $timestamp
- * @property boolean $resolved
+ * @property int $beatmapset_id
  * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property int|null $resolver_id
  * @property \Carbon\Carbon|null $deleted_at
  * @property int|null $deleted_by_id
+ * @property int $id
+ * @property KudosuHistory $kudosuHistory
  * @property boolean $kudosu_denied
  * @property int|null $kudosu_denied_by_id
- * @property mixed $message_type
- * @property mixed $message_type
- * @property mixed $resolved
- * @property mixed $resolved
+ * @property int|null $message_type
+ * @property boolean $resolved
+ * @property int|null $resolver_id
+ * @property BeatmapDiscussionPost $startingPost
+ * @property int|null $timestamp
+ * @property \Carbon\Carbon|null $updated_at
+ * @property User $user
+ * @property int|null $user_id
  * @property Beatmap $visibleBeatmap
  * @property Beatmapset $visibleBeatmapset
- * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionPosts BeatmapDiscussionPost
- * @property BeatmapDiscussionPost $startingPost
- * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionVotes BeatmapDiscussionVote
- * @property User $user
- * @property KudosuHistory $kudosuHistory
  */
 class BeatmapDiscussion extends Model
 {

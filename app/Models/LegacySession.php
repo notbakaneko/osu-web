@@ -22,17 +22,17 @@ namespace App\Models;
 
 /**
  *
+ * @property boolean $session_admin
+ * @property boolean $session_autologin
+ * @property string $session_forwarded_for
  * @property string $session_id
- * @property int $session_user_id
+ * @property string $session_ip
  * @property int $session_last_visit
+ * @property string $session_page
  * @property int $session_start
  * @property int $session_time
- * @property string $session_ip
- * @property string $session_forwarded_for
- * @property string $session_page
+ * @property int $session_user_id
  * @property boolean $session_viewonline
- * @property boolean $session_autologin
- * @property boolean $session_admin
  * @property boolean $verified
  */
 class LegacySession extends Model

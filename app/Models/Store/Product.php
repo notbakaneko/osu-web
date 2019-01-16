@@ -24,37 +24,34 @@ use App\Exceptions\InsufficientStockException;
 
 /**
  *
- * @property int $product_id
- * @property string $name
- * @property string|null $description
- * @property string|null $image
- * @property float|null $cost
- * @property int|null $weight
+ * @property boolean $allow_multiple
  * @property float $base_shipping
- * @property float $next_shipping
- * @property int|null $stock
- * @property int $max_quantity
+ * @property 'Category' $category
+ * @property float|null $cost
  * @property \Carbon\Carbon $created_at
+ * @property string|null $custom_class
  * @property \Carbon\Carbon|null $deleted_at
- * @property \Carbon\Carbon|null $updated_at
- * @property boolean $promoted
+ * @property string|null $description
  * @property int $display_order
+ * @property boolean $enabled
  * @property string|null $header_description
  * @property string|null $header_image
+ * @property string|null $image
  * @property string|null $images_json
- * @property int|null $master_product_id
- * @property string|null $type_mappings_json
- * @property string|null $custom_class
- * @property boolean $enabled
- * @property boolean $allow_multiple
- * @property int|null $tournament_id
- * @property mixed $header_image
- * @property mixed $header_description
- * @property mixed $description
  * @property self $masterProduct
- * @property \Illuminate\Database\Eloquent\Collection $variations static
- * @property 'Category' $category
+ * @property int|null $master_product_id
+ * @property int $max_quantity
+ * @property string $name
+ * @property float $next_shipping
  * @property \Illuminate\Database\Eloquent\Collection $notificationRequests NotificationRequest
+ * @property int $product_id
+ * @property boolean $promoted
+ * @property int|null $stock
+ * @property int|null $tournament_id
+ * @property string|null $type_mappings_json
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection $variations static
+ * @property int|null $weight
  */
 class Product extends Model
 {

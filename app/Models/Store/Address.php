@@ -27,20 +27,20 @@ use Auth;
 /**
  *
  * @property int $address_id
- * @property int|null $user_id
- * @property string|null $first_name
- * @property string|null $last_name
- * @property string|null $street
  * @property string|null $city
- * @property string|null $state
- * @property string|null $zip
+ * @property Country $country
  * @property string|null $country_code
- * @property string|null $phone
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon|null $deleted_at
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property string|null $phone
+ * @property string|null $state
+ * @property string|null $street
  * @property \Carbon\Carbon|null $updated_at
  * @property User $user
- * @property Country $country
+ * @property int|null $user_id
+ * @property string|null $zip
  */
 class Address extends Model
 {

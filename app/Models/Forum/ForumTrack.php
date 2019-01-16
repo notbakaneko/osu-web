@@ -22,9 +22,9 @@ namespace App\Models\Forum;
 
 /**
  *
- * @property int $user_id
  * @property int $forum_id
  * @property int $mark_time
+ * @property int $user_id
  */
 class ForumTrack extends Model
 {

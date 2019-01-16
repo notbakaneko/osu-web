@@ -22,12 +22,12 @@ namespace App\Models;
 
 /**
  *
+ * @property Beatmap $beatmap
  * @property int $beatmap_id
- * @property int $mode
- * @property int $mods
  * @property float $diff_unified
  * @property \Carbon\Carbon $last_update
- * @property Beatmap $beatmap
+ * @property int $mode
+ * @property int $mods
  */
 class BeatmapDifficulty extends Model
 {

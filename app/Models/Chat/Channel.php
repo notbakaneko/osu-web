@@ -26,15 +26,14 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $channel_id
- * @property string $name
- * @property string $description
- * @property \Carbon\Carbon $creation_time
- * @property mixed $type
  * @property string|null $allowed_groups
- * @property int $moderated
- * @property mixed $allowed_groups
+ * @property int $channel_id
+ * @property \Carbon\Carbon $creation_time
+ * @property string $description
  * @property \Illuminate\Database\Eloquent\Collection $messages Message
+ * @property int $moderated
+ * @property string $name
+ * @property mixed $type
  */
 class Channel extends Model
 {

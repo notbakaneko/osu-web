@@ -6,12 +6,12 @@ use DB;
 
 /**
  *
+ * @property boolean $foe
+ * @property boolean $friend
+ * @property User $target
+ * @property User $user
  * @property int $user_id
  * @property int $zebra_id
- * @property boolean $friend
- * @property boolean $foe
- * @property User $user
- * @property User $target
  */
 class UserRelation extends Model
 {

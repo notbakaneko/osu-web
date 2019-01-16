@@ -22,22 +22,20 @@ namespace App\Models;
 
 /**
  *
- * @property int $log_id
- * @property int $log_type
- * @property int $user_id
- * @property int $forum_id
- * @property int $topic_id
- * @property int $reportee_id
- * @property string $log_ip
- * @property int $log_time
- * @property string $log_operation
- * @property mixed $log_data
- * @property mixed $log_data
- * @property mixed $log_data
  * @property Forum\Forum $forum
- * @property Forum\Topic $topic
- * @property User $user
+ * @property int $forum_id
+ * @property mixed $log_data
+ * @property int $log_id
+ * @property string $log_ip
+ * @property string $log_operation
+ * @property int $log_time
+ * @property int $log_type
  * @property User $reportee
+ * @property int $reportee_id
+ * @property Forum\Topic $topic
+ * @property int $topic_id
+ * @property User $user
+ * @property int $user_id
  */
 class Log extends Model
 {

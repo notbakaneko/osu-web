@@ -25,14 +25,14 @@ use DB;
 
 /**
  *
- * @property int $smiley_id
  * @property string $code
+ * @property int $display_on_posting
  * @property string $emotion
+ * @property int $smiley_height
+ * @property int $smiley_id
+ * @property int $smiley_order
  * @property string $smiley_url
  * @property int $smiley_width
- * @property int $smiley_height
- * @property int $smiley_order
- * @property int $display_on_posting
  */
 class Smiley extends Model
 {

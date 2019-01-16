@@ -23,14 +23,14 @@ namespace App\Models;
 /**
  *
  * @property string $acronym
- * @property string $name
- * @property int $rankedscore
- * @property int $playcount
- * @property int $usercount
- * @property int $pp
  * @property int $display
- * @property float $shipping_rate
+ * @property string $name
+ * @property int $playcount
+ * @property int $pp
  * @property \Illuminate\Database\Eloquent\Collection $profileBanners ProfileBanner
+ * @property int $rankedscore
+ * @property float $shipping_rate
+ * @property int $usercount
  */
 class Country extends Model
 {

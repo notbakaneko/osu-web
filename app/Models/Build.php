@@ -24,21 +24,21 @@ use Carbon\Carbon;
 
 /**
  *
+ * @property boolean $allow_bancho
+ * @property int $allow_ranking
  * @property int $build_id
- * @property string|null $version
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
+ * @property Comment $comments
+ * @property \Carbon\Carbon $date
  * @property mixed|null $hash
  * @property mixed|null $last_hash
- * @property \Carbon\Carbon $date
- * @property int $allow_ranking
- * @property boolean $allow_bancho
- * @property int $test_build
- * @property int $users
- * @property int|null $stream_id
- * @property UpdateStream $updateStream
- * @property \Illuminate\Database\Eloquent\Collection $changelogs Changelog
- * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
- * @property Comment $comments
  * @property \Illuminate\Database\Eloquent\Collection $propagationHistories BuildPropagationHistory
+ * @property int|null $stream_id
+ * @property int $test_build
+ * @property UpdateStream $updateStream
+ * @property int $users
+ * @property string|null $version
  */
 class Build extends Model
 {

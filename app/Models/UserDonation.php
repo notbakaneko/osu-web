@@ -27,13 +27,13 @@ use Log;
 /**
  * FIXME: should validate donation is a positive value on save.
  *
- * @property int $user_id
- * @property string $transaction_id
- * @property int $target_user_id
- * @property int $length
  * @property int $amount
- * @property \Carbon\Carbon $timestamp
  * @property boolean $cancel
+ * @property int $length
+ * @property int $target_user_id
+ * @property \Carbon\Carbon $timestamp
+ * @property string $transaction_id
+ * @property int $user_id
  */
 class UserDonation extends Model
 {

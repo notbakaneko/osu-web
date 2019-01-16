@@ -22,12 +22,12 @@ namespace App\Models;
 
 /**
  *
- * @property int $group_id
- * @property int $user_id
- * @property int $group_leader
- * @property int $user_pending
  * @property Group $group
+ * @property int $group_id
+ * @property int $group_leader
  * @property User $user
+ * @property int $user_id
+ * @property int $user_pending
  */
 class UserGroup extends Model
 {

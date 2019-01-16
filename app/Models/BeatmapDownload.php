@@ -22,14 +22,14 @@ namespace App\Models;
 
 /**
  *
- * @property int $user_id
- * @property int $timestamp
+ * @property Beatmapset $beatmapset
  * @property int $beatmapset_id
  * @property int $fulfilled
- * @property int $mirror_id
- * @property Beatmapset $beatmapset
  * @property BeatmapMirror $mirror
+ * @property int $mirror_id
+ * @property int $timestamp
  * @property User $user
+ * @property int $user_id
  */
 class BeatmapDownload extends Model
 {

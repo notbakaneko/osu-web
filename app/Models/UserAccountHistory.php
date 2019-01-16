@@ -24,17 +24,17 @@ use Carbon\Carbon;
 
 /**
  *
+ * @property User $actor
  * @property int $ban_id
- * @property int|null $user_id
+ * @property int|null $ban_status
+ * @property int|null $banner_id
+ * @property int $period
  * @property string|null $reason
  * @property string|null $supporting_url
- * @property int|null $ban_status
- * @property int $period
  * @property \Carbon\Carbon|null $timestamp
- * @property int|null $banner_id
  * @property mixed $type
  * @property User $user
- * @property User $actor
+ * @property int|null $user_id
  */
 class UserAccountHistory extends Model
 {

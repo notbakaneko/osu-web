@@ -28,16 +28,16 @@ use Exception;
 
 /**
  *
- * @property int $id
- * @property string|null $version
- * @property string $slug
- * @property string|null $hash
- * @property string|null $tumblr_id
- * @property array|null $page
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property \Carbon\Carbon|null $published_at
  * @property Comment $comments
+ * @property \Carbon\Carbon|null $created_at
+ * @property string|null $hash
+ * @property int $id
+ * @property array|null $page
+ * @property \Carbon\Carbon|null $published_at
+ * @property string $slug
+ * @property string|null $tumblr_id
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $version
  */
 class NewsPost extends Model
 {

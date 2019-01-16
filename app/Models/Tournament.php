@@ -24,24 +24,24 @@ use Carbon\Carbon;
 
 /**
  *
- * @property int $tournament_id
- * @property string $name
- * @property string $description
- * @property string|null $header_banner
- * @property int $play_mode
- * @property int|null $rank_min
- * @property int|null $rank_max
- * @property \Carbon\Carbon $signup_open
- * @property \Carbon\Carbon $signup_close
- * @property \Carbon\Carbon $start_date
- * @property \Carbon\Carbon $end_date
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property int|null $tournament_banner_product_id
  * @property \Carbon\Carbon|null $banner_sales_ends_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property string $description
+ * @property \Carbon\Carbon $end_date
+ * @property string|null $header_banner
  * @property string|null $info_url
+ * @property string $name
+ * @property int $play_mode
  * @property \Illuminate\Database\Eloquent\Collection $profileBanners ProfileBanner
+ * @property int|null $rank_max
+ * @property int|null $rank_min
  * @property \Illuminate\Database\Eloquent\Collection $registrations TournamentRegistration
+ * @property \Carbon\Carbon $signup_close
+ * @property \Carbon\Carbon $signup_open
+ * @property \Carbon\Carbon $start_date
+ * @property int|null $tournament_banner_product_id
+ * @property int $tournament_id
+ * @property \Carbon\Carbon|null $updated_at
  */
 class Tournament extends Model
 {

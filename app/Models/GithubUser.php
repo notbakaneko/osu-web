@@ -22,14 +22,14 @@ namespace App\Models;
 
 /**
  *
- * @property int $id
  * @property int|null $canonical_id
- * @property string|null $username
- * @property int|null $user_id
+ * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
  * @property \Carbon\Carbon|null $created_at
+ * @property int $id
  * @property \Carbon\Carbon|null $updated_at
  * @property User $user
- * @property \Illuminate\Database\Eloquent\Collection $changelogEntries ChangelogEntry
+ * @property int|null $user_id
+ * @property string|null $username
  */
 class GithubUser extends Model
 {

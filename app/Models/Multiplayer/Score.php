@@ -25,25 +25,24 @@ use App\Traits\Scoreable;
 
 /**
  *
+ * @property int $count100
+ * @property int $count300
+ * @property int $count50
+ * @property int $countgeki
+ * @property int $countkatu
+ * @property int $countmiss
+ * @property int|null $enabled_mods
+ * @property int $frame
+ * @property Game $game
  * @property int $game_id
+ * @property int $maxcombo
+ * @property int $pass
+ * @property int $perfect
+ * @property mixed $rank
+ * @property int $score
  * @property int $slot
  * @property int $team
  * @property int $user_id
- * @property int $score
- * @property int $maxcombo
- * @property mixed $rank
- * @property int $count50
- * @property int $count100
- * @property int $count300
- * @property int $countmiss
- * @property int $countgeki
- * @property int $countkatu
- * @property int $perfect
- * @property int $pass
- * @property int $frame
- * @property int|null $enabled_mods
- * @property mixed $team
- * @property Game $game
  */
 class Score extends Model
 {

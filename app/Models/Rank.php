@@ -23,11 +23,10 @@ namespace App\Models;
 /**
  *
  * @property int $rank_id
- * @property string $rank_title
+ * @property string $rank_image
  * @property int $rank_min
  * @property int $rank_special
- * @property string $rank_image
- * @property mixed $rank_title
+ * @property string $rank_title
  */
 class Rank extends Model
 {
