@@ -52,6 +52,15 @@ class AnnotateModel
     const FLOAT_TYPES = ['decimal', 'float', 'double'];
     const DATE_TYPES = ['date', 'timestamp'];
 
+    /** @var array */
+    private $attributeNames;
+
+    /** @var ClassDeclaration */
+    private $classDeclaration;
+
+    /** @var string */
+    private $className;
+
     /** @var SplFileInfo */
     private $file;
 
@@ -63,9 +72,6 @@ class AnnotateModel
 
     /** @var Parser */
     private $parser;
-
-    /** @var Node */
-    private $astNode;
 
     /** @var string */
     private $content;
@@ -150,6 +156,30 @@ class AnnotateModel
         return $methods;
     }
 
+    private static function extractMethodDeclarations(ClassDeclaration $classDeclaration) : array
+    {
+        $methods = [];
+        $classMemberDeclarations = $classDeclaration->classMembers->classMemberDeclarations;
+        foreach ($classMemberDeclarations as $declaration) {
+            if ($declaration instanceof MethodDeclaration) {
+                $methods[] = $declaration;
+            }
+        }
+
+        return $methods;
+    }
+
+    private static function findClassDeclaration(Node $astNode) : ?ClassDeclaration
+    {
+        foreach ($astNode->statementList as $statement) {
+            if ($statement instanceof ClassDeclaration) {
+                return $statement;
+            }
+        }
+
+        return null;
+    }
+
     public function __construct(SplFileInfo $file)
     {
         $this->file = $file;
@@ -183,9 +213,7 @@ class AnnotateModel
             return;
         }
 
-        if ($this->astNode === null) {
-            $this->astNode = $this->parse();
-        }
+        $this->parse();
 
         $this->findDirectProperties();
         $this->findPropertiesFromMethods();
@@ -201,17 +229,9 @@ class AnnotateModel
         $parser = new Parser();
         $astNode = $parser->parseSourceFile($this->content);
 
-        $this->classDeclaration = null;
-        foreach ($astNode->statementList as $statement) {
-            if ($statement instanceof ClassDeclaration) {
-                $this->className = $statement->getNameParts()[0]->getText($this->content);
-
-                $this->classDeclaration = $statement;
-                break;
-            }
-        }
-
-        $this->methodDeclarations = $this->parseMethodDeclarations();
+        $this->classDeclaration = static::findClassDeclaration($astNode);
+        $this->className = $this->classDeclaration->getNameParts()[0]->getText($this->content);
+        $this->methodDeclarations = static::extractMethodDeclarations($this->classDeclaration);
 
         $this->attributeNames = collect($this->methodDeclarations)->filter(function ($item) {
             return ends_with($item->getName(), 'Attribute');
@@ -219,21 +239,6 @@ class AnnotateModel
             $name = $item->getName();
             return snake_case(substr(substr($name, 3), 0, -9));
         })->all();
-
-        return $astNode;
-    }
-
-    public function parseMethodDeclarations()
-    {
-        $methods = [];
-        $classMemberDeclarations = $this->classDeclaration->classMembers->classMemberDeclarations;
-        foreach ($classMemberDeclarations as $declaration) {
-            if ($declaration instanceof MethodDeclaration) {
-                $methods[] = $declaration;
-            }
-        }
-
-        return $methods;
     }
 
     private function addAnnotationsToFile()
@@ -282,6 +287,21 @@ class AnnotateModel
         File::put($this->file->getRealPath(), $newContent);
     }
 
+    private function addPropertyFromCallExpression(string $name, CallExpression $expression)
+    {
+        [$function, $className] = $this->tryFindRelationshipFromCallExpression($expression);
+
+        if ($className !== null) {
+            $isCollection = in_array($function, static::collectionRelationshipMethods(), true);
+            $this->addProperty(
+                $name,
+                // PSR-5 removed generics recently, so no standard typehint format for typed collections
+                $isCollection ? '\Illuminate\Database\Eloquent\Collection' : $className,
+                $isCollection ? $className : null
+            );
+        }
+    }
+
     private function castType(string $field, string $type) : string
     {
         $cast = $this->instance->getCasts()[$field] ?? null;
@@ -328,6 +348,7 @@ class AnnotateModel
 
     private function findPropertiesFromMethods()
     {
+        /** @var MethodDeclaration $declaration */
         foreach ($this->methodDeclarations as $declaration) {
             if ($this->tryExtractRelationship($declaration) !== null) {
                 /** @var Node[] $statements */
@@ -346,20 +367,8 @@ class AnnotateModel
 
                 $nodes = $statement->getChildNodes();
                 foreach ($nodes as $node) {
-                    if (!$node instanceof CallExpression) {
-                        continue;
-                    }
-
-                    [$function, $className] = $this->walkCallExpression($node);
-
-                    if ($className !== null) {
-                        $isCollection = in_array($function, static::collectionRelationshipMethods(), true);
-                        $this->addProperty(
-                            $declaration->getName(),
-                            // PSR-5 removed generics recently, so no standard typehint format for typed collections
-                            $isCollection ? '\Illuminate\Database\Eloquent\Collection' : $className,
-                            $isCollection ? $className : null
-                        );
+                    if ($node instanceof CallExpression) {
+                        $this->addPropertyFromCallExpression($declaration->getName(), $node);
                     }
                 }
             }
@@ -400,7 +409,19 @@ class AnnotateModel
         return $declaration;
     }
 
-    private function tryFindRelationship(Node $node) : ?array
+    private function tryFindRelationshipFromCallExpression(CallExpression $expression)
+    {
+        $nodes = $expression->getDescendantNodes();
+
+        foreach ($nodes as $node) {
+            $relationship = $this->tryFindRelationshipFromNode($node);
+            if ($relationship !== null) {
+                return $relationship;
+            }
+        }
+    }
+
+    private function tryFindRelationshipFromNode(Node $node) : ?array
     {
         // keep going until probable relationship method.
         if (!$node instanceof MemberAccessExpression) {
@@ -455,17 +476,5 @@ class AnnotateModel
         $className = $classNode instanceof StringLiteral ? $classNode->getStringContentsText() : $classNode->getText();
 
         return [$functionName, $className];
-    }
-
-    private function walkCallExpression(Node $expression)
-    {
-        $nodes = $expression->getDescendantNodes();
-
-        foreach ($nodes as $node) {
-            $relationship = $this->tryFindRelationship($node);
-            if ($relationship !== null) {
-                return $relationship;
-            }
-        }
     }
 }
