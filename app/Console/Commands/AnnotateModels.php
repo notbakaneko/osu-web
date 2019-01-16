@@ -49,7 +49,7 @@ class AnnotateModels extends Command
     {
         $files = File::allFiles(app_path().'/Models');
         foreach ($files as $file) {
-            // $this->annotateFile($file);
+            $this->line($file->getRelativePathname());
             (new AnnotateModel($file))->annotate();
         }
     }
