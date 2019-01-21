@@ -4,7 +4,7 @@ namespace Benchmarks\GetAttribute;
 
 use Benchmarks\UserNoCast;
 
-class GetAttributeNoCastBench extends GetAttributeBenchCase
+class NoCastBench extends BenchCase
 {
     public function getSubject()
     {

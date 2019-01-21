@@ -4,7 +4,7 @@ namespace Benchmarks\GetAttribute;
 
 use Benchmarks\UserNoMutator;
 
-class GetAttributeNoMutatorBench extends GetAttributeBenchCase
+class NoMutatorBench extends BenchCase
 {
     public function getSubject()
     {

@@ -4,7 +4,7 @@ namespace Benchmarks\MagicGet;
 
 use Benchmarks\UserNoCast;
 
-class MagicGetNoCastBench extends MagicGetBenchCase
+class NoCastBench extends BenchCase
 {
     public function getSubject()
     {

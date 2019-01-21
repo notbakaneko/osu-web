@@ -4,7 +4,7 @@ namespace Benchmarks\MagicGet;
 
 use Benchmarks\UserNoMutator;
 
-class MagicGetNoMutatorBench extends MagicGetBenchCase
+class NoMutatorBench extends BenchCase
 {
     public function getSubject()
     {

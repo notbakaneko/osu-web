@@ -23,9 +23,4 @@ class OverridenUser extends User
     {
         return $this->attributes['username'];
     }
-
-    public function getA($name)
-    {
-        return $this->attributes[$name];
-    }
 }

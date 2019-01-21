@@ -1,13 +1,11 @@
 <?php
 
-namespace Benchmarks;
+namespace Benchmarks\GetAttributes;
 
-use Benchmarks\OverridenUser as User;
+use App\Models\User;
+use Benchmarks\BenchCase as BaseBenchCase;
 
-/**
- * @Groups({"attributes"}, extend=true)
- */
-class AttributesBench extends BenchCase
+abstract class BenchCase extends BaseBenchCase
 {
     public function getSubject()
     {
@@ -21,7 +19,7 @@ class AttributesBench extends BenchCase
 
     public function benchIsBanned()
     {
-        return $this->subject->getAttributes()['user_type'] === 1;
+        $this->subject->getAttributes()['user_type'] === 1;
     }
 
     public function benchReadUsername()

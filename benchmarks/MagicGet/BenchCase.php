@@ -1,11 +1,11 @@
 <?php
 
-namespace Benchmarks\GetAttribute;
+namespace Benchmarks\MagicGet;
 
 use App\Models\User;
-use Benchmarks\BenchCase;
+use Benchmarks\BenchCase as BaseBenchCase;
 
-abstract class GetAttributeBenchCase extends BenchCase
+abstract class BenchCase extends BaseBenchCase
 {
     public function getSubject()
     {
@@ -19,23 +19,23 @@ abstract class GetAttributeBenchCase extends BenchCase
 
     public function benchIsBanned()
     {
-        $this->subject->getAttribute('user_type') === 1;
+        return $this->subject->user_type === 1;
     }
 
     public function benchReadUsername()
     {
-        $this->subject->getAttribute('username');
+        $this->subject->username;
     }
 
     public function benchReadUserId()
     {
-        $this->subject->getAttribute('user_id');
+        $this->subject->user_id;
     }
 
     public function benchReadKeys()
     {
         foreach ($this->keys as $key) {
-            $this->subject->getAttribute($key);
+            $this->subject->$key;
         }
     }
 }
