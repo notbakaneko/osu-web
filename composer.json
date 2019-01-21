@@ -8,7 +8,6 @@
     "email": "support@ppy.sh",
     "issues": "https://github.com/ppy/osu-web/issues"
   },
-  "minimum-stability": "dev",
   "repositories": [
     {
       "type": "vcs",
@@ -20,7 +19,6 @@
     }
   ],
   "require": {
-    "Microsoft/tolerant-php-parser": "master",
     "chaseconey/laravel-datadog-helper": "*",
     "doctrine/dbal": "*",
     "egulias/email-validator": "*",
@@ -53,6 +51,7 @@
     "beyondcode/laravel-query-detector": "^1.0",
     "filp/whoops": "~2.0",
     "fzaninotto/faker": "~1.4",
+    "microsoft/tolerant-php-parser": "master@dev",
     "mockery/mockery": "~1.0",
     "phpunit/phpunit": "~6.0",
     "symfony/css-selector": "*",
