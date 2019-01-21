@@ -24,6 +24,7 @@ use App\Exceptions\InsufficientStockException;
 
 /**
  * @property bool $allow_multiple
+ * @property \Carbon\Carbon|null $available_until
  * @property float $base_shipping
  * @property float|null $cost
  * @property \Carbon\Carbon $created_at
@@ -45,7 +46,6 @@ use App\Exceptions\InsufficientStockException;
  * @property int $product_id
  * @property bool $promoted
  * @property int|null $stock
- * @property int|null $tournament_id
  * @property string|null $type_mappings_json
  * @property \Carbon\Carbon|null $updated_at
  * @property \Illuminate\Database\Eloquent\Collection $variations static

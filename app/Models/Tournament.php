@@ -23,7 +23,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- * @property \Carbon\Carbon|null $banner_sales_ends_at
  * @property \Carbon\Carbon|null $created_at
  * @property string $description
  * @property \Carbon\Carbon $end_date
