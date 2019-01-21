@@ -2,11 +2,11 @@
 
 namespace Benchmarks\Attribute;
 
-class AttributeOverheadBench extends BenchCase
+class AttributeOverheadWithStringModificationBench extends BenchCase
 {
     public function getSubject()
     {
-        return new Model([
+        return new ModelWithStringModification([
             'test' => 'value',
         ]);
     }

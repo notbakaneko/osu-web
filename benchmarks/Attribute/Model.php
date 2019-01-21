@@ -12,4 +12,9 @@ class Model extends BaseModel
     {
         return $value;
     }
+
+    public function getTest()
+    {
+        return $this->attributes['test'];
+    }
 }
