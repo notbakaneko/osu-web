@@ -3,9 +3,9 @@
 namespace Benchmarks\GetAttribute;
 
 use App\Models\User;
-use Benchmarks\BenchCase as BaseBenchCase;
+use Benchmarks\UserBenchCase;
 
-abstract class BenchCase extends BaseBenchCase
+abstract class BenchCase extends UserBenchCase
 {
     public function getSubject()
     {
