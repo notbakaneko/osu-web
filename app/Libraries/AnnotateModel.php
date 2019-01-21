@@ -20,10 +20,9 @@
 
 namespace App\Libraries;
 
-use App\Models\Model;
-use DB;
 use File;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
+use Illuminate\Database\Eloquent\Model;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
@@ -115,11 +114,6 @@ class AnnotateModel
     public static function describeTable(Model $instance)
     {
         return $instance->getConnection()->select("DESCRIBE `{$instance->getTable()}`");
-    }
-
-    public static function getTables(string $connectionName = null)
-    {
-        return DB::connection($connectionName)->select('SHOW TABLES');
     }
 
     public static function relationshipMethods()
