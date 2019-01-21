@@ -4,6 +4,9 @@ namespace Benchmarks\Attribute;
 
 use Benchmarks\BenchCase as BaseBenchCase;
 
+/**
+ * @Groups({"accessor-overhead"}, extend=true)
+ */
 abstract class BenchCase extends BaseBenchCase
 {
     public function benchAttribute()

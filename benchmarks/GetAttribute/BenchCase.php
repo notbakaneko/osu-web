@@ -5,6 +5,9 @@ namespace Benchmarks\GetAttribute;
 use App\Models\User;
 use Benchmarks\UserBenchCase;
 
+/**
+ * @Groups({"user-accessor"}, extend=true)
+ */
 abstract class BenchCase extends UserBenchCase
 {
     public function getSubject()
