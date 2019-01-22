@@ -21,6 +21,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Str;
 
 abstract class CachingModel extends BaseModel
 {
@@ -61,5 +62,62 @@ abstract class CachingModel extends BaseModel
         $this->_cache[$key] = $value;
 
         return $value;
+    }
+
+    /**
+     * Set a given attribute on the model.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function setAttribute($key, $value)
+    {
+        $this->_cache[$key] = $value;
+
+        // First we will check for the presence of a mutator for the set operation
+        // which simply lets the developers tweak the attribute as it is set on
+        // the model, such as "json_encoding" an listing of data for storage.
+        if ($this->hasSetMutator($key)) {
+            $method = 'set'.Str::studly($key).'Attribute';
+
+            return $this->{$method}($value);
+        }
+
+        // If an attribute is listed as a "date", we'll convert it from a DateTime
+        // instance into a form proper for storage on the database tables using
+        // the connection grammar's date format. We will auto set the values.
+        elseif ($value && $this->isDateAttribute($key)) {
+            $value = $this->fromDateTime($value);
+        }
+
+        if ($this->isJsonCastable($key) && ! is_null($value)) {
+            $value = $this->castAttributeAsJson($key, $value);
+        }
+
+        // If this attribute contains a JSON ->, we'll set the proper value in the
+        // attribute's underlying array. This takes care of properly nesting an
+        // attribute in the array's value in the case of deeply nested items.
+        if (Str::contains($key, '->')) {
+            return $this->fillJsonAttribute($key, $value);
+        }
+
+        $this->attributes[$key] = $value;
+
+        return $this;
+    }
+
+    public function fresh($with = [])
+    {
+        $this->_cache = [];
+
+        return parent::fresh($with);
+    }
+
+    public function refresh()
+    {
+        $this->_cache = [];
+
+        return parent::refresh();
     }
 }
