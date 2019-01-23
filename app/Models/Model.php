@@ -28,7 +28,7 @@ use App\Traits\MacroableModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
-abstract class Model extends CachingModel
+abstract class Model extends BaseModel
 {
     use MacroableModel;
     protected $connection = 'mysql';
