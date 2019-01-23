@@ -114,71 +114,14 @@ class Beatmap extends DirectAttributeModel
         return $this->hasMany(BeatmapDifficultyAttrib::class, 'beatmap_id');
     }
 
-    public function getOrphaned()
+    public function getOrphanedAttribute($value)
     {
-        return (bool) $this->attributes['orphaned'];
+        return (bool) $value;
     }
 
-    public function getMode()
+    public function getLastUpdateAttribute($value)
     {
-        return static::modeStr($this->attributes['playmode']);
-    }
-
-    public function getDiffSize()
-    {
-        $value = $this->attributes['diff_size'];
-        /*
-         * Matches client implementation.
-         * all round()s here use PHP_ROUND_HALF_EVEN to match C# default Math.Round.
-         * References:
-         * - (implmentation) https://github.com/ppy/osu/blob/c9276ce2b8b2eb728b1e5fc74f5f7ef81b0c6e09/osu.Game.Rulesets.Mania/Beatmaps/ManiaBeatmapConverter.cs#L36
-         * - (rounding) https://msdn.microsoft.com/en-us/library/wyk4d9cy(v=vs.110).aspx
-         */
-        if ($this->mode === 'mania') {
-            $roundedValue = (int) round($value, 0, PHP_ROUND_HALF_EVEN);
-
-            if ($this->convert) {
-                $sliderOrSpinner = $this->countSlider + $this->countSpinner;
-                $total = max(1, $sliderOrSpinner + $this->countNormal);
-                $percentSliderOrSpinner = $sliderOrSpinner / $total;
-
-                $accuracy = (int) round($this->diff_overall, 0, PHP_ROUND_HALF_EVEN);
-
-                if ($percentSliderOrSpinner < 0.2) {
-                    return 7;
-                } elseif ($percentSliderOrSpinner < 0.3 || $roundedValue >= 5) {
-                    return $accuracy > 5 ? 7 : 5;
-                } elseif ($percentSliderOrSpinner > 0.6) {
-                    return $accuracy > 4 ? 5 : 4;
-                } else {
-                    return clamp($accuracy + 1, 4, 7);
-                }
-            } else {
-                return max(1, $roundedValue);
-            }
-        }
-
-        return $value;
-    }
-
-    public function getLastUpdate()
-    {
-        return $this->parseDate($this->attributes['last_update']);
-    }
-
-    public function getVersion()
-    {
-        $value = $this->attributes['version'];
-
-        if ($this->mode === 'mania') {
-            $keys = $this->diff_size;
-
-            if (strpos($value, "{$keys}k") === false && strpos($value, "{$keys}K") === false) {
-                return "[{$keys}K] {$value}";
-            }
-        }
-
-        return $value;
+        return $this->parseDate($value);
     }
 
     public function getModeAttribute()

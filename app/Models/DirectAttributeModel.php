@@ -27,9 +27,9 @@ abstract class DirectAttributeModel extends Model
 {
     public function getAttributeValue($key)
     {
-        $method = 'get'.Str::studly($key);
+        $method = 'get'.Str::studly($key).'Attribute';
         if (method_exists($this, $method)) {
-            return $this->$method();
+            return $this->$method($this->attributes[$key] ?? null);
         }
 
         return $this->attributes[$key] ?? null;
