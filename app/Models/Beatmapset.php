@@ -225,69 +225,69 @@ class Beatmapset extends DirectAttributeModel implements AfterCommit
     }
 
     // property accessors
-    public function getActive()
+    public function getActiveAttribute($value)
     {
-        return (bool) $this->attributes['active'];
+        return (bool) $value;
     }
 
-    public function getDownloadDisabled()
+    public function getDownloadDisabledAttribute($value)
     {
-        return (bool) $this->attributes['download_disabled'];
+        return (bool) $value;
     }
 
-    public function getEpilepsy()
+    public function getEpilepsyAttribute($value)
     {
-        return (bool) $this->attributes['epilepsy'];
+        return (bool) $value;
     }
 
-    public function getStoryboard()
+    public function getStoryboardAttribute($value)
     {
-        return (bool) $this->attributes['storyboard'];
+        return (bool) $value;
     }
 
-    public function getVideo()
+    public function getVideoAttribute($value)
     {
-        return (bool) $this->attributes['video'];
+        return (bool) $value;
     }
 
-    public function getDiscussionEnabled()
+    public function getDiscussionEnabledAttribute($value)
     {
-        return (bool) $this->attributes['discussion_enabled'];
+        return (bool) $value;
     }
 
-    public function getApprovedDate()
+    public function getApprovedDateAttribute($value)
     {
-        return $this->parseDate($this->attributes['approved_date']);
+        return $this->parseDate($value);
     }
 
-    public function getCoverUpdatedAt()
+    public function getCoverUpdatedAtAttribute($value)
     {
-        return $this->parseDate($this->attributes['cover_updated_at']);
+        return $this->parseDate($value);
     }
 
-    public function getDeletedAt()
+    public function getDeletedAtAttribute($value)
     {
-        return $this->parseDate($this->attributes['deleted_at']);
+        return $this->parseDate($value);
     }
 
-    public function getLastUpdate()
+    public function getLastUpdateAttribute($value)
     {
-        return $this->parseDate($this->attributes['last_update']);
+        return $this->parseDate($value);
     }
 
-    public function getQueuedAt()
+    public function getQueuedAtAttribute($value)
     {
-        return $this->parseDate($this->attributes['queued_at']);
+        return $this->parseDate($value);
     }
 
-    public function getSubmitDate()
+    public function getSubmitDateAttribute($value)
     {
-        return $this->parseDate($this->attributes['submit_date']);
+        return $this->parseDate($value);
     }
 
-    public function getThreadIconDate()
+    public function getThreadIconDateAttribute($value)
     {
-        return $this->parseDate($this->attributes['thread_icon_date']);
+        return $this->parseDate($value);
     }
 
     // one-time checks
