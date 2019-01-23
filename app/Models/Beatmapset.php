@@ -95,7 +95,7 @@ use Illuminate\Database\QueryException;
  * @property bool $video
  * @property \Illuminate\Database\Eloquent\Collection $watches BeatmapsetWatch
  */
-class Beatmapset extends Model implements AfterCommit
+class Beatmapset extends DirectAttributeModel implements AfterCommit
 {
     use Elasticsearch\BeatmapsetTrait, SoftDeletes;
 
@@ -283,6 +283,72 @@ class Beatmapset extends Model implements AfterCommit
     public function scopeActive($query)
     {
         return $query->where('active', '=', true);
+    }
+
+    // property accessors
+    public function getActive()
+    {
+        return (bool) $this->attributes['active'];
+    }
+
+    public function getDownloadDisabled()
+    {
+        return (bool) $this->attributes['download_disabled'];
+    }
+
+    public function getEpilepsy()
+    {
+        return (bool) $this->attributes['epilepsy'];
+    }
+
+    public function getStoryboard()
+    {
+        return (bool) $this->attributes['storyboard'];
+    }
+
+    public function getVideo()
+    {
+        return (bool) $this->attributes['video'];
+    }
+
+    public function getDiscussionEnabled()
+    {
+        return (bool) $this->attributes['discussion_enabled'];
+    }
+
+    public function getApprovedDate()
+    {
+        return $this->parseDate($this->attributes['approved_date']);
+    }
+
+    public function getCoverUpdatedAt()
+    {
+        return $this->parseDate($this->attributes['cover_updated_at']);
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->parseDate($this->attributes['deleted_at']);
+    }
+
+    public function getLastUpdate()
+    {
+        return $this->parseDate($this->attributes['last_update']);
+    }
+
+    public function getQueuedAt()
+    {
+        return $this->parseDate($this->attributes['queued_at']);
+    }
+
+    public function getSubmitDate()
+    {
+        return $this->parseDate($this->attributes['submit_date']);
+    }
+
+    public function getThreadIconDate()
+    {
+        return $this->parseDate($this->attributes['thread_icon_date']);
     }
 
     // one-time checks
