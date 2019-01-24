@@ -42,6 +42,7 @@
     "mariuzzo/laravel-js-localization": "*",
     "paypal/rest-api-sdk-php": "*",
     "sentry/sentry-laravel": "*",
+    "swooletw/laravel-swoole": "^2.6",
     "symfony/yaml": "*",
     "webuni/commonmark-table-extension": ">=0.8.0",
     "xsolla/xsolla-sdk-php": "*"
