@@ -70,4 +70,11 @@ abstract class CachingModel extends BaseModel
 
         return parent::refresh();
     }
+
+    public function __clone()
+    {
+        $this->_cache = [];
+
+        parent::__clone();
+    }
 }
