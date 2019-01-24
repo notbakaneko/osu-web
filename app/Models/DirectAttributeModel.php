@@ -27,12 +27,65 @@ abstract class DirectAttributeModel extends Model
 {
     public function getAttributeValue($key)
     {
+        $value = $this->attributes[$key] ?? null;
         $method = 'get'.Str::studly($key).'Attribute';
         if (method_exists($this, $method)) {
-            return $this->$method($this->attributes[$key] ?? null);
+            return $this->$method($value);
         }
 
-        return $this->attributes[$key] ?? null;
+        if (array_key_exists($key, $this->getCasts())) {
+            return $this->castAttribute($key, $value);
+        }
+
+        if (in_array($key, $this->getDates()) && !is_null($value)) {
+            return $this->parseDate($value);
+        }
+
+        return $value;
+    }
+
+    // faster comparisons
+    protected function castAttribute($key, $value)
+    {
+        if (is_null($value)) {
+            return $value;
+        }
+
+        $type = $this->getCastType($key);
+        switch ($type) {
+            case 'int':
+            case 'integer':
+                return (int) $value;
+            case 'real':
+            case 'float':
+            case 'double':
+                return (float) $value;
+            case 'string':
+                return (string) $value;
+            case 'bool':
+            case 'boolean':
+                return (bool) $value;
+            case 'object':
+                return $this->fromJson($value, true);
+            case 'array':
+            case 'json':
+                return $this->fromJson($value);
+            case 'collection':
+                return new BaseCollection($this->fromJson($value));
+            case 'date':
+                return $this->asDate($value);
+            case 'datetime':
+                return $this->asDateTime($value);
+            case 'timestamp':
+                return $this->asTimestamp($value);
+            default:
+                return $value;
+        }
+    }
+
+    protected function getCastType($key)
+    {
+        return $this->getCasts()[$key];
     }
 
     protected function parseDate($value, $format = 'Y-m-d H:i:s')
