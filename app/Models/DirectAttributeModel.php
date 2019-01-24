@@ -25,10 +25,12 @@ use Illuminate\Support\Str;
 
 abstract class DirectAttributeModel extends Model
 {
+    public static $_methodNames = [];
+
     public function getAttributeValue($key)
     {
-        $method = 'get'.Str::studly($key).'Attribute';
-        if (method_exists($this, $method)) {
+        $method = $this->getGetter($key);
+        if ($method !== null) {
             return $this->$method($this->attributes[$key] ?? null);
         }
 
@@ -40,5 +42,21 @@ abstract class DirectAttributeModel extends Model
         if ($value !== null) {
             return Carbon::createFromFormat($format, $value);
         }
+    }
+
+    public function getGetter($key)
+    {
+        if (!array_key_exists(static::class, self::$_methodNames)) {
+            self::$_methodNames[static::class] = [];
+        }
+
+        if (array_key_exists($key, self::$_methodNames[static::class])) {
+            return self::$_methodNames[static::class][$key];
+        }
+
+        $method = 'get'.Str::studly($key).'Attribute';
+        self::$_methodNames[static::class][$key] = method_exists(static::class, $method) ? $method : null;
+
+        return self::$_methodNames[static::class][$key];
     }
 }
