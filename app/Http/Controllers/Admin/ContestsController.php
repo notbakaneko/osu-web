@@ -90,15 +90,17 @@ class ContestsController extends Controller
             $zip->close();
 
             // send 'em
-            header('Content-Disposition: attachment; filename='.basename($zipOutput));
-            header('Content-Type: application/zip');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: '.filesize($zipOutput));
-            readfile($zipOutput);
+            $headers = [
+                'Content-Type' => 'application/zip',
+                'Expires' => 0,
+                'Cache-Control' => 'must-revalidate',
+                'Pragma' => 'public',
+            ];
+
+            return response()->download($zipOutput, basename($zipOutput), $headers);
         } finally {
-            deltree($tmpBase);
+            // TODO: need to fix cleanup
+            // deltree($tmpBase);
         }
     }
 }
