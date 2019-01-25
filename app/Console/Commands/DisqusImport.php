@@ -126,15 +126,14 @@ class DisqusImport extends Command
 
     private function findBeatmapset($legacyId, $link)
     {
-        $id = null;
-
         static $prefix = 'beatmapset_';
+        static $beatmapsetLinkId = '//osu.ppy.sh/s/';
+
+        $id = null;
 
         if (starts_with($legacyId, $prefix)) {
             $id = get_int(substr($legacyId, strlen($prefix)));
         } else {
-            static $beatmapsetLinkId = '//osu.ppy.sh/s/';
-
             $beatmapsetLinkPos = strpos($link, $beatmapsetLinkId);
 
             if ($beatmapsetLinkPos !== false) {
