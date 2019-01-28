@@ -65,6 +65,7 @@ class ScoresController extends Controller
 
             $content = $replayFile->get();
             // TODO: switch to streamDownload in Laravel 5.6+?
+            // ob_output must be true for StreamedResponse to work with laravel-swoole.
             $stream = response()->stream(function () use ($replayFile, $content) {
                 echo $replayFile->headerChunk();
                 echo pack('i', strlen($content));

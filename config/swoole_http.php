@@ -69,6 +69,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Console output will be transferred to response content if enabled.
+    | ob_output must be enabled for streaming downloads to work.
     |--------------------------------------------------------------------------
     */
     'ob_output' => env('SWOOLE_OB_OUTPUT', true),
