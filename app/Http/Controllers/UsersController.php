@@ -38,6 +38,30 @@ class UsersController extends Controller
     protected $section = 'user';
     protected $maxResults = 100;
 
+    private static function parsePaginationParams($request)
+    {
+        $controller = $request->route()->getController();
+
+        $controller->user = User::lookup(Request::route('user'), 'id', true);
+        if ($controller->user === null || !priv_check('UserShow', $controller->user)->can()) {
+            abort(404);
+        }
+
+        $controller->mode = Request::route('mode') ?? Request::input('mode') ?? $controller->user->playmode;
+        if (!array_key_exists($controller->mode, Beatmap::MODES)) {
+            abort(404);
+        }
+
+        $controller->offset = get_int(Request::input('offset')) ?? 0;
+
+        if ($controller->offset >= $controller->maxResults) {
+            $controller->perPage = 0;
+        } else {
+            $perPage = $controller->sanitizedLimitParam();
+            $controller->perPage = min($perPage, $controller->maxResults - $controller->offset);
+        }
+    }
+
     public function __construct()
     {
         $this->middleware('auth', ['only' => [
@@ -53,7 +77,7 @@ class UsersController extends Controller
         }
 
         $this->middleware(function ($request, $next) {
-            $this->parsePaginationParams();
+            static::parsePaginationParams($request);
 
             return $next($request);
         }, [
@@ -340,28 +364,6 @@ class UsersController extends Controller
                 'user',
                 'jsonChunks'
             ));
-        }
-    }
-
-    private function parsePaginationParams()
-    {
-        $this->user = User::lookup(Request::route('user'), 'id', true);
-        if ($this->user === null || !priv_check('UserShow', $this->user)->can()) {
-            abort(404);
-        }
-
-        $this->mode = Request::route('mode') ?? Request::input('mode') ?? $this->user->playmode;
-        if (!array_key_exists($this->mode, Beatmap::MODES)) {
-            abort(404);
-        }
-
-        $this->offset = get_int(Request::input('offset')) ?? 0;
-
-        if ($this->offset >= $this->maxResults) {
-            $this->perPage = 0;
-        } else {
-            $perPage = $this->sanitizedLimitParam();
-            $this->perPage = min($perPage, $this->maxResults - $this->offset);
         }
     }
 

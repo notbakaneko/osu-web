@@ -40,6 +40,45 @@ class RankingController extends Controller
     const RANKING_TYPES = ['performance', 'charts', 'score', 'country'];
     const SPOTLIGHT_TYPES = ['charts'];
 
+    private static function resolveVariablesMiddleware($request, $next)
+    {
+        $mode = $request['mode'];
+        $type = $request['type'];
+        $controller = $request->route()->getController();
+
+        if ($mode === null) {
+            return ujs_redirect(route('rankings', ['mode' => 'osu', 'type' => 'performance']));
+        }
+
+        if (!array_key_exists($mode, Beatmap::MODES)) {
+            abort(404);
+        }
+
+        if ($type === null) {
+            return ujs_redirect(route('rankings', ['mode' => $mode, 'type' => 'performance']));
+        }
+
+        if (!in_array($type, static::RANKING_TYPES, true)) {
+            abort(404);
+        }
+
+        if ($request->has('country') && !in_array($type, static::SPOTLIGHT_TYPES, true)) {
+            $countryStats = CountryStatistics::where('display', 1)
+                ->where('country_code', request('country'))
+                ->first();
+
+            if ($countryStats === null) {
+                return ujs_redirect(route('rankings', ['mode' => $mode, 'type' => $type]));
+            }
+
+            $controller->country = $countryStats->country;
+        }
+
+        view()->share('country', $controller->country);
+
+        return $next($request);
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -53,38 +92,8 @@ class RankingController extends Controller
         view()->share('type', $type);
         view()->share('spotlight', null); // so variable capture in selector function doesn't die.
 
-        $this->middleware(function ($request, $next) use ($mode, $type) {
-            if ($mode === null) {
-                return ujs_redirect(route('rankings', ['mode' => 'osu', 'type' => 'performance']));
-            }
-
-            if (!array_key_exists($mode, Beatmap::MODES)) {
-                abort(404);
-            }
-
-            if ($type === null) {
-                return ujs_redirect(route('rankings', ['mode' => $mode, 'type' => 'performance']));
-            }
-
-            if (!in_array($type, static::RANKING_TYPES, true)) {
-                abort(404);
-            }
-
-            if (request()->has('country') && !in_array($type, static::SPOTLIGHT_TYPES, true)) {
-                $countryStats = CountryStatistics::where('display', 1)
-                    ->where('country_code', request('country'))
-                    ->first();
-
-                if ($countryStats === null) {
-                    return redirect(route('rankings', ['mode' => $mode, 'type' => $type]));
-                }
-
-                $this->country = $countryStats->country;
-            }
-
-            view()->share('country', $this->country);
-
-            return $next($request);
+        $this->middleware(function ($request, $next) {
+            return static::resolveVariablesMiddleware($request, $next);
         });
     }
 
