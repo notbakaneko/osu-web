@@ -53,7 +53,7 @@ class UsersController extends Controller
         }
 
         $this->middleware(function ($request, $next) {
-            $this->parsePaginationParams();
+            $this->parsePaginationParams($request);
 
             return $next($request);
         }, [
@@ -343,25 +343,27 @@ class UsersController extends Controller
         }
     }
 
-    private function parsePaginationParams()
+    private function parsePaginationParams($request)
     {
-        $this->user = User::lookup(Request::route('user'), 'id', true);
-        if ($this->user === null || !priv_check('UserShow', $this->user)->can()) {
+        $controller = $request->route()->getController();
+
+        $controller->user = User::lookup(Request::route('user'), 'id', true);
+        if ($controller->user === null || !priv_check('UserShow', $controller->user)->can()) {
             abort(404);
         }
 
-        $this->mode = Request::route('mode') ?? Request::input('mode') ?? $this->user->playmode;
-        if (!array_key_exists($this->mode, Beatmap::MODES)) {
+        $controller->mode = Request::route('mode') ?? Request::input('mode') ?? $controller->user->playmode;
+        if (!array_key_exists($controller->mode, Beatmap::MODES)) {
             abort(404);
         }
 
-        $this->offset = get_int(Request::input('offset')) ?? 0;
+        $controller->offset = get_int(Request::input('offset')) ?? 0;
 
-        if ($this->offset >= $this->maxResults) {
-            $this->perPage = 0;
+        if ($controller->offset >= $controller->maxResults) {
+            $controller->perPage = 0;
         } else {
-            $perPage = $this->sanitizedLimitParam();
-            $this->perPage = min($perPage, $this->maxResults - $this->offset);
+            $perPage = $controller->sanitizedLimitParam();
+            $controller->perPage = min($perPage, $controller->maxResults - $controller->offset);
         }
     }
 

@@ -40,25 +40,27 @@ class ModdingHistoryController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->isModerator = priv_check('BeatmapDiscussionModerate')->can();
-            $this->user = User::lookup(request('user'), null, $this->isModerator);
+            $controller = $request->route()->getController();
 
-            if ($this->user === null || $this->user->isBot() || !priv_check('UserShow', $this->user)->can()) {
+            $controller->isModerator = priv_check('BeatmapDiscussionModerate')->can();
+            $controller->user = User::lookup(request('user'), null, $controller->isModerator);
+
+            if ($controller->user === null || $controller->user->isBot() || !priv_check('UserShow', $controller->user)->can()) {
                 abort(404);
             }
 
-            if ((string) $this->user->user_id !== (string) request('user')) {
+            if ((string) $controller->user->user_id !== (string) request('user')) {
                 return ujs_redirect(route(
                     $request->route()->getName(),
-                    array_merge(['user' => $this->user->user_id], $request->query())
+                    array_merge(['user' => $controller->user->user_id], $request->query())
                 ));
             }
 
-            $this->searchParams = array_merge(['user' => $this->user->user_id], request()->query());
-            $this->searchParams['is_moderator'] = $this->isModerator;
+            $controller->searchParams = array_merge(['user' => $controller->user->user_id], request()->query());
+            $controller->searchParams['is_moderator'] = $controller->isModerator;
 
-            if (!$this->isModerator) {
-                $this->searchParams['with_deleted'] = false;
+            if (!$controller->isModerator) {
+                $controller->searchParams['with_deleted'] = false;
             }
 
             return $next($request);
