@@ -71,10 +71,7 @@ class UsersController extends Controller
         ]]);
 
         $this->middleware('throttle:10,60', ['only' => ['store']]);
-
-        if (is_api_request()) {
-            $this->middleware('require-scopes:identify', ['only' => ['me']]);
-        }
+        $this->middleware('require-scopes:identify', ['only' => ['me']]);
 
         $this->middleware(function ($request, $next) {
             static::parsePaginationParams($request);
