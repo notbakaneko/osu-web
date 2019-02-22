@@ -32,7 +32,8 @@ class RequireScopesTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = Request::create('/', 'GET');
+        $this->request = Request::create('/api/derp', 'GET');
+        $this->app->instance('request', $this->request);
         $this->next = static function () {
             // just an empty closure.
         };
@@ -190,7 +191,7 @@ class RequireScopesTest extends TestCase
     {
         // set a fake route resolver
         $this->request->setRouteResolver(function () use ($scopes) {
-            $route = new Route(['GET'], '/', null);
+            $route = new Route(['GET'], '/api/derp', null);
             $route->middleware('require-scopes');
 
             if ($scopes !== null) {

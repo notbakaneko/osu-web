@@ -42,9 +42,7 @@ class FriendsController extends Controller
             ],
         ]);
 
-        if (is_api_request()) {
-            $this->middleware('require-scopes:friends.read', ['only' => ['index']]);
-        }
+        $this->middleware('require-scopes:friends.read', ['only' => ['index']]);
 
         return parent::__construct();
     }
