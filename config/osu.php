@@ -19,7 +19,7 @@ return [
         'uid' => '1337',
     ],
     'beatmaps' => [
-        'max' => 50,
+        'max' => get_int(env('BEATMAPSET_SEARCH_MAX')) ?? 50,
         'max-scores' => 50,
     ],
     'beatmap_processor' => [
