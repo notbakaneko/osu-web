@@ -43,6 +43,9 @@ class BeatmapPack extends Model
     protected $table = 'osu_beatmappacks';
     protected $primaryKey = 'pack_id';
 
+    protected $casts = [
+        'hidden' => 'boolean',
+    ];
     protected $dates = ['date'];
     public $timestamps = false;
 
