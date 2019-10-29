@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'silindi',
+    'deleted_count' => ':count_delimited silinmiş yorum|:count_delimited silinmiş yorum',
     'edited' => ':timeago tarihinde :user tarafından düzenlendi',
     'empty' => 'Henüz yorum yok.',
+    'load_replies' => 'yanıtları yükle',
     'replies' => 'Yanıtlar',
-    'show_replies' => 'yanıtları göster',
     'title' => 'Yorumlar',
 
     'commentable_name' => [
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Yorum yapmak için giriş yapınız',
-        'reply' => 'Yanıt yapmak için giriş yapınız',
+        'new' => 'Yorum yazmak için oturum açılsın mı',
+        'reply' => 'Cevaplamak için giriş yap',
     ],
 
     'index' => [
@@ -65,12 +66,5 @@ return [
             '_' => 'Yorumlar :info',
             'info' => 'Ayrıntı',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

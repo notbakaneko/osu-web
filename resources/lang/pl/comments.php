@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'usunięte',
+    'deleted_count' => ':count_delimited usunięty komentarz|:count_delimited usunięte komentarze|:count_delimited usuniętych komentarzy',
     'edited' => 'ostatnio edytowane :timeago przez :user',
     'empty' => 'Brak komentarzy.',
+    'load_replies' => 'wczytaj odpowiedzi',
     'replies' => 'Odpowiedzi',
-    'show_replies' => 'pokaż odpowiedzi',
     'title' => 'Komentarze',
 
     'commentable_name' => [
@@ -62,15 +63,8 @@ return [
 
     'show' => [
         'title' => [
-            '_' => 'Komentarze » :info',
-            'info' => 'Szczegóły',
+            '_' => 'Komentarze',
+            'info' => 'Komentarze',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

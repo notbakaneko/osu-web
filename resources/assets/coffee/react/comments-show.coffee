@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-reactTurbolinks.registerPersistent 'comments-show', CommentsManager, true, ->
-  data = osu.parseJson('json-show')
+import { CommentsManager } from 'comments-manager'
+import core from 'osu-core-singleton'
+import { Main } from './comments-show/main'
 
-  component: CommentsShow.Main
-  componentProps:
-    comment: data.comment
-  commentBundle: data.bundle
+reactTurbolinks.registerPersistent 'comments-show', CommentsManager, true, ->
+  commentBundle = osu.parseJson('json-show')
+  core.dataStore.updateWithCommentBundleJSON(commentBundle)
+  core.dataStore.uiState.initializeWithCommentBundleJSON(commentBundle)
+
+  component: Main

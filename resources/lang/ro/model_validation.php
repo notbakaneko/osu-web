@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Discuția este închisă.',
         'first_post' => 'Nu se poate șterge postarea de pornire.',
+
+        'attributes' => [
+            'message' => 'Mesajul',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,7 +40,11 @@ return [
         'invalid_beatmap_id' => 'Dificultatea specificată nu este validă.',
         'invalid_beatmapset_id' => 'Beatmapul specificat nu este valid.',
         'locked' => 'Discuția este închisă.',
-        'mapper_note_wrong_user' => 'Doar proprietarul acestui beatmap poate posta note de mapare.',
+
+        'attributes' => [
+            'message_type' => 'Tipul mesajului',
+            'timestamp' => 'Dată/Oră',
+        ],
 
         'hype' => [
             'guest' => 'Trebuie să fii autentificat pentru a acorda un hype.',
@@ -52,6 +60,18 @@ return [
         ],
     ],
 
+    'comment' => [
+        'deleted_parent' => 'Nu este permis să răspunzi la un comentariu șters.',
+
+        'attributes' => [
+            'message' => 'Mesajul',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => '',
+    ],
+
     'forum' => [
         'feature_vote' => [
             'not_feature_topic' => 'Poți vota doar o cerere de funcții.',
@@ -65,19 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Ștergerea metadatei unui beatmap nu este permisă.',
             'beatmapset_post_no_edit' => 'Editarea metadatei unui beatmap nu este permisă.',
+            'only_quote' => 'Răspunsul tău conţine doar un citat.',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Titlul subiectului',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Opțiunile duplicate nu sunt permise.',
+            'grace_period_expired' => 'Nu poți edita un sondaj după mai mult de :limit ore',
+            'hiding_results_forever' => '',
             'invalid_max_options' => 'Opțiunea per utilizator nu poate depăși numărul de opțiuni disponibile.',
             'minimum_one_selection' => 'Este necesar cel puțin o opțiune per utilizator.',
             'minimum_two_options' => 'Este nevoie de cel puțin două opțiuni.',
             'too_many_options' => 'Ai depășit numărul maxim de opțiuni permise.',
+
+            'attributes' => [
+                'title' => 'Titlu sondaj',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Selectează o opțiune când votezi.',
             'too_many' => 'Ai selectat mai multe opțiuni decât este permis.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -93,6 +142,7 @@ return [
         'username_available_soon' => 'Acest nume de utilizator va fi disponibil pentru utilizare în orice moment de acum!',
         'username_invalid_characters' => 'Numele de utilizator solicitat conține caractere invalide.',
         'username_in_use' => 'Numele de utilizator este deja folosit!',
+        'username_locked' => 'Numele de utilizator este deja luat!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Te rugăm să folosești fie underscore, fie spații, nu ambele!',
         'username_no_spaces' => "Numele de utilizator nu poate începe sau termina cu spații!",
         'username_not_allowed' => 'Acest nume de utilizator nu este permis.',
@@ -104,12 +154,33 @@ return [
         'wrong_password_confirmation' => 'Parola de confirmare nu se potrivește.',
         'too_long' => 'Ai depășit lungimea maximă - nu poate fi decât până la :limit caractere.',
 
+        'attributes' => [
+            'username' => 'Nume de utilizator',
+            'user_email' => 'Adresă de e-mail',
+            'password' => 'Parolă',
+        ],
+
         'change_username' => [
+            'restricted' => 'Nu iți poți schimba numele de utilizator cât timp ești restricționat.',
             'supporter_required' => [
                 '_' => 'Trebuie să :link pentru a-ți schimba numele!',
                 'link_text' => 'fii un suporter osu!',
             ],
             'username_is_same' => 'Acesta este deja numele tău de utilizator, prostuțule!',
+        ],
+    ],
+
+    'user_report' => [
+        'reason_not_valid' => '',
+        'self' => "Nu te poți raporta pe tine însuți!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Cantitate',
+                'cost' => 'Cost',
+            ],
         ],
     ],
 ];

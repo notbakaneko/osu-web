@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Έχετε φτάσει στο όριο των nomination για σήμερα, παρακαλώ προσπαθήστε ξανά αύριο.',
+            'full_bn_required' => 'Πρέπει να είστε ένας πλήρης nominator για να επικυρώσετε αυτό το nomination.',
+            'full_bn_required_hybrid' => 'Πρέπει να είστε ένας πλήρης nominator για να κάνετε nominate beatmap sets με περισσότερα από ένα game mode.',
             'incorrect_state' => 'Σφάλμα κατά την εκτέλεση αυτής της ενέργειας, δοκιμάστε να ανανεώσετε τη σελίδα.',
             'owner' => "Δεν μπορείτε να κάνετε nominate το δικό σας beatmap.",
         ],
@@ -45,23 +47,34 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => '',
+            'resolved' => '',
+            'system_generated' => '',
+        ],
+
         'edit' => [
-            'system_generated' => 'Οι δημοσιεύσεις που έχουν δημιουργηθεί αυτόματα δεν μπορούν να επεξεργαστούν.',
             'not_owner' => 'Μόνο ο δημιουργός της δημοσίευσης μπορεί να την επεξεργαστεί.',
+            'resolved' => '',
+            'system_generated' => 'Οι δημοσιεύσεις που έχουν δημιουργηθεί αυτόματα δεν μπορούν να επεξεργαστούν.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Αυτό το beatmap είναι κλειδωμένο προς συζήτηση.',
         ],
     ],
 
     'chat' => [
-        'blocked' => '',
-        'friends_only' => '',
-        'moderated' => '',
-        'no_access' => '',
-        'restricted' => '',
+        'blocked' => 'Αδυναμία αποστολής σε χρήστη που σας έχει ή έχετε αποκλείσει.',
+        'friends_only' => 'Ο χρήστης αποκλείει μηνύματα απο άτομα εκτός της λίστας φίλων του.',
+        'moderated' => 'Το κανάλι βρίσκεται υπό παρακολούθηση.',
+        'no_access' => 'Δεν έχετε πρόσβαση σε αυτό το κανάλι.',
+        'restricted' => 'Δεν μπορείτε να στείλετε μηνύματα ενώ είστε σιγασμένος, περιορισμένος ή απαγορευμένος.',
     ],
 
     'comment' => [
         'update' => [
-            'deleted' => "",
+            'deleted' => "Δεν μπορείτε να επεξεργαστείτε διαγραμμένη δημοσίευση.",
         ],
     ],
 
@@ -71,7 +84,7 @@ return [
 
     'forum' => [
         'moderate' => [
-            'no_permission' => '',
+            'no_permission' => 'Δεν έχει άδεια να εποπτεύσετε αυτό το φόρουμ.',
         ],
 
         'post' => [
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Απαιτείται πρόσβαση για το συγκεκριμένο φόρουμ.',
                 'over' => 'Η ψηφοφορία έχει τερματιστεί και δε μπορείτε πλέον να ψηφίσετε.',
+                'play_more' => 'Χρειάζεται να παίξετε παραπάνω πριν ψηφίσετε σε αυτό το forum.',
                 'voted' => 'Δεν επιτρέπεται η αλλαγή ψήφου.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Καθορίσατε μη έγκυρο εξώφυλλο.',
                 'not_owner' => 'Μόνο ο ιδιοκτήτης μπορεί να επεξεργαστεί το εξώφυλλο.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Αυτό το φόρουμ δεν αποδέχεται εξώφυλλα θεμάτων.',
             ],
         ],
 

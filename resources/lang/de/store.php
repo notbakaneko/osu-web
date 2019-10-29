@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -59,7 +59,7 @@ return [
 
         'pending_checkout' => [
             'line_1' => 'Der vorherige Bezahlvorgang wurde gestartet, aber nicht beendet.',
-            'line_2' => 'Setzte deine Zahlung fort, indem du eine Zahlungsmethode auswählst.',
+            'line_2' => 'Setze deine Zahlung fort, indem du eine Zahlungsmethode auswählst.',
         ],
     ],
 
@@ -90,6 +90,7 @@ return [
 
         'invoice' => 'Rechnung anzeigen',
         'no_orders' => 'Keine Bestellungen zum anzeigen.',
+        'resume' => 'Bezahlung fortsetzen',
 
         'item' => [
             'display_name' => [
@@ -114,7 +115,7 @@ return [
             'delivered' => 'Zugestellt',
             'paid' => 'Bezahlt',
             'processing' => 'Bestätigung ausstehend',
-            'shipped' => 'In Zustellung',
+            'shipped' => 'In Bearbeitung',
         ],
     ],
 

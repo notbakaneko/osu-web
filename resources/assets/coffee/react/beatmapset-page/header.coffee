@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,23 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, span, a, img, ol, li, i} = ReactDOMFactories
+import { BeatmapPicker } from './beatmap-picker'
+import { Stats } from './stats'
+import { BeatmapsetMapping } from 'beatmapset-mapping'
+import { BigButton } from 'big-button'
+import { PlaymodeTabs } from 'playmode-tabs'
+import * as React from 'react'
+import { div, span, a, img, ol, li, i } from 'react-dom-factories'
+import { UserAvatar } from 'user-avatar'
 el = React.createElement
 
-class BeatmapsetPage.Header extends React.Component
+export class Header extends React.Component
   favouritesToShow: 50
+
+  hasAvailabilityInfo: =>
+    @props.beatmapset.availability.download_disabled || @props.beatmapset.availability.more_information?
+
+
   showFavourites: (event) =>
     target = event.currentTarget
 
@@ -31,11 +43,11 @@ class BeatmapsetPage.Header extends React.Component
 
     $(target).qtip
       style:
-        classes: 'beatmapset-favourites'
+        classes: 'user-list-popup'
         def: false
         tip: false
       content:
-        text: (event, api) => $('.beatmapset-favourites__template').html()
+        text: (event, api) => $('.user-list-popup__template').html()
       position:
         at: 'right center'
         my: 'left center'
@@ -75,7 +87,7 @@ class BeatmapsetPage.Header extends React.Component
 
         div className: 'beatmapset-header__box beatmapset-header__box--main',
           div className: 'beatmapset-header__beatmap-picker-box',
-            el BeatmapsetPage.BeatmapPicker,
+            el BeatmapPicker,
               beatmaps: @props.beatmaps[@props.currentBeatmap.mode]
               currentBeatmap: @props.currentBeatmap
 
@@ -86,12 +98,12 @@ class BeatmapsetPage.Header extends React.Component
               className: 'beatmapset-header__star-difficulty'
               style:
                 visibility: 'hidden' if !@props.hoveredBeatmap?
-              "#{osu.trans 'beatmapsets.show.stats.stars'} #{if @props.hoveredBeatmap then @props.hoveredBeatmap.difficulty_rating.toFixed 2 else ''}"
+              "#{osu.trans 'beatmapsets.show.stats.stars'} #{if @props.hoveredBeatmap then osu.formatNumber(@props.hoveredBeatmap.difficulty_rating, 2) else ''}"
 
             div {},
               span className: 'beatmapset-header__value', title: osu.trans('beatmapsets.show.stats.playcount'),
                 span className: 'beatmapset-header__value-icon', i className: 'fas fa-play-circle'
-                span className: 'beatmapset-header__value-name', @props.beatmapset.play_count.toLocaleString()
+                span className: 'beatmapset-header__value-name', osu.formatNumber(@props.beatmapset.play_count)
 
               if @props.beatmapset.status == 'pending'
                 span className: 'beatmapset-header__value', title: osu.trans('beatmapsets.show.stats.nominations'),
@@ -105,37 +117,37 @@ class BeatmapsetPage.Header extends React.Component
                 span className: 'beatmapset-header__value-icon',
                   i className: 'fas fa-heart'
                 span className: 'beatmapset-header__value-name',
-                  @props.favcount.toLocaleString()
+                  osu.formatNumber(@props.favcount)
 
             # this content of this div is used as a template for the on-hover/touch above
             div
-              className: 'beatmapset-favourites beatmapset-favourites__template'
+              className: 'user-list-popup user-list-popup__template'
               style:
                 display: 'none'
               @props.beatmapset.recent_favourites.map (user) ->
                 a
                   href: laroute.route('users.show', user: user.id)
-                  className: 'js-usercard beatmapset-favourites__user'
+                  className: 'js-usercard user-list-popup__user'
                   key: user.id
                   'data-user-id': user.id
                   el UserAvatar, user: user, modifiers: ['full']
               if @props.favcount > @favouritesToShow
-                div className: 'beatmapset-favourites__remainder-count',
-                  osu.transChoice 'beatmapsets.show.details.favourited_count', (@props.favcount - @favouritesToShow).toLocaleString()
+                div className: 'user-list-popup__remainder-count',
+                  osu.transChoice 'common.count.plus_others', @props.favcount - @favouritesToShow
 
           a
             className: 'beatmapset-header__details-text beatmapset-header__details-text--title u-ellipsis-overflow'
-            href: laroute.route 'beatmapsets.index', q: encodeURIComponent(@props.beatmapset.title)
+            href: laroute.route 'beatmapsets.index', q: @props.beatmapset.title
             @props.beatmapset.title
 
           a
             className: 'beatmapset-header__details-text beatmapset-header__details-text--artist'
-            href: laroute.route 'beatmapsets.index', q: encodeURIComponent(@props.beatmapset.artist)
+            href: laroute.route 'beatmapsets.index', q: @props.beatmapset.artist
             @props.beatmapset.artist
 
           el BeatmapsetMapping, beatmapset: @props.beatmapset
 
-          if currentUser.id? && @props.beatmapset.availability
+          if currentUser.id? && @hasAvailabilityInfo()
             div
               className: 'beatmapset-header__availability-info',
               if @props.beatmapset.availability.download_disabled
@@ -143,9 +155,12 @@ class BeatmapsetPage.Header extends React.Component
               else
                 osu.trans 'beatmapsets.availability.parts-removed'
 
-              if @props.beatmapset.availability.more_information
+              if @props.beatmapset.availability.more_information?
                 div className: 'beatmapset-header__availability-link',
-                  a href: @props.beatmapset.availability.more_information, target: '_blank', osu.trans 'beatmapsets.availability.more-info'
+                  a
+                    href: @props.beatmapset.availability.more_information
+                    target: '_blank'
+                    osu.trans 'beatmapsets.availability.more-info'
 
           div
             className: 'beatmapset-header__buttons'
@@ -154,10 +169,6 @@ class BeatmapsetPage.Header extends React.Component
               el BigButton,
                 props:
                   onClick: @toggleFavourite
-                  href:
-                    laroute.route 'beatmapsets.update-favourite',
-                      beatmapset: @props.beatmapset.id
-                      action: favouriteButton.action
                   title: osu.trans "beatmapsets.show.details.#{favouriteButton.action}"
                 modifiers: ['beatmapset-header-square', "beatmapset-header-square-#{favouriteButton.action}"]
                 icon: favouriteButton.icon
@@ -185,7 +196,7 @@ class BeatmapsetPage.Header extends React.Component
 
         div className: 'beatmapset-header__box beatmapset-header__box--stats',
           div className: 'beatmapset-status beatmapset-status--show', @props.beatmapset.status
-          el BeatmapsetPage.Stats,
+          el Stats,
             beatmapset: @props.beatmapset
             beatmap: @props.currentBeatmap
             timeElapsed: @props.timeElapsed
@@ -253,8 +264,6 @@ class BeatmapsetPage.Header extends React.Component
 
 
   toggleFavourite: (e) ->
-    e.preventDefault()
-
     if !currentUser.id?
       userLogin.show e.target
     else

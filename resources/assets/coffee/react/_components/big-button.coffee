@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, button, span, i} = ReactDOMFactories
+import * as React from 'react'
+import { a, button, span, i } from 'react-dom-factories'
+import { Spinner } from 'spinner'
 el = React.createElement
 
-@BigButton = ({modifiers = [], text, icon, props = {}, extraClasses = []}) ->
+export BigButton = ({modifiers = [], text, icon, props = {}, extraClasses = [], isBusy = false}) ->
   props.className = osu.classWithModifiers('btn-osu-big', modifiers)
   props.className += " #{klass}" for klass in extraClasses
 
@@ -43,7 +45,7 @@ el = React.createElement
         span className: 'btn-osu-big__icon',
           # ensure no random width change when changing icon
           span className: 'fa-fw',
-            if icon == '_spinner'
+            if isBusy
               el Spinner
             else
               i className: icon

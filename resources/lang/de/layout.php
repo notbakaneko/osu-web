@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Der Rhythmus ist nur einen *Klick* entfernt!  Mit Ouendan/EBA, Taiko und eigenen Spielmodi, zusätzlich zu einem voll funktionalen Leveleditor',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Community',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Schließen (Esc)',
+        'fullscreen' => 'Vollbild umschalten',
+        'zoom' => 'Vergrößern/Verkleinern',
+        'previous' => 'Vorheriges (Pfeil links)',
+        'next' => 'Weiter (Pfeil rechts)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'home',
             'account-edit' => 'einstellungen',
+            'account-verifyLink' => 'Überprüfung abgeschlossen',
             'friends-index' => 'freunde',
             'changelog-index' => 'changelog',
             'changelog-build' => 'version',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'gruppen',
             'index' => 'dashboard',
             'legal-show' => 'informationen',
-            'messages-index' => '',
+            'messages-index' => 'nachrichten',
             'news-index' => 'news',
             'news-show' => 'news',
             'password-reset-index' => 'passwort zurücksetzen',
             'search' => 'suche',
             'supportTheGame' => 'Das Spiel unterstützen',
             'team' => 'team',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'hilfe',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'community',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'entwicklung',
             'getForum' => 'foren',
             'getLive' => 'live',
@@ -118,16 +140,18 @@ return [
             'reset' => 'retten',
             'new' => 'neu',
 
-            'messages' => 'Nachrichten',
-            'settings' => 'Einstellungen',
-            'logout' => 'Ausloggen',
             'help' => 'Hilfe',
+            'logout' => 'Ausloggen',
+            'messages' => 'Nachrichten',
             'modding-history-discussions' => 'nutzer-moddingdiskussionen',
             'modding-history-events' => 'nutzer-modding-events',
             'modding-history-index' => 'nutzer-moddingverlauf',
             'modding-history-posts' => 'nutzer-modding-posts',
             'modding-history-votesGiven' => 'vergebene modding-votes',
             'modding-history-votesReceived' => 'erhaltene modding-votes',
+            'oauth_login' => 'anmelden für oauth',
+            'oauth_request' => 'oauth Autorisierung',
+            'settings' => 'Einstellungen',
         ],
         'store' => [
             '_' => 'shop',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Sie brauchen einen Account, Sir. Warum besitzen Sie noch keinen?",
+            'download' => '',
+            'info' => 'Sie brauchen einen Account, Sir. Warum besitzen Sie noch keinen?',
             'title' => "Kein Account?",
         ],
     ],

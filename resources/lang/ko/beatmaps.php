@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosu 허용하기',
+        'beatmap_information' => '비트맵 페이지',
         'delete' => '삭제',
         'deleted' => ':delete_time에 :editor님에 의해 삭제되었습니다',
         'deny_kudosu' => 'kudosu 박탈하기',
@@ -40,12 +41,14 @@ return [
         'edited' => ':update_time에 :editor님에 의해 마지막으로 수정됨',
         'kudosu_denied' => 'kudosu 획득이 불가능합니다.',
         'message_placeholder_deleted_beatmap' => '제거된 난이도이므로 더 이상의 토론이 불가능합니다.',
+        'message_placeholder_locked' => '이 비트맵에 대한 토론이 비활성화되었습니다.',
         'message_type_select' => '게시할 답글의 형식을 선택하세요',
         'reply_notice' => '답변을 보내려면 엔터를 누르세요.',
         'reply_placeholder' => '보내실 답변의 내용을 입력하세요.',
         'require-login' => '답글을 올리려면 로그인해 주세요',
         'resolved' => '해결됨',
         'restore' => '복구됨',
+        'show_deleted' => '삭제된 내용 표시',
         'title' => '토론',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => '아직 토론이 아무것도 없습니다!',
             'hidden' => '검색 결과에 해당하는 토론이 없습니다.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => '토론 잠금',
+                'unlock' => '토론 잠금 해제',
+            ],
+
+            'prompt' => [
+                'lock' => '잠긴 이유',
+                'unlock' => '잠금 해제하시겠어요?',
+            ],
         ],
 
         'message_hint' => [
@@ -73,7 +88,7 @@ return [
             'disqualify' => 'Disqualify',
             'hype' => 'Hype!',
             'mapper_note' => '노트',
-            'nomination_reset' => 'Nomination 초기화',
+            'nomination_reset' => '지명 초기화',
             'praise' => '칭찬',
             'problem' => '문제',
             'suggestion' => '제안',
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => '고정',
             'timestamp' => '타임스탬프',
             'timestamp_missing' => '비트맵 편집 모드에서 Ctrl-C를 눌러 복사하고 이 곳에 붙여넣어 타임스탬프를 추가할 수 있습니다!',
             'title' => '새 토론',
+            'unpin' => '고정 해제',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => '정렬 기준:',
-            'created_at' => '작성일',
+            'created_at' => '만든 날짜',
             'timeline' => '타임라인',
-            'updated_at' => '최근 업데이트',
+            'updated_at' => '마지막 업데이트',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => '안내: 이 비트맵은 제작자가 \'미완성\'으로 표시한 맵입니다.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '아직 비추천이 없습니다',
+                'up' => '아직 추천이 없습니다',
+            ],
+            'latest' => [
+                'down' => '최근 비추천',
+                'up' => '최근 추천',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -147,7 +173,7 @@ return [
         'delete' => '삭제',
         'delete_own_confirm' => '확실한가요? 비트맵을 제거하고 당신의 프로필로 돌아갑니다.',
         'delete_other_confirm' => '확실한가요? 비트맵을 제거하고 해당 유저의 프로필로 돌아갑니다.',
-        'disqualification_prompt' => 'Disqualify하는 이유는 무엇입니까?',
+        'disqualification_prompt' => 'Disqualify 처리하는 이유는 무엇입니까?',
         'disqualified_at' => ':time_ago에 Disqualified 됨 (:reason).',
         'disqualified_no_reason' => '이유가 명시되지 않았습니다',
         'disqualify' => 'Disqualify',
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => '확실한가요? 새로운 문제를 제기하는 것은 지명 상태를 초기화시킵니다.',
-            'disqualify' => '',
+            'disqualify' => '확실한가요? 이 작업은 비트맵을 qualify 상태에서 제거하고 지명 상태도 초기화합니다.',
         ],
     ],
 
@@ -197,12 +223,13 @@ return [
                 'title' => '제목',
                 'artist' => '아티스트',
                 'difficulty' => '난이도',
-                'updated' => '최신 업데이트',
-                'ranked' => '랭크된 날짜',
-                'rating' => '평점',
+                'favourites' => '즐겨찾기',
+                'updated' => '최근 순',
+                'ranked' => 'Ranked',
+                'rating' => '평가',
                 'plays' => '플레이된 횟수',
                 'relevance' => '연관성',
-                'nominations' => '지명',
+                'nominations' => '지명 순',
             ],
             'supporter_filter_quote' => [
                 '_' => ':filters로 검색하려면 :link이 필요합니다.',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => '모두',
-        'ranked-approved' => 'Ranked & Approved',
         'approved' => 'Approved',
-        'qualified' => 'Qualified',
-        'loved' => 'Loved',
-        'faves' => '즐겨찾기',
-        'pending' => '보류 중 & 작업 중',
+        'favourites' => '즐겨찾기',
         'graveyard' => 'Graveyard',
-        'my-maps' => '내 비트맵',
+        'leaderboard' => '리더보드 있음',
+        'loved' => 'Loved',
+        'mine' => '내 비트맵',
+        'pending' => '보류 중 & 작업 중',
+        'qualified' => 'Qualified',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => '모두',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => '미러',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => '모드 없음',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => '플레이 횟수: :count',
+        'favourites' => '즐겨찾기 수: :count',
     ],
 ];

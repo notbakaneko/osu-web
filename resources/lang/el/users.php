@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Ιστορικό Modding του χρήστη :user",
-        'title_compact' => '',
+        'title_compact' => 'Εξέταση',
 
         'discussions' => [
             'title_recent' => 'Πρόσφατα δημιουργημένες συζητήσεις',
@@ -88,9 +88,6 @@ return [
         'title' => 'Δημοσιεύσεις του :username',
     ],
 
-    'signup' => [
-        '_' => 'Εγγραφή',
-    ],
     'anonymous' => [
         'login_link' => 'κάντε κλικ για να συνδεθείτε',
         'login_text' => 'σύνδεση',
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!supporter',
         'joined_at' => 'Μέλος από :date',
         'lastvisit' => 'Τελευταία φορά εμφανίστηκε στις :date',
+        'lastvisit_online' => '',
         'missingtext' => 'Ίσως να κάνατε κάποιο ορθογραφικό λάθος! (ή ο χρήστης είναι banned)',
         'origin_country' => 'Από :country',
         'page_description' => 'osu! - Όλα όσα θέλεις να ξέρεις για τον :username!',
@@ -148,10 +146,14 @@ return [
                     'button' => 'Ανεβάστε εικόνα',
                     'dropzone' => 'Αφήστε εδώ για να ανεβεί',
                     'dropzone_info' => 'Μπορείτε επίσης να σύρετε την εικόνα σας εδώ για να ανεβεί',
-                    'restriction_info' => "Διαθέσιμη μεταφόρτωση για <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporters</a> μόνο",
                     'size_info' => 'Το μέγεθος του εξωφύλλου πρέπει να είναι 2800x620',
                     'too_large' => 'Το αρχείο είναι πολύ μεγάλο.',
                     'unsupported_format' => 'Μη υποστηριζόμενη μορφή.',
+
+                    'restriction_info' => [
+                        '_' => '',
+                        'link' => '',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => '1 ακόλουθος|:count ακόλουθοι',
+            'none' => '',
             'unranked' => 'Κανένα πρόσφατο σκορ',
 
             'achievements' => [
                 'achieved-on' => 'Επιτεύχθηκε στις :date',
-                'locked' => '',
+                'locked' => 'Κλειδωμένο',
                 'title' => 'Επιτεύγματα',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'από :artist',
                 'none' => 'Κανένα... ακόμα.',
                 'title' => 'Beatmaps',
 
@@ -191,13 +193,23 @@ return [
                     'title' => 'Εκκρεμή Beatmaps',
                 ],
             ],
+            'discussions' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
+            ],
+            'events' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
+            ],
             'historical' => [
                 'empty' => 'Κανένα ρεκόρ επίδοσης. :(',
                 'title' => 'Ιστορικό',
 
                 'monthly_playcounts' => [
                     'title' => 'Ιστορικό Δραστηριότητας',
-                    'count_label' => '',
+                    'count_label' => 'Προσπάθειες',
                 ],
                 'most_played' => [
                     'count' => 'φορές που παίχτηκε',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Ιστορικό Παρακολούθησης Replay',
-                    'count_label' => '',
+                    'count_label' => 'Παρακολουθημένες Επαναλήψεις',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => 'Πρόσφατο Ιστορικό Kudosu',
                 'title' => 'Kudosu!',
                 'total' => 'Σύνολο Εξασφαλισμένων Kudosu',
-                'total_info' => 'Βασισμένο στο πόσο έχει συνεισφέρει ο χρήστης για τον έλεγχο των beatmap. Δείτε <a href="'.osu_url('user.kudosu').'">αυτήν τη σελίδα</a> για περισσότερες πληροφορίες.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,23 +269,33 @@ return [
                         'revoke' => 'Ο :giver αρνήθηκε τα kudosu για το post :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '',
+                    'link' => '',
+                ],
             ],
             'me' => [
                 'title' => 'me!',
             ],
             'medals' => [
                 'empty' => "Αυτός ο χρήστης δεν έχει πάρει κανένα ακόμα. ;_;",
-                'recent' => '',
+                'recent' => 'Πρόσφατα',
                 'title' => 'Μετάλλια',
+            ],
+            'posts' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
             ],
             'recent_activity' => [
                 'title' => 'Πρόσφατα',
             ],
             'top_ranks' => [
-                'download_replay' => '',
+                'download_replay' => 'Λήψη Επανάληψης',
                 'empty' => 'Καμία εκπληκτική επίδοση ακόμα. :(',
                 'not_ranked' => 'Μόνο τα ranked beatmaps δίνουν pp.',
-                'pp_weight' => '',
+                'pp_weight' => 'σταθμισμένo :percentage',
                 'title' => 'Σκορ',
 
                 'best' => [
@@ -283,6 +304,13 @@ return [
                 'first' => [
                     'title' => 'Πρώτες Θέσεις',
                 ],
+            ],
+            'votes' => [
+                'given' => '',
+                'received' => '',
+                'title' => '',
+                'title_longer' => '',
+                'vote_count' => '',
             ],
             'account_standing' => [
                 'title' => 'Κατάσταση λογαριασμού',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'Παίκτης :info',
+            'info' => 'Πληροφορίες',
         ],
 
         'info' => [
@@ -330,10 +358,15 @@ return [
             'title' => 'Ο χρήστης δε βρέθηκε! ;_;',
         ],
         'page' => [
+            'button' => 'Επεξεργασία σελίδας προφίλ',
             'description' => 'To <strong>me!</strong> είναι μια προσωπική προσαρμόσιμη περιοχή στη σελίδα του προφίλ σας.',
             'edit_big' => 'Επεξεργασία!',
             'placeholder' => 'Γράψτε το περιεχόμενο της σελίδας εδώ',
-            'restriction_info' => "Χρειάζεται να είστε <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> για να ξεκλειδώσετε αυτή τη δυνατότητα.",
+
+            'restriction_info' => [
+                '_' => '',
+                'link' => '',
+            ],
         ],
         'post_count' => [
             '_' => 'Συνεισφορά :link',
@@ -341,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => 'Κατάταξη στη χώρα για το :mode',
-            'country_simple' => '',
+            'country_simple' => 'Εθνική Κατάταξη',
             'global' => 'Παγκόσμια κατάταξη για το :mode',
-            'global_simple' => '',
+            'global_simple' => 'Παγκόσμια Κατάταξη',
         ],
         'stats' => [
             'hit_accuracy' => 'Ακρίβεια Ευστοχίας',
             'level' => 'Επίπεδο :level',
-            'level_progress' => '',
+            'level_progress' => 'Πρόοδος για επόμενο επίπεδο',
             'maximum_combo' => 'Μέγιστο Combo',
-            'medals' => '',
+            'medals' => 'Μετάλλια',
             'play_count' => 'Αριθμός Προσπαθειών',
             'play_time' => 'Συνολικός Χρόνος Παιχνιδιού',
             'ranked_score' => 'Ranked Σκορ',
@@ -358,9 +391,16 @@ return [
             'score_ranks' => 'Κατάταξη Score',
             'total_hits' => 'Συνολικά Hits',
             'total_score' => 'Συνολική Βαθμολογία',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => '',
+            'loved_beatmapset_count' => '',
+            'unranked_beatmapset_count' => '',
+            'graveyard_beatmapset_count' => '',
         ],
     ],
+
     'status' => [
+        'all' => '',
         'online' => 'Συνδεδεμένοι',
         'offline' => 'Αποσυνδεδεμένοι',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'Επαλήθευση του Λογαριασμού',
+    ],
+
+    'view_mode' => [
+        'card' => '',
+        'list' => '',
     ],
 ];

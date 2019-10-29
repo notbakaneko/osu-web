@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -18,8 +18,8 @@
 @extends('master')
 
 @section('content')
-    <div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1 osu-layout__row--full t-forum-category-osu">
-        <div class="osu-layout__sub-row osu-layout__sub-row--lg1-compact ">
+    <div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1 osu-layout__row--full">
+        <div class="osu-layout__sub-row osu-layout__sub-row--lg1-compact">
             @include('home._user_header_nav')
 
             <div class="osu-page-header osu-page-header--home-user js-current-user-cover">
@@ -35,7 +35,7 @@
                             {{ trans('forum.topic_watches.index.box.total') }}
                         </div>
                         <div class="js-forum-topic-watch--total osu-page-header__status-text">
-                            {{ number_format($counts['total']) }}
+                            {{ i18n_number_format($counts['total']) }}
                         </div>
                     </div>
 
@@ -44,18 +44,22 @@
                             {{ trans('forum.topic_watches.index.box.unread') }}
                         </div>
                         <div class="js-forum-topic-watch--unread osu-page-header__status-text">
-                            {{ number_format($counts['unread']) }}
+                            {{ i18n_number_format($counts['unread']) }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        @include('forum.forums._topics', [
-            'title' => trans('forum.topic_watches.index.title'),
-            'row' => 'forum.topic_watches._topic',
-        ])
+        <div class="forum-list">
+            <ul class="forum-list__items">
+                @include('forum.forums._topics', [
+                    'row' => 'forum.topic_watches._topic',
+                    'topics' => $topics,
+                ])
+            </ul>
+        </div>
 
-        @include('objects._pagination_v0', ['object' => $topics])
+        @include('objects._pagination_v2', ['object' => $topics, 'modifiers' => ['light-bg']])
     </div>
 @endsection

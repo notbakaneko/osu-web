@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -45,6 +45,12 @@
     }
   }
 
+  &__description {
+    a {
+      .link-default();
+    }
+  }
+
   &__table {
     width: 100%;
     min-width: 800px;
@@ -65,7 +71,7 @@
     }
 
     &--date {
-      color: @community-user-graygreen-lighter;
+      color: @osu-colour-f1;
       width: 160px;
       padding-right: 20px;
     }
@@ -85,14 +91,14 @@
   }
 
   &__actor {
-    color: @community-user-graygreen-lighter;
+    color: @osu-colour-l1;
 
     &::before {
       content: ' ';
     }
 
     a {
-      color: @community-user-graygreen-light;
+      .link-default();
     }
   }
 }

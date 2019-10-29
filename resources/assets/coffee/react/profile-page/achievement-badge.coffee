@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, img} = ReactDOMFactories
+import * as React from 'react'
+import { Img2x } from 'img2x'
+import { div, img } from 'react-dom-factories'
 el = React.createElement
 
-class ProfilePage.AchievementBadge extends React.PureComponent
+export class AchievementBadge extends React.PureComponent
   constructor: (props) ->
     super props
 

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -51,13 +51,27 @@
                         {{ trans('beatmapset_events.index.form.types') }}
                     </div>
                     <div class="simple-form__checkboxes-overflow">
-                        @foreach (App\Models\BeatmapsetEvent::publicTypes() as $type)
+                        @php
+                            if (present($search['params']['user'] ?? null)) {
+                                $types = App\Models\BeatmapsetEvent::types('public');
+                                if (priv_check('BeatmapDiscussionAllowOrDenyKudosu')->can()) {
+                                    $types = array_merge($types, App\Models\BeatmapsetEvent::types('kudosuModeration'));
+                                }
+                                if (priv_check('BeatmapDiscussionModerate')->can()) {
+                                    $types = array_merge($types, App\Models\BeatmapsetEvent::types('moderation'));
+                                }
+                            } else {
+                                $types = App\Models\BeatmapsetEvent::types('all');
+                            }
+                        @endphp
+                        @foreach ($types as $type)
                             <div class="simple-form__checkbox-overflow-container">
                                 <label class="simple-form__checkbox simple-form__checkbox--overflow">
-                                    @include('objects._checkbox', [
-                                        'name' => 'types[]',
-                                        'value' => $type,
+                                    @include('objects._switch', [
                                         'checked' => in_array($type, $search['params']['types'], true),
+                                        'name' => 'types[]',
+                                        'type' => 'checkbox',
+                                        'value' => $type,
                                     ])
                                     {{ trans("beatmapset_events.type.{$type}") }}
                                 </label>
@@ -114,7 +128,7 @@
                     @include('beatmapset_events._item', compact('event'))
                 @endforeach
             </div>
-            @include('objects._pagination_v0', ['object' => $events->fragment('events')])
+            @include('objects._pagination_v2', ['object' => $events->fragment('events')])
         </div>
     </div>
 @endsection

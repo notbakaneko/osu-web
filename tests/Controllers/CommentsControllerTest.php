@@ -1,20 +1,33 @@
 <?php
 
+namespace Tests\Controllers;
+
 use App\Models\Beatmapset;
 use App\Models\Comment;
+use App\Models\Follow;
+use App\Models\Notification;
 use App\Models\User;
+use Tests\TestCase;
 
 class CommentsControllerTest extends TestCase
 {
     public function testStore()
     {
         $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
 
         $beatmapset = factory(Beatmapset::class)->create();
+        $follow = Follow::create([
+            'notifiable' => $beatmapset,
+            'user' => $otherUser,
+            'subtype' => 'comment',
+        ]);
+
         $commentableType = 'beatmapset';
         $commentableId = $beatmapset->getKey();
 
         $currentComments = Comment::count();
+        $currentNotifications = Notification::count();
 
         $this
             ->actingAs($user)
@@ -28,6 +41,7 @@ class CommentsControllerTest extends TestCase
             ->assertStatus(200);
 
         $this->assertSame($currentComments + 1, Comment::count());
+        $this->assertSame($currentNotifications + 1, Notification::count());
     }
 
     public function testStoreReply()

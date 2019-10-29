@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => '、と',
     ],
 
+    'badges' => [
+        'new' => '新規',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'トップに戻る',
+        'admin' => '管理者',
         'back_to_previous' => '直前の状態に戻す',
+        'back_to_top' => 'トップに戻る',
         'cancel' => 'キャンセル',
         'change' => '変更',
         'click_to_copy' => 'クリックでコピー',
         'click_to_copy_copied' => 'クリップボードにコピーされました！',
+        'close' => '閉じる',
+        'collapse' => '折りたたむ',
         'delete' => '削除',
         'edit' => '編集',
+        'expand' => '展開',
         'hide' => '隠す',
         'permalink' => 'パーマリンク',
         'permalink_copied' => 'コピーしました',
@@ -52,8 +60,16 @@ return [
         'search' => '検索',
         'see_more' => 'もっと見る',
         'show' => '表示',
+        'show_deleted' => '削除済みを表示',
         'show_more' => '展開する',
+        'show_more_options' => '詳細オプションを表示する',
+        'update' => 'アップデート',
         'upload_image' => '画像をアップロード',
+
+        'watch' => [
+            'to_0' => 'ウォッチを解除する',
+            'to_1' => 'ウォッチする',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count時間',
         'item' => ':count個',
         'minute_short_unit' => '分',
-        'minutes' => '',
+        'minutes' => ':count_delimited分',
         'months' => ':countヶ月',
+        'plus_others' => '+ :count_delimited',
+        'post' => ':count_delimited 投稿',
         'second_short_unit' => '秒',
+        'star_priority' => ':count_delimited スタープライオリティ',
+        'update' => ':count_delimited アップデート',
+        'view' => ':count_delimited ビュー',
         'years' => ':count年',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'ここにドロップでアップロード',
+    ],
+
+    'input' => [
+        'search' => '検索...',
     ],
 
     'pagination' => [

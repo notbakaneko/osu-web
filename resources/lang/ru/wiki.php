@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'Запрашиваемая страница не переведена на русский язык. Показывается версия на английском.',
-        'languages' => 'Языки',
+        'incomplete_or_outdated' => 'Эта страница не закончена или устарела. Если можете помочь, пожалуйста, обновите эту статью!',
         'missing' => 'Запрашиваемая страница ":keyword" не найдена.',
         'missing_title' => 'Не найдено',
         'missing_translation' => 'Запрашиваемая страница не найдена для этого языка.',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'на английском языке',
         ],
+    ],
+    'main' => [
+        'title' => 'База знаний',
+        'subtitle' => 'потому что osu!педия звучит глупо',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

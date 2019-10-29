@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -55,7 +55,12 @@ class Message extends Model
 
     public function scopeForUser($query, User $user)
     {
-        return $query->whereIn('channel_id', $user->channels->pluck('channel_id'))
+        $channelIds = UserChannel::where([
+            'user_id' => $user->user_id,
+            'hidden' => false,
+        ])->pluck('channel_id');
+
+        return $query->whereIn('channel_id', $channelIds)
             ->orderBy('message_id', 'desc');
     }
 

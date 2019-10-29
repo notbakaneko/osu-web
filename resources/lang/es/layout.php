@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - El ritmo está a solo un *clic* de distancia! Con Ouendan/EBA, Taiko y modos de juego originales, así como un editor de niveles totalmente funcional.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Comunidad',
+
+            'forum' => 'Foro',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Cerrar (Esc)',
+        'fullscreen' => 'Activar/Desactivar pantalla completa',
+        'zoom' => 'Zoom Acercar/Alejar',
+        'previous' => 'Anterior (flecha izquierda)',
+        'next' => 'Siguiente (flecha derecha)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'inicio',
             'account-edit' => 'ajustes',
+            'account-verifyLink' => 'Verificación Completada',
             'friends-index' => 'amigos',
             'changelog-index' => 'lista de Cambios',
             'changelog-build' => 'compilación',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'grupos',
             'index' => 'panel',
             'legal-show' => 'información',
-            'messages-index' => '',
+            'messages-index' => 'mensajes',
             'news-index' => 'noticias',
             'news-show' => 'noticias',
             'password-reset-index' => 'reestablecer contraseña',
             'search' => 'buscar',
             'supportTheGame' => 'apoya el juego',
             'team' => 'equipo',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'ayuda',
@@ -78,13 +100,13 @@ return [
         ],
         'community' => [
             '_' => 'comunidad',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'desarrollo',
             'getForum' => 'foros',
             'getLive' => 'en vivo',
-            'comments-index' => '',
-            'comments-show' => '',
+            'comments-index' => 'comentarios',
+            'comments-show' => 'comentario',
             'contests' => 'concursos',
             'profile' => 'perfil',
             'tournaments' => 'torneos',
@@ -118,16 +140,18 @@ return [
             'reset' => 'recuperar',
             'new' => 'nuevo',
 
-            'messages' => 'Mensajes',
-            'settings' => 'Ajustes',
-            'logout' => 'Cerrar sesión',
             'help' => 'Ayuda',
+            'logout' => 'Cerrar sesión',
+            'messages' => 'Mensajes',
             'modding-history-discussions' => 'discusiones sobre modding',
             'modding-history-events' => 'eventos sobre modding',
             'modding-history-index' => 'historial de moddding del usuario',
             'modding-history-posts' => 'publicaciones de modding del usuario',
             'modding-history-votesGiven' => 'votos dados sobre modding del usuario',
             'modding-history-votesReceived' => 'votos recibidos sobre modding del usuario',
+            'oauth_login' => 'inicia sesión para oauth',
+            'oauth_request' => 'autorización oauth',
+            'settings' => 'Ajustes',
         ],
         'store' => [
             '_' => 'tienda',
@@ -137,7 +161,7 @@ return [
 
             'getCheckout' => 'caja',
             'getInvoice' => 'factura',
-            'orders-index' => '',
+            'orders-index' => 'historial de pedidos',
             'products-show' => 'producto',
 
             'new' => 'nuevo',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Necesita una cuenta, señor. ¿Por qué aún no tiene una?",
+            'download' => '',
+            'info' => 'Necesita una cuenta, señor. ¿Por qué aún no tiene una?',
             'title' => "¿No tienes una cuenta?",
         ],
     ],

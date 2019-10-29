@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -30,19 +30,19 @@ return [
                 'scary' => 'ÄLÄ',
             ],
             'note' => [
-                '_' => 'Huomaa myös, että on erittäin suositeltavaa :scary, koska vanhimmat mapit ovat paljon huonompia kuin uusimmat mapit.',
+                '_' => 'Huomaa myös, että on erittäin suositeltavaa :scary, koska vanhemmat mapit ovat paljon huonompia kuin uudet.',
                 'scary' => 'ladata uusimpia kokoelmia vanhojen sijaan',
             ],
         ],
-        'title' => 'Beatmap Kokoelmat',
-        'description' => 'Valmiiksi pakattuja beatmap kokoelmia perustuen yleisiin teemoihin.',
+        'title' => 'Beatmap-Kokoelmat',
+        'description' => 'Valmiiksi kasattuja beatmap kokoelmia, joissa yhdistyy tietty teema.',
     ],
 
     'show' => [
         'download' => 'Lataa',
         'item' => [
             'cleared' => 'läpäisty',
-            'not_cleared' => 'ei läpäisty',
+            'not_cleared' => 'läpäisemätön',
         ],
     ],
 

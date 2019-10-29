@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -133,7 +133,7 @@ class @TooltipDefault
       .text time.format('LL')
     $timeEl = $('<span>')
       .addClass 'tooltip-default__time'
-      .text "#{time.format('LT')} #{@tzString(time)}"
+      .text "#{time.format('LTS')} #{@tzString(time)}"
 
     $('<span>')
       .append $dateEl

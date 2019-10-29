@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -66,11 +66,7 @@ class ContestEntryTransformer extends Fractal\TransformerAbstract
             }
 
             $size = fast_imagesize($entry->entry_url.($urlSuffix ?? ''));
-            $thumb = $entry->entry_url;
-
-            if (present(config('osu.assets.mini_url')) && present(config('osu.assets.mini_url'))) {
-                $thumb = str_replace(config('osu.assets.base_url'), config('osu.assets.mini_url'), $thumb);
-            }
+            $thumb = mini_asset($entry->entry_url);
 
             return [
                 'width' => $size[0],

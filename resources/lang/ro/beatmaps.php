@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'permite kudosu',
+        'beatmap_information' => '',
         'delete' => 'șterge',
         'deleted' => 'Șters de :editor :delete_time.',
         'deny_kudosu' => 'refuză kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Ultima dată editat de :editor :update_time.',
         'kudosu_denied' => 'A refuzat să primească kudosu.',
         'message_placeholder_deleted_beatmap' => 'Această dificultate a fost ștearsă, deci e posibil să nu mai fie discutată.',
+        'message_placeholder_locked' => '',
         'message_type_select' => 'Selectează tipul comentariului',
         'reply_notice' => 'Apasă enter pentru a răspunde.',
         'reply_placeholder' => 'Scrie-ți răspunsul aici',
         'require-login' => 'Te rugăm să te conectezi pentru a posta sau a răspunde',
         'resolved' => 'Rezolvat',
         'restore' => 'restabilește',
+        'show_deleted' => '',
         'title' => 'Discuții',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Nicio discuție încă!',
             'hidden' => 'Nicio discuție nu se potrivește cu filtrul selectat.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => '',
+                'unlock' => '',
+            ],
+
+            'prompt' => [
+                'lock' => '',
+                'unlock' => '',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => '',
             'timestamp' => 'Marcaj de timp',
             'timestamp_missing' => 'ctrl-c în modul de editare și lipește-ți mesajul pentru a adăuga un marcaj de timp!',
             'title' => 'Discuție nouă',
+            'unpin' => '',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sortat după:',
-            'created_at' => 'data creării',
-            'timeline' => 'cronologie',
-            'updated_at' => 'ultima actualizare',
+            'created_at' => 'Data creării',
+            'timeline' => 'Cronologie',
+            'updated_at' => 'Ultima actualizare',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Notă: Acest beatmap este marcat ca o lucrare în desfășurare de către creator.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -144,11 +170,16 @@ return [
     ],
 
     'nominations' => [
+        'delete' => 'Șterge',
+        'delete_own_confirm' => 'Ești sigur? Acest beatmap va fi șters, iar tu vei fi redirecționat înapoi la profilul tău.',
+        'delete_other_confirm' => 'Ești sigur? Acest beatmap va fi șters, iar tu vei fi redirecționat înapoi la profilul utilizatorului.',
         'disqualification_prompt' => 'Motiv pentru descalificare?',
         'disqualified_at' => 'Descalificat :time_ago (:reason).',
         'disqualified_no_reason' => 'niciun răspuns specificat',
         'disqualify' => 'Descalificare',
         'incorrect_state' => 'S-a produs o eroare la efectuarea acestei acțiuni, încearcă să reîmprospătezi pagina.',
+        'love' => 'Love',
+        'love_confirm' => '\'Love\' acest beatmap?',
         'nominate' => 'Nominalizează',
         'nominate_confirm' => 'Nominalizezi acest beatmap?',
         'nominated_by' => 'nominalizat de :users',
@@ -166,20 +197,22 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Ești sigur? Postarea unei probleme noi va reseta procesul de nominalizare.',
+            'disqualify' => 'Ești sigur? Asta va elimina beatmap-ul din calificare și va reseta procesul de nominalizare.',
         ],
     ],
 
     'listing' => [
         'search' => [
             'prompt' => 'scrieți cuvinte cheie...',
+            'login_required' => 'Conectează-te pentru a căuta.',
             'options' => 'Mai multe opțiuni de căutare',
-            'supporter_filter' => 'Trebuie să fii un suporter pentru a filtra prin :filters',
+            'supporter_filter' => 'Trebuie să fii un suporter osu! pentru a putea filtra prin :filters',
             'not-found' => 'niciun rezultat',
             'not-found-quote' => '... nup, nimic găsit.',
             'filters' => [
                 'general' => 'General',
                 'mode' => 'Mod',
-                'status' => 'Statut de clasificare',
+                'status' => 'Categorii',
                 'genre' => 'Gen',
                 'language' => 'Limbă',
                 'extra' => 'extra',
@@ -187,25 +220,22 @@ return [
                 'played' => 'Jucat',
             ],
             'sorting' => [
-                'title' => 'titlu',
-                'artist' => 'artist',
-                'difficulty' => 'dificultate',
-                'updated' => 'actualizat',
-                'ranked' => 'clasat',
-                'rating' => 'evaluare',
-                'plays' => 'numărul de jucări',
-                'relevance' => 'relevanță',
-                'nominations' => 'nominalizări',
+                'title' => 'Titlu',
+                'artist' => 'Artist',
+                'difficulty' => 'Dificultate',
+                'favourites' => 'Favorite',
+                'updated' => 'Actualizat',
+                'ranked' => 'Clasat',
+                'rating' => 'Evaluare',
+                'plays' => 'Jocuri',
+                'relevance' => 'Relevanţă',
+                'nominations' => 'Nominalizări',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Ai nevoie de un :link activ pentru a filtra prin :filters',
-                'link_text' => 'etichetă de suporter',
+                'link_text' => 'etichetă de suporter osu!',
             ],
         ],
-        'mode' => 'Mod',
-        'status' => 'Statut de clasificare',
-        'source' => 'de la :source',
-        'load-more' => 'Încarcă mai multe...',
     ],
     'general' => [
         'recommended' => 'Dificultatea recomandată',
@@ -220,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Oricare',
-        'ranked-approved' => 'Clasate & Aprobate',
         'approved' => 'Aprobate',
-        'qualified' => 'Calificate',
-        'loved' => 'Loved',
-        'faves' => 'Favorite',
-        'pending' => 'În așteptare',
+        'favourites' => '',
         'graveyard' => 'Graveyard',
-        'my-maps' => 'Mapele mele',
+        'leaderboard' => '',
+        'loved' => 'Loved',
+        'mine' => '',
+        'pending' => 'În așteptare & în lucru',
+        'qualified' => 'Calificate',
+        'ranked' => '',
     ],
     'genre' => [
         'any' => 'Oricare',
@@ -256,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -298,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Numărul de jocuri :count',
+        'favourites' => 'Favorite :count',
     ],
 ];

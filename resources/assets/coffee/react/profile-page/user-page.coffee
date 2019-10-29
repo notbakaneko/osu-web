@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,27 +16,34 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div, span, p} = ReactDOMFactories
+import { ExtraHeader } from './extra-header'
+import { UserPageEditor } from './user-page-editor'
+import * as React from 'react'
+import { a, button, div, span, p } from 'react-dom-factories'
+import { StringWithComponent } from 'string-with-component'
 el = React.createElement
 
-class ProfilePage.UserPage extends React.Component
+export class UserPage extends React.Component
   render: =>
     isBlank = @props.userPage.initialRaw.trim() == ''
-    div className: 'page-extra page-extra--userpage',
-      el ProfilePage.ExtraHeader, name: @props.name, withEdit: @props.withEdit
+    canEdit = @props.withEdit || window.currentUser.can_moderate || window.currentUser.is_admin
 
-      if !@props.userPage.editing && @props.withEdit && !isBlank
+    div className: 'page-extra page-extra--userpage',
+      el ExtraHeader, name: @props.name, withEdit: @props.withEdit
+
+      if !@props.userPage.editing && canEdit && !isBlank
         div className: 'page-extra__actions',
           button
             type: 'button'
+            title: osu.trans('users.show.page.button')
             className: 'profile-page-toggle'
             onClick: @editStart
             span className: 'fas fa-pencil-alt'
 
       if @props.userPage.editing
-        el ProfilePage.UserPageEditor, userPage: @props.userPage
+        el UserPageEditor, userPage: @props.userPage, user: @props.user
       else
-        div className: 'page-extra__content-overflow-wrapper-outer',
+        div className: 'page-extra__content-overflow-wrapper-outer u-fancy-scrollbar',
           if @props.withEdit && isBlank
             @pageNew()
           else
@@ -49,9 +56,9 @@ class ProfilePage.UserPage extends React.Component
 
 
   pageNew: =>
-    div className: 'text-center',
+    div className: 'profile-extra-user-page profile-extra-user-page--new',
       button
-        className: 'profile-extra-user-page__new-content   btn-osu btn-osu--lite btn-osu--profile-page-edit'
+        className: 'profile-extra-user-page__new-content  btn-osu btn-osu--lite btn-osu--profile-page-edit'
         onClick: @editStart
         disabled: !@props.user.has_supported
         osu.trans 'users.show.page.edit_big'
@@ -67,8 +74,14 @@ class ProfilePage.UserPage extends React.Component
       if !@props.user.has_supported
         p
           className: 'profile-extra-user-page__new-content'
-          dangerouslySetInnerHTML:
-            __html: osu.trans 'users.show.page.restriction_info'
+          el StringWithComponent,
+            mappings:
+              ':link': a
+                href: laroute.route('store.products.show', product: 'supporter-tag')
+                key: 'link'
+                target: '_blank'
+                osu.trans 'users.show.page.restriction_info.link'
+            pattern: osu.trans 'users.show.page.restriction_info._'
 
 
   pageShow: =>

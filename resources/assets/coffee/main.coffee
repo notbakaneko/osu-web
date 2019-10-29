@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,7 @@
 
 Turbolinks.setProgressBarDelay(0)
 
-Lang.setLocale(currentLocale)
+Lang.setLocale(@currentLocale)
 jQuery.timeago.settings.allowFuture = true
 
 # loading animation overlay
@@ -44,7 +44,6 @@ $(document).on 'turbolinks:load', ->
 
 @accountEdit ?= new AccountEdit
 @accountEditAvatar ?= new AccountEditAvatar
-@accountEditPlaystyle ?= new AccountEditPlaystyle
 @accountEditBlocklist ?= new AccountEditBlocklist
 @beatmapsetDownloadObserver ?= new BeatmapsetDownloadObserver
 @changelogChartLoader ?= new ChangelogChartLoader
@@ -58,6 +57,8 @@ $(document).on 'turbolinks:load', ->
 @forum ?= new Forum
 @forumAutoClick ?= new ForumAutoClick
 @forumCover ?= new ForumCover
+@forumPoll ?= new _exported.ForumPoll(@)
+@forumPostPreview ?= new ForumPostPreview
 @forumTopicTitle ?= new ForumTopicTitle
 @forumTopicWatchAjax ?= new ForumTopicWatchAjax
 @gallery ?= new Gallery
@@ -69,24 +70,21 @@ $(document).on 'turbolinks:load', ->
 @osuAudio ?= new OsuAudio
 @osuLayzr ?= new OsuLayzr
 @postPreview ?= new PostPreview
-@reactTurbolinks ?= new ReactTurbolinks
-@replyPreview ?= new ReplyPreview
 @scale ?= new Scale
 @search ?= new Search
 @stickyFooter ?= new StickyFooter
 @timeago ?= new Timeago
 @tooltipBeatmap ?= new TooltipBeatmap
 @tooltipDefault ?= new TooltipDefault
-@turbolinksReload ?= new TurbolinksReload
-@userCard ?= new UserCard
+@turbolinksReload ?= new _exported.TurbolinksReload
 @userLogin ?= new UserLogin
 @userVerification ?= new UserVerification
 
+@osuEnchant ?= new _exported.Enchant(@, @turbolinksReload)
 @formConfirmation ?= new FormConfirmation(@formError)
 @forumPostsSeek ?= new ForumPostsSeek(@forum)
-@forumSearchModal ?= new ForumSearchModal(@forum)
 @forumTopicPostJump ?= new ForumTopicPostJump(@forum)
-@forumTopicReply ?= new ForumTopicReply(@forum, @stickyFooter)
+@forumTopicReply ?= new ForumTopicReply({ @forum, @forumPostPreview, @stickyFooter })
 @twitchPlayer ?= new TwitchPlayer(@turbolinksReload)
 _exported.WindowVHPatcher.init(window)
 
@@ -98,31 +96,6 @@ $(document).on 'change', '.js-url-selector', (e) ->
 $(document).on 'keydown', (e) ->
   $.publish 'key:esc' if e.keyCode == 27
 
-# Globally init countdown timers
-reactTurbolinks.register 'countdownTimer', CountdownTimer, (e) ->
-  deadline: e.dataset.deadline
-
-# Globally init friend buttons
-reactTurbolinks.register 'friendButton', FriendButton, (target) ->
-  container: target
-  userId: parseInt(target.dataset.target)
-
-# Globally init block buttons
-reactTurbolinks.register 'blockButton', BlockButton, (target) ->
-  container: target
-  userId: parseInt(target.dataset.target)
-
-reactTurbolinks.register 'beatmapset-panel', BeatmapsetPanel, (el) ->
-  JSON.parse(el.dataset.beatmapsetPanel)
-
-reactTurbolinks.register 'spotlight-select-options', _exported.SpotlightSelectOptions, ->
-  osu.parseJson 'json-spotlight-select-options'
-
-reactTurbolinks.register 'comments', CommentsManager, (el) ->
-  props = JSON.parse(el.dataset.props)
-  props.component = Comments
-
-  props
 
 rootUrl = "#{document.location.protocol}//#{document.location.host}"
 rootUrl += ":#{document.location.port}" if document.location.port

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'forum osu!',
 
     'covers' => [
+        'edit' => 'Sunting sampul',
+
         'create' => [
             '_' => 'Pasang gambar sampul',
             'button' => 'Unggah gambar',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Kiriman Terbaru',
+
+        'index' => [
+            'title' => 'Indeks Forum',
+        ],
+
         'topics' => [
             'empty' => 'Topik tidak ditemukan!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Tandai forum ini sebagai telah terbaca',
+        'forums' => 'Tandai forum-forum ini sebagai telah terbaca',
+        'busy' => 'Menandai sebagai telah terbaca...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Hapus Kiriman',
             'restore' => 'Kembalikan post',
             'edit' => 'Sunting post',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Balasan baru',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited postingan',
+            'topic_starter' => 'Pembuka Topik',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'topik dimulai oleh :user',
 
         'create' => [
+            'close' => 'Tutup',
             'preview' => 'Pratinjau',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Pembuatan Jajak Pendapat',
 
+            'preview' => 'Pratinjau Postingan',
+
             'create_poll_button' => [
                 'add' => 'Buat jajak pendapat',
                 'remove' => 'Batal membuat jajak pendapat',
             ],
 
             'poll' => [
+                'hide_results' => 'Rahasiakan suara yang masuk ketika polling sedang berjalan.',
+                'hide_results_info' => 'Hasil polling baru akan dapat terlihat ketika waktu pemungutan suara telah berakhir.',
                 'length' => 'Jalankan jajak pendapat selama',
                 'length_days_suffix' => 'hari',
                 'length_info' => 'Biarkan kosong apabila Anda tidak ingin menerapkan tenggat waktu pada jajak pendapat ini',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'kali dilihat',
+            'feature_votes' => 'prioritas',
             'replies' => 'balasan',
+            'views' => 'kali dilihat',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Topik telah disematkan dan ditandai sebagai pengumuman',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Post yang Dihapus',
             'total_posts' => 'Jumlah Post',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Prioritas saat ini: +:count',
                 'do' => 'Promosikan permintaan ini',
+
+                'info' => [
+                    '_' => 'Ini adalah sebuah :feature_request. Fitur-fitur yang diajukan dapat di-vote lebih lanjut oleh :supporters.',
+                    'feature_request' => 'permintaan fitur',
+                    'supporters' => 'para supporter',
+                ],
 
                 'user' => [
                     'count' => '{0} tidak ada suara|{1} :count suara|[2,*] :count suara',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Sunting jajak pendapat',
+                'edit_warning' => 'Menyunting isi jajak pendapat akan menghilangkan semua hasil yang sudah tercatat sampai saat ini!',
                 'vote' => 'Pilih',
+
+                'button' => [
+                    'change_vote' => 'Ganti suara',
+                    'edit' => 'Sunting jajak pendapat',
+                    'view_results' => 'Lewati ke hasil jajak pendapat',
+                    'vote' => 'Pilih',
+                ],
 
                 'detail' => [
                     'end_time' => 'Pemilihan akan berakhir :time',
                     'ended' => 'Pemilihan telah berakhir :time',
+                    'results_hidden' => 'Hasil polling baru akan dapat terlihat ketika waktu pemungutan suara telah berakhir.',
                     'total' => 'Jumlah suara: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Tidak dimarkahi',
             'to_watching' => 'Markah',
             'to_watching_mail' => 'Markah dengan notifikasi',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Anda sedang mengaktifkan notifikasi otomatis untuk topik ini. Klik di sini untuk menonaktifkan notifikasi otomatis',
+            'tooltip_mail_enable' => 'Anda sedang tidak mengaktifkan notifikasi otomatis untuk topik ini. Klik di sini untuk mengaktifkan notifikasi otomatis',
         ],
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -41,13 +41,15 @@ trait Reportable
     public function reportBy(User $reporter, array $params = []) : ?UserReport
     {
         try {
-            return $this->reportedIn()->create(
-                array_merge([
-                    'comments' => $params['comments'] ?? '',
-                    'reason' => $params['reason'] ?? 'Cheating',
-                    'reporter_id' => $reporter->getKey(),
-                ], $this->newReportableExtraParams())
-            );
+            $attributes = $this->newReportableExtraParams();
+            $attributes['comments'] = $params['comments'] ?? '';
+            $attributes['reporter_id'] = $reporter->getKey();
+
+            if (array_key_exists('reason', $params)) {
+                $attributes['reason'] = $params['reason'];
+            }
+
+            return $this->reportedIn()->create($attributes);
         } catch (PDOException $e) {
             // ignore duplicate reports
             if (!is_sql_unique_exception($e)) {

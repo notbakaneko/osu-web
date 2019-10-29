@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,42 +34,51 @@ return [
         'discussion' => '讨论',
 
         'details' => [
+            'approved' => 'approved 于 ',
+            'favourite' => '收藏这张谱面',
+            'logged-out' => '下载谱面前请先登录！',
+            'loved' => 'loved 于 ',
             'mapped_by' => '作者: :mapper',
+            'qualified' => 'qualified 于 ',
+            'ranked' => 'ranked 于 ',
             'submitted' => '提交于 ',
+            'unfavourite' => '取消收藏',
             'updated' => '上次更新于 ',
             'updated_timeago' => '上次更新于 :timeago',
-            'ranked' => 'ranked 于 ',
-            'approved' => 'approved 于 ',
-            'qualified' => 'qualified 于 ',
-            'loved' => 'loved 于 ',
-            'logged-out' => '下载谱面前请先登录！',
+
             'download' => [
                 '_' => '下载',
-                'video' => '带视频',
-                'no-video' => '不带视频',
                 'direct' => 'osu!direct',
+                'no-video' => '不包含视频',
+                'video' => '包含视频',
             ],
-            'favourite' => '收藏这张谱面',
-            'unfavourite' => '取消收藏',
-            'favourited_count' => '还有很多人...',
+
+            'login_required' => [
+                'bottom' => '以使用更多的功能',
+                'top' => '登录',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => '谱面收藏数超出限制，请删除一些后再试。',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => '如果你觉得这张谱面很好玩，推荐它来帮助它发展到<strong>Ranked</strong>状态。',
 
             'current' => [
-                '_' => '',
+                '_' => '这张谱面正处于 :status 状态。',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'pending',
+                    'qualified' => 'qualified',
+                    'wip' => '制作中',
                 ],
             ],
         ],
 
         'info' => [
-            'description' => '介绍',
+            'description' => '谱面介绍',
             'genre' => '流派',
             'language' => '语言',
             'no_scores' => '数据还在计算中。。。',
@@ -85,8 +94,8 @@ return [
             'country' => '国内排名',
             'friend' => '好友排名',
             'global' => '全球排名',
-            'supporter-link' => '点击 <a href=":link">这里</a> 来查看你可以得到的精彩功能！',
-            'supporter-only' => '你需要成为支持者才能查看国内/好友排名！',
+            'supporter-link' => '点击 <a href=":link">这里</a> 来查看你得到的精彩功能！',
+            'supporter-only' => '你需要成为 osu! 支持者才能查看国内/好友排名！',
             'title' => '排行榜',
 
             'headers' => [

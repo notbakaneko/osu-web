@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,8 +19,6 @@
  */
 
 namespace App\Libraries\Elasticsearch;
-
-use Cache;
 
 abstract class SearchParams
 {
@@ -41,21 +39,6 @@ abstract class SearchParams
     }
 
     /**
-     * Magic execute and cache if isCacheable() function.
-     * This does not seem like the best place for it but it will do for now.
-     */
-    public function fetchCacheable(?string $prefix = null, float $duration, callable $callable)
-    {
-        if ($this->isCacheable()) {
-            return Cache::remember("{$prefix}{$this->getCacheKey()}", $duration, function () use ($callable) {
-                return $callable();
-            });
-        }
-
-        return $callable();
-    }
-
-    /**
      * Gets the key useable as a cache key.
      *
      * @return string the cache key.
@@ -68,6 +51,18 @@ abstract class SearchParams
      * @return bool true if the parameters are eligible for caching; false, otherwise.
      */
     abstract public function isCacheable() : bool;
+
+    public function blockedUserIds()
+    {
+        $user = auth()->user();
+
+        return $user !== null ? $user->blockedUserIds()->toArray() : [];
+    }
+
+    public function isQueryStringTooShort()
+    {
+        return mb_strlen($this->queryString) < config('osu.search.minimum_length');
+    }
 
     public function shouldReturnEmptyResponse() : bool
     {

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,59 +18,26 @@
 
 .search-entry {
   .link-plain();
-  .default-box-shadow();
   .default-border-radius();
-  background-color: #444;
+  background-color: @osu-colour-b5;
   display: flex;
   flex-direction: column;
   padding: 10px 10px 15px 10px;
+  border: 2px solid transparent;
 
-  &::after, &::before {
-    .full-size();
-    content: ' ';
-    will-change: opacity;
-    transition: opacity 120ms;
-    pointer-events: none;
-  }
+  &:hover {
+    border: 2px solid @osu-colour-l1;
 
-  &::after {
-    .thicker-box-shadow();
-    opacity: 0;
-  }
-
-  &:hover::after {
-    opacity: 1;
-  }
-
-  &::before {
-    .default-box-shadow();
-  }
-
-  &:hover::before {
-    opacity: 0;
-  }
-
-  &__row {
-    margin: 5px 0;
-    padding: 0;
-    line-height: 1.5;
-    word-wrap: break-word;
-
-    &--title {
-      margin-top: 0;
-      color: #fff;
-      font-size: @font-size--title-small-2;
+    .search-result--beatmapset & {
+      border-color: @pink-dark;
     }
 
-    &--excerpt {
-      color: #ddd;
-      font-size: @font-size--small-2;
-      word-break: break-word;
+    .search-result--forum_post & {
+      border-color: @yellow-dark;
     }
 
-    &--footer {
-      color: #999;
-      font-size: @font-size--small;
+    .search-result--wiki_page & {
+      border-color: @purple-dark;
     }
   }
 }

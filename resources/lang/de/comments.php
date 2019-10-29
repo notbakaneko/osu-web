@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'gelöscht',
+    'deleted_count' => ':count_delimited gelöschten Kommentar|:count_delimited gelöschte Kommentare',
     'edited' => 'bearbeitet :timeago von :user',
     'empty' => 'Noch keine Kommentare vorhanden.',
+    'load_replies' => 'Antworten laden',
     'replies' => 'Antworten',
-    'show_replies' => 'antworten anzeigen',
     'title' => 'Kommentare',
 
     'commentable_name' => [
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => 'Drücke Enter, um :action. Benutze Shift+Enter für eine neue Zeile.',
+            '_' => 'Drücke Enter, um zu :action. Benutze Shift+Enter für eine neue Zeile.',
             'edit' => 'Speichern',
             'new' => 'posten',
             'reply' => 'antworten',
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Anmelden, um zu kommentieren',
-        'reply' => 'Anmelden, um zu antworten',
+        'new' => 'Zum Kommentieren anmelden',
+        'reply' => 'Zum Antworten anmelden',
     ],
 
     'index' => [
@@ -65,12 +66,5 @@ return [
             '_' => 'Kommentare :info',
             'info' => 'Einzelheiten',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,12 +18,12 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Tests;
+namespace Tests\Models\Store;
 
 use App\Exceptions\InsufficientStockException;
 use App\Models\Store\OrderItem;
 use App\Models\Store\Product;
-use TestCase;
+use Tests\TestCase;
 
 class OrderItemTest extends TestCase
 {

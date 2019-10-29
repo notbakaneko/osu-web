@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ' และ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => '',
-        'back_to_previous' => '',
+        'admin' => 'ผู้ดูแล',
+        'back_to_previous' => 'กลับไปยังตำแหน่งก่อนหน้านี้',
+        'back_to_top' => 'กลับไปด้านบน',
         'cancel' => 'ยกเลิก',
         'change' => 'เปลี่ยน',
         'click_to_copy' => 'คลิกเพื่อคัดลอกไปยังคลิปบอร์ด',
         'click_to_copy_copied' => 'คัดลอกไปยังคลิปบอร์ดแล้ว',
+        'close' => 'ปิด',
+        'collapse' => 'ยุบ',
         'delete' => 'ลบ',
-        'edit' => '',
+        'edit' => 'แก้ไข',
+        'expand' => 'ขยาย',
         'hide' => 'ซ่อน',
         'permalink' => 'ลิงก์ถาวร',
         'permalink_copied' => 'คัดลอกลิ้งค์แล้ว',
@@ -46,14 +54,22 @@ return [
         'reply_reopen' => 'ตอบกลับ และเปิดใหม่',
         'reply_resolve' => 'ตอบกลับ และแก้ไข',
         'reset' => 'รีเซ็ต',
-        'restore' => '',
+        'restore' => 'กู้คืน',
         'save' => 'บันทึก',
         'saving' => 'กำลังบันทึก...',
         'search' => 'ค้นหา',
         'see_more' => 'ดูเพิ่มเติม',
         'show' => 'แสดง',
+        'show_deleted' => 'แสดงรายการที่ลบ',
         'show_more' => 'แสดงเพิ่มเติม',
+        'show_more_options' => 'แสดงตัวเลือกเพิ่มเติม',
+        'update' => 'อัปเดต',
         'upload_image' => 'อัพโหลดรูปภาพ',
+
+        'watch' => [
+            'to_0' => 'เลิกติดตาม',
+            'to_1' => 'ติดตาม',
+        ],
     ],
 
     'count' => [
@@ -63,17 +79,22 @@ return [
         'hours' => ':count ชั่วโมง|:count ชั่วโมง',
         'item' => ':count อัน|:count อัน',
         'minute_short_unit' => 'นาที|นาที',
-        'minutes' => '',
+        'minutes' => ':count_delimited นาที|:count_delimited นาที',
         'months' => ':count เดือน|:count เดือน',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 'วินาที|วินาที',
+        'star_priority' => '',
+        'update' => '',
+        'view' => '',
         'years' => ':count ปี|:count ปี',
     ],
 
     'countdown' => [
-        'days' => '',
-        'hours' => '',
-        'minutes' => '',
-        'seconds' => '',
+        'days' => 'วัน',
+        'hours' => 'ชั่วโมง',
+        'minutes' => 'นาที',
+        'seconds' => 'วินาที',
     ],
 
     'datetime' => [
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'วางที่นี่เพื่ออัพโหลด',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

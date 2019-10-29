@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,12 +22,14 @@ return [
     'pinned_topics' => 'Przypięte wątki',
     'slogan' => "samodzielna rozgrywka jest niebezpieczna.",
     'subforums' => 'Podfora',
-    'title' => 'forum osu!',
+    'title' => 'Forum',
 
     'covers' => [
+        'edit' => 'Edytuj tło',
+
         'create' => [
             '_' => 'Ustaw tło',
-            'button' => 'Dodaj tło',
+            'button' => 'Prześlij tło',
             'info' => 'Tło powinno mieć rozdzielczość :dimensions. Możesz także upuścić tutaj swoje tło, aby je dodać.',
         ],
 
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Ostatni post',
+
+        'index' => [
+            'title' => 'Forum',
+        ],
+
         'topics' => [
             'empty' => 'Brak wątków!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Oznacz forum jako przeczytane',
+        'forums' => 'Oznacz fora jako przeczytane',
+        'busy' => 'Oznaczanie jako przeczytane...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Usuń post',
             'restore' => 'Przywróć post',
             'edit' => 'Edytuj post',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nowa odpowiedź',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited post|:count_delimited posty|:count_delimited postów',
+            'topic_starter' => 'Autor wątku',
         ],
     ],
 
@@ -90,10 +101,11 @@ return [
         'post_reply' => 'Opublikuj',
         'reply_box_placeholder' => 'Napisz tutaj swoją odpowiedź',
         'reply_title_prefix' => 'Odp.',
-        'started_by' => 'przez :user',
+        'started_by' => 'Autor: :user',
         'started_by_verbose' => 'utworzony przez :user',
 
         'create' => [
+            'close' => 'Zamknij',
             'preview' => 'Podgląd',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Tworzenie ankiety',
 
+            'preview' => 'Podgląd wątku',
+
             'create_poll_button' => [
-                'add' => 'Stwórz ankietę',
+                'add' => 'Utwórz ankietę',
                 'remove' => 'Anuluj tworzenie ankiety',
             ],
 
             'poll' => [
+                'hide_results' => 'Ukryj wyniki tej ankiety.',
+                'hide_results_info' => 'Wyniki ankiety zostaną upublicznione po jej zakończeniu.',
                 'length' => 'Przeprowadź ankietę przez',
                 'length_days_suffix' => 'dni',
                 'length_info' => 'Zostaw puste dla niekończącej się ankiety.',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'wyświetleń',
+            'feature_votes' => 'priorytet',
             'replies' => 'odpowiedzi',
+            'views' => 'wyświetleń',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Wątek został przypięty i oznaczony jako ogłoszenie',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Usunięte posty',
             'total_posts' => 'Wszystkie posty',
@@ -266,19 +288,35 @@ return [
                 'current' => 'Priorytet: +:count',
                 'do' => 'Nagłośnij tę prośbę',
 
+                'info' => [
+                    '_' => 'To jest :feature_request. Na prośby o funkcję mogą głosować tylko :supporters.',
+                    'feature_request' => 'prośba o funkcję',
+                    'supporters' => 'donatorzy',
+                ],
+
                 'user' => [
-                    'count' => '{0} brak głosów|{1} :count głos|[2,*] :count głosów',
+                    'count' => '{0} 0 głosów|{1} :count_delimited głos|[2,4] :count_delimited głosy|{5,*} :count_delimited głosów',
                     'current' => 'Pozostało ci :votes głosów.',
                     'not_enough' => "Nie posiadasz żadnych głosów",
                 ],
             ],
 
             'poll' => [
+                'edit' => 'Edytowanie ankiety',
+                'edit_warning' => 'Wprowadzenie zmian do ankiety spowoduje usunięcie obecnych wyników!',
                 'vote' => 'Zagłosuj',
+
+                'button' => [
+                    'change_vote' => 'Zmień głos',
+                    'edit' => 'Edytuj ankietę',
+                    'view_results' => 'Przejdź do wyników',
+                    'vote' => 'Zagłosuj',
+                ],
 
                 'detail' => [
                     'end_time' => 'Ankieta zakończy się :time',
                     'ended' => 'Ankieta zakończyła się :time',
+                    'results_hidden' => 'Wyniki ankiety zostaną upublicznione po jej zakończeniu.',
                     'total' => 'Liczba wszystkich głosów: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Nie subskrybuj',
             'to_watching' => 'Subskrybuj',
             'to_watching_mail' => 'Subskrybuj z powiadomieniami',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Powiadomienia są włączone. Kliknij tutaj, aby je wyłączyć.',
+            'tooltip_mail_enable' => 'Powiadomienia są wyłączone. Kliknij tutaj, aby je włączyć.',
         ],
     ],
 ];

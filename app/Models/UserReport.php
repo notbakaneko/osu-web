@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,6 +21,7 @@
 namespace App\Models;
 
 use App\Exceptions\ValidationException;
+use App\Libraries\MorphMap;
 use App\Models\Score\Best;
 use App\Models\Score\Best\Model as BestModel;
 use App\Traits\Validatable;
@@ -46,15 +47,19 @@ class UserReport extends Model
 {
     use Validatable;
 
-    const CREATED_AT = 'timestamp';
-    const REPORTABLES = [
-        'comment' => Comment::class,
-        'user' => User::class,
-        'score_best_osu' => Best\Osu::class,
-        'score_best_taiko' => Best\Taiko::class,
-        'score_best_fruits' => Best\Fruits::class,
-        'score_best_mania' => Best\Mania::class,
+    const POST_TYPE_REASONS = ['Insults', 'Spam', 'UnwantedContent', 'Nonsense', 'Other'];
+    const SCORE_TYPE_REASONS = ['Cheating', 'Other'];
+
+    const ALLOWED_REASONS = [
+        MorphMap::MAP[BeatmapDiscussionPost::class] => self::POST_TYPE_REASONS,
+        MorphMap::MAP[Best\Fruits::class] => self::SCORE_TYPE_REASONS,
+        MorphMap::MAP[Best\Mania::class] => self::SCORE_TYPE_REASONS,
+        MorphMap::MAP[Best\Osu::class] => self::SCORE_TYPE_REASONS,
+        MorphMap::MAP[Best\Taiko::class] => self::SCORE_TYPE_REASONS,
+        MorphMap::MAP[Comment::class] => self::POST_TYPE_REASONS,
     ];
+
+    const CREATED_AT = 'timestamp';
 
     protected $table = 'osu_user_reports';
     protected $primaryKey = 'report_id';
@@ -97,6 +102,17 @@ class UserReport extends Model
                 'user_id',
                 '.self'
             );
+        }
+
+        $allowedReasons = static::ALLOWED_REASONS[$this->reportable_type] ?? null;
+        if ($allowedReasons !== null) {
+            if (!in_array($this->reason, $allowedReasons, true)) {
+                $this->validationErrors()->add(
+                    'reason',
+                    '.reason_not_valid',
+                    ['reason' => $this->reason]
+                );
+            }
         }
 
         return $this->validationErrors()->isEmpty();

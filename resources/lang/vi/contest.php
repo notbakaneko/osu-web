@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,8 +26,15 @@ return [
     'voting' => [
         'over' => 'Bình chọn đã kết thúc cho cuộc thi này',
         'login_required' => 'Hãy đăng nhập để bình chọn.',
+
         'best_of' => [
             'none_played' => "Dường như bạn chưa chơi bất kì beatmap nào đủ điều kiện cho cuộc thi này!",
+        ],
+
+        'button' => [
+            'add' => 'Bỏ phiếu',
+            'remove' => 'Hủy phiếu',
+            'used_up' => 'Bạn đã dùng tất cả phiếu bầu',
         ],
     ],
     'entry' => [

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,18 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div, h1, p, span} = ReactDOMFactories
+import { Comment } from 'comment'
+import { Observer } from 'mobx-react'
+import core from 'osu-core-singleton'
+import * as React from 'react'
+import { button, div, h1, p, span } from 'react-dom-factories'
+
 el = React.createElement
 
-class CommentsIndex.Main extends React.PureComponent
+store = core.dataStore.commentStore
+uiState = core.dataStore.uiState
+
+export class Main extends React.Component
   constructor: (props) ->
     super props
 
@@ -41,20 +49,20 @@ class CommentsIndex.Main extends React.PureComponent
           @renderHeaderTitle()
           @renderHeaderTabs()
 
-      div className: 'osu-page osu-page--comments',
-        for comment in @props.comments
-          el Comment,
-            key: comment.id
-            comment: comment
-            usersById: @props.usersById
-            userVotesByCommentId: @props.userVotesByCommentId
-            commentableMetaById: @props.commentableMetaById
-            showReplies: false
-            showCommentableMeta: true
-            linkParent: true
-            depth: 0
+      el Observer, null, () =>
+        comments = uiState.comments.topLevelCommentIds.map (id) -> store.comments.get(id)
+        div className: 'osu-page osu-page--comments',
+          for comment in comments
+            el Comment,
+              key: comment.id
+              comment: comment
+              showReplies: false
+              showCommentableMeta: true
+              linkParent: true
+              depth: 0
+              modifiers: ['dark']
 
-        div ref: @pagination
+          div ref: @pagination
 
 
   renderHeaderTabs: =>

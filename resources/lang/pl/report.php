@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,22 @@
  */
 
 return [
+    'beatmapset_discussion_post' => [
+        'button' => '',
+        'title' => '',
+    ],
+
+    'comment' => [
+        'button' => 'Zgłoś',
+        'title' => 'Zgłosić komentarz gracza :username?',
+    ],
+
     'scores' => [
+        'button' => 'Zgłoś wynik',
+        'title' => 'Zgłosić wynik gracza :username?',
+    ],
+
+    'user' => [
         'button' => '',
         'title' => '',
     ],

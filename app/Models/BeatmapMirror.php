@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -63,7 +63,7 @@ class BeatmapMirror extends Model
 
     public static function getRandom()
     {
-        return self::randomUsable()->first();
+        return self::where('regions', null)->randomUsable()->first();
     }
 
     public static function getRandomFromList(array $mirrorIds)
@@ -99,7 +99,7 @@ class BeatmapMirror extends Model
         $userId = Auth::check() ? Auth::user()->user_id : 0;
         $checksum = md5("{$beatmapset->beatmapset_id}{$diskFilename}{$serveFilename}{$time}{$noVideo}{$this->secret_key}");
 
-        $url = "{$this->base_url}d/{$beatmapset->beatmapset_id}?fs=".rawurlencode($serveFilename).'&fd='.rawurlencode($diskFilename)."&ts=$time&cs=$checksum&u=$userId&nv=$noVideo";
+        $url = "{$this->base_url}d/{$beatmapset->beatmapset_id}?fs=".rawurlencode($serveFilename).'&fd='.rawurlencode($diskFilename)."&ts=$time&cs=$checksum&nv=$noVideo";
 
         return $url;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,11 +26,12 @@ use App\Jobs\EsDeleteDocument;
 use App\Jobs\EsIndexDocument;
 use App\Libraries\Elasticsearch\BoolQuery;
 use App\Libraries\Elasticsearch\Es;
-use App\Libraries\OsuMarkdownProcessor;
+use App\Libraries\Markdown\OsuMarkdown;
 use App\Libraries\OsuWiki;
 use App\Libraries\Search\BasicSearch;
 use Carbon\Carbon;
 use Exception;
+use Log;
 
 class Page
 {
@@ -38,12 +39,24 @@ class Page
     const REINDEX_AFTER = 300;
     const VERSION = 1;
 
+    const TEMPLATES = [
+        'markdown_page' => 'wiki.show',
+        'main_page' => 'wiki.main',
+    ];
+
+    const RENDERERS = [
+        'markdown_page' => App\Libraries\Wiki\MarkdownRenderer::class,
+        'main_page' => App\Libraries\Wiki\MainPageRenderer::class,
+    ];
+
     public $locale;
     public $requestedLocale;
 
     private $cache = [];
     private $defaultTitle;
     private $defaultSubtitle;
+
+    private $source; // source document from elasticsearch;
 
     public static function cleanupPath($path)
     {
@@ -106,6 +119,7 @@ class Page
 
     public function __construct($path, $locale, $esCache = null)
     {
+        $this->source = $esCache;
         if ($esCache !== null) {
             $path = $esCache['path'];
             $locale = $esCache['locale'];
@@ -131,6 +145,8 @@ class Page
         $params = static::searchIndexConfig();
 
         if ($this->page() === null) {
+            $this->log('index document empty');
+
             $params['body'] = [
                 'locale' => null,
                 'page' => null,
@@ -141,14 +157,22 @@ class Page
                 'tags' => [],
             ];
         } else {
+            $this->log('index document');
+
+            $content = $this->getContent();
+
+            $rendererClass = $this->renderer();
+            $indexContent = (new $rendererClass($this, $content))->renderIndexable();
+
             $params['body'] = [
                 'locale' => $this->locale,
                 'page' => json_encode($this->page()),
-                'page_text' => replace_tags_with_spaces($this->page()['output']),
+                'page_text' => $indexContent,
                 'path' => $this->path,
                 'path_clean' => static::cleanupPath($this->path),
-                'title' => $this->title(),
+                'title' => strip_tags($this->title()),
                 'tags' => $this->tags(),
+                'layout' => $this->layout(),
             ];
         }
 
@@ -161,21 +185,57 @@ class Page
 
     public function esDeleteDocument()
     {
+        $this->log('delete document');
+
         return Es::getClient()->delete(static::searchIndexConfig([
             'id' => $this->pagePath(),
             'client' => ['ignore' => 404],
         ]));
     }
 
-    public function isOutdated()
+    /**
+     * Gets the markdown content for the page from Github.
+     *
+     * @param bool $force Force any cached value to refresh.
+     * @return string|null
+     */
+    public function getContent(bool $force = false)
+    {
+        $key = "content_{$this->locale}";
+        if (!array_key_exists($key, $this->cache) || $force) {
+            try {
+                $this->log('fetch');
+
+                $this->cache[$key] = OsuWiki::fetchContent('wiki/'.$this->pagePath());
+            } catch (GitHubNotFoundException $e) {
+                $this->log('not found');
+
+                $this->cache[$key] = null;
+            }
+        }
+
+        return $this->cache[$key];
+    }
+
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    public function isOutdated() : bool
     {
         return $this->page()['header']['outdated'] ?? false;
     }
 
-    public function isLegalTranslation()
+    public function isLegalTranslation() : bool
     {
-        return $this->locale !== config('app.fallback_locale')
+        return $this->isTranslation()
             && ($this->page()['header']['legal'] ?? false);
+    }
+
+    public function isTranslation() : bool
+    {
+        return $this->locale !== config('app.fallback_locale');
     }
 
     public function page()
@@ -213,21 +273,20 @@ class Page
 
                 if ($fetch) {
                     try {
-                        $body = OsuWiki::fetchContent('wiki/'.$this->pagePath());
+                        $body = $this->getContent();
                     } catch (Exception $e) {
-                        if (!$e instanceof GitHubNotFoundException) {
-                            $index = false;
-
-                            log_error($e);
-                        }
-
                         $body = null;
+                        $index = false;
+                        log_error($e);
                     }
 
                     if (present($body)) {
-                        $page = OsuMarkdownProcessor::process($body, [
-                            'path' => wiki_url($this->path),
-                        ]);
+                        // prefilling the header so layout() works
+                        $this->cache['page']['header'] = OsuMarkdown::parseYamlHeader($body)['header'];
+
+                        $rendererClass = $this->renderer();
+
+                        $page = (new $rendererClass($this, $body))->render();
                     }
                 }
 
@@ -296,5 +355,45 @@ class Page
         }
 
         return presence($this->page()['header']['subtitle'] ?? null) ?? $this->defaultSubtitle;
+    }
+
+    public function layout()
+    {
+        if ($this->page() === null) {
+            return;
+        }
+
+        return presence($this->page()['header']['layout'] ?? null) ?? 'markdown_page';
+    }
+
+    public function template()
+    {
+        if ($this->page() === null) {
+            return static::TEMPLATES['markdown_page'];
+        }
+
+        if (!array_key_exists($this->layout(), static::TEMPLATES)) {
+            throw new \Exception('Invalid wiki page type');
+        }
+
+        return static::TEMPLATES[$this->layout()];
+    }
+
+    public function renderer()
+    {
+        if ($this->page() === null) {
+            return;
+        }
+
+        if (!array_key_exists($this->layout(), static::RENDERERS)) {
+            throw new \Exception('Invalid wiki page type');
+        }
+
+        return static::RENDERERS[$this->layout()];
+    }
+
+    private function log($action)
+    {
+        Log::info("wiki ({$action}): {$this->pagePath()}");
     }
 }

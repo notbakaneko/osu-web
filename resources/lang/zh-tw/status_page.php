@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -62,7 +62,7 @@ return [
             'month' => '本月',
             'all_time' => '所有時間',
             'last_week' => '上週',
-            'weeks_ago' => ': count 週前',
+            'weeks_ago' => ':count_delimited 周前|:count_delimited 幾週前',
         ],
     ],
 ];

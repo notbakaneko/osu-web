@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosu erlauben',
+        'beatmap_information' => 'Beatmap-Seite',
         'delete' => 'löschen',
         'deleted' => 'Von :editor gelöscht (:delete_time).',
         'deny_kudosu' => 'kudosu verweigern',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Zuletzt bearbeitet von :editor (:update_time).',
         'kudosu_denied' => 'Dir wurde kudosu verweigert.',
         'message_placeholder_deleted_beatmap' => 'Diese Schwierigkeitsstufe wurde gelöscht und kann nicht mehr diskutiert werden.',
+        'message_placeholder_locked' => 'Die Diskussion für diese Beatmap wurde deaktiviert.',
         'message_type_select' => 'Kommentartyp auswählen',
         'reply_notice' => 'Zum Antworten Enter drücken.',
         'reply_placeholder' => 'Antwort hier eingeben',
         'require-login' => 'Zum Beitragen oder Antworten bitte einloggen',
         'resolved' => 'Gelöst',
         'restore' => 'wiederherstellen',
+        'show_deleted' => 'Gelöschte anzeigen',
         'title' => 'Diskussionen',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Es gibt noch keine Diskussionen!',
             'hidden' => 'Keine Diskussion entspricht dem ausgewählten Filter.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Diskussion sperren',
+                'unlock' => 'Diskussion freigeben',
+            ],
+
+            'prompt' => [
+                'lock' => 'Grund für die Sperrung',
+                'unlock' => 'Willst du wirklich freigeben?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Anheften',
             'timestamp' => 'Timestamp',
             'timestamp_missing' => 'Strg-C im Editor und in deine Nachricht einfügen, um eine Timestamp hinzuzufügen!',
             'title' => 'Neue Diskussion',
+            'unpin' => 'Lösen',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sortiert nach:',
-            'created_at' => 'erstellungsdatum',
-            'timeline' => 'timeline',
-            'updated_at' => 'letzter aktualisierung',
+            'created_at' => 'Erstellungszeitpunkt',
+            'timeline' => 'Timeline',
+            'updated_at' => 'Letzte Aktualisierung',
         ],
 
         'stats' => [
@@ -124,13 +140,23 @@ return [
             'wip' => 'Anmerkung: Diese Beatmap ist vom Ersteller als \'Work-In-Progress\' gekennzeichnet',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Noch keine Downvotes',
+                'up' => 'Noch keine Upvotes',
+            ],
+            'latest' => [
+                'down' => 'Letzte Upvotes',
+                'up' => 'Letzte Upvotes',
+            ],
+        ],
     ],
 
     'hype' => [
         'button' => 'Beatmap hypen!',
         'button_done' => 'Schon gehypt!',
         'confirm' => "Sicher? Dies wird eins deiner letzten :n Hypes verwenden und kann nicht rückgängig gemacht werden.",
-        'explanation' => 'Hype diese Beatmap, um sie für Nominierungen und ranked sichtbarer zu machen!',
+        'explanation' => 'Hype diese Beatmap, um sie für Nominierungen und Ranking sichtbarer zu machen!',
         'explanation_guest' => 'Einloggen und diese Beatmap hypen, um sie für Nominierungen und ranked sichtbarer zu machen!',
         'new_time' => "Um :new_time wirst du deinen nächsten Hype erhalten.",
         'remaining' => 'Du hast noch :remaining Hypes übrig.',
@@ -171,14 +197,14 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Bist du dir sicher? Der Nominierungsprozess wird durch das neue Problem zurückgesetzt.',
-            'disqualify' => '',
+            'disqualify' => 'Bist du sicher? Das wird die Beatmap von der Qualifiezierung entfernen und den Nominierungsprozess zurücksetzen.',
         ],
     ],
 
     'listing' => [
         'search' => [
             'prompt' => 'stichwörter eingeben...',
-            'login_required' => 'Melde dich um, um zu suchen.',
+            'login_required' => 'Melde dich an, um zu suchen.',
             'options' => 'Mehr Suchoptionen',
             'supporter_filter' => 'Filtern nach :filters benötigt ein aktives osu!supporter Tag',
             'not-found' => 'keine ergebnisse',
@@ -194,15 +220,16 @@ return [
                 'played' => 'Gespielt',
             ],
             'sorting' => [
-                'title' => 'titel',
-                'artist' => 'künstler',
-                'difficulty' => 'schwierigkeit',
-                'updated' => 'zuletzt aktualisiert',
-                'ranked' => 'ranked',
-                'rating' => 'bewertung',
-                'plays' => 'plays',
-                'relevance' => 'relevanz',
-                'nominations' => 'nominierungen',
+                'title' => 'Titel',
+                'artist' => 'Künstler',
+                'difficulty' => 'Schwierigkeit',
+                'favourites' => 'Favoriten',
+                'updated' => 'Zuletzt aktualisiert',
+                'ranked' => 'Ranked',
+                'rating' => 'Bewertung',
+                'plays' => 'Plays',
+                'relevance' => 'Relevanz',
+                'nominations' => 'Nominierungen',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Du benötigst einen aktiven :link, um nach :filters zu filtern',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Alle',
-        'ranked-approved' => 'Ranked & Approved',
         'approved' => 'Approved',
-        'qualified' => 'Qualifiziert',
-        'loved' => 'Loved',
-        'faves' => 'Favoriten',
-        'pending' => 'Ausstehend & WIP',
+        'favourites' => 'Favoriten',
         'graveyard' => 'Graveyard',
-        'my-maps' => 'Meine Beatmaps',
+        'leaderboard' => 'Hat Ranglisten',
+        'loved' => 'Loved',
+        'mine' => 'Meine Maps',
+        'pending' => 'Ausstehend & WIP',
+        'qualified' => 'Qualifiziert',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => 'Alle',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'Spiegel',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Anzahl der Spiele: :count',
+        'favourites' => 'Favoriten: :count',
     ],
 ];

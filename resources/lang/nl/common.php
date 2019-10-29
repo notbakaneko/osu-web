@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,7 @@
  */
 
 return [
-    'confirmation' => 'Weet je dat zeker?',
+    'confirmation' => 'Weet je het zeker?',
     'confirmation_unsaved' => 'Niet-opgeslagen wijzigingen zullen verloren gaan. Weet je het zeker?',
     'saved' => 'Opgeslagen',
 
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', en ',
     ],
 
+    'badges' => [
+        'new' => 'NIEUW',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Terug naar boven',
+        'admin' => 'Administrator',
         'back_to_previous' => 'Terug naar vorige positie',
+        'back_to_top' => 'Terug naar boven',
         'cancel' => 'Annuleer',
-        'change' => 'verander',
-        'click_to_copy' => 'klik op naar klembord kopiëren',
+        'change' => 'wijzigen',
+        'click_to_copy' => 'klik om naar klembord te kopiëren',
         'click_to_copy_copied' => 'gekopiëerd naar klembord!',
+        'close' => 'Sluiten',
+        'collapse' => 'samenvouwen',
         'delete' => 'Verwijder',
         'edit' => 'Bewerk',
+        'expand' => 'uitbreiden',
         'hide' => 'verbergen',
         'permalink' => 'permalink',
         'permalink_copied' => 'link gekopieerd',
@@ -52,8 +60,16 @@ return [
         'search' => 'Zoeken',
         'see_more' => 'toon meer',
         'show' => 'weergeven',
+        'show_deleted' => 'Toon verwijderd',
         'show_more' => 'toon meer',
+        'show_more_options' => 'toon meer opties',
+        'update' => 'Update',
         'upload_image' => 'upload afbeelding',
+
+        'watch' => [
+            'to_0' => 'Niet meer volgen',
+            'to_1' => 'Bekijk',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count uur|:count uren',
         'item' => ':count stuk|:count stuks',
         'minute_short_unit' => 'minuut|minuten',
-        'minutes' => '',
+        'minutes' => ':count_delimited minuut|:count_delimited minuten',
         'months' => ':count maand|:count maanden',
+        'plus_others' => '+ :count_delimited andere!|+ :count_delimited anderen!',
+        'post' => ':count_delimited bericht|:count_delimited berichten',
         'second_short_unit' => 'second|seconden',
+        'star_priority' => ':count_delimited ster prioriteit|:count_delimited ster prioriteiten',
+        'update' => ':count_delimited update|:count_delimited updates',
+        'view' => ':count_delimited weergave|:count_delimited weergaven',
         'years' => ':count jaar|:count jaar',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'laat hier los om te uploaden',
+    ],
+
+    'input' => [
+        'search' => 'zoeken...',
     ],
 
     'pagination' => [

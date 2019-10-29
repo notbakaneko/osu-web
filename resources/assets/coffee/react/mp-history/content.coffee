@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div} = ReactDOMFactories
+import { Event } from './event'
+import { Game } from './game'
+import * as React from 'react'
+import { button, div } from 'react-dom-factories'
+import { Spinner } from 'spinner'
 el = React.createElement
 
-class MPHistory.Content extends React.PureComponent
+export class Content extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -43,7 +47,7 @@ class MPHistory.Content extends React.PureComponent
     if snapshot.reference?
       snapshot.referenceTop = snapshot.reference.getBoundingClientRect().top
 
-    if osu.bottomPageDistance() < 300 && prevProps.isAutoloading && @props.isAutoloading
+    if osu.bottomPageDistance() < 10 && prevProps.isAutoloading && @props.isAutoloading
       snapshot.scrollToLastEvent = true
 
     snapshot
@@ -77,12 +81,12 @@ class MPHistory.Content extends React.PureComponent
         ref: @eventsRef
         for event, i in @props.events
           if event.detail.type == 'other'
-            continue if !event.game? || (!event.game.end_time? && event.id != @props.lastGameId)
+            continue if !event.game? || (!event.game.end_time? && event.game.id != @props.currentGameId)
 
             div
               className: 'mp-history-events__game'
               key: event.id
-              el MPHistory.Game,
+              el Game,
                 event: event
                 teamScores: @teamScores i
                 users: @props.users
@@ -90,7 +94,7 @@ class MPHistory.Content extends React.PureComponent
             div
               className: 'mp-history-events__event'
               key: event.id
-              el MPHistory.Event,
+              el Event,
                 event: event
                 users: @props.users
                 key: event.id

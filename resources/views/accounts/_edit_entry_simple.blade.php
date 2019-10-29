@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-<div class="account-edit-entry js-account-edit js-form-error" data-account-edit-auto-submit="1" data-skip-ajax-error-popup="1">
+<div class="account-edit-entry js-account-edit js-form-error js-form-error--field" data-account-edit-auto-submit="1" data-skip-ajax-error-popup="1">
     <input
         class="account-edit-entry__input js-account-edit__input"
         name="user[{{ $field }}]"

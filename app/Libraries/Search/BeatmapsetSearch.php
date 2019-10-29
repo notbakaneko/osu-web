@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,6 +29,8 @@ use App\Models\Score;
 
 class BeatmapsetSearch extends RecordSearch
 {
+    public $recommendedDifficulty;
+
     /**
      * @param BeatmapsetSearchParams $params
      */
@@ -46,23 +48,44 @@ class BeatmapsetSearch extends RecordSearch
      */
     public function getQuery()
     {
-        $query = (new BoolQuery());
+        static $partialMatchFields = ['artist', 'artist.*', 'artist_unicode', 'creator', 'title', 'title.raw', 'title.*', 'title_unicode', 'tags^0.5'];
+
+        $query = new BoolQuery;
 
         if (present($this->params->queryString)) {
             $terms = explode(' ', $this->params->queryString);
-            // results must contain at least one of the terms and boosted by containing all of them.
-            $query->must(QueryHelper::queryString($this->params->queryString, [], 'or', 1 / count($terms)));
-            $query->should(QueryHelper::queryString($this->params->queryString, [], 'and'));
+
+            // the subscoping is not necessary but prevents unintentional accidents when combining other matchers
+            $query->must(
+                (new BoolQuery)
+                    // results must contain at least one of the terms and boosted by containing all of them,
+                    // or match the id of the beatmapset.
+                    ->shouldMatch(1)
+                    ->should(['term' => ['_id' => ['value' => $this->params->queryString, 'boost' => 100]]])
+                    ->should(QueryHelper::queryString($this->params->queryString, $partialMatchFields, 'or', 1 / count($terms)))
+                    ->should(QueryHelper::queryString($this->params->queryString, [], 'and'))
+            );
         }
 
-        $this->addModeFilter($query);
-        $this->addRecommendedFilter($query);
+        $this->addBlacklistFilter($query);
+        $this->addBlockedUsersFilter($query);
         $this->addGenreFilter($query);
         $this->addLanguageFilter($query);
         $this->addExtraFilter($query);
-        $this->addRankFilter($query);
         $this->addStatusFilter($query);
-        $this->addPlayedFilter($query);
+
+        $nested = new BoolQuery;
+        $this->addModeFilter($nested);
+        $this->addPlayedFilter($nested);
+        $this->addRankFilter($nested);
+        $this->addRecommendedFilter($nested);
+
+        $query->filter([
+            'nested' => [
+                'path' => 'beatmaps',
+                'query' => $nested->toArray(),
+            ],
+        ]);
 
         return $query;
     }
@@ -70,6 +93,33 @@ class BeatmapsetSearch extends RecordSearch
     public function records()
     {
         return $this->response()->records()->with('beatmaps')->get();
+    }
+
+    private function addBlacklistFilter($query)
+    {
+        static $fields = ['artist', 'source', 'tags'];
+        $bool = new BoolQuery;
+
+        foreach ($fields as $field) {
+            $bool->mustNot([
+                'terms' => [
+                    $field => [
+                        'index' => config('osu.elasticsearch.prefix').'blacklist',
+                        'type' => 'blacklist', // FIXME: change to _doc after upgrading from 6.1
+                        'id' => 'beatmapsets',
+                        // can be changed to per-field blacklist as different fields should probably have different restrictions.
+                        'path' => 'keywords',
+                    ],
+                ],
+            ]);
+        }
+
+        $query->filter($bool);
+    }
+
+    private function addBlockedUsersFilter($query)
+    {
+        $query->mustNot(['terms' => ['user_id' => $this->params->blockedUserIds()]]);
     }
 
     private function addExtraFilter($query)
@@ -95,22 +145,21 @@ class BeatmapsetSearch extends RecordSearch
 
     private function addModeFilter($query)
     {
-        if ($this->params->mode !== null) {
-            $modes = [$this->params->mode];
-            if ($this->params->includeConverts && $this->params->mode !== Beatmap::MODES['osu']) {
-                $modes[] = Beatmap::MODES['osu'];
-            }
+        if (!$this->params->includeConverts) {
+            $query->filter(['term' => ['beatmaps.convert' => false]]);
+        }
 
-            $query->filter(['terms' => ['difficulties.playmode' => $modes]]);
+        if ($this->params->mode !== null) {
+            $query->filter(['term' => ['beatmaps.playmode' => $this->params->mode]]);
         }
     }
 
     private function addPlayedFilter($query)
     {
         if ($this->params->playedFilter === 'played') {
-            $query->filter(['terms' => ['difficulties.beatmap_id' => $this->getPlayedBeatmapIds()]]);
+            $query->filter(['terms' => ['beatmaps.beatmap_id' => $this->getPlayedBeatmapIds()]]);
         } elseif ($this->params->playedFilter === 'unplayed') {
-            $query->mustNot(['terms' => ['difficulties.beatmap_id' => $this->getPlayedBeatmapIds()]]);
+            $query->mustNot(['terms' => ['beatmaps.beatmap_id' => $this->getPlayedBeatmapIds()]]);
         }
     }
 
@@ -120,18 +169,17 @@ class BeatmapsetSearch extends RecordSearch
             return;
         }
 
-        $query->filter(['terms' => ['difficulties.beatmap_id' => $this->getPlayedBeatmapIds($this->params->rank)]]);
+        $query->filter(['terms' => ['beatmaps.beatmap_id' => $this->getPlayedBeatmapIds($this->params->rank)]]);
     }
 
     private function addRecommendedFilter($query)
     {
         if ($this->params->showRecommended && $this->params->user !== null) {
             // TODO: index convert difficulties and handle them.
-            $mode = Beatmap::modeStr($this->params->mode) ?? $this->params->user->playmode;
-            $difficulty = $this->params->user->recommendedStarDifficulty($mode);
+            $difficulty = $this->params->getRecommendedDifficulty();
             $query->filter([
                 'range' => [
-                    'difficulties.difficultyrating' => [
+                    'beatmaps.difficultyrating' => [
                         'gte' => $difficulty - 0.5,
                         'lte' => $difficulty + 0.5,
                     ],
@@ -146,41 +194,46 @@ class BeatmapsetSearch extends RecordSearch
         $query = new BoolQuery;
 
         switch ($this->params->status) {
-            case 0: // Ranked & Approved
+            case 'any':
+                break;
+            case 'ranked':
                 $query->should([
                     ['match' => ['approved' => Beatmapset::STATES['ranked']]],
                     ['match' => ['approved' => Beatmapset::STATES['approved']]],
                 ]);
                 break;
-            case 8: // Loved
+            case 'loved':
                 $query->must(['match' => ['approved' => Beatmapset::STATES['loved']]]);
                 break;
-            case 2: // Favourites
+            case 'favourites':
                 $favs = model_pluck($this->params->user->favouriteBeatmapsets(), 'beatmapset_id', Beatmapset::class);
                 $query->must(['ids' => ['type' => 'beatmaps', 'values' => $favs]]);
                 break;
-            case 3: // Qualified
+            case 'qualified':
                 $query->should([
                     ['match' => ['approved' => Beatmapset::STATES['qualified']]],
                 ]);
                 break;
-            case 4: // Pending
+            case 'pending':
                 $query->should([
                     ['match' => ['approved' => Beatmapset::STATES['wip']]],
                     ['match' => ['approved' => Beatmapset::STATES['pending']]],
                 ]);
                 break;
-            case 5: // Graveyard
+            case 'graveyard':
                 $query->must(['match' => ['approved' => Beatmapset::STATES['graveyard']]]);
                 break;
-            case 6: // My Maps
+            case 'mine':
                 $maps = model_pluck($this->params->user->beatmapsets(), 'beatmapset_id');
                 $query->must(['ids' => ['type' => 'beatmaps', 'values' => $maps]]);
                 break;
-            case 7: // Explicit Any
-                break;
             default: // null, etc
-                break;
+                $query->should([
+                    ['match' => ['approved' => Beatmapset::STATES['ranked']]],
+                    ['match' => ['approved' => Beatmapset::STATES['approved']]],
+                    ['match' => ['approved' => Beatmapset::STATES['loved']]],
+                ]);
+            break;
         }
 
         $mainQuery->filter($query);

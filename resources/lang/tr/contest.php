@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,8 +26,15 @@ return [
     'voting' => [
         'over' => 'Bu yarışma için oylama sona erdi',
         'login_required' => 'Oylamak için lütfen giriş yapınız.',
+
         'best_of' => [
             'none_played' => "Bu yarışma için geçerli olan hiçbir beatmapi oynamamışsınız!",
+        ],
+
+        'button' => [
+            'add' => 'Oyla',
+            'remove' => 'Oyu Kaldır',
+            'used_up' => 'Tüm oylarını kullandın',
         ],
     ],
     'entry' => [

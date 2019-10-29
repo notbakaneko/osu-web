@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { span } from 'react-dom-factories'
 el = React.createElement
-{span} = ReactDOMFactories
 
 bn = 'flag-country'
 
-@FlagCountry = ({country, modifiers}) ->
+export FlagCountry = ({country, modifiers}) ->
   return null if !country?.code?
 
   blockClass = osu.classWithModifiers(bn, modifiers)

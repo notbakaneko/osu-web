@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -79,7 +79,7 @@ class BlocksController extends Controller
         }
 
         return json_collection(
-            $currentUser->relations()->get(),
+            $currentUser->relations()->visible()->get(),
             'UserRelation'
         );
     }
@@ -99,7 +99,7 @@ class BlocksController extends Controller
         $user->blocks()->detach($block);
 
         return json_collection(
-            $user->relations()->get(),
+            $user->relations()->visible()->get(),
             'UserRelation'
         );
     }

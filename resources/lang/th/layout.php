@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,25 +23,47 @@ return [
         'page_description' => 'osu! - จังหวะนั้นอยู่ห่างแค่คลิกเดียว! ด้วย Ouendan/EBA, Taiko และเกมโหมดดั้งเดิมอีกมากมาย พร้อมทั้งหน้าต่างแก้ไขที่ใช้งานได้อย่างสมบูรณ์',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'ปิด (กด Esc)',
+        'fullscreen' => 'ปรับเป็นเต็มหน้าจอ',
+        'zoom' => 'ซูมเข้า/ออก',
+        'previous' => 'รูปที่แล้ว (กดลูกศรซ้าย)',
+        'next' => 'รูปต่อไป (กดลูกศรขวา)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'หน้าแรก',
             'account-edit' => 'การตั้งค่า',
+            'account-verifyLink' => '',
             'friends-index' => 'เพื่อน',
             'changelog-index' => 'บันทึกการเปลี่ยนแปลง',
-            'changelog-build' => '',
+            'changelog-build' => 'เวอร์ชั่น',
             'getDownload' => 'ดาวน์โหลด',
             'getIcons' => 'ไอคอน',
             'groups-show' => 'กลุ่ม',
             'index' => 'หน้าหลัก',
             'legal-show' => 'ข้อมูล',
-            'messages-index' => '',
+            'messages-index' => 'ข้อความ',
             'news-index' => 'ข่าวสาร',
             'news-show' => 'ข่าวสาร',
             'password-reset-index' => 'รีเซ็ตรหัสผ่าน',
             'search' => 'ค้นหา',
             'supportTheGame' => 'สนับสนุนเกม',
             'team' => 'ทีม',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'ช่วยเหลือ',
@@ -53,7 +75,7 @@ return [
         ],
         'beatmaps' => [
             '_' => 'beatmaps',
-            'artists' => 'featured artists',
+            'artists' => 'ศิลปินโดดเด่น',
             'beatmap_discussion_posts-index' => 'โพสต์การสนทนาเกี่ยวกับ Beatmap',
             'beatmap_discussions-index' => 'การสนทนาเกี่ยวกับ Beatmap',
             'beatmapset-watches-index' => 'รายการ Mod ที่ติดตาม',
@@ -78,13 +100,13 @@ return [
         ],
         'community' => [
             '_' => 'ชุมชน',
-            'chat' => '',
-            'chat-index' => '',
-            'dev' => 'พัฒนาการ',
+            'chat' => 'แชท',
+            'chat-index' => 'แชท',
+            'dev' => 'การพัฒนา',
             'getForum' => 'forum',
-            'getLive' => 'live',
-            'comments-index' => '',
-            'comments-show' => '',
+            'getLive' => 'การถ่ายทอดสด',
+            'comments-index' => 'ความคิดเห็น',
+            'comments-show' => 'ความคิดเห็น',
             'contests' => 'contests',
             'profile' => 'profile',
             'tournaments' => 'tournaments',
@@ -118,16 +140,18 @@ return [
             'reset' => 'กู้คืน',
             'new' => 'ใหม่',
 
-            'messages' => 'ข้อความ',
-            'settings' => 'การตั้งค่า',
-            'logout' => 'ออกจากระบบ',
             'help' => 'ช่วยเหลือ',
+            'logout' => 'ออกจากระบบ',
+            'messages' => 'ข้อความ',
             'modding-history-discussions' => 'การสนทนาการ Mod ของผู้ใช้',
             'modding-history-events' => 'กิจกรรมการ Mod ของผู้ใช้',
             'modding-history-index' => 'ประวัติการ Mod ของผู้ใช้',
             'modding-history-posts' => 'โพสต์การ Mod ของผู้ใช้',
             'modding-history-votesGiven' => 'โหวตการ Mod ที่ถูกให้',
             'modding-history-votesReceived' => 'โหวตการ Mod ที่ได้รับ',
+            'oauth_login' => 'เข้าสู่ระบบเพื่อยืนยัน',
+            'oauth_request' => 'ยืนยันตนสำเร็จแล้ว',
+            'settings' => 'การตั้งค่า',
         ],
         'store' => [
             '_' => 'ร้านค้า',
@@ -137,7 +161,7 @@ return [
 
             'getCheckout' => 'ชำระเงิน',
             'getInvoice' => 'ใบกำกับสินค้า',
-            'orders-index' => '',
+            'orders-index' => 'ประวัติการสั่งซื้อ',
             'products-show' => 'สินค้า',
 
             'new' => 'ใหม่',
@@ -188,7 +212,7 @@ return [
             'copyright' => 'ลิขสิทธิ์ (DMCA)',
             'privacy' => 'ความเป็นส่วนตัว',
             'server_status' => 'สถานะของเซิร์ฟเวอร์',
-            'source_code' => '',
+            'source_code' => 'รหัสต้นฉบับ',
             'terms' => 'เงื่อนไขการใช้บริการ',
         ],
     ],
@@ -235,16 +259,17 @@ return [
             'email' => 'ที่อยู่อีเมล',
             'forgot' => "ฉันลืมรายละเอียดของฉัน",
             'password' => 'รหัสผ่าน',
-            'title' => 'ลงชื่อเข้าใช้เพื่อดำเนินต่อ',
+            'title' => 'ลงชื่อเข้าใช้เพื่อดำเนินการต่อ',
 
             'error' => [
-                'email' => "ชื่อผู้ใช้หรืออีเมลแอดเดรสไม่มีอยู่จริง",
+                'email' => "ชื่อผู้ใช้หรืออีเมลไม่มีอยู่จริง",
                 'password' => 'รหัสผ่านไม่ถูกต้อง',
             ],
         ],
 
         'register' => [
-            'info' => "คุณต้องมีบัญชีครับ ทำไมคุณยังไม่มีล่ะ?",
+            'download' => '',
+            'info' => 'คุณต้องมีบัญชีครับ ทำไมคุณยังไม่มีล่ะ?',
             'title' => "ยังไม่มีมีบัญชีเหรอ?",
         ],
     ],

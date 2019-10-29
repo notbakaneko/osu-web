@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosuya izin ver',
+        'beatmap_information' => '',
         'delete' => 'sil',
         'deleted' => ':editor tarafından :delete_time tarihinde silindi.',
         'deny_kudosu' => 'kudosuyu reddet',
@@ -40,12 +41,14 @@ return [
         'edited' => 'En son :editor tarafından :update_time tarihinde düzenlendi.',
         'kudosu_denied' => 'Kudosu almaktan mahrum bırakıldı.',
         'message_placeholder_deleted_beatmap' => 'Bu zorluk seviyesi silindi o yüzden hakkında daha fazla tartışılamaz.',
+        'message_placeholder_locked' => 'Bu beatmap için tartışma devre dışı bırakıldı.',
         'message_type_select' => 'Yorum Türünü Seçin',
         'reply_notice' => 'Cevaplamak için Enter tuşuna basın.',
         'reply_placeholder' => 'Yanıtınızı buraya yazın',
         'require-login' => 'Lütfen yorum yapmak ya da cevaplamak için giriş yapınız',
         'resolved' => 'Çözüldü',
         'restore' => 'restore et',
+        'show_deleted' => 'Silineni göster',
         'title' => 'Tartışmalar',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Henüz tartışma yok!',
             'hidden' => 'Filtre ile eşleşen tartışma yok.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Tartışmayı kilitle',
+                'unlock' => 'Tartışmanın kilidini aç',
+            ],
+
+            'prompt' => [
+                'lock' => 'Kilitleme sebebi',
+                'unlock' => 'Kilidi açmak istediğinizden emin misiniz?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Sabitle',
             'timestamp' => 'Zaman damgası',
             'timestamp_missing' => 'bir zaman damgası eklemek için editörde ctrl-c\'ye basıp mesajınıza yapıştırın!',
             'title' => 'Yeni Tartışma',
+            'unpin' => 'Sabitlemeyi kaldır',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Şuna göre sıralandı:',
-            'created_at' => 'oluşturulma zamanı',
-            'timeline' => 'zaman çizgisi',
-            'updated_at' => 'son güncelleme',
+            'created_at' => 'Oluşturulma zamanı',
+            'timeline' => 'Zaman Çizgisi',
+            'updated_at' => 'Son güncelleme',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Dikkat: Bu beatmap yaratıcısı tarafından yapım aşamasında olarak işaretlendi.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Emin misin? Yeni bir sorun bildirmek aday gösterme sürecini sıfırlayacaktır.',
-            'disqualify' => '',
+            'disqualify' => 'Emin misiniz? Bu beatmap\'in niteliğini silecek ve adaylık süresine sıfırlayacak.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Oynanmışlık',
             ],
             'sorting' => [
-                'title' => 'isim',
-                'artist' => 'sanatçı',
-                'difficulty' => 'zorluk',
-                'updated' => 'güncel',
-                'ranked' => 'dereceli',
-                'rating' => 'derece',
-                'plays' => 'oynanma',
-                'relevance' => 'alaka',
-                'nominations' => 'adaylıklar',
+                'title' => 'Başlık',
+                'artist' => 'Sanatçı',
+                'difficulty' => 'Zorluk',
+                'favourites' => 'Favoriler',
+                'updated' => 'Güncellendi',
+                'ranked' => 'Sırada yer aldı',
+                'rating' => 'Derecelendirme',
+                'plays' => 'Oynamalar',
+                'relevance' => 'Alaka düzeyi',
+                'nominations' => 'Adaylıklar',
             ],
             'supporter_filter_quote' => [
                 '_' => ':filters ile filtrelemek için aktif bir :link gerekli',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Hepsi',
-        'ranked-approved' => 'Dereceli & Onaylı',
         'approved' => 'Onaylı',
-        'qualified' => 'Nitelikli',
-        'loved' => 'Sevilen',
-        'faves' => 'Favoriler',
-        'pending' => 'Beklemede & Yapım Aşamasında',
+        'favourites' => 'Favoriler',
         'graveyard' => 'Mezarlık',
-        'my-maps' => 'Haritalarım',
+        'leaderboard' => 'Liderlik tablosu olanlar',
+        'loved' => 'Sevilen',
+        'mine' => 'Benim haritalarım',
+        'pending' => 'Beklemede & Yapım Aşamasında',
+        'qualified' => 'Nitelikli',
+        'ranked' => 'Dereceli',
     ],
     'genre' => [
         'any' => 'Hepsi',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Oynanma sayısı',
+        'favourites' => 'Favoriler',
     ],
 ];

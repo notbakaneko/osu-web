@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,15 +16,17 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { ValueDisplay } from 'value-display'
 el = React.createElement
 
 
-ProfilePage.Rank = ({type, stats, modifiers}) ->
+export Rank = ({type, stats, modifiers}) ->
   el ValueDisplay,
     modifiers: modifiers
     label: osu.trans("users.show.rank.#{type}_simple")
     value:
       if stats.rank[type]?
-        "##{stats.rank[type].toLocaleString()}"
+        "##{osu.formatNumber(stats.rank[type])}"
       else
         '-'

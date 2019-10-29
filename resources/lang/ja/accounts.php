@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,10 +26,12 @@ return [
 
         'avatar' => [
             'title' => 'プロフィール画像',
+            'rules' => 'あなたのプロフィール画像が公序良俗に反したもので無いか確認してください。 :link.<br/>易しく言えば<strong>全ての年齢に適した</strong>、つまりヌードや冒涜的な表現などを想起させるものを含んでいない事を確認してください。',
+            'rules_link' => 'コミュニティールール',
         ],
 
         'email' => [
-            'current' => '現在のEメール',
+            'current' => '現在のメールアドレス',
             'new' => '新しいメールアドレス',
             'new_confirmation' => '新しいメールアドレス（再入力）',
             'title' => 'メールアドレス',
@@ -46,52 +48,72 @@ return [
             'title' => 'プロフィール',
 
             'user' => [
+                'user_discord' => 'discord',
                 'user_from' => '現在地',
                 'user_interests' => '趣味',
                 'user_msnm' => 'skype',
                 'user_occ' => '職業',
                 'user_twitter' => 'twitter',
                 'user_website' => 'ウェブサイト',
-                'user_discord' => 'discord',
             ],
         ],
 
         'signature' => [
             'title' => '署名',
-            'update' => '適用',
+            'update' => '更新',
         ],
     ],
 
-    'update_email' => [
-        'email_subject' => 'osu! メールアドレス変更の確認',
-        'update' => '適用',
+    'notifications' => [
+        'title' => '通知',
+        'topic_auto_subscribe' => '作成した新しいフォーラムトピックに関する通知を自動的に有効にします',
     ],
 
-    'update_password' => [
-        'email_subject' => 'osu!パスワード変更の確認',
-        'update' => '適用',
+    'oauth' => [
+        'authorized_clients' => '認証済みのクライアント',
+        'own_clients' => '自分のクライアント',
+        'title' => 'OAuth',
     ],
 
     'playstyles' => [
-        'title' => 'プレイスタイル',
-        'mouse' => 'マウス',
         'keyboard' => 'キーボード',
+        'mouse' => 'マウス',
         'tablet' => 'ペンタブ',
+        'title' => 'プレイスタイル',
         'touch' => 'タッチスクリーン',
     ],
 
     'privacy' => [
-        'title' => 'プライバシー',
-        'friends_only' => '友達リストにいない人からプライベートメッセージをブロックする',
+        'friends_only' => 'フレンドリストにいない人からのプライベートメッセージをブロックする',
         'hide_online' => 'オンライン状態を隠す',
+        'title' => 'プライバシー',
     ],
 
     'security' => [
-        'current_session' => '直近',
-        'end_session' => '最終セッション',
-        'end_session_confirmation' => 'すぐにこのセッションを終了してよろしいですか？',
-        'last_active' => '最終ログイン:',
+        'current_session' => '現在',
+        'end_session' => 'セッション終了',
+        'end_session_confirmation' => 'このデバイスでのセッションが終了します。本当によろしいですか？',
+        'last_active' => '最終ログイン：',
         'title' => 'セキュリティ',
-        'web_sessions' => 'webでのセッション',
+        'web_sessions' => 'webセッション',
+    ],
+
+    'update_email' => [
+        'email_subject' => 'メールアドレス変更の確認',
+        'update' => '更新',
+    ],
+
+    'update_password' => [
+        'email_subject' => 'パスワード変更の確認',
+        'update' => '更新',
+    ],
+
+    'verification_completed' => [
+        'text' => '今すぐにこのウィンドウを閉じる事が出来ます。',
+        'title' => '認証が完了しました。',
+    ],
+
+    'verification_invalid' => [
+        'title' => '無効もしくは期限切れの認証リンク',
     ],
 ];

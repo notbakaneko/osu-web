@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ритъмът е само на *клик* от вас! Със специални режими на игра като Ouendan/EBA и Taiko, както и напълно фунциониращ редактор на бийтмапове.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'начало',
             'account-edit' => 'настройки',
+            'account-verifyLink' => '',
             'friends-index' => 'приятели',
             'changelog-index' => 'списък на промените',
             'changelog-build' => 'версия',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'групи',
             'index' => 'главно табло',
             'legal-show' => 'информация',
-            'messages-index' => '',
+            'messages-index' => 'съобщения',
             'news-index' => 'новини',
             'news-show' => 'новини',
             'password-reset-index' => 'задаване на нова парола',
             'search' => 'търсене',
             'supportTheGame' => 'подкрепи играта',
             'team' => 'отбор',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'помощ',
@@ -71,15 +93,15 @@ return [
             '_' => 'класации',
             'index' => 'изпълнение',
             'performance' => 'performance',
-            'charts' => 'в светлината на прожектора',
+            'charts' => 'препоръчани',
             'score' => 'резултат',
             'country' => 'държава',
             'kudosu' => 'kudosu',
         ],
         'community' => [
             '_' => 'колектив',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'чат',
+            'chat-index' => 'чат',
             'dev' => 'разработка',
             'getForum' => 'форуми',
             'getLive' => 'на живо',
@@ -118,16 +140,18 @@ return [
             'reset' => 'възстанови',
             'new' => 'ново',
 
-            'messages' => 'Съобщения',
-            'settings' => 'Настройки',
-            'logout' => 'Изход',
             'help' => 'Помощ',
+            'logout' => 'Изход',
+            'messages' => 'Съобщения',
             'modding-history-discussions' => 'потребителски modding дискусии',
             'modding-history-events' => 'потребителски modding събития',
             'modding-history-index' => 'потребителска modding история',
             'modding-history-posts' => 'потребителски modding публикации',
             'modding-history-votesGiven' => 'потребителски modding гласове дадени',
             'modding-history-votesReceived' => 'потребителски modding гласове получени',
+            'oauth_login' => 'влезте за oauth',
+            'oauth_request' => 'оаuth оторизация',
+            'settings' => 'Настройки',
         ],
         'store' => [
             '_' => 'магазин',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Трябва ди акаунт, господине. Защо все още нямате един?",
+            'download' => '',
+            'info' => 'Трябва ди акаунт, господине. Защо все още нямате един?',
             'title' => "Нямате акаунт?",
         ],
     ],

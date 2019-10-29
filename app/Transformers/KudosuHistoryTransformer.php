@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -51,8 +51,13 @@ class KudosuHistoryTransformer extends Fractal\TransformerAbstract
             $model = get_model_basename($kudosuHistory->kudosuable);
             $action = $kudosuHistory->details['event'].'.'.$kudosuHistory->action;
         } else {
-            // missing topic and not the new format.
-            return [];
+            $post = [
+                'url' => null,
+                'title' => '[deleted beatmap]',
+            ];
+
+            $model = 'forum_post';
+            $action = $kudosuHistory->action;
         }
 
         return [

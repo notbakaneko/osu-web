@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -16,7 +16,11 @@
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
 <div class="search-result search-result--{{ $mode }}">
-    @if ($search->total() === 0)
+    @if ($search->getError() !== null)
+        <div class="search-result__row search-result__row--notice">
+            {{ search_error_message($search->getError()) }}
+        </div>
+    @elseif ($search->total() === 0)
         <div class="search-result__row search-result__row--notice">
             {{ trans('home.search.empty_result') }}
         </div>
@@ -48,7 +52,7 @@
                 </div>
             @endif
             <div class="search-result__row search-result__row--paginator">
-                @include('objects._pagination', [
+                @include('objects._pagination_v2', [
                     'object' => $search->getPaginator(['path' => route('search')])->appends(request()->query()),
                     'modifier' => 'search'
                 ])

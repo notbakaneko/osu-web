@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'diễn đàn osu!',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Đặt ảnh bìa',
             'button' => 'Tải lên ảnh',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Bài viết mới nhất',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Không có chủ đề nào cả!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Đánh dấu diễn đàn đã đọc',
+        'forums' => 'Đánh dấu diễn đàn đã đọc',
+        'busy' => 'Đang đánh dấu đã đọc...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Xóa bài viết',
             'restore' => 'Phục hồi bài viết',
             'edit' => 'Chỉnh sửa bài viết',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited bài đăng',
+            'topic_starter' => 'Chủ đề mở đầu',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'bắt đầu bởi :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Xem trước',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Tạo Thăm Dò Ý Kiến',
 
+            'preview' => 'Xem Lại Bài Đăng',
+
             'create_poll_button' => [
                 'add' => 'Tạo một cuộc thăm dò',
                 'remove' => 'Hủy bỏ',
             ],
 
             'poll' => [
+                'hide_results' => 'Ẩn kết quả cuộc thăm dò.',
+                'hide_results_info' => 'Nó sẽ chỉ được hiển thị sau khi cuộc thăm dò kết thúc.',
                 'length' => 'Thời gian thăm dò',
                 'length_days_suffix' => 'ngày',
                 'length_info' => 'Để trống nếu nó không bao giờ kết thúc',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'lượt xem',
+            'feature_votes' => 'ưu tiên sao',
             'replies' => 'câu trả lời',
+            'views' => 'lượt xem',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Chủ đề đã ghim và sẽ đánh dấu là thông báo',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Bài Đăng Đã Bị Xóa',
             'total_posts' => 'Tổng Bài Đăng',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Độ Ưu Tiên: +:count',
                 'do' => 'Thúc đẩy yêu cầu này',
+
+                'info' => [
+                    '_' => 'Đây là một :feature_request. Yêu cầu tính năng có thể được bỏ phiếu bởi :supporters.',
+                    'feature_request' => 'yêu cầu tính năng',
+                    'supporters' => 'người hỗ trợ',
+                ],
 
                 'user' => [
                     'count' => '{0} không có bình chọn|[1,*] :count phiếu',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Bỏ phiếu',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Cuộc thăm dò sẽ kết thúc vào :time',
                     'ended' => 'Cuộc thăm dò đã kết thúc vào :time',
+                    'results_hidden' => 'Kết quả sẽ được hiển thị sau khi cuộc thăm dò kết thúc.',
                     'total' => 'Tổng số phiếu: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Chưa đánh dấu',
             'to_watching' => 'Đánh dấu',
             'to_watching_mail' => 'Đánh dấu với thông báo',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Đã bật thông báo. Nhấp để tắt',
+            'tooltip_mail_enable' => 'Đã tắt thông báo. Nhấp để bật',
         ],
     ],
 ];

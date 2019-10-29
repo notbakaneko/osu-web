@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -26,7 +26,8 @@
                     {!! trans('livestreams.top-headers.description', [
                     'link' => link_to(
                     wiki_url('Guides/Live_Streaming_osu!'),
-                    trans('livestreams.top-headers.link')
+                    trans('livestreams.top-headers.link'),
+                    ['class' => 'osu-page-header__description-link']
                     ),
                     ]) !!}
                 </p>

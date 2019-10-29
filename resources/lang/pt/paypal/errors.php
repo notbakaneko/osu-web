@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,5 +21,5 @@
 return [
     'instrument_declined' => 'O método de pagamento selecionado foi rejeitado pelo PayPal.',
     'invalid_resource_id' => 'Nenhuma informação de pagamento encontrada.',
-    'unknown' => "O pagamento foi rejeitado, mas não temos a certeza do porquê.",
+    'unknown' => "O pagamento foi rejeitado, mas não sabemos bem porquê.",
 ];

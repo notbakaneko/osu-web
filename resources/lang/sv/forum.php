@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! forumen',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Sätt omslags bild',
             'button' => 'Ladda upp bild',
@@ -42,6 +44,12 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Inga ämnen!',
         ],
@@ -51,14 +59,6 @@ return [
         'forum' => '',
         'forums' => '',
         'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Radera inlägg',
             'restore' => 'Återställ inlägg',
             'edit' => 'Redigera inlägg',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => '',
+            'topic_starter' => '',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'startad av :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Förhandsvisning',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Skapande av enkät',
 
+            'preview' => '',
+
             'create_poll_button' => [
                 'add' => 'Skapa en enkät',
                 'remove' => 'Avbryt skapande av enkät',
             ],
 
             'poll' => [
+                'hide_results' => '',
+                'hide_results_info' => '',
                 'length' => 'Kör enkät i',
                 'length_days_suffix' => 'dagar',
                 'length_info' => 'Lämna tom för inget avslut av enkät',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'visningar',
+            'feature_votes' => '',
             'replies' => 'svar',
+            'views' => 'visningar',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Ämne har blivit nålat och markerat som meddelande',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Raderade Inlägg',
             'total_posts' => 'Totala Inlägg',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Nuvarande Prioritet: +:count',
                 'do' => 'Uppmuntra denna begäran',
+
+                'info' => [
+                    '_' => '',
+                    'feature_request' => '',
+                    'supporters' => '',
+                ],
 
                 'user' => [
                     'count' => '{0} ingen röst|{1} :count röst|[2,*] :count röster',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Rösta',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Enkät kommer avslutas :time',
                     'ended' => 'Enkät avslutades :time',
+                    'results_hidden' => '',
                     'total' => 'Totala röster: :count',
                 ],
             ],

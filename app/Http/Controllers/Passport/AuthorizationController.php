@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -49,6 +49,27 @@ class AuthorizationController extends PassportAuthorizationController
                               ClientRepository $clients,
                               TokenRepository $tokens)
     {
+        view()->share('currentSection', 'user');
+
+        if (!auth()->check()) {
+            $cancelUrl = request('redirect_uri');
+
+            if (present($cancelUrl)) {
+                // Breaks when url contains hash ("#").
+                $separator = strpos($cancelUrl, '?') === false ? '?' : '&';
+                $cancelUrl .= "{$separator}error=access_denied";
+            } else {
+                $cancelUrl = route('home');
+            }
+
+            return view('passport::login', [
+                'cancelUrl' => $cancelUrl,
+                'currentAction' => 'oauth_login',
+            ]);
+        }
+
+        view()->share('currentAction', 'oauth_request');
+
         return parent::authorize($this->normalizeRequestScopes($psrRequest), $request, $clients, $tokens);
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,9 +21,9 @@
 return [
     'show' => [
         'fallback_translation' => 'A kért oldal még nem lett lefordítva a kiválasztott (:language) nyelvre. Az angol verzió látható.',
-        'languages' => 'Nyelvek',
+        'incomplete_or_outdated' => 'A tartalom ezen az oldalon befejezetlen vagy elavult. Ha segíteni bírnál ezen, kérlek frissítsd a cikket!',
         'missing' => 'Az oldal ":keyword" nem található.',
-        'missing_title' => 'Nem található',
+        'missing_title' => 'Nem Található',
         'missing_translation' => 'A kért oldal nem található a jelenleg kiválasztott nyelven.',
         'search' => 'Létező oldalak keresése :link után.',
         'toc' => 'Tartalom',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Angol verzió',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

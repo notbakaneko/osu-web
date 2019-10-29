@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,14 +20,15 @@
 
 return [
     'deleted' => '削除済み',
+    'deleted_count' => ':count_delimited個の削除されたコメント',
     'edited' => ':userが:timeagoに編集済み',
-    'empty' => 'コメントがありません。',
+    'empty' => 'まだコメントがありません。',
+    'load_replies' => '返信を読み込む',
     'replies' => '返信',
-    'show_replies' => '返信を表示',
     'title' => 'コメント',
 
     'commentable_name' => [
-        'beatmapset' => '譜面',
+        'beatmapset' => 'ビートマップ',
         'build' => '更新履歴',
         'news_post' => 'お知らせ',
         '_deleted' => '削除済みアイテム',
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => ':actionを行うためにはenterキーを押してください。shift+enterを押すことで改行できます。',
+            '_' => ':actionを行うためにはEnterキーを押してください。Shift+Enterを押すことで改行できます。',
             'edit' => '保存',
             'new' => '投稿',
             'reply' => '返信',
@@ -43,21 +44,21 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'ログインしてコメント',
-        'reply' => 'ログインして返信',
+        'new' => 'ログインしてコメントする',
+        'reply' => 'ログインして返信する',
     ],
 
     'index' => [
         'title' => [
             '_' => 'コメント :info',
-            'info' => '譜面リスト',
+            'info' => '一覧',
         ],
     ],
 
     'placeholder' => [
         'edit' => 'コメントをここで編集',
-        'new' => '新規コメントをここに入力',
-        'reply' => 'あなたの反応をここに入力',
+        'new' => '新しいコメントを入力',
+        'reply' => '返信を入力',
     ],
 
     'show' => [
@@ -65,12 +66,5 @@ return [
             '_' => 'コメント :info',
             'info' => '詳細',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

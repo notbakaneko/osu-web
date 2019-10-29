@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => '你今天的提名次数已达上限，请明天再试。',
+            'full_bn_required' => '你必须是一位完整提名者才能执行有效提名。',
+            'full_bn_required_hybrid' => '你必须是一位完整提名者，以提名包含多个游戏模式的谱面。',
             'incorrect_state' => '操作出错了，请尝试刷新页面。',
             'owner' => "不能提名自己的谱面。",
         ],
@@ -45,18 +47,29 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => '你只能删除你自己的帖子。',
+            'resolved' => '你不能删除已解决的讨论帖。',
+            'system_generated' => '自动生成的帖子无法删除。',
+        ],
+
         'edit' => [
-            'system_generated' => '无法编辑自动回复。',
             'not_owner' => '只有作者可以编辑。',
+            'resolved' => '你不能编辑已解决讨论里的帖子。',
+            'system_generated' => '无法编辑自动回复。',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => '该谱面因需要探讨而被锁定。',
         ],
     ],
 
     'chat' => [
-        'blocked' => '无法向被加入黑名单的用户发消息。',
+        'blocked' => '无法向已加入黑名单的用户发消息，或者你已经被拉黑了。',
         'friends_only' => '用户阻止了来自非好友的消息。',
         'moderated' => '该频道现在正在被管制中。',
         'no_access' => '你没有权限访问该频道。',
-        'restricted' => '在账户受限与或被禁言时不能发消息。',
+        'restricted' => '在账户禁言、受限或被 ban 期间不能发消息。',
     ],
 
     'comment' => [
@@ -77,7 +90,7 @@ return [
         'post' => [
             'delete' => [
                 'only_last_post' => '只有最后的回复可以被删除。',
-                'locked' => '无法删除被锁定主题的回复。',
+                'locked' => '无法删除已锁定主题的回复。',
                 'no_forum_access' => '没有权限进入该板块。',
                 'not_owner' => '只有作者能删除此回复。',
             ],
@@ -91,16 +104,16 @@ return [
             ],
 
             'store' => [
-                'play_more' => '在发帖之前先玩上两局吧！如果你在游戏时遇到问题，请在 Help and Support 版块发帖求助。',
+                'play_more' => '在发帖之前先玩上两局吧！如果你在游戏时遇到问题，请在 Help 或 中文 版块发帖求助。',
                 'too_many_help_posts' => "如果你想发更多的帖子，再多玩几把吧！如果你仍然在游戏时遇到问题请邮件联系 support@ppy.sh", // FIXME: unhardcode email address.
             ],
         ],
 
         'topic' => [
             'reply' => [
-                'double_post' => '请编辑您的最后一条评论, 而不是多次发表。',
+                'double_post' => '请编辑您的最后一条评论, 而不是再发一遍。',
                 'locked' => '无法回复被锁定的主题。',
-                'no_forum_access' => '没有权限，无法进入该板块。',
+                'no_forum_access' => '没有权限进入该板块。',
                 'no_permission' => '没有权限，无法回复。',
 
                 'user' => [
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => '没有权限，无法进入该板块。',
                 'over' => '投票已结束！',
+                'play_more' => '要在论坛中投票，你需要玩更长时间的游戏。',
                 'voted' => '不允许修改投票。',
 
                 'user' => [
@@ -135,8 +149,11 @@ return [
 
         'topic_cover' => [
             'edit' => [
-                'uneditable' => '指定的头图不可用。',
-                'not_owner' => '只有楼主可以编辑头图。',
+                'uneditable' => '指定的题图不可用。',
+                'not_owner' => '只有楼主可以编辑题图。',
+            ],
+            'store' => [
+                'forum_not_allowed' => '本论坛不接受主题涵盖范围。',
             ],
         ],
 

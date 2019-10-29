@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -58,7 +58,7 @@ class WikiController extends Controller
             $status = 404;
         }
 
-        return response()->view('wiki.show', compact('page'), $status ?? 200);
+        return response()->view($page->template(), compact('page'), $status ?? 200);
     }
 
     public function update($path)
@@ -74,11 +74,11 @@ class WikiController extends Controller
     {
         $image = (new Wiki\Image($path, Request::url(), Request::header('referer')))->data();
 
-        if ($image === null) {
-            abort(404);
-        }
-
         session(['_strip_cookies' => true]);
+
+        if ($image === null) {
+            return response('Not found', 404);
+        }
 
         return response($image['data'], 200)
             ->header('Content-Type', $image['type'])

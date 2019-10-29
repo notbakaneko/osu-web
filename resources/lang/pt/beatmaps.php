@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,25 +27,28 @@ return [
 
     'discussion-votes' => [
         'update' => [
-            'error' => 'Falha ao actualizar voto',
+            'error' => 'Falha ao atualizar voto',
         ],
     ],
 
     'discussions' => [
         'allow_kudosu' => 'permitir kudosu',
+        'beatmap_information' => 'Página de Beatmap',
         'delete' => 'eliminar',
         'deleted' => 'Eliminado por :editor :delete_time.',
         'deny_kudosu' => 'recusar kudosu',
         'edit' => 'editar',
-        'edited' => 'Editado pela ultima vez por :editor :update_time.',
+        'edited' => 'Editado pela última vez por :editor :update_time.',
         'kudosu_denied' => 'Recusado de obter kudosu.',
         'message_placeholder_deleted_beatmap' => 'Esta dificuldade foi eliminada por isso poderá não ser mais discutida.',
-        'message_type_select' => 'Seleccionar Tipo de Comentário',
+        'message_placeholder_locked' => 'A discussão para este beatmap foi desativada.',
+        'message_type_select' => 'Selecionar Tipo de Comentário',
         'reply_notice' => 'Prime ENTER para responder.',
         'reply_placeholder' => 'Escreve a tua resposta aqui',
         'require-login' => 'Por favor inicia sessão para publicar ou responder',
         'resolved' => 'Resolvida',
         'restore' => 'restaurar',
+        'show_deleted' => 'Exibir eliminados',
         'title' => 'Discussões',
 
         'collapse' => [
@@ -55,7 +58,19 @@ return [
 
         'empty' => [
             'empty' => 'Ainda sem discussões!',
-            'hidden' => 'Nenhuma discussão corresponde ao filtro seleccionado.',
+            'hidden' => 'Nenhuma discussão corresponde ao filtro selecionado.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Bloquear discussão',
+                'unlock' => 'Desbloquear discussão',
+            ],
+
+            'prompt' => [
+                'lock' => 'Razão para o bloqueio',
+                'unlock' => 'Tens a certeza que queres desbloquear?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Afixar',
             'timestamp' => 'Marca de tempo',
             'timestamp_missing' => 'faz ctrl-c no modo de edição e cola na tua mensagem para adicionares uma marca de tempo!',
             'title' => 'Nova Discussão',
+            'unpin' => 'Desafixar',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Ordenadas por:',
-            'created_at' => 'hora da criação',
-            'timeline' => 'cronologia',
-            'updated_at' => 'última actualização',
+            'created_at' => 'Data de criação',
+            'timeline' => 'Cronologia',
+            'updated_at' => 'Última atualização',
         ],
 
         'stats' => [
@@ -111,19 +127,29 @@ return [
             'mapper_notes' => 'Notas',
             'mine' => 'Minhas',
             'pending' => 'Pendentes',
-            'praises' => 'Glorificações',
+            'praises' => 'Elogios',
             'resolved' => 'Resolvidas',
             'total' => 'Todas',
         ],
 
         'status-messages' => [
             'approved' => 'Este beatmap foi aprovado a :date!',
-            'graveyard' => "Este beatmap não tem sido actualizado desde :date e muito provavelmente foi abandonado pelo criador...",
+            'graveyard' => "Este beatmap não tem sido atualizado desde :date e muito provavelmente foi abandonado pelo criador...",
             'loved' => 'Este beatmap foi adicionado a adorado em :date!',
             'ranked' => 'Este beatmap foi classificado em :date!',
             'wip' => 'Nota: Este beatmap está marcado como um trabalho em progresso pelo criador.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Ainda sem votos negativos',
+                'up' => 'Ainda sem votos positivos',
+            ],
+            'latest' => [
+                'down' => 'Últimos votos negativos',
+                'up' => 'Últimos votos positivos',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -145,13 +171,13 @@ return [
 
     'nominations' => [
         'delete' => 'Apagar',
-        'delete_own_confirm' => 'Tens a certeza? O beatmap será apagado e serás redireccionado de volta para o teu perfil.',
-        'delete_other_confirm' => 'Tens a certeza? O beatmap será apagado e serás redireccionado de volta para o perfil de utilizador.',
+        'delete_own_confirm' => 'Tens a certeza? O beatmap será apagado e serás redirecionado de volta para o teu perfil.',
+        'delete_other_confirm' => 'Tens a certeza? O beatmap será apagado e serás redirecionado de volta para o perfil de utilizador.',
         'disqualification_prompt' => 'Razão pela desqualificação?',
         'disqualified_at' => 'Desqualificado :time_ago (:reason).',
         'disqualified_no_reason' => 'nenhuma razão especificada',
         'disqualify' => 'Desqualificar',
-        'incorrect_state' => 'Erro ao desempenhar essa acção, tenta recarregar a página.',
+        'incorrect_state' => 'Erro ao desempenhar essa ação, tenta recarregar a página.',
         'love' => 'Adorar',
         'love_confirm' => 'Adoras este beatmap?',
         'nominate' => 'Nomear',
@@ -171,14 +197,14 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Tens a certeza? Publicar um novo problema irá reiniciar o processo de nomeação.',
-            'disqualify' => '',
+            'disqualify' => 'Tens a certeza? Isto irá remover o beatmap de qualificar-se e reiniciará o processo de nomeação.',
         ],
     ],
 
     'listing' => [
         'search' => [
-            'prompt' => 'digita em palavras-chave...',
-            'login_required' => 'Inicia sessão para pesquisar.',
+            'prompt' => 'escreve em palavras-chave...',
+            'login_required' => 'Inicia sessão para procurar',
             'options' => 'Mais Opções de Pesquisa',
             'supporter_filter' => 'Filtrar por :filters requer uma etiqueta de osu!supporter',
             'not-found' => 'sem resultados',
@@ -188,24 +214,25 @@ return [
                 'mode' => 'Modo',
                 'status' => 'Categorias',
                 'genre' => 'Género',
-                'language' => 'Linguagem',
+                'language' => 'Idioma',
                 'extra' => 'extra',
                 'rank' => 'Classificação Alcançada',
                 'played' => 'Jogado',
             ],
             'sorting' => [
-                'title' => 'título',
-                'artist' => 'artista',
-                'difficulty' => 'dificuldade',
-                'updated' => 'actualizado',
-                'ranked' => 'classificado',
-                'rating' => 'avaliação',
-                'plays' => 'partidas',
-                'relevance' => 'relevância',
-                'nominations' => 'nomeações',
+                'title' => 'Título',
+                'artist' => 'Artista',
+                'difficulty' => 'Dificuldade',
+                'favourites' => 'Favoritos',
+                'updated' => 'Atualizado',
+                'ranked' => 'Classificados',
+                'rating' => 'Avaliação',
+                'plays' => 'Partidas',
+                'relevance' => 'Relevância',
+                'nominations' => 'Nomeações',
             ],
             'supporter_filter_quote' => [
-                '_' => 'Filtrar por :filters requer um :link activo',
+                '_' => 'Filtrar por :filters requer um :link ativo',
                 'link_text' => 'etiqueta de osu!supporter',
             ],
         ],
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Qualquer',
-        'ranked-approved' => 'Classificado & Aprovado',
-        'approved' => 'Aprovado',
-        'qualified' => 'Qualificado',
-        'loved' => 'Adorado',
-        'faves' => 'Favoritos',
-        'pending' => 'Pendente & WIP',
+        'approved' => 'Aprovados',
+        'favourites' => 'Favoritos',
         'graveyard' => 'Cemitério',
-        'my-maps' => 'Meus Mapas',
+        'leaderboard' => 'Possui uma Tabela de Classificações',
+        'loved' => 'Adorados',
+        'mine' => 'Meus Mapas',
+        'pending' => 'Pendente & WIP',
+        'qualified' => 'Qualificados',
+        'ranked' => 'Classificados',
     ],
     'genre' => [
         'any' => 'Qualquer',
@@ -242,7 +270,7 @@ return [
         'other' => 'Outro',
         'novelty' => 'Inovação',
         'hip-hop' => 'Hip Hop',
-        'electronic' => 'Electrónica',
+        'electronic' => 'Eletrónica',
     ],
     'mods' => [
         '4K' => '',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => 'Link alternativo',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Partidas jogadas: :count',
+        'favourites' => 'Favoritos: :count',
     ],
 ];

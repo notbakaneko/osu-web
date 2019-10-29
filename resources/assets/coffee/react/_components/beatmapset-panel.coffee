@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div,a,i,span} = ReactDOMFactories
+import { BeatmapIcon } from 'beatmap-icon'
+import { Img2x } from 'img2x'
+import * as React from 'react'
+import { div,a,i,span } from 'react-dom-factories'
 el = React.createElement
 
-class @BeatmapsetPanel extends React.PureComponent
+export class BeatmapsetPanel extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -54,14 +57,14 @@ class @BeatmapsetPanel extends React.PureComponent
 
     showHypeCounts = _.includes ['wip', 'pending', 'graveyard'], beatmapset.status
     if showHypeCounts
-      currentHype = beatmapset.hype.current.toLocaleString()
-      requiredHype = beatmapset.hype.required.toLocaleString()
-      currentNominations = beatmapset.nominations.current.toLocaleString()
-      requiredNominations = beatmapset.nominations.required.toLocaleString()
+      currentHype = osu.formatNumber(beatmapset.hype.current)
+      requiredHype = osu.formatNumber(beatmapset.hype.required)
+      currentNominations = osu.formatNumber(beatmapset.nominations.current)
+      requiredNominations = osu.formatNumber(beatmapset.nominations.required)
 
-    playCount = beatmapset.play_count.toLocaleString()
+    playCount = osu.formatNumber(beatmapset.play_count)
 
-    favouriteCount = beatmapset.favourite_count.toLocaleString()
+    favouriteCount = osu.formatNumber(beatmapset.favourite_count)
 
     # arbitrary number
     maxDisplayedDifficulty = 10
@@ -102,9 +105,12 @@ class @BeatmapsetPanel extends React.PureComponent
             src: beatmapset.covers.card
           div className: 'beatmapset-panel__image-overlay'
           div className: 'beatmapset-panel__status-container',
-            if beatmapset.video or beatmapset.storyboard
-              div className: 'beatmapset-panel__video-icon',
+            if beatmapset.video
+              div className: 'beatmapset-panel__extra-icon',
                 i className: 'fas fa-film fa-fw'
+            if beatmapset.storyboard
+              div className: 'beatmapset-panel__extra-icon',
+                i className: 'fas fa-image fa-fw'
             div className: 'beatmapset-status', beatmapset.status
 
           div className: 'beatmapset-panel__title-artist-box',
@@ -123,11 +129,11 @@ class @BeatmapsetPanel extends React.PureComponent
                   span className: 'beatmapset-panel__count-number', currentNominations
                   i className: 'fas fa-thumbs-up fa-fw'
             else
-              div className: 'beatmapset-panel__count', title: osu.trans('beatmaps.panel.playcount', {count: playCount}),
+              div className: 'beatmapset-panel__count', title: osu.trans('beatmaps.panel.playcount', count: playCount),
                 span className: 'beatmapset-panel__count-number', playCount
                 i className: 'fas fa-fw fa-play-circle'
 
-            div className: 'beatmapset-panel__count', title: osu.trans('beatmaps.panel.favourites', {count: favouriteCount}),
+            div className: 'beatmapset-panel__count', title: osu.trans('beatmaps.panel.favourites', count: favouriteCount),
               span className: 'beatmapset-panel__count-number', favouriteCount
               i className: 'fas fa-fw fa-heart'
 
@@ -162,11 +168,18 @@ class @BeatmapsetPanel extends React.PureComponent
 
             div className: 'beatmapset-panel__icons-box',
               if currentUser?.id
-                a
-                  href: laroute.route 'beatmapsets.download', beatmapset: beatmapset.id
-                  className: 'beatmapset-panel__icon js-beatmapset-download-link'
-                  'data-turbolinks': 'false'
-                  i className: 'fas fa-download'
+                if beatmapset.availability.download_disabled
+                  div
+                    title: osu.trans('beatmapsets.availability.disabled')
+                    className: 'beatmapset-panel__icon beatmapset-panel__icon--disabled'
+                    i className: 'fas fa-lg fa-download'
+                else
+                  a
+                    href: laroute.route 'beatmapsets.download', beatmapset: beatmapset.id
+                    title: osu.trans('beatmapsets.show.details.download._')
+                    className: 'beatmapset-panel__icon js-beatmapset-download-link'
+                    'data-turbolinks': 'false'
+                    i className: 'fas fa-lg fa-download'
 
           div className: 'beatmapset-panel__difficulties', difficulties
       a

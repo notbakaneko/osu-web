@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -31,6 +31,7 @@ class TopicPoll
     private $topic;
     private $validated = false;
     private $params;
+    private $votedBy = [];
 
     public function canEdit()
     {
@@ -45,11 +46,23 @@ class TopicPoll
     public function fill($params)
     {
         $this->params = array_merge([
+            'hide_results' => false,
+            'length_days' => 0,
             'max_options' => 1,
+            'vote_change' => false,
         ], $params);
         $this->validated = false;
 
         return $this;
+    }
+
+    public function isOpen()
+    {
+        if ($this->topic === null) {
+            return false;
+        }
+
+        return $this->topic->pollEnd() === null || $this->topic->pollEnd()->isFuture();
     }
 
     public function isValid($revalidate = false)
@@ -82,6 +95,10 @@ class TopicPoll
                 $this->validationErrors()->add('max_options', '.invalid_max_options');
             }
 
+            if ($this->params['hide_results'] && $this->params['length_days'] === 0) {
+                $this->validationErrors()->add('hide_results', '.hiding_results_forever');
+            }
+
             if ($this->topic !== null && $this->topic->exists && !$this->canEdit()) {
                 $this->validationErrors()->add(
                     'edit',
@@ -104,9 +121,10 @@ class TopicPoll
             $this->topic->update([
                 'poll_title' => $this->params['title'],
                 'poll_start' => Carbon::now(),
-                'poll_length' => ($this->params['length_days'] ?? 0) * 3600 * 24,
+                'poll_length' => $this->params['length_days'] * 3600 * 24,
                 'poll_max_options' => $this->params['max_options'],
-                'poll_vote_change' => $this->params['vote_change'] ?? false,
+                'poll_vote_change' => $this->params['vote_change'],
+                'poll_hide_results' => $this->params['hide_results'],
             ]);
 
             $this
@@ -141,5 +159,24 @@ class TopicPoll
     public function validationErrorsTranslationPrefix()
     {
         return 'forum.topic_poll';
+    }
+
+    public function votedBy($user)
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        if ($this->topic === null) {
+            return false;
+        }
+
+        $userId = $user->getKey();
+
+        if (!isset($this->votedBy[$userId])) {
+            $this->votedBy[$userId] = $this->topic->pollVotes()->where('vote_user_id', $userId)->exists();
+        }
+
+        return $this->votedBy[$userId];
     }
 }

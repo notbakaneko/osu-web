@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Chỉ bắt đầu bằng một cái *click* chuột!  Với Ouendan/EBA, Taiko và những chế độ chơi nguyên bản, cũng như một level editor đầy đủ chức năng.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Cộng đồng',
+
+            'forum' => 'Diễn đàn',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'trang chủ',
             'account-edit' => 'cài đặt',
+            'account-verifyLink' => '',
             'friends-index' => 'bạn bè',
             'changelog-index' => 'changelog',
             'changelog-build' => 'build',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'nhóm',
             'index' => 'tổng quan',
             'legal-show' => 'thông tin',
-            'messages-index' => '',
+            'messages-index' => 'tin nhắn',
             'news-index' => 'tin tức',
             'news-show' => 'tin tức',
             'password-reset-index' => 'đặt lại mật khẩu',
             'search' => 'tìm kiếm',
             'supportTheGame' => 'ủng hộ osu!',
             'team' => 'team',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'trợ giúp',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'cộng đồng',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'phát triển',
             'getForum' => 'diễn đàn',
             'getLive' => 'live stream',
@@ -118,16 +140,18 @@ return [
             'reset' => 'khôi phục',
             'new' => 'mới',
 
-            'messages' => 'Tin Nhắn',
-            'settings' => 'Cài Đặt',
-            'logout' => 'Đăng Xuất',
             'help' => 'Trợ Giúp',
+            'logout' => 'Đăng Xuất',
+            'messages' => 'Tin Nhắn',
             'modding-history-discussions' => 'thảo luận modding của người dùng',
             'modding-history-events' => 'sự kiện modding của người dùng',
             'modding-history-index' => 'lịch sử modding của người dùng',
             'modding-history-posts' => 'bài đăng modding của người dùng',
             'modding-history-votesGiven' => 'modding votes đã cho của người dùng',
             'modding-history-votesReceived' => 'modding votes đã nhận của người dùng',
+            'oauth_login' => 'đăng nhập cho oauth',
+            'oauth_request' => 'ủy quyền oauth',
+            'settings' => 'Cài Đặt',
         ],
         'store' => [
             '_' => 'cửa hàng',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Bạn cần một tài khoản. Tại sao bạn lại không có chứ?",
+            'download' => '',
+            'info' => 'Bạn cần một tài khoản. Tại sao bạn lại không có chứ?',
             'title' => "Chưa có tài khoản?",
         ],
     ],

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-@extends('master')
+@extends('store/layout')
 
 @section('content')
 @include('store.header')
@@ -30,7 +30,7 @@
 </style>
 
 @if(!$order)
-<div class="grid grid--gutters osu-layout__row osu-layout__row--page">
+<div class="grid grid--gutters osu-layout__row osu-layout__row--page osu-layout--store">
     <div class="grid-cell grid-cell--fill">
         <h1>Not Found</h1>
         <p>The requested order could not be found.</p>
@@ -38,7 +38,7 @@
 </div>
 @else
 @if(Request::has('thanks'))
-<div class="grid grid--gutters osu-layout__row osu-layout__row--page no-print">
+<div class="grid grid--gutters osu-layout__row osu-layout__row--page no-print osu-layout--store">
     <div class="grid-cell grid-cell--fill">
         <h1>Thanks for your order!</h1>
         <p>
@@ -52,7 +52,7 @@
     @if($i > 0)
     <div class='print-page-break'></div>
     @endif
-    <div class="grid grid--gutters osu-layout__row osu-layout__row--page invoice-page"><div class="grid-cell grid-cell--fill">
+    <div class="grid grid--gutters osu-layout__row osu-layout__row--page invoice-page osu-layout--store"><div class="grid-cell grid-cell--fill">
         <div class="grid grid--xs">
             <div class="grid-cell grid-cell--5of12">
                 <div>
@@ -130,7 +130,7 @@
                 @endif
                 </td>
                 <td>FOB Japan</td>
-                <td>{{ $order->getPaymentProvider() }} ({{ $order->getPaymentStatusText() }})</td>
+                <td>{{ studly_case($order->getPaymentProvider()) }} ({{ $order->getPaymentStatusText() }})</td>
             </tr>
         </table>
         @endif
@@ -151,7 +151,7 @@ window.onload = function() {
 </script>
 @endif
 
-<div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1 no-print">
+<div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1 no-print osu-layout--store">
     <div class='osu-layout__sub-row osu-layout__sub-row--with-separator'>
         <h3>Order Status</h3>
 

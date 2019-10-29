@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
         'headline' => 'Canlı Yayınlar',
         'description' => 'Veriler her beş dakikada bir twitch.tv\'deki bulunan listelemeye göre alınmaktadır. Yayın yapma özgürlüğünüzü kullanın ve kendinizi bu listeye ekleyin! Canlı yayın kurulumu hakkında daha fazla bilgi almak istiyorsanız, lütfen wiki sayfasını ziyaret edin.',
 
-        'link' => '',
+        'link' => 'canlı yayınlar hakkındaki wiki sayfası',
     ],
     'headers' => [
         'regular' => 'Şu andaki canlı yayınlar',

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { ValueDisplay } from 'value-display'
 el = React.createElement
 
 
-ProfilePage.Pp = ({stats}) ->
+export Pp = ({stats}) ->
   el ValueDisplay,
     modifiers: ['pp']
     label: 'pp'
-    value: Math.round(stats.pp).toLocaleString()
+    value: osu.formatNumber(Math.round(stats.pp))

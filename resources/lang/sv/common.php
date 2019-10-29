@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', och ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => '',
+        'admin' => '',
         'back_to_previous' => '',
+        'back_to_top' => '',
         'cancel' => 'Avbryt',
         'change' => 'ändra',
         'click_to_copy' => 'klicka för att kopiera till urklipp',
         'click_to_copy_copied' => 'kopierad till urklipp!',
+        'close' => '',
+        'collapse' => '',
         'delete' => 'Radera',
         'edit' => '',
+        'expand' => '',
         'hide' => 'dölj',
         'permalink' => 'permalänk',
         'permalink_copied' => 'länk kopierad',
@@ -52,8 +60,16 @@ return [
         'search' => 'Sök',
         'see_more' => 'se mer',
         'show' => 'visa',
+        'show_deleted' => '',
         'show_more' => 'visa mer',
+        'show_more_options' => '',
+        'update' => '',
         'upload_image' => 'ladda upp bild',
+
+        'watch' => [
+            'to_0' => '',
+            'to_1' => '',
+        ],
     ],
 
     'count' => [
@@ -65,7 +81,12 @@ return [
         'minute_short_unit' => 'm|m',
         'minutes' => '',
         'months' => ':count månad|:count månader',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 's|s',
+        'star_priority' => '',
+        'update' => '',
+        'view' => '',
         'years' => ':count år|:count år',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'släpp här för att ladda upp',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

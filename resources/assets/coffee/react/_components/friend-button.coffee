@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { button, div, i, span } from 'react-dom-factories'
+import { Spinner } from 'spinner'
 el = React.createElement
-{button, div, i, span} = ReactDOMFactories
 
 bn = 'user-action-button'
 
-class @FriendButton extends React.PureComponent
+export class FriendButton extends React.PureComponent
   @defaultProps =
     showFollowerCounter: false
     alwaysVisible: false
@@ -102,7 +104,7 @@ class @FriendButton extends React.PureComponent
     isFriendLimit = (currentUser.friends?.length ? 0) >= currentUser.max_friends
     title = switch
       when !isVisible
-        null
+        osu.trans('friends.buttons.disabled')
       when @state.friend?
         osu.trans('friends.buttons.remove')
       when isFriendLimit
@@ -118,21 +120,22 @@ class @FriendButton extends React.PureComponent
       else
         blockClass += " #{bn}--friend"
 
-    button
-      type: 'button'
-      className: blockClass
-      onClick: @clicked
-      ref: @button
+    div
       title: title
-      disabled: disabled
-      @renderIcon({isFriendLimit, isVisible})
-      @renderCounter()
+      button
+        type: 'button'
+        className: blockClass
+        onClick: @clicked
+        ref: @button
+        disabled: disabled
+        @renderIcon({isFriendLimit, isVisible})
+        @renderCounter()
 
 
   renderCounter: =>
     return unless @props.showFollowerCounter && @props.followers?
 
-    span className: "#{bn}__counter", @followers().toLocaleString()
+    span className: "#{bn}__counter", osu.formatNumber(@followers())
 
 
   renderIcon: ({isFriendLimit, isVisible}) =>
@@ -152,8 +155,7 @@ class @FriendButton extends React.PureComponent
               span
                 key: 'normal-mutual'
                 className: "#{bn}__icon #{bn}__icon--hover-hidden"
-                i className: 'fas fa-user'
-                i className: 'fas fa-user'
+                i className: 'fas fa-user-friends'
             else
               span
                 key: 'normal'

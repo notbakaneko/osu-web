@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'удалено',
+    'deleted_count' => ':count_delimited комментарий удален|:count_delimited комментариев удалено',
     'edited' => ':user отредактировал :timeago',
     'empty' => 'Нет комментариев.',
+    'load_replies' => 'загрузить ответы',
     'replies' => 'Ответы',
-    'show_replies' => 'показать ответы',
     'title' => 'Комментарии',
 
     'commentable_name' => [
@@ -35,15 +36,15 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => 'Нажмите enter чтобы :action. Используйте shift+enter для перевода на новую строку.',
-            'edit' => 'сохр.',
-            'new' => 'отправ.',
-            'reply' => 'ответить',
+            '_' => 'Нажмите Enter для :action. Используйте Shift+Enter для перевода на новую строку.',
+            'edit' => 'сохранения',
+            'new' => 'отправки',
+            'reply' => 'ответа',
         ],
     ],
 
     'guest_button' => [
-        'new' => 'Войдите для комментирования',
+        'new' => 'Войдите, чтобы комментировать',
         'reply' => 'Войдите, чтобы ответить',
     ],
 
@@ -56,7 +57,7 @@ return [
 
     'placeholder' => [
         'edit' => 'Изменить комментарий',
-        'new' => 'Введите новый комментарий',
+        'new' => 'Оставьте своё мнение',
         'reply' => 'Введите ответ',
     ],
 
@@ -65,12 +66,5 @@ return [
             '_' => 'Комментарии :info',
             'info' => 'Детали',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

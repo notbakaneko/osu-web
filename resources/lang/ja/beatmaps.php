@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,24 +33,27 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosuを許可',
+        'beatmap_information' => 'ビートマップページ',
         'delete' => '削除',
         'deleted' => ':editorが:delete_timeに削除',
         'deny_kudosu' => 'kudosuを拒否',
         'edit' => '編集',
         'edited' => ':editorが:update_timeに編集',
         'kudosu_denied' => 'kudosuの入手を拒否されました。',
-        'message_placeholder_deleted_beatmap' => 'この難易度は削除されたのでディスカッションはできません。',
+        'message_placeholder_deleted_beatmap' => 'この難易度は削除された為これ以上ディスカッションに投稿できません。',
+        'message_placeholder_locked' => 'このビートマップに関するディスカッションは無効になっています。',
         'message_type_select' => 'コメントタイプを選択',
-        'reply_notice' => 'Enter キーを押して送信',
-        'reply_placeholder' => 'ここに入力してください',
+        'reply_notice' => 'Enterキーを押して送信',
+        'reply_placeholder' => 'ここにメッセージを入力してください',
         'require-login' => '返信するにはログインが必要です。',
         'resolved' => '解決済',
         'restore' => '復元',
+        'show_deleted' => '削除済みを表示',
         'title' => 'ディスカッション',
 
         'collapse' => [
-            'all-collapse' => '全て収納する',
-            'all-expand' => '全て展開する',
+            'all-collapse' => '全てを折りたたむ',
+            'all-expand' => '全て展開',
         ],
 
         'empty' => [
@@ -58,21 +61,33 @@ return [
             'hidden' => '該当するディスカッションは見つかりませんでした。',
         ],
 
+        'lock' => [
+            'button' => [
+                'lock' => 'ディスカッションのロック',
+                'unlock' => 'ディスカッションのロック解除',
+            ],
+
+            'prompt' => [
+                'lock' => 'ロックの理由',
+                'unlock' => '本当にロックを解除しますか？',
+            ],
+        ],
+
         'message_hint' => [
-            'in_general' => 'これは一般のディスカッションに投稿されます。 この譜面をmodするにはタイムスタンプ（例:　00:12:345）で始まるメッセージを入力してください。',
-            'in_timeline' => '複数のタイムスタンプをmodするには複数の投稿に分けてください。',
+            'in_general' => 'これは一般のディスカッションに投稿されます。 このビートマップをmodするにはタイムスタンプ（例：00:12:345）を付けたメッセージを入力してください。',
+            'in_timeline' => '複数のタイムスタンプをmodするには、投稿を複数回に分けてください。',
         ],
 
         'message_placeholder' => [
-            'general' => '一般(:version)への投稿をここに入力',
-            'generalAll' => '一般 (全難易度) への投稿をここに入力',
-            'timeline' => '一般(:version)への投稿をここに入力',
+            'general' => '一般（:version）への投稿をここに入力',
+            'generalAll' => '一般 （全難易度）への投稿をここに入力',
+            'timeline' => 'タイムライン（:version）へ投稿するにはここに入力',
         ],
 
         'message_type' => [
-            'disqualify' => '失格',
+            'disqualify' => 'Disqualify',
             'hype' => 'Hype!',
-            'mapper_note' => 'メモ',
+            'mapper_note' => '注意',
             'nomination_reset' => 'ノミネーションをリセット',
             'praise' => '称賛',
             'problem' => '問題',
@@ -84,55 +99,66 @@ return [
             'general' => '一般:scope',
             'timeline' => 'タイムライン',
             'scopes' => [
-                'general' => '選択中の難易度',
+                'general' => 'この難易度',
                 'generalAll' => '全難易度',
             ],
         ],
 
         'new' => [
+            'pin' => 'ピン',
             'timestamp' => 'タイムスタンプ',
-            'timestamp_missing' => 'ゲーム内のEdit画面でCtrl+Cを押してメッセージに張り付けるとタイムスタンプになります',
+            'timestamp_missing' => 'ゲーム内のEdit画面でCtrl+Cを押してメッセージに張り付けるとタイムスタンプになります！',
             'title' => '新しいディスカッション',
+            'unpin' => 'ピン解除',
         ],
 
         'show' => [
-            'title' => ':title mapped by :mapper',
+            'title' => ':title 作成 :mapper',
         ],
 
         'sort' => [
-            '_' => '並び替え順:',
-            'created_at' => '投稿日時',
+            'created_at' => '作成日時',
             'timeline' => 'タイムライン',
-            'updated_at' => '更新日時',
+            'updated_at' => '最終更新',
         ],
 
         'stats' => [
-            'deleted' => '削除済',
-            'mapper_notes' => 'メモ',
+            'deleted' => '削除済み',
+            'mapper_notes' => '注意',
             'mine' => '自分',
             'pending' => '未解決',
             'praises' => '称賛',
-            'resolved' => '解決済',
+            'resolved' => '解決済み',
             'total' => '全て',
         ],
 
         'status-messages' => [
-            'approved' => 'この譜面は:dateにApprovedになりました！',
-            'graveyard' => "この譜面は:dateから更新が止まっています・・・",
-            'loved' => 'この譜面は:dateにLovedになりました！',
-            'ranked' => 'この譜面は:dateにRankedになりました！',
-            'wip' => '注：この譜面は作者に未完成だとマークされています',
+            'approved' => 'このビートマップは:dateにApprovedになりました！',
+            'graveyard' => "このビートマップは:dateから更新止まっているため放棄された可能性があります・・・",
+            'loved' => 'このビートマップは:dateにLovedに追加しました！',
+            'ranked' => 'このビートマップは:dateにRankedになりました！',
+            'wip' => '注意：このビートマップは作者によって作成途中とされています。',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '反対票はまだありません',
+                'up' => '賛成票はまだありません',
+            ],
+            'latest' => [
+                'down' => '最近の反対票',
+                'up' => '最近の賛成票',
+            ],
+        ],
     ],
 
     'hype' => [
-        'button' => '譜面をHype！',
+        'button' => 'ビートマップにHype！',
         'button_done' => 'Hype済みです！',
         'confirm' => "あなたの残りHype数は:n回です。Hypeは取り消しできません。Hypeしますか？",
-        'explanation' => 'Hypeすることで譜面に注目が集まりやすくなります。Rankedして欲しい譜面はHypeしましょう！',
-        'explanation_guest' => 'Hypeすることで譜面に注目が集まりやすくなります。ログインして譜面をHypeしましょう！',
-        'new_time' => ":new_timeで残りhype数が回復します。",
+        'explanation' => 'このビートマップにHypeすることで注目が集まり、ノミネーションやRankedがされやすくなります！',
+        'explanation_guest' => 'このビートマップにログインしてHypeすることで注目が集まり、ノミネーションやRankedがされやすくなります！',
+        'new_time' => ":new_timeでhype数が回復します。",
         'remaining' => 'あなたの残りHype数は:remaining回です',
         'required_text' => 'Hype: :current/:required',
         'section_title' => 'Hype進行',
@@ -140,47 +166,47 @@ return [
     ],
 
     'feedback' => [
-        'button' => 'コメントを残す',
+        'button' => 'フィードバックを残す',
     ],
 
     'nominations' => [
         'delete' => '削除',
-        'delete_own_confirm' => '譜面は削除され、あなたはプロフィール画面にリダイレクトされます。本当によろしいですか？',
-        'delete_other_confirm' => '譜面は削除され、あなたはプロフィール画面にリダイレクトされます。本当によろしいですか？',
+        'delete_own_confirm' => '本当によろしいですか？ビートマップは削除され、プロフィール画面にリダイレクトされます。',
+        'delete_other_confirm' => '本当によろしいですか？ビートマップは削除され、ユーザーのプロフィール画面にリダイレクトされます。',
         'disqualification_prompt' => 'Disqualification（Qualifyの取り消し）の理由',
         'disqualified_at' => ':time_agoにDisqualifyされました(:reason).',
-        'disqualified_no_reason' => '理由が明示されていません',
+        'disqualified_no_reason' => '理由が設定されていません',
         'disqualify' => 'Disqualify',
-        'incorrect_state' => 'エラーが発生しました。ページの更新をすると直る可能性があります。',
+        'incorrect_state' => 'エラーが発生しました。ページの再読み込みを試してください。',
         'love' => 'Lovedに追加',
         'love_confirm' => 'Lovedに追加しますか？',
         'nominate' => 'ノミネート',
-        'nominate_confirm' => 'この譜面をノミネートしますか？',
-        'nominated_by' => ':usersがノミネート',
-        'qualified' => '問題が発覚しなければ:dateにRanked予定',
-        'qualified_soon' => '問題が発覚しなければ間もなくRanked',
+        'nominate_confirm' => 'このビートマップをノミネートしますか？',
+        'nominated_by' => ':usersにノミネートされました。',
+        'qualified' => '特に問題がなかった場合、:dateにranked予定です。',
+        'qualified_soon' => '特に問題がなかった場合、間もなくランクされる予定です。',
         'required_text' => 'ノミネート数: :current/:required',
         'reset_message_deleted' => '削除済み',
         'title' => 'ノミネートのステータス',
         'unresolved_issues' => 'まだ未解決の問題があります。',
 
         'reset_at' => [
-            'nomination_reset' => ':userが:time_agoに新しい問題:discussion (:message)によりノミネーションをリセットしました。',
-            'disqualify' => ':userが:time_agoに新しい問題:discussion (:message)によりDisqualifyしました。',
+            'nomination_reset' => 'ノミネーション審査が:userによる新しい問題:discussion （:message）により、:time_agoにリセットされました。',
+            'disqualify' => ':userの新しい問題:discussion（:message）により、:time_agoにDisqualifyしました。',
         ],
 
         'reset_confirm' => [
-            'nomination_reset' => 'よろしいですか？新しい問題点を投稿すると審査中ではなくなります。',
-            'disqualify' => '',
+            'nomination_reset' => '本当によろしいですか？新しい問題を投稿するとノミネーション審査中ではなくなります。',
+            'disqualify' => '本当によろしいですか？これによりビートマップがQualifiedから外され、ノミネーション審査がリセットされます。',
         ],
     ],
 
     'listing' => [
         'search' => [
             'prompt' => 'キーワードを入力・・・',
-            'login_required' => '検索にはサインインをする必要があります。',
+            'login_required' => 'ログインして検索する。',
             'options' => '検索の詳細設定',
-            'supporter_filter' => ':filters による絞り込みにはサポーター タグが必要です',
+            'supporter_filter' => ':filters による絞り込みにはosu!サポータータグが必要です',
             'not-found' => '該当結果なし',
             'not-found-quote' => '・・・なにも見つからなかったようだ。',
             'filters' => [
@@ -189,16 +215,17 @@ return [
                 'status' => 'カテゴリー',
                 'genre' => 'ジャンル',
                 'language' => '言語',
-                'extra' => 'エキストラ',
-                'rank' => '取得ランク',
+                'extra' => '追加情報',
+                'rank' => 'Rank取得日',
                 'played' => 'プレイ済み',
             ],
             'sorting' => [
-                'title' => '曲名',
+                'title' => 'タイトル',
                 'artist' => 'アーティスト',
                 'difficulty' => '難易度',
-                'updated' => '更新日時',
-                'ranked' => 'ranked日時',
+                'favourites' => 'お気に入り',
+                'updated' => '更新',
+                'ranked' => 'Ranked',
                 'rating' => '評価',
                 'plays' => 'プレイ数',
                 'relevance' => '関連性',
@@ -206,13 +233,13 @@ return [
             ],
             'supporter_filter_quote' => [
                 '_' => ':filters による絞り込みには有効な:link が必要です',
-                'link_text' => 'サポーター タグ',
+                'link_text' => 'osu!サポータータグ',
             ],
         ],
     ],
     'general' => [
         'recommended' => '推奨難易度',
-        'converts' => 'コンバート譜面を含む',
+        'converts' => 'コンバートビートマップを含める',
     ],
     'mode' => [
         'any' => '全て',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => '全て',
-        'ranked-approved' => 'Ranked & Approved',
         'approved' => 'Approved',
-        'qualified' => 'Qualified',
-        'loved' => 'Loved',
-        'faves' => 'お気に入り',
-        'pending' => '保留中・製作中',
+        'favourites' => 'お気に入り',
         'graveyard' => 'Graveyard',
-        'my-maps' => 'My Maps',
+        'leaderboard' => 'リーダーボード',
+        'loved' => 'Loved',
+        'mine' => 'マイマップ',
+        'pending' => 'Pending & WIP',
+        'qualified' => 'Qualified',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => '全て',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'ミラー',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -279,7 +308,7 @@ return [
         'korean' => '韓国語',
         'spanish' => 'スペイン語',
         'swedish' => 'スウェーデン語',
-        'instrumental' => 'Instrumental',
+        'instrumental' => '楽器',
         'other' => 'その他',
     ],
     'played' => [
@@ -289,17 +318,21 @@ return [
     ],
     'extra' => [
         'video' => '動画あり',
-        'storyboard' => 'Storyboardあり',
+        'storyboard' => 'ストーリーボードあり',
     ],
     'rank' => [
         'any' => '全て',
-        'XH' => '銀SS',
+        'XH' => 'Silver SS',
         'X' => 'SS',
-        'SH' => '銀S',
+        'SH' => 'Silver S',
         'S' => 'S',
         'A' => 'A',
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'プレイ回数：:count',
+        'favourites' => 'お気に入り：:count',
     ],
 ];

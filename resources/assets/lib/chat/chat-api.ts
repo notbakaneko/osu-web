@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,13 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { route } from 'laroute';
 import * as ApiResponses from './chat-api-responses';
 
 export default class ChatAPI {
   getMessages(channelId: number): Promise<ApiResponses.GetMessagesJSON> {
     return new Promise((resolve, reject) => {
-      $.get(laroute.route('chat.channels.messages.index', {channel_id: channelId}))
+      $.get(route('chat.channels.messages.index', {channel: channelId}))
         .done((response) => {
           resolve(response as ApiResponses.GetMessagesJSON);
         }).fail((error) => {
@@ -32,7 +33,7 @@ export default class ChatAPI {
 
   getUpdates(since: number): Promise<ApiResponses.GetUpdatesJSON> {
     return new Promise((resolve, reject) => {
-      $.get(laroute.route('chat.updates'),
+      $.get(route('chat.updates'),
         {since},
       ).done((response) => {
         resolve(response as ApiResponses.GetUpdatesJSON);
@@ -46,7 +47,7 @@ export default class ChatAPI {
     return new Promise((resolve, reject) => {
       $.ajax({
         type: 'PUT',
-        url: laroute.route('chat.channels.mark-as-read', {channel_id: channelId, message_id: messageId}),
+        url: route('chat.channels.mark-as-read', {channel: channelId, message: messageId}),
       }).done((response) => {
         resolve(response as ApiResponses.MarkAsReadJSON);
       }).fail((error) => {
@@ -55,9 +56,10 @@ export default class ChatAPI {
     });
   }
 
-  newConversation(userId: number, message: string): Promise<ApiResponses.NewConversationJSON> {
+  newConversation(userId: number, message: string, action?: boolean): Promise<ApiResponses.NewConversationJSON> {
     return new Promise((resolve, reject) => {
-      $.post(laroute.route('chat.new'), {
+      $.post(route('chat.new'), {
+        is_action: action,
         message,
         target_id: userId,
       }).done((response) => {
@@ -68,9 +70,25 @@ export default class ChatAPI {
     });
   }
 
-  sendMessage(channelId: number, message: string): Promise<ApiResponses.SendMessageJSON> {
+  partChannel(channelId: number, userId: number) {
     return new Promise((resolve, reject) => {
-      $.post(laroute.route('chat.channels.messages.store', {channel_id: channelId}), {
+      $.ajax(route('chat.channels.part', {
+        channel: channelId,
+        user: userId,
+      }), {
+        method: 'DELETE',
+      }).done((response) => {
+        resolve(response);
+      }).fail((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  sendMessage(channelId: number, message: string, action?: boolean): Promise<ApiResponses.SendMessageJSON> {
+    return new Promise((resolve, reject) => {
+      $.post(route('chat.channels.messages.store', {channel: channelId}), {
+        is_action: action,
         message,
         target_id: channelId,
         target_type: 'channel',

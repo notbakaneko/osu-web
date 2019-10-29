@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, dd, dl, dt} = ReactDOMFactories
+import * as React from 'react'
+import { div, dd, dl, dt } from 'react-dom-factories'
 el = React.createElement
 
 
-class ProfilePage.Stats extends React.PureComponent
+export class Stats extends React.PureComponent
   entries = [
     'ranked_score'
     'hit_accuracy'
@@ -48,5 +49,5 @@ class ProfilePage.Stats extends React.PureComponent
     val = @props.stats[key]
 
     switch key
-      when 'hit_accuracy' then "#{val.toFixed(2)}%"
-      else val.toLocaleString()
+      when 'hit_accuracy' then "#{osu.formatNumber(val, 2)}%"
+      else osu.formatNumber(val)

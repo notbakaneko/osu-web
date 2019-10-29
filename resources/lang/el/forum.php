@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! φόρουμ',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Επιλογή εικόνας εξωφύλλου',
             'button' => 'Ανεβάστε εικόνα',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Δεν υπάρχουν θέματα!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Επισήμανση forum ως αναγνωσμένo',
+        'forums' => 'Επισήμανση forum ως αναγνωσμένα',
+        'busy' => 'Σήμανση ως αναγνωσμένου...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Διαγραφή δημοσίευσης',
             'restore' => 'Επαναφορά δημοσίευσης',
             'edit' => 'Επεξεργασία δημοσίευσης',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited δημοσίευση|:count_delimited δημοσιεύσεις',
+            'topic_starter' => 'Δημιουργός του Θέματος',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'ξεκίνησε από :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Προεπισκόπηση',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Δημιουργία ψηφοφορίας',
 
+            'preview' => 'Προεπισκόπηση Δημοσίευσης',
+
             'create_poll_button' => [
                 'add' => 'Δημιούργησε ψηφοφορία',
                 'remove' => 'Ακύρωση δημιουργίας ψηφοφορίας',
             ],
 
             'poll' => [
+                'hide_results' => 'Απόκρυψη των αποτελεσμάτων της ψηφοφορίας.',
+                'hide_results_info' => 'Θα φανερωθούν μόνο μετά τη λήξη της ψηφοφορίας.',
                 'length' => 'Διεξαγωγή ψηφοφορίας για',
                 'length_days_suffix' => 'μέρες',
                 'length_info' => 'Αφήστε κενό για μία ατελείωτη ψηφοφορία',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'προβολές',
+            'feature_votes' => 'βάσει αστεριών',
             'replies' => 'απαντήσεις',
+            'views' => 'προβολές',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Το θέμα καρφιτσώθηκε και σημάνθηκε ως ανακοίνωση',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Διαγραμμένες Δημοσιεύσεις',
             'total_posts' => 'Σύνολο Δημοσιεύσεων',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Τρέχουσα Προτεραιότητα +:count',
                 'do' => 'Προαγωγή αυτού του αιτήματος',
+
+                'info' => [
+                    '_' => 'Αυτό είναι ένα :feature_request. Τα αιτήματα για λειτουργίες μπορούν να ψηφισθούν από τους :supporters.',
+                    'feature_request' => 'αίτημα για λειτουργία',
+                    'supporters' => 'supporters',
+                ],
 
                 'user' => [
                     'count' => '{0} καμία ψήφος|{1} :count ψήφος|[2,*] :count ψήφοι',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Ψηφίστε',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Η ψηφοφορία θα λήξει στις :time',
                     'ended' => 'H ψηφοφορία έληξε στις :time',
+                    'results_hidden' => 'Τα αποτελέσματα θα φανερωθούν μόνο μετά τη λήξη της ψηφοφορίας.',
                     'total' => 'Σύνολο ψήφων: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Χωρίς σελιδοδείκτη',
             'to_watching' => 'Βάλτε Σελιδοδείκτη',
             'to_watching_mail' => 'Βάλτε σελιδοδείκτη με ειδοποίηση',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Η Ειδοποίηση είναι ενεργοποιημένη. Κάντε κλικ για να απενεργοποίηση',
+            'tooltip_mail_enable' => 'Η ειδοποίηση είναι απενεργοποιημένη. Κάντε κλικ για ενεργοποίηση',
         ],
     ],
 ];

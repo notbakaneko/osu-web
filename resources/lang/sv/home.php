@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => '<strong>:players</strong> spelare online i <strong>:games</strong> spel',
         'peak' => 'Som högst, :count spelare online',
         'players' => '<strong>:count</strong> registrerade spelare',
+        'title' => '',
 
         'slogan' => [
             'main' => 'gratis-att-spela rytm spel',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Avancerad sökning',
         'button' => 'Sök',
         'empty_result' => 'Ingenting hittades!',
-        'missing_query' => 'Sökning på nyckelord behöver vara minst :n tecken',
+        'keyword_required' => '',
         'placeholder' => 'skriv för att söka',
         'title' => 'Sök',
 

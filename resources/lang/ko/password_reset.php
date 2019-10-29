@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -55,5 +55,10 @@ return [
 
     'starting' => [
         'username' => '유저 이름이나 이메일 주소를 입력하세요.',
+
+        'support' => [
+            '_' => '도움이 필요하신가요? :button을 통해 문의해보세요.',
+            'button' => '지원 시스템',
+        ],
     ],
 ];

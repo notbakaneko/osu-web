@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,20 +20,22 @@
 
 return [
     'pinned_topics' => 'Gepinde Onderwerpen',
-    'slogan' => "it's dangerous to play alone.",
-    'subforums' => 'Subfora',
+    'slogan' => "het is gevaarlijk om alleen te spelen.",
+    'subforums' => 'Subforums',
     'title' => 'osu! forums',
 
     'covers' => [
+        'edit' => 'Wijzig omslag',
+
         'create' => [
-            '_' => 'Stel cover afbeelding in',
+            '_' => 'Stel omslagafbeelding in',
             'button' => 'Afbeelding uploaden',
-            'info' => 'Cover groote moet :dimensions zijn. Je kunt ook een afbeelding hier loslaten om hem te uploaden.',
+            'info' => 'Omslag grootte moet :dimensions zijn. Je kunt ook een afbeelding hier loslaten om hem te uploaden.',
         ],
 
         'destroy' => [
-            '_' => 'Verwijder cover afbeelding',
-            'confirm' => 'Weet je zeker dat je de cover afbeelding wilt verwijderen?',
+            '_' => 'Verwijder omslag afbeelding',
+            'confirm' => 'Weet je zeker dat je de omslag afbeelding wilt verwijderen?',
         ],
     ],
 
@@ -42,42 +44,51 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Laatste bericht',
+
+        'index' => [
+            'title' => 'Forum Overzicht',
+        ],
+
         'topics' => [
             'empty' => 'Geen topics!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Markeer forum als gelezen',
+        'forums' => 'Markeer forums als gelezen',
+        'busy' => 'Markeren als gelezen...',
     ],
 
     'post' => [
         'confirm_destroy' => 'Will je deze post echt verwijderen?',
         'confirm_restore' => 'Will je deze post echt terugzetten?',
-        'edited' => 'Laatst bewerkt door :user op :when. :count keer bewerkt.',
+        'edited' => 'Laatst bewerkt door :user op :when. :count keer bewerkt in totaal.',
         'posted_at' => 'gepost op :when',
 
         'actions' => [
-            'destroy' => 'Verwijder post',
-            'restore' => 'Herstel post',
-            'edit' => 'Bewerk post',
+            'destroy' => 'Verwijder bericht',
+            'restore' => 'Herstel bericht',
+            'edit' => 'Bewerk bericht',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nieuw antwoord',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited bericht|:count_delimited berichten',
+            'topic_starter' => 'Onderwerp Starter',
         ],
     ],
 
     'search' => [
-        'go_to_post' => 'Ga naar post',
-        'post_number_input' => 'geef post nummer',
-        'total_posts' => ':posts_count posts',
+        'go_to_post' => 'Ga naar bericht',
+        'post_number_input' => 'geef bericht nummer',
+        'total_posts' => ':posts_count berichten totaal',
     ],
 
     'topic' => [
@@ -85,7 +96,7 @@ return [
         'go_to_latest' => 'bekijk nieuwste post',
         'latest_post' => ':when door :user',
         'latest_reply_by' => 'laatste bericht door :user',
-        'new_topic' => 'Maak nieuw onderwerp',
+        'new_topic' => 'Nieuw onderwerp',
         'new_topic_login' => 'Log in om een nieuw onderwerp maken',
         'post_reply' => 'Post',
         'reply_box_placeholder' => 'Typ hier om te antwoorden',
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'gestart door :user',
 
         'create' => [
+            'close' => 'Sluiten',
             'preview' => 'Voorbeeld',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Peiling Aanmaken',
 
+            'preview' => 'Plaats voorbeeld',
+
             'create_poll_button' => [
                 'add' => 'Maak een Peiling aan',
                 'remove' => 'Annuleer aanmaken van peiling',
             ],
 
             'poll' => [
+                'hide_results' => 'Verberg de resultaten van de poll.',
+                'hide_results_info' => 'Deze zullen pas worden getoond na de sluiting van de poll.',
                 'length' => 'Maak peiling voor',
                 'length_days_suffix' => 'dagen',
                 'length_info' => 'Laat leeg voor een peiling die nooit eindigt',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'keer bekeken',
+            'feature_votes' => 'ster prioriteit',
             'replies' => 'keer beantwoordt',
+            'views' => 'keer bekeken',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Topic is gepint en gemarkeerd als melding',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Verwijderde posts',
             'total_posts' => 'Alle posts',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Prioriteit: +:count',
                 'do' => 'Promoot dit verzoek',
+
+                'info' => [
+                    '_' => 'Dit is een :feature_request. Feature requests kunnen omhoog worden gestemd door :supporters.',
+                    'feature_request' => 'feature request',
+                    'supporters' => 'supporters',
+                ],
 
                 'user' => [
                     'count' => '{0} geen stemmen|{1} :count stem|[2,*] :count stemmen',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Poll bewerken',
+                'edit_warning' => 'Een poll bewerken zal de huidige resultaten verwijderen!',
                 'vote' => 'Stem',
+
+                'button' => [
+                    'change_vote' => 'Verander je stem',
+                    'edit' => 'Bewerk poll',
+                    'view_results' => 'Ga naar resultaten',
+                    'vote' => 'Stem',
+                ],
 
                 'detail' => [
                     'end_time' => 'Stemmen eindigt op :time',
                     'ended' => 'Stemming eindigde op :time',
+                    'results_hidden' => 'Als de pollen zijn gesloten dan zullen resultaten worden getoond.',
                     'total' => 'Totale stemmen: count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Heeft geen bladwijzer',
             'to_watching' => 'Voeg bladwijzer toe',
             'to_watching_mail' => 'Voeg bladwijzer met notificaties toe',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Melding is ingeschakeld. Klik om uit te schakelen',
+            'tooltip_mail_enable' => 'Melding is uitgeschakeld. Klik om in te schakelen',
         ],
     ],
 ];

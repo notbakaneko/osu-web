@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -36,13 +36,13 @@ return [
     ],
 
     'stat' => [
-        'accuracy' => '精度(Accuracy)',
+        'accuracy' => '精度',
         'active_users' => 'アクティブユーザー数',
         'country' => '所在国',
         'play_count' => 'プレイ回数',
         'performance' => 'パフォーマンス',
-        'total_score' => '累計スコア',
-        'ranked_score' => 'Rankedスコア',
+        'total_score' => '合計スコア',
+        'ranked_score' => 'ランクスコア',
         'average_score' => '平均スコア',
         'average_performance' => '平均パフォーマンス',
         'ss' => 'SS',

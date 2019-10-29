@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'törölve',
+    'deleted_count' => ':count_delimited törölt komment|:count_delimited törölt kommentek',
     'edited' => ':user által szerkesztve :timeago',
     'empty' => 'Még nincsenek hozzászólások.',
+    'load_replies' => 'válaszok betöltése',
     'replies' => 'Válaszok',
-    'show_replies' => 'válaszok megjelenítése',
     'title' => 'Hozzászólások',
 
     'commentable_name' => [
@@ -65,12 +66,5 @@ return [
             '_' => 'Hozzászólások: :info',
             'info' => 'Részletek',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

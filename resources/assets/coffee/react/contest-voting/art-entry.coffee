@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,12 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, span, a, i} = ReactDOMFactories
+import { Voter } from './voter'
+import * as React from 'react'
+import { div, span, a, i } from 'react-dom-factories'
 el = React.createElement
 
-class Contest.Voting.ArtEntry extends React.Component
+export class ArtEntry extends React.Component
   render: ->
     votingOver = moment(@props.contest.voting_ends_at).diff() <= 0
     isSelected = _.includes @props.selected, @props.entry.id
@@ -63,7 +65,7 @@ class Contest.Voting.ArtEntry extends React.Component
           'contest__vote-link-banner--smaller' if showVotes && place > 2
           'hidden' if hideVoteButton
         ]).compact().join(' ')
-        el Contest.Voting.Voter,
+        el Voter,
           key: @props.entry.id,
           entry: @props.entry,
           waitingForResponse: @props.waitingForResponse,
@@ -92,4 +94,5 @@ class Contest.Voting.ArtEntry extends React.Component
             span className: 'contest-art-entry__result-votes',
               osu.transChoice 'contest.vote.count', @props.entry.results.votes
             if not isNaN(votePercentage)
-              span className: 'contest-art-entry__result-votes contest-art-entry__result-votes--percentage', " (#{votePercentage}%)"
+              span className: 'contest-art-entry__result-votes contest-art-entry__result-votes--percentage',
+                " (#{osu.formatNumber(votePercentage)}%)"

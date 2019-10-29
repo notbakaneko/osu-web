@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2018 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -16,7 +16,6 @@
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
 @extends('master', [
-    'bodyAdditionalClasses' => 'osu-layout--body-111-plain',
     'legacyNav' => false,
 ])
 
@@ -26,7 +25,7 @@
     {{-- temporary pagination to be used by react component above --}}
     <div class="hidden">
         <div class="js-comments-pagination">
-            @include('objects._pagination_v0', ['object' => $commentPagination])
+            @include('objects._pagination_v2', ['object' => $commentPagination])
         </div>
     </div>
 

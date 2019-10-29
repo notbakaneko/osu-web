@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,12 @@
 
 namespace App\Models;
 
+use App\Jobs\RefreshBeatmapsetUserKudosu;
 use App\Traits\Validatable;
 use Cache;
 use Carbon\Carbon;
 use DB;
+use Exception;
 
 /**
  * @property \Illuminate\Database\Eloquent\Collection $beatmapDiscussionPosts BeatmapDiscussionPost
@@ -57,7 +59,7 @@ class BeatmapDiscussion extends Model
         'resolved' => 'boolean',
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'last_post_at'];
 
     const KUDOSU_STEPS = [1, 2, 5];
 
@@ -71,6 +73,8 @@ class BeatmapDiscussion extends Model
 
     const RESOLVABLE_TYPES = [1, 2];
     const KUDOSUABLE_TYPES = [1, 2];
+
+    const VOTES_TO_SHOW = 50;
 
     public static function search($rawParams = [])
     {
@@ -247,10 +251,27 @@ class BeatmapDiscussion extends Model
             }
         }
 
-        $change = $targetKudosu - $kudosuGranted;
+        $beatmapsetKudosuGranted = (int) KudosuHistory
+            ::whereIn('kudosuable_type', [static::class, $this->getMorphClass()])
+            ->whereIn('kudosuable_id',
+                static
+                    ::where('kudosu_denied', '=', false)
+                    ->where('beatmapset_id', '=', $this->beatmapset_id)
+                    ->where('user_id', '=', $this->user_id)
+                    ->select('id')
+            )->sum('amount');
+
+        $availableKudosu = config('osu.beatmapset.discussion_kudosu_per_user') - $beatmapsetKudosuGranted;
+        $maxChange = $targetKudosu - $kudosuGranted;
+        $change = min($availableKudosu, $maxChange);
 
         if ($change === 0) {
             return;
+        }
+
+        // This should only happen when the rule is changed so always assume recalculation.
+        if (abs($change) > 1) {
+            $event = 'recalculate';
         }
 
         DB::transaction(function () use ($change, $event, $eventExtraData, $currentVotes) {
@@ -278,7 +299,7 @@ class BeatmapDiscussion extends Model
                 'amount' => $change,
                 'action' => $change > 0 ? 'give' : 'reset',
                 'date' => Carbon::now(),
-                'kudosuable_type' => static::class,
+                'kudosuable_type' => $this->getMorphClass(),
                 'kudosuable_id' => $this->id,
                 'details' => [
                     'event' => $event,
@@ -290,6 +311,11 @@ class BeatmapDiscussion extends Model
                 'osu_kudosavailable' => DB::raw("osu_kudosavailable + {$change}"),
             ]);
         });
+
+        // When user lost kudosu, check if there's extra kudosu available.
+        if ($event !== 'recalculate' && $change < 0) {
+            dispatch(new RefreshBeatmapsetUserKudosu(['beatmapsetId' => $this->beatmapset_id, 'userId' => $this->user_id]));
+        }
     }
 
     public function refreshResolved()
@@ -462,14 +488,26 @@ class BeatmapDiscussion extends Model
 
     public function votesSummary()
     {
-        $votes = ['up' => 0, 'down' => 0];
+        $votes = [
+            'up' => 0,
+            'down' => 0,
+            'voters' => [
+                'up' => [],
+                'down' => [],
+            ],
+        ];
 
-        foreach ($this->beatmapDiscussionVotes as $vote) {
-            if ($vote->score === 1) {
-                $votes['up'] += 1;
-            } elseif ($vote->score === -1) {
-                $votes['down'] += 1;
+        foreach ($this->beatmapDiscussionVotes->sortByDesc('created_at') as $vote) {
+            if ($vote->score === 0) {
+                continue;
             }
+
+            $direction = $vote->score > 0 ? 'up' : 'down';
+
+            if ($votes[$direction] < static::VOTES_TO_SHOW) {
+                $votes['voters'][$direction][] = $vote->user_id;
+            }
+            $votes[$direction] += 1;
         }
 
         return $votes;
@@ -490,7 +528,16 @@ class BeatmapDiscussion extends Model
                 if ($vote->score === 0) {
                     $vote->delete();
                 } else {
-                    $vote->save();
+                    try {
+                        $vote->save();
+                    } catch (Exception $e) {
+                        if (is_sql_unique_exception($e)) {
+                            // abort and pretend it's saved correctly
+                            return true;
+                        }
+
+                        throw $e;
+                    }
                 }
 
                 $this->userRecentVotesCount($vote->user, true);
@@ -547,7 +594,7 @@ class BeatmapDiscussion extends Model
         $key = "beatmapDiscussion:{$this->getKey()}:votes:{$user->getKey()}";
 
         if ($increment) {
-            Cache::add($key, 0, 60);
+            Cache::add($key, 0, 3600);
 
             return Cache::increment($key);
         } else {
@@ -562,11 +609,7 @@ class BeatmapDiscussion extends Model
                 BeatmapsetEvent::log(BeatmapsetEvent::DISCUSSION_RESTORE, $restoredBy, $this)->saveOrExplode();
             }
 
-            $timestamps = $this->timestamps;
-            $this->timestamps = false;
             $this->update(['deleted_at' => null]);
-            $this->timestamps = $timestamps;
-
             $this->refreshKudosu('restore');
         });
     }
@@ -587,24 +630,17 @@ class BeatmapDiscussion extends Model
 
     public function softDeleteOrExplode($deletedBy)
     {
-        $timestamps = $this->timestamps;
+        DB::transaction(function () use ($deletedBy) {
+            if ($deletedBy->getKey() !== $this->user_id) {
+                BeatmapsetEvent::log(BeatmapsetEvent::DISCUSSION_DELETE, $deletedBy, $this)->saveOrExplode();
+            }
 
-        try {
-            DB::transaction(function () use ($deletedBy) {
-                if ($deletedBy->getKey() !== $this->user_id) {
-                    BeatmapsetEvent::log(BeatmapsetEvent::DISCUSSION_DELETE, $deletedBy, $this)->saveOrExplode();
-                }
-
-                $this->timestamps = false;
-                $this->fill([
-                    'deleted_by_id' => $deletedBy->user_id ?? null,
-                    'deleted_at' => Carbon::now(),
-                ])->saveOrExplode();
-                $this->refreshKudosu('delete');
-            });
-        } finally {
-            $this->timestamps = $timestamps;
-        }
+            $this->fill([
+                'deleted_by_id' => $deletedBy->user_id ?? null,
+                'deleted_at' => Carbon::now(),
+            ])->saveOrExplode();
+            $this->refreshKudosu('delete');
+        });
     }
 
     public function trashed()
@@ -641,5 +677,20 @@ class BeatmapDiscussion extends Model
     public function scopeWithoutTrashed($query)
     {
         $query->whereNull('deleted_at');
+    }
+
+    public function scopeVisible($query)
+    {
+        $query->visibleWithTrashed()
+            ->withoutTrashed();
+    }
+
+    public function scopeVisibleWithTrashed($query)
+    {
+        $query->whereHas('visibleBeatmapset')
+            ->where(function ($q) {
+                $q->whereNull('beatmap_id')
+                    ->orWhereHas('visibleBeatmap');
+            });
     }
 }

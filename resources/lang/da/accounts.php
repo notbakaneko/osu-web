@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,12 +20,14 @@
 
 return [
     'edit' => [
-        'title' => '<strong>Konto</strong>indstillinger',
+        'title' => '<strong>Konto</strong> Indstillinger',
         'title_compact' => 'indstillinger',
         'username' => 'brugernavn',
 
         'avatar' => [
-            'title' => 'Avatar',
+            'title' => 'Profilbillede',
+            'rules' => '',
+            'rules_link' => '',
         ],
 
         'email' => [
@@ -46,13 +48,13 @@ return [
             'title' => 'Profil',
 
             'user' => [
+                'user_discord' => '',
                 'user_from' => 'nuværende placering',
                 'user_interests' => 'interesser',
                 'user_msnm' => 'skype',
                 'user_occ' => 'stilling',
                 'user_twitter' => 'twitter',
                 'user_website' => 'hjemmeside',
-                'user_discord' => '',
             ],
         ],
 
@@ -60,6 +62,40 @@ return [
             'title' => 'Signatur',
             'update' => 'opdater',
         ],
+    ],
+
+    'notifications' => [
+        'title' => 'Notifikationer',
+        'topic_auto_subscribe' => 'aktiver automatisk notifikationer på nye forum emner du opretter',
+    ],
+
+    'oauth' => [
+        'authorized_clients' => '',
+        'own_clients' => '',
+        'title' => '',
+    ],
+
+    'playstyles' => [
+        'keyboard' => 'tastatur',
+        'mouse' => 'mus',
+        'tablet' => 'tablet',
+        'title' => 'Spillestile',
+        'touch' => 'touch',
+    ],
+
+    'privacy' => [
+        'friends_only' => 'Bloker private beskeder fra folk, der ikke er på din venneliste',
+        'hide_online' => 'skjul din online status',
+        'title' => 'Privacy',
+    ],
+
+    'security' => [
+        'current_session' => 'nuværende',
+        'end_session' => 'Afslut Session',
+        'end_session_confirmation' => 'Dette vil straks afslutte sessionen på enheden. Er du sikker?',
+        'last_active' => 'Sidst aktiv:',
+        'title' => 'Sikkerhed',
+        'web_sessions' => 'websessioner',
     ],
 
     'update_email' => [
@@ -72,26 +108,12 @@ return [
         'update' => 'opdater',
     ],
 
-    'playstyles' => [
-        'title' => 'Spillestile',
-        'mouse' => 'mus',
-        'keyboard' => 'tastatur',
-        'tablet' => 'tablet',
-        'touch' => 'touch',
-    ],
-
-    'privacy' => [
-        'title' => 'Privacy',
-        'friends_only' => 'Bloker private beskeder fra folk, der ikke er på din venneliste',
-        'hide_online' => '',
-    ],
-
-    'security' => [
-        'current_session' => '',
-        'end_session' => '',
-        'end_session_confirmation' => '',
-        'last_active' => '',
+    'verification_completed' => [
+        'text' => '',
         'title' => '',
-        'web_sessions' => '',
+    ],
+
+    'verification_invalid' => [
+        'title' => '',
     ],
 ];

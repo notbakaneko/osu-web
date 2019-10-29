@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,16 +29,23 @@ return [
         'last_word_connector' => ', and ',
     ],
 
+    'badges' => [
+        'new' => 'NEW',
+    ],
+
     'buttons' => [
         'admin' => 'Admin',
-        'back_to_top' => 'Back to top',
         'back_to_previous' => 'Return to previous position',
+        'back_to_top' => 'Back to top',
         'cancel' => 'Cancel',
         'change' => 'change',
         'click_to_copy' => 'click to copy to clipboard',
         'click_to_copy_copied' => 'copied to clipboard!',
+        'close' => 'Close',
+        'collapse' => 'collapse',
         'delete' => 'Delete',
         'edit' => 'Edit',
+        'expand' => 'expand',
         'hide' => 'hide',
         'permalink' => 'permalink',
         'permalink_copied' => 'link copied',
@@ -53,21 +60,34 @@ return [
         'search' => 'Search',
         'see_more' => 'see more',
         'show' => 'show',
+        'show_deleted' => 'Show deleted',
         'show_more' => 'show more',
+        'show_more_options' => 'show more options',
+        'update' => 'Update',
         'upload_image' => 'upload image',
+
+        'watch' => [
+            'to_0' => 'Unwatch',
+            'to_1' => 'Watch',
+        ],
     ],
 
     'count' => [
-        'badges' => ':count badge|:count badges',
-        'days' => ':count day|:count days',
+        'badges' => ':count_delimited badge|:count_delimited badges',
+        'days' => ':count_delimited day|:count_delimited days',
         'hour_short_unit' => 'hr|hrs',
-        'hours' => ':count hour|:count hours',
-        'item' => ':count unit|:count units',
+        'hours' => ':count_delimited hour|:count_delimited hours',
+        'item' => ':count_delimited unit|:count_delimited units',
         'minute_short_unit' => 'min|mins',
-        'minutes' => ':count minute|:count minutes',
-        'months' => ':count month|:count months',
+        'minutes' => ':count_delimited minute|:count_delimited minutes',
+        'months' => ':count_delimited month|:count_delimited months',
+        'plus_others' => '+ :count_delimited other!|+ :count_delimited others!',
+        'post' => ':count_delimited post|:count_delimited posts',
         'second_short_unit' => 'sec|secs',
-        'years' => ':count year|:count years',
+        'star_priority' => ':count_delimited star priority|:count_delimited star priorities',
+        'update' => ':count_delimited update|:count_delimited updates',
+        'view' => ':count_delimited view|:count_delimited views',
+        'years' => ':count_delimited year|:count_delimited years',
     ],
 
     'countdown' => [
@@ -98,6 +118,10 @@ return [
         'target' => 'drop here to upload',
     ],
 
+    'input' => [
+        'search' => 'search...',
+    ],
+
     'pagination' => [
         'previous' => 'prev',
         'next' => 'next',
@@ -113,8 +137,8 @@ return [
     ],
 
     'time' => [
-        'days_ago' => ':count day ago|:count days ago',
-        'hours_ago' => ':count hour ago|:count hours ago',
+        'days_ago' => ':count_delimited day ago|:count_delimited days ago',
+        'hours_ago' => ':count_delimited hour ago|:count_delimited hours ago',
         'now' => 'now',
         'remaining' => 'Time Remaining',
     ],

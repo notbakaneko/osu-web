@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -127,6 +127,7 @@ $(document).on 'ajax:beforeSend', (e) ->
   for el in form.querySelectorAll('.js-ujs-submit-disable')
     continue if el.disabled
 
+    el.blur() if el.dataset.blurOnSubmitDisable == '1'
     el.disabled = true
     form._ujsSubmitDisabled.push el
 

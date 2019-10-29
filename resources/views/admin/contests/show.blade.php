@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,9 +15,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-@extends('master', [
+@extends('admin/master', [
     'title' => $contest->name,
-    'bodyAdditionalClasses' => 'osu-layout--body-dark'
 ])
 
 @section('content')
@@ -32,7 +31,7 @@
         </div>
     </div>
 
-    <div class="osu-page osu-page--generic">
+    <div class="osu-layout__row osu-layout__row--page-admin">
         <div class="row">
             <div class="col-md-8">
                 <dl class="dl-horizontal">
@@ -61,7 +60,7 @@
                     'route' => ['admin.contests.get-zip', $contest->id],
                     'method' => 'POST'
                 ]) !!}
-                    <button class="btn btn-primary">
+                    <button class="btn-osu-big">
                         <i class="fas fa-fw fa-file-archive"></i>
                         Download all entries as ZIP
                     </button>
@@ -71,14 +70,14 @@
         <dl>
             <dt class="admin-contest__meta-row">Entry Description</dt>
             <dd class="contest">
-                <div class="contest__description">{!! Markdown::convertToHtml($contest->description_enter) !!}</div>
+                <div class="contest__description">{!! markdown($contest->description_enter) !!}</div>
             </dd>
-            <dt class="admin-contest__meta-row">Voting Description</dt>
+            <dt class="admin-contest__meta-row"><br />Voting Description</dt>
             <dd class="contest">
-                <div class="contest__description">{!! Markdown::convertToHtml($contest->description_voting) !!}</div>
+                <div class="contest__description">{!! markdown($contest->description_voting) !!}</div>
             </dd>
             @if ($contest->extra_options !== null)
-                <dt class="admin-contest__meta-row">Extra Options</dt>
+                <dt class="admin-contest__meta-row"><br />Extra Options</dt>
                 <dd><pre>{{json_encode($contest->extra_options, JSON_PRETTY_PRINT)}}</pre></dd>
             @endif
         </dl>

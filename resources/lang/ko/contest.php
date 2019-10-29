@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,8 +26,15 @@ return [
     'voting' => [
         'over' => '현재 콘테스트의 투표가 종료되었습니다.',
         'login_required' => '투표하려면 로그인해주세요.',
+
         'best_of' => [
             'none_played' => "이 콘테스트에서 평가할 어떤 맵도 플레이하지 않으신 것 같네요.",
+        ],
+
+        'button' => [
+            'add' => '투표',
+            'remove' => '투표 제거',
+            'used_up' => '모든 투표권을 사용했습니다',
         ],
     ],
     'entry' => [

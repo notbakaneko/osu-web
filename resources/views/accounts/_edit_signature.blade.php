@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -31,7 +31,11 @@
         <div class="account-edit__input-group">
 
             <div class="account-edit-entry account-edit-entry--wide account-edit-entry--no-label">
-                <div class="account-edit-entry__misc-info js-post-preview--body">
+                <div class="
+                    account-edit-entry__misc-info
+                    account-edit-entry__misc-info--signature-preview
+                    js-post-preview--preview
+                ">
                     {!! bbcode(Auth::user()->user_sig, Auth::user()->user_sig_bbcode_uid) !!}
                 </div>
             </div>

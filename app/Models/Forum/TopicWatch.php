@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,6 +20,7 @@
 
 namespace App\Models\Forum;
 
+use App\Events\UserSubscriptionChangeEvent;
 use App\Models\User;
 
 /**
@@ -97,12 +98,17 @@ class TopicWatch extends Model
 
             try {
                 if ($state === 'not_watching') {
+                    $notify = false;
                     $watch->delete();
                 } else {
-                    $mail = $state === 'watching_mail';
+                    $notify = $state === 'watching_mail';
 
-                    $watch->fill(['mail' => $mail])->saveOrExplode();
+                    $watch->fill(['mail' => $notify])->saveOrExplode();
                 }
+
+                $event = $notify ? 'add' : 'remove';
+
+                event(new UserSubscriptionChangeEvent($event, $user, $topic));
 
                 return $watch;
             } catch (Exception $e) {

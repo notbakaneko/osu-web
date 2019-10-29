@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! フォーラム',
 
     'covers' => [
+        'edit' => 'カバーを編集',
+
         'create' => [
             '_' => 'カバー画像の設定',
             'button' => '画像をアップロード',
@@ -38,27 +40,25 @@ return [
     ],
 
     'email' => [
-        'new_reply' => '[osu!] ":title"に新しい投稿があります',
+        'new_reply' => '[osu!] トピック":title"に新しい返信があります',
     ],
 
     'forums' => [
+        'latest_post' => '最新の投稿',
+
+        'index' => [
+            'title' => 'フォーラム 目次',
+        ],
+
         'topics' => [
             'empty' => 'トピックがありません！',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'フォーラムを既読にする',
+        'forums' => 'フォーラムを既読にする',
+        'busy' => '既読にする・・・',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => '投稿を削除',
             'restore' => '投稿を復元',
             'edit' => '投稿を編集',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '新規返信',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited 投稿|:count_delimited 投稿',
+            'topic_starter' => 'トピック開始者',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => '開始したユーザー: :user',
 
         'create' => [
+            'close' => '閉じる',
             'preview' => 'プレビュー',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'ポールの作成',
 
+            'preview' => '投稿のプレビュー',
+
             'create_poll_button' => [
                 'add' => 'ポールを作成',
                 'remove' => 'ポールの作成をキャンセル',
             ],
 
             'poll' => [
+                'hide_results' => '投票結果を非表示にする。',
+                'hide_results_info' => '投票が終わった後にだけ表示されます。',
                 'length' => 'ポールの期限を設定する',
                 'length_days_suffix' => '日間',
                 'length_info' => '空白で無期限に設定されます',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => '観覧数',
+            'feature_votes' => 'スタープライオリティ',
             'replies' => '返信数',
+            'views' => '観覧数',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'ピン付けされてアナウンスメントになりました',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => '削除された投稿',
             'total_posts' => '全ての投稿',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => '現在の優先度： +:count',
                 'do' => 'このリクエストを推進する',
+
+                'info' => [
+                    '_' => 'これは:feature_requestです。機能の提案は:supportersが投票することができます。',
+                    'feature_request' => '機能の提案',
+                    'supporters' => 'サポーター',
+                ],
 
                 'user' => [
                     'count' => '{0} 投票なし|[1,*] :count票',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '投票編集',
+                'edit_warning' => '編集中の投票フォームは現在の編集状況が削除されます！',
                 'vote' => '投票',
+
+                'button' => [
+                    'change_vote' => '投票を変更する',
+                    'edit' => '投票を編集',
+                    'view_results' => '結果にスキップ',
+                    'vote' => '投票',
+                ],
 
                 'detail' => [
                     'end_time' => 'ポールの期限終了は :time です',
                     'ended' => 'ポールの期限は :time に終了しました',
+                    'results_hidden' => '投票後に結果が表示されます。',
                     'total' => '総票数: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'ブックマーク無し',
             'to_watching' => 'ブックマーク',
             'to_watching_mail' => 'ブックマーク（通知あり）',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => '通知は有効です。クリックして無効化',
+            'tooltip_mail_enable' => '通知は無効です。クリックして有効化',
         ],
     ],
 ];

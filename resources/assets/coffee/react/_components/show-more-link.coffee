@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2019 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -15,28 +15,42 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
-{button, span} = ReactDOMFactories
+import * as React from 'react'
+import { a, button, span } from 'react-dom-factories'
+import { Spinner } from 'spinner'
 el = React.createElement
 bn = 'show-more-link'
 
-@ShowMoreLink = React.forwardRef (props, ref) =>
+export ShowMoreLink = React.forwardRef (props, ref) =>
   return null unless props.hasMore || props.loading
 
   onClick = props.callback
   onClick ?= -> $.publish props.event, props.data
+  icon = span className: "#{bn}__label-icon",
+    span className: "fas fa-angle-#{props.direction ? 'down'}"
 
-  button
+  if props.hideIcon
+    icon = null
+
+  element = button
+
+  if props.url
+    element = a
+
+  element
     ref: ref
     type: 'button'
-    onClick: onClick
+    onClick: onClick if !props.url
+    href: props.url if props.url
     disabled: props.loading
     className: osu.classWithModifiers(bn, props.modifiers)
     span className: "#{bn}__spinner",
       el Spinner
     span className: "#{bn}__label",
-      span className: "#{bn}__label-icon",
-        span className: 'fas fa-angle-down'
+      icon
       span className: "#{bn}__label-text",
-        osu.trans('common.buttons.show_more')
-      span className: "#{bn}__label-icon",
-        span className: 'fas fa-angle-down'
+        props.label ? osu.trans('common.buttons.show_more')
+
+        if props.remaining?
+          " (#{props.remaining})"
+      icon

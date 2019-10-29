@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -18,7 +18,7 @@
 @extends('master')
 
 @section('content')
-    <div class="osu-layout__row osu-layout__row--page">
+    <div class="osu-page osu-page--generic">
         @include(i18n_view('users._disabled_message'))
     </div>
 @endsection

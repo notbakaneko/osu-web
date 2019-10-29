@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ritim sadece bir *tık* uzakta! Ouendan/EBA, Taiko ve orijinal oyun modlarıyla, hem de tamamiyle işlevsel seviye editörüyle beraber.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Topluluk',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'anasayfa',
             'account-edit' => 'ayarlar',
+            'account-verifyLink' => 'Doğrulama Tamamlandı',
             'friends-index' => 'arkadaşlar',
             'changelog-index' => 'değişiklikler',
             'changelog-build' => 'sürüm',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'gruplar',
             'index' => 'kontrol paneli',
             'legal-show' => 'bilgi',
-            'messages-index' => '',
+            'messages-index' => 'mesajlar',
             'news-index' => 'haberler',
             'news-show' => 'haberler',
             'password-reset-index' => 'şifreni sıfırla',
             'search' => 'ara',
             'supportTheGame' => 'oyunu destekle',
             'team' => 'takım',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'yardım',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'topluluk',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'sohbet',
+            'chat-index' => 'sohbet',
             'dev' => 'geliştirme',
             'getForum' => 'forumlar',
             'getLive' => 'canlı',
@@ -118,16 +140,18 @@ return [
             'reset' => 'kurtar',
             'new' => 'yeni',
 
-            'messages' => 'Mesajlar',
-            'settings' => 'Ayarlar',
-            'logout' => 'Çıkış Yap',
             'help' => 'Yardım',
+            'logout' => 'Çıkış Yap',
+            'messages' => 'Mesajlar',
             'modding-history-discussions' => 'kullanıcı modlama tartışmaları',
             'modding-history-events' => 'kullanıcı modlama etkinlikleri',
             'modding-history-index' => 'kullanıcı modlama geçmişi',
             'modding-history-posts' => 'kullanıcı modlama gönderileri',
             'modding-history-votesGiven' => 'kullanıcı verilen modlama oyları',
             'modding-history-votesReceived' => 'kullanıcı alınan modlama oyları',
+            'oauth_login' => 'oauth için giriş yapın',
+            'oauth_request' => 'oauth doğrulaması',
+            'settings' => 'Ayarlar',
         ],
         'store' => [
             '_' => 'mağaza',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Bir hesaba ihtiyacınız var, efendim. Neden hemen bir tane oluşturmuyorsunuz?",
+            'download' => '',
+            'info' => 'Bir hesaba ihtiyacınız var, efendim. Neden hemen bir tane oluşturmuyorsunuz?',
             'title' => "Hesabın yok mu?",
         ],
     ],

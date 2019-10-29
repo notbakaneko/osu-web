@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -19,8 +19,12 @@ Hi {{ $user->username }},
 
 An action performed on your account from {{ $requestCountry ?? 'unknown country' }} requires verification.
 
-Your verification code is: {{ $key }}
+Your verification code is: {{ $keys['main'] }}
 You can enter the code with or without spaces.
+
+Alternatively, you can also visit this link below to finish verification:
+
+{{ route('account.verify', ['key' => $keys['link']]) }}
 
 If you did not request this, please REPLY IMMEDIATELY as your account may be in danger.
 

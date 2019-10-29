@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,8 +19,7 @@
  */
 
 return [
-    'feed_title' => 'lista',
-    'generic' => 'Correcções de bugs e pequenas melhorias',
+    'generic' => 'Correções de bugs e pequenas melhorias',
 
     'build' => [
         'title' => 'alterações em :version',
@@ -53,7 +52,7 @@ return [
     ],
 
     'support' => [
-        'heading' => 'Adoras esta actualização?',
+        'heading' => 'Adoras esta atualização?',
         'text_1' => 'Apoia o desenvolvimento mais adiante do osu! e :link hoje!',
         'text_1_link' => 'torna-te num apoiante',
         'text_2' => 'Não só estarás a ajudar a acelerar o desenvolvimento, mas também receberás algumas funcionalidades extra e personalizações!',

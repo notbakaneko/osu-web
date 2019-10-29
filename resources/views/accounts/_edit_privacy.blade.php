@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -26,20 +26,11 @@
         <div class="account-edit__input-group">
             <div class="account-edit-entry account-edit-entry--no-label js-account-edit" data-account-edit-auto-submit="1" data-skip-ajax-error-popup="1">
                 <label class="account-edit-entry__checkbox">
-                    <div class="osu-checkbox">
-                        <input
-                            name="user[pm_friends_only]"
-                            class="osu-checkbox__input js-account-edit__input"
-                            type="checkbox"
-                            @if (Auth::user()->pm_friends_only)
-                                checked
-                            @endif
-                        >
-                        <span class="osu-checkbox__box"></span>
-                        <span class="osu-checkbox__tick">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </div>
+                    @include('objects._switch', [
+                        'additionalClass' => 'js-account-edit__input',
+                        'checked' => auth()->user()->pm_friends_only,
+                        'name' => 'user[pm_friends_only]',
+                    ])
 
                     <span class="account-edit-entry__checkbox-label">
                         {{ trans('accounts.privacy.friends_only') }}
@@ -53,20 +44,11 @@
 
             <div class="account-edit-entry account-edit-entry--no-label js-account-edit" data-account-edit-auto-submit="1" data-skip-ajax-error-popup="1">
                 <label class="account-edit-entry__checkbox">
-                    <div class="osu-checkbox">
-                        <input
-                            name="user[hide_presence]"
-                            class="osu-checkbox__input js-account-edit__input"
-                            type="checkbox"
-                            @if (Auth::user()->hide_presence)
-                                checked
-                            @endif
-                        >
-                        <span class="osu-checkbox__box"></span>
-                        <span class="osu-checkbox__tick">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </div>
+                    @include('objects._switch', [
+                        'additionalClass' => 'js-account-edit__input',
+                        'checked' => auth()->user()->hide_presence,
+                        'name' => 'user[hide_presence]',
+                    ])
 
                     <span class="account-edit-entry__checkbox-label">
                         {{ trans('accounts.privacy.hide_online') }}
@@ -84,12 +66,12 @@
                     <div class="account-edit-entry__label account-edit-entry__label--top-pinned js-account-edit-blocklist-count">
                         {{ trans('users.blocks.blocked_count', ['count' => count($blocks)]) }}
                     </div>
-                    <div class="user-list">
-                        <a class='user-list__toggle js-account-edit-blocklist' href='#'>{{trans('common.buttons.show')}}</a>
-                        <div class="user-list__content hidden">
+                    <div class="block-list">
+                        <a class='block-list__toggle js-account-edit-blocklist' href='#'>{{trans('common.buttons.show')}}</a>
+                        <div class="block-list__content hidden">
                             @foreach ($blocks as $block)
-                                <div class="user-list-item">
-                                    <a class="user-list-item__link" href='{{route('users.show', $block->user_id)}}'>{{ $block->username }}</a>
+                                <div class="block-list-item">
+                                    <a class="block-list-item__link" href='{{route('users.show', $block->user_id)}}'>{{ $block->username }}</a>
                                     <div class="js-react--blockButton" data-target="{{$block->user_id}}"></div>
                                 </div>
                             @endforeach

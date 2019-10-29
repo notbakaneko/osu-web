@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,9 +34,14 @@ return [
         'invalid_mode' => 'Érvénytelen mód lett megadva.',
         'standard_converts_only' => 'Nincs elérhető eredmény a kért módra ezen a beatmap nehézségen.',
     ],
-    'beatmapsets' => [
-        'too-many-favourites' => 'Túl sok beatmap van a kedvenceid közöt! Kérlek távolíts el egyet közülük a folytatáshoz.',
+    'checkout' => [
+        'generic' => 'Hiba történt a fizetés előkészítése közben.',
     ],
+    'search' => [
+        'default' => '',
+        'operation_timeout_exception' => '',
+    ],
+
     'logged_out' => 'Ki lettél léptetve. Kérlek lépj be és próbáld újra.',
     'supporter_only' => 'Támogatónak kell lenned a funkció használatához.',
     'no_restricted_access' => 'Felfüggesztett állapot erre nem vagy alkalmas.',

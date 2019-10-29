@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, div, h2, h3, img, p, small, span} = ReactDOMFactories
+import { BeatmapPlaycount } from './beatmap-playcount'
+import { ExtraHeader } from './extra-header'
+import { PlayDetailList } from 'play-detail-list'
+import * as React from 'react'
+import { a, div, h2, h3, img, p, small, span } from 'react-dom-factories'
+import { ShowMoreLink } from 'show-more-link'
 el = React.createElement
 
 
-class ProfilePage.Historical extends React.PureComponent
+export class Historical extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -50,12 +55,12 @@ class ProfilePage.Historical extends React.PureComponent
     div
       className: 'page-extra'
 
-      el ProfilePage.ExtraHeader, name: @props.name, withEdit: @props.withEdit
+      el ExtraHeader, name: @props.name, withEdit: @props.withEdit
 
       if @hasMonthlyPlaycounts()
         div null,
           h3
-            className: 'page-extra__title page-extra__title--small'
+            className: 'title title--page-extra-small'
             osu.trans('users.show.extra.historical.monthly_playcounts.title')
 
           div
@@ -64,18 +69,18 @@ class ProfilePage.Historical extends React.PureComponent
 
 
       h3
-        className: 'page-extra__title page-extra__title--small'
+        className: 'title title--page-extra-small'
         osu.trans('users.show.extra.historical.most_played.title')
 
       if @props.beatmapPlaycounts?.length
         [
           for playcount in @props.beatmapPlaycounts
-            el ProfilePage.BeatmapPlaycount,
+            el BeatmapPlaycount,
               key: playcount.beatmap.id
               playcount: playcount
           el ShowMoreLink,
             key: 'show-more-row'
-            modifiers: ['profile-page', 't-community-user-graygreen-darker']
+            modifiers: ['profile-page', 't-greyseafoam-dark']
             event: 'profile:showMore'
             hasMore: @props.pagination.beatmapPlaycounts.hasMore
             loading: @props.pagination.beatmapPlaycounts.loading
@@ -90,16 +95,16 @@ class ProfilePage.Historical extends React.PureComponent
         p null, osu.trans('users.show.extra.historical.empty')
 
       h3
-        className: 'page-extra__title page-extra__title--small'
+        className: 'title title--page-extra-small'
         osu.trans('users.show.extra.historical.recent_plays.title')
 
       if @props.scoresRecent?.length
         [
-          el window._exported.PlayDetailList, key: 'play-detail-list', scores: @props.scoresRecent
+          el PlayDetailList, key: 'play-detail-list', scores: @props.scoresRecent
 
           el ShowMoreLink,
             key: 'show-more-row'
-            modifiers: ['profile-page', 't-community-user-graygreen-darker']
+            modifiers: ['profile-page', 't-greyseafoam-dark']
             event: 'profile:showMore'
             hasMore: @props.pagination.scoresRecent.hasMore
             loading: @props.pagination.scoresRecent.loading
@@ -117,7 +122,7 @@ class ProfilePage.Historical extends React.PureComponent
       if @hasReplaysWatchedCounts()
         div null,
           h3
-            className: 'page-extra__title page-extra__title--small'
+            className: 'title title--page-extra-small'
             osu.trans('users.show.extra.historical.replays_watched_counts.title')
 
           div
@@ -156,11 +161,11 @@ class ProfilePage.Historical extends React.PureComponent
         curve: d3.curveLinear
         formats:
           x: (d) -> moment(d).format(osu.trans('common.datetime.year_month_short.moment'))
-          y: (d) -> d.toLocaleString()
+          y: (d) -> osu.formatNumber(d)
         margins: right: 60 # more spacing for x axis label
         infoBoxFormats:
           x: (d) -> moment(d).format(osu.trans('common.datetime.year_month.moment'))
-          y: (d) -> "<strong>#{osu.trans("users.show.extra.historical.#{attribute}.count_label")}</strong> #{_.escape(d.toLocaleString())}"
+          y: (d) -> "<strong>#{osu.trans("users.show.extra.historical.#{attribute}.count_label")}</strong> #{_.escape(osu.formatNumber(d))}"
         tickValues: {}
         ticks: {}
         circleLine: true

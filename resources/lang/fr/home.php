@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => '<strong>:players</strong> connectés en ce moment dans <strong>:games</strong> parties',
         'peak' => 'Pic, :count joueurs connectés',
         'players' => '<strong>:count</strong> joueurs inscrits',
+        'title' => 'bienvenue',
 
         'slogan' => [
             'main' => 'le meilleur jeu de rythme free-to-win',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Recherche avancée',
         'button' => 'Rechercher',
         'empty_result' => 'Aucun résultat !',
-        'missing_query' => 'Les mots clés doivent être de :n caractères minimum',
+        'keyword_required' => 'Un mot clé de recherche est requis',
         'placeholder' => 'tapez pour rechercher',
         'title' => 'Rechercher',
 
@@ -89,7 +90,7 @@ return [
             'macos' => 'pour macOS',
             'linux' => 'pour Linux',
         ],
-        'mirror' => 'mirroir',
+        'mirror' => 'miroir',
         'macos-fallback' => 'utilisateurs macOS',
         'steps' => [
             'register' => [

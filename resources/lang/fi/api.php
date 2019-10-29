@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,12 +21,17 @@
 return [
     'error' => [
         'chat' => [
+            'empty' => 'Ei voida lähettää tyhjää viestiä.',
             'limit_exceeded' => 'Lähetät viestejä liian nopeasti, odota hetki ennen kuin yrität uudelleen.',
             'too_long' => 'Viesti jota yrität lähettää on liian pitkä.',
         ],
     ],
 
     'scopes' => [
-        'identify' => '',
+        'identify' => 'Tunnista itsesi ja lue julkista profiiliasi.',
+
+        'friends' => [
+            'read' => 'Näe ketä seuraat.',
+        ],
     ],
 ];

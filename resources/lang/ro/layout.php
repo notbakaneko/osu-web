@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ritmul este doar la un *clic* distanță! Cu Ouendan/EBA, Taiko și moduri de joc originale,  precum și un editor de nivel complet funcțional.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'acasă',
             'account-edit' => 'setări',
+            'account-verifyLink' => '',
             'friends-index' => 'prieteni',
             'changelog-index' => 'jurnalul modificărilor',
             'changelog-build' => 'versiune',
@@ -35,12 +52,18 @@ return [
             'groups-show' => 'grupuri',
             'index' => 'tablou de bord',
             'legal-show' => 'informație',
-            'news-index' => 'noutăți',
-            'news-show' => 'noutăți',
+            'messages-index' => 'mesaje',
+            'news-index' => 'ştiri',
+            'news-show' => 'ştiri',
             'password-reset-index' => 'resetare parolă',
             'search' => 'căutare',
             'supportTheGame' => 'sprijină jocul',
             'team' => 'echipă',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'ajutor',
@@ -77,10 +100,13 @@ return [
         ],
         'community' => [
             '_' => 'comunitate',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'dezvoltare',
             'getForum' => 'forumuri',
-            'getChat' => 'chat',
             'getLive' => 'în direct',
+            'comments-index' => 'comentarii',
+            'comments-show' => 'comentariu',
             'contests' => 'concursuri',
             'profile' => 'profil',
             'tournaments' => 'turnee',
@@ -114,16 +140,18 @@ return [
             'reset' => 'recuperează',
             'new' => 'nou',
 
-            'messages' => 'Mesaje',
-            'settings' => 'Setări',
-            'logout' => 'Deconectare',
             'help' => 'Ajutor',
+            'logout' => 'Deconectare',
+            'messages' => 'Mesaje',
             'modding-history-discussions' => 'discuțiile modificate ale utilizatorului',
             'modding-history-events' => 'evenimentele modificate ale utilizatorului',
             'modding-history-index' => 'isoricul modificărilor utilizatorului',
             'modding-history-posts' => 'postările modificate ale utilizatorului',
             'modding-history-votesGiven' => 'voturile modificate date ale utilizatorului',
             'modding-history-votesReceived' => 'voturile modificate primite ale utilizatorului',
+            'oauth_login' => 'autentifică-te pentru oauth',
+            'oauth_request' => 'autorizare oauth',
+            'settings' => 'Setări',
         ],
         'store' => [
             '_' => 'magazin',
@@ -133,6 +161,7 @@ return [
 
             'getCheckout' => 'finalizare comandă',
             'getInvoice' => 'factura',
+            'orders-index' => 'istoric comenzi',
             'products-show' => 'produs',
 
             'new' => 'nou',
@@ -177,11 +206,6 @@ return [
             'forum' => 'Forumuri',
             'livestreams' => 'Transmisiuni în direct',
             'report' => 'Raportează o problemă',
-        ],
-        'support' => [
-            '_' => 'Sprijină osu!',
-            'tags' => 'Insigne de suporter',
-            'merchandise' => 'Marfă',
         ],
         'legal' => [
             '_' => 'Legalitate & Statut',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Ai nevoie de un cont, domnule. De ce nu ai unul deja?",
+            'download' => '',
+            'info' => 'Ai nevoie de un cont, domnule. De ce nu ai unul deja?',
             'title' => "Nu ai un cont?",
         ],
     ],

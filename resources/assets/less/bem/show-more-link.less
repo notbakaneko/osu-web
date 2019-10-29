@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2019 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,13 +25,16 @@
   align-self: center;
   text-align: center;
   font-size: @font-size--normal;
-  color: @link-color;
+  color: white;
   padding: 5px 20px;
   border-radius: 10000px;
-  color: inherit;
+  width: max-content;
+
+  background-color: @osu-colour-b2;
 
   .link-hover({
-    color: inherit;
+    color: white;
+    background-color: @osu-colour-b1;
   });
 
   &--beatmapsets {
@@ -47,52 +50,23 @@
   }
 
   &--forum-topic {
-    margin: 5px auto 10px;
+    margin: 5px auto;
+
+    .link-hover({
+      background-color: @osu-colour-b3;
+    });
+  }
+
+  &--notification-group {
+    font-size: @font-size--small;
   }
 
   &--profile-page {
     margin: 10px auto 0;
   }
 
-  &--t-community-user-graygreen-darker {
-    background-color: @community-user-graygreen-darker;
-
-    .link-hover({
-      background-color: @community-user-graygreen-dark;
-    });
-  }
-
-  &--t-dark-purple-darker {
-    background-color: @dark-purple-darker;
-
-    .link-hover({
-      background-color: #000;
-    });
-  }
-
-  &--t-ddd {
-    background-color: #ddd;
-
-    .link-hover({
-      background-color: #ccc;
-    });
-  }
-
   &[disabled], &.js-disabled {
-    color: #ccc;
-
-    &.@{_top}--t-community-user-graygreen-darker {
-      background-color: @community-user-graygreen-darker;
-    }
-
-    &.@{_top}--t-ddd {
-      background-color: #ddd;
-      color: #666;
-    }
-
-    &.@{_top}--t-dark-purple-darker {
-      background-color: @dark-purple-darker;
-    }
+    background-color: @osu-colour-b2;
   }
 
   &__spinner {
@@ -108,6 +82,8 @@
 
   &__label {
     opacity: 1;
+    margin: 0 -5px;
+    display: flex;
 
     .@{_top}[disabled] &, .@{_top}.js-disabled & {
       opacity: 0;
@@ -115,15 +91,20 @@
   }
 
   &__label-icon {
-    color: @yellow;
+    color: @osu-colour-f1;
+    margin: 0 5px;
 
-    .@{_top}--t-ddd & {
-      color: @yellow-dark;
+    .@{_top}:hover & {
+      color: @osu-colour-l1;
+    }
+
+    .@{_top}--notification-group & {
+      color: #fff;
     }
   }
 
   &__label-text {
-    margin: 0 10px;
+    margin: 0 5px;
     text-transform: uppercase;
   }
 }

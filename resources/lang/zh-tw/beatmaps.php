@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => '給予 kudosu',
+        'beatmap_information' => '',
         'delete' => '刪除',
         'deleted' => '被 :editor 於 :delete_time 刪除。',
         'deny_kudosu' => '收回 kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => '最後由 :editor 編輯於 :update_time 。',
         'kudosu_denied' => 'kudosu 被收回',
         'message_placeholder_deleted_beatmap' => '該難度已被刪除，無法繼續討論',
+        'message_placeholder_locked' => '此圖譜的討論已被禁用。',
         'message_type_select' => '選擇回覆類型',
         'reply_notice' => '按下 Enter 以回覆',
         'reply_placeholder' => '在此處輸入您的回覆',
         'require-login' => '回覆前請先登入。',
         'resolved' => '已解決',
         'restore' => '已修復',
+        'show_deleted' => '顯示刪除的項目',
         'title' => '討論區',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => '還沒有討論！',
             'hidden' => '沒有符合過濾條件的討論。',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => '鎖定討論',
+                'unlock' => '解鎖討論',
+            ],
+
+            'prompt' => [
+                'lock' => '鎖定的原因',
+                'unlock' => '確認解鎖？',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => '釘選',
             'timestamp' => '時間戳',
             'timestamp_missing' => '在編輯模式下按 Ctrl+C 並至您輸入的對話框中按 Ctrl+V 以加入時間戳！',
             'title' => '新的討論',
+            'unpin' => '取消釘選',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => '排序：',
             'created_at' => '建立時間',
             'timeline' => '時間軸',
-            'updated_at' => '最後更新時間',
+            'updated_at' => '最後更新',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => '注意：這張圖譜被作者標記為 WIP（半成品）',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => '你確定嗎？提出新的問題會重置提名。',
-            'disqualify' => '',
+            'disqualify' => '你確定嗎？這個會移除圖譜從進榜和重設提名進度。',
         ],
     ],
 
@@ -194,14 +220,15 @@ return [
                 'played' => '玩過',
             ],
             'sorting' => [
-                'title' => '標題',
-                'artist' => '作曲者',
-                'difficulty' => '困難度',
-                'updated' => '更新時間',
-                'ranked' => '排名',
+                'title' => '曲名',
+                'artist' => '演出者',
+                'difficulty' => '難度',
+                'favourites' => '我的最愛',
+                'updated' => '已更新',
+                'ranked' => '進榜',
                 'rating' => '評分',
                 'plays' => '遊玩次數',
-                'relevance' => '相關性',
+                'relevance' => '相關度',
                 'nominations' => '提名狀態',
             ],
             'supporter_filter_quote' => [
@@ -212,7 +239,7 @@ return [
     ],
     'general' => [
         'recommended' => '推薦難度',
-        'converts' => '包括转谱',
+        'converts' => '包括轉換圖譜',
     ],
     'mode' => [
         'any' => '所有',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => '所有',
-        'ranked-approved' => '進榜/批准',
         'approved' => '批准',
-        'qualified' => '提名',
-        'loved' => 'Loved',
-        'faves' => '我的最愛',
-        'pending' => 'Pending & WIP',
+        'favourites' => '收藏',
         'graveyard' => '拋棄',
-        'my-maps' => '我的圖譜',
+        'leaderboard' => '擁有排行榜',
+        'loved' => 'Loved',
+        'mine' => '我的圖譜',
+        'pending' => 'Pending & WIP',
+        'qualified' => '提名',
+        'ranked' => '已進榜',
     ],
     'genre' => [
         'any' => '所有',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => '',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => '遊玩次數：:count',
+        'favourites' => '收藏次數：:count',
     ],
 ];

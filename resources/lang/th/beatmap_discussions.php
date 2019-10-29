@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,13 +22,13 @@ return [
     'authorizations' => [
         'update' => [
             'null_user' => 'ต้องเข้าสู่ระบบก่อนจะแก้ไข',
-            'system_generated' => 'โพสต์ที่ถูกสร้างขึ้นเองจากระบบไม่สามารถถูกแก้ไขได้',
-            'wrong_user' => 'ต้องเป็นเจ้าของโพสนี้ถึงจะสามารถแก้ไขได้',
+            'system_generated' => 'ไม่สามารถแก้ไขโพสต์ที่ระบบสร้างขึ้นเองได้',
+            'wrong_user' => 'ต้องเป็นเจ้าของโพสต์นี้ถึงจะสามารถแก้ไขได้',
         ],
     ],
 
     'events' => [
-        'empty' => 'ยังไม่มีอะไรเกิดขึ้น...ยัง',
+        'empty' => 'อืม... ยังไม่มีอะไรเกิดขึ้น',
     ],
 
     'index' => [
@@ -72,13 +72,6 @@ return [
             'true' => 'ทำเครื่องหมายเป็นแก้ไขแล้วโดย :user',
             'false' => 'ถูกเปิดใหม่โดย :user',
         ],
-    ],
-
-    'user' => [
-        'admin' => 'ผู้ดูแล',
-        'bng' => 'ผู้เสนอชื่อ',
-        'owner' => 'ผู้ทำแมพ',
-        'qat' => 'qat',
     ],
 
     'user_filter' => [

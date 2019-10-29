@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
 
         'avatar' => [
             'title' => 'Avatar',
+            'rules' => 'Por favor, certifica-te de que o teu avatar respeita :link.<br/>Isto significa que deve ser <strong>adequado para todas as idades</strong>, ou seja, sem nudez, profanidade ou conteúdo sugestivo.',
+            'rules_link' => 'as regras da comunidade',
         ],
 
         'email' => [
@@ -46,13 +48,13 @@ return [
             'title' => 'Perfil',
 
             'user' => [
+                'user_discord' => '',
                 'user_from' => 'localização atual',
                 'user_interests' => 'interesses',
                 'user_msnm' => '',
                 'user_occ' => 'ocupação',
                 'user_twitter' => '',
                 'user_website' => 'website',
-                'user_discord' => '',
             ],
         ],
 
@@ -62,28 +64,29 @@ return [
         ],
     ],
 
-    'update_email' => [
-        'email_subject' => 'osu! confirmação da alteração de email',
-        'update' => 'atualizar',
+    'notifications' => [
+        'title' => 'Notificações',
+        'topic_auto_subscribe' => 'ativar automaticamente as notificações em novos tópicos de fórum que tenhas criado',
     ],
 
-    'update_password' => [
-        'email_subject' => 'osu! confirmação da alteração da palavra-passe',
-        'update' => 'atualizar',
+    'oauth' => [
+        'authorized_clients' => 'clientes autorizados',
+        'own_clients' => 'os teus clientes',
+        'title' => 'OAuth',
     ],
 
     'playstyles' => [
-        'title' => 'Estilos de jogo',
-        'mouse' => 'rato',
         'keyboard' => 'teclado',
+        'mouse' => 'rato',
         'tablet' => 'tablet',
+        'title' => 'Estilos de jogo',
         'touch' => 'toque',
     ],
 
     'privacy' => [
-        'title' => 'Privacidade',
         'friends_only' => 'bloquear mensagens privadas de pessoas que não estejam na tua lista de amigos',
         'hide_online' => 'ocultar a tua presença online',
+        'title' => 'Privacidade',
     ],
 
     'security' => [
@@ -93,5 +96,24 @@ return [
         'last_active' => 'Ativo pela última vez:',
         'title' => 'Segurança',
         'web_sessions' => 'sessões web',
+    ],
+
+    'update_email' => [
+        'email_subject' => 'Confirmação da alteração de email do osu!',
+        'update' => 'atualizar',
+    ],
+
+    'update_password' => [
+        'email_subject' => 'Confirmação da alteração da palavra-passe do osu!',
+        'update' => 'atualizar',
+    ],
+
+    'verification_completed' => [
+        'text' => 'Poderás agora fechar este(a) separador/janela',
+        'title' => 'A verificação foi concluída',
+    ],
+
+    'verification_invalid' => [
+        'title' => 'Link de verificação inválido ou expirado',
     ],
 ];

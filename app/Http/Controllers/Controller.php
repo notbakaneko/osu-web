@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,6 +21,7 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Http\Middleware\VerifyPrivilegedUser;
 use App\Libraries\LocaleMeta;
 use App\Models\Log;
 use Auth;
@@ -46,6 +47,21 @@ abstract class Controller extends BaseController
         view()->share('currentAction', ($this->actionPrefix ?? '').current_action());
     }
 
+    /**
+     * Remove cookies from domain different to the one currently set in session.domain.
+     *
+     * @return void
+     */
+    protected function cleanupCookies()
+    {
+        $domain = config('session.domain') === null ? request()->getHttpHost() : null;
+        foreach (['locale', 'osu_session', 'XSRF-TOKEN'] as $key) {
+            // TODO: maybe also remove keys on parents - if setting on
+            //       a.b.c.d.e then remove on .b.c.d.e, .b.c.d, etc.
+            setcookie($key, '', 1, '/', $domain);
+        }
+    }
+
     protected function formatValidationErrors(Validator $validator)
     {
         return ['validation_error' => $validator->errors()->getMessages()];
@@ -62,10 +78,13 @@ abstract class Controller extends BaseController
 
     protected function login($user, $remember = false)
     {
-        Request::session()->flush();
-        Request::session()->regenerateToken();
+        $this->cleanupCookies();
+
+        session()->flush();
+        session()->regenerateToken();
+        session()->put('requires_verification', VerifyPrivilegedUser::isRequired($user));
         Auth::login($user, $remember);
-        Request::session()->migrate(true, Auth::user()->user_id);
+        session()->migrate(true, Auth::user()->user_id);
     }
 
     protected function logout()
@@ -79,6 +98,8 @@ abstract class Controller extends BaseController
         setcookie('phpbb3_2cjk5_sid_check', '', 1, '/', '.ppy.sh');
         setcookie('phpbb3_2cjk5_sid', '', 1, '/', '.osu.ppy.sh');
         setcookie('phpbb3_2cjk5_sid_check', '', 1, '/', '.osu.ppy.sh');
+
+        $this->cleanupCookies();
 
         Request::session()->invalidate();
     }

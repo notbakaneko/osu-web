@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'deleted',
+    'deleted_count' => ':count_delimited deleted comment|:count_delimited deleted comments',
     'edited' => 'edited :timeago by :user',
     'empty' => 'No comments yet.',
+    'load_replies' => 'load replies',
     'replies' => 'Replies',
-    'show_replies' => 'show replies',
     'title' => 'Comments',
 
     'commentable_name' => [
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Login to comment',
-        'reply' => 'Login to reply',
+        'new' => 'Sign in to comment',
+        'reply' => 'Sign in to reply',
     ],
 
     'index' => [
@@ -62,8 +63,8 @@ return [
 
     'show' => [
         'title' => [
-            '_' => 'Comments :info',
-            'info' => 'Detail',
+            '_' => 'Comments',
+            'info' => 'Comments',
         ],
     ],
 ];

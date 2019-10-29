@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,9 +34,14 @@ return [
         'invalid_mode' => 'Invalide mode opgegeven.',
         'standard_converts_only' => 'Er zijn geen scores beschikbaar voor de gevraagde mode voor deze beatmap difficulty.',
     ],
-    'beatmapsets' => [
-        'too-many-favourites' => 'Je hebt te veel favoriete beatmaps! Verwijder er een voor verder te gaan.',
+    'checkout' => [
+        'generic' => 'Er is een fout opgetreden tijdens het voorbereiden voor het afrekenen.',
     ],
+    'search' => [
+        'default' => 'Kan geen resultaten krijgen, probeer het later opnieuw.',
+        'operation_timeout_exception' => 'Zoeken is momenteel drukker dan gebruikelijk, probeer het later opnieuw.',
+    ],
+
     'logged_out' => 'Je bent uitgelogd. Log in en probeer opnieuw.',
     'supporter_only' => 'Je moet een supporter zijn om dit te gebruiken.',
     'no_restricted_access' => 'Je mag dit niet doen terwijl je account de restricted status heeft.',

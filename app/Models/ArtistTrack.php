@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -50,5 +50,19 @@ class ArtistTrack extends Model
     public function album()
     {
         return $this->belongsTo(ArtistAlbum::class);
+    }
+
+    public function getCoverUrlAttribute($value)
+    {
+        if (present($value)) {
+            return $value;
+        }
+
+        return $this->album_id ? $this->album->cover_url : $this->artist->cover_url;
+    }
+
+    public function isNew()
+    {
+        return $this->created_at->isAfter(now()->subMonth(1));
     }
 }

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,11 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div} = ReactDOMFactories
+import * as React from 'react'
+import { div } from 'react-dom-factories'
 bn = 'value-display'
 
-@ValueDisplay = ({label, value, description, modifiers}) ->
+export ValueDisplay = ({label, value, description, modifiers}) ->
   div
     className: osu.classWithModifiers(bn, modifiers)
     div className: "#{bn}__label", label

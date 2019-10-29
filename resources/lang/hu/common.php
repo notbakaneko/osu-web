@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', és ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Vissza a lap tetejére',
+        'admin' => 'Admin',
         'back_to_previous' => 'Vissza az előző pozícióra',
+        'back_to_top' => 'Vissza a lap tetejére',
         'cancel' => 'Mégse',
         'change' => 'változtat',
         'click_to_copy' => 'kattints ide a vágólapra helyezéshez',
         'click_to_copy_copied' => 'vágólapra helyezve!',
+        'close' => '',
+        'collapse' => 'összecsuk',
         'delete' => 'Törlés',
         'edit' => 'Szerkesztés',
+        'expand' => 'kibont',
         'hide' => 'elrejtés',
         'permalink' => 'állandó hivatkozás',
         'permalink_copied' => 'hivatkozás másolva',
@@ -52,8 +60,16 @@ return [
         'search' => 'Keresés',
         'see_more' => 'továbbiak mutatása',
         'show' => 'mutat',
+        'show_deleted' => 'Töröltek megjelenítése',
         'show_more' => 'több megjelenítése',
+        'show_more_options' => 'további opciók mutatása',
+        'update' => 'Frissítés',
         'upload_image' => 'kép feltöltése',
+
+        'watch' => [
+            'to_0' => 'Követés megszüntetése',
+            'to_1' => 'Követés',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count óra|:count óra',
         'item' => ':count egység|:count egység',
         'minute_short_unit' => 'p|p',
-        'minutes' => '',
+        'minutes' => ':count perc |:count percek',
         'months' => ':count hónap|:count hónap',
+        'plus_others' => '',
+        'post' => ':count_delimited poszt|:count_delimited posztok',
         'second_short_unit' => 'mp|mp',
+        'star_priority' => ':count_delimited: csillag prioritás|:count_delimited csillag prioritások',
+        'update' => ':count_delimited frissítés|:count_delimited frissítések',
+        'view' => ':count_delimited megtekintés|:count_delimited megtekintések',
         'years' => ':count év|:count év',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'húzd ide a feltöltéshez',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

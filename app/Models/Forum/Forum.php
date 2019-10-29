@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2019 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ use App\Models\User;
 use Carbon\Carbon;
 
 /**
+ * @property bool $allow_topic_covers
  * @property ForumCover $cover
  * @property int $display_on_index
  * @property int $enable_icons
@@ -82,6 +83,7 @@ class Forum extends Model
     public $timestamps = false;
 
     protected $casts = [
+        'allow_topic_covers' => 'boolean',
         'enable_indexing' => 'boolean',
         'enable_sigs' => 'boolean',
         'moderator_groups' => 'array',
@@ -268,6 +270,11 @@ class Forum extends Model
         return $this->forum_id === $id || isset($this->forum_parents[$id]);
     }
 
+    public function isHelpForum()
+    {
+        return $this->forum_id === config('osu.forum.help_forum_id');
+    }
+
     public function topicsAdded($count)
     {
         $this->getConnection()->transaction(function () use ($count) {
@@ -349,16 +356,32 @@ class Forum extends Model
         return $this->forum_type === 1;
     }
 
-    public function markAsRead(User $user)
+    public function markAsRead(User $user, bool $recursive = false)
     {
-        $forumTrack = ForumTrack::firstOrNew([
-            'user_id' => $user->getKey(),
-            'forum_id' => $this->getKey(),
-        ]);
-        $forumTrack->mark_time = Carbon::now();
-        $forumTrack->save();
+        $forumIds = [$this->getKey()];
 
-        TopicTrack::where('user_id', $user->getKey())->where('forum_id', $this->getKey())->delete();
+        if ($recursive) {
+            $forums = static::all();
+
+            foreach ($forums as $forum) {
+                if (isset($forum->forum_parents[$this->getKey()])) {
+                    $forumIds[] = $forum->getKey();
+                }
+            }
+        }
+
+        $this->getConnection()->transaction(function () use ($forumIds, $user) {
+            foreach ($forumIds as $forumId) {
+                $forumTrack = ForumTrack::firstOrNew([
+                    'user_id' => $user->getKey(),
+                    'forum_id' => $forumId,
+                ]);
+                $forumTrack->mark_time = Carbon::now();
+                $forumTrack->save();
+            }
+
+            TopicTrack::where('user_id', $user->getKey())->whereIn('forum_id', $forumIds)->delete();
+        });
     }
 
     public function toMetaDescription()

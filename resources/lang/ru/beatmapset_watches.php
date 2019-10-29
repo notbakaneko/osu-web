@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,13 +19,6 @@
  */
 
 return [
-    'button' => [
-        'action' => [
-            'to_0' => 'Отписаться от обновлений',
-            'to_1' => 'Подписаться на обновления',
-        ],
-    ],
-
     'index' => [
         'description' => 'Тут показываются карты, на обновления которых вы подписаны. Вы будете оповещены, если появятся новые посты или обновления.',
         'title_compact' => 'подписки на карты',

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,11 +17,14 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace Tests\Libraries;
+
 use App\Exceptions\ChangeUsernameException;
 use App\Libraries\ChangeUsername;
 use App\Models\User;
-use App\Models\UserStatistics;
 use Carbon\Carbon;
+use Tests\TestCase;
 
 // FIXME: need more tests
 class ChangeUsernameTest extends TestCase
@@ -34,6 +37,26 @@ class ChangeUsernameTest extends TestCase
         $this->assertArrayHasKey('user_id', $errors);
     }
 
+    public function testUserIsRestricted()
+    {
+        $user = $this->createUser(['user_warnings' => 1]);
+
+        $errors = $user->validateChangeUsername('newusername')->all();
+        $expected = [trans('model_validation.user.change_username.restricted')];
+
+        $this->assertArrayHasKey('username', $errors);
+        $this->assertArraySubset($expected, $errors['username'], true);
+    }
+
+    public function testSupportCanChangeEvenIfUserIsRestricted()
+    {
+        $user = $this->createUser(['user_warnings' => 1]);
+
+        $errors = $user->validateChangeUsername('newusername', 'support')->all();
+
+        $this->assertEmpty($errors);
+    }
+
     public function testUserHasNeverSupported()
     {
         $user = $this->createUser(['osu_subscriptionexpiry' => null]);
@@ -43,6 +66,15 @@ class ChangeUsernameTest extends TestCase
 
         $this->assertArrayHasKey('username', $errors);
         $this->assertArraySubset($expected, $errors['username'], true);
+    }
+
+    public function testSupportCanChangeEvenIfUserHasNeverSupported()
+    {
+        $user = $this->createUser(['osu_subscriptionexpiry' => null]);
+
+        $errors = $user->validateChangeUsername('newusername', 'support')->all();
+
+        $this->assertEmpty($errors);
     }
 
     public function testUsernameIsSame()
@@ -119,9 +151,8 @@ class ChangeUsernameTest extends TestCase
         $this->assertTrue($historyExists);
     }
 
-    public function testPreviousUserIsRankedLocked()
+    public function testPreviousUserHasBadge()
     {
-        config()->set('osu.user.username_lock_rank_limit', 10);
         $newUsername = 'newusername';
 
         $user = $this->createUser();
@@ -138,17 +169,14 @@ class ChangeUsernameTest extends TestCase
             'type' => 'paid',
         ]);
 
-        $existing->statisticsOsu()->save(
-            factory(UserStatistics\Osu::class)->make(['rank' => 10, 'rank_score_index' => 10, 'playcount' => 0])
-        );
+        $existing->badges()->create(['image' => 'test', 'description' => 'test', 'awarded' => now()]);
 
         $this->expectException(ChangeUsernameException::class);
         $user->changeUsername($newUsername, 'paid');
     }
 
-    public function testPreviousUserIsNotRankedLocked()
+    public function testPreviousUserHasNoBadge()
     {
-        config()->set('osu.user.username_lock_rank_limit', 9);
         $newUsername = 'newusername';
 
         $user = $this->createUser();
@@ -165,48 +193,14 @@ class ChangeUsernameTest extends TestCase
             'type' => 'paid',
         ]);
 
-        $existing->statisticsOsu()->save(
-            factory(UserStatistics\Osu::class)->make(['rank' => 10, 'rank_score_index' => 10, 'playcount' => 0])
-        );
-
-        $history = $user->changeUsername($newUsername, 'paid');
+        $user->changeUsername($newUsername, 'paid');
         $user->refresh();
 
         $this->assertSame($newUsername, $user->username);
     }
 
-    public function testPreviousUserIsNotRanked()
+    public function testInactiveUserHasBadge()
     {
-        config()->set('osu.user.username_lock_rank_limit', 10);
-        $newUsername = 'newusername';
-
-        $user = $this->createUser();
-        $existing = $this->createUser([
-            'username' => 'existing_now',
-            'username_clean' => 'existing_now',
-            'osu_subscriptionexpiry' => null,
-        ]);
-
-        $existing->usernameChangeHistory()->create([
-            'username' => 'existing_now',
-            'username_last' => $newUsername,
-            'timestamp' => Carbon::now()->subYear(),
-            'type' => 'paid',
-        ]);
-
-        $existing->statisticsOsu()->save(
-            factory(UserStatistics\Osu::class)->make(['rank' => 0, 'rank_score_index' => 0, 'playcount' => 0])
-        );
-
-        $history = $user->changeUsername($newUsername, 'paid');
-        $user->refresh();
-
-        $this->assertSame($newUsername, $user->username);
-    }
-
-    public function testInactiveUserIsRankLocked()
-    {
-        config()->set('osu.user.username_lock_rank_limit', 10);
         $newUsername = 'newusername';
 
         $user = $this->createUser();
@@ -217,9 +211,7 @@ class ChangeUsernameTest extends TestCase
             'user_lastvisit' => Carbon::now()->subYear(),
         ]);
 
-        $existing->statisticsOsu()->save(
-            factory(UserStatistics\Osu::class)->make(['rank' => 10, 'rank_score_index' => 10, 'playcount' => 0])
-        );
+        $existing->badges()->create(['image' => 'test', 'description' => 'test', 'awarded' => now()]);
 
         $this->expectException(ChangeUsernameException::class);
         $user->changeUsername($newUsername, 'paid');

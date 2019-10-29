@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -18,36 +18,29 @@
 
 # Import shim so that globally declared scripts can work without changes.
 
-import { BackToTop } from 'back-to-top'
-import { PlayDetailList } from 'play-detail-list'
-import { PlayDetailMenu } from 'play-detail-menu'
-import { ReportComment } from 'report-comment'
-import { ReportUser } from 'report-user'
-import { ScoreHelper } from 'score-helper'
-import { SelectOptions } from 'select-options'
-import { SpotlightSelectOptions } from 'spotlight-select-options'
+import Enchant from 'enchant'
+import ForumPoll from 'forum-poll'
+import * as laroute from 'laroute'
 import { StoreCheckout } from 'store-checkout'
 import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
-import VirtualList from 'react-virtual-list'
 import GalleryContest from 'gallery-contest'
-import WindowVHPatcher from 'window-vh-patcher';
+import WindowVHPatcher from 'window-vh-patcher'
+import TurbolinksReload from 'turbolinks-reload'
 
 # polyfill non-Edge IE
 window.Promise ?= Promise
 
 window._exported = {
-  BackToTop
-  PlayDetailList
-  PlayDetailMenu
-  ReportComment
-  ReportUser
-  ScoreHelper
-  SelectOptions
-  SpotlightSelectOptions
+  Enchant
+  ForumPoll
   GalleryContest
+  TurbolinksReload
   WindowVHPatcher
 }
+
+# FIXME: remove once everything imports instead of using global
+window.laroute ?= laroute
 
 # refer to variables.less
 window._styles =
@@ -58,4 +51,3 @@ window._styles =
 
 window.StoreCheckout = StoreCheckout
 window.TextareaAutosize = TextareaAutosize
-window.VirtualList = VirtualList

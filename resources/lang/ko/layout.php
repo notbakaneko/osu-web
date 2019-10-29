@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - 리듬은 단순한 *클릭*만으로도 만들어질 수 있습니다! 응원단/리듬히어로, 태고와 이외 독자적인 게임플레이 모드, 완벽한 기능을 갖춘 맵 에디터까지 준비되어 있습니다.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '커뮤니티',
+
+            'forum' => '포럼',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '닫기 (Esc)',
+        'fullscreen' => '전체화면 전환',
+        'zoom' => '확대 / 축소',
+        'previous' => '이전 (왼쪽 방향키)',
+        'next' => '다음 (오른쪽 방향키)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => '메인',
             'account-edit' => '설정',
+            'account-verifyLink' => '인증 완료',
             'friends-index' => '친구',
             'changelog-index' => '변경 사항',
             'changelog-build' => '빌드 버전',
@@ -35,13 +52,18 @@ return [
             'groups-show' => '그룹',
             'index' => '대시보드',
             'legal-show' => '정보',
-            'messages-index' => '',
+            'messages-index' => '메시지',
             'news-index' => '소식',
             'news-show' => '소식',
             'password-reset-index' => '비밀번호 재설정',
             'search' => '검색',
             'supportTheGame' => '게임 지원하기',
             'team' => '운영진',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => '도움말',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => '커뮤니티',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => '채팅',
+            'chat-index' => '채팅',
             'dev' => '개발',
             'getForum' => '포럼',
             'getLive' => '라이브 스트림',
@@ -118,16 +140,18 @@ return [
             'reset' => '복원',
             'new' => '새',
 
-            'messages' => '메시지',
-            'settings' => '설정',
-            'logout' => '로그아웃',
             'help' => '도움말',
+            'logout' => '로그아웃',
+            'messages' => '메시지',
             'modding-history-discussions' => '유저 모딩 토론',
             'modding-history-events' => '유저 모딩 활동',
             'modding-history-index' => '유저 모딩 기록',
             'modding-history-posts' => '유저 모딩 글',
             'modding-history-votesGiven' => '유저가 준 모딩 투표',
             'modding-history-votesReceived' => '유저가 받은 모딩 투표',
+            'oauth_login' => 'OAuth로 로그인',
+            'oauth_request' => 'OAuth 인증',
+            'settings' => '설정',
         ],
         'store' => [
             '_' => '상점',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "계정이 필요합니다, 하나 만들어보시는 건 어때요?",
+            'download' => '',
+            'info' => '계정이 필요합니다, 하나 만들어보시는 건 어때요?',
             'title' => "아직 계정이 없으신가요?",
         ],
     ],

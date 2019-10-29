@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => 'Jelenleg <strong>:players</strong> játszik <strong>:games</strong> játékban',
         'peak' => 'Csúcsfokon, :count játékos volt elérhető',
         'players' => '<strong>:count</strong> regisztrált játékos',
+        'title' => 'üdv',
 
         'slogan' => [
             'main' => 'a legeslegjobb ingyen játszható ritmusjáték',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Részletes keresés',
         'button' => 'Keresés',
         'empty_result' => 'Nincs találat!',
-        'missing_query' => 'Minimum :n karatkerrel keress',
+        'keyword_required' => 'Adj meg egy kulcsszót is',
         'placeholder' => 'keresendő szöveg',
         'title' => 'Keresés',
 

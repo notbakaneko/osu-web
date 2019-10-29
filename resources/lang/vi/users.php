@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Lịch Sử Modding Của :user",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'Cuộc thảo luận gần đây',
@@ -88,9 +88,6 @@ return [
         'title' => 'Bài đăng của :username',
     ],
 
-    'signup' => [
-        '_' => 'Đăng kí',
-    ],
     'anonymous' => [
         'login_link' => 'nhấp để đăng nhập',
         'login_text' => 'đăng nhập',
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!supporter',
         'joined_at' => 'Đã tham gia :date',
         'lastvisit' => 'Lần cuối hoạt động :date',
+        'lastvisit_online' => 'Hiện đang trực tuyến',
         'missingtext' => 'Có thể bạn đã thực hiện một lỗi đánh máy! (hoặc người dùng này có thể đã bị ban)',
         'origin_country' => 'Từ :country',
         'page_description' => 'osu! - Tất cả những bì bạn muốn biết về :username!',
@@ -148,10 +146,14 @@ return [
                     'button' => 'Tải ảnh lên',
                     'dropzone' => 'Thả vào đây để tải lên',
                     'dropzone_info' => 'Bạn cũng có thể thả hình ảnh vào đây để tải lên',
-                    'restriction_info' => "Tải lên chỉ có sẵn cho <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>người hỗ trợ osu!</a>",
                     'size_info' => 'Kích cỡ ảnh bìa nên là 2800x620',
                     'too_large' => 'Tệp đã tải lên quá lơn.',
                     'unsupported_format' => 'Định dạng không được hỗ trợ.',
+
+                    'restriction_info' => [
+                        '_' => 'Tải lên chỉ có sẵn cho :link',
+                        'link' => '',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => ':count người theo dõi',
+            'none' => 'không có',
             'unranked' => 'Không chơi gần đây',
 
             'achievements' => [
                 'achieved-on' => 'Đạt được vào :date',
-                'locked' => '',
+                'locked' => 'Đã khóa',
                 'title' => 'Huy hiệu',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'bởi :artist',
                 'none' => 'Chưa có... gì cả.',
                 'title' => 'Beatmaps',
 
@@ -179,7 +181,7 @@ return [
                     'title' => 'Beatmap Yêu Thích',
                 ],
                 'graveyard' => [
-                    'title' => '',
+                    'title' => 'Graveyarded Beatmaps',
                 ],
                 'loved' => [
                     'title' => 'Loved Beatmaps',
@@ -191,13 +193,23 @@ return [
                     'title' => 'Beatmap Đang Chờ',
                 ],
             ],
+            'discussions' => [
+                'title' => 'Thảo luận',
+                'title_longer' => 'Thảo luận gần đây',
+                'show_more' => 'xem thảo luận khác',
+            ],
+            'events' => [
+                'title' => 'Sự kiện',
+                'title_longer' => 'Sự kiện gần đây',
+                'show_more' => 'xem sự kiện khác',
+            ],
             'historical' => [
                 'empty' => 'Chưa ghi nhận điểm. :(',
                 'title' => 'Lịch Sử',
 
                 'monthly_playcounts' => [
                     'title' => 'Lịch Sử Chơi',
-                    'count_label' => '',
+                    'count_label' => 'Lượt Chơi',
                 ],
                 'most_played' => [
                     'count' => 'số lần chơi',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Lịch Sử Replay Được Xem',
-                    'count_label' => '',
+                    'count_label' => 'Replay Đã Xem',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => 'Lịch Sử Kudosu Gần Đây',
                 'title' => 'Kudosu!',
                 'total' => 'Tông Số Kudosu Nhận Được',
-                'total_info' => 'Dựa vào số lượng đóng góp mà người dùng này đã thực hiện để điều chỉnh beatmap. Xem <a href="'.osu_url('user.kudosu').'">trang này</a> để biết thêm thông tin.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,14 +269,24 @@ return [
                         'revoke' => 'Từ chối kudosu kudosu :giver cho bài đăng :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '',
+                    'link' => 'trang này',
+                ],
             ],
             'me' => [
                 'title' => 'tôi!',
             ],
             'medals' => [
                 'empty' => "Người dùng này chưa có huy chương nào cả. ;_;",
-                'recent' => '',
+                'recent' => 'Gần Nhất',
                 'title' => 'Huy Chương',
+            ],
+            'posts' => [
+                'title' => 'Bài viết',
+                'title_longer' => 'Bài viết gần đây',
+                'show_more' => 'xem bài viết khác',
             ],
             'recent_activity' => [
                 'title' => 'Gần Đây',
@@ -274,7 +295,7 @@ return [
                 'download_replay' => 'Tải Xuống Replay',
                 'empty' => 'Chưa ghi nhận thành tích tuyệt vời nào. :(',
                 'not_ranked' => 'Chỉ có beatmap được xếp hạng mới có pp.',
-                'pp_weight' => '',
+                'pp_weight' => 'trọng số :percentage',
                 'title' => 'Xếp Hạng',
 
                 'best' => [
@@ -283,6 +304,13 @@ return [
                 'first' => [
                     'title' => 'Xếp Hạng Nhất',
                 ],
+            ],
+            'votes' => [
+                'given' => '',
+                'received' => '',
+                'title' => '',
+                'title_longer' => '',
+                'vote_count' => '',
             ],
             'account_standing' => [
                 'title' => 'Trạng Thái Tài Khoản',
@@ -293,7 +321,7 @@ return [
                     'title' => 'Vi Phạm Gần Đây',
                     'date' => 'ngày',
                     'action' => 'hành động',
-                    'length' => 'chiều dài',
+                    'length' => 'thời lượng',
                     'length_permanent' => 'vĩnh viễn',
                     'description' => 'mô tả',
                     'actor' => 'bởi :username',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => ':info Người Chơi',
+            'info' => 'Thông Tin',
         ],
 
         'info' => [
@@ -330,10 +358,15 @@ return [
             'title' => 'Không tìm thấy người dùng! ;_;',
         ],
         'page' => [
+            'button' => 'Chỉnh sửa trang cá nhân',
             'description' => '<strong>tôi!</strong> là một khu vực cá nhân có thể tùy chỉnh trong trang cá nhân của bạn.',
             'edit_big' => 'Chỉnh sửa tôi!',
             'placeholder' => 'Nhập nội dung trang vào đây',
-            'restriction_info' => "Bạn cần phải là <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>người hỗ trợ osu!</a> để mở khóa tính năng này.",
+
+            'restriction_info' => [
+                '_' => '',
+                'link' => '',
+            ],
         ],
         'post_count' => [
             '_' => 'Đã đóng góp :link',
@@ -341,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => 'Hạng quốc gia cho :mode',
-            'country_simple' => '',
+            'country_simple' => 'Hạng Quốc Gia',
             'global' => 'Hạng quốc tế cho :mode',
-            'global_simple' => '',
+            'global_simple' => 'Hạng Toàn Cầu',
         ],
         'stats' => [
             'hit_accuracy' => 'Độ Chính Xác',
             'level' => 'Level :level',
-            'level_progress' => '',
+            'level_progress' => 'Tiến độ qua level tiếp theo',
             'maximum_combo' => 'Combo Cao Nhất',
-            'medals' => '',
+            'medals' => 'Huy Chương',
             'play_count' => 'Số Lần Chơi',
             'play_time' => 'Tổng Thời Gian Chơi',
             'ranked_score' => 'Điểm Được Xếp Hạng',
@@ -358,9 +391,16 @@ return [
             'score_ranks' => 'Điểm Số',
             'total_hits' => 'Tổng Lần Bấm',
             'total_score' => 'Tổng Điểm',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => '',
+            'loved_beatmapset_count' => '',
+            'unranked_beatmapset_count' => '',
+            'graveyard_beatmapset_count' => '',
         ],
     ],
+
     'status' => [
+        'all' => '',
         'online' => 'Online',
         'offline' => 'Offline',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'Xác Thực Tài Khoản',
+    ],
+
+    'view_mode' => [
+        'card' => '',
+        'list' => '',
     ],
 ];

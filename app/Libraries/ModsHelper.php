@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -38,6 +38,7 @@ class ModsHelper
         [14, 'PF', [5]],
         [5, 'SD'],
         [2, 'TD'],
+        [30, 'MR'],
 
         // mania keys (converts)
         [15, '4K'],
@@ -83,7 +84,13 @@ class ModsHelper
 
         foreach (static::AVAILABLE_MODS as $availableMod) {
             if (in_array($availableMod[1], $mods, true)) {
-                $bitset ^= (1 << $availableMod[0]);
+                $bitset |= (1 << $availableMod[0]);
+
+                if (isset($availableMod[2])) {
+                    foreach ($availableMod[2] as $implicitMod) {
+                        $bitset |= (1 << $implicitMod);
+                    }
+                }
             }
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,6 +34,14 @@ return [
         'invalid_mode' => 'Invalid mode specified.',
         'standard_converts_only' => 'No scores are available for the requested mode on this beatmap difficulty.',
     ],
+    'checkout' => [
+        'generic' => 'An error occurred while preparing your checkout.',
+    ],
+    'search' => [
+        'default' => 'Could not get any results, try again later.',
+        'operation_timeout_exception' => 'Search is currently busier than usual, try again later.',
+    ],
+
     'logged_out' => 'You have been signed out. Please sign in and retry.',
     'supporter_only' => 'You must be an osu!supporter to use this feature.',
     'no_restricted_access' => 'You are not able to perform this action while your account is in a restricted state.',

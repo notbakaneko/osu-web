@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'разреши kudosu',
+        'beatmap_information' => '',
         'delete' => 'изтрий',
         'deleted' => 'Изтрито от :editor :delete_time.',
         'deny_kudosu' => 'забрани kudosu',
@@ -40,22 +41,36 @@ return [
         'edited' => 'Последно редактирано от :editor :update_time.',
         'kudosu_denied' => 'Забранено получаване на kudosu.',
         'message_placeholder_deleted_beatmap' => 'Тази трудност е била изтрита, така че тя вече не може да се обсъжда.',
+        'message_placeholder_locked' => '',
         'message_type_select' => 'Изберете тип на коментар',
         'reply_notice' => 'Натиснете enter за да отговорите.',
         'reply_placeholder' => 'Въведете вашия отговор тук',
         'require-login' => 'Моля влезте в профила си за да публикувате или отговорите',
         'resolved' => 'Разрешени',
         'restore' => 'възстанови',
+        'show_deleted' => 'Покажи изтритите',
         'title' => 'Дискусии',
 
         'collapse' => [
-            'all-collapse' => 'Затвори всички',
+            'all-collapse' => 'Свий всички',
             'all-expand' => 'Разшири всички',
         ],
 
         'empty' => [
             'empty' => 'Няма дискусии все още!',
             'hidden' => 'Няма дискусия която съвпада с избрания филтър.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Заключи дискусията',
+                'unlock' => 'Отключи дискусията',
+            ],
+
+            'prompt' => [
+                'lock' => 'Причина за заключването',
+                'unlock' => 'Сигурни ли сте, че искате да отключите дискусията?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Закачи',
             'timestamp' => 'Времев етикет',
             'timestamp_missing' => 'ctrl-c в редактора и вмъкнете вашето съобщение, за да добавите времев етикет!',
             'title' => 'Нова Дискусия',
+            'unpin' => 'Откачи',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Сортирани по:',
-            'created_at' => 'време на създаване',
-            'timeline' => 'времева лента',
-            'updated_at' => 'последна актуализация',
+            'created_at' => 'Време на създаване',
+            'timeline' => 'Времева лента',
+            'updated_at' => 'Последно обновяване',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Забележка: Този бийтмап е маркиран като работа в прогрес от създателя.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Сигурен ли сте? Публикуването на нов проблем ще нулира номинационният процес.',
-            'disqualify' => '',
+            'disqualify' => 'Сигурни ли сте? Това ще премахне бийтмапа от квалифицирания му статус и ще нулира целия процес на номинация.',
         ],
     ],
 
@@ -190,19 +216,20 @@ return [
                 'genre' => 'Жанр',
                 'language' => 'Език',
                 'extra' => 'екстра',
-                'rank' => 'Постигнат Ранк',
+                'rank' => 'Постигнат Ранг',
                 'played' => 'Изигран',
             ],
             'sorting' => [
-                'title' => 'заглавие',
-                'artist' => 'артист',
-                'difficulty' => 'трудност',
-                'updated' => 'актуализиран',
-                'ranked' => 'класиран',
-                'rating' => 'рейтинг',
-                'plays' => 'изигран',
-                'relevance' => 'уместност',
-                'nominations' => 'номинации',
+                'title' => 'Заглавие',
+                'artist' => 'Изпълнител',
+                'difficulty' => 'Трудност',
+                'favourites' => 'Любими',
+                'updated' => 'Обновен',
+                'ranked' => 'Класиран',
+                'rating' => 'Рейтинг',
+                'plays' => 'Изигран',
+                'relevance' => 'Уместност',
+                'nominations' => 'Номинации',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Филтриране по :filters изисква активен :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Всички',
-        'ranked-approved' => 'Класирани и Одобрени',
         'approved' => 'Одобрени',
-        'qualified' => 'Квалифицирани',
-        'loved' => 'Обичани',
-        'faves' => 'Фаворити',
-        'pending' => 'Изчакващи одобрение или недовършени',
+        'favourites' => '',
         'graveyard' => 'Гробище',
-        'my-maps' => 'Моите Мапове',
+        'leaderboard' => '',
+        'loved' => 'Обичани',
+        'mine' => '',
+        'pending' => 'Изчакващи одобрение или недовършени',
+        'qualified' => 'Квалифицирани',
+        'ranked' => '',
     ],
     'genre' => [
         'any' => 'Всички',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Брой игри: :count',
+        'favourites' => 'Любими: :count',
     ],
 ];

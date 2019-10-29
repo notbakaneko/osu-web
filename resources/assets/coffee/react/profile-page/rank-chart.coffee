@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,9 +16,10 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div} = ReactDOMFactories
+import * as React from 'react'
+import { div } from 'react-dom-factories'
 
-class ProfilePage.RankChart extends React.Component
+export class RankChart extends React.Component
   constructor: (props) ->
     super props
 
@@ -47,7 +48,7 @@ class ProfilePage.RankChart extends React.Component
       osu.transChoice('common.time.days_ago', -d)
 
   formatY: (d) ->
-    "<strong>#{osu.trans('users.show.rank.global_simple')}</strong> ##{(-d).toLocaleString()}"
+    "<strong>#{osu.trans('users.show.rank.global_simple')}</strong> ##{osu.formatNumber(-d)}"
 
 
   render: =>
@@ -85,11 +86,20 @@ class ProfilePage.RankChart extends React.Component
       y: -rank
     .filter (point) -> point.y < 0
 
+    return unless data.length > 0
+
     if data.length == 1
       data.unshift
         x: data[0].x - 1
         y: data[0].y
 
-    _.last(data).y = -@props.stats.rank.global
+    lastData = _.last(data)
+
+    if lastData.x == 0
+      lastData.y = -@props.stats.rank.global
+    else
+      data.push
+        x: 0
+        y: -@props.stats.rank.global
 
     @rankChart.loadData data

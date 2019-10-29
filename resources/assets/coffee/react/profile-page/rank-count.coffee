@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,20 +16,26 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div} = ReactDOMFactories
+import * as React from 'react'
+import { div } from 'react-dom-factories'
 el = React.createElement
-ranks = ['XH', 'X', 'SH', 'S', 'A']
+ranks =
+  XH: 'ssh'
+  X: 'ss'
+  SH: 'sh'
+  S: 's'
+  A: 'a'
 
-class ProfilePage.RankCount extends React.PureComponent
+export class RankCount extends React.PureComponent
   render: =>
     div className: 'profile-rank-count',
-      ranks.map @renderRankCountEntry
+      @renderRankCountEntry(name, grade) for name, grade of ranks
 
 
-  renderRankCountEntry: (name) =>
+  renderRankCountEntry: (name, grade) =>
     div
       key: name
       className: 'profile-rank-count__item'
       div
-        className: "score-rank-v2 score-rank-v2--#{name} score-rank-v2--profile-page"
-      @props.stats.scoreRanks[name].toLocaleString()
+        className: "score-rank score-rank--#{name} score-rank--profile-page"
+      osu.formatNumber(@props.stats.grade_counts[grade])

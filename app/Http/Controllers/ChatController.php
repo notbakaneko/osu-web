@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,7 +27,7 @@ use Request;
 
 class ChatController extends Controller
 {
-    protected $section = 'home';
+    protected $section = 'community';
     protected $actionPrefix = 'chat-';
 
     public function __construct()
@@ -39,24 +39,6 @@ class ChatController extends Controller
 
     public function index()
     {
-        // TODO: REMOVE ONCE COMPLETELY LIVE
-        $canWebChat = false;
-        if (Auth::check()) {
-            if (Auth::user()->isPrivileged()) {
-                $canWebChat = true;
-            }
-            if (config('osu.chat.webchat_enabled_supporter') && Auth::user()->isSupporter()) {
-                $canWebChat = true;
-            }
-            if (config('osu.chat.webchat_enabled_all')) {
-                $canWebChat = true;
-            }
-        }
-
-        if (!$canWebChat) {
-            return view('chat.coming-soon');
-        }
-
         $presence = UserChannel::presenceForUser(Auth::user());
         $json = [];
 

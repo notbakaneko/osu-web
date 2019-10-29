@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => '삭제됨',
+    'deleted_count' => ':count_delimited개의 삭제된 댓글',
     'edited' => ':user에 의해 :timeago전에 수정됨.',
     'empty' => '아직 댓글이 없습니다.',
+    'load_replies' => '답글 불러오기',
     'replies' => '답글',
-    'show_replies' => '답글 보이기',
     'title' => '댓글',
 
     'commentable_name' => [
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => '댓글을 작성하려면 로그인하세요.',
-        'reply' => '답글을 작성하려면 로그인해야 합니다.',
+        'new' => '로그인하여 댓글 달기',
+        'reply' => '로그인하여 답글 작성',
     ],
 
     'index' => [
@@ -65,12 +66,5 @@ return [
             '_' => '댓글 :info',
             'info' => '세부 정보',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

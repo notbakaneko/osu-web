@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Cronologia Modding di :user",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'Discussioni aperte di recente',
@@ -49,25 +49,25 @@ return [
     'blocks' => [
         'banner_text' => 'Hai bloccato questo utente.',
         'blocked_count' => 'utenti bloccati (:count)',
-        'hide_profile' => 'nascondi profilo',
+        'hide_profile' => 'Nascondi profilo',
         'not_blocked' => 'Questo utente non è bloccato.',
-        'show_profile' => 'visualizza profilo',
+        'show_profile' => 'Visualizza profilo',
         'too_many' => 'Limite blocchi raggiunto.',
         'button' => [
-            'block' => 'blocca',
+            'block' => 'Blocca',
             'unblock' => 'sblocca',
         ],
     ],
 
     'card' => [
         'loading' => 'Caricamento...',
-        'send_message' => 'invia messaggio',
+        'send_message' => 'Invia messaggio',
     ],
 
     'login' => [
         '_' => 'Accedi',
         'locked_ip' => 'il tuo indirizzo IP è bloccato. Aspetta qualche minuto per favore.',
-        'username' => 'Nome utente',
+        'username' => 'Nome Utente',
         'password' => 'Password',
         'button' => 'Accedi',
         'button_posting' => 'Accesso in corso...',
@@ -77,7 +77,7 @@ return [
         'register' => "Non hai un account di osu!? Fanne uno nuovo",
         'forgot' => 'Hai dimenticato la tua password?',
         'beta' => [
-            'main' => 'L\'accesso alla beta è momentaneamente ristretto ad utenti privilegiati.',
+            'main' => 'L\'accesso alla beta è attualmente limitato ad utenti privilegiati.',
             'small' => '(i supporter lo avranno a breve)',
         ],
 
@@ -88,9 +88,6 @@ return [
         'title' => 'Post di :username',
     ],
 
-    'signup' => [
-        '_' => 'Registrati',
-    ],
     'anonymous' => [
         'login_link' => 'clicca per accedere',
         'login_text' => 'registrati',
@@ -99,12 +96,12 @@ return [
     ],
     'logout_confirm' => 'Sei sicuro di volerti disconnettere? :(',
     'report' => [
-        'button_text' => 'segnala',
+        'button_text' => 'Segnala',
         'comments' => 'Ulteriori Commenti',
-        'placeholder' => 'Si prega di fornire qualsiasi informazione che ritieni possa essere utile.',
+        'placeholder' => 'Fornisci qualsiasi informazione che ritieni possa essere utile.',
         'reason' => 'Motivazione',
         'thanks' => 'Grazie per la tua segnalazione!',
-        'title' => 'Segnala :username?',
+        'title' => 'Segnalare :username?',
 
         'actions' => [
             'send' => 'Invia Segnalazione',
@@ -112,28 +109,29 @@ return [
         ],
 
         'options' => [
-            'cheating' => 'Gioco sporco / Cheating',
+            'cheating' => 'Gioco scorretto / Cheating',
             'insults' => 'Insulti a me / altri',
             'spam' => 'Spamming',
-            'unwanted_content' => 'Condivisione di contenuti inappropiati',
+            'unwanted_content' => 'Condivisione di contenuti inappropriati',
             'nonsense' => 'Senza senso',
             'other' => 'Altro (scrivi sotto)',
         ],
     ],
     'restricted_banner' => [
-        'title' => 'Il tuo account è stato ristretto!',
-        'message' => 'Quando sei ristretto, non sarai in grado di interagire con gli altri giocatori e i tuoi punteggi saranno visibili solo a te. Questo è solitamente il risultato di un processo automatico e verrà risolto preferibilmente entro 24 ore. Se desideri fare appello alla tua restrizione, si prega di <a
-href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
+        'title' => 'Il tuo account è stato limitato!',
+        'message' => 'Quando sei limitato, non sarai in grado di interagire con gli altri giocatori e i tuoi punteggi saranno visibili solo a te. Solitamente questo è il risultato di un processo automatico e verrà risolto preferibilmente entro 24 ore. Se desideri fare appello alla tua restrizione, <a
+href="mailto:accounts@ppy.sh">contatta il supporto</a>.',
     ],
     'show' => [
         'age' => ':age anni',
         'change_avatar' => 'cambia il tuo avatar!',
         'first_members' => 'Qui dall\'inizio',
         'is_developer' => 'sviluppatore di osu!',
-        'is_supporter' => 'sostenitore di osu!',
-        'joined_at' => 'Registrato :date',
-        'lastvisit' => 'Ultimo visto :date',
-        'missingtext' => 'Potresti aver fatto un\'errore di battitura! (o l\'utente potrebbe essere stato bannato)',
+        'is_supporter' => 'osu!supporter',
+        'joined_at' => 'Registrato da :date',
+        'lastvisit' => 'Ultimo accesso :date',
+        'lastvisit_online' => 'Attualmente online',
+        'missingtext' => 'Potresti aver fatto un errore di battitura! (o l\'utente potrebbe essere stato bannato)',
         'origin_country' => 'da :country',
         'page_description' => 'osu! - Tutto ciò che hai mai voluto sapere su :username!',
         'previous_usernames' => 'precedentemente conosciuto come',
@@ -143,16 +141,20 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
         'edit' => [
             'cover' => [
                 'button' => 'Cambia copertina del profilo',
-                'defaults_info' => 'Più opzioni per la copertina saranno disponibili nel futuro',
+                'defaults_info' => 'Più opzioni per la copertina saranno disponibili in futuro',
                 'upload' => [
-                    'broken_file' => 'Elaborazione dell\'immagine non riuscito. Controlla l\'immagine caricata e riprova.',
+                    'broken_file' => 'Elaborazione dell\'immagine non riuscita. Controlla l\'immagine caricata e riprova.',
                     'button' => 'Carica immagine',
                     'dropzone' => 'Trascina qui per caricarla',
                     'dropzone_info' => 'Puoi anche trascinare qui l\'immagine per caricarla',
-                    'restriction_info' => "Caricamento disponibile solo per gli <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a>",
                     'size_info' => 'L\'immagine di copertina dovrebbe essere 2800x620',
                     'too_large' => 'Il file caricato è troppo grande.',
                     'unsupported_format' => 'Formato non supportato.',
+
+                    'restriction_info' => [
+                        '_' => 'Caricamento disponibile solo per gli :link',
+                        'link' => 'osu!supporter',
+                    ],
                 ],
             ],
 
@@ -163,16 +165,16 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
         ],
 
         'extra' => [
-            'followers' => '1 follower|:count followers',
+            'none' => 'nessuno',
             'unranked' => 'Nessuna partita recente',
 
             'achievements' => [
-                'achieved-on' => 'Raggiunto il :date',
-                'locked' => '',
+                'achieved-on' => 'Ottenuto il :date',
+                'locked' => 'Bloccato',
                 'title' => 'Obiettivi',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'di :artist',
                 'none' => 'Nessuna... per ora.',
                 'title' => 'Beatmap',
 
@@ -186,11 +188,21 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
                     'title' => 'Beatmap Amate',
                 ],
                 'ranked_and_approved' => [
-                    'title' => 'Beatmap Classificate e Approvate',
+                    'title' => 'Beatmap Classificate & Approvate',
                 ],
                 'unranked' => [
-                    'title' => 'Beatmap In Attesa',
+                    'title' => 'Beatmap in Attesa',
                 ],
+            ],
+            'discussions' => [
+                'title' => 'Discussioni',
+                'title_longer' => 'Discussioni Recenti',
+                'show_more' => 'guarda più discussioni',
+            ],
+            'events' => [
+                'title' => 'Eventi',
+                'title_longer' => 'Eventi Recenti',
+                'show_more' => 'guarda più eventi',
             ],
             'historical' => [
                 'empty' => 'Nessuna performance recente :(',
@@ -198,7 +210,7 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
 
                 'monthly_playcounts' => [
                     'title' => 'Cronologia Partite',
-                    'count_label' => '',
+                    'count_label' => 'Giocate',
                 ],
                 'most_played' => [
                     'count' => 'volte giocata',
@@ -210,16 +222,15 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Cronologia Replay Guardati',
-                    'count_label' => '',
+                    'count_label' => 'Replay guardati',
                 ],
             ],
             'kudosu' => [
                 'available' => 'Kudosu Disponibili',
                 'available_info' => "I kudosu possono essere scambiati per delle stelle kudosu, che aiuteranno la tua beatmap ad ottenere più attenzione. Questo è il numero di kudosu che non hai ancora scambiato.",
-                'recent_entries' => 'Storico dei recenti kudosu',
+                'recent_entries' => 'Cronologia Kudosu Recenti',
                 'title' => 'Kudosu!',
                 'total' => 'Totale Kudosu Guadagnati',
-                'total_info' => 'Basandosi su quando ha contribuito l\'utente alla moderazione delle beatmap. Vedi <a href="'.osu_url('user.kudosu').'">questa pagina</a> per ulteriori informazioni.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -227,24 +238,24 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
 
                     'beatmap_discussion' => [
                         'allow_kudosu' => [
-                            'give' => 'Ricevuto :amount dall\'annullamento del rifiuto di kudosu del modding post :post',
+                            'give' => 'Ricevuto :amount dall\'annullamento del rifiuto di kudosu del post di modding :post',
                         ],
 
                         'deny_kudosu' => [
-                            'reset' => 'Negato :amount dal modding post :post',
+                            'reset' => 'Negato :amount dal post di modding :post',
                         ],
 
                         'delete' => [
-                            'reset' => 'Perso :amount dalla rimozione del modding post :post',
+                            'reset' => 'Perso :amount dalla rimozione del post di modding di :post',
                         ],
 
                         'restore' => [
-                            'give' => 'Ricevuto :amount dal ripristino del modding post :post',
+                            'give' => 'Ricevuto :amount dal ripristino del post di modding di :post',
                         ],
 
                         'vote' => [
                             'give' => 'Ricevuto :amount dall\'ottenimento di voti nel post di modding di :post',
-                            'reset' => 'Perso :amount dalla perdita di voti nel posto di modding di :post',
+                            'reset' => 'Perso :amount dalla perdita di voti nel post di modding di :post',
                         ],
 
                         'recalculate' => [
@@ -255,9 +266,14 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
 
                     'forum_post' => [
                         'give' => 'Ricevuto :amount da :giver per il post in :post',
-                        'reset' => 'Kudosu resettato da :giver per il post :post',
-                        'revoke' => 'Kudosu negato da :giver per il post :post',
+                        'reset' => 'Kudosu resettati da :giver per il post :post',
+                        'revoke' => 'Kudosu negati da :giver per il post :post',
                     ],
+                ],
+
+                'total_info' => [
+                    '_' => 'Basato sul contributo che l\'utente ha dato nella moderazione delle beatmap. Visita :link per più informazioni.',
+                    'link' => 'questa pagina',
                 ],
             ],
             'me' => [
@@ -265,8 +281,13 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
             ],
             'medals' => [
                 'empty' => "Questo utente non ne ha ricevuti ancora. ;_;",
-                'recent' => '',
+                'recent' => 'Più recenti',
                 'title' => 'Medaglie',
+            ],
+            'posts' => [
+                'title' => 'Post',
+                'title_longer' => 'Post Recenti',
+                'show_more' => 'guarda più post',
             ],
             'recent_activity' => [
                 'title' => 'Recenti',
@@ -275,7 +296,7 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
                 'download_replay' => 'Scarica Replay',
                 'empty' => 'Ancora nessuna prestazione impressionante. :(',
                 'not_ranked' => 'Solo le mappe classificate danno pp.',
-                'pp_weight' => '',
+                'pp_weight' => 'valutata :percentage',
                 'title' => 'Rank',
 
                 'best' => [
@@ -284,6 +305,13 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
                 'first' => [
                     'title' => 'Rank Primo Posto',
                 ],
+            ],
+            'votes' => [
+                'given' => 'Voti Assegnati (negli ultimi 3 mesi)',
+                'received' => 'Voti Ricevuti (negli ultimi 3 mesi)',
+                'title' => 'Voti',
+                'title_longer' => 'Voti Recenti',
+                'vote_count' => ':count_delimited voto|:count_delimited voti',
             ],
             'account_standing' => [
                 'title' => 'Stato dell\'account',
@@ -309,8 +337,8 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => ':info Giocatore',
+            'info' => 'Informazioni',
         ],
 
         'info' => [
@@ -331,10 +359,15 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
             'title' => 'Utente non trovato! ;_;',
         ],
         'page' => [
+            'button' => 'Modifica pagina del profilo',
             'description' => '<strong>io!</strong> è un\'area personale personalizzabile nella tua pagina del profilo.',
             'edit_big' => 'Modificami!',
             'placeholder' => 'Scrivi il contenuto della pagina qui',
-            'restriction_info' => "Devi essere un <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> per sbloccare questa funzione.",
+
+            'restriction_info' => [
+                '_' => 'Devi essere un :link per sbloccare questa funzionalità.',
+                'link' => 'osu!supporter',
+            ],
         ],
         'post_count' => [
             '_' => 'Ha contribuito :link',
@@ -342,16 +375,16 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
         ],
         'rank' => [
             'country' => 'Rank del paese per :mode',
-            'country_simple' => '',
+            'country_simple' => 'Classifica del Paese',
             'global' => 'Rank globale :mode',
-            'global_simple' => '',
+            'global_simple' => 'Classifica globale',
         ],
         'stats' => [
             'hit_accuracy' => 'Precisione dei colpi',
             'level' => 'Livello :level',
-            'level_progress' => '',
+            'level_progress' => 'Avanzamento al livello successivo',
             'maximum_combo' => 'Combo Massima',
-            'medals' => '',
+            'medals' => 'Medaglie',
             'play_count' => 'Partite giocate',
             'play_time' => 'Tempo totale di gioco',
             'ranked_score' => 'Punteggio Rankato',
@@ -359,9 +392,16 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
             'score_ranks' => 'Rank dei Punteggi',
             'total_hits' => 'Colpi Totali',
             'total_score' => 'Punteggio Totale',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Beatmap Classificate & Approvate',
+            'loved_beatmapset_count' => 'Beatmap Amate',
+            'unranked_beatmapset_count' => 'Beatmap in Attesa',
+            'graveyard_beatmapset_count' => 'Beatmap Abbandonate',
         ],
     ],
+
     'status' => [
+        'all' => 'Tutti',
         'online' => 'Online',
         'offline' => 'Offline',
     ],
@@ -370,5 +410,10 @@ href="mailto:accounts@ppy.sh">contattare il supporto</a>.',
     ],
     'verify' => [
         'title' => 'Verifica dell\'account',
+    ],
+
+    'view_mode' => [
+        'card' => 'Vista a schede',
+        'list' => 'Vista ad elenco',
     ],
 ];

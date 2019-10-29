@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,6 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Istoricul modificărilor lui :user",
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'Discuții începute recent',
@@ -77,7 +78,7 @@ return [
         'forgot' => 'Ți-ai uitat parola?',
         'beta' => [
             'main' => 'Accesul beta este momentan limitat la utilizatorii autorizați.',
-            'small' => '(suporterii vor primi acces curând)',
+            'small' => '(suporterii osu! vor primi acces curând)',
         ],
 
         'here' => 'aici', // this is substituted in when generating a link above. change it to suit the language.
@@ -87,9 +88,6 @@ return [
         'title' => 'Postările lui :username',
     ],
 
-    'signup' => [
-        '_' => 'Înregistrează-te',
-    ],
     'anonymous' => [
         'login_link' => 'dă clic pentru a te conecta',
         'login_text' => 'conectează-te',
@@ -97,6 +95,28 @@ return [
         'error' => 'Trebuie să fii conectat pentru a face acest lucru.',
     ],
     'logout_confirm' => 'Ești sigur că vrei să te deconectezi? :(',
+    'report' => [
+        'button_text' => 'raportează',
+        'comments' => 'Comentarii suplimentare',
+        'placeholder' => 'Te rugăm să oferi orice informație ce crezi că ar putea fi utilă.',
+        'reason' => 'Motiv',
+        'thanks' => 'Mulțumim pentru raportul tău!',
+        'title' => 'Raportezi pe :username?',
+
+        'actions' => [
+            'send' => 'Trimite raportul',
+            'cancel' => 'Anulează',
+        ],
+
+        'options' => [
+            'cheating' => 'Cheating',
+            'insults' => 'M-a insultat pe mine / pe alții',
+            'spam' => 'Spam',
+            'unwanted_content' => 'Partajarea unui conținut nepotrivit',
+            'nonsense' => 'Nonsens',
+            'other' => 'Altele (scrie mai jos)',
+        ],
+    ],
     'restricted_banner' => [
         'title' => 'Contul tău a fost restricționat!',
         'message' => 'Când ești restricționat, nu vei putea să interacționezi cu alți jucători și scorurile tale vor fi vizibile doar pentru tine. Acesta este de obicei rezultatul unui proces automat și, de obicei, în termen de 24 de ore. Dacă dorești să contești, te rugăm să <a href="mailto:accounts@ppy.sh">contactezi asistența</a>.',
@@ -109,9 +129,8 @@ return [
         'is_supporter' => 'suporter osu!',
         'joined_at' => 'Încris :date',
         'lastvisit' => 'Văzut ultima dată :date',
+        'lastvisit_online' => '',
         'missingtext' => 'S-ar putea să fi făcut o greșeală de scriere! (sau este posibil ca utilizatorul să fi fost restricționat)',
-        'origin_age' => ':age',
-        'origin_country_age' => ':age din :country',
         'origin_country' => 'Din :country',
         'page_description' => 'osu! - Tot ce ai dorit vreodată să știi despre :username!',
         'previous_usernames' => 'cunoscut anterior ca',
@@ -127,10 +146,14 @@ return [
                     'button' => 'Încarcă imaginea',
                     'dropzone' => 'Plasați fișiere aici pentru a le încărca',
                     'dropzone_info' => 'Poți, de asemenea, să-ți plasezi imaginea aici pentru a o încărca',
-                    'restriction_info' => "Încărcare disponibilă pentru <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>numai</a>suporteri osu!",
-                    'size_info' => 'Dimensiunea coperții trebuie să fie de 2000x700',
+                    'size_info' => 'Dimensiunea coperții trebuie să fie de 2800x620',
                     'too_large' => 'Fișierul încărcat este prea mare.',
                     'unsupported_format' => 'Format nesuportat.',
+
+                    'restriction_info' => [
+                        '_' => '',
+                        'link' => '',
+                    ],
                 ],
             ],
 
@@ -141,32 +164,44 @@ return [
         ],
 
         'extra' => [
-            'followers' => '1 urmăritor|:count urmăritori',
+            'none' => '',
             'unranked' => 'Nu există jocuri recente',
 
             'achievements' => [
-                'title' => 'Realizări',
                 'achieved-on' => 'Realizat pe :date',
+                'locked' => 'Blocat',
+                'title' => 'Realizări',
             ],
             'beatmaps' => [
+                'by_artist' => 'de :artist',
                 'none' => 'Nici unul... încă.',
                 'title' => 'Beatmaps',
 
                 'favourite' => [
-                    'title' => 'Beatmaps favorite (:count)',
+                    'title' => 'Beatmaps favorite',
                 ],
                 'graveyard' => [
-                    'title' => 'Beatmaps îngropate (:count)',
+                    'title' => 'Beatmaps îngropate',
                 ],
                 'loved' => [
-                    'title' => 'Beatmaps iubite (:count)',
+                    'title' => 'Beatmaps iubite',
                 ],
                 'ranked_and_approved' => [
-                    'title' => 'Beatmaps clasate & aprobate (:count)',
+                    'title' => 'Beatmaps clasate & aprobate',
                 ],
                 'unranked' => [
-                    'title' => 'Beatmaps în așteptare (:count)',
+                    'title' => 'Beatmaps în așteptare',
                 ],
+            ],
+            'discussions' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
+            ],
+            'events' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
             ],
             'historical' => [
                 'empty' => 'Nicio înregistrare de performanță. :(',
@@ -174,6 +209,7 @@ return [
 
                 'monthly_playcounts' => [
                     'title' => 'Istoricul jocurilor',
+                    'count_label' => 'Jocuri',
                 ],
                 'most_played' => [
                     'count' => 'jucat de',
@@ -185,15 +221,15 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Istoricul reluărilor vizionate',
+                    'count_label' => 'Reluări vizionate',
                 ],
             ],
             'kudosu' => [
                 'available' => 'Kudosu avabili',
-                'available_info' => "Kudosu poate fi tranzicționate pentru stele kudosu, ce pot ajuta ca beatmapul tău să obțină mai multă atenție. Acesta este numărul de kudosu ce nu a fost tranzicționat încă.",
+                'available_info' => "Kudosu pot fi tranzacționați pentru stele kudosu, ce pot ajuta ca beatmapul tău să obțină mai multă atenție. Acesta este numărul de kudosu ce nu au fost tranzacționați încă.",
                 'recent_entries' => 'Istoricul Kudosu recent',
                 'title' => 'Kudosu!',
                 'total' => 'Suma totală de Kudosu câștigați',
-                'total_info' => 'Bazat pe cât de mult a contribuit utilizatorul la moderarea unui beatmap. Vezi <a href="'.osu_url('user.kudosu').'">această pagină</a> pentru mai multe informații.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -233,23 +269,34 @@ return [
                         'revoke' => 'Kudosu respinși de :giver pentru postarea :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '',
+                    'link' => '',
+                ],
             ],
             'me' => [
                 'title' => 'eu!',
             ],
             'medals' => [
                 'empty' => "Acest utilizator nu a primit nici unul încă. ;_;",
+                'recent' => 'Recente',
                 'title' => 'Medalii',
+            ],
+            'posts' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
             ],
             'recent_activity' => [
                 'title' => 'Recent',
             ],
             'top_ranks' => [
+                'download_replay' => 'Descarcă replay-ul',
                 'empty' => 'Nicio performanță uimitoare nu a fost înregistrată încă. :(',
                 'not_ranked' => 'Numai beatmaps clasate acordă pp.',
-                'pp' => '',
+                'pp_weight' => 'ponderat :percentage',
                 'title' => 'Clasamente',
-                'weighted_pp' => 'ponderat: :pp (:percentage)',
 
                 'best' => [
                     'title' => 'Cele mai bune performanțe',
@@ -257,6 +304,13 @@ return [
                 'first' => [
                     'title' => 'Primele locuri',
                 ],
+            ],
+            'votes' => [
+                'given' => '',
+                'received' => '',
+                'title' => '',
+                'title_longer' => '',
+                'vote_count' => '',
             ],
             'account_standing' => [
                 'title' => 'Starea contului',
@@ -280,6 +334,12 @@ return [
                 ],
             ],
         ],
+
+        'header_title' => [
+            '_' => ':info jucător',
+            'info' => 'Detalii',
+        ],
+
         'info' => [
             'discord' => '',
             'interests' => 'Interese',
@@ -298,10 +358,15 @@ return [
             'title' => 'Utilizatorul nu a fost găsit! ;_;',
         ],
         'page' => [
+            'button' => 'Editează profilul',
             'description' => '<strong>eu!</strong> este o zonă personală personalizabilă în pagina ta de profil.',
             'edit_big' => 'Editează-mă!',
             'placeholder' => 'Introdu conținutul paginii aici',
-            'restriction_info' => "Trebuie să fii un <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>suporter osu!</a> pentru a debloca această funcție.",
+
+            'restriction_info' => [
+                '_' => '',
+                'link' => '',
+            ],
         ],
         'post_count' => [
             '_' => 'A contribuit la :link',
@@ -309,22 +374,33 @@ return [
         ],
         'rank' => [
             'country' => 'Clasament pe țară pentru :mode',
+            'country_simple' => 'Clasament pe țară',
             'global' => 'Clasament global pentru :mode',
+            'global_simple' => 'Clasament global',
         ],
         'stats' => [
             'hit_accuracy' => 'Precizie',
             'level' => 'Nivelul :level',
+            'level_progress' => 'Progres până la nivelul următor',
             'maximum_combo' => 'Combo maxim',
+            'medals' => 'Medalii',
             'play_count' => 'Număr de jocuri',
             'play_time' => 'Timpul total de joc',
             'ranked_score' => 'Scor clasat',
-            'replays_watched_by_others' => 'Istoria reuluărilor vizionate de alții',
+            'replays_watched_by_others' => 'Istoria reluărilor vizionate de alții',
             'score_ranks' => 'Clasament de scoruri',
             'total_hits' => 'Număr de clicuri',
             'total_score' => 'Scor total',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => '',
+            'loved_beatmapset_count' => '',
+            'unranked_beatmapset_count' => '',
+            'graveyard_beatmapset_count' => '',
         ],
     ],
+
     'status' => [
+        'all' => '',
         'online' => 'Online',
         'offline' => 'Offline',
     ],
@@ -333,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'Verificarea contului',
+    ],
+
+    'view_mode' => [
+        'card' => '',
+        'list' => '',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,7 +27,6 @@ class UserStatisticsTransformer extends Fractal\TransformerAbstract
 {
     protected $availableIncludes = [
         'rank',
-        'scoreRanks',
         'user',
     ];
 
@@ -74,23 +73,6 @@ class UserStatisticsTransformer extends Fractal\TransformerAbstract
             return [
                 'global' => $stats->globalRank(),
                 'country' => $stats->countryRank(),
-            ];
-        });
-    }
-
-    public function includeScoreRanks(UserStatistics\Model $stats = null)
-    {
-        if ($stats === null) {
-            $stats = new UserStatistics\Osu();
-        }
-
-        return $this->item($stats, function ($stats) {
-            return [
-                'XH' => $stats->xh_rank_count,
-                'SH' => $stats->sh_rank_count,
-                'X' => $stats->x_rank_count,
-                'S' => $stats->s_rank_count,
-                'A' => $stats->a_rank_count,
             ];
         });
     }

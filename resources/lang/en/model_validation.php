@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Discussion is locked.',
         'first_post' => 'Can not delete starting post.',
+
+        'attributes' => [
+            'message' => 'The message',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Invalid difficulty specified.',
         'invalid_beatmapset_id' => 'Invalid beatmap specified.',
         'locked' => 'Discussion is locked.',
+
+        'attributes' => [
+            'message_type' => 'Message type',
+            'timestamp' => 'Timestamp',
+        ],
 
         'hype' => [
             'guest' => 'Must be signed in to hype.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Replying to deleted comment is not allowed.',
+
+        'attributes' => [
+            'message' => 'The message',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Invalid :attribute specified.',
     ],
 
     'forum' => [
@@ -69,20 +86,47 @@ return [
             'beatmapset_post_no_delete' => 'Deleting beatmap metadata post is not allowed.',
             'beatmapset_post_no_edit' => 'Editing beatmap metadata post is not allowed.',
             'only_quote' => 'Your reply contains only a quote.',
+
+            'attributes' => [
+                'post_text' => 'Post body',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Topic title',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Duplicated option is not allowed.',
-            'grace_period_expired' => 'Can\'t edit a poll after more than :limit hours',
+            'grace_period_expired' => 'Can\'t edit a poll after more than :limit hours.',
+            'hiding_results_forever' => 'Can\'t hide results of a poll that never ends.',
             'invalid_max_options' => 'Option per user may not exceed the number of available options.',
             'minimum_one_selection' => 'A minimum of one option per user is required.',
             'minimum_two_options' => 'Need at least two options.',
             'too_many_options' => 'Exceeded maximum number of allowed options.',
+
+            'attributes' => [
+                'title' => 'Poll title',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Select an option when voting.',
             'too_many' => 'Selected more options than allowed.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Exceeded maximum number of allowed OAuth applications.',
+            'url' => 'Please enter a valid URL.',
+
+            'attributes' => [
+                'name' => 'Application Name',
+                'redirect' => 'Application Callback URL',
+            ],
         ],
     ],
 
@@ -110,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Password confirmation does not match.',
         'too_long' => 'Exceeded maximum length - can only be up to :limit characters.',
 
+        'attributes' => [
+            'username' => 'Username',
+            'user_email' => 'Email address',
+            'password' => 'Password',
+        ],
+
         'change_username' => [
+            'restricted' => 'You cannot change your username while restricted.',
             'supporter_required' => [
                 '_' => 'You must have :link to change your name!',
                 'link_text' => 'supported osu!',
@@ -120,6 +171,16 @@ return [
     ],
 
     'user_report' => [
+        'reason_not_valid' => ':reason is not valid for this report type.',
         'self' => "You can't report yourself!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Quantity',
+                'cost' => 'Cost',
+            ],
+        ],
     ],
 ];

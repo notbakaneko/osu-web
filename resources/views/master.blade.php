@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -16,41 +16,51 @@
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
 @php
-    $legacyNav ?? ($legacyNav = true);
+    $legacyNav = $legacyNav ?? true;
+    $legacyFont = $legacyFont ?? true;
+
+    if (!isset($title)) {
+        $titleTree = [];
+
+        if (isset($titlePrepend)) {
+            $titleTree[] = $titlePrepend;
+        }
+
+        $titleTree[] = trans("layout.menu.{$currentSection}.{$currentAction}");
+        $titleTree[] = trans("layout.menu.{$currentSection}._");
+
+        $title = implode(' · ', $titleTree);
+    }
+
+    $title .= ' | osu!';
+    $currentHue = $currentHue ?? section_to_hue_map($currentSection);
 @endphp
 <!DOCTYPE html>
 <html>
     <head>
         @include("layout.metadata")
-        <title>
-            @if (isset($title))
-                {{ $title }}
-            @elseif (isset($titlePrepend))
-                {{
-                    $titlePrepend.
-                    ' · '.
-                    trans("layout.menu.$currentSection.$currentAction").
-                    ' · '.
-                    trans("layout.menu.$currentSection._")
-                }}
-            @else
-                {{ trans("layout.menu.$currentSection.$currentAction") }} · {{ trans("layout.menu.$currentSection._") }}
-            @endif
-            | osu!
-        </title>
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ $title }}</title>
     </head>
 
     <body
         class="
             osu-layout
             osu-layout--body
-            t-section-{{ $currentSection ?? 'error' }}
+            t-section
             action-{{ $currentAction }}
             {{ $bodyAdditionalClasses ?? '' }}
         "
     >
+        <style>
+            :root {
+                @if (!$legacyFont)
+                    --font-default-override: var(--font-default-torus);
+                    --font-content-override: var(--font-content-inter);
+                @endif
+                --base-hue: {{ $currentHue }};
+                --base-hue-deg: {{ $currentHue }}deg;
+            }
+        </style>
         <div id="overlay" class="blackout blackout--overlay" style="display: none;"></div>
         <div class="blackout js-blackout" data-visibility="hidden"></div>
 

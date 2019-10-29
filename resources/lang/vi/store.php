@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -90,6 +90,7 @@ return [
 
         'invoice' => 'Xem Hóa Đơn',
         'no_orders' => 'Không có đơn đặt hàng.',
+        'resume' => 'Tiếp Tục Thanh Toán',
 
         'item' => [
             'display_name' => [
@@ -114,7 +115,7 @@ return [
             'delivered' => 'Đã Giao Hàng',
             'paid' => 'Đã Thanh Toán',
             'processing' => 'Đang chờ xác nhận',
-            'shipped' => 'Đang Vận Chuyển',
+            'shipped' => 'Đã giao hàng',
         ],
     ],
 

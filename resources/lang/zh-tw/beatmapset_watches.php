@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,13 +19,6 @@
  */
 
 return [
-    'button' => [
-        'action' => [
-            'to_0' => '取消關注',
-            'to_1' => '關注',
-        ],
-    ],
-
     'index' => [
         'description' => '這裡是你關注的圖譜，您將會在它們更新或有新討論的時候收到通知。',
         'title_compact' => '摸圖',

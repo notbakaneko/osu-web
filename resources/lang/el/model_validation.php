@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Η συζήτηση έχει κλειδωθεί.',
         'first_post' => 'Το αρχικό post δε μπορεί να διαγραφεί.',
+
+        'attributes' => [
+            'message' => '',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Προσδιορίστηκε μη έγκυρη δυσκολία.',
         'invalid_beatmapset_id' => 'Προσδιορίστηκε μη έγκυρο beatmap.',
         'locked' => 'Η συζήτηση είναι κλειδωμένη.',
+
+        'attributes' => [
+            'message_type' => '',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'Πρέπει να είστε συνδεδεμένοι για να κάνετε hype.',
@@ -52,7 +61,15 @@ return [
     ],
 
     'comment' => [
-        'deleted_parent' => '',
+        'deleted_parent' => 'Δεν επιτρέπεται η απάντηση σε διαγραμμένο σχόλιο.',
+
+        'attributes' => [
+            'message' => '',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => '',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Η διαγραφή του post για τα μεταδεδομένα το beatmap δεν είναι επιτρεπτή.',
             'beatmapset_post_no_edit' => 'Η επεξεργασία του post για τα μεταδεδομένα το beatmap δεν είναι επιτρεπτή.',
+            'only_quote' => 'Η απάντησή σας περιέχει μόνο μία αναφορά.',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Τίτλος Θέματος',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Η επιλογή για διπλασιασμό δεν είναι επιτρεπτή.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Δεν είναι δυνατή επεξεργασία δημοσκόπησης μετά από :limit + ώρες',
+            'hiding_results_forever' => 'Δεν μπορείτε να αποκρύψετε τα αποτελέσματα μιας ψηφοφορίας που δεν τελειώνει ποτέ.',
             'invalid_max_options' => 'Η επιλογή ανά χρήστη ίσως υπερβαίνει τον αριθμό των διαθέσιμων επιλογών.',
             'minimum_one_selection' => 'Το ελάχιστο που απαιτείται είναι μία επιλογή ανά χρήστη.',
             'minimum_two_options' => 'Χρειάζονται τουλάχιστον δύο επιλογές.',
             'too_many_options' => 'Υπερβήκατε το μέγιστο αριθμό επιλογών που επιτρέπεται.',
+
+            'attributes' => [
+                'title' => '',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Επιλέξτε μία επιλογή όταν ψηφίζετε.',
             'too_many' => 'Επιλέχθηκαν περισσότερες επιλογές από το επιτρεπόμενο όριο.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Αυτό το όνομα χρήστη θα είναι διαθέσιμο σύντομα!',
         'username_invalid_characters' => 'Το ζητούμενο όνομα χρήστη περιέχει μη έγκυρους χαρακτήρες.',
         'username_in_use' => 'Το όνομα χρήστη χρησιμοποιείται ήδη!',
+        'username_locked' => 'Το όνομα χρήστη χρησιμοποιείται ήδη!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Παρακαλώ χρησιμοποιείστε κάτω παύλες ή κενά, όχι και τα δύο!',
         'username_no_spaces' => "Το όνομα χρήστη δε μπορεί να ξεκινάει ή να τελειώνει με κενά!",
         'username_not_allowed' => 'Η επιλογή αυτού του ονόματος χρήστη δεν επιτρέπεται.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Η πιστοποίηση του κωδικού δεν ταιριάζει.',
         'too_long' => 'Έχετε υπερβεί το μέγιστο όριο - μπορεί να είναι μέχρι :limit χαρακτήρες.',
 
+        'attributes' => [
+            'username' => '',
+            'user_email' => '',
+            'password' => '',
+        ],
+
         'change_username' => [
+            'restricted' => 'Δεν μπορείτε να αλλάξετε όνομα χρήστη ενώ είστε restricted.',
             'supporter_required' => [
                 '_' => 'Πρέπει να έχεις :link για να αλλάξεις το όνομα χρήστη σου!',
                 'link_text' => 'υποστήριξε το osu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Δεν μπορείτε να αποκλέισετε τον εαυτό σας!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => '',
+                'cost' => '',
+            ],
+        ],
     ],
 ];

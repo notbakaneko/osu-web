@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,13 +19,8 @@
 .sort {
   @_top: sort;
   @_item-margin: 5px;
-  @_hover-bg: #ddd;
-  @_hover-bg--beatmapsets: #eee;
-  @_hover-bg--beatmapset-discussions: #eee;
-  @_hover-bg--changelog: @dark-purple-darker;
-  @_hover-bg--forum-topics: #ddd;
 
-  .default-gutter();
+  padding: 0;
   display: flex;
   font-size: @font-size--normal;
 
@@ -38,57 +33,27 @@
   }
 
   &--forum-topics {
-    padding: 10px 40px;
-    background-color: #eee;
-    border-bottom: 1px solid #ddd;
+    margin-top: 10px;
+  }
+
+  &--user-list {
+    padding: 0;
   }
 
   &__item {
     .reset-input();
     margin: @_item-margin;
+    color: white;
     padding: 5px 10px;
-    color: #333;
     .default-border-radius();
-
-    .@{_top}--changelog & {
-      color: inherit;
-    }
 
     &--button {
       .link-plain();
-      color: #555;
+      .link-white();
 
-      .link-hover({
-        background-color: @_hover-bg;
-        color: #555;
-      });
-
-      .@{_top}--beatmapset-discussions & {
-        .link-hover({
-          background-color: @_hover-bg--beatmapset-discussions;
-        });
-      }
-
-      .@{_top}--beatmapsets & {
-        .link-hover({
-          background-color: @_hover-bg--beatmapsets;
-        });
-      }
-
-      .@{_top}--changelog & {
-        color: #ddd;
-
-        .link-hover({
-          background-color: @_hover-bg--changelog;
-          color: #ddd;
-        });
-      }
-
-      .@{_top}--forum-topics & {
-        .link-hover({
-          background-color: @_hover-bg--forum-topics;
-        });
-      }
+      &:hover {
+        background-color: @osu-colour-b3;
+      };
     }
 
     &--title {
@@ -97,34 +62,9 @@
 
     // overrides --button
     &--active {
-      background-color: @_hover-bg;
-      color: @pink-darker;
+      background-color: @osu-colour-b3;
+      color: @osu-colour-l1;
       font-weight: bold;
-
-      .link-hover({
-        color: @pink-darker;
-      });
-
-      .@{_top}--beatmapset-discussions & {
-        background-color: @_hover-bg--beatmapset-discussions;
-      }
-
-      .@{_top}--beatmapsets & {
-        background-color: @_hover-bg--beatmapsets;
-      }
-
-      .@{_top}--changelog & {
-        background-color: @_hover-bg--changelog;
-        color: @pink;
-
-        .link-hover({
-          color: @pink;
-        });
-      }
-
-      .@{_top}--forum-topics & {
-        background-color: @_hover-bg--forum-topics;
-      }
     }
   }
 

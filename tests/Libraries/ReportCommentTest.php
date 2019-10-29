@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,21 +17,18 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace Tests\Libraries;
+
 use App\Exceptions\ValidationException;
 use App\Models\Build;
-use App\Models\Comment;
 use App\Models\User;
 use App\Models\UserReport;
+use Tests\TestCase;
 
 class ReportCommentTest extends TestCase
 {
     private $reporter;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->reporter = factory(User::class)->create();
-    }
 
     public function testCannotReportOwnComment()
     {
@@ -45,11 +42,11 @@ class ReportCommentTest extends TestCase
     {
         $comment = $this->createComment(factory(User::class)->create());
 
-        $report = $comment->reportBy($this->reporter, [
+        $this->expectException(ValidationException::class);
+
+        $comment->reportBy($this->reporter, [
             'reason' => 'NotAValidReason',
         ]);
-
-        $this->assertSame('Spam', $report->reason);
     }
 
     public function testReportableInstance()
@@ -65,6 +62,12 @@ class ReportCommentTest extends TestCase
         $this->assertSame($reportsCount + 1, $this->reporter->reportsMade()->count());
         $this->assertSame($report->user_id, $report->user_id);
         $this->assertTrue($report->reportable->is($comment));
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->reporter = factory(User::class)->create();
     }
 
     private function createComment($user)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', y ',
     ],
 
+    'badges' => [
+        'new' => 'NUEVO',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Ir arriba',
+        'admin' => 'Administrador',
         'back_to_previous' => 'Volver a la última posición',
+        'back_to_top' => 'Ir arriba',
         'cancel' => 'Cancelar',
         'change' => 'cambiar',
         'click_to_copy' => 'haz clic para copiarlo al portapapeles',
         'click_to_copy_copied' => '¡copiado al portapapeles!',
+        'close' => 'Cerrar',
+        'collapse' => 'colapsar',
         'delete' => 'Eliminar',
         'edit' => 'Editar',
+        'expand' => 'expandir',
         'hide' => 'ocultar',
         'permalink' => 'permalink',
         'permalink_copied' => 'enlace copiado',
@@ -52,8 +60,16 @@ return [
         'search' => 'Buscar',
         'see_more' => 'ver más',
         'show' => 'mostrar',
+        'show_deleted' => 'Mostrar eliminados',
         'show_more' => 'mostrar más',
+        'show_more_options' => 'mostrar más opciones',
+        'update' => 'Actualizar',
         'upload_image' => 'subir imagen',
+
+        'watch' => [
+            'to_0' => 'Dejar de ver',
+            'to_1' => 'Ver',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count hora|:count horas',
         'item' => ':count unidad|:count unidades',
         'minute_short_unit' => 'min|mins',
-        'minutes' => '',
+        'minutes' => ':count minuto|:count minutos',
         'months' => ':count mes|:count meses',
+        'plus_others' => '+ :count_delimited otro!|+ :count_delimited otros!',
+        'post' => ':count_delimited publicación|:count_delimited publicaciones',
         'second_short_unit' => 'seg|segs',
+        'star_priority' => ':count_delimited prioridad de estrella|:count_delimited star priorities',
+        'update' => ':count_delimited actualización|:count_delimited actualizaciones',
+        'view' => ':count_delimited visita|:count_delimited visitas',
         'years' => ':count año|:count años',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'suelta aquí para subirlo',
+    ],
+
+    'input' => [
+        'search' => 'buscar...',
     ],
 
     'pagination' => [

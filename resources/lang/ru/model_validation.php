@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Обсуждение закрыто.',
         'first_post' => 'Невозможно удалить первую публикацию.',
+
+        'attributes' => [
+            'message' => 'Сообщение',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Указана неверная сложность.',
         'invalid_beatmapset_id' => 'Указана неправильная карта.',
         'locked' => 'Обсуждение закрыто.',
+
+        'attributes' => [
+            'message_type' => 'Тип сообщения',
+            'timestamp' => 'Временная отметка',
+        ],
 
         'hype' => [
             'guest' => 'Вам нужно войти, чтобы хайпить.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Нельзя ответить на удалённый комментарий.',
+
+        'attributes' => [
+            'message' => 'Сообщение',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Указан неверный :attribute.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Нельзя удалить метаданные карты.',
             'beatmapset_post_no_edit' => 'Нельзя изменить метаданные карты.',
+            'only_quote' => 'Ваш ответ содержит только цитату.',
+
+            'attributes' => [
+                'post_text' => 'Тело сообщения',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Заголовок темы',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Повторение вариантов недопустимо.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Нельзя отредактировать опрос спустя :limit часов',
+            'hiding_results_forever' => 'Нельзя скрыть результаты опроса, если он никогда не закончится.',
             'invalid_max_options' => 'Вариант на пользователя не может превышать количество доступных опций.',
             'minimum_one_selection' => 'Требуется минимум один вариант для каждого пользователя.',
             'minimum_two_options' => 'Нужно как минимум два варианта.',
             'too_many_options' => 'Превышено максимальное количество вариантов.',
+
+            'attributes' => [
+                'title' => 'Заголовок опроса',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Выберите вариант, за который хотите проголосовать.',
             'too_many' => 'Выбрано больше вариантов, чем разрешено.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Превышено максимально количество приложений OAuth.',
+            'url' => 'Пожалуйста, введите действительный URL.',
+
+            'attributes' => [
+                'name' => 'Имя приложения',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Это имя будет доступно для выбора в любую минуту!',
         'username_invalid_characters' => 'Выбранное имя содержит недопустимые символы.',
         'username_in_use' => 'Это имя уже используется!',
+        'username_locked' => 'Это имя уже используется!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Пожалуйста не используйте пробелы и подчёркивания одновременно!',
         'username_no_spaces' => "Имя не может начинаться и заканчиваться пробелами!",
         'username_not_allowed' => 'Это имя недоступно.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Подтверждения пароля не совпадают.',
         'too_long' => 'Превышено максимальное количество символов - можно использовать только до :limit characters символов.',
 
+        'attributes' => [
+            'username' => 'Имя пользователя',
+            'user_email' => 'E-mail адрес',
+            'password' => 'Пароль',
+        ],
+
         'change_username' => [
+            'restricted' => 'Вы не можете сменить своё имя, пока ваш аккаунт ограничен.',
             'supporter_required' => [
                 '_' => 'Вы должны :link , чтобы изменить свое имя!',
                 'link_text' => 'поддержать osu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Вы не можете пожаловаться на себя!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Кол-во',
+                'cost' => 'Цена',
+            ],
+        ],
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! 论坛',
 
     'covers' => [
+        'edit' => '编辑封面',
+
         'create' => [
             '_' => '设置封面',
             'button' => '上传图片',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '最新帖子',
+
+        'index' => [
+            'title' => '论坛主页',
+        ],
+
         'topics' => [
             'empty' => '没有主题！',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => '标记版块为已读',
+        'forums' => '标记版块为已读',
+        'busy' => '标记为已读…',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => '删除回复',
             'restore' => '恢复回复',
             'edit' => '编辑回复',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '新回复',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited 帖子',
+            'topic_starter' => '楼主',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => '由 :user 发起',
 
         'create' => [
+            'close' => '关闭',
             'preview' => '预览',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => '创建投票',
 
+            'preview' => '发帖预览',
+
             'create_poll_button' => [
                 'add' => '创建投票',
                 'remove' => '取消创建投票',
             ],
 
             'poll' => [
+                'hide_results' => '隐藏投票结果。',
+                'hide_results_info' => '这些内容只在投票结束之后显示。',
                 'length' => '投票持续',
                 'length_days_suffix' => '天',
                 'length_info' => '如果无期限则留空',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => '查看数',
+            'feature_votes' => '星级优先级',
             'replies' => '回复数',
+            'views' => '查看数',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => '该主题已置顶并标记为公告',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => '删除主题',
             'total_posts' => '讨论总数',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => '当前优先级: +:count',
                 'do' => '提升这个请求',
+
+                'info' => [
+                    '_' => '这是一个 :feature_request。:supporters 可以为新功能请求投票。',
+                    'feature_request' => '新功能请求',
+                    'supporters' => 'osu! 支持者',
+                ],
 
                 'user' => [
                     'count' => ':count 票',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '编辑投票',
+                'edit_warning' => '编辑投票将清空当前投票结果！',
                 'vote' => '投票',
+
+                'button' => [
+                    'change_vote' => '更改投票',
+                    'edit' => '编辑投票',
+                    'view_results' => '直接跳到结果',
+                    'vote' => '投票',
+                ],
 
                 'detail' => [
                     'end_time' => '将于 :time 结束',
                     'ended' => '结束于 :time',
+                    'results_hidden' => '投票结束后才显示结果。',
                     'total' => '总票数: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => '未订阅',
             'to_watching' => '订阅',
             'to_watching_mail' => '订阅并启用邮件通知',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => '通知已启用。点击禁用',
+            'tooltip_mail_enable' => '通知已禁用。点击启用',
         ],
     ],
 ];

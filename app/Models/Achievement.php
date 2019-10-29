@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -43,6 +43,7 @@ class Achievement extends Model
         'enabled' => 'boolean',
     ];
     public $timestamps = false;
+    public $incrementing = false;
 
     public function getModeAttribute($value)
     {
@@ -58,5 +59,10 @@ class Achievement extends Model
         return $query
             ->where('enabled', true)
             ->where('slug', '<>', '');
+    }
+
+    public function iconUrl()
+    {
+        return '/images/badges/user-achievements/'.e($this->slug).'.png';
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,6 +20,7 @@
 
 return [
     'confirmation' => 'Ești sigur?',
+    'confirmation_unsaved' => 'Modificările nesalvate vor fi pierdute. Ești sigur?',
     'saved' => 'Salvat',
 
     'array_and' => [
@@ -28,12 +29,23 @@ return [
         'last_word_connector' => ', și ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
+        'admin' => 'Admin',
+        'back_to_previous' => 'Revino la poziția anterioară',
+        'back_to_top' => 'Înapoi sus',
         'cancel' => 'Anulează',
         'change' => 'modifică',
         'click_to_copy' => 'faceți clic pentru a copia în clipboard',
         'click_to_copy_copied' => 'copiat în clipboard!',
+        'close' => '',
+        'collapse' => 'restrânge',
         'delete' => 'Șterge',
+        'edit' => 'Editează',
+        'expand' => 'extinde',
         'hide' => 'ascunde',
         'permalink' => 'link permanent',
         'permalink_copied' => 'link copiat',
@@ -42,13 +54,22 @@ return [
         'reply_reopen' => 'Răspundeți și deschideți din nou',
         'reply_resolve' => 'Răspunde și rezolvă',
         'reset' => 'Resetează',
+        'restore' => 'Restaurează',
         'save' => 'Salvează',
         'saving' => 'Se salvează...',
         'search' => 'Caută',
         'see_more' => 'vezi mai mult',
         'show' => 'arată',
+        'show_deleted' => 'Arată șterse',
         'show_more' => 'arată mai mult',
+        'show_more_options' => 'arată mai multe opţiuni',
+        'update' => '',
         'upload_image' => 'încarcă imaginea',
+
+        'watch' => [
+            'to_0' => 'Nu mai urmări',
+            'to_1' => 'Urmărește',
+        ],
     ],
 
     'count' => [
@@ -58,9 +79,22 @@ return [
         'hours' => ':count oră|:count ore',
         'item' => ':count element|:count elemente',
         'minute_short_unit' => 'minut|minute',
+        'minutes' => ':count minut|:count minute',
         'months' => ':count lună|:count luni',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 'secundă|secunde',
+        'star_priority' => '',
+        'update' => ':count_delimited actualizare|:count_delimited actualizări',
+        'view' => '',
         'years' => ':count an|:count ani',
+    ],
+
+    'countdown' => [
+        'days' => 'zile',
+        'hours' => 'ore',
+        'minutes' => 'minute',
+        'seconds' => 'secunde',
     ],
 
     'datetime' => [
@@ -82,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'dați drumul aici pentru a încărca',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

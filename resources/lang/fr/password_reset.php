@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -55,5 +55,10 @@ return [
 
     'starting' => [
         'username' => 'Entrez une adresse email ou un nom d\'utilisateur',
+
+        'support' => [
+            '_' => 'Vous avez besoin d\'aide supplémentaire ? Contactez-nous via notre :button.',
+            'button' => 'système de support',
+        ],
     ],
 ];

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, button, div, h3, span, i, textarea} = ReactDOMFactories
+import { BBCodeEditor } from 'bbcode-editor'
+import * as React from 'react'
+import { a, button, div, h3, span, i, textarea } from 'react-dom-factories'
 el = React.createElement
 
-class BeatmapsetPage.Info extends React.Component
+export class Info extends React.Component
   constructor: (props) ->
     super props
+
+    @overlay = React.createRef()
 
     @state =
       isBusy: false
@@ -40,12 +44,23 @@ class BeatmapsetPage.Info extends React.Component
     $(window).off '.beatmapsetPageInfo'
 
 
+  # see Modal#hideModal
   dismissEditor: (e) =>
-    @setState isEditing: false if e.target == @overlay
+    @setState isEditing: false if e.button == 0 &&
+                                  e.target == @overlay.current &&
+                                  @clickEndTarget == @clickStartTarget
 
 
   editStart: =>
     @setState isEditing: true
+
+
+  handleClickEnd: (e) =>
+    @clickEndTarget = e.target
+
+
+  handleClickStart: (e) =>
+    @clickStartTarget = e.target
 
 
   onEditorChange: (action) =>
@@ -87,7 +102,7 @@ class BeatmapsetPage.Info extends React.Component
 
 
   renderChart: ->
-    return if !@props.beatmapset.has_scores || @props.beatmap.playcount < 1
+    return if !@props.beatmapset.is_scoreable || @props.beatmap.playcount < 1
 
     unless @_failurePointsChart?
       options =
@@ -129,7 +144,9 @@ class BeatmapsetPage.Info extends React.Component
           div
             className: 'beatmapset-description-editor__overlay'
             onClick: @dismissEditor
-            ref: (element) => @overlay = element
+            onMouseDown: @handleClickStart
+            onMouseUp: @handleClickEnd
+            ref: @overlay
 
             div className: 'beatmapset-description-editor__container osu-page',
               el BBCodeEditor,
@@ -147,7 +164,7 @@ class BeatmapsetPage.Info extends React.Component
           className: 'beatmapset-info__header'
           osu.trans 'beatmapsets.show.info.description'
 
-        div className: 'beatmapset-info__description-container',
+        div className: 'beatmapset-info__description-container u-fancy-scrollbar',
           div
             className: 'beatmapset-info__description'
             dangerouslySetInnerHTML:
@@ -197,7 +214,7 @@ class BeatmapsetPage.Info extends React.Component
               '...' if tagsOverload
 
       div className: 'beatmapset-info__box beatmapset-info__box--success-rate',
-        if !@props.beatmapset.has_scores
+        if !@props.beatmapset.is_scoreable
           div className: 'beatmap-success-rate',
             div
               className: 'beatmap-success-rate__empty'
@@ -218,7 +235,7 @@ class BeatmapsetPage.Info extends React.Component
 
               div
                 className: 'beatmap-success-rate__percentage'
-                title: "#{@props.beatmap.passcount.toLocaleString()} / #{@props.beatmap.playcount.toLocaleString()}"
+                title: "#{osu.formatNumber(@props.beatmap.passcount)} / #{osu.formatNumber(@props.beatmap.playcount)}"
                 'data-tooltip-position': 'bottom center'
                 style:
                   marginLeft: "#{percentage}%"

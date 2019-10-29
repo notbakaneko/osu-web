@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Anda telah mencapai batas nominasi Anda untuk hari ini, silakan coba lagi besok.',
+            'full_bn_required' => 'Anda harus menjadi nominator penuh untuh melakukan kualifikasi nominasi ini.',
+            'full_bn_required_hybrid' => 'Anda harus berstatus sebagai nominator penuh (full nominator) untuk dapat menominasikan set beatmap yang mencakup lebih dari satu mode permainan.',
             'incorrect_state' => 'Terjadi kesalahan saat memproses perintah, silakan muat ulang laman.',
             'owner' => "Tidak dapat menominasikan beatmap buatan sendiri.",
         ],
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => '',
+            'resolved' => '',
+            'system_generated' => '',
+        ],
+
         'edit' => [
-            'system_generated' => 'Kiriman yang dihasilkan secara otomatis tidak dapat disunting.',
             'not_owner' => 'Hanya pemilik topik yang diperbolehkan untuk menyunting kiriman.',
+            'resolved' => '',
+            'system_generated' => 'Kiriman yang dihasilkan secara otomatis tidak dapat disunting.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Beatmap ini dikunci untuk diskusi.',
         ],
     ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Akses ke forum yang diminta diperlukan.',
                 'over' => 'Polling selesai dan tidak dapat dipilih lagi.',
+                'play_more' => 'Anda harus bermain lebih banyak untuk dapat memberikan suara pada forum.',
                 'voted' => 'Pengubahan suara tidak diizinkan.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Gambar sampul yang Anda ingin terapkan tidak valid.',
                 'not_owner' => 'Hanya pemilik topik yang dapat menyunting sampul.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Forum ini tidak dapat dipasang sampul topik.',
             ],
         ],
 

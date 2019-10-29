@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -44,6 +44,8 @@ trait UserTrait
 
         $values['is_old'] = $this->isOld();
 
+        $values['previous_usernames'] = $this->previousUsernames(true)->unique()->values();
+
         return $values;
     }
 
@@ -79,7 +81,10 @@ trait UserTrait
         $columns = array_keys((new static())->esFilterFields());
         array_unshift($columns, 'user_id');
 
-        return static::on('mysql-readonly')->withoutGlobalScopes()->select($columns);
+        return static::on('mysql')
+            ->withoutGlobalScopes()
+            ->with('usernameChangeHistoryPublic')
+            ->select($columns);
     }
 
     public static function esSchemaFile()

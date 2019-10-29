@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'hosts' => (array) env('ES_SCORES_HOST', 'localhost:9200'),
     'connectionParams' => [
@@ -9,4 +8,5 @@ return [
             'connect_timeout' => get_float(env('ES_CLIENT_CONNECT_TIMEOUT')) ?? 0.5,
         ],
     ],
+    'connectionPool' => '\Elasticsearch\ConnectionPool\SimpleConnectionPool',
 ];

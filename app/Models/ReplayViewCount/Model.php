@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,6 @@
 
 namespace App\Models\ReplayViewCount;
 
-use App\Libraries\ReplayFile;
 use App\Models\Model as BaseModel;
 use App\Models\Score\Best as ScoreBest;
 
@@ -40,10 +39,5 @@ abstract class Model extends BaseModel
         $class = ScoreBest::class.'\\'.static::suffix();
 
         return $this->belongsTo($class, 'score_id');
-    }
-
-    public function file()
-    {
-        return new ReplayFile($this);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,22 +18,15 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Tests\Payments;
+namespace Tests\Controllers\Payments;
 
 use App\Libraries\Payments\XsollaSignature;
 use App\Models\Store\Order;
 use Config;
-use TestCase;
+use Tests\TestCase;
 
 class XsollaControllerTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-        Config::set('payments.xsolla.secret_key', 'magic');
-        $this->order = factory(Order::class)->states('checkout')->create();
-    }
-
     public function testWhenEverythingIsFine()
     {
         $data = $this->getPostData();
@@ -82,6 +75,13 @@ class XsollaControllerTest extends TestCase
         );
 
         $response->assertStatus(422);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Config::set('payments.xsolla.secret_key', 'magic');
+        $this->order = factory(Order::class)->states('checkout')->create();
     }
 
     private function getPostData(array $overrides = [])

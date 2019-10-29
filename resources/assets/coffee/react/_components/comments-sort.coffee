@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,9 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div} = ReactDOMFactories
+import { Observer } from 'mobx-react'
+import core from 'osu-core-singleton'
+import * as React from 'react'
+import { button, div } from 'react-dom-factories'
 
-class @CommentsSort extends React.PureComponent
+el = React.createElement
+
+uiState = core.dataStore.uiState
+
+export class CommentsSort extends React.PureComponent
   render: =>
     div className: osu.classWithModifiers('sort', @props.modifiers),
       div className: 'sort__items',
@@ -29,14 +36,15 @@ class @CommentsSort extends React.PureComponent
 
 
   renderButton: (sort) =>
-    className = 'sort__item sort__item--button'
-    className += ' sort__item--active' if sort == (@props.loadingSort ? @props.currentSort)
+    el Observer, null, () =>
+      className = 'sort__item sort__item--button'
+      className += ' sort__item--active' if sort == (uiState.comments.loadingSort ? uiState.comments.currentSort)
 
-    button
-      className: className
-      'data-sort': sort
-      onClick: @setSort
-      osu.trans("sort.#{sort}")
+      button
+        className: className
+        'data-sort': sort
+        onClick: @setSort
+        osu.trans("sort.#{sort}")
 
 
   setSort: (e) =>

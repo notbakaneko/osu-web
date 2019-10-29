@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
 
         'avatar' => [
             'title' => 'Avatár',
+            'rules' => '',
+            'rules_link' => 'a közösségi szabályok',
         ],
 
         'email' => [
@@ -46,13 +48,13 @@ return [
             'title' => 'Profil',
 
             'user' => [
+                'user_discord' => 'discord',
                 'user_from' => 'tartózkodási hely',
                 'user_interests' => 'érdeklődés',
                 'user_msnm' => 'skype',
                 'user_occ' => 'foglalkozás',
                 'user_twitter' => 'twitter',
                 'user_website' => 'weboldal',
-                'user_discord' => 'discord',
             ],
         ],
 
@@ -60,6 +62,40 @@ return [
             'title' => 'Aláírás',
             'update' => 'mentés',
         ],
+    ],
+
+    'notifications' => [
+        'title' => 'Értesítések',
+        'topic_auto_subscribe' => 'az általad létrehozott új fórum témák értesítéseinek automatikus bekapcsolása',
+    ],
+
+    'oauth' => [
+        'authorized_clients' => 'felhatalmazott kliensek',
+        'own_clients' => '',
+        'title' => 'OAuth',
+    ],
+
+    'playstyles' => [
+        'keyboard' => 'billentyűzet',
+        'mouse' => 'egér',
+        'tablet' => 'tablet',
+        'title' => 'Játékstílusok',
+        'touch' => 'érintőképernyő',
+    ],
+
+    'privacy' => [
+        'friends_only' => 'privát üzenetek tiltása olyan személyektől, akik nincsenek a baráti listádon',
+        'hide_online' => 'online állapot elrejtése',
+        'title' => 'Adatvédelem',
+    ],
+
+    'security' => [
+        'current_session' => 'jelenlegi',
+        'end_session' => 'Munkamenet befejezése',
+        'end_session_confirmation' => 'Ez azonnal befejezi a munkamenetet az eszközön. Biztos vagy benne?',
+        'last_active' => 'Utoljára aktív:',
+        'title' => 'Biztonság',
+        'web_sessions' => 'webes munkamenetek',
     ],
 
     'update_email' => [
@@ -72,26 +108,12 @@ return [
         'update' => 'mentés',
     ],
 
-    'playstyles' => [
-        'title' => 'Játékstílusok',
-        'mouse' => 'egér',
-        'keyboard' => 'billentyűzet',
-        'tablet' => 'tablet',
-        'touch' => 'érintőképernyő',
+    'verification_completed' => [
+        'text' => 'Mostmár bezárhatod ezt az oldalt',
+        'title' => 'Az ellenőrzés befejeződött',
     ],
 
-    'privacy' => [
-        'title' => 'Adatvédelem',
-        'friends_only' => 'privát üzenetek tiltása olyan személyektől, akik nincsenek a baráti listádon',
-        'hide_online' => 'online állapot elrejtése',
-    ],
-
-    'security' => [
-        'current_session' => 'jelenlegi',
-        'end_session' => 'Munkamenet befejezése',
-        'end_session_confirmation' => 'Ez azonnal befejezi a munkamenetet az eszközön. Biztos vagy benne?',
-        'last_active' => 'Utoljára aktív:',
-        'title' => 'Biztonság',
-        'web_sessions' => 'webes munkamenetek',
+    'verification_invalid' => [
+        'title' => 'Érvénytelen vagy lejárt ellenőrző link',
     ],
 ];

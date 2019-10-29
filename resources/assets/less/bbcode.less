@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,42 +24,84 @@
   line-height: 1.5;
 
   a {
-    .@{_top}--profile-page& {
-      color: @blue;
-      .link-hover({
-        color: @blue-light;
-      });
-    }
+    .link-default();
   }
 
   h2,
   h4 {
-    .default-font();
     font-style: normal;
     font-weight: bold;
   }
 
   // heading tag
   h2 {
-    font-size: @font-size--forum-post-heading;
-  }
-
-  // quote tag
-  h4 {
-    font-size: @font-size--forum-quote-heading;
+    font-size: 1.5em;
+    color: @osu-colour-l1;
   }
 
   blockquote {
     font-size: inherit;
-    padding-right: 0;
+    padding: 0 0 0 20px;
+    border: none;
+    color: @osu-colour-c2;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      border-radius: 10000px;
+      background-color: @osu-colour-c2;
+    }
+
+    // quote tag
+    h4 {
+      font-size: inherit;
+      color: @osu-colour-c1;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    // second and deeper levels
+    blockquote {
+      font-size: 0.9em;
+
+      &::before {
+        display: none;
+      }
+
+      h4 {
+        color: inherit;
+      }
+    }
   }
 
   img {
     max-width: 100%;
   }
 
+  ol, ul {
+    padding-left: 20px;
+
+    ol {
+      font-size: 0.85em;
+
+      ol {
+        font-size: 1em;
+      }
+    }
+  }
+
   pre {
+    .default-border-radius();
     white-space: pre-wrap;
+    background-color: @osu-colour-b5;
+    color: inherit;
+    padding: 10px;
+    border: none;
+    font-size: inherit;
   }
 
   .unordered {
@@ -78,11 +120,8 @@
   // overrides bootstrap styling for [notice]
   .well {
     margin: 0;
-
-    .@{_top}--profile-page& {
-      background-color: #333;
-      border-color: #444;
-    }
+    background: @osu-colour-b5;
+    border: 2px solid @osu-colour-b1;
   }
 
   &--normal-line-height {

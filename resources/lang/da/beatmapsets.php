@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Diskussion',
 
         'details' => [
+            'approved' => 'godkendt den ',
+            'favourite' => 'Markér dette beatmapset som favorit',
+            'logged-out' => 'Du skal være logget ind for at kunne downloade beatmaps!',
+            'loved' => 'loved den ',
             'mapped_by' => 'mappet af :mapper',
+            'qualified' => 'kvalificeret den ',
+            'ranked' => 'ranked den ',
             'submitted' => 'indsendt den ',
+            'unfavourite' => 'Fjern markering af dette beatmapset som favorit',
             'updated' => 'sidst opdateret den ',
             'updated_timeago' => 'sidst opdateret :timeago',
-            'ranked' => 'ranked den ',
-            'approved' => 'godkendt den ',
-            'qualified' => 'kvalificeret den ',
-            'loved' => 'loved den ',
-            'logged-out' => 'Du skal være logget ind for at kunne downloade beatmaps!',
+
             'download' => [
                 '_' => 'Download',
-                'video' => 'med video',
-                'no-video' => 'uden video',
                 'direct' => 'osu!direct',
+                'no-video' => 'uden video',
+                'video' => 'med video',
             ],
-            'favourite' => 'Markér dette beatmapset som favorit',
-            'unfavourite' => 'Fjern markering af dette beatmapset som favorit',
-            'favourited_count' => '+ 1 anden!|+ :count andre!',
+
+            'login_required' => [
+                'bottom' => 'til at få adgang til flere funktioner',
+                'top' => 'Log ind',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Du har for mange favoritter! Fjern venligst en favorit for at tilføje en ny.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Hype dette map hvis du nød at spille det for at hjælpe det til at komme til en <strong>Ranked</strong> status.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Dette map er i øjeblikket :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'afvendtende',
+                    'qualified' => 'kvalificeret',
+                    'wip' => 'endnu ikke færdigt',
                 ],
             ],
         ],
@@ -91,9 +100,9 @@ return [
 
             'headers' => [
                 'accuracy' => 'Præcision',
-                'combo' => 'Max Combo',
+                'combo' => 'Maks Combo',
                 'miss' => 'Miss',
-                'mods' => '',
+                'mods' => 'Mods',
                 'player' => 'Spiller',
                 'pp' => '',
                 'rank' => 'Rank',
@@ -128,7 +137,7 @@ return [
             'user-rating' => 'Brugerbedømmelse',
             'rating-spread' => 'Rating Fordeling',
             'nominations' => 'Nomineringer',
-            'playcount' => '',
+            'playcount' => 'Playcount',
         ],
     ],
 ];

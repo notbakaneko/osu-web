@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,17 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { button, div, i, span } from 'react-dom-factories'
+import { Spinner } from 'spinner'
 el = React.createElement
-{button, div, i, span} = ReactDOMFactories
 
 bn = 'textual-button'
 
-class @BlockButton extends React.PureComponent
+export class BlockButton extends React.PureComponent
+  @defaultProps =
+    onClick: -> # do nothing
+
   constructor: (props) ->
     super props
 
@@ -39,13 +44,17 @@ class @BlockButton extends React.PureComponent
       $.publish 'blockButton:refresh'
       $.publish 'friendButton:refresh'
 
+    @props.onClick()
+
 
   refresh: (e) =>
     @setState block: _.find(currentUser.blocks, target_id: @props.userId)
 
 
   clicked: (e) =>
-    return if !confirm osu.trans('common.confirmation')
+    if !confirm osu.trans('common.confirmation')
+      @props.onClick()
+      return
 
     @setState loading: true, =>
       if @state.block

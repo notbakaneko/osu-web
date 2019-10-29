@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ο ρυθμός είναι μόνο ένα *κλικ* μακριά! Με Ouendan/EBA, Taiko και αυθεντικά gameplay modes, καθώς και έναν πλήρως λειτουργικό level editor.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'αρχική σελίδα',
             'account-edit' => 'ρυθμίσεις',
+            'account-verifyLink' => '',
             'friends-index' => 'φίλοι',
             'changelog-index' => 'αρχείο καταγραφής αλλαγών',
             'changelog-build' => 'έκδοση',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'ομάδες',
             'index' => 'επισκόπηση',
             'legal-show' => 'πληροφορίες',
-            'messages-index' => '',
+            'messages-index' => 'μηνύματα',
             'news-index' => 'ειδήσεις',
             'news-show' => 'ειδήσεις',
             'password-reset-index' => 'επαναφορά κωδικού πρόσβασης',
             'search' => 'αναζήτηση',
             'supportTheGame' => 'υποστηρίξτε το παιχνίδι',
             'team' => 'ομάδα',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'βοήθεια',
@@ -78,13 +100,13 @@ return [
         ],
         'community' => [
             '_' => 'κοινότητα',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'συνομιλία',
+            'chat-index' => 'συνομιλία',
             'dev' => 'προγραμματισμός',
             'getForum' => 'φόρουμ',
             'getLive' => 'ζωντανά',
-            'comments-index' => '',
-            'comments-show' => '',
+            'comments-index' => 'σχόλια',
+            'comments-show' => 'σχόλιο',
             'contests' => 'διαγωνισμοί',
             'profile' => 'προφίλ',
             'tournaments' => 'τουρνουά',
@@ -118,16 +140,18 @@ return [
             'reset' => 'ανάκτηση',
             'new' => 'νέα',
 
-            'messages' => 'Μηνύματα',
-            'settings' => 'Ρυθμίσεις',
-            'logout' => 'Αποσύνδεση',
             'help' => 'Βοήθεια',
+            'logout' => 'Αποσύνδεση',
+            'messages' => 'Μηνύματα',
             'modding-history-discussions' => 'modding συζητήσεις του χρήστη',
             'modding-history-events' => 'γεγονότα για την επεξεργασία χρηστών',
             'modding-history-index' => 'modding ιστορικό του χρήστη',
             'modding-history-posts' => 'modding αναρτήσεις του χρήστη',
             'modding-history-votesGiven' => 'modding ψήφους που έχει δώσει ο χρήστης',
             'modding-history-votesReceived' => 'modding ψήφους που έχει λάβει ο χρήστης',
+            'oauth_login' => 'συνδεθείτε για το oauth',
+            'oauth_request' => 'εξουσιοδότηση oauth',
+            'settings' => 'Ρυθμίσεις',
         ],
         'store' => [
             '_' => 'κατάστημα',
@@ -137,7 +161,7 @@ return [
 
             'getCheckout' => 'ολοκλήρωση αγοράς',
             'getInvoice' => 'τιμολόγιο',
-            'orders-index' => '',
+            'orders-index' => 'ιστορικό παραγγελιών',
             'products-show' => 'προϊόν',
 
             'new' => 'νέο',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Χρειάζεστε λογαριασμό, κύριε. Γιατί δεν έχετε ήδη έναν;",
+            'download' => '',
+            'info' => 'Χρειάζεστε λογαριασμό, κύριε. Γιατί δεν έχετε ήδη έναν;',
             'title' => "Δεν έχετε λογαριασμό;",
         ],
     ],

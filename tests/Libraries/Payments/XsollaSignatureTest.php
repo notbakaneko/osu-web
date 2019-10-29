@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,25 +18,25 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Tests;
+namespace Tests\Libraries\Payments;
 
 use App\Libraries\Payments\XsollaSignature;
 use Config;
-use TestCase;
+use Tests\TestCase;
 
 class XsollaSignatureTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-        Config::set('payments.xsolla.secret_key', 'magic');
-    }
-
     public function testCalculateSignature()
     {
         static $expected = 'e61077e203eb692b6eb29fff47ccec989089118f';
         $signature = XsollaSignature::calculateSignature("{'notification_type':'payment'}");
 
         $this->assertSame($expected, $signature);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Config::set('payments.xsolla.secret_key', 'magic');
     }
 }

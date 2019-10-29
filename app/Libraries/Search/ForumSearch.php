@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -88,6 +88,8 @@ class ForumSearch extends Search
             $user = User::lookup($this->params->username);
             $query->filter(['term' => ['poster_id' => $user ? $user->user_id : -1]]);
         }
+
+        $query->mustNot(['terms' => ['poster_id' => $this->params->blockedUserIds()]]);
 
         return (new HasChildQuery('posts', 'posts'))
             ->size(3)

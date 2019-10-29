@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,7 +24,6 @@ use App\Libraries\CommentBundle;
 use App\Libraries\GithubImporter;
 use App\Models\Build;
 use App\Models\BuildPropagationHistory;
-use App\Models\Changelog;
 use App\Models\UpdateStream;
 use Cache;
 
@@ -38,14 +37,6 @@ class ChangelogController extends Controller
     public function index()
     {
         $this->getUpdateStreams();
-
-        $chartConfig = Cache::remember(
-            'chart_config_global',
-            config('osu.changelog.build_history_interval'),
-            function () {
-                return $this->chartConfig(null);
-            }
-        );
 
         $search = [
             'stream' => presence(request('stream')),
@@ -65,7 +56,7 @@ class ChangelogController extends Controller
             ])->orderBy('build_id', 'DESC')
             ->get();
 
-        if (!request()->expectsJson() && count($builds) === 1 && request('no_redirect') !== '1') {
+        if (!is_json_request() && count($builds) === 1 && request('no_redirect') !== '1') {
             return ujs_redirect(build_url($builds[0]));
         }
 
@@ -75,13 +66,22 @@ class ChangelogController extends Controller
         ]);
 
         $indexJson = [
+            'streams' => $this->updateStreams,
             'builds' => $buildsJson,
             'search' => $search,
         ];
 
-        if (request()->expectsJson()) {
+        if (is_json_request()) {
             return $indexJson;
         } else {
+            $chartConfig = Cache::remember(
+                'chart_config_global',
+                config('osu.changelog.build_history_interval'),
+                function () {
+                    return $this->chartConfig(null);
+                }
+            );
+
             return view('changelog.index', compact('chartConfig', 'indexJson'));
         }
     }
@@ -90,7 +90,18 @@ class ChangelogController extends Controller
     {
         $token = config('osu.changelog.github_token');
 
-        list($algo, $signature) = explode('=', request()->header('X-Hub-Signature'));
+        $signatureHeader = explode('=', request()->header('X-Hub-Signature'));
+
+        if (count($signatureHeader) !== 2) {
+            abort(422, 'invalid signature header');
+        }
+
+        [$algo, $signature] = $signatureHeader;
+
+        if (!in_array($algo, hash_hmac_algos(), true)) {
+            abort(422, 'unknown signature algorithm');
+        }
+
         $hash = hash_hmac($algo, request()->getContent(), $token);
 
         if (!hash_equals((string) $hash, (string) $signature)) {
@@ -107,8 +118,24 @@ class ChangelogController extends Controller
 
     public function show($version)
     {
-        $build = Build::default()->where('version', '=', $version)->first();
+        if (request('key') === 'id') {
+            $build = Build::default()->findOrFail($version);
+        } else {
+            // Search by exact version first.
+            $build = Build::default()->where('version', '=', $version)->first();
+        }
 
+        // Failing that, check if $version is actually a stream name.
+        if ($build === null) {
+            $stream = UpdateStream::where('name', '=', $version)->first();
+
+            if ($stream !== null) {
+                $build = $stream->builds()->default()->orderBy('build_id', 'desc')->first();
+            }
+        }
+
+        // When there's no build found, strip everything but numbers and dots then search again.
+        // 404 if still nothing found.
         if ($build === null) {
             $normalizedVersion = preg_replace('#[^0-9.]#', '', $version);
 
@@ -136,7 +163,11 @@ class ChangelogController extends Controller
                 return $this->chartConfig($build->updateStream);
             });
 
-        return view('changelog.build', compact('build', 'buildJson', 'chartConfig', 'commentBundle'));
+        if (is_json_request()) {
+            return $buildJson;
+        } else {
+            return view('changelog.build', compact('build', 'buildJson', 'chartConfig', 'commentBundle'));
+        }
     }
 
     private function getUpdateStreams()

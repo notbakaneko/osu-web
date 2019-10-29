@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -36,11 +36,13 @@ class VerifyUser
 
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->is('home/account/verify')
-            && !$request->is('home/account/reissue-code')
-            && !$request->is('session')
-            && $this->requiresVerification($request)) {
-            $verification = new UserVerification($this->auth->user(), $request);
+        if (!$request->is([
+            'home/account/reissue-code',
+            'home/account/verify',
+            'home/notifications/endpoint',
+            'session',
+        ]) && $this->requiresVerification($request)) {
+            $verification = UserVerification::fromCurrentRequest();
 
             if (!$verification->isDone()) {
                 return $verification->initiate();

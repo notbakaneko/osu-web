@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,8 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-@foreach ($search->data() as $entry)
-    <div class="search-result-entry">
-        @include('objects._usercard', ['user' => $entry, '_modifiers' => ['no-margin']])
-    </div>
-@endforeach
+<div class="js-react--user-cards"
+     data-modifiers="{{ json_encode(['search']) }}"
+     data-users="{{ json_encode(json_collection($search->data(), 'UserCompact', ['cover', 'country'])) }}">
+</div>

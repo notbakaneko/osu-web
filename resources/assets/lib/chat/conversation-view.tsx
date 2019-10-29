@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -16,24 +16,38 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { route } from 'laroute';
+import * as _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import Message from 'models/chat/message';
+import * as moment from 'moment';
 import * as React from 'react';
+import { Spinner } from 'spinner';
 import RootDataStore from 'stores/root-data-store';
+import { StringWithComponent } from 'string-with-component';
+import { UserAvatar } from 'user-avatar';
 import MessageDivider from './message-divider';
 import MessageGroup from './message-group';
 
 @inject('dataStore')
 @observer
 export default class ConversationView extends React.Component<any, any> {
+  private chatViewRef = React.createRef<HTMLInputElement>();
+
   componentDidMount() {
     this.componentDidUpdate();
+    $(window).on('throttled-scroll', _.throttle(this.onScroll, 1000));
   }
 
-  componentDidUpdate() {
-    // if ($('.chat-conversation').length > 0) {
-    //   $('.chat-conversation').scrollTop($('.chat-conversation')[0].scrollHeight);
-    // }
+  componentDidUpdate = () => {
+    const chatView = this.chatViewRef.current;
+    if (!chatView) {
+      return;
+    }
+
+    if (this.props.dataStore.uiState.chat.autoScroll) {
+      $(chatView).scrollTop(chatView.scrollHeight);
+    }
   }
 
   noCanSendMessage(): React.ReactNode {
@@ -70,12 +84,19 @@ export default class ConversationView extends React.Component<any, any> {
     }
   }
 
+  onScroll = () => {
+    const chatView = this.chatViewRef.current;
+    if (chatView) {
+      this.props.dataStore.uiState.chat.autoScroll = chatView.scrollTop + chatView.clientHeight >= chatView.scrollHeight;
+    }
+  }
+
   render(): React.ReactNode {
     const dataStore: RootDataStore = this.props.dataStore;
     const channel = dataStore.channelStore.channels.get(dataStore.uiState.chat.selected);
 
     if (!channel) {
-      return(<div className='conversation' />);
+      return <div className='conversation' />;
     }
 
     const lazerLink = 'https://github.com/ppy/osu/releases';
@@ -107,7 +128,8 @@ export default class ConversationView extends React.Component<any, any> {
       }
 
       // add message to current message grouping if the sender is the same, otherwise create a new message grouping
-      if (_.isEmpty(currentGroup) || _.last(currentGroup).sender.id === message.sender.id) {
+      const lastCurrentGroup = _.last(currentGroup);
+      if (lastCurrentGroup == null || lastCurrentGroup.sender.id === message.sender.id) {
         currentGroup.push(message);
       } else {
         conversationStack.push(<MessageGroup key={currentGroup[0].uuid} messages={currentGroup} />);
@@ -121,13 +143,17 @@ export default class ConversationView extends React.Component<any, any> {
     });
 
     return (
-      <div className='chat-conversation'>
+      <div className='chat-conversation' onScroll={this.onScroll} ref={this.chatViewRef}>
         <div className='chat-conversation__new-chat-avatar'>
           <UserAvatar user={{id: 0, avatar_url: channel.icon}} />
         </div>
         <div className='chat-conversation__chat-label'>
           {channel.type === 'PM' ? (
-            osu.trans('chat.talking_with', {name: channel.name})
+            <StringWithComponent
+              pattern={osu.trans('chat.talking_with')}
+              // TODO: rework this once the user class situation is resolved
+              mappings={{':name': <a key='user' className='js-usercard' data-user-id={channel.pmTarget} href={route('users.show', {user: channel.pmTarget})}>{channel.name}</a>}}
+            />
           ) : (
             osu.trans('chat.talking_in', {channel: channel.name})
           )}

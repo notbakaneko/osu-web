@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Diskusi terkunci',
         'first_post' => 'Tidak dapat menghapus postingan awal.',
+
+        'attributes' => [
+            'message' => 'Isi pesan',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Tingkat kesulitan yang tidak valid ditentukan.',
         'invalid_beatmapset_id' => 'Beatmap yang tidak valid ditentukan.',
         'locked' => 'Diskusi dikunci.',
+
+        'attributes' => [
+            'message_type' => 'Tipe pesan',
+            'timestamp' => 'Keterangan Waktu',
+        ],
 
         'hype' => [
             'guest' => 'Silakan masuk untuk dapat memberikan hype.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Membalas komentar yang sudah dihapus tidak diperbolehkan.',
+
+        'attributes' => [
+            'message' => 'Isi pesan',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => ':attribute yang Ditentukan Tidak Valid.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Menghapus posting metadata beatmap tidak diizinkan.',
             'beatmapset_post_no_edit' => 'Menyunting posting metadata beatmap tidak diizinkan.',
+            'only_quote' => 'Balasan Anda hanya berisi kutipan.',
+
+            'attributes' => [
+                'post_text' => 'Isi postingan',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Judul topik',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Opsi ganda tidak diizinkan.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Tidak dapat menyunting sebuah jajak pendapat setelah melebihi :limit jam',
+            'hiding_results_forever' => 'Suara pada polling yang tidak memiliki batasan akhir waktu tidak dapat dirahasiakan.',
             'invalid_max_options' => 'Pilihan per pengguna tidak boleh melebihi jumlah opsi yang tersedia.',
             'minimum_one_selection' => 'Diperlukan setidaknya satu opsi per pengguna.',
             'minimum_two_options' => 'Diperlukan setidaknya dua opsi',
             'too_many_options' => 'Jumlah maksimum opsi melebihi yang diizinkan.',
+
+            'attributes' => [
+                'title' => 'Judul pemungutan suara',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Pilih opsi saat memilih.',
             'too_many' => 'Jumlah pilihan Anda lebih banyak dari yang diizinkan.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Jumlah aplikasi OAuth melebihi batas maksimal.',
+            'url' => 'Harap masukkan URL valid.',
+
+            'attributes' => [
+                'name' => 'Nama Aplikasi',
+                'redirect' => 'Callback URL Aplikasi',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Nama pengguna ini dapat digunakan sekarang!',
         'username_invalid_characters' => 'Nama pengguna yang diminta mengandung karakter yang tidak valid.',
         'username_in_use' => 'Nama pengguna sudah digunakan!',
+        'username_locked' => 'Nama pengguna sudah digunakan!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Mohon gunakan garis bawah atau spasi, jangan keduanya!',
         'username_no_spaces' => "Nama pengguna tidak dapat dimulai atau diakhiri dengan spasi!",
         'username_not_allowed' => 'Pilihan nama pengguna ini tidak diizinkan.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Konfirmasi kata sandi tidak cocok.',
         'too_long' => 'Melebihi batas maksimum - hanya bisa hingga :limit karakter.',
 
+        'attributes' => [
+            'username' => 'Nama Pengguna',
+            'user_email' => 'Alamat Email',
+            'password' => 'Kata Sandi',
+        ],
+
         'change_username' => [
+            'restricted' => 'Anda tidak dapat mengganti nama pengguna Anda selama dibatasi.',
             'supporter_required' => [
                 '_' => 'Anda harus menjadi :link untuk mengubah nama Anda!',
                 'link_text' => 'osu!supporter',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Anda tidak dapat melaporkan diri Anda sendiri!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Jumlah',
+                'cost' => 'Biaya',
+            ],
+        ],
     ],
 ];

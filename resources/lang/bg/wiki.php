@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,10 +21,10 @@
 return [
     'show' => [
         'fallback_translation' => 'Страницата все още не е преведена на избрания език (:language). Ще бъде показана на английски език.',
-        'languages' => 'Езици',
-        'missing' => 'Страницата ":keyword" не можа да бъде намерена.',
-        'missing_title' => 'Не е намерена',
-        'missing_translation' => 'Страницата не е намерена за текущо избрания език.',
+        'incomplete_or_outdated' => '',
+        'missing' => 'Страницата ":keyword" не беше намерена.',
+        'missing_title' => 'Не е намерено',
+        'missing_translation' => 'Страницата не е намерена на текущо избрания език.',
         'search' => 'Търси съществуващи страници за :link.',
         'toc' => 'Съдържание',
 
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Версия на английски език',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

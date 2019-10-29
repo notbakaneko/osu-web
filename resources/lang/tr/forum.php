@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! forumları',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Kapak fotoğrafı ekle',
             'button' => 'Resim yükle',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Son Gönderi',
+
+        'index' => [
+            'title' => 'Forum Ana Sayfası',
+        ],
+
         'topics' => [
             'empty' => 'Başlık yok!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Forumu okundu olarak işaretle',
+        'forums' => 'Forumları okundu olarak işaretle',
+        'busy' => 'Okundu olarak işaretleniyor...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Gönderiyi sil',
             'restore' => 'Gönderiyi geri getir',
             'edit' => 'Gönderiyi düzenle',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ': sınırlandırılmış mesaj sayısı |: sınırlandırılmış mesaj sayıları',
+            'topic_starter' => 'Konu Başlığı',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => ':user tarafından başlatıldı',
 
         'create' => [
+            'close' => '',
             'preview' => 'Ön izleme ',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Anket oluşturma',
 
+            'preview' => 'Yazı önizleme',
+
             'create_poll_button' => [
                 'add' => 'Anket oluştur',
                 'remove' => 'Anket oluşturmayı iptal et',
             ],
 
             'poll' => [
+                'hide_results' => 'Anket sonuçlarını gizle.',
+                'hide_results_info' => 'Sadece anket sonuçlandıktan sonra gösterilecekler.',
                 'length' => 'Şu süreyle anketi sürdür',
                 'length_days_suffix' => 'gün',
                 'length_info' => 'Hiç bitmeyen bir anket için boş bırakın',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'görülme',
+            'feature_votes' => 'yıldız öncelik',
             'replies' => 'yanıt',
+            'views' => 'görülme',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Başlık sabitlendi ve duyuru olarak işaretlendi',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Silinmiş mesajlar',
             'total_posts' => 'Toplam Mesaj',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Mevcut Öncelik: +:count',
                 'do' => 'Bu isteği destekle',
+
+                'info' => [
+                    '_' => 'Bu bir: özellik isteğidir. Özellik istekleri aşağıdakiler tarafından oylanabilir: destek Personeli.',
+                    'feature_request' => 'özellik isteği',
+                    'supporters' => 'destek Personeli',
+                ],
 
                 'user' => [
                     'count' => '{0} oy yok|{1} :count oy|[2,*] :count oy',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Oyla',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Anket :time tarihinde bitecek',
                     'ended' => 'Anket :time tarihinde bitti',
+                    'results_hidden' => 'Sonuçlar anket bittikten sonra gösterilecek.',
                     'total' => 'Toplam oy: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Kayıtlı değil',
             'to_watching' => 'Kaydet',
             'to_watching_mail' => 'Bildirimlerle beraber kaydet',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Bildirim etkin. Devre dışı bırakmak için tıklayın',
+            'tooltip_mail_enable' => 'Bildirim devre dışı. Etkinleştirmek için tıklayın',
         ],
     ],
 ];

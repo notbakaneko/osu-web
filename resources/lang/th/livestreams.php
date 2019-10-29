@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
         'headline' => 'การถ่ายทอดสด',
         'description' => 'ข้อมูลจะรับมาจาก twitch.tv ทุกๆ 5 นาทีจากรายการเกม คุณสามารถเริ่มไลฟ์ของคุณเองเพื่อให้มาแสดงในนี้ได้! หากต้องการคำแนะนำในการติดตั้งไลฟ์ สามารถเช็คได้จาก wiki ของเราในหัวห้อ live streaming',
 
-        'link' => '',
+        'link' => 'การถ่ายทอดสดบนหน้าวิกิ',
     ],
     'headers' => [
         'regular' => 'กำลังถ่ายทอดสดอยู่ขณะนี้',

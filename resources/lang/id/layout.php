@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Rhythm is just a *click* away! Dengan berbagai mode permainan seperti Ouendan/EBA, Taiko, serta level editor yang berfungsi.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Komunitas',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Tutup (Esc)',
+        'fullscreen' => 'Beralih ke layar penuh',
+        'zoom' => 'Perbesar/perkecil tampilan',
+        'previous' => 'Sebelumnya (arrow left)',
+        'next' => 'Selanjutnya (arrow right)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'beranda',
             'account-edit' => 'pengaturan',
+            'account-verifyLink' => 'Verifikasi Selesai',
             'friends-index' => 'teman',
             'changelog-index' => 'riwayat perubahan',
             'changelog-build' => 'versi',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'grup',
             'index' => 'dasbor',
             'legal-show' => 'informasi',
-            'messages-index' => '',
+            'messages-index' => 'pesan',
             'news-index' => 'berita',
             'news-show' => 'berita',
             'password-reset-index' => 'setel ulang kata sandi',
             'search' => 'cari',
             'supportTheGame' => 'dukung permainan ini',
             'team' => 'tim',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'bantuan',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'komunitas',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'pengembangan',
             'getForum' => 'forum',
             'getLive' => 'siaran langsung',
@@ -118,16 +140,18 @@ return [
             'reset' => 'pulihkan',
             'new' => 'baru',
 
-            'messages' => 'Pesan',
-            'settings' => 'Pengaturan',
-            'logout' => 'Keluar',
             'help' => 'bantuan',
+            'logout' => 'Keluar',
+            'messages' => 'Pesan',
             'modding-history-discussions' => 'diskusi modding pengguna',
             'modding-history-events' => 'peristiwa modding pengguna',
             'modding-history-index' => 'riwayat modding pengguna',
             'modding-history-posts' => 'postingan modding pengguna',
             'modding-history-votesGiven' => 'suara modding yang diberikan pengguna',
             'modding-history-votesReceived' => 'suara modding yang diterima pengguna',
+            'oauth_login' => 'masuk untuk oauth',
+            'oauth_request' => 'otorisasi oauth',
+            'settings' => 'Pengaturan',
         ],
         'store' => [
             '_' => 'toko',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Anda butuh akun. Mengapa Anda belum memilikinya?",
+            'download' => '',
+            'info' => 'Anda butuh akun. Mengapa Anda belum memilikinya?',
             'title' => "Belum memiliki akun?",
         ],
     ],

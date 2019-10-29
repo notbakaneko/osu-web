@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -16,9 +16,9 @@
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
 @extends('master', [
-    'title' => 'osu!',
+    'title' => trans('home.landing.title'),
     'blank' => 'true',
-    'bodyAdditionalClasses' => 'osu-layout--body-dark'
+    'bodyAdditionalClasses' => 'osu-layout--body-landing'
 ])
 
 @section('content')
@@ -86,17 +86,9 @@
                 <a
                     href="#"
                     class="landing-nav__link js-nav-toggle js-click-menu js-user-login--menu"
-                    title="{{ trans("users.anonymous.login_link") }}"
                     data-click-menu-target="nav2-login-box"
                 >
                     {{ trans("users.login._") }}
-                </a>
-
-                <a
-                    href="{{ osu_url('user.signup') }}"
-                    class="landing-nav__link js-nav-toggle"
-                >
-                    {{ trans("users.signup._") }}
                 </a>
             </div>
         </div>
@@ -130,10 +122,10 @@
             </div>
 
             <div class="landing-hero__info">
-                {!! trans("home.landing.players", ['count' => number_format($stats->totalUsers)]) !!},
+                {!! trans("home.landing.players", ['count' => i18n_number_format($stats->totalUsers)]) !!},
                 {!! trans("home.landing.online", [
-                    'players' => number_format($stats->currentOnline),
-                    'games' => number_format($stats->currentGames)]
+                    'players' => i18n_number_format($stats->currentOnline),
+                    'games' => i18n_number_format($stats->currentGames)]
                 ) !!}
             </div>
 
@@ -181,13 +173,7 @@
         </div>
     </div>
 
-    <div class="osu-page osu-page--landing-buttons">
-        <div class="landing-middle-buttons">
-            <a
-                href="https://blog.ppy.sh/"
-                class="landing-middle-buttons__button landing-middle-buttons__button--blog"
-            ></a>
-        </div>
+    <div class="osu-page js-react--landing-news">
     </div>
 
     <footer class="osu-layout__section osu-layout__section--landing-footer">
@@ -215,9 +201,6 @@
             <a href="{{ osu_url("social.twitter") }}" class="landing-footer-social__icon landing-footer-social__icon--twitter">
                 <span class="fab fa-twitter"></span>
             </a>
-            <a href="{{ osu_url("social.facebook") }}" class="landing-footer-social__icon landing-footer-social__icon--facebook">
-                <span class="fab fa-facebook"></span>
-            </a>
         </div>
 
         @include('layout.footer', ['modifiers' => ['landing'], 'withLinks' => false])
@@ -228,4 +211,8 @@
 
 @section ("script")
     @parent
+
+    <script id="json-posts" type="application/json">
+        {!! json_encode($news) !!}
+    </script>
 @endsection

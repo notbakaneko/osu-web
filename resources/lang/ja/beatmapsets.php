@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,56 +20,65 @@
 
 return [
     'availability' => [
-        'disabled' => 'この譜面は現在ダウンロード不可能です。',
-        'parts-removed' => '権利者の申し立てによりこの譜面は部分的に削除されています。',
+        'disabled' => 'このビートマップは現在ダウンロード不可能です。',
+        'parts-removed' => '権利者の申し立てによりこのビートマップは部分的に削除されています。',
         'more-info' => '詳細はこちらです。',
     ],
 
     'index' => [
-        'title' => '譜面リスト',
-        'guest_title' => '譜面',
+        'title' => 'ビートマップリスト',
+        'guest_title' => 'ビートマップ',
     ],
 
     'show' => [
         'discussion' => 'ディスカッション',
 
         'details' => [
+            'approved' => 'Approved日 ',
+            'favourite' => 'ビートマップセットをお気に入りに追加する',
+            'logged-out' => 'ビートマップをダウンロードするにはログインが必要です！',
+            'loved' => 'loved追加日 ',
             'mapped_by' => '作者 :mapper',
+            'qualified' => 'qualifiedされた日',
+            'ranked' => 'Ranked日 ',
             'submitted' => '投稿日 ',
-            'updated' => '最後の更新 ',
-            'updated_timeago' => '最終更新時刻: :timeago',
-            'ranked' => 'ranked日時 ',
-            'approved' => 'approved日時 ',
-            'qualified' => 'qualified日時 ',
-            'loved' => 'loved日時 ',
-            'logged-out' => '譜面をダウンロードするにはログインが必要です！',
+            'unfavourite' => 'ビートマップをお気に入りから外す',
+            'updated' => '最終更新 ',
+            'updated_timeago' => '最終更新 :timeago',
+
             'download' => [
                 '_' => 'ダウンロード',
-                'video' => '動画あり',
-                'no-video' => '動画なし',
                 'direct' => 'osu!direct',
+                'no-video' => '動画なし',
+                'video' => '動画あり',
             ],
-            'favourite' => '譜面をお気に入りに追加する',
-            'unfavourite' => '譜面をお気に入りから外す',
-            'favourited_count' => '+ そのほか:count人！',
+
+            'login_required' => [
+                'bottom' => 'より多くの機能にアクセスする',
+                'top' => 'ログイン',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'お気に入りのビートマップが多すぎます！お気に入りを外してから再試行してください。',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'もしこのビートマップが良かった場合、Hypeすることでビートマップのステータスが<strong>Ranked</strong>状態になります。',
 
             'current' => [
-                '_' => '',
+                '_' => 'このビートマップは現在:statusです。',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'Pending',
+                    'qualified' => 'Qualified',
+                    'wip' => '作業中',
                 ],
             ],
         ],
 
         'info' => [
-            'description' => '説明文',
+            'description' => '概要',
             'genre' => 'ジャンル',
             'language' => '言語',
             'no_scores' => 'データはまだ現在計算中です・・・',
@@ -77,7 +86,7 @@ return [
             'source' => 'ソース',
             'success-rate' => 'クリア率',
             'tags' => 'タグ',
-            'unranked' => 'Unranked譜面',
+            'unranked' => 'Unrankedビートマップ',
         ],
 
         'scoreboard' => [
@@ -85,32 +94,32 @@ return [
             'country' => '国別ランキング',
             'friend' => 'フレンドランキング',
             'global' => '世界ランキング',
-            'supporter-link' => '<a href=":link">ここ</a>をクリックする事でサポーターの詳細が見れます。',
-            'supporter-only' => 'フレンドランキングと国別ランキングを利用するにはサポータータグが必要です！',
+            'supporter-link' => '<a href=":link">ここ</a>をクリックする事でosu!サポーターの詳細が見れます。',
+            'supporter-only' => 'フレンドランキングと国別ランキングを利用するにはosu!サポータータグが必要です！',
             'title' => 'スコアボード',
 
             'headers' => [
-                'accuracy' => 'Accuracy',
-                'combo' => 'Max Combo',
-                'miss' => 'Miss',
+                'accuracy' => '精度',
+                'combo' => '最大コンボ',
+                'miss' => 'ミス',
                 'mods' => 'Mods',
-                'player' => 'Player',
+                'player' => 'プレイヤー',
                 'pp' => 'pp',
-                'rank' => 'Rank',
-                'score_total' => 'Total Score',
-                'score' => 'Score',
+                'rank' => '順位',
+                'score_total' => '合計スコア',
+                'score' => 'スコア',
             ],
 
             'no_scores' => [
-                'country' => 'あなたの国からのプレイヤーで記録を作った人はまだいません！',
-                'friend' => 'あなたのフレンドで記録を作った人はまだいません!',
+                'country' => 'あなたの国のプレイヤーで記録を作った人はまだいません！',
+                'friend' => 'あなたのフレンドで記録を作った人はまだいません！',
                 'global' => 'まだ記録はありません。一番乗りを目指そう！',
                 'loading' => 'スコアの読み込み中・・・',
-                'unranked' => 'Unranked譜面です。',
+                'unranked' => 'Unrankedのビートマップです。',
             ],
             'score' => [
                 'first' => 'In the Lead',
-                'own' => 'Your Best',
+                'own' => 'あなたのベスト',
             ],
         ],
 

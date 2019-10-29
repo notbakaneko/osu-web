@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Je hebt je dagelijkse nominatie-limiet bereikt, probeer het morgen opnieuw.',
+            'full_bn_required' => 'Je moet een volledige nominator zijn om deze nominatie te kunnen uitvoeren.',
+            'full_bn_required_hybrid' => 'Je moet een volledige nominator zijn om beatmap sets met meer dan één spelmodus te nomineren.',
             'incorrect_state' => 'Fout tijdens het uitvoeren van deze actie, probeer de pagina te herladen.',
             'owner' => "Je kan je eigen beatmap niet nomineren.",
         ],
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => 'U kunt alleen uw eigen berichten verwijderen.',
+            'resolved' => 'U kunt een bericht van een opgeloste discussie niet verwijderen.',
+            'system_generated' => 'Automatisch gegenereerd bericht kan niet worden verwijderd.',
+        ],
+
         'edit' => [
-            'system_generated' => 'Automatisch gegenereerde posts kunnen niet worden bewerkt.',
             'not_owner' => 'Alleen de eigenaar kan deze post bewerken.',
+            'resolved' => 'U kunt geen bericht van een opgeloste discussie bewerken.',
+            'system_generated' => 'Automatisch gegenereerde posts kunnen niet worden bewerkt.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Deze beatmap is vergrendeld voor discussie.',
         ],
     ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Toegang tot deze forum is nodig.',
                 'over' => 'De stemperiode is voorbij en er kan niet meer gestemd worden.',
+                'play_more' => 'Je moet meer spelen voordat je kan stemmen op het forum.',
                 'voted' => 'Je stem veranderen is niet toegestaan.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Foutieve cover gespecificeerd.',
                 'not_owner' => 'Alleen de eigenaar kan de cover bewerken.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Dit forum accepteert geen topic covers.',
             ],
         ],
 

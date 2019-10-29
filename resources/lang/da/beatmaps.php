@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'discussion-posts' => [
         'store' => [
-            'error' => 'Kunne ikke gemme opslag',
+            'error' => 'Kunne ikke gemme opslaget',
         ],
     ],
 
@@ -32,20 +32,23 @@ return [
     ],
 
     'discussions' => [
-        'allow_kudosu' => 'tillad kudosu',
+        'allow_kudosu' => 'giv kudosu',
+        'beatmap_information' => '',
         'delete' => 'slet',
         'deleted' => 'Slettet af :editor :delete_time.',
         'deny_kudosu' => 'nægt kudosu',
         'edit' => 'ændr',
         'edited' => 'Sidst redigeret af :editor :update_time.',
         'kudosu_denied' => 'Nægtet fra at kunne modtage kudosu.',
-        'message_placeholder_deleted_beatmap' => 'Den her sværhedsgrad er blevet slettet så den må ikke blive diskuteret.',
+        'message_placeholder_deleted_beatmap' => 'Denne sværhedsgrad er blevet slettet så den kan ikke længere blive diskuteret.',
+        'message_placeholder_locked' => 'Diskussion for dette beatmap er blevet deaktiveret.',
         'message_type_select' => 'Vælg kommentar-type',
         'reply_notice' => 'Tryk enter for at svare.',
         'reply_placeholder' => 'Skriv dit svar her',
         'require-login' => 'Log ind for at slå op eller svare',
         'resolved' => 'Løst',
         'restore' => 'gendan',
+        'show_deleted' => '',
         'title' => 'Diskussioner',
 
         'collapse' => [
@@ -58,15 +61,27 @@ return [
             'hidden' => 'Ingen diskussioner matchede det valgte filter.',
         ],
 
+        'lock' => [
+            'button' => [
+                'lock' => 'Lås diskussion',
+                'unlock' => 'Lås op for diskussion',
+            ],
+
+            'prompt' => [
+                'lock' => 'Årsag for låsning',
+                'unlock' => 'Er du sikker på at du vil låse op?',
+            ],
+        ],
+
         'message_hint' => [
-            'in_general' => 'Dette opslag vil lande i general beatmapset diskussionen. For at modde dette beatmap, start beskeden med et tidsstempel (f.eks. 00:12:345).',
-            'in_timeline' => 'For at modde flere tidsstempler, slå flere tidsstempler op (kun et opslag pr. tidsstempel).',
+            'in_general' => 'Dette opslag vil ende i general beatmapset diskussionen. Start beskeden med et tidsstempel (f.eks. 00:12:345) for at modde dette beatmap.',
+            'in_timeline' => 'For at modde flere tidsstempler, skal der slås flere tidsstempler op (kun et opslag pr. tidsstempel).',
         ],
 
         'message_placeholder' => [
-            'general' => '',
-            'generalAll' => '',
-            'timeline' => '',
+            'general' => 'Skriv her for at sende en besked til General (:version)',
+            'generalAll' => 'Skriv her til at sende en besked til General (All difficulties)',
+            'timeline' => 'Skriv her for at sende en besked til tidslinjen (:version)',
         ],
 
         'message_type' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Fastgør',
             'timestamp' => 'Tidsstempel',
             'timestamp_missing' => 'Tryk ctrl-c i edit mode og indsæt i din besked for at tilføje tidsstempel!',
             'title' => 'Ny diskussion',
+            'unpin' => 'Frigør',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sorteret efter:',
-            'created_at' => 'Dato for upload',
-            'timeline' => 'tidslinje',
-            'updated_at' => 'sidst opdateret',
+            'created_at' => 'Oprettelsestidspunkt',
+            'timeline' => 'Tidslinje',
+            'updated_at' => '',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Notat: Dette beatmap er blevet markeret som "Under konstruktion" af skaberen.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -144,16 +170,16 @@ return [
     ],
 
     'nominations' => [
-        'delete' => '',
-        'delete_own_confirm' => '',
-        'delete_other_confirm' => '',
+        'delete' => 'Fjern',
+        'delete_own_confirm' => 'Er du sikker? Dette beatmap vil blive slettet og du vil blive omdirigeret tilbage til din profil.',
+        'delete_other_confirm' => 'Er du sikker? Dette beatmap vil blive slettet og du vil blive omdirigeret tilbage til brugerens profil.',
         'disqualification_prompt' => 'Årsag for diskvalifikation?',
         'disqualified_at' => 'Diskvalificeret :time_ago (:reason).',
         'disqualified_no_reason' => 'ingen årsag specificeret',
         'disqualify' => 'Diskvalificér',
         'incorrect_state' => 'Fejl under udførelse, try prøv at genindlæse siden.',
-        'love' => '',
-        'love_confirm' => '',
+        'love' => 'Kærlighed',
+        'love_confirm' => 'Elsk denne beatmap?',
         'nominate' => 'Nominér',
         'nominate_confirm' => 'Nominér dette beatmap?',
         'nominated_by' => 'nomineret af :users',
@@ -171,42 +197,43 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Er du sikker? At slå et nyt problem op nulstiller nominations processen.',
-            'disqualify' => '',
+            'disqualify' => 'Er du sikker? Det her vil fjerne dette beatmap fra at kunne blive kvalificeret og vil nulstille nomineringsprocessen.',
         ],
     ],
 
     'listing' => [
         'search' => [
             'prompt' => 'skriv nøgleord...',
-            'login_required' => '',
+            'login_required' => 'Du skal være logget ind for at kunne søge.',
             'options' => 'Flere søgefunktioner',
-            'supporter_filter' => '',
+            'supporter_filter' => 'Filtrering af :filters kræver et aktivt osu! supporter tag',
             'not-found' => 'ingen resultater',
             'not-found-quote' => '... desværre, intet fundet.',
             'filters' => [
                 'general' => 'Generalt',
                 'mode' => 'Mode',
-                'status' => '',
+                'status' => 'Kategorier',
                 'genre' => 'Genre',
                 'language' => 'Sprog',
                 'extra' => 'extra',
                 'rank' => 'Rank Opnået',
-                'played' => '',
+                'played' => 'Allerede spillet',
             ],
             'sorting' => [
-                'title' => '',
-                'artist' => '',
-                'difficulty' => '',
-                'updated' => '',
-                'ranked' => '',
-                'rating' => '',
-                'plays' => '',
+                'title' => 'Titel',
+                'artist' => 'Kunstner',
+                'difficulty' => 'Sværhedsgrad',
+                'favourites' => 'Favoritter',
+                'updated' => 'Opdateret',
+                'ranked' => 'Rangeret',
+                'rating' => 'Vurdering',
+                'plays' => 'Afspilninger',
                 'relevance' => '',
-                'nominations' => '',
+                'nominations' => 'Nomineringer',
             ],
             'supporter_filter_quote' => [
-                '_' => '',
-                'link_text' => '',
+                '_' => 'Filtrering af :filters kræver en aktiv :link',
+                'link_text' => 'osu!supporter tag',
             ],
         ],
     ],
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Vilkårlig',
-        'ranked-approved' => 'Ranked & Godkendt',
         'approved' => 'Godkendt',
-        'qualified' => 'Kvalificeret',
-        'loved' => 'Loved',
-        'faves' => 'Favoritter',
-        'pending' => '',
+        'favourites' => 'Favoritter',
         'graveyard' => 'Kirkegård',
-        'my-maps' => 'Mine Maps',
+        'leaderboard' => '',
+        'loved' => 'Loved',
+        'mine' => '',
+        'pending' => 'Afventende & WIP',
+        'qualified' => 'Kvalificeret',
+        'ranked' => '',
     ],
     'genre' => [
         'any' => 'Vilkårlig',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => '',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -283,9 +312,9 @@ return [
         'other' => 'Andet',
     ],
     'played' => [
-        'any' => '',
-        'played' => '',
-        'unplayed' => '',
+        'any' => 'Hvilken som helst',
+        'played' => 'Allerede spillet',
+        'unplayed' => 'Aldrig spillet',
     ],
     'extra' => [
         'video' => 'Har Video',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => '',
+        'favourites' => 'Favoritter :count',
     ],
 ];

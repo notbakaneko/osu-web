@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2018 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="osu-page osu-page--small-desktop">
+        <div class="osu-page osu-page--small">
             <div class="search">
                 @include('home._search_page_tabs', compact('allSearch'))
 
@@ -68,7 +68,7 @@
                 @else
                     <div class="search-result">
                         <div class="search-result__row search-result__row--notice">
-                            {{ trans('home.search.missing_query', ['n' => config('osu.search.minimum_length')]) }}
+                            {{ trans('home.search.keyword_required') }}
                         </div>
                     </div>
                 @endif

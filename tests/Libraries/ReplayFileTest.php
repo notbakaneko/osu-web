@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,13 +18,14 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Tests;
+namespace Tests\Libraries;
 
 use App\Libraries\ReplayFile;
 use App\Models\Beatmap;
+use App\Models\ReplayViewCount;
 use App\Models\Score\Best;
 use App\Models\User;
-use TestCase;
+use Tests\TestCase;
 
 class ReplayFileTest extends TestCase
 {
@@ -45,12 +46,30 @@ class ReplayFileTest extends TestCase
 
         $replayFile = new ReplayFile($this->knownScore());
 
-        $this->assertSame($known, bin2hex($replayFile->headerChunk('20180822')));
+        $this->assertSame($known, bin2hex($replayFile->headerChunk()));
     }
 
-    private function knownScore()
+    public function testHeaderChunkDefaultVersion()
     {
-        return Best\Osu::make([
+        $known = '00bc7b33010b2039323536623735613064663334356262623237396533353438303732396631340b08492e522e5265616c0b2033393336326435393239313738633162626265373465323130646639316232399e000600000016000500000059911f00460101784200000b008014b73dec8dd508';
+
+        $replayFile = new ReplayFile($this->knownScore(true, null));
+
+        $this->assertSame($known, bin2hex($replayFile->headerChunk()));
+    }
+
+    public function testHeaderChunkMissingReplayRecord()
+    {
+        $known = '00bc7b33010b2039323536623735613064663334356262623237396533353438303732396631340b08492e522e5265616c0b2033393336326435393239313738633162626265373465323130646639316232399e000600000016000500000059911f00460101784200000b008014b73dec8dd508';
+
+        $replayFile = new ReplayFile($this->knownScore(false));
+
+        $this->assertSame($known, bin2hex($replayFile->headerChunk()));
+    }
+
+    private function knownScore($hasReplayRecord = true, ?int $version = 20180822)
+    {
+        $score = Best\Osu::make([
             'score_id' => 2493013207,
             'beatmap_id' => 1103293,
             'user_id' => 6258604,
@@ -79,5 +98,17 @@ class ReplayFileTest extends TestCase
                 'checksum' => '9256b75a0df345bbb279e35480729f14',
             ]),
         ]);
+
+        if ($hasReplayRecord) {
+            $score->fill([
+                'replayViewCount' => ReplayViewCount\Osu::make([
+                   'score_id' => 2493013207,
+                    'play_count' => 1,
+                    'version' => $version,
+                ]),
+            ]);
+        }
+
+        return $score;
     }
 }

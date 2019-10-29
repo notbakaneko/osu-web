@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -90,6 +90,7 @@ return [
 
         'invoice' => 'Lihat Invoice',
         'no_orders' => 'Tidak ada pesanan yang tercatat.',
+        'resume' => 'Lanjutkan Proses Check-Out',
 
         'item' => [
             'display_name' => [
@@ -114,7 +115,7 @@ return [
             'delivered' => 'Sampai Tujuan',
             'paid' => 'Lunas',
             'processing' => 'Menunggu konfirmasi',
-            'shipped' => 'Sedang Dikirim',
+            'shipped' => 'Dalam Perjalanan',
         ],
     ],
 

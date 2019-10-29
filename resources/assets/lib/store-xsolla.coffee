@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -15,6 +15,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
+
+import { route } from 'laroute'
 
 export class StoreXsolla
   @promiseInit: (orderNumber) ->
@@ -35,7 +37,7 @@ export class StoreXsolla
 
   @fetchToken: (orderNumber) ->
     new Promise (resolve, reject) ->
-      $.post laroute.route('payments.xsolla.token'), { orderNumber }
+      $.post route('payments.xsolla.token'), { orderNumber }
       .done (data) ->
         # Make sure laroute hasn't trolled us.
         return reject(message: 'wrong token length') unless data.length == 32
@@ -59,4 +61,4 @@ export class StoreXsolla
       if done
         LoadingOverlay.show()
         LoadingOverlay.show.flush()
-        window.location = laroute.route('payments.xsolla.completed', 'foreignInvoice': orderNumber)
+        window.location = route('payments.xsolla.completed', 'foreignInvoice': orderNumber)

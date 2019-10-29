@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,17 +16,20 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div, span} = ReactDOMFactories
-
+import { BigButton } from 'big-button'
+import * as React from 'react'
+import { button, div, span } from 'react-dom-factories'
+import { Spinner } from 'spinner'
+import { UserAvatar } from 'user-avatar'
 el = React.createElement
 
 bn = 'comment-editor'
 
-class @CommentEditor extends React.PureComponent
+export class CommentEditor extends React.PureComponent
   constructor: (props) ->
     super props
 
-    @textarea = null
+    @textarea = React.createRef()
     @throttledPost = _.throttle @post, 1000
 
     @handleKeyDown = InputHandler.textarea @handleKeyDownCallback
@@ -37,8 +40,8 @@ class @CommentEditor extends React.PureComponent
 
 
   componentDidMount: =>
-    @textarea.selectionStart = -1
-    @textarea.focus() if (@props.focus ? true)
+    @textarea.current?.selectionStart = -1
+    @textarea.current?.focus() if (@props.focus ? true)
 
 
   componentWillUnmount: =>
@@ -57,7 +60,7 @@ class @CommentEditor extends React.PureComponent
 
       el TextareaAutosize,
         className: "#{bn}__message"
-        innerRef: @setTextarea
+        ref: @textarea
         value: @state.message
         placeholder: osu.trans("comments.placeholder.#{@mode()}")
         onChange: @onChange
@@ -160,23 +163,20 @@ class @CommentEditor extends React.PureComponent
 
         onDone = (data) =>
           @setState message: ''
-          $.publish 'comments:added', commentBundle: data, prepend: true
+          $.publish 'comments:new', data
       when 'edit'
         url = laroute.route 'comments.update', comment: @props.id
         method = 'PUT'
 
         onDone = (data) ->
-          $.publish 'comment:updated', comment: data
+          $.publish 'comment:updated', data
 
     @xhr = $.ajax url, {method, data}
     .always =>
       @setState posting: false
     .done (data) =>
       onDone(data)
+      @props.onPosted?(@mode())
       @props.close?()
     .fail (xhr, status) =>
       osu.ajaxError(xhr, status)
-
-
-  setTextarea: (ref) =>
-    @textarea = ref

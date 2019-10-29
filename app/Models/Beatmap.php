@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -79,6 +79,11 @@ class Beatmap extends Model
         'mania' => 3,
     ];
 
+    public static function isModeValid(?string $mode)
+    {
+        return array_key_exists($mode, static::MODES);
+    }
+
     public static function modeInt($str)
     {
         return static::MODES[$str] ?? null;
@@ -91,7 +96,7 @@ class Beatmap extends Model
 
     public function beatmapset()
     {
-        return $this->belongsTo(Beatmapset::class, 'beatmapset_id');
+        return $this->belongsTo(Beatmapset::class, 'beatmapset_id')->withTrashed();
     }
 
     public function beatmapDiscussions()
@@ -112,6 +117,11 @@ class Beatmap extends Model
     public function difficultyAttribs()
     {
         return $this->hasMany(BeatmapDifficultyAttrib::class, 'beatmap_id');
+    }
+
+    public function getDifficultyratingAttribute($value)
+    {
+        return round($value, 2);
     }
 
     public function getModeAttribute()
@@ -184,7 +194,7 @@ class Beatmap extends Model
     {
         $mode ?? ($mode = $this->mode);
 
-        if (!array_key_exists($mode, static::MODES)) {
+        if (!static::isModeValid($mode)) {
             throw new ScoreRetrievalException(trans('errors.beatmaps.invalid_mode'));
         }
 

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -27,7 +27,7 @@
                     'mode' => $routeMode,
                     'type' => $routeType,
                     'spotlight' => $routeType === 'charts' ? $spotlight ?? null : null,
-                    'country' => $routeType !== 'charts' ? $country['acronym'] : null,
+                    'country' => $routeType === 'performance' ? $country['acronym'] : null,
                 ]), '?');
             }
         ];
@@ -57,7 +57,7 @@
     </div>
     <div class="osu-page osu-page--small osu-page--rankings">
         @if ($hasPager)
-            @include('objects._pagination', [
+            @include('objects._pagination_v2', [
                 'object' => $scores
                     ->appends(['country' => $country['acronym']])
                     ->fragment('scores')
@@ -72,7 +72,7 @@
         @yield('ranking-footer')
 
         @if ($hasPager)
-            @include('objects._pagination', [
+            @include('objects._pagination_v2', [
                 'object' => $scores
                     ->appends(['country' => $country['acronym']])
                     ->fragment('scores')

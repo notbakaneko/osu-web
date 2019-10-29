@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,20 +17,21 @@
  */
 
 .supporter-icon {
-  @top: supporter-icon;
-  font-size: 14px;
+  .center-content();
   color: white;
+  background-color: @pink;
 
-  &--smaller {
-    font-size: 10px;
-  }
+  // TODO: combine with profile-info__icon--supporter somehow?
+  height: 20px;
+  border-radius: 10000px;
+  font-size: 12px;
+  padding: 0 10px;
 
-  &__heart {
-    font-size: 0.8em;
-    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
-
-    .@{top}--smaller & {
-      font-size: 0.9em;
-    }
+  &--user-card {
+    height: @user-card-icon-size;
+    width: @user-card-icon-size;
+    font-size: @user-card-icon-size / 2;
+    border-radius: 50%;
+    padding: unset;
   }
 }

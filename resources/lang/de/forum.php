@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! Foren',
 
     'covers' => [
+        'edit' => 'Cover bearbeiten',
+
         'create' => [
             '_' => 'Banner festlegen',
             'button' => 'Bild hochladen',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Neuester Beitrag',
+
+        'index' => [
+            'title' => 'Forum-Startseite',
+        ],
+
         'topics' => [
             'empty' => 'Keine Threads!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Forum als gelesen markieren',
+        'forums' => 'Foren als gelesen markieren',
+        'busy' => 'Als gelesen markieren...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Post löschen',
             'restore' => 'Post wiederherstellen',
             'edit' => 'Post bearbeiten',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Neue Antwort',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited Beitrag | :count_delimited Beiträge',
+            'topic_starter' => 'Thread Starter',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'gestartet von :user',
 
         'create' => [
+            'close' => 'Schließen',
             'preview' => 'Vorschau',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Abstimmung erstellen',
 
+            'preview' => 'Beitragsvorschau',
+
             'create_poll_button' => [
                 'add' => 'Erstelle eine Abstimmung',
                 'remove' => 'Brich die Abstimmungserstellung ab',
             ],
 
             'poll' => [
+                'hide_results' => 'Ergebnisse der Umfrage verstecken.',
+                'hide_results_info' => 'Sie werden erst nach Abschluss der Umfrage angezeigt.',
                 'length' => 'Abstimmung offen für',
                 'length_days_suffix' => 'Tage',
                 'length_info' => 'Nichts eingeben für eine nie endende Abstimmung',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'Aufrufe',
+            'feature_votes' => 'Sternpriorität',
             'replies' => 'Antworten',
+            'views' => 'Aufrufe',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Thread wurde angepinnt und als Ankündigung markiert',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Gelöschte Posts',
             'total_posts' => 'Posts insgesamt',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Aktuelle Priorität: +:count',
                 'do' => 'Priorität hinzufügen',
+
+                'info' => [
+                    '_' => 'Dies ist ein :feature_request. Funktionsvorschläge können nur von :supporters abgestimmt werden.',
+                    'feature_request' => 'Funktionsvorschlag',
+                    'supporters' => 'Unterstützer',
+                ],
 
                 'user' => [
                     'count' => '{0} Keine Stimme|{1} :count Stimme|[2,*] :count Stimmen',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Umfrage bearbeiten',
+                'edit_warning' => 'Bearbeiten der Umfrage wird die derzeitigen Ergebnisse entfernen!',
                 'vote' => 'Abstimmung',
+
+                'button' => [
+                    'change_vote' => 'Stimme ändern',
+                    'edit' => 'Umfrage bearbeiten',
+                    'view_results' => 'Zu Ergebnissen springen',
+                    'vote' => 'Abstimmen',
+                ],
 
                 'detail' => [
                     'end_time' => 'Abstimmung endet am :time',
                     'ended' => 'Abstimmung beendet am :time',
+                    'results_hidden' => 'Ergebnisse werden nach dem Abstimmungsende angezeigt.',
                     'total' => 'Stimmen insgesamt: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Kein Lesezeichen gesetzt',
             'to_watching' => 'Lesezeichen setzen',
             'to_watching_mail' => 'Lesezeichen setzen und benachrichtigt werden',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Benachrichtigungen sind aktiviert. Klicken, zum deaktivieren',
+            'tooltip_mail_enable' => 'Benachrichtigungen sind deaktiviert. Klicken, zum aktivieren',
         ],
     ],
 ];

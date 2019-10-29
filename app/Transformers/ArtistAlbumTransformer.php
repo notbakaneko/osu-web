@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -37,6 +37,7 @@ class ArtistAlbumTransformer extends Fractal\TransformerAbstract
             'title' => $album->title,
             'title_romanized' => $album->title_romanized,
             'genre' => $album->genre,
+            'is_new' => $album->isNew(),
             'cover_url' => $album->cover_url,
         ];
     }

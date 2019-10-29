@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,7 +29,7 @@ class UserVerification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $key;
+    public $keys;
     public $user;
     public $requestCountry;
 
@@ -40,7 +40,7 @@ class UserVerification extends Mailable implements ShouldQueue
      */
     public function __construct($attributes)
     {
-        $this->key = $attributes['key'];
+        $this->keys = $attributes['keys'];
         $this->user = $attributes['user'];
         $this->requestCountry = $attributes['requestCountry'];
     }

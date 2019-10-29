@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -38,6 +38,7 @@ class LegacySession extends Model
 {
     protected $table = 'phpbb_sessions';
     protected $primaryKey = 'session_id';
+    protected $keyType = 'string';
     public $incrementing = false;
 
     protected $dateFormat = 'U';
@@ -53,6 +54,15 @@ class LegacySession extends Model
 
     public static function loadFromRequest($request)
     {
+        $queryWhere = static::queryWhereFromRequest($request);
+
+        if ($queryWhere !== null) {
+            return static::where($queryWhere)->first();
+        }
+    }
+
+    public static function queryWhereFromRequest($request)
+    {
         $sessionId = $request->cookie('phpbb3_2cjk5_sid');
         $sessionIdSign = $request->cookie('phpbb3_2cjk5_sid_check');
 
@@ -64,9 +74,10 @@ class LegacySession extends Model
             return;
         }
 
-        return static
-            ::where('session_ip', $request->getClientIp())
-            ->find($sessionId);
+        return [
+            'session_id' => $sessionId,
+            'session_ip' => $request->getClientIp(),
+        ];
     }
 
     public static function signId($id)

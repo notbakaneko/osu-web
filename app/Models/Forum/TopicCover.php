@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -40,7 +40,7 @@ class TopicCover extends Model
 {
     use Imageable;
 
-    const MAX_DIMENSIONS = [2000, 400];
+    const MAX_DIMENSIONS = [2400, 580];
 
     protected $table = 'forum_topic_covers';
 

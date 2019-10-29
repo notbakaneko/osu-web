@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'foros de osu!',
 
     'covers' => [
+        'edit' => 'Editar portada',
+
         'create' => [
             '_' => 'Establecer imagen de portada',
             'button' => 'Subir imagen',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Último mensaje',
+
+        'index' => [
+            'title' => 'Índice del foro',
+        ],
+
         'topics' => [
             'empty' => '¡No hay temas!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Marcar foro como leído',
+        'forums' => 'Marcar foros como leídos',
+        'busy' => 'Marcando como leído...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Eliminar publicación',
             'restore' => 'Restaurar publicación',
             'edit' => 'Editar publicación',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nueva respuesta',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited publicación|:count_delimited publicaciones',
+            'topic_starter' => 'Topic Starter',
         ],
     ],
 
@@ -89,11 +100,12 @@ return [
         'new_topic_login' => 'Inicia sesión para publicar un nuevo tema',
         'post_reply' => 'Publicar',
         'reply_box_placeholder' => 'Escribe aquí para responder',
-        'reply_title_prefix' => '',
+        'reply_title_prefix' => 'Re',
         'started_by' => 'por :user',
         'started_by_verbose' => 'iniciado por :user',
 
         'create' => [
+            'close' => 'Cerrar',
             'preview' => 'Previsualizar',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Creación de encuestas',
 
+            'preview' => 'Vista previa',
+
             'create_poll_button' => [
                 'add' => 'Crear una encuesta',
                 'remove' => 'Cancelar creación de encuesta',
             ],
 
             'poll' => [
+                'hide_results' => 'Ocultar los resultados de la encuesta.',
+                'hide_results_info' => 'Solo se mostrarán después de que finalice la encuesta.',
                 'length' => 'Duración de la encuesta',
                 'length_days_suffix' => 'días',
                 'length_info' => 'Deja en blanco para una encuesta sin fin',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'vistas',
+            'feature_votes' => 'prioridad estrella',
             'replies' => 'respuestas',
+            'views' => 'vistas',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'El tema ya ha sido fijado y marcado como anuncio',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Publicaciones eliminadas',
             'total_posts' => 'Publicaciones totales',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Prioridad actual: +:count',
                 'do' => 'Apoyar esta solicitud',
+
+                'info' => [
+                    '_' => 'Esto es un :feature_request. Sugerencias pueden ser votadas por :supporters.',
+                    'feature_request' => 'sugerir una idea',
+                    'supporters' => 'colaboradores',
+                ],
 
                 'user' => [
                     'count' => '{0} cero votos|{1} :count voto|[2,*] :count votos',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Editar encuesta',
+                'edit_warning' => '¡Editar una encuesta eliminará los resultados actuales!',
                 'vote' => 'Votar',
+
+                'button' => [
+                    'change_vote' => 'Cambiar voto',
+                    'edit' => 'Editar encuesta',
+                    'view_results' => 'Saltar a resultados',
+                    'vote' => 'Votar',
+                ],
 
                 'detail' => [
                     'end_time' => 'La encuesta terminará el :time',
                     'ended' => 'Encuesta terminada el :time',
+                    'results_hidden' => 'Los resultados se mostrarán después de que finalice la encuesta.',
                     'total' => 'Votos totales: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'No marcado',
             'to_watching' => 'Marcado',
             'to_watching_mail' => 'Marcado con aviso de notificaciones',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Notificación activada. Haga clics para desactivar',
+            'tooltip_mail_enable' => 'Notificación desactivada. Haga clic para activar',
         ],
     ],
 ];

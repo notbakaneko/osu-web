@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', và ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Quay lại đầu trang',
+        'admin' => 'Admin',
         'back_to_previous' => 'Trở về vị trí trước',
+        'back_to_top' => 'Quay lại đầu trang',
         'cancel' => 'Hủy',
         'change' => 'đổi',
         'click_to_copy' => 'click để sao chép vào bộ nhớ tạm',
         'click_to_copy_copied' => 'đã sao chép vào bộ nhớ tạm!',
+        'close' => '',
+        'collapse' => 'thu lại',
         'delete' => 'Xóa',
         'edit' => 'Chỉnh sửa',
+        'expand' => 'mở rộng',
         'hide' => 'ẩn',
         'permalink' => 'permalink',
         'permalink_copied' => 'đã sao chép link',
@@ -52,8 +60,16 @@ return [
         'search' => 'Tìm Kiếm',
         'see_more' => 'xem thêm',
         'show' => 'hiện',
+        'show_deleted' => 'Hiển thị bình luận đã xóa',
         'show_more' => 'hiển thị thêm',
+        'show_more_options' => 'hiển thị thêm tùy chọn',
+        'update' => '',
         'upload_image' => 'tải ảnh lên',
+
+        'watch' => [
+            'to_0' => 'Ngừng theo dõi',
+            'to_1' => 'Theo dõi',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count giờ',
         'item' => ':count đơn vị',
         'minute_short_unit' => 'phút',
-        'minutes' => '',
+        'minutes' => ':count phút',
         'months' => ':count tháng',
+        'plus_others' => '',
+        'post' => ':count_delimited bài viết',
         'second_short_unit' => 'giây',
+        'star_priority' => '',
+        'update' => ':count_delimited cập nhật',
+        'view' => ':count_delimited lượt xem',
         'years' => ':count năm',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'kéo vào đây để tải lên',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

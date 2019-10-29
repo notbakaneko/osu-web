@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,26 +17,20 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace Tests;
+
 use App\Exceptions\AuthorizationException;
 use App\Http\Middleware\RequireScopes;
 use App\Models\User;
 use Illuminate\Routing\Route;
 use Laravel\Passport\Exceptions\MissingScopeException;
+use Request;
 
 class RequireScopesTest extends TestCase
 {
     protected $next;
     protected $request;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->request = Request::create('/', 'GET');
-        $this->next = static function () {
-            // just an empty closure.
-        };
-    }
 
     public function testSingleton()
     {
@@ -186,6 +180,19 @@ class RequireScopesTest extends TestCase
         });
     }
 
+    public function testRequireScopesSkipped()
+    {
+        $userScopes = ['somethingelse'];
+        $requireScopes = ['identify'];
+
+        $this->request = Request::create('/api/v2/changelog', 'GET');
+        $this->setUser($userScopes);
+        $this->setRequest($requireScopes);
+
+        app(RequireScopes::class)->handle($this->request, $this->next, ...$requireScopes);
+        $this->assertTrue(true);
+    }
+
     protected function setRequest(?array $scopes = null)
     {
         // set a fake route resolver
@@ -199,6 +206,16 @@ class RequireScopesTest extends TestCase
 
             return $route;
         });
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->request = Request::create('/', 'GET');
+        $this->next = static function () {
+            // just an empty closure.
+        };
     }
 
     protected function setUser(?array $scopes = null)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,6 +20,7 @@
 
 namespace App\Models\Score;
 
+use App\Exceptions\ClassNotFoundException;
 use App\Models\Beatmap;
 use App\Models\Model as BaseModel;
 use App\Models\User;
@@ -78,6 +79,10 @@ abstract class Model extends BaseModel
 
     public static function getClassByString(string $mode)
     {
+        if (!Beatmap::isModeValid($mode)) {
+            throw new ClassNotFoundException();
+        }
+
         return get_class_namespace(static::class).'\\'.studly_case($mode);
     }
 

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,6 @@
     'currentAction' => 'artists',
     'title' => trans('artist.title'),
     'pageDescription' => trans('artist.page_description'),
-    'bodyAdditionalClasses' => 'osu-layout--body-darker'
 ])
 
 @section('content')
@@ -37,13 +36,18 @@
                 <div class="artist__index">
                     @foreach ($artists as $artist)
                         <div class="artist__box{{$artist->visible ? '' : ' artist__box--hidden'}}">
-                            <div class="artist__portrait-wrapper artist__portrait-wrapper--index">
-                                <a href="{{route('artists.show', ['id' => $artist->id])}}" class="artist__portrait artist__portrait--index" style="{{$artist->cover_url ? 'background-image: url(' . $artist->cover_url . ')' : ''}}"></a>
+                            <div class="artist__portrait-wrapper">
+                                <a href="{{route('artists.show', $artist)}}" class="artist__portrait artist__portrait--index {{$artist->hasNewTracks() ? ' artist__portrait--new' : ''}}" style="{{$artist->cover_url ? 'background-image: url(' . $artist->cover_url . ')' : ''}}"></a>
                                 @if($artist->label !== null)
                                     <a class="artist__label-overlay artist__label-overlay--index" href="{{$artist->label->website}}" style="background-image: url('{{$artist->label->icon_url}}')"></a>
                                 @endif
+                                @if($artist->hasNewTracks())
+                                    <span class="artist__badge-wrapper">
+                                        <span class="pill-badge pill-badge--yellow pill-badge--with-shadow">{{trans('common.badges.new')}}</span>
+                                    </span>
+                                @endif
                             </div>
-                            <a href="{{route('artists.show', ['id' => $artist->id])}}" class="artist__name">{{$artist->name}}</a>
+                            <a href="{{route('artists.show', $artist)}}" class="artist__name">{{$artist->name}}</a>
                             <div class="artist__track-count">{{trans_choice('artist.songs.count', $artist->tracks_count)}}</div>
                         </div>
                     @endforeach

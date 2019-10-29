@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,41 +20,20 @@ import { UserJSON } from 'chat/chat-api-responses';
 import { action, observable } from 'mobx';
 
 export default class User {
-  @observable id: number;
-  @observable username: string = '';
   @observable avatarUrl: string = '/images/layout/avatar-guest.png'; // TODO: move to a global config store?
-  @observable profileColour: string = '';
   @observable countryCode: string = 'XX';
-
-  @observable isSupporter: boolean = false;
+  @observable id: number;
   @observable isActive: boolean = false;
   @observable isBot: boolean = false;
   @observable isOnline: boolean = false;
-
+  @observable isSupporter: boolean = false;
   @observable loaded: boolean = false;
-
   @observable pmFriendsOnly: boolean = false;
+  @observable profileColour: string = '';
+  @observable username: string = '';
 
   constructor(id: number) {
     this.id = id;
-  }
-
-  load() {
-    // TODO: do automagic loading stuff?
-  }
-
-  @action
-  updateFromJSON(json: UserJSON) {
-    this.username = json.username;
-    this.avatarUrl = json.avatar_url;
-    this.profileColour = json.profile_colour;
-    this.countryCode = json.country_code;
-    this.isSupporter = json.is_supporter;
-    this.isActive = json.is_active;
-    this.isBot = json.is_bot;
-    this.isOnline = json.is_online;
-    this.pmFriendsOnly = json.pm_friends_only;
-    this.loaded =  true;
   }
 
   static fromJSON(json: UserJSON): User {
@@ -72,5 +51,45 @@ export default class User {
       profileColour: json.profile_colour,
       username: json.username,
     });
+  }
+
+  is(user: User | UserJSON) {
+    return user.id === this.id;
+  }
+
+  load() {
+    // TODO: do automagic loading stuff?
+  }
+
+  /**
+   * Compatibility so existing UserAvatar component can be used as-is.
+   */
+  toJSON() {
+    return {
+      avatar_url: this.avatarUrl,
+      country_code: this.countryCode,
+      id: this.id,
+      is_active: this.isActive,
+      is_bot: this.isBot,
+      is_online: this.isOnline,
+      is_supporter: this.isSupporter,
+      pm_friends_only: this.pmFriendsOnly,
+      profile_colour: this.profileColour,
+      username: this.username,
+    };
+  }
+
+  @action
+  updateFromJSON(json: UserJSON) {
+    this.username = json.username;
+    this.avatarUrl = json.avatar_url;
+    this.profileColour = json.profile_colour;
+    this.countryCode = json.country_code;
+    this.isSupporter = json.is_supporter;
+    this.isActive = json.is_active;
+    this.isBot = json.is_bot;
+    this.isOnline = json.is_online;
+    this.pmFriendsOnly = json.pm_friends_only;
+    this.loaded = true;
   }
 }

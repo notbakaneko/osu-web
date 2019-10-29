@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -41,24 +41,26 @@ class RequireScopes
      */
     public function handle(Request $request, Closure $next, ...$scopes)
     {
-        $token = optional($request->user())->token();
-        if ($token === null) {
-            throw new AuthorizationException();
-        }
-
-        if (empty($token->scopes)) {
-            throw new MissingScopeException([], 'Tokens without scopes are not valid.');
-        }
-
-        if (!$this->requestHasScopedMiddleware($request)) {
-            // use a non-existent scope; only '*' should pass.
-            if (!$token->can('invalid')) {
-                throw new MissingScopeException();
+        if (!AuthApi::skipAuth($request)) {
+            $token = optional($request->user())->token();
+            if ($token === null) {
+                throw new AuthorizationException();
             }
-        } else {
-            foreach ($scopes as $scope) {
-                if (!$token->can($scope)) {
-                    throw new MissingScopeException([$scope], 'A required scope is missing.');
+
+            if (empty($token->scopes)) {
+                throw new MissingScopeException([], 'Tokens without scopes are not valid.');
+            }
+
+            if (!$this->requestHasScopedMiddleware($request)) {
+                // use a non-existent scope; only '*' should pass.
+                if (!$token->can('invalid')) {
+                    throw new MissingScopeException();
+                }
+            } else {
+                foreach ($scopes as $scope) {
+                    if (!$token->can($scope)) {
+                        throw new MissingScopeException([$scope], 'A required scope is missing.');
+                    }
                 }
             }
         }

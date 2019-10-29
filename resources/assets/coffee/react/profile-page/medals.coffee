@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, h2, h3} = ReactDOMFactories
+import { AchievementBadge } from './achievement-badge'
+import { ExtraHeader } from './extra-header'
+import * as React from 'react'
+import { div, h2, h3 } from 'react-dom-factories'
 el = React.createElement
 
-class ProfilePage.Medals extends React.PureComponent
+export class Medals extends React.PureComponent
   render: =>
     @userAchievements = null
 
@@ -39,18 +42,18 @@ class ProfilePage.Medals extends React.PureComponent
 
     div
       className: 'page-extra'
-      el ProfilePage.ExtraHeader, name: @props.name, withEdit: @props.withEdit
+      el ExtraHeader, name: @props.name, withEdit: @props.withEdit
 
       if recentAchievements.length > 0
         div className: 'page-extra__recent-medals-box',
-          div className: 'page-extra__title page-extra__title--small',
+          div className: 'title title--page-extra-small',
             osu.trans('users.show.extra.medals.recent')
           div className: 'page-extra__recent-medals',
             for achievement in recentAchievements
               div
                 className: 'page-extra__recent-medal'
                 key: achievement.achievement_id
-                el ProfilePage.AchievementBadge,
+                el AchievementBadge,
                   achievement: @props.achievements[achievement.achievement_id]
                   userAchievement: achievement
                   modifiers: ['dynamic-height']
@@ -84,7 +87,7 @@ class ProfilePage.Medals extends React.PureComponent
     div
       key: achievement.id
       className: 'medals-group__medal'
-      el ProfilePage.AchievementBadge,
+      el AchievementBadge,
         modifiers: ['listing']
         achievement: achievement
         userAchievement: @userAchievement achievement.id

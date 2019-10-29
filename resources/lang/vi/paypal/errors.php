@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,5 +21,5 @@
 return [
     'instrument_declined' => 'Paypal từ chối phương thức thanh toán này.',
     'invalid_resource_id' => 'Không tìm thấy thông tin thanh toán nào.',
-    'unknown' => "Thanh toán đã bị từ chối, nhưng chúng tôi không biết tại sao.",
+    'unknown' => "Thanh toán đã bị từ chối, nhưng chúng tôi không chắc tại sao.",
 ];

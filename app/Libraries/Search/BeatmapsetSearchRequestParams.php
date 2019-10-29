@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,13 +20,33 @@
 
 namespace App\Libraries\Search;
 
+use App\Libraries\Elasticsearch\BoolQuery;
 use App\Libraries\Elasticsearch\Sort;
 use App\Models\Beatmap;
+use App\Models\Genre;
+use App\Models\Language;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
 {
+    const AVAILABLE_STATUSES = ['any', 'leaderboard', 'ranked', 'qualified', 'loved', 'favourites', 'pending', 'graveyard', 'mine'];
+    const AVAILABLE_EXTRAS = ['video', 'storyboard'];
+    const AVAILABLE_GENERAL = ['recommended', 'converts'];
+    const AVAILABLE_PLAYED = ['any', 'played', 'unplayed'];
+    const AVAILABLE_RANKS = ['XH', 'X', 'SH', 'S', 'A', 'B', 'C', 'D'];
+
+    const LEGACY_STATUS_MAP = [
+        '0' => 'ranked',
+        '2' => 'favourites',
+        '3' => 'qualified',
+        '4' => 'pending',
+        '5' => 'graveyard',
+        '6' => 'mine',
+        '7' => 'any',
+        '8' => 'loved',
+    ];
+
     public function __construct(Request $request, ?User $user = null)
     {
         parent::__construct();
@@ -43,7 +63,10 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
 
         if ($this->user !== null) {
             $this->queryString = es_query_escape_with_caveats($request['q'] ?? $request['query']);
-            $this->status = get_int($request['s']) ?? 0;
+
+            $status = presence($request['s']);
+            $this->status = static::LEGACY_STATUS_MAP[$status] ?? $status;
+
             $this->genre = get_int($request['g']);
             $this->language = get_int($request['l']);
             $this->extra = array_intersect(
@@ -75,20 +98,59 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
         }
     }
 
+    public static function getAvailableFilters()
+    {
+        $languages = Language::listing();
+        $genres = Genre::listing();
+
+        $modes = [['id' => null, 'name' => trans('beatmaps.mode.any')]];
+        foreach (Beatmap::MODES as $name => $id) {
+            $modes[] = ['id' => $id, 'name' => trans("beatmaps.mode.{$name}")];
+        }
+
+        $extras = [];
+        $general = [];
+        $played = [];
+        $ranks = [];
+        $statuses = [];
+
+        foreach (static::AVAILABLE_EXTRAS as $id) {
+            $extras[] = ['id' => $id, 'name' => trans("beatmaps.extra.{$id}")];
+        }
+
+        foreach (static::AVAILABLE_GENERAL as $id) {
+            $general[] = ['id' => $id, 'name' => trans("beatmaps.general.{$id}")];
+        }
+
+        foreach (static::AVAILABLE_PLAYED as $id) {
+            $played[] = ['id' => $id, 'name' => trans("beatmaps.played.{$id}")];
+        }
+
+        foreach (static::AVAILABLE_RANKS as $id) {
+            $ranks[] = ['id' => $id, 'name' => trans("beatmaps.rank.{$id}")];
+        }
+
+        foreach (static::AVAILABLE_STATUSES as $id) {
+            $statuses[] = ['id' => $id, 'name' => trans("beatmaps.status.{$id}")];
+        }
+
+        return compact('extras', 'general', 'genres', 'languages', 'modes', 'played', 'ranks', 'statuses');
+    }
+
     private function getDefaultSort(string $order) : array
     {
         if (present($this->queryString)) {
             return [new Sort('_score', $order)];
         }
 
-        if ($this->status === 3) {
+        if ($this->status === 'qualified') {
             return [
                 new Sort('queued_at', $order),
                 new Sort('approved_date', $order), // fallback
             ];
         }
 
-        if (in_array($this->status, [4, 5, 6], true)) {
+        if (in_array($this->status, ['pending', 'graveyard', 'mine'], true)) {
             return [new Sort('last_update', $order)];
         }
 
@@ -102,7 +164,7 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
     {
         // additional options
         static $orderOptions = [
-            'difficulties.difficultyrating' => [
+            'beatmaps.difficultyrating' => [
                 'asc' => ['mode' => 'min'],
                 'desc' => ['mode' => 'max'],
             ],
@@ -111,8 +173,27 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
         $newSort = [];
         // assign sort modes if any.
         $options = ($orderOptions[$sort->field] ?? [])[$sort->order] ?? [];
+
+        // use relevant mode when sorting on nested field
+        if (starts_with($sort->field, 'beatmaps.')) {
+            $sortFilter = new BoolQuery;
+
+            if (!$this->includeConverts) {
+                $sortFilter->filter(['term' => ['beatmaps.convert' => false]]);
+            }
+
+            if ($this->mode !== null) {
+                $sortFilter->filter(['term' => ['beatmaps.playmode' => $this->mode]]);
+            }
+
+            $options['nested'] = [
+                'path' => 'beatmaps',
+                'filter' => $sortFilter->toArray(),
+            ];
+        }
+
         if ($options !== []) {
-            $sort->mode = $options['mode'];
+            $sort->extras = $options;
         }
 
         $newSort[] = $sort;
@@ -120,7 +201,7 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
         // append/prepend extra sort orders.
         if ($sort->field === 'nominations') {
             $newSort[] = new Sort('hype', $sort->order);
-        } elseif ($sort->field === 'approved_date' && $this->status === 3) {
+        } elseif ($sort->field === 'approved_date' && $this->status === 'qualified') {
             array_unshift($newSort, new Sort('queued_at', $sort->order));
         }
 
@@ -152,7 +233,8 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
         static $fields = [
             'artist' => 'artist.raw',
             'creator' => 'creator.raw',
-            'difficulty' => 'difficulties.difficultyrating',
+            'difficulty' => 'beatmaps.difficultyrating',
+            'favourites' => 'favourite_count',
             'nominations' => 'nominations',
             'plays' => 'play_count',
             'ranked' => 'approved_date',

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Rytmen är bara ett *klick* bort!  Med Ouendan/EBA, Taiko och originala spel lägen, och en full funktionell nivå redigerare.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'hem',
             'account-edit' => 'inställningar',
+            'account-verifyLink' => '',
             'friends-index' => 'vänner',
             'changelog-index' => 'ändringslogg',
             'changelog-build' => 'bygget',
@@ -42,6 +59,11 @@ return [
             'search' => 'sök',
             'supportTheGame' => 'stötta spelet',
             'team' => 'lag',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'hjälp',
@@ -118,16 +140,18 @@ return [
             'reset' => 'återhämta',
             'new' => 'ny',
 
-            'messages' => 'Meddelanden',
-            'settings' => 'Inställningar',
-            'logout' => 'Logga Ut',
             'help' => 'Hjälp',
+            'logout' => 'Logga Ut',
+            'messages' => 'Meddelanden',
             'modding-history-discussions' => 'användarmoddingsdiskussioner',
             'modding-history-events' => 'användarmoddningsinlägg',
             'modding-history-index' => 'användarmoddingshistorik',
             'modding-history-posts' => 'användarmoddingsinlägg',
             'modding-history-votesGiven' => 'användarmoddingsröster givna',
             'modding-history-votesReceived' => 'användarmoddningsröster givna',
+            'oauth_login' => '',
+            'oauth_request' => '',
+            'settings' => 'Inställningar',
         ],
         'store' => [
             '_' => 'butik',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Herrn, du behöver ett konto. Varför har du inte ett redan?",
+            'download' => '',
+            'info' => 'Herrn, du behöver ett konto. Varför har du inte ett redan?',
             'title' => "Har du inte ett konto?",
         ],
     ],

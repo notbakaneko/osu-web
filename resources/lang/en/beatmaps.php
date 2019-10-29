@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'allow kudosu',
+        'beatmap_information' => 'Beatmap Page',
         'delete' => 'delete',
         'deleted' => 'Deleted by :editor :delete_time.',
         'deny_kudosu' => 'deny kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Last edited by :editor :update_time.',
         'kudosu_denied' => 'Denied from obtaining kudosu.',
         'message_placeholder_deleted_beatmap' => 'This difficulty has been deleted so it may no longer be discussed.',
+        'message_placeholder_locked' => 'Discussion for this beatmap has been disabled.',
         'message_type_select' => 'Select Comment Type',
         'reply_notice' => 'Press enter to reply.',
         'reply_placeholder' => 'Type your response here',
         'require-login' => 'Please sign in to post or reply',
         'resolved' => 'Resolved',
         'restore' => 'restore',
+        'show_deleted' => 'Show deleted',
         'title' => 'Discussions',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'No discussions yet!',
             'hidden' => 'No discussion matches selected filter.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Lock discussion',
+                'unlock' => 'Unlock discussion',
+            ],
+
+            'prompt' => [
+                'lock' => 'Reason for locking',
+                'unlock' => 'Are you sure to unlock?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Pin',
             'timestamp' => 'Timestamp',
             'timestamp_missing' => 'ctrl-c in edit mode and paste in your message to add a timestamp!',
             'title' => 'New Discussion',
+            'unpin' => 'Unpin',
         ],
 
         'show' => [
@@ -100,7 +117,6 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sorted by:',
             'created_at' => 'Creation time',
             'timeline' => 'Timeline',
             'updated_at' => 'Last update',
@@ -118,12 +134,22 @@ return [
 
         'status-messages' => [
             'approved' => 'This beatmap was approved on :date!',
-            'graveyard' => "This beatmap hasn't been updated since :date and has most likely been abandoned by the creator...",
+            'graveyard' => "This beatmap wasn't updated since :date so it was graveyarded...",
             'loved' => 'This beatmap was added to loved on :date!',
             'ranked' => 'This beatmap was ranked on :date!',
             'wip' => 'Note: This beatmap is marked as a work-in-progress by the creator.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'No downvotes yet',
+                'up' => 'No upvotes yet',
+            ],
+            'latest' => [
+                'down' => 'Latest downvotes',
+                'up' => 'Latest upvotes',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -157,6 +183,7 @@ return [
         'nominate' => 'Nominate',
         'nominate_confirm' => 'Nominate this beatmap?',
         'nominated_by' => 'nominated by :users',
+        'not_enough_hype' => "There isn't enough hype.",
         'qualified' => 'Estimated to be ranked :date, if no issues are found.',
         'qualified_soon' => 'Estimated to be ranked soon, if no issues are found.',
         'required_text' => 'Nominations: :current/:required',
@@ -197,6 +224,7 @@ return [
                 'title' => 'Title',
                 'artist' => 'Artist',
                 'difficulty' => 'Difficulty',
+                'favourites' => 'Favourites',
                 'updated' => 'Updated',
                 'ranked' => 'Ranked',
                 'rating' => 'Rating',
@@ -223,14 +251,15 @@ return [
     ],
     'status' => [
         'any' => 'Any',
-        'ranked-approved' => 'Ranked & Approved',
         'approved' => 'Approved',
-        'qualified' => 'Qualified',
-        'loved' => 'Loved',
-        'faves' => 'Favourites',
-        'pending' => 'Pending & WIP',
+        'favourites' => 'Favourites',
         'graveyard' => 'Graveyard',
-        'my-maps' => 'My Maps',
+        'leaderboard' => 'Has Leaderboard',
+        'loved' => 'Loved',
+        'mine' => 'My Maps',
+        'pending' => 'Pending & WIP',
+        'qualified' => 'Qualified',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => 'Any',
@@ -259,6 +288,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'Mirror',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',

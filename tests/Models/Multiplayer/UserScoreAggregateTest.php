@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,25 +18,18 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Tests\Multiplayer;
+namespace Tests\Models\Multiplayer;
 
 use App\Models\Multiplayer\PlaylistItem;
 use App\Models\Multiplayer\Room;
 use App\Models\Multiplayer\RoomScore;
 use App\Models\Multiplayer\UserScoreAggregate;
 use App\Models\User;
-use TestCase;
+use Tests\TestCase;
 
 class UserScoreAggregateTest extends TestCase
 {
     private $room;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->room = factory(Room::class)->create();
-    }
 
     public function testStartingPlayIncreasesAttempts()
     {
@@ -185,6 +178,13 @@ class UserScoreAggregateTest extends TestCase
 
         $this->assertSame(0.65, $result['pp']);
         $this->assertSame(0.65, $result['accuracy']);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->room = factory(Room::class)->create();
     }
 
     private function playlistItem()

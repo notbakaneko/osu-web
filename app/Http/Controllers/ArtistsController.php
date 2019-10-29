@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -53,11 +53,19 @@ class ArtistsController extends Controller
 
         $albums = $artist->albums()
             ->where('visible', true)
+            ->orderBy('id', 'desc')
             ->with(['tracks' => function ($query) {
                 $query->orderBy('display_order', 'ASC');
-            }])->get();
+            }])
+            ->with('tracks.artist')
+            ->get();
 
-        $tracks = $artist->tracks()->whereNull('album_id')->orderBy('display_order', 'ASC NULLS LAST')->get();
+        $tracks = $artist
+            ->tracks()
+            ->whereNull('album_id')
+            ->with('artist')
+            ->orderBy('id', 'desc')
+            ->get();
 
         $images = [
             'header_url' => $artist->header_url,

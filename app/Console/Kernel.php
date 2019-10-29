@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,7 +33,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\DisqusImport::class,
 
+        Commands\EsCreateSearchBlacklist::class,
         Commands\EsIndexDocuments::class,
+        Commands\EsIndexWiki::class,
 
         // modding stuff
         Commands\ModdingQueueUpdateCommand::class,
@@ -46,6 +48,7 @@ class Kernel extends ConsoleKernel
         // parsing html with regexp
         Commands\StoreCheckOrderTrackingStatus::class,
         Commands\StoreCleanupStaleOrders::class,
+        Commands\StoreExpireProducts::class,
 
         // builds
         Commands\BuildsCreate::class,
@@ -59,6 +62,16 @@ class Kernel extends ConsoleKernel
 
         // fix username change fail :D
         Commands\FixUsernameChangeTopicCache::class,
+
+        // fix userchannel deletion fail
+        Commands\FixMissingUserChannels::class,
+
+        // fix forum display order
+        Commands\FixForumDisplayOrder::class,
+
+        Commands\MigrateFreshAllCommand::class,
+
+        Commands\OAuthDeleteExpiredTokens::class,
 
         Commands\UserBestScoresCheckCommand::class,
         Commands\UserRecalculateRankCounts::class,
@@ -78,6 +91,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('store:cleanup-stale-orders')
             ->daily();
 
+        $schedule->command('store:expire-products')
+            ->hourly();
+
         $schedule->command('store:tracking')
             ->cron('0 0,8,16 * * *');
 
@@ -86,6 +102,12 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('rankings:recalculate-country')
             ->cron('25 0,3,6,9,12,15,18,21 * * *');
+
+        $schedule->command('modding:rank')
+            ->cron('*/20 * * * *');
+
+        $schedule->command('oauth:delete-expired-tokens')
+            ->cron('14 1 * * *');
     }
 
     protected function commands()

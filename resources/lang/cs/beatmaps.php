@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'povolit kudosu',
+        'beatmap_information' => '',
         'delete' => 'odstranit',
         'deleted' => 'Smazal uživatel :editor v :delete_time.',
         'deny_kudosu' => 'odepřít kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Naposledy upravil :editor v :update_time.',
         'kudosu_denied' => 'Odepřen od získávání kudosu.',
         'message_placeholder_deleted_beatmap' => 'Tato obtížnost byla smazána, takže už nemůže být probírána.',
+        'message_placeholder_locked' => 'Diskuze o této mapě byly vypnuty.',
         'message_type_select' => 'Vybrat typ komentáře',
         'reply_notice' => 'Stiskni enter pro odpověď.',
         'reply_placeholder' => 'Napiš svou odpověď sem',
         'require-login' => 'Pro psaní odpovědí nebo přidávání příspěvků se prosím přihlaš',
         'resolved' => 'Vyřešeno',
         'restore' => 'obnovit',
+        'show_deleted' => 'Zobrazit smazané',
         'title' => 'Diskuze',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Zatím žádné diskuse!',
             'hidden' => 'Žádná diskuze neodpovídá zvolenému filtru.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Zamknout diskuze',
+                'unlock' => 'Odemknout diskuze',
+            ],
+
+            'prompt' => [
+                'lock' => 'Důvod k uzamknutí',
+                'unlock' => 'Jste si jistý o uzamknutí?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Pin',
             'timestamp' => 'Časová sekvence',
             'timestamp_missing' => 'ctrl-c v režimu úprav a vložte do zprávy pro přidání časové sekvence!',
             'title' => 'Nová diskuze',
+            'unpin' => 'Odepnout',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Seřazeno podle:',
-            'created_at' => 'čas vytvoření',
-            'timeline' => 'časová osa',
-            'updated_at' => 'poslední aktualizace',
+            'created_at' => 'Čas vytvoření',
+            'timeline' => 'Časová osa',
+            'updated_at' => 'Poslední aktualizace',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Tato beatmapa byla označena jako Rozpracovaná jejím autorem.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Jsi si jist? Vytvořením nové připomínky se nominační proces resetuje.',
-            'disqualify' => '',
+            'disqualify' => 'Jste si jistý? Tohle odstraní beatmapu z kvalifikování a vyresetuje nominační proces.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Již hrané',
             ],
             'sorting' => [
-                'title' => 'název',
-                'artist' => 'interpret',
-                'difficulty' => 'obtížnost',
-                'updated' => 'aktualizováno',
-                'ranked' => 'ohodnocené',
-                'rating' => 'hodnocení',
-                'plays' => 'hráno',
-                'relevance' => 'relevance',
-                'nominations' => 'nominace',
+                'title' => 'Název',
+                'artist' => 'Umělec',
+                'difficulty' => 'Obtížnost',
+                'favourites' => 'Oblíbené',
+                'updated' => 'Aktualizováno',
+                'ranked' => 'Hodnocené',
+                'rating' => 'Hodnocení',
+                'plays' => 'Zahraní',
+                'relevance' => 'Relevance',
+                'nominations' => 'Nominace',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Filtrování podle :filters vyžaduje aktivní :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Jakékoliv',
-        'ranked-approved' => 'Hodnocené & Schválené',
         'approved' => 'Schválené',
-        'qualified' => 'Kvalifikované',
-        'loved' => 'Oblíbené',
-        'faves' => 'Mé oblíbené',
-        'pending' => 'Čekající & Rozpracované',
+        'favourites' => 'Oblíbené',
         'graveyard' => 'Hřbitov',
-        'my-maps' => 'Mé mapy',
+        'leaderboard' => '',
+        'loved' => 'Oblíbené',
+        'mine' => 'Moje mapy',
+        'pending' => 'Čekající & Rozpracované',
+        'qualified' => 'Kvalifikované',
+        'ranked' => 'Hodnocené',
     ],
     'genre' => [
         'any' => 'Jakékoliv',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Počet zahrání: :count',
+        'favourites' => 'V oblíbených: :count',
     ],
 ];

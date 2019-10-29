@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2019 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -44,6 +44,7 @@ class @Forum
     $(document).on 'click', '.js-post-url', @postUrlClick
     $(document).on 'submit', '.js-forum-posts-jump-to', @jumpToSubmit
     $(document).on 'keyup', @keyboardNavigation
+    $(document).on 'click', '.js-forum-topic-moderate--toggle-deleted', @toggleDeleted
 
 
   userCanModerate: ->
@@ -64,20 +65,33 @@ class @Forum
 
   totalPosts: =>
     return null if @_totalPostsDiv.length == 0
-    parseInt @_totalPostsDiv[0].textContent, 10
+    parseInt @_totalPostsDiv[0].dataset.total, 10
+
+
+  # null if option not available (not moderator), false/true accordingly otherwise
+  showDeleted: =>
+    toggle = document.querySelector('.js-forum-topic-moderate--toggle-deleted')
+
+    return unless toggle?
+
+    toggle.dataset.showDeleted == '1'
 
 
   setTotalPosts: (n) =>
-    $(@_totalPostsDiv).text(n)
+    $(@_totalPostsDiv)
+      .text osu.formatNumber(n)
+      .attr 'data-total', n
 
 
   deletedPosts: ->
     return null if @_deletedPostsDiv.length == 0
-    parseInt @_deletedPostsDiv[0].textContent, 10
+    parseInt @_deletedPostsDiv[0].dataset.total, 10
 
 
   setDeletedPosts: (n) ->
-    $(@_deletedPostsDiv).text(n)
+    $(@_deletedPostsDiv)
+      .text osu.formatNumber(n)
+      .attr 'data-total', n
 
 
   setCounter: (currentPost) =>
@@ -86,7 +100,7 @@ class @Forum
     @setTotalPosts(@currentPostPosition) if @currentPostPosition > @totalPosts()
     window.reloadUrl = @postUrlN @currentPostPosition
 
-    @_postsCounter[0].textContent = @currentPostPosition
+    @_postsCounter[0].textContent = osu.formatNumber @currentPostPosition
     @_postsProgress[0].style.width = "#{100 * @currentPostPosition / @totalPosts()}%"
 
 
@@ -125,14 +139,13 @@ class @Forum
     return if @_postsCounter.length == 0
 
     currentPost = null
-    anchorHeight = window.innerHeight * 0.5
 
     if osu.bottomPage()
       currentPost = @posts[@posts.length - 1]
     else
       for post in @posts
         postTop = post.getBoundingClientRect().top
-        if postTop <= anchorHeight
+        if Math.floor(window.stickyHeader.scrollOffset(postTop)) <= 0
           currentPost = post
         else
           break
@@ -151,7 +164,7 @@ class @Forum
     postN = Math.min(postN, @totalPosts())
 
     $post = $(".js-forum-post[data-post-position='#{postN}']")
-    @_postsCounter[0].textContent = postN
+    @_postsCounter[0].textContent = osu.formatNumber postN
 
     if $post.length
       @scrollTo $post.attr('data-post-id')
@@ -171,6 +184,7 @@ class @Forum
 
     try @jumpTo n
 
+
   scrollTo: (postId) =>
     post = document.querySelector(".js-forum-post[data-post-id='#{postId}']")
 
@@ -185,7 +199,17 @@ class @Forum
 
     # using jquery smooth scrollTo will cause unwanted events to trigger on the way down.
     window.scrollTo window.pageXOffset, postTop
+    @highlightPost post
 
+
+  highlightPost: (post) ->
+    $('.js-forum-post--highlighted').removeClass('js-forum-post--highlighted')
+    $(post).addClass('js-forum-post--highlighted')
+
+
+  toggleDeleted: =>
+    Turbolinks.visit osu.updateQueryString @postUrlN(@currentPostPosition),
+      with_deleted: +!@showDeleted()
 
   initialScrollTo: =>
     return if location.hash != '' ||
@@ -204,7 +228,12 @@ class @Forum
 
 
   postUrlN: (postN) ->
-    "#{document.location.pathname}?n=#{postN}"
+    url = "#{document.location.pathname}?n=#{postN}"
+
+    if @showDeleted() == false
+      url += "&with_deleted=0"
+
+    url
 
 
   showMore: (e) =>
@@ -219,6 +248,7 @@ class @Forum
       start: null
       end: null
       skip_layout: 1
+      with_deleted: +@showDeleted()
 
     if mode == 'previous'
       $refPost = $('.js-forum-post').first()

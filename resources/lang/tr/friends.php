@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,12 +21,15 @@
 return [
     'buttons' => [
       'add' => 'arkadaş ekle',
+      'disabled' => 'arkadaşlar',
       'remove' => 'arkadaşlıktan çıkar',
     ],
 
-    'state' => [
-      'friends' => 'arkadaşlar',
-      'mutual' => 'karşılıklı',
+    'index' => [
+        'title' => [
+            '_' => 'Ana menü :info',
+            'info' => 'Arkadaşlar',
+        ],
     ],
 
     'title' => 'Arkadaşlar',

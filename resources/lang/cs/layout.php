@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Rytmus je jen o klkání! Spolu s Ouendan/EBA, Taikem, originálními herními módy a plně funkčním level editorem.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '',
+
+            'forum' => '',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '',
+        'fullscreen' => '',
+        'zoom' => '',
+        'previous' => '',
+        'next' => '',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'domů',
             'account-edit' => 'nastavení',
+            'account-verifyLink' => '',
             'friends-index' => 'přátelé',
             'changelog-index' => 'seznam změn',
             'changelog-build' => 'sestavení',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'skupiny',
             'index' => 'nástěnka',
             'legal-show' => 'informace',
-            'messages-index' => '',
+            'messages-index' => 'soukromé zprávy',
             'news-index' => 'novinky',
             'news-show' => 'novinky',
             'password-reset-index' => 'obnovit heslo',
             'search' => 'hledat',
             'supportTheGame' => 'podpoř hru',
             'team' => 'tým',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'nápověda',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'komunita',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'vývoj',
             'getForum' => 'Fórum',
             'getLive' => 'živě',
@@ -118,16 +140,18 @@ return [
             'reset' => 'obnovit',
             'new' => 'nový',
 
-            'messages' => 'Zprávy',
-            'settings' => 'Nastavení',
-            'logout' => 'Odhlásit se',
             'help' => 'Nápověda',
+            'logout' => 'Odhlásit se',
+            'messages' => 'Zprávy',
             'modding-history-discussions' => 'uživatelská modding diskuze',
             'modding-history-events' => 'uživatelské modding události',
             'modding-history-index' => 'uživatelská modding historie',
             'modding-history-posts' => 'uživatelské modding příspěvky',
             'modding-history-votesGiven' => 'uživatelské modding hlasy dány',
             'modding-history-votesReceived' => 'uživatelské modding hlasy obdrženy',
+            'oauth_login' => '',
+            'oauth_request' => '',
+            'settings' => 'Nastavení',
         ],
         'store' => [
             '_' => 'obchod',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Potřebujete účet, pane. Proč již jeden nemáte?",
+            'download' => '',
+            'info' => 'Potřebujete účet, pane. Proč již jeden nemáte?',
             'title' => "Nemáte účet?",
         ],
     ],

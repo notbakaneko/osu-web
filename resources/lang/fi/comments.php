@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'poistettu',
+    'deleted_count' => ':count_delimited poistettu kommentti|:count_delimited poistettuja kommentteja',
     'edited' => ':user muokkasi :timeago sitten',
     'empty' => 'Ei vielä kommentteja.',
+    'load_replies' => '',
     'replies' => 'Vastaukset',
-    'show_replies' => 'näytä vastaukset',
     'title' => 'Kommentit',
 
     'commentable_name' => [
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => '',
+            '_' => 'Paina enter-näppäintä tehdäksesi :action. Paina shift- ja enter-näppäimiä tehdäksesi uuden rivin.',
             'edit' => 'tallenna',
             'new' => 'lähetä',
             'reply' => 'vastaa',
@@ -43,14 +44,14 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Kirjaudu kommentoidaksesi',
-        'reply' => 'Kirjaudu vastataksesi',
+        'new' => 'Kirjaudu sisään tehdäksesi kommentti',
+        'reply' => 'Kirjaudu sisään vastataksesi',
     ],
 
     'index' => [
         'title' => [
             '_' => 'Kommentit :info',
-            'info' => 'Listat',
+            'info' => 'Listaus',
         ],
     ],
 
@@ -65,12 +66,5 @@ return [
             '_' => 'Kommentit :info',
             'info' => 'Tiedot',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

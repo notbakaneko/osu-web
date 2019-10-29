@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -32,20 +32,33 @@ class UserGroup extends Model
 {
     protected $table = 'phpbb_user_group';
     public $timestamps = false;
+    protected $primaryKeys = ['user_id', 'group_id'];
 
     // taken from current forum
     const GROUPS = [
         'default' => 2,
         'gmt' => 4,
         'admin' => 5,
-        'qat' => 7,
+        'nat' => 7,
         'dev' => 11,
         'alumni' => 16,
-        'hax' => 17,
         'mod' => 18,
         'bng' => 28,
         'bot' => 29,
         'loved' => 31,
+        'bng_limited' => 32,
+        'ppy' => 33,
+    ];
+
+    const DISPLAY_PRIORITY = [
+        'ppy',
+        'dev',
+        'gmt',
+        'nat',
+        'bng',
+        'bng_limited',
+        'support',
+        'alumni',
     ];
 
     public function group()
@@ -56,5 +69,14 @@ class UserGroup extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function name()
+    {
+        static $lookup;
+
+        $lookup = $lookup ?? array_flip(static::GROUPS);
+
+        return $lookup[$this->group_id] ?? null;
     }
 }

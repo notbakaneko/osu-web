@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'tillåt kudosu',
+        'beatmap_information' => '',
         'delete' => 'radera',
         'deleted' => 'Raderad av :editor :delete_time.',
         'deny_kudosu' => 'neka kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Senast redigerad av :editor :update_time.',
         'kudosu_denied' => 'Kudosu nekad.',
         'message_placeholder_deleted_beatmap' => 'Denna svårighetsgrad har blivit borttagen så den kan inte längre diskuteras.',
+        'message_placeholder_locked' => '',
         'message_type_select' => 'Välj Kommentar Typ',
         'reply_notice' => 'Tryck enter för att svara.',
         'reply_placeholder' => 'Skriv ditt svar här',
         'require-login' => 'Var vänlig logga in för att lägga upp inlägg eller svara',
         'resolved' => 'Löst',
         'restore' => 'återställ',
+        'show_deleted' => '',
         'title' => 'Diskussioner',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Inga diskussioner än!',
             'hidden' => 'Inga diskussioner matchar valt filter.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => '',
+                'unlock' => '',
+            ],
+
+            'prompt' => [
+                'lock' => '',
+                'unlock' => '',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => '',
             'timestamp' => 'Tidsstämpel',
             'timestamp_missing' => 'Tryck ctrl-c i redigeringsläget och klistra in ditt meddelande för att lägga till en tidsstämpel!',
             'title' => 'Ny Diskussion',
+            'unpin' => '',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sorterade efter:',
-            'created_at' => 'skapelsedatum',
-            'timeline' => 'tidslinje',
-            'updated_at' => 'senaste uppdatering',
+            'created_at' => '',
+            'timeline' => '',
+            'updated_at' => '',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Notera: Denna beatmap är markerad som pågående arbete av skaparen.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -194,15 +220,16 @@ return [
                 'played' => 'Spelade',
             ],
             'sorting' => [
-                'title' => 'titel',
-                'artist' => 'artist',
-                'difficulty' => 'svårighetsgrad',
-                'updated' => 'uppdaterad',
-                'ranked' => 'rankad',
-                'rating' => 'omdöme',
-                'plays' => 'spelad',
-                'relevance' => 'relevans',
-                'nominations' => 'nomineringar',
+                'title' => '',
+                'artist' => '',
+                'difficulty' => '',
+                'favourites' => '',
+                'updated' => '',
+                'ranked' => '',
+                'rating' => '',
+                'plays' => '',
+                'relevance' => '',
+                'nominations' => '',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Filtrering av :filters kräver en aktiv :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Alla',
-        'ranked-approved' => 'Rankad & Godkänd',
         'approved' => 'Godkänd',
-        'qualified' => 'Kvalificerad',
-        'loved' => 'Älskad',
-        'faves' => 'Favoriter',
-        'pending' => 'Pågående & WIP',
+        'favourites' => '',
         'graveyard' => 'Kyrkogård',
-        'my-maps' => 'Mina Maps',
+        'leaderboard' => '',
+        'loved' => 'Älskad',
+        'mine' => '',
+        'pending' => 'Pågående & WIP',
+        'qualified' => 'Kvalificerad',
+        'ranked' => '',
     ],
     'genre' => [
         'any' => 'Alla',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Gömd',
         'HR' => 'Hård Rock',
         'HT' => 'Halv Tid',
+        'MR' => '',
         'NC' => 'Nightcore',
         'NF' => 'Ingen Fail',
         'NM' => 'Inga mods',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => '',
+        'favourites' => '',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,9 +34,14 @@ return [
         'invalid_mode' => 'Virheellinen pelimoodi annettu.',
         'standard_converts_only' => 'Tuloksia valitulle pelimuodolle ei löydy tässä vaikeustasossa.',
     ],
-    'beatmapsets' => [
-        'too-many-favourites' => 'Sinulla on liian monta suosikkikenttää! Ole ystävällinen ja ota yksi pois suosikeista ennen jatkamista.',
+    'checkout' => [
+        'generic' => 'Ostoksesi valmistelussa tapahtui virhe.',
     ],
+    'search' => [
+        'default' => '',
+        'operation_timeout_exception' => '',
+    ],
+
     'logged_out' => 'Sinut on kirjattu ulos. Kirjaudu sisään ja yritä uudelleen.',
     'supporter_only' => 'Sinun täytyy olla Tukija käyttääksesi tätä ominaisuutta.',
     'no_restricted_access' => 'Et voi suorittaa tätä toimintoa tilisi ollessa rajoitetussa tilassa.',

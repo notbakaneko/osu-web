@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,6 @@
  */
 
 return [
-    'feed_title' => '详细',
     'generic' => '修复已知问题并做了小改动.',
 
     'build' => [
@@ -54,8 +53,8 @@ return [
 
     'support' => [
         'heading' => '喜欢这次更新吗？',
-        'text_1' => '支持 osu! 的后续开发并 :link 吧！',
+        'text_1' => '支持 osu! 的后续开发， :link 吧！',
         'text_1_link' => '成为 Supporter',
-        'text_2' => '你不仅仅能加快开发进度，还能获得一些额外的功能及定制化内容！',
+        'text_2' => '你不仅仅能加快开发进度，还能获得一些额外的功能，甚至个性化你的游戏界面！',
     ],
 ];

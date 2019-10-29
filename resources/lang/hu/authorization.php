@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Elérted a napi ajánlási limited, próbáld újra holnap.',
+            'full_bn_required' => 'Teljes jogú nominátornak kell lenned a kvalifikálásra nomináláshoz.',
+            'full_bn_required_hybrid' => 'Teljes jogú nominátornak kell lenned a több játékmódot tartalmazó beatmapszettek nominálásához.',
             'incorrect_state' => 'Hiba történt a művelet végrehajtása közben, próbáld frissíteni az oldalt.',
             'owner' => "Saját beatmap-et nem lehet ajánlani.",
         ],
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => '',
+            'resolved' => '',
+            'system_generated' => '',
+        ],
+
         'edit' => [
-            'system_generated' => 'Automatikusan generált posztot nem lehet szerkeszteni.',
             'not_owner' => 'Csak a posztoló tudja szerkeszteni a posztot.',
+            'resolved' => '',
+            'system_generated' => 'Automatikusan generált posztot nem lehet szerkeszteni.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Ez a beatmap megbeszélés miatt zárolva.',
         ],
     ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'A kért fórumhoz hozzáférési jog szükséges.',
                 'over' => 'A szavazás lejárt, és többé nem szavazhatsz rá.',
+                'play_more' => 'Többet kell játszanod mielőtt szavazhatnál a fórumon.',
                 'voted' => 'A szavazat megváltoztatása nem engedélyezett.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Érvénytelen borítót adtál meg.',
                 'not_owner' => 'Csak a szerző változtathatja a borítót.',
+            ],
+            'store' => [
+                'forum_not_allowed' => '',
             ],
         ],
 

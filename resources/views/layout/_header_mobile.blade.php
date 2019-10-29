@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -36,13 +36,14 @@
 
                 <div class="navbar-mobile__header-section navbar-mobile__header-section--buttons">
                     @if (Auth::check())
-                        <a
-                            href="{{ osu_url('user.inbox') }}"
-                            class="notification-icon notification-icon--mobile{{Auth::user()->notificationCount() > 0 ? ' notification-icon--glow' : ''}}"
-                        >
-                            <i class="fas fa-lg fa-fw fa-inbox notification-icon__inbox"></i>
-                            <span class="notification-icon__count">{{ Auth::user()->notificationCount() > 0 ? number_format(Auth::user()->notificationCount()) : '' }}</span>
-                        </a>
+                        <div class="js-react--notification" data-notification-type="mobile">
+                            <div class="nav-button nav-button--mobile">
+                                <span class="notification-icon notification-icon--mobile">
+                                    <i class="fas fa-inbox"></i>
+                                    <span class="notification-icon__count">...</span>
+                                </span>
+                            </div>
+                        </div>
 
                         <a
                             href="{{ route('users.show', Auth::user()->user_id) }}"
@@ -84,6 +85,9 @@
 
     @if (Auth::check() && !($currentSection === 'home' && $currentAction === 'search'))
         <form action="{{ route('search') }}" class="navbar-mobile-search">
+            @foreach ($searchParams ?? [] as $name => $value)
+                <input type="hidden" name="{{ $name }}" value="{{ $value }}" />
+            @endforeach
             <input class="navbar-mobile-search__input" name="query" />
             <button class="navbar-mobile-search__icon">
                 <i class="fas fa-search"></i>

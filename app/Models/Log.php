@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -44,6 +44,7 @@ class Log extends Model
     const LOG_USERS = 3;
     const LOG_COMMENT_MOD = 4;
     const LOG_BEATMAPSET_MOD = 5;
+    const LOG_USER_MOD = 6;
 
     protected $table = 'phpbb_log';
     protected $primaryKey = 'log_id';

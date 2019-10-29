@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,8 @@
         {{ trans('password_reset.starting.username') }}
 
         <input name="username" class="password-reset__input" autofocus>
+
+        <span class="password-reset__error js-form-error--error"></span>
     </label>
 
     <div class="password-reset__input-group">
@@ -34,4 +36,16 @@
             {{ trans('password_reset.button.start') }}
         </button>
     </div>
+
+    @if (config('services.enchant.id') !== null)
+        <div>
+            {!! trans('password_reset.starting.support._', ['button' => tag('a', [
+                'class' => 'link link--default js-enchant--show',
+                'role' => 'button',
+                'href' => '#',
+            ], trans('password_reset.starting.support.button'))]) !!}
+        </div>
+
+        <div class="enchant-help-center" data-id="{{ config('services.enchant.id') }}"></div>
+    @endif
 {!! Form::close() !!}

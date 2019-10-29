@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -37,6 +37,8 @@ class Mod
     const PERFECT = 'PF';
     const RELAX = 'RX';
     const SUDDENDEATH = 'SD';
+    const WIND_UP = 'WU';
+    const WIND_DOWN = 'WD';
 
     // osu-specific
     const OSU_AUTOPILOT = 'AP';
@@ -45,6 +47,10 @@ class Mod
     const OSU_TARGET = 'TP';
     const OSU_TRANSFORM = 'TR';
     const OSU_WIGGLE = 'WG';
+    const OSU_GROW = 'GR';
+    const OSU_DEFLATE = 'DF';
+    const OSU_SPININ = 'SI';
+    const OSU_TRACEABLE = 'TC';
 
     // mania-specific
     const MANIA_KEY1 = '1K';
@@ -80,6 +86,8 @@ class Mod
         self::PERFECT,
         self::RELAX,
         self::SUDDENDEATH,
+        self::WIND_DOWN,
+        self::WIND_UP,
     ];
 
     // Defines mutual-exclusivity for groups of mods, i.e. only one mod within each group can be active at a time
@@ -101,6 +109,8 @@ class Mod
             self::HALFTIME,
             self::DAYCORE,
             self::NIGHTCORE,
+            self::WIND_DOWN,
+            self::WIND_UP,
         ],
         [
             self::MANIA_KEY1,
@@ -116,6 +126,17 @@ class Mod
         [
             self::OSU_TRANSFORM,
             self::OSU_WIGGLE,
+        ],
+        [
+            self::OSU_GROW,
+            self::OSU_DEFLATE,
+            self::OSU_SPININ,
+            self::OSU_TRACEABLE,
+        ],
+        [
+            self::HIDDEN,
+            self::OSU_SPININ,
+            self::OSU_TRACEABLE,
         ],
     ];
 
@@ -135,6 +156,10 @@ class Mod
                         self::OSU_TARGET,
                         self::OSU_TRANSFORM,
                         self::OSU_WIGGLE,
+                        self::OSU_GROW,
+                        self::OSU_DEFLATE,
+                        self::OSU_SPININ,
+                        self::OSU_TRACEABLE,
                     ]
                 ),
 

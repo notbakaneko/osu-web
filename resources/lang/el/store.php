@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -53,27 +53,27 @@ return [
         'pay' => 'Ολοκλήρωση αγοράς με Paypal',
 
         'has_pending' => [
-            '_' => '',
-            'link_text' => '',
+            '_' => 'Έχετε μη-ολοκληρωμένες αγορές, κάντε κλικ στο κουμπί :link για να τις δείτε.',
+            'link_text' => 'εδώ',
         ],
 
         'pending_checkout' => [
             'line_1' => 'Μία προηγούμενη πληρωμή άρχισε αλλά δεν τελείωσε.',
-            'line_2' => '',
+            'line_2' => 'Συνεχίστε την πληρωμή σας επιλέγοντας μία μέθοδο πληρωμής.',
         ],
     ],
 
     'discount' => 'κερδίστε :percent%',
 
     'invoice' => [
-        'echeck_delay' => '',
+        'echeck_delay' => 'Δεδομένου ότι η πληρωμή σας ήταν μια eCheck, παρακαλώ επιτρέψτε έως και 10ημέρες για την πληρωμή μέσω PayPal!',
         'status' => [
             'processing' => [
-                'title' => '',
-                'line_1' => '',
+                'title' => 'Δεν έχει ακόμη επιβεβαιωθεί η πληρωμή σας!',
+                'line_1' => 'Αν έχετε ήδη πληρώσει, μπορεί ακόμα να περιμένουμε την επιβεβάιωση της πληρωμής σας. Παρακαλούμε ανανεώστε τη σελίδα σε ένα λεπτό ή δύο!',
                 'line_2' => [
-                    '_' => '',
-                    'link_text' => '',
+                    '_' => 'Εάν αντιμετωπίσατε κάποιο πρόβλημα κατά τη διάρκεια checkout, :link',
+                    'link_text' => 'κάντε κλικ εδώ για να συνεχίσετε την παραγγελία σας',
                 ],
             ],
         ],
@@ -86,10 +86,11 @@ return [
     ],
 
     'order' => [
-        'paid_on' => '',
+        'paid_on' => 'Παραγγελία ορίστηκε :date',
 
-        'invoice' => '',
-        'no_orders' => '',
+        'invoice' => 'Προβολή τιμολογίου',
+        'no_orders' => 'Δεν υπάρχουν παραγγελίες για προβολή.',
+        'resume' => 'Συνέχιση Αγοράς',
 
         'item' => [
             'display_name' => [
@@ -109,12 +110,12 @@ return [
         ],
 
         'status' => [
-            'cancelled' => '',
-            'checkout' => '',
-            'delivered' => '',
-            'paid' => '',
-            'processing' => '',
-            'shipped' => '',
+            'cancelled' => 'Ακυρώθηκε',
+            'checkout' => 'Προετοιμάζεται',
+            'delivered' => 'Παραδόθηκε',
+            'paid' => 'Πληρώθηκε',
+            'processing' => 'Προς επιβεβαίωση',
+            'shipped' => 'Μεταφέρεται',
         ],
     ],
 

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -16,7 +16,11 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChatChannelSwitchAction} from 'actions/chat-actions';
+import {
+  ChatChannelPartAction,
+  ChatChannelSwitchAction,
+  ChatPresenceUpdateAction,
+} from 'actions/chat-actions';
 import DispatcherAction from 'actions/dispatcher-action';
 import { WindowBlurAction, WindowFocusAction } from 'actions/window-focus-actions';
 import DispatchListener from 'dispatch-listener';
@@ -28,12 +32,10 @@ import ChatAPI from './chat-api';
 import { MessageJSON } from './chat-api-responses';
 
 export default class ChatOrchestrator implements DispatchListener {
+  private api: ChatAPI;
   private dispatcher: Dispatcher;
   private rootDataStore: RootDataStore;
-
   private windowIsActive: boolean = true;
-
-  private api: ChatAPI;
 
   constructor(dispatcher: Dispatcher, rootDataStore: RootDataStore) {
     this.dispatcher = dispatcher;
@@ -42,17 +44,18 @@ export default class ChatOrchestrator implements DispatchListener {
     this.api = new ChatAPI();
   }
 
-  handleDispatchAction(action: DispatcherAction) {
-    if (action instanceof ChatChannelSwitchAction) {
-      this.changeChannel(action.channelId);
-    } else if (action instanceof WindowFocusAction) {
-      this.windowIsActive = true;
-      if (this.rootDataStore.channelStore.loaded) {
-        this.markAsRead(this.rootDataStore.uiState.chat.selected);
-      }
-    } else if (action instanceof WindowBlurAction) {
-      this.windowIsActive = false;
-    }
+  addMessages(channelId: number, messages: MessageJSON[]) {
+    const newMessages: Message[] = [];
+
+    transaction(() => {
+      messages.forEach((json: MessageJSON) => {
+        const newMessage = Message.fromJSON(json);
+        newMessage.sender = this.rootDataStore.userStore.getOrCreate(json.sender_id, json.sender);
+        newMessages.push(newMessage);
+      });
+
+      this.rootDataStore.channelStore.addMessages(channelId, newMessages);
+    });
   }
 
   changeChannel(channelId: number) {
@@ -63,6 +66,11 @@ export default class ChatOrchestrator implements DispatchListener {
 
     const channelStore = this.rootDataStore.channelStore;
     transaction(() => {
+      if (channelStore.getOrCreate(uiState.selected).type !== 'NEW') {
+        // don't disable autoScroll if we're 'switching' away from the 'new chat' screen
+        //   e.g. keep autoScroll enabled to jump to the newly sent message when restarting an old conversation
+        uiState.autoScroll = false;
+      }
       const channel = channelStore.getOrCreate(channelId);
 
       if (!channel.newChannel) {
@@ -78,25 +86,41 @@ export default class ChatOrchestrator implements DispatchListener {
         }
       }
 
-      this.rootDataStore.uiState.chat.selected = channelId;
+      uiState.selected = channelId;
     });
   }
 
-  markAsRead(channelId: number) {
-    const channel = this.rootDataStore.channelStore.getOrCreate(channelId);
-    const lastRead = channel.lastMessageId;
-
-    if (!channel.isUnread) {
+  focusNextChannel() {
+    const channelStore = this.rootDataStore.channelStore;
+    const channel = channelStore.get(this.rootDataStore.uiState.chat.selected);
+    if (channel && (channel.exists || channel.newChannel)) {
       return;
     }
 
-    this.api.markAsRead(channel.channelId, lastRead)
-      .then(() => {
-        channel.lastReadId = lastRead;
-      })
-      .catch((err) => {
-        console.debug('markAsRead error', err);
-      });
+    const channelList = channelStore.channelList;
+    if (channelList.length > 0) {
+      // TODO: switch to next 'closest' conversation instead of first in list
+      this.dispatcher.dispatch(new ChatChannelSwitchAction(channelList[0].channelId));
+    } else {
+      channelStore.loaded  = false;
+    }
+  }
+
+  handleDispatchAction(action: DispatcherAction) {
+    if (action instanceof ChatChannelSwitchAction) {
+      this.changeChannel(action.channelId);
+    } else if (action instanceof ChatChannelPartAction) {
+      this.partChannel(action.channelId);
+    } else if (action instanceof ChatPresenceUpdateAction) {
+      this.focusNextChannel();
+    } else if (action instanceof WindowFocusAction) {
+      this.windowIsActive = true;
+      if (this.rootDataStore.channelStore.loaded) {
+        this.markAsRead(this.rootDataStore.uiState.chat.selected);
+      }
+    } else if (action instanceof WindowBlurAction) {
+      this.windowIsActive = false;
+    }
   }
 
   loadChannel(channelId: number): Promise<void> {
@@ -121,17 +145,34 @@ export default class ChatOrchestrator implements DispatchListener {
       });
   }
 
-  addMessages(channelId: number, messages: MessageJSON[]) {
-    const newMessages: Message[] = [];
+  markAsRead(channelId: number) {
+    const channel = this.rootDataStore.channelStore.getOrCreate(channelId);
+    const lastRead = channel.lastMessageId;
 
-    transaction(() => {
-      messages.forEach((json: MessageJSON) => {
-        const newMessage = Message.fromJSON(json);
-        newMessage.sender = this.rootDataStore.userStore.getOrCreate(json.sender_id, json.sender);
-        newMessages.push(newMessage);
+    if (!channel.isUnread) {
+      return;
+    }
+
+    this.api.markAsRead(channel.channelId, lastRead)
+      .then(() => {
+        channel.lastReadId = lastRead;
+      })
+      .catch((err) => {
+        console.debug('markAsRead error', err);
       });
+  }
 
-      this.rootDataStore.channelStore.addMessages(channelId, newMessages);
-    });
+  partChannel(channelId: number) {
+    const channelStore = this.rootDataStore.channelStore;
+    channelStore.partChannel(channelId);
+
+    this.focusNextChannel();
+
+    if (channelId !== -1) {
+      return this.api.partChannel(channelId, window.currentUser.id)
+        .catch((err) => {
+          console.debug('leaveChannel error', err);
+        });
+    }
   }
 }

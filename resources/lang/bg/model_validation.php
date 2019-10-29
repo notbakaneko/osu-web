@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Дискусията е заключена.',
         'first_post' => 'Не можете да изтриете началната публикация.',
+
+        'attributes' => [
+            'message' => '',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Невалидна трудност зададена.',
         'invalid_beatmapset_id' => 'Невалиден бийтмап зададен.',
         'locked' => 'Дискусията е заключена.',
+
+        'attributes' => [
+            'message_type' => '',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'Трябва да влезете в профила си за да надъхате.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Не е позволено отговарянето на изтрит коментар.',
+
+        'attributes' => [
+            'message' => '',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => '',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Изтриването на метаданните на този бийтмап не е позволено.',
             'beatmapset_post_no_edit' => 'Редактирането на метаданните на този бийтмап не е позволено.',
+            'only_quote' => 'Вашият отговор съдържа само цитат.',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => '',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Дублираната опция не е позволена.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Не може да редактирате анкета след повече от :limit часа',
+            'hiding_results_forever' => 'Скриването на резултатите на безкрайна анкета е невъзможно.',
             'invalid_max_options' => 'Изборите на потребителя не трябва да надвишават броя на налични опции.',
             'minimum_one_selection' => 'Изисква се минимум една опция от потребителя.',
             'minimum_two_options' => 'Необходими са поне две опции.',
             'too_many_options' => 'Достигнат е максимум брой позволени опции.',
+
+            'attributes' => [
+                'title' => '',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Изберете опция, когато гласувате.',
             'too_many' => 'Избрани са повече опции, отколкото е позволено.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Това потребителско име ще стане достъпно за употреба след няколко момента!',
         'username_invalid_characters' => 'Желаното име съдържа невалидни символи.',
         'username_in_use' => 'Потребителско име вече е в употреба!',
+        'username_locked' => 'Потребителското име вече е в употреба!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Моля използвайте или долна черта или пространства, не и двете!',
         'username_no_spaces' => "Потребителското име не може да започва или завършва с интервал!",
         'username_not_allowed' => 'Този избор на потребителско име не е разрешен.',
@@ -108,16 +154,33 @@ return [
         'wrong_password_confirmation' => 'Потвърждението на паролата не съотвества.',
         'too_long' => 'Превишена максимална дължина - може да бъде само до :limit символа.',
 
+        'attributes' => [
+            'username' => '',
+            'user_email' => '',
+            'password' => '',
+        ],
+
         'change_username' => [
+            'restricted' => '',
             'supporter_required' => [
                 '_' => 'Трябва да сте :link , за да промените името си!',
-                'link_text' => 'osu!supporter',
+                'link_text' => 'подкрепили osu!',
             ],
             'username_is_same' => 'Това е потребителското ти име, глупчо!',
         ],
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Не може да докладвате себе си!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => '',
+                'cost' => '',
+            ],
+        ],
     ],
 ];

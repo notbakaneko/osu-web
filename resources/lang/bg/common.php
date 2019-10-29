@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,19 +29,27 @@ return [
         'last_word_connector' => ', и ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Обратно към началото',
+        'admin' => 'Админ',
         'back_to_previous' => 'Връщане към предишния изглед',
+        'back_to_top' => 'Обратно към началото',
         'cancel' => 'Отмяна',
         'change' => 'промяна',
         'click_to_copy' => 'щракнете, за да копирате в клипборда',
         'click_to_copy_copied' => 'копиранo в клипборда!',
+        'close' => '',
+        'collapse' => 'свиване',
         'delete' => 'Изтрий',
         'edit' => 'Редактирай',
+        'expand' => 'разгъване',
         'hide' => 'скрий',
         'permalink' => 'постоянен линк',
         'permalink_copied' => 'линк копиран',
-        'post' => 'Пост',
+        'post' => 'Публикувай',
         'reply' => 'Отговори',
         'reply_reopen' => 'Отговори и възстанови',
         'reply_resolve' => 'Отговори и разреши',
@@ -52,8 +60,16 @@ return [
         'search' => 'Търсене',
         'see_more' => 'виж още',
         'show' => 'покажи',
+        'show_deleted' => 'Покажи изтритите',
         'show_more' => 'покажи още',
+        'show_more_options' => 'покажи още опции',
+        'update' => '',
         'upload_image' => 'качи снимка',
+
+        'watch' => [
+            'to_0' => 'Спри наблюдението',
+            'to_1' => 'Наблюдавай',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count ч|:count ч',
         'item' => ':count брой|:count броя',
         'minute_short_unit' => 'мин|мин',
-        'minutes' => '',
+        'minutes' => ':count минута|:count минути',
         'months' => ':count месец|:count месеца',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 'сек|сек',
+        'star_priority' => '',
+        'update' => ':count_delimited актуализация|:count_delimited актуализации',
+        'view' => '',
         'years' => ':count година|:count години',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'поставете тук за качване',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

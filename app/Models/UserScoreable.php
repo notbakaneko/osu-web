@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -51,7 +51,6 @@ trait UserScoreable
                     'aggs' => [
                         'top_scores' => [
                             'top_hits' => [
-                                '_source' => ['score_id'],
                                 'size' => 1,
                                 'sort' => [['pp' => ['order' => 'desc']]],
                             ],
@@ -62,7 +61,12 @@ trait UserScoreable
                 ],
             ]);
 
-        return $search->response();
+        $response = $search->response();
+        if ($search->getError() !== null) {
+            throw $search->getError();
+        }
+
+        return $response;
     }
 
     public function beatmapBestScoreIds(string $mode, int $size)
@@ -71,7 +75,7 @@ trait UserScoreable
         $buckets = $this->aggregatedScoresBest($mode, $size)->aggregations('by_beatmaps')['buckets'] ?? [];
 
         return array_map(function ($bucket) {
-            return array_get($bucket, 'top_scores.hits.hits.0._source.score_id');
+            return array_get($bucket, 'top_scores.hits.hits.0._id');
         }, $buckets);
     }
 
@@ -79,9 +83,8 @@ trait UserScoreable
     {
         // aggregations do not support regular pagination.
         // always fetching 100 to cache; we're not supporting beyond 100, either.
-        // TODO: combine/extract with SearchParams::fetchCacheable
         $key = "search-cache:beatmapBestScores:{$this->getKey()}:{$mode}";
-        $ids = Cache::remember($key, config('osu.scores.es_cache_duration'), function () use ($mode) {
+        $ids = cache_remember_mutexed($key, config('osu.scores.es_cache_duration'), [], function () use ($mode) {
             return $this->beatmapBestScoreIds($mode, 100);
         });
 

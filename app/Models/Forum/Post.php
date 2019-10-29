@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,6 +21,7 @@
 namespace App\Models\Forum;
 
 use App\Jobs\EsIndexDocument;
+use App\Jobs\MarkNotificationsRead;
 use App\Libraries\BBCodeForDB;
 use App\Libraries\BBCodeFromDB;
 use App\Libraries\Transactions\AfterCommit;
@@ -351,5 +352,7 @@ class Post extends Model implements AfterCommit
         if ($topic->topic_last_post_id === $this->getKey()) {
             TopicWatch::lookupQuery($topic, $user)->update(['notify_status' => false]);
         }
+
+        (new MarkNotificationsRead($this, $user))->dispatch();
     }
 }

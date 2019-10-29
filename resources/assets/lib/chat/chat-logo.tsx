@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,7 +22,7 @@ export default class ChatLogo extends React.Component<any, any> {
   render(): React.ReactNode {
     return (
       <div className='chat-logo'>
-        <div className='chat-logo__icon'></div>
+        <div className='chat-logo__icon'/>
         <div className='chat-logo__title'>{osu.trans('chat.title')}</div>
       </div>
     );

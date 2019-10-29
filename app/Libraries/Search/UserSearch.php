@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -58,13 +58,16 @@ class UserSearch extends RecordSearch
         ];
 
         $query = (new BoolQuery())
+            ->mustNot(['terms' => ['_id' => $this->params->blockedUserIds()]])
             ->mustNot(['term' => ['is_old' => true]])
             ->filter(['term' => ['user_warnings' => 0]])
             ->filter(['term' => ['user_type' => 0]]);
 
         if ($this->params->queryString !== null) {
             $query->shouldMatch(1)
+                ->should(['term' => ['_id' => ['value' => $this->params->queryString, 'boost' => 100]]])
                 ->should(['match' => ['username.raw' => ['query' => $this->params->queryString, 'boost' => 5]]])
+                ->should(['match' => ['previous_usernames' => ['query' => $this->params->queryString]]])
                 ->should(['multi_match' => array_merge(['query' => $this->params->queryString], $lowercase_stick)])
                 ->should(['multi_match' => array_merge(['query' => $this->params->queryString], $whitespace_stick)])
                 ->should(['match_phrase' => ['username._slop' => $this->params->queryString]]);

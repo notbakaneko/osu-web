@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,28 +34,28 @@ return [
         'discussion' => 'Discussion',
 
         'details' => [
+            'approved' => 'approved on ',
+            'favourite' => 'Favourite this beatmapset',
+            'logged-out' => 'You need to sign in before downloading any beatmaps!',
+            'loved' => 'loved on ',
             'mapped_by' => 'mapped by :mapper',
+            'qualified' => 'qualified on ',
+            'ranked' => 'ranked on ',
             'submitted' => 'submitted on ',
+            'unfavourite' => 'Unfavourite this beatmapset',
             'updated' => 'last updated on ',
             'updated_timeago' => 'last updated :timeago',
-            'ranked' => 'ranked on ',
-            'approved' => 'approved on ',
-            'qualified' => 'qualified on ',
-            'loved' => 'loved on ',
-            'logged-out' => 'You need to sign in before downloading any beatmaps!',
+
             'download' => [
                 '_' => 'Download',
-                'video' => 'with Video',
-                'no-video' => 'without Video',
                 'direct' => 'osu!direct',
+                'no-video' => 'without Video',
+                'video' => 'with Video',
             ],
-            'favourite' => 'Favourite this beatmapset',
-            'unfavourite' => 'Unfavourite this beatmapset',
-            'favourited_count' => '+ 1 other!|+ :count others!',
 
             'login_required' => [
-                'top' => 'Sign In',
                 'bottom' => 'to access more features',
+                'top' => 'Sign In',
             ],
         ],
 
@@ -74,6 +74,13 @@ return [
                     'qualified' => 'qualified',
                     'wip' => 'work in progress',
                 ],
+            ],
+
+            'report' => [
+                '_' => 'If you find an issue with this beatmap, please report it :link to alert the team.',
+                'button' => 'Report Problem',
+                'button_title' => 'Report a problem on a qualified beatmap.',
+                'link' => 'here',
             ],
         ],
 
@@ -130,7 +137,7 @@ return [
             'accuracy' => 'Accuracy',
             'ar' => 'Approach Rate',
             'stars' => 'Star Difficulty',
-            'total_length' => 'Length',
+            'total_length' => 'Length (Drain length: :hit_length)',
             'bpm' => 'BPM',
             'count_circles' => 'Circle Count',
             'count_sliders' => 'Slider Count',

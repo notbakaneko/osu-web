@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,19 +26,21 @@ return [
 
         'avatar' => [
             'title' => 'Avatar',
+            'rules' => 'Bitte stelle sicher, dass sich dein Avatar an :link hält.<br/>Das heißt, es muss <strong>für alle Altersklassen geeignet</strong> sein. Z.B. keine Nacktheit, Obszönität oder anstößiger Inhalt.',
+            'rules_link' => 'die Community Regeln',
         ],
 
         'email' => [
             'current' => 'Aktuelle E-Mail Adresse',
             'new' => 'Neue E-Mail',
-            'new_confirmation' => 'e-mail bestätigen',
+            'new_confirmation' => 'E-Mail bestätigen',
             'title' => 'E-Mail',
         ],
 
         'password' => [
             'current' => 'aktuelles passwort',
             'new' => 'neues passwort',
-            'new_confirmation' => 'passwort bestätigen',
+            'new_confirmation' => 'Passwort bestätigen',
             'title' => 'Passwort',
         ],
 
@@ -46,13 +48,13 @@ return [
             'title' => 'Profil',
 
             'user' => [
+                'user_discord' => 'discord',
                 'user_from' => 'aktueller standort',
-                'user_interests' => 'interessen',
+                'user_interests' => 'Interessen',
                 'user_msnm' => 'skype',
                 'user_occ' => 'beschäftigung',
                 'user_twitter' => 'twitter',
                 'user_website' => 'webseite',
-                'user_discord' => 'discord',
             ],
         ],
 
@@ -60,6 +62,40 @@ return [
             'title' => 'Signatur',
             'update' => 'speichern',
         ],
+    ],
+
+    'notifications' => [
+        'title' => 'Nachrichten',
+        'topic_auto_subscribe' => 'aktiviere Nachrichten automatisch bei neue Forum Themen die du erstellst',
+    ],
+
+    'oauth' => [
+        'authorized_clients' => 'autorisierte Geräte',
+        'own_clients' => 'eigene Geräte',
+        'title' => 'OAuth',
+    ],
+
+    'playstyles' => [
+        'keyboard' => 'Tastatur',
+        'mouse' => 'Maus',
+        'tablet' => 'Tablet',
+        'title' => 'Spielstil',
+        'touch' => 'touch',
+    ],
+
+    'privacy' => [
+        'friends_only' => 'Blockiere Nachrichten von Benutzern, die nicht auf deiner Freundesliste sind',
+        'hide_online' => 'Online-Status verstecken',
+        'title' => 'Privatsphäre',
+    ],
+
+    'security' => [
+        'current_session' => 'Aktuell',
+        'end_session' => 'Sitzung beenden',
+        'end_session_confirmation' => 'Das wird deine Sitzung auf diesem Gerät sofort beenden. Bist du sicher?',
+        'last_active' => 'Zuletzt aktiv:',
+        'title' => 'Sicherheit',
+        'web_sessions' => 'Sitzungen',
     ],
 
     'update_email' => [
@@ -72,26 +108,12 @@ return [
         'update' => 'speichern',
     ],
 
-    'playstyles' => [
-        'title' => 'Spielstil',
-        'mouse' => 'maus',
-        'keyboard' => 'tastatur',
-        'tablet' => 'tablet',
-        'touch' => 'touch',
+    'verification_completed' => [
+        'text' => 'Sie können diesen Tab/Fenster jetzt schließen',
+        'title' => 'Überprüfung wurde abgeschlossen',
     ],
 
-    'privacy' => [
-        'title' => 'Privatsphäre',
-        'friends_only' => 'Blockiere Nachrichten von Benutzern, die nicht auf deiner Freundesliste sind',
-        'hide_online' => 'Online-Status verstecken',
-    ],
-
-    'security' => [
-        'current_session' => 'Aktuell',
-        'end_session' => 'Sitzung beenden',
-        'end_session_confirmation' => 'Das wird deine Sitzung auf diesem Gerät sofort beenden. Bist du sicher?',
-        'last_active' => 'Zuletzt aktiv:',
-        'title' => 'Sicherheit',
-        'web_sessions' => 'Sitzungen',
+    'verification_invalid' => [
+        'title' => 'Ungültiger oder abgelaufener Bestätigungslink',
     ],
 ];

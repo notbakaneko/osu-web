@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! 論壇',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => '新增封面',
             'button' => '上傳圖片',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => '沒有主題！',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => '將論壇標為已讀',
+        'forums' => '將論壇標為已讀',
+        'busy' => '標記已讀…',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => '刪除回覆',
             'restore' => '恢復回覆',
             'edit' => '編輯回覆',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited 主題',
+            'topic_starter' => '主題開啟者',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => '由 :user 發起',
 
         'create' => [
+            'close' => '',
             'preview' => '預覽',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -101,7 +113,7 @@ return [
             'submit' => '發表',
 
             'necropost' => [
-                'default' => '',
+                'default' => '此主題不被討論一段時間了。如非有特殊理由，請勿在此回覆。',
 
                 'new_topic' => [
                     '_' => "此主題不被討論一段時間了。如果你沒有在這裡發文的具體理由, 請用 :create 代替。",
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => '建立投票',
 
+            'preview' => '主題預覽',
+
             'create_poll_button' => [
                 'add' => '建立投票',
                 'remove' => '取消建立投票',
             ],
 
             'poll' => [
+                'hide_results' => '隱藏投票結果。',
+                'hide_results_info' => '這些內容只在投票結束後顯示。',
                 'length' => '投票持續',
                 'length_days_suffix' => '天',
                 'length_info' => '如果無期限則留空',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => '瀏覽數',
+            'feature_votes' => '星級優先',
             'replies' => '回覆數',
+            'views' => '瀏覽數',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => '該主题已置頂並標記為公告',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => '刪除主題',
             'total_posts' => '總主題數量',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => '當前優先順序: +:count',
                 'do' => '提升這個請求',
+
+                'info' => [
+                    '_' => '這是一個:feature_request。:supporters 可為新功能建議投票。',
+                    'feature_request' => '新功能建議',
+                    'supporters' => '贊助者',
+                ],
 
                 'user' => [
                     'count' => '{0} 沒有票|[1,*] :count 票',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => '投票',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => '將於 :time 結束',
                     'ended' => '結束於 :time',
+                    'results_hidden' => '結果將於投票結束後顯示。',
                     'total' => '總票數: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => '未訂閱',
             'to_watching' => '訂閱',
             'to_watching_mail' => '訂閱並開啟電子郵件通知',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => '通知已啟用。點擊以禁用。',
+            'tooltip_mail_enable' => '通知已禁用。點擊以啟用。',
         ],
     ],
 ];

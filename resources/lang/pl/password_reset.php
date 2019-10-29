@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,7 +34,7 @@ return [
 
     'error' => [
         'contact_support' => 'Skontaktuj się z pomocą techniczną, aby odzyskać konto.',
-        'is_privileged' => 'Skontaktuj się z peppym.',
+        'is_privileged' => 'Skontaktuj się administratorem, by odzyskać konto.',
         'missing_key' => 'Wymagane.',
         'too_many_tries' => 'Za dużo błędnych prób.',
         'user_not_found' => 'Ten użytkownik nie istnieje.',
@@ -55,5 +55,10 @@ return [
 
     'starting' => [
         'username' => 'Wprowadź e-mail lub nazwę użytkownika',
+
+        'support' => [
+            '_' => 'Potrzebujesz pomocy? Skontaktuj się z :button.',
+            'button' => 'pomocą techniczną',
+        ],
     ],
 ];

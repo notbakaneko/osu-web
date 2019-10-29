@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,14 +21,19 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ModelNotSavedException;
-use App\Exceptions\ValidationException;
 use App\Libraries\CommentBundle;
+use App\Libraries\CommentBundleParams;
+use App\Libraries\MorphMap;
 use App\Models\Comment;
 use App\Models\Log;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+/**
+ * @group Comments
+ */
 class CommentsController extends Controller
 {
     protected $section = 'community';
@@ -38,9 +43,22 @@ class CommentsController extends Controller
     {
         parent::__construct();
 
-        $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
+    /**
+     * Delete Comment
+     *
+     * Deletes the specified comment.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     */
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
@@ -53,39 +71,52 @@ class CommentsController extends Controller
             $this->logModerate('LOG_COMMENT_DELETE', $comment);
         }
 
-        return json_item($comment, 'Comment', ['editor', 'user', 'commentable_meta']);
+        return CommentBundle::forComment($comment)->toArray();
     }
 
+    /**
+     * Get Comments
+     *
+     * Returns a list comments and their replies up to 2 levels deep.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     *
+     * @queryParam commentable_type The type of resource to get comments for.
+     * @queryParam commentable_id The id of the resource to get comments for.
+     */
     public function index()
     {
-        if (!request()->expectsJson()) {
-            priv_check('CommentModerate')->ensureCan();
-        }
-
         $type = request('commentable_type');
         $id = request('commentable_id');
 
         if (isset($type) && isset($id)) {
-            $class = Comment::COMMENTABLES[$type] ?? null;
-
-            if ($class === null) {
+            if (!Comment::isValidType($type)) {
                 abort(422);
             }
 
+            $class = MorphMap::getClass($type);
             $commentable = $class::findOrFail($id);
         }
 
+        $params = request()->all();
+        $params['sort'] = $params['sort'] ?? CommentBundleParams::DEFAULT_SORT;
         $commentBundle = new CommentBundle(
             $commentable ?? null,
-            ['params' => request()->all()]
+            ['params' => $params]
         );
 
-        if (request()->expectsJson()) {
+        if (is_json_request()) {
             return $commentBundle->toArray();
         } else {
             $commentBundle->depth = 0;
             $commentBundle->includeCommentableMeta = true;
-            $commentBundle->includeParent = true;
+            $commentBundle->includeDeleted = isset($commentable);
 
             $commentPagination = new LengthAwarePaginator(
                 [],
@@ -102,21 +133,6 @@ class CommentsController extends Controller
         }
     }
 
-    public function report($id)
-    {
-        $comment = Comment::findOrFail($id);
-
-        try {
-            $comment->reportBy(auth()->user(), [
-                'comments' => trim(request('comments')),
-            ]);
-        } catch (ValidationException $e) {
-            return error_popup($e->getMessage());
-        }
-
-        return response(null, 204);
-    }
-
     public function restore($id)
     {
         $comment = Comment::findOrFail($id);
@@ -127,37 +143,64 @@ class CommentsController extends Controller
 
         $this->logModerate('LOG_COMMENT_RESTORE', $comment);
 
-        return json_item($comment, 'Comment', ['editor', 'user', 'commentable_meta']);
+        return CommentBundle::forComment($comment)->toArray();
     }
 
+    /**
+     * Get a Comment
+     *
+     * Gets a comment and its replies up to 2 levels deep.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     */
     public function show($id)
     {
-        priv_check('CommentModerate')->ensureCan();
-
         $comment = Comment::findOrFail($id);
 
-        $commentBundle = new CommentBundle($comment->commentable, [
-            'params' => ['parent_id' => $comment->getKey()],
-            'additionalComments' => [$comment],
-            'includeCommentableMeta' => true,
-        ]);
+        $commentBundle = CommentBundle::forComment($comment, true);
 
-        $commentJson = json_item($comment, 'Comment', [
-            'editor', 'user', 'commentable_meta', 'parent',
-        ]);
+        if (is_json_request()) {
+            return $commentBundle->toArray();
+        }
 
-        return view('comments.show', compact('commentJson', 'commentBundle'));
+        return view('comments.show', compact('commentBundle'));
     }
 
+    /**
+     * Post a new comment
+     *
+     * Posts a new comment to a comment thread.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     *
+     * @queryParam comment.commentable_id Resource ID the comment thread is attached to
+     * @queryParam comment.commentable_type Resource type the comment thread is attached to
+     * @queryParam comment.message Text of the comment
+     * @queryParam comment.parent_id The id of the comment to reply to, null if not a reply
+     */
     public function store()
     {
+        $user = auth()->user();
+
         $params = get_params(request(), 'comment', [
             'commentable_id:int',
             'commentable_type',
             'message',
             'parent_id:int',
         ]);
-        $params['user_id'] = optional(auth()->user())->getKey();
+        $params['user_id'] = optional($user)->getKey();
 
         $comment = new Comment($params);
 
@@ -169,20 +212,26 @@ class CommentsController extends Controller
             return error_popup($e->getMessage());
         }
 
-        $comments = collect([$comment]);
+        broadcast_notification(Notification::COMMENT_NEW, $comment, $user);
 
-        if ($comment->parent !== null) {
-            $comments[] = $comment->parent;
-        }
-
-        $bundle = new CommentBundle($comment->commentable, [
-            'comments' => $comments,
-            'includeCommentableMeta' => true,
-        ]);
-
-        return $bundle->toArray();
+        return CommentBundle::forComment($comment)->toArray();
     }
 
+    /**
+     * Edit Comment
+     *
+     * Edit an existing comment.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     *
+     * @queryParam comment.message New text of the comment
+     */
     public function update($id)
     {
         $comment = Comment::findOrFail($id);
@@ -198,9 +247,22 @@ class CommentsController extends Controller
             $this->logModerate('LOG_COMMENT_UPDATE', $comment);
         }
 
-        return json_item($comment, 'Comment', ['editor', 'user', 'commentable_meta']);
+        return CommentBundle::forComment($comment)->toArray();
     }
 
+    /**
+     * Remove Comment vote
+     *
+     * Un-upvotes a comment.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     */
     public function voteDestroy($id)
     {
         $comment = Comment::findOrFail($id);
@@ -213,9 +275,22 @@ class CommentsController extends Controller
 
         optional($vote)->delete();
 
-        return json_item($comment->fresh(), 'Comment', ['editor', 'user', 'commentable_meta']);
+        return CommentBundle::forComment($comment->fresh(), false)->toArray();
     }
 
+    /**
+     * Add Comment vote
+     *
+     * Upvotes a comment.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [CommentBundle](#commentbundle)
+     *
+     * @authenticated
+     */
     public function voteStore($id)
     {
         $comment = Comment::findOrFail($id);
@@ -232,7 +307,7 @@ class CommentsController extends Controller
             }
         }
 
-        return json_item($comment->fresh(), 'Comment', ['editor', 'user', 'commentable_meta']);
+        return CommentBundle::forComment($comment->fresh(), false)->toArray();
     }
 
     private function logModerate($operation, $comment)

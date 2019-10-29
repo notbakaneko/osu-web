@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -52,11 +52,24 @@ abstract class Model extends BaseModel
         'XH' => 'xh_rank_count',
     ];
 
-    public function replayFile()
+    public static function queueIndexingForUser(User $user)
+    {
+        $instance = new static;
+        $table = $instance->getTable();
+        $modeId = Beatmap::MODES[static::getMode()];
+
+        $instance->getConnection()->insert(
+            "INSERT INTO score_process_queue (score_id, mode, status) SELECT score_id, {$modeId}, 1 FROM {$table} WHERE user_id = {$user->getKey()}"
+        );
+    }
+
+    public function replayFile() : ?ReplayFile
     {
         if ($this->replay) {
             return new ReplayFile($this);
         }
+
+        return null;
     }
 
     public function weightedPp()
@@ -256,7 +269,7 @@ abstract class Model extends BaseModel
 
             $bitset = ModsHelper::toBitset($modsArray);
             if ($bitset > 0) {
-                $q->orWhereRaw('enabled_mods & ? != 0', [$bitset]);
+                $q->orWhere('enabled_mods', $bitset);
             }
         });
     }
@@ -303,7 +316,7 @@ abstract class Model extends BaseModel
     public function delete()
     {
         $result = $this->getConnection()->transaction(function () {
-            $stats = optional($this->user)->statistics($this->gamemodeString());
+            $stats = optional($this->user)->statistics($this->gameModeString());
 
             if ($stats !== null) {
                 $statsColumn = static::RANK_TO_STATS_COLUMN_MAPPING[$this->rank] ?? null;
@@ -327,7 +340,7 @@ abstract class Model extends BaseModel
     {
         return [
             'mode' => Beatmap::modeInt($this->getMode()),
-            'reason' => 'Cheating', // TODO: probably want more options
+            'reason' => 'Cheating',
             'score_id' => $this->getKey(),
             'user_id' => $this->user_id,
         ];

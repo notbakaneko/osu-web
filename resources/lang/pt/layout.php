@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ritmo está apenas a um *clique* de distância! Com Ouendan/EBA, Taiko e modos de jogo originais, como também um editor de níveis totalmente funcional.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Comunidade',
+
+            'forum' => 'Fórum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Fechar (Esc)',
+        'fullscreen' => 'Ativar/Desativar ecrã completo',
+        'zoom' => 'Aproximar/Afastar',
+        'previous' => 'Anterior (seta esquerda)',
+        'next' => 'Seguinte (seta direita)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'início',
             'account-edit' => 'definições',
+            'account-verifyLink' => 'Verificação Concluída',
             'friends-index' => 'amigos',
             'changelog-index' => 'lista de mudanças',
             'changelog-build' => 'compilação',
@@ -35,25 +52,30 @@ return [
             'groups-show' => 'grupos',
             'index' => 'painel de controlo',
             'legal-show' => 'informação',
-            'messages-index' => '',
+            'messages-index' => 'mensagens',
             'news-index' => 'notícias',
             'news-show' => 'notícias',
             'password-reset-index' => 'redefinir palavra-passe',
             'search' => 'pesquisar',
-            'supportTheGame' => 'suporta o jogo',
+            'supportTheGame' => 'apoia o jogo',
             'team' => 'equipa',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'ajuda',
             'getFaq' => 'perguntas frequentes',
             'getRules' => 'regras',
-            'getSupport' => 'não, a sério, eu preciso de ajuda!',
+            'getSupport' => 'não, a sério, preciso mesmo de ajuda!',
             'getWiki' => 'wiki',
             'wiki-show' => 'wiki',
         ],
         'beatmaps' => [
             '_' => 'beatmaps',
-            'artists' => 'featured artists',
+            'artists' => 'artistas destacados',
             'beatmap_discussion_posts-index' => 'publicações de discussão de beatmap',
             'beatmap_discussions-index' => 'discussões de beatmap',
             'beatmapset-watches-index' => 'lista de observação de modificações',
@@ -61,7 +83,7 @@ return [
             'beatmapset_events-index' => 'eventos de conjunto de beatmaps',
             'index' => 'listagem',
             'packs' => 'pacotes',
-            'show' => 'info',
+            'show' => 'informação',
         ],
         'beatmapsets' => [
             '_' => 'beatmaps',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'comunidade',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'desenvolvimento',
             'getForum' => 'fóruns',
             'getLive' => 'ao vivo',
@@ -112,22 +134,24 @@ return [
         'user' => [
             '_' => 'utilizador',
             'getLogin' => 'iniciar sessão',
-            'disabled' => 'desactivado',
+            'disabled' => 'desativado',
 
             'register' => 'registar',
             'reset' => 'recuperar',
             'new' => 'novo',
 
-            'messages' => 'Mensagens',
-            'settings' => 'Definições',
-            'logout' => 'Terminar Sessão',
             'help' => 'Ajuda',
+            'logout' => 'Terminar Sessão',
+            'messages' => 'Mensagens',
             'modding-history-discussions' => 'discussões de modificações do utilizador',
             'modding-history-events' => 'eventos de modificações do utilizador',
             'modding-history-index' => 'historial de modificações do utilizador',
             'modding-history-posts' => 'publicações de modificações do utilizador',
             'modding-history-votesGiven' => 'votos de modificações do utilizador dados',
             'modding-history-votesReceived' => 'votos de modificações do utilizador recebidos',
+            'oauth_login' => 'inicia sessão para oauth',
+            'oauth_request' => 'autorização oauth',
+            'settings' => 'Definições',
         ],
         'store' => [
             '_' => 'loja',
@@ -136,7 +160,7 @@ return [
             'cart-show' => 'carrinho',
 
             'getCheckout' => 'pagamento',
-            'getInvoice' => 'factura',
+            'getInvoice' => 'fatura',
             'orders-index' => 'histórico de encomendas',
             'products-show' => 'produto',
 
@@ -177,14 +201,14 @@ return [
             'wiki' => 'Wiki',
         ],
         'help' => [
-            '_' => 'Ajuda & Comunidade',
-            'faq' => 'Perguntas Frequentes',
+            '_' => 'Ajuda e Comunidade',
+            'faq' => 'Perguntas Frequentes (em brasileiro)',
             'forum' => 'Fóruns da Comunidade',
-            'livestreams' => 'Transmissões Ao Vivo',
+            'livestreams' => 'Transmissões ao Vivo',
             'report' => 'Comunicar um Problema',
         ],
         'legal' => [
-            '_' => 'Legalidade & Situação Jurídica',
+            '_' => 'Legalidade e Situação Jurídica',
             'copyright' => 'Direitos de Autor (DMCA)',
             'privacy' => 'Privacidade',
             'server_status' => 'Estado do Servidor',
@@ -239,12 +263,13 @@ return [
 
             'error' => [
                 'email' => "Nome de utilizador ou endereço de email não existente",
-                'password' => 'Palavra-passe incorrecta',
+                'password' => 'Palavra-passe incorreta',
             ],
         ],
 
         'register' => [
-            'info' => "Precisa de uma conta, senhor. Porque é que ainda não tem uma?",
+            'download' => '',
+            'info' => 'Precisa duma conta, senhor. Porque é que ainda não tem uma?',
             'title' => "Não tens uma conta?",
         ],
     ],

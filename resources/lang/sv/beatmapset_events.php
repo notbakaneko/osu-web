@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Godkänd.',
         'discussion_delete' => 'Moderator raderade diskussion :discussion.',
+        'discussion_lock' => '',
         'discussion_post_delete' => 'Moderator raderade inlägg från diskussionen :discussion.',
         'discussion_post_restore' => 'Moderator återställde inlägg från diskussionen :discussion.',
         'discussion_restore' => 'Moderator återställde diskussionen :discussion.',
+        'discussion_unlock' => '',
         'disqualify' => 'Diskvalificerad av :user. Anledning: :discussion (:text).',
         'disqualify_legacy' => 'Diskvalificerad av :user. Anledning: :text.',
         'issue_reopen' => 'Löst problem :discussion öppnat igen.',

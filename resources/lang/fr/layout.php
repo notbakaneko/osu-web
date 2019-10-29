@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Le rythme est à un seul *clic* !  Avec Ouendan/EBA, Taiko et les modes originaux de gameplay, avec un éditeur de niveau complet.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Communauté',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Fermer (Échap)',
+        'fullscreen' => 'Plein écran',
+        'zoom' => 'Zoom avant/arrière',
+        'previous' => 'Précédent (flèche gauche)',
+        'next' => 'Suivant (flèche droite)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'accueil',
             'account-edit' => 'paramètres',
+            'account-verifyLink' => 'Vérification terminée',
             'friends-index' => 'amis',
             'changelog-index' => 'notes de MàJ',
             'changelog-build' => 'build',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'groupes',
             'index' => 'tableau de bord',
             'legal-show' => 'information',
-            'messages-index' => '',
+            'messages-index' => 'messages',
             'news-index' => 'actualités',
             'news-show' => 'actualités',
             'password-reset-index' => 'réinitialiser le mot de passe',
             'search' => 'rechercher',
             'supportTheGame' => 'supporter le jeu',
             'team' => 'équipe',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'aide',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'communauté',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'développement',
             'getForum' => 'forums',
             'getLive' => 'direct',
@@ -118,16 +140,18 @@ return [
             'reset' => 'récupérer',
             'new' => 'nouveau',
 
-            'messages' => 'Messages',
-            'settings' => 'Paramètres',
-            'logout' => 'Se déconnecter',
             'help' => 'Aide',
+            'logout' => 'Se déconnecter',
+            'messages' => 'Messages',
             'modding-history-discussions' => 'discussion des modifications utilisateur',
             'modding-history-events' => 'événements de modifications utilisateur',
             'modding-history-index' => 'activités utilisateur du beatmapset',
             'modding-history-posts' => 'messages de modifications utilisateur',
             'modding-history-votesGiven' => 'votes de modifications utilisateur donnés',
             'modding-history-votesReceived' => 'votes de modifications utilisateur reçus',
+            'oauth_login' => 'se connecter pour oauth',
+            'oauth_request' => 'autorisation oauth',
+            'settings' => 'Paramètres',
         ],
         'store' => [
             '_' => 'magasin',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Vous avez besoin d'un compte, mon cher. Pourquoi n'en avez vous pas ?",
+            'download' => '',
+            'info' => 'Vous avez besoin d\'un compte, mon cher. Pourquoi n\'en avez vous pas ?',
             'title' => "Vous n'avez pas de compte ?",
         ],
     ],

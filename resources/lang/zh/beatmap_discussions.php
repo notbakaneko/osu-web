@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -28,7 +28,7 @@ return [
     ],
 
     'events' => [
-        'empty' => '目前还没有什么事件...呢。',
+        'empty' => '目前还没有什么事件……呢。',
     ],
 
     'index' => [
@@ -52,7 +52,7 @@ return [
         'created_at' => '发帖时间',
         'deleted_at' => '删帖时间',
         'message_type' => '类型',
-        'permalink' => '静态链接',
+        'permalink' => '永久链接',
     ],
 
     'nearby_posts' => [
@@ -70,15 +70,8 @@ return [
     'system' => [
         'resolved' => [
             'true' => '被 :user 标记为 “已解决”',
-            'false' => '被 :user 标记为 “未解决”',
+            'false' => '被 :user 重新打开',
         ],
-    ],
-
-    'user' => [
-        'admin' => '管理员',
-        'bng' => '谱面管理团队',
-        'owner' => '谱面作者',
-        'qat' => '质量保证团队',
     ],
 
     'user_filter' => [

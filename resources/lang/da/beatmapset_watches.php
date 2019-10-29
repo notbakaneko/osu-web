@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,13 +19,6 @@
  */
 
 return [
-    'button' => [
-        'action' => [
-            'to_0' => 'Unwatch',
-            'to_1' => 'Watch',
-        ],
-    ],
-
     'index' => [
         'description' => 'Dette er de beatmap diskussioner følger du. Du vil modtage opdateringer når der er nye opslag eller opdateringer.',
         'title_compact' => 'modding watchlist',

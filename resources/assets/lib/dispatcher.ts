@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,6 @@ export default class Dispatcher {
   private callbacks: DispatchListener[] = [];
   private trace: boolean = false;
 
-  register(callback: DispatchListener) {
-    this.callbacks.push(callback);
-  }
-
   dispatch(action: DispatcherAction) {
     if (this.trace) {
       console.debug('Dispatcher::dispatch', action);
@@ -34,5 +30,9 @@ export default class Dispatcher {
     this.callbacks.forEach((callback) => {
       callback.handleDispatchAction(action);
     });
+  }
+
+  register(callback: DispatchListener) {
+    this.callbacks.push(callback);
   }
 }

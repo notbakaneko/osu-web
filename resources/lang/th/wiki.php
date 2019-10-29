@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'หน้าที่คุณเรียกยังไม่ถูกแปลในภาษาที่เลือกอยู่ (:language) กำลังแสดงเนื้อหาฉบับภาษาอังกฤษ',
-        'languages' => 'ภาษา',
+        'incomplete_or_outdated' => 'เนื้อหาในหน้านี้ยังเขียนไม่เสร็จหรือเก่าไป ถ้าหากคุณช่วยได้ ให้ลองมาแก้ไขบทความนี้',
         'missing' => 'ไม่พบหน้า ":keyword" ที่คุณเรียก',
         'missing_title' => 'ไม่พบ',
         'missing_translation' => 'หน้าที่คุณเรียกไม่สามารถหาพบเจอได้ในภาษาที่คุณเรียกอยู่ในขณะนี้',
@@ -34,10 +34,17 @@ return [
         ],
 
         'translation' => [
-            'legal' => '',
-            'outdated' => '',
+            'legal' => 'การแปลที่เห็นมีไว้เพื่อความสะดวกในการอ่านเท่านั้น ต้นฉบับ :default คือข้อความที่ถูกต้องที่สุด',
+            'outdated' => 'หน้านี้มีเนื้อหาที่แปลแล้วแต่ยังไม่ถูกปรับปรุงแก้ไข โปรดตรวจสอบ :default เพื่อข้อมูลที่ถูกต้องที่สุด (และพิจารณาอัปเดตเกี่ยวกับการแปลหากคุณสามารถช่วยเหลือได้)!',
 
-            'default' => '',
+            'default' => 'ฉบับภาษาอังกฤษ',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => 'เพราะชื่อ osu!pedia ไม่ค่อยเหมาะเท่าไหร่',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

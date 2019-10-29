@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -42,7 +42,7 @@ class NewForumTopic
     {
         $body = null;
 
-        if ($this->forum->forum_id === config('osu.forum.help_forum_id')) {
+        if ($this->forum->isHelpForum()) {
             $client = $this->user->clients()->last('timestamp');
 
             $buildName = '';
@@ -73,7 +73,7 @@ class NewForumTopic
 
     public function titlePlaceholder()
     {
-        if ($this->forum->forum_id === config('osu.forum.help_forum_id')) {
+        if ($this->forum->isHelpForum()) {
             // In English language forum, no localization.
             return 'What is your problem (50 characters)';
         }

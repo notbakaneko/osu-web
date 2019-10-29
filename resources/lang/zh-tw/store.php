@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -53,27 +53,27 @@ return [
         'pay' => '使用 Paypal 付款',
 
         'has_pending' => [
-            '_' => '',
-            'link_text' => '',
+            '_' => '客官您還有結帳還沒完成呢，點選 :link 查看他們',
+            'link_text' => '這裡',
         ],
 
         'pending_checkout' => [
             'line_1' => '先前的訂單尚未完成',
-            'line_2' => '',
+            'line_2' => '透過選擇付款方式來恢復訂單。',
         ],
     ],
 
     'discount' => '折扣 :percent%',
 
     'invoice' => [
-        'echeck_delay' => '',
+        'echeck_delay' => '由於您是用 eCheck 付款，請等待至多 10 天以使該支付通過 PayPal 完成！',
         'status' => [
             'processing' => [
-                'title' => '',
-                'line_1' => '',
+                'title' => '您的付款尚未被確認!',
+                'line_1' => '如果您已經付款, 我們可能還在等待收到您付款的確認。請在一兩分鐘內重新整理此頁面!',
                 'line_2' => [
-                    '_' => '',
-                    'link_text' => '',
+                    '_' => '如果您在結帳時遇到問題，請查看 :link',
+                    'link_text' => '點擊這裡繼續您的結帳',
                 ],
             ],
         ],
@@ -86,10 +86,11 @@ return [
     ],
 
     'order' => [
-        'paid_on' => '',
+        'paid_on' => '下訂單 :date',
 
-        'invoice' => '',
-        'no_orders' => '',
+        'invoice' => '查看收據',
+        'no_orders' => '沒有訂單',
+        'resume' => '繼續結賬',
 
         'item' => [
             'display_name' => [
@@ -109,12 +110,12 @@ return [
         ],
 
         'status' => [
-            'cancelled' => '',
-            'checkout' => '',
+            'cancelled' => '已取消',
+            'checkout' => '準備中',
             'delivered' => '已送達',
-            'paid' => '',
+            'paid' => '已付款',
             'processing' => '待確認',
-            'shipped' => '運輸中',
+            'shipped' => '已出貨',
         ],
     ],
 
@@ -138,7 +139,7 @@ return [
     'supporter_tag' => [
         'gift' => '要贈與的玩家',
         'require_login' => [
-            '_' => '',
+            '_' => '您需要 :link 以獲得 osu!贊助者標籤！',
             'link_text' => '登入',
         ],
     ],

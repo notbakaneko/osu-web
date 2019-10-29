@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,32 +19,32 @@
  */
 
 return [
-    'coming_soon' => '',
-    'limitation_notice' => '',
-    'talking_in' => '',
-    'talking_with' => '',
-    'title_compact' => '',
-    'title' => '',
+    'coming_soon' => '近日公開',
+    'limitation_notice' => '注意：<a href=":lazer_link">osu!lazer</a>または新しいウェブサイトを利用している人だけが、このシステムを使ってPMを受け取れます。<br/>もし嫌な場合は、<a href=":oldpm_link">旧サイト</a>からメッセージを送信して下さい。',
+    'talking_in' => ':channelで会話中',
+    'talking_with' => ':nameと会話中',
+    'title_compact' => 'チャット',
+    'title' => 'チャット',
     'cannot_send' => [
-        'channel' => '',
-        'user' => '',
+        'channel' => '現在このチャンネルでメッセージを送信できません。次の理由のいずれかである可能性があります：',
+        'user' => '現在このユーザーへメッセージを送信できません。理由は次のいずれかである可能性があります：',
         'reasons' => [
-            'blocked' => '',
-            'channel_moderated' => '',
-            'friends_only' => '',
-            'restricted' => '',
-            'target_restricted' => '',
+            'blocked' => 'あなたは受信者にブロックされました',
+            'channel_moderated' => 'このチャンネルは管理されています',
+            'friends_only' => 'フレンドリスト上の人からのメッセージのみ受信する',
+            'restricted' => 'あなたは現在制限されています',
+            'target_restricted' => '受信者は現在制限されています',
         ],
     ],
     'input' => [
-        'disabled' => '',
-        'placeholder' => '',
-        'send' => '',
+        'disabled' => 'メッセージの送信ができません...',
+        'placeholder' => 'メッセージを入力',
+        'send' => '送信',
     ],
     'no-conversations' => [
-        'howto' => "",
-        'lazer' => '',
-        'pm_limitations' => '',
-        'title' => '',
+        'howto' => "ユーザープロフィールまたはユーザーカードのポップアップから会話を開始します。",
+        'lazer' => 'あなたが<a href=":link">osu!lazer</a>で参加している公開チャンネルもここに表示されます。',
+        'pm_limitations' => '<a href=":link">osu!lazer</a>または新しいウェブサイトを利用している人だけがPMを受信できます。',
+        'title' => 'まだトークはありません',
     ],
 ];

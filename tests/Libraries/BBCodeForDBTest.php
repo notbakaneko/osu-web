@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,26 +17,35 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace Tests\Libraries;
+
 use App\Libraries\BBCodeForDB;
+use Tests\TestCase;
 
 class BBCodeForDBTest extends TestCase
 {
     private $uid = '1';
 
-    public function testAll()
+    /**
+     * @dataProvider examples
+     */
+    public function testGenerate($name, $path)
     {
-        $text = new BBCodeForDB();
+        $baseFilePath = "{$path}/{$name}.base.txt";
+        $dbFilePath = "{$path}/{$name}.db.txt";
+
+        $text = new BBCodeForDB;
         $text->uid = $this->uid;
-        $path = __DIR__.'/bbcode_examples';
+        $text->text = file_get_contents($baseFilePath);
 
-        foreach (glob("{$path}/*.base.txt") as $baseFilePath) {
-            $dbFilePath = preg_replace('/\.base\.txt$/', '.db.txt', $baseFilePath);
-            $text->text = trim(file_get_contents($baseFilePath));
+        $output = $text->generate();
 
-            $output = $this->normalizeHTML($text->generate());
-            $referenceOutput = $this->normalizeHTML(file_get_contents($dbFilePath));
+        $this->assertStringEqualsFile($dbFilePath, $output);
+    }
 
-            $this->assertSame($referenceOutput, $output);
-        }
+    public function examples()
+    {
+        return $this->fileList(__DIR__.'/bbcode_examples', '.base.txt');
     }
 }

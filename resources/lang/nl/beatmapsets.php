@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Discussie',
 
         'details' => [
+            'approved' => 'goedgekeurd op ',
+            'favourite' => 'Markeer deze beatmapset als favoriet',
+            'logged-out' => 'Je moet ingelogd zijn voordat je beatmaps kan downloaden!',
+            'loved' => 'loved op ',
             'mapped_by' => 'gemapped door :mapper',
+            'qualified' => 'gekwalificeerd op ',
+            'ranked' => 'gerankt op ',
             'submitted' => 'ingezonden op ',
+            'unfavourite' => 'Verwijder markering als favoriet',
             'updated' => 'laatst geüpdatet op ',
             'updated_timeago' => 'laatst bijgewerkt :timeago',
-            'ranked' => 'gerankt op ',
-            'approved' => 'goedgekeurd op ',
-            'qualified' => 'gekwalificeerd op ',
-            'loved' => 'loved op ',
-            'logged-out' => 'Je moet ingelogd zijn voordat je beatmaps kan downloaden!',
+
             'download' => [
                 '_' => 'downloaden',
-                'video' => 'met Video',
-                'no-video' => 'zonder video',
                 'direct' => 'osu!direct',
+                'no-video' => 'zonder video',
+                'video' => 'met Video',
             ],
-            'favourite' => 'Markeer deze beatmapset als favoriet',
-            'unfavourite' => 'Verwijder markering als favoriet',
-            'favourited_count' => '+1 andere!|+ :count anderen!',
+
+            'login_required' => [
+                'bottom' => 'toegang tot meer functies',
+                'top' => 'Inloggen',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Je hebt te veel favoriete beatmaps! Verwijder er een paar voor je het opnieuw probeert.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Hype deze map als je het leuk vond om deze te spelen en om het te helpen de status <strong>ranked</strong> te bereiken.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Deze map is momenteel :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'in behandeling',
+                    'qualified' => 'gekwalificeerd',
+                    'wip' => 'werk in uitvoering',
                 ],
             ],
         ],

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! 포럼',
 
     'covers' => [
+        'edit' => '커버 수정',
+
         'create' => [
             '_' => '표지 이미지 설정',
             'button' => '이미지 업로드',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '최근 게시글',
+
+        'index' => [
+            'title' => '포럼 목차',
+        ],
+
         'topics' => [
             'empty' => '주제글이 아무것도 없습니다!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => '포럼을 읽음으로 표시',
+        'forums' => '포럼을 읽음으로 표시',
+        'busy' => '읽음으로 표시하는 중...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => '삭제',
             'restore' => '복원',
             'edit' => '수정',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '새로운 회신',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => '게시글 :count_delimited개',
+            'topic_starter' => '주제 시작인',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => ':user 님이 시작함',
 
         'create' => [
+            'close' => '닫기',
             'preview' => '미리보기',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -105,7 +117,7 @@ return [
 
                 'new_topic' => [
                     '_' => "이 주제는 조금 오래된 글입니다. 정말 여기에 작성해야 할 사유가 없다면, :create해 주세요.",
-                    'create' => '새로운 주제를 생성',
+                    'create' => '새로운 주제글 작성',
                 ],
             ],
 
@@ -119,8 +131,8 @@ return [
             'enter' => '특정 글로 이동하려면 클릭하세요',
             'first' => '처음 글로 이동하기',
             'last' => '마지막 글로 이동하기',
-            'next' => '다음 10개 글 표시',
-            'previous' => '이전 10개 글 표시',
+            'next' => '10개 글 건너뛰기',
+            'previous' => '10개 글 이전으로',
         ],
 
         'post_edit' => [
@@ -148,7 +160,7 @@ return [
 
         'topic_buttons' => [
             'remove' => [
-                'confirmation' => '이 주제를 구독 해제하시겠습니까?',
+                'confirmation' => '이 주제를 구독 해제하시겠어요?',
                 'title' => '구독 해제',
             ],
         ],
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => '투표 만들기',
 
+            'preview' => '글 미리보기',
+
             'create_poll_button' => [
                 'add' => '투표 만들기',
                 'remove' => '투표 생성 취소',
             ],
 
             'poll' => [
+                'hide_results' => '투표의 결과를 숨깁니다.',
+                'hide_results_info' => '투표가 끝났을 때만 보입니다.',
                 'length' => '투표 진행 기간',
                 'length_days_suffix' => '일',
                 'length_info' => '투표를 영구적으로 진행하려면 공백으로 두세요.',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => '조회수',
+            'feature_votes' => '별 평점 순위',
             'replies' => '답글',
+            'views' => '조회수',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => '해당 주제가 고정되고 알림글로 표시됩니다.',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => '삭제된 게시글',
             'total_posts' => '총 게시글',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => '현재 우선도: +:count',
                 'do' => '이 요청 옹호',
+
+                'info' => [
+                    '_' => '이곳은 :feature_request입니다. 기능 요청들의 투표는 :supporters가 할 수 있습니다.',
+                    'feature_request' => '기능 요청',
+                    'supporters' => '서포터',
+                ],
 
                 'user' => [
                     'count' => '{0} 표 없음|{1,*} :count 표',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '투표 수정',
+                'edit_warning' => '투표를 수정하면 현재 결과가 제거됩니다!',
                 'vote' => '투표',
+
+                'button' => [
+                    'change_vote' => '추천 변경',
+                    'edit' => '투표 수정',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => '투표가 :time에 종료됩니다.',
                     'ended' => '투표가 :time에 종료되었습니다.',
+                    'results_hidden' => '투표가 끝난 후에 결과가 표시됩니다.',
                     'total' => '총 투표 수: :count회',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => '즐겨찾기 등록 안됨',
             'to_watching' => '즐겨찾기',
             'to_watching_mail' => '알림과 함께 즐겨찾기',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => '알림이 활성화되었습니다. 눌러서 비활성화하세요.',
+            'tooltip_mail_enable' => '알림이 비활성화되었습니다. 눌러서 활성화하세요.',
         ],
     ],
 ];

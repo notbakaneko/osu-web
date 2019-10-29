@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,26 @@
 
 namespace App\Http\Middleware;
 
+use App\Events\UserSessionEvent;
+
 class VerifyPrivilegedUser extends VerifyUser
 {
+    public static function isRequired($user)
+    {
+        return $user !== null && $user->isPrivileged();
+    }
+
     public function requiresVerification($request)
     {
-        return $this->auth->user() === null || $this->auth->user()->isPrivileged();
+        $user = auth()->user();
+        $isRequired = static::isRequired($user);
+
+        if ($user !== null && session()->get('requires_verification') !== $isRequired) {
+            session()->put('requires_verification', $isRequired);
+            session()->save();
+            event(UserSessionEvent::newVerificationRequirementChange($user->getKey(), $isRequired));
+        }
+
+        return $isRequired;
     }
 }

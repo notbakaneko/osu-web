@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => '已刪除',
+    'deleted_count' => ':count_delimited 已刪除評論|:count_delimited 已刪除評論',
     'edited' => '由 :user 在 :timeago 前編輯',
     'empty' => '還沒有評論',
+    'load_replies' => '載入回覆',
     'replies' => '回覆',
-    'show_replies' => '顯示回覆',
     'title' => '評論',
 
     'commentable_name' => [
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => '',
+            '_' => '按下 Enter :action. 如果要換行請下 shift+enter 。',
             'edit' => '保存',
             'new' => '發布',
             'reply' => '回覆',
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => '登入以評論',
-        'reply' => '登入以回覆',
+        'new' => '登入以留言。',
+        'reply' => '登入以回覆。',
     ],
 
     'index' => [
@@ -62,15 +63,8 @@ return [
 
     'show' => [
         'title' => [
-            '_' => '評論 :info',
+            '_' => '評論',
             'info' => '詳情',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

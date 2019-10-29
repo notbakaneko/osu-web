@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,12 +33,12 @@ return [
 
     'index' => [
         'deleted_beatmap' => 'eliminato',
-        'title' => 'Discussioni di beatmap',
+        'title' => 'Discussioni Beatmap',
 
         'form' => [
             '_' => 'Cerca',
             'deleted' => 'Includi discussioni eliminate',
-            'types' => 'Tipo di messaggio',
+            'types' => 'Tipi di messaggio',
             'username' => 'Nome Utente',
 
             'user' => [
@@ -57,7 +57,7 @@ return [
 
     'nearby_posts' => [
         'confirm' => 'Nessuno dei post riguarda il mio problema',
-        'notice' => 'Ci sono già post a :timestamp (:existing_timestamps). Si prega di controllare prima di postare.',
+        'notice' => 'Ci sono già dei post verso :timestamp (:existing_timestamps). Controlla prima di postare.',
     ],
 
     'reply' => [
@@ -72,13 +72,6 @@ return [
             'true' => 'Segnato come risolto da :user',
             'false' => 'Riaperto da :user',
         ],
-    ],
-
-    'user' => [
-        'admin' => 'amministratore',
-        'bng' => 'nominatore',
-        'owner' => 'mapper',
-        'qat' => 'qat',
     ],
 
     'user_filter' => [

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,6 +19,8 @@
  */
 
 namespace App\Models;
+
+use Carbon\Carbon;
 
 /**
  * @property \Illuminate\Database\Eloquent\Collection $albums ArtistAlbum
@@ -45,6 +47,8 @@ namespace App\Models;
  */
 class Artist extends Model
 {
+    private static $memoized = [];
+
     public function label()
     {
         return $this->belongsTo(Label::class);
@@ -58,5 +62,22 @@ class Artist extends Model
     public function tracks()
     {
         return $this->hasMany(ArtistTrack::class);
+    }
+
+    public function hasNewTracks()
+    {
+        if (!array_key_exists('recentlyUpdatedArtists', self::$memoized)) {
+            self::$memoized['recentlyUpdatedArtists'] =
+                cache_remember_mutexed('recentlyUpdatedArtists', 300, [], function () {
+                    return ArtistTrack::where('created_at', '>', Carbon::now()->subMonth(1))
+                        ->select('artist_id')
+                        ->groupBy('artist_id')
+                        ->get()
+                        ->pluck('artist_id')
+                        ->toArray();
+                });
+        }
+
+        return in_array($this->id, self::$memoized['recentlyUpdatedArtists'], true);
     }
 }

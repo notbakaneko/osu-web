@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => ":user님의 모딩 기록",
-        'title_compact' => '',
+        'title_compact' => '모딩',
 
         'discussions' => [
             'title_recent' => '최근 시작된 토론',
@@ -88,9 +88,6 @@ return [
         'title' => ':username님의 글',
     ],
 
-    'signup' => [
-        '_' => '회원가입',
-    ],
     'anonymous' => [
         'login_link' => '클릭하여 로그인',
         'login_text' => '로그인',
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!supporter',
         'joined_at' => ':date에 가입',
         'lastvisit' => ':date에 마지막으로 접속',
+        'lastvisit_online' => '현재 온라인',
         'missingtext' => '오타가 있는 것 같은데요! (또는 차단된 사용자일 수 있습니다)',
         'origin_country' => ':country에 거주',
         'page_description' => 'osu! - :username님에 대해 궁금했던 모든 것!',
@@ -148,10 +146,14 @@ return [
                     'button' => '이미지 업로드',
                     'dropzone' => '업로드하려면 여기에 끌어놓으세요',
                     'dropzone_info' => '이쪽에 이미지를 끌어놓아 업로드할수도 있습니다',
-                    'restriction_info' => "<a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!서포터</a>만 업로드할 수 있습니다",
                     'size_info' => '표지 크기는 2800x620 이여야 합니다',
                     'too_large' => '업로드된 파일이 너무 큽니다.',
                     'unsupported_format' => '지원되지 않는 확장자입니다.',
+
+                    'restriction_info' => [
+                        '_' => '업로드는 :link만 가능합니다',
+                        'link' => 'osu! 서포터',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => ':count 팔로워|:count 팔로워',
+            'none' => '없음',
             'unranked' => '최근 플레이가 없습니다',
 
             'achievements' => [
                 'achieved-on' => ':date에 달성함',
-                'locked' => '',
+                'locked' => '잠김',
                 'title' => '업적',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'by :artist',
                 'none' => '아직... 없네요...',
                 'title' => '비트맵',
 
@@ -191,13 +193,23 @@ return [
                     'title' => 'Pending 비트맵',
                 ],
             ],
+            'discussions' => [
+                'title' => '토론',
+                'title_longer' => '최근 토론',
+                'show_more' => '토론 더 보기',
+            ],
+            'events' => [
+                'title' => '이벤트',
+                'title_longer' => '최근 이벤트',
+                'show_more' => '이벤트 더 보기',
+            ],
             'historical' => [
                 'empty' => '기록된 플레이가 없습니다. :(',
                 'title' => '통계',
 
                 'monthly_playcounts' => [
                     'title' => '플레이 기록',
-                    'count_label' => '',
+                    'count_label' => '플레이 횟수',
                 ],
                 'most_played' => [
                     'count' => '플레이 횟수',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => '리플레이가 재생된 횟수',
-                    'count_label' => '',
+                    'count_label' => '리플레이 재생 횟수',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => '최근 Kudosu 기록',
                 'title' => 'Kudosu!',
                 'total' => '총 획득한 Kudosu 수',
-                'total_info' => '사용자가 비트맵 제작 과정에 얼마나 기여했는지를 나타내는 척도입니다. 더 많은 설명을 얻고 싶으면 <a href="'.osu_url('user.kudosu').'">이 페이지</a>를 확인해주세요.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,14 +269,24 @@ return [
                         'revoke' => ':post에서 :giver님으로부터 kudosu 획득 자격을 박탈당했습니다.',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '유저가 비트맵 제작 과정에 얼마나 기여했는지에 기반합니다. 더 많은 정보를 얻고싶으시다면 :link를 참고해주세요.',
+                    'link' => '이 페이지',
+                ],
             ],
             'me' => [
                 'title' => 'me!',
             ],
             'medals' => [
                 'empty' => "아직 아무런 메달도 받지 못했네요. ;_;",
-                'recent' => '',
+                'recent' => '최근 획득',
                 'title' => '메달',
+            ],
+            'posts' => [
+                'title' => '게시글',
+                'title_longer' => '최근 게시글',
+                'show_more' => '글 더 보기',
             ],
             'recent_activity' => [
                 'title' => '최근 활동',
@@ -274,7 +295,7 @@ return [
                 'download_replay' => '리플레이 다운로드',
                 'empty' => '아직 이렇다 할 플레이 기록이 없네요. :(',
                 'not_ranked' => '랭크된 비트맵만 pp를 줍니다.',
-                'pp_weight' => '',
+                'pp_weight' => '가중치 :percentage',
                 'title' => '랭크',
 
                 'best' => [
@@ -283,6 +304,13 @@ return [
                 'first' => [
                     'title' => '1위 달성 맵',
                 ],
+            ],
+            'votes' => [
+                'given' => '투표 참여 수 (지난 3개월 간)',
+                'received' => '받은 투표수 (지난 3개월 간)',
+                'title' => '투표',
+                'title_longer' => '최근 투표',
+                'vote_count' => ':count_delimited 투표',
             ],
             'account_standing' => [
                 'title' => '계정 상태',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => '플레이어 :info',
+            'info' => '정보',
         ],
 
         'info' => [
@@ -330,10 +358,15 @@ return [
             'title' => '사용자를 찾을 수 없습니다! ;_;',
         ],
         'page' => [
+            'button' => '프로필 페이지 수정',
             'description' => '<strong>me!</strong>는 유저 프로필 페이지에서 개인이 꾸밀 수 있는 공간입니다.',
             'edit_big' => 'me! 수정하기',
             'placeholder' => '페이지에 들어갈 내용을 입력하세요.',
-            'restriction_info' => "이 기능을 이용하려면 <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a>가 되어야 합니다.",
+
+            'restriction_info' => [
+                '_' => '이 기능을 사용하기 위해서는 :link가 되어야합니다.',
+                'link' => 'osu! 서포터',
+            ],
         ],
         'post_count' => [
             '_' => '게시글 수 :link',
@@ -341,26 +374,33 @@ return [
         ],
         'rank' => [
             'country' => ':mode 국가 순위',
-            'country_simple' => '',
+            'country_simple' => '국가 순위',
             'global' => ':mode 세계 순위',
-            'global_simple' => '',
+            'global_simple' => '세계 순위',
         ],
         'stats' => [
             'hit_accuracy' => '정확도',
             'level' => '레벨 :level',
-            'level_progress' => '',
+            'level_progress' => '다음 레벨까지의 진척도',
             'maximum_combo' => '최대 콤보',
-            'medals' => '',
+            'medals' => '메달',
             'play_count' => '플레이 횟수',
             'play_time' => '총 플레이 시간',
             'ranked_score' => '기록된 점수',
-            'replays_watched_by_others' => '다른 플레이어가 관전한 횟수',
+            'replays_watched_by_others' => '리플레이가 재생된 횟수',
             'score_ranks' => '점수 순위',
             'total_hits' => '총 타격 횟수',
             'total_score' => '총 점수',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Ranked 및 Approved 상태의 비트맵',
+            'loved_beatmapset_count' => 'Loved 비트맵',
+            'unranked_beatmapset_count' => '대기 중인 비트맵',
+            'graveyard_beatmapset_count' => '묻힌 비트맵',
         ],
     ],
+
     'status' => [
+        'all' => '모두',
         'online' => '온라인',
         'offline' => '오프라인',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => '계정 인증',
+    ],
+
+    'view_mode' => [
+        'card' => '카드 형식 보기',
+        'list' => '목록으로 보기',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosu toestaan',
+        'beatmap_information' => 'Beatmap pagina',
         'delete' => 'verwijder',
         'deleted' => 'Verwijderd door :editor :delete_time.',
         'deny_kudosu' => 'kudosu ontzeggen',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Laatst bewerkt door :editor :update_time',
         'kudosu_denied' => 'Verkrijgen van kudosu ontkend.',
         'message_placeholder_deleted_beatmap' => 'Deze moeilijkheidsgraad is verwijderd en mag niet meer besproken worden.',
+        'message_placeholder_locked' => 'Discussie voor deze beatmap is uitgeschakeld.',
         'message_type_select' => 'Selecteer Commentaartype',
         'reply_notice' => 'Druk op enter om te antwoorden.',
         'reply_placeholder' => 'Type hier je reactie',
         'require-login' => 'Log in om te posten of te antwoorden',
         'resolved' => 'Opgelost',
         'restore' => 'herstel',
+        'show_deleted' => 'Toon verwijderde discussies',
         'title' => 'Discussies',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Nog geen bestaande discussie!',
             'hidden' => 'Geen discussies komen overeen met de geselecteerde filter.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Vergrendel discussie',
+                'unlock' => 'Ontgrendel discussie',
+            ],
+
+            'prompt' => [
+                'lock' => 'Reden voor vergrendelen',
+                'unlock' => 'Weet je zeker dat je het wilt ontgrendelen?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Vastzetten',
             'timestamp' => 'Tijdstip',
             'timestamp_missing' => 'ctrl+c in de bewerkmodus en plak in je bericht om een tijdstip toe te voegen!',
             'title' => 'Nieuwe Discussie',
+            'unpin' => 'Losmaken',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Gesorteerd op:',
-            'created_at' => 'aanmaaktijd',
-            'timeline' => 'tijdlijn',
-            'updated_at' => 'laatste update',
+            'created_at' => 'Gemaakt op',
+            'timeline' => 'Tijdlijn',
+            'updated_at' => 'Laatst bijgewerkt',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Deze beatmap is gemarkeerd als work-in-progress door de maker.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Nog geen downvotes',
+                'up' => 'Nog geen upvotes',
+            ],
+            'latest' => [
+                'down' => 'Laatste downvotes',
+                'up' => 'Laatste upvotes',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Weet je dat zeker? Een nieuw probleem posten zal het nominatieproces resetten.',
-            'disqualify' => '',
+            'disqualify' => 'Weet je het zeker? Hierdoor zal de beatmap worden verwijderd van kwalificatie en wordt het nominatie proces gereset.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Gespeeld',
             ],
             'sorting' => [
-                'title' => 'titel',
-                'artist' => 'artiest',
-                'difficulty' => 'moeilijkheidsgraad',
-                'updated' => 'bijgewerkt',
-                'ranked' => 'gerankt',
-                'rating' => 'beoordeling',
-                'plays' => 'keren gespeeld',
-                'relevance' => 'relevantie',
-                'nominations' => 'nominaties',
+                'title' => 'Titel',
+                'artist' => 'Artiest',
+                'difficulty' => 'Moeilijkheidsgraad',
+                'favourites' => 'Favorieten',
+                'updated' => 'Bijgewerkt',
+                'ranked' => 'Ranked',
+                'rating' => 'Beoordeling',
+                'plays' => 'Keren gespeeld',
+                'relevance' => 'Relevantie',
+                'nominations' => 'Nominaties',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Filteren met :filters vereist een :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Alles',
-        'ranked-approved' => 'Gerankt & Goedgekeurd',
         'approved' => 'Goedgekeurd',
-        'qualified' => 'Gekwalificeerd',
-        'loved' => 'Loved',
-        'faves' => 'Favorieten',
-        'pending' => 'Pending & WIP',
+        'favourites' => 'Favorieten',
         'graveyard' => 'Begraafplaats',
-        'my-maps' => 'Mijn Mappen',
+        'leaderboard' => 'Heeft Ranglijst',
+        'loved' => 'Loved',
+        'mine' => 'Mijn Mappen',
+        'pending' => 'Pending & WIP',
+        'qualified' => 'Gekwalificeerd',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => 'Alles',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => 'Mirror',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Speelaantal :count',
+        'favourites' => 'Favorieten: :count',
     ],
 ];

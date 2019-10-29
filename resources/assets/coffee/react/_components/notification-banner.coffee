@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,13 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import * as React from 'react'
+import { div } from 'react-dom-factories'
 el = React.createElement
-{div} = ReactDOMFactories
 
 bn = 'notification-banner-v2'
 notificationBanners = document.getElementsByClassName('js-notification-banners')
 
-class @NotificationBanner extends React.PureComponent
+export class NotificationBanner extends React.PureComponent
   constructor: (props) ->
     super props
 

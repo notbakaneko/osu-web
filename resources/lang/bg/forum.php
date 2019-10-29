@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! форум',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Задай изображение за корицата',
             'button' => 'Качи изображение',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Няма теми!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Маркирай форума като прочетен',
+        'forums' => 'Маркирай форумите като прочетени',
+        'busy' => 'Маркиране като прочетено...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Изтрий публикацията',
             'restore' => 'Възстанови публикацията',
             'edit' => 'Редактиране на публикацията',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited публикация|:count_delimited публикации',
+            'topic_starter' => '',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'започнато от :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Преглед',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Създаване на анкета',
 
+            'preview' => 'Предварителен преглед',
+
             'create_poll_button' => [
                 'add' => 'Създай анкета',
                 'remove' => 'Отмени създаването на анкета',
             ],
 
             'poll' => [
+                'hide_results' => 'Скрий резултатите от анкетата.',
+                'hide_results_info' => '',
                 'length' => 'Остави анкетата отворена за',
                 'length_days_suffix' => 'дни',
                 'length_info' => 'Оставете празно за безкрайна анкета',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'посещения',
+            'feature_votes' => 'приоритет по звезди',
             'replies' => 'отговори',
+            'views' => 'посещения',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Темата бе закачена и я отбелязана като уведомление',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Изтрити публикации',
             'total_posts' => 'Общ брой публикации',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Текущ приоритет: +:count',
                 'do' => 'Разгласи тази молба',
+
+                'info' => [
+                    '_' => 'Това е :feature_request. Заявките за нови функции може да се гласуват само от :supporters.',
+                    'feature_request' => 'заявка за функция',
+                    'supporters' => 'поддръжници',
+                ],
 
                 'user' => [
                     'count' => '{0} няма гласове | {1} :count глас | [2,*] :count гласове',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Гласувай',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Гласуването затваря в :time',
                     'ended' => 'Гласуването приключи в :time',
+                    'results_hidden' => '',
                     'total' => 'Общ брой гласове: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Не е отметнато',
             'to_watching' => 'Отметка',
             'to_watching_mail' => 'Отметка с известяване',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Включени известия. Кликни да изключиш',
+            'tooltip_mail_enable' => 'Изключени известия. Кликни да включиш',
         ],
     ],
 ];

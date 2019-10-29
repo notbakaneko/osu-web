@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,33 +22,22 @@ namespace App\Transformers;
 
 use App\Models\Comment;
 use League\Fractal;
-use Markdown;
 
 class CommentTransformer extends Fractal\TransformerAbstract
 {
-    protected $availableIncludes = [
-        'commentable_meta',
-        'editor',
-        'user',
-        'parent',
-    ];
-
     public function transform(Comment $comment)
     {
-        $message = priv_check('CommentUpdate', $comment)->can()
-            ? $comment->message
-            : null;
-
-        $messageHtml = priv_check('CommentShow', $comment)->can()
-            ? Markdown::convertToHtml($comment->message)
-            : null;
+        if (priv_check('CommentShow', $comment)->can()) {
+            $message = $comment->message;
+            $messageHtml = markdown($comment->message);
+        }
 
         return [
             'id' => $comment->id,
             'parent_id' => $comment->parent_id,
             'user_id' => $comment->user_id,
-            'message' => $message,
-            'message_html' => $messageHtml,
+            'message' => $message ?? null,
+            'message_html' => $messageHtml ?? null,
             'replies_count' => $comment->replies_count_cache ?? 0,
             'votes_count' => $comment->votes_count_cache ?? 0,
 
@@ -65,37 +54,5 @@ class CommentTransformer extends Fractal\TransformerAbstract
             'edited_at' => json_time($comment->edited_at),
             'edited_by_id' => $comment->edited_by_id,
         ];
-    }
-
-    public function includeCommentableMeta(Comment $comment)
-    {
-        return $this->item($comment->commentable, new CommentableMetaTransformer);
-    }
-
-    public function includeEditor(Comment $comment)
-    {
-        if ($comment->editor_id === null || $comment->editor === null) {
-            return;
-        }
-
-        return $this->item($comment->editor, new UserCompactTransformer);
-    }
-
-    public function includeParent(Comment $comment)
-    {
-        if ($comment->parent === null) {
-            return;
-        }
-
-        return $this->item($comment->parent, new static);
-    }
-
-    public function includeUser(Comment $comment)
-    {
-        if ($comment->user === null) {
-            return;
-        }
-
-        return $this->item($comment->user, new UserCompactTransformer);
     }
 }

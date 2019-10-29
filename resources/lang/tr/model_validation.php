@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Tartışma kilitli.',
         'first_post' => 'Başlangıç yazısı silinemez.',
+
+        'attributes' => [
+            'message' => 'Mesaj',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Yanlış zorluk belirtildi.',
         'invalid_beatmapset_id' => 'Yanlış beatmap belirtildi.',
         'locked' => 'Tartışma kilitli.',
+
+        'attributes' => [
+            'message_type' => 'Mesaj türü',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'Destek oyu vermek için giriş yapmalısın.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Silinmiş yorumlara cevap verilemez.',
+
+        'attributes' => [
+            'message' => 'Mesaj',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Geçersiz :attribute belirtildi.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Beatmap üstverisi gönderisinin silinmesi yasaktır.',
             'beatmapset_post_no_edit' => 'Beatmap üstverisi gönderisini düzenlemek yasaktır.',
+            'only_quote' => 'Cevabınız sadece bir alıntı içeriyor.',
+
+            'attributes' => [
+                'post_text' => 'Gönderi içeriği',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Konu başlığı',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Yinelenen seçenekler yasaktır.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => ':limit saatten sonra bir anket düzenlenemez',
+            'hiding_results_forever' => 'Asla bitmeyen bir anketin sonuçları saklanamaz.',
             'invalid_max_options' => 'Kullanıcı başına seçenek sayısı mevcut seçenek sayısını geçemez.',
             'minimum_one_selection' => 'Kullanıcı başına en az bir seçenek gereklidir.',
             'minimum_two_options' => 'En az iki seçenek gereklidir.',
             'too_many_options' => 'İzin verilen maksimum seçenek sayısı aşıldı.',
+
+            'attributes' => [
+                'title' => 'Anket başlığı',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Oy verirken bir seçenek seçin.',
             'too_many' => 'İzin verilenden fazla seçenek seçildi.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Bu kullanıcı adı hemen her an kullanıma açılabilir!',
         'username_invalid_characters' => 'İstenen kullanıcı adı geçersiz karakterler içeriyor.',
         'username_in_use' => 'Kullanıcı adı zaten kullanımda!',
+        'username_locked' => 'Kullanıcı adı zaten kullanımda!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Lütfen ya alt çizgi ya da boşluk kullanın, ikisini birden değil!',
         'username_no_spaces' => "Kullanıcı adı boşluk ile başlayamaz ya da bitemez!",
         'username_not_allowed' => 'Kullanıcı adı seçimine izin verilmiyor.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Şifre doğrulaması eşleşmiyor.',
         'too_long' => 'Maksimum uzunluk aşıldı - yalnızca :limit karakter olabilir.',
 
+        'attributes' => [
+            'username' => 'Kullanıcı adı',
+            'user_email' => 'E-posta adresi',
+            'password' => 'Şifre',
+        ],
+
         'change_username' => [
+            'restricted' => 'Kısıtlanmış iken kullanıcı adını değiştiremezsin.',
             'supporter_required' => [
                 '_' => 'İsminizi değiştirmek için :link olmanız gerekli!',
                 'link_text' => 'osu!\'u desteklemiş',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Kendinizi raporlayamazsınız!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Miktar',
+                'cost' => 'Ücret',
+            ],
+        ],
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -68,9 +68,9 @@ trait PostTrait
 
     public static function esIndexingQuery()
     {
-        $forumIds = Forum::on('mysql-readonly')->where('enable_indexing', 1)->pluck('forum_id');
+        $forumIds = Forum::on('mysql')->where('enable_indexing', 1)->pluck('forum_id');
 
-        return static::on('mysql-readonly')->withoutGlobalScopes()->whereIn('forum_id', $forumIds);
+        return static::on('mysql')->withoutGlobalScopes()->whereIn('forum_id', $forumIds);
     }
 
     public static function esSchemaFile()

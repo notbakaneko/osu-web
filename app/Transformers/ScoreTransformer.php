@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,9 @@
 
 namespace App\Transformers;
 
+use App\Models\Beatmap;
 use App\Models\Score\Best\Model as ScoreBest;
+use App\Models\Score\Model as ScoreModel;
 use League\Fractal;
 
 class ScoreTransformer extends Fractal\TransformerAbstract
@@ -36,7 +38,7 @@ class ScoreTransformer extends Fractal\TransformerAbstract
 
     public function transform($score)
     {
-        return [
+        $ret = [
             'id' => $score->score_id,
             'user_id' => $score->user_id,
             'accuracy' => $score->accuracy(),
@@ -44,7 +46,6 @@ class ScoreTransformer extends Fractal\TransformerAbstract
             'score' => $score->score,
             'max_combo' => $score->maxcombo,
             'perfect' => $score->perfect,
-            'replay' => $score->replay,
             'statistics' => [
                 'count_50' => $score->count50,
                 'count_100' => $score->count100,
@@ -58,6 +59,17 @@ class ScoreTransformer extends Fractal\TransformerAbstract
             'rank' => $score->rank === '0' ? null : $score->rank,
             'created_at' => json_time($score->date),
         ];
+
+        if ($score instanceof ScoreModel) {
+            $ret['mode'] = $score->getMode();
+            $ret['mode_int'] = Beatmap::modeInt($score->getMode());
+        }
+
+        if ($score instanceof ScoreBest) {
+            $ret['replay'] = $score->replay;
+        }
+
+        return $ret;
     }
 
     public function includeMultiplayer($score)

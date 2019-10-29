@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -18,7 +18,7 @@
 
 @osu =
   isIos: /iPad|iPhone|iPod/.test(navigator.platform)
-  urlRegex: /(https?:\/\/(?:(?:[a-z0-9]\.|[a-z0-9][a-z0-9-]*[a-z0-9]\.)*[a-z][a-z0-9-]*[a-z0-9](?::\d+)?)(?:(?:(?:\/+(?:[a-z0-9$_\.\+!\*',;:@&=-]|%[0-9a-f]{2})*)*(?:\?(?:[a-z0-9$_\.\+!\*',;:@&=-]|%[0-9a-f]{2})*)?)?(?:#(?:[a-z0-9$_\.\+!\*',;:@&=/?-]|%[0-9a-f]{2})*)?)?)/ig
+  urlRegex: /(https?:\/\/((?:(?:[a-z0-9]\.|[a-z0-9][a-z0-9-]*[a-z0-9]\.)*[a-z][a-z0-9-]*[a-z0-9](?::\d+)?)(?:(?:(?:\/+(?:[a-z0-9$_\.\+!\*',;:@&=-]|%[0-9a-f]{2})*)*(?:\?(?:[a-z0-9$_\.\+!\*',;:@&=-]|%[0-9a-f]{2})*)?)?(?:#(?:[a-z0-9$_\.\+!\*',;:@&=/?-]|%[0-9a-f]{2})*)?)?))/ig
 
   bottomPage: ->
     osu.bottomPageDistance() == 0
@@ -99,8 +99,14 @@
     $(document).trigger('osu:page:change')
 
 
-  parseJson: (id) ->
-    JSON.parse document.getElementById(id)?.text ? null
+  parseJson: (id, remove = false) ->
+    element = document.getElementById(id)
+    return unless element?
+
+    json = JSON.parse element.text
+    element.remove() if remove
+
+    json
 
 
   storeJson: (id, object) ->
@@ -155,7 +161,7 @@
 
   src2x: (mainUrl) ->
     src: mainUrl
-    srcSet: "#{mainUrl} 1x, #{mainUrl.replace(/(\.[^.]+)$/, '@2x$1')} 2x"
+    srcSet: "#{mainUrl} 1x, #{mainUrl?.replace(/(\.[^.]+)$/, '@2x$1')} 2x"
 
 
   link: (url, text, options = {}) ->
@@ -170,8 +176,8 @@
     el.outerHTML
 
 
-  linkify: (text) ->
-    return text.replace(osu.urlRegex, '<a href="$1" rel="nofollow">$1</a>')
+  linkify: (text, newWindow = false) ->
+    text.replace(osu.urlRegex, "<a href=\"$1\" rel=\"nofollow noreferrer\"#{if newWindow then ' target=\"_blank\"' else ''}>$2</a>")
 
 
   timeago: (time) ->
@@ -189,7 +195,19 @@
     return "#{bytes} B" if (bytes < k)
 
     i = Math.floor(Math.log(bytes) / Math.log(k))
-    return "#{(bytes / Math.pow(k, i)).toFixed(decimals)} #{suffixes[i]}"
+    "#{osu.formatNumber(bytes / Math.pow(k, i), decimals)} #{suffixes[i]}"
+
+
+  formatNumber: (number, precision, options, locale) ->
+    return null unless number?
+
+    options ?= {}
+
+    if precision?
+      options.minimumFractionDigits = precision
+      options.maximumFractionDigits = precision
+
+    number.toLocaleString locale ? currentLocale, options
 
 
   formatNumberSuffixed: (number, precision, options = {}) ->
@@ -227,7 +245,7 @@
 
 
   urlPresence: (url) ->
-    "url(#{url})" if osu.presence(url)?
+    if osu.present(url) then "url(#{url})" else null
 
 
   navigate: (url, keepScroll, {action = 'advance'} = {}) ->
@@ -276,7 +294,11 @@
 
 
   presence: (string) ->
-    if string? && string != '' then string else null
+    if osu.present(string) then string else null
+
+
+  present: (string) ->
+    string? && string != ''
 
 
   promisify: (deferred) ->
@@ -286,18 +308,10 @@
       .fail reject
 
 
-  trans: (key, replacements, locale) ->
-    if locale?
-      initialLocale = Lang.getLocale()
-      Lang.setLocale locale
-      translated = Lang.get(key, replacements)
-      Lang.setLocale initialLocale
+  trans: (key, replacements = {}, locale) ->
+    locale = fallbackLocale unless osu.transExists(key, locale)
 
-      translated
-    else
-      translated = Lang.get(key, replacements) if Lang.has(key)
-
-      osu.presence(translated) ? osu.trans(key, replacements, fallbackLocale)
+    Lang.get(key, replacements, locale)
 
 
   transArray: (array, key = 'common.array_and') ->
@@ -313,19 +327,43 @@
 
 
   transChoice: (key, count, replacements = {}, locale) ->
-    replacements.count_delimited ?= count.toLocaleString()
+    locale ?= currentLocale
+    isFallbackLocale = locale == fallbackLocale
 
-    if locale?
-      initialLocale = Lang.getLocale()
+    if !isFallbackLocale && !osu.transExists(key, locale)
+      return osu.transChoice(key, count, replacements, fallbackLocale)
+
+    initialLocale = Lang.getLocale()
+    if locale != initialLocale
+      # FIXME: remove this setLocale hack once Lang.js is updated to the one with
+      #        locale pluralization rule bug fixed.
+      #
+      # How to check:
+      # > Lang.setLocale('be')
+      # > Lang.choice('common.count.months', 6, { count_delimited: 6 }, 'en')
+      # It should return "6 months" instead of undefined.
       Lang.setLocale locale
-      translated = Lang.choice(key, count, replacements)
-      Lang.setLocale initialLocale
 
-      translated
-    else
-      translated = Lang.choice(key, count, replacements) if Lang.has(key)
+    replacements.count_delimited = osu.formatNumber(count, null, null, locale)
+    translated = Lang.choice(key, count, replacements, locale)
 
-      osu.presence(translated) ? osu.transChoice(key, count, replacements, fallbackLocale)
+    Lang.setLocale initialLocale if initialLocale?
+
+    if !isFallbackLocale && !translated?
+      delete replacements.count_delimited
+      # added by Lang.choice
+      delete replacements.count
+
+      return osu.transChoice(key, count, replacements, fallbackLocale)
+
+    translated
+
+
+  # Handles case where crowdin fills in untranslated key with empty string.
+  transExists: (key, locale) ->
+    translated = Lang.get(key, null, locale)
+
+    osu.present(translated) && translated != key
 
 
   uuid: ->

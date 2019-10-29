@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'pinned_topics' => 'Subiecte fixate',
     'slogan' => "este periculos să te joci singur.",
     'subforums' => 'Subforumuri',
-    'title' => 'comunitatea osu!',
+    'title' => 'forumuri osu!',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Setează imaginea de copertă',
             'button' => 'Încarcă imaginea',
@@ -42,9 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Niciun subiect!',
         ],
+    ],
+
+    'mark_as_read' => [
+        'forum' => 'Marchează forumul ca citit',
+        'forums' => 'Marchează forumurile ca citite',
+        'busy' => 'Se marchează ca citit...',
     ],
 
     'post' => [
@@ -57,6 +71,17 @@ return [
             'destroy' => 'Șterge postarea',
             'restore' => 'Restaurează postarea',
             'edit' => 'Editează postarea',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited postare|:count_delimited postări',
+            'topic_starter' => '',
         ],
     ],
 
@@ -75,14 +100,26 @@ return [
         'new_topic_login' => 'Conectează-te pentru a posta un subiect nou',
         'post_reply' => 'Postează',
         'reply_box_placeholder' => 'Scrie aici pentru a răspunde',
+        'reply_title_prefix' => 'Re',
         'started_by' => 'de :user',
+        'started_by_verbose' => 'început de :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Previzualizare',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
             'preview_hide' => 'Scrie',
             'submit' => 'Postează',
+
+            'necropost' => [
+                'default' => 'Acest subiect a fost inactiv pentru o vreme. Postează aici doar dacă ai un motiv specific.',
+
+                'new_topic' => [
+                    '_' => "Acest subiect a fost inactiv pentru o vreme. Dacă nu ai un motiv specific pentru a posta aici, te rugăm să :create în schimb.",
+                    'create' => 'creezi un subiect nou',
+                ],
+            ],
 
             'placeholder' => [
                 'body' => 'Introdu conținutul postării aici',
@@ -114,6 +151,11 @@ return [
                 'total' => 'Subiecte la care te-ai abonat',
                 'unread' => 'Subiecte cu răspunsuri noi',
             ],
+
+            'info' => [
+                'total' => 'Tu ești abonat la :total subiecte.',
+                'unread' => 'Tu ai :unread răspunsuri necitite la subiectele la care te-ai abonat.',
+            ],
         ],
 
         'topic_buttons' => [
@@ -137,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Crearea unui sondaj',
 
+            'preview' => 'Previzualizare',
+
             'create_poll_button' => [
                 'add' => 'Creează un sondaj',
                 'remove' => 'Anulează crearea unui sondaj',
             ],
 
             'poll' => [
+                'hide_results' => '',
+                'hide_results_info' => '',
                 'length' => 'Rulează sondajul pentru',
                 'length_days_suffix' => 'zile',
                 'length_info' => 'Lasă liber pentru un sondaj ce nu se termină niciodată',
@@ -161,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'vizualizări',
+            'feature_votes' => 'prioritatea stelelor',
             'replies' => 'răspunsuri',
+            'views' => 'vizualizări',
         ],
 
         'issue_tag_added' => [
@@ -228,6 +275,11 @@ return [
             'to_2_done' => 'Subiectul a fost fixat și marcat ca un anunț',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Postări șterse',
             'total_posts' => 'Total postări',
@@ -235,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Prioritate curentă: +:count',
                 'do' => 'Promovează această cerere',
+
+                'info' => [
+                    '_' => 'Aceasta este o :feature_request. Cererile pot fi votate de către :supporters.',
+                    'feature_request' => 'cerere de avantaje',
+                    'supporters' => 'suporteri',
+                ],
 
                 'user' => [
                     'count' => '{0} niciun vot|{1} :count vot|[2,*] :count voturi',
@@ -244,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Votează',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Votarea se va termina în :time',
                     'ended' => 'Votarea s-a terminat :time',
+                    'results_hidden' => '',
                     'total' => 'Total voturi: :count',
                 ],
             ],
@@ -258,7 +326,8 @@ return [
             'to_not_watching' => 'Nu este marcat',
             'to_watching' => 'Marchează',
             'to_watching_mail' => 'Marchează cu notificare',
-            'mail_disable' => 'Dezactivează notificarea',
+            'tooltip_mail_disable' => 'Notificările sunt activate. Click pentru a le dezactiva',
+            'tooltip_mail_enable' => 'Notificările sunt dezactivate. Click pentru a le activa',
         ],
     ],
 ];

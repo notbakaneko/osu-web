@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2019 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -220,7 +220,8 @@ class TopicsController extends Controller
         $postStartId = Request::input('start');
         $postEndId = get_int(Request::input('end'));
         $nthPost = get_int(Request::input('n'));
-        $skipLayout = Request::input('skip_layout') === '1';
+        $skipLayout = get_bool(Request::input('skip_layout')) ?? false;
+        $showDeleted = get_bool(Request::input('with_deleted')) ?? true;
         $jumpTo = null;
 
         $topic = Topic
@@ -243,7 +244,7 @@ class TopicsController extends Controller
 
         priv_check('ForumView', $topic->forum)->ensureCan();
 
-        $posts = $topic->posts()->showDeleted($userCanModerate);
+        $posts = $topic->posts()->showDeleted($showDeleted && $userCanModerate);
 
         if ($postStartId === 'unread') {
             $postStartId = Post::lastUnreadByUser($topic, Auth::user());
@@ -292,7 +293,7 @@ class TopicsController extends Controller
             ->with('topic')
             ->with('user.rank')
             ->with('user.country')
-            ->with('user.supporterTags')
+            ->with('user.supporterTagPurchases')
             ->get()
             ->sortBy('post_id');
 
@@ -345,7 +346,8 @@ class TopicsController extends Controller
                 'firstPostPosition',
                 'firstPostId',
                 'topic',
-                'userCanModerate'
+                'userCanModerate',
+                'showDeleted'
             )
         );
     }
@@ -375,6 +377,10 @@ class TopicsController extends Controller
             $topic = Topic::createNew($forum, $params, $poll ?? null);
         } catch (ModelNotSavedException $e) {
             return error_popup($e->getMessage());
+        }
+
+        if (Auth::user()->user_notify || $forum->isHelpForum()) {
+            TopicWatch::setState($topic, Auth::user(), 'watching_mail');
         }
 
         ForumUpdateNotifier::onNew([
@@ -445,6 +451,7 @@ class TopicsController extends Controller
     private function getPollParams()
     {
         return get_params(request(), 'forum_topic_poll', [
+            'hide_results:bool',
             'length_days:int',
             'max_options:int',
             'options:string_split',

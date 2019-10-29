@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'accorder le kudosu',
+        'beatmap_information' => '',
         'delete' => 'supprimer',
         'deleted' => 'Supprimé par :editor :delete_time.',
         'deny_kudosu' => 'refuser le kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Dernière modification par :editor :update_time',
         'kudosu_denied' => 'Le kudosu a été refusé pour ce post.',
         'message_placeholder_deleted_beatmap' => 'Cette difficulté a été supprimée, il n\'est plus possible d\'en discuter.',
+        'message_placeholder_locked' => 'La discussion pour cette beatmap a été désactivée.',
         'message_type_select' => 'Sélectionnez un type de commentaire',
         'reply_notice' => 'Appuyez sur Entrée pour répondre.',
         'reply_placeholder' => 'Écrivez votre réponse ici',
         'require-login' => 'Connectez-vous pour poster ou répondre',
         'resolved' => 'Résolu',
         'restore' => 'restaurer',
+        'show_deleted' => 'Afficher le contenu supprimé',
         'title' => 'Discussions',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Pas encore de discussion !',
             'hidden' => 'Aucune discussion ne correspond à vos critères.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Verrouiller la discussion',
+                'unlock' => 'Déverrouiller la discussion',
+            ],
+
+            'prompt' => [
+                'lock' => 'Raison du verrouillage',
+                'unlock' => 'Êtes-vous sûr de vouloir déverrouiller ?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Épingler',
             'timestamp' => 'Horodatage',
             'timestamp_missing' => 'ctrl-c en mode édition et collez votre message pour ajouter un horodatage !',
             'title' => 'Nouvelle Discussion',
+            'unpin' => 'Ne plus épingler',
         ],
 
         'show' => [
@@ -100,7 +117,6 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Trier par:',
             'created_at' => 'Date de création',
             'timeline' => 'Chronologie',
             'updated_at' => 'Dernière mise à jour',
@@ -124,6 +140,16 @@ return [
             'wip' => 'Note: Cette beatmap a été marquée comme en cours de travail par son créateur.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Pas encore de votes négatifs',
+                'up' => 'Pas encore de votes positifs',
+            ],
+            'latest' => [
+                'down' => 'Derniers votes négatifs',
+                'up' => 'Derniers votes positifs',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Êtes-vous sûr ? Poster un nouveau problème va réinitialiser le processus de nomination.',
-            'disqualify' => '',
+            'disqualify' => 'Êtes-vous sûr? Cela va supprimer la beatmap de la qualification et réinitialiser le processus de nomination.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Jouée',
             ],
             'sorting' => [
-                'title' => 'titre',
-                'artist' => 'artiste',
-                'difficulty' => 'difficulté',
-                'updated' => 'mise à jour',
-                'ranked' => 'classée',
-                'rating' => 'évaluation',
-                'plays' => 'parties',
-                'relevance' => 'pertinence',
-                'nominations' => 'nominations',
+                'title' => 'Titre',
+                'artist' => 'Artiste',
+                'difficulty' => 'Difficulté',
+                'favourites' => 'Favoris',
+                'updated' => 'Mise à jour',
+                'ranked' => 'Classée',
+                'rating' => 'Évaluation',
+                'plays' => 'Parties',
+                'relevance' => 'Pertinence',
+                'nominations' => 'Nominations',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Le filtrage par :filters requiert un :link actif',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Tous',
-        'ranked-approved' => 'Classifiée & approuvée',
         'approved' => 'Approuvée',
-        'qualified' => 'Qualifiée',
-        'loved' => 'Loved',
-        'faves' => 'Favoris',
-        'pending' => 'En attente & WIP',
+        'favourites' => 'Favoris',
         'graveyard' => 'Cimetière',
-        'my-maps' => 'Mes maps',
+        'leaderboard' => 'A un classement',
+        'loved' => 'Loved',
+        'mine' => 'Mes maps',
+        'pending' => 'En attente & WIP',
+        'qualified' => 'Qualifiée',
+        'ranked' => 'Classée',
     ],
     'genre' => [
         'any' => 'Tous',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'Miroir',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'Sans mods',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Nombre de joueurs : :count',
+        'favourites' => 'Favorites : :count',
     ],
 ];

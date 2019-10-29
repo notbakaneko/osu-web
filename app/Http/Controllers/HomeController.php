@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,7 +27,6 @@ use App\Models\BeatmapDownload;
 use App\Models\Beatmapset;
 use App\Models\Forum\Post;
 use App\Models\NewsPost;
-use App\Models\User;
 use App\Models\UserDonation;
 use Auth;
 use Request;
@@ -68,19 +67,6 @@ class HomeController extends Controller
         return view('home.download');
     }
 
-    public function getIcons()
-    {
-        return view('home.icons')
-        ->with('icons', [
-            'osu',
-            'mode-osu',
-            'mode-mania',
-            'mode-fruits',
-            'mode-taiko',
-            'social-patreon',
-        ]);
-    }
-
     public function index()
     {
         $host = Request::getHttpHost();
@@ -90,8 +76,10 @@ class HomeController extends Controller
             return ujs_redirect(route('store.products.index'));
         }
 
+        $newsLimit = Auth::check() ? NewsPost::DASHBOARD_LIMIT + 1 : NewsPost::LANDING_LIMIT;
+        $news = NewsPost::default()->limit($newsLimit)->get();
+
         if (Auth::check()) {
-            $news = NewsPost::default()->limit(NewsPost::DASHBOARD_LIMIT + 1)->get();
             $newBeatmapsets = Beatmapset::latestRankedOrApproved();
             $popularBeatmapsetsPlaycount = Beatmapset::mostPlayedToday();
             $popularBeatmapsetIds = array_keys($popularBeatmapsetsPlaycount);
@@ -106,31 +94,15 @@ class HomeController extends Controller
                 'popularBeatmapsetsPlaycount'
             ));
         } else {
-            return view('home.landing', ['stats' => new CurrentStats()]);
+            $news = json_collection($news, 'NewsPost');
+
+            return view('home.landing', ['stats' => new CurrentStats(), 'news' => $news]);
         }
     }
 
     public function messageUser($user)
     {
-        // TODO: REMOVE ONCE COMPLETELY LIVE
-        $canWebChat = false;
-        if (Auth::check()) {
-            if (Auth::user()->isPrivileged()) {
-                $canWebChat = true;
-            }
-            if (config('osu.chat.webchat_enabled_supporter') && Auth::user()->isSupporter()) {
-                $canWebChat = true;
-            }
-            if (config('osu.chat.webchat_enabled_all')) {
-                $canWebChat = true;
-            }
-        }
-
-        if (!$canWebChat) {
-            return ujs_redirect("https://osu.ppy.sh/forum/ucp.php?i=pm&mode=compose&u={$user}");
-        } else {
-            return ujs_redirect(route('chat.index', ['sendto' => $user]));
-        }
+        return ujs_redirect(route('chat.index', ['sendto' => $user]));
     }
 
     public function osuSupportPopup()
@@ -152,7 +124,7 @@ class HomeController extends Controller
 
     public function setLocale()
     {
-        $newLocale = get_valid_locale(Request::input('locale'));
+        $newLocale = get_valid_locale(Request::input('locale')) ?? config('app.fallback_locale');
         App::setLocale($newLocale);
 
         if (Auth::check()) {
@@ -192,10 +164,10 @@ class HomeController extends Controller
                 'expiration' => $expiration,
                 // purchased
                 'dollars' => currency($dollars, 2, false),
-                'tags' => number_format($tags),
+                'tags' => i18n_number_format($tags),
                 // gifted
                 'giftedDollars' => currency($giftedDollars, 2, false),
-                'giftedTags' => number_format($giftedTags),
+                'giftedTags' => i18n_number_format($giftedTags),
             ];
 
             if ($current) {
@@ -215,36 +187,129 @@ class HomeController extends Controller
             }
         }
 
+        $pageLayout = [
+            // why support
+            'support-reasons' => [
+                'type' => 'group',
+                'section' => 'why-support',
+                'items' => [
+                    'team' => [
+                        'icons' => ['fas fa-users'],
+                    ],
+                    'infra' => [
+                        'icons' => ['fas fa-server'],
+                    ],
+                    'featured-artists' => [
+                        'icons' => ['fas fa-user-astronaut'],
+                        'link' => route('artists.index'),
+                    ],
+                    'ads' => [
+                        'icons' => ['fas fa-ad', 'fas fa-slash'],
+                    ],
+                    'tournaments' => [
+                        'icons' => ['fas fa-trophy'],
+                        'link' => route('tournaments.index'),
+                    ],
+                    'bounty-program' => [
+                        'icons' => ['fas fa-child'],
+                        'link' => osu_url('bounty-form'),
+                    ],
+                ],
+            ],
+
+            // supporter perks
+
+            // There are 5 perk rendering types: image, image-flipped, hero, group and image-group.
+            // image, image-flipped, hero each show an individual perk (with image) while group and image-group show groups of perks (the latter with images)
+            'perks' => [
+                [
+                    'type' => 'image',
+                    'name' => 'osu_direct',
+                    'icons' => ['fas fa-search'],
+                ],
+                [
+                    'type' => 'image_group',
+                    'items' => [
+                        'friend_ranking' => [
+                            'icons' => ['fas fa-list-alt'],
+                        ],
+                        'country_ranking' => [
+                            'icons' => ['fas fa-globe-asia'],
+                        ],
+                        'mod_filtering' => [
+                            'icons' => ['fas fa-tasks'],
+                        ],
+                    ],
+                ],
+                [
+                    'type' => 'image',
+                    'variant' => 'flipped',
+                    'name' => 'beatmap_filters',
+                    'icons' => ['fas fa-filter'],
+                ],
+                [
+                    'type' => 'group',
+                    'items' => [
+                        'auto_downloads' => [
+                            'icons' => ['fas fa-download'],
+                        ],
+                        'more_beatmaps' => [
+                            'icons' => ['fas fa-file-upload'],
+                        ],
+                        'early_access' => [
+                            'icons' => ['fas fa-flask'],
+                        ],
+                    ],
+                ],
+                [
+                    'type' => 'hero',
+                    'name' => 'customisation',
+                    'icons' => ['fas fa-image'],
+                ],
+                [
+                    'type' => 'group',
+                    'items' => [
+                        'more_favourites' => [
+                            'icons' => ['fas fa-star'],
+                            'translation_options' => [
+                                'normally' => config('osu.beatmapset.favourite_limit'),
+                                'supporter' => config('osu.beatmapset.favourite_limit_supporter'),
+                            ],
+                        ],
+                        'more_friends' => [
+                            'icons' => ['fas fa-user-friends'],
+                            'translation_options' => [
+                                'normally' => config('osu.user.max_friends'),
+                                'supporter' => config('osu.user.max_friends_supporter'),
+                            ],
+                        ],
+                        'friend_filtering' => [
+                            'icons' => ['fas fa-medal'],
+                        ],
+                    ],
+                ],
+                [
+                    'type' => 'image_group',
+                    'items' => [
+                        'yellow_fellow' => [
+                            'icons' => ['fas fa-fire'],
+                        ],
+                        'speedy_downloads' => [
+                            'icons' => ['fas fa-tachometer-alt'],
+                        ],
+                        'change_username' => [
+                            'icons' => ['fas fa-magic'],
+                        ],
+                        'skinnables' => [
+                            'icons' => ['fas fa-paint-brush'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
         return view('home.support-the-game')
             ->with('supporterStatus', $supporterStatus ?? [])
-            ->with('data', [
-                // why support's blocks
-                'blocks' => [
-                    // localization's name => icon
-                    'dev' => 'fas fa-user',
-                    'time' => 'far fa-clock',
-                    'ads' => 'fas fa-thumbs-up',
-                    'goodies' => 'fas fa-star',
-                ],
-
-                // supporter's perks
-                'perks' => [
-                    // localization's name => icon
-                    'osu_direct' => 'fas fa-search',
-                    'auto_downloads' => 'fas fa-download',
-                    'upload_more' => 'fas fa-cloud-upload-alt',
-                    'early_access' => 'fas fa-flask',
-                    'customisation' => 'far fa-image',
-                    'beatmap_filters' => 'fas fa-filter',
-                    'yellow_fellow' => 'fas fa-fire',
-                    'speedy_downloads' => 'fas fa-tachometer-alt',
-                    'change_username' => 'fas fa-magic',
-                    'skinnables' => 'fas fa-paint-brush',
-                    'feature_votes' => 'fas fa-thumbs-up',
-                    'sort_options' => 'fas fa-trophy',
-                    'feel_special' => 'fas fa-heart',
-                    'more_to_come' => 'fas fa-gift',
-                ],
-            ]);
+            ->with('data', $pageLayout);
     }
 }

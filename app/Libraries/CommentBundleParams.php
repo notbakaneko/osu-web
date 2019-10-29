@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,9 +27,9 @@ class CommentBundleParams
     const DEFAULT_SORT = 'new';
 
     const SORTS = [
-        'new' => ['order' => 'DESC', 'columns' => ['created_at', 'id']],
-        'old' => ['order' => 'ASC', 'columns' => ['created_at', 'id']],
-        'top' => ['order' => 'DESC', 'columns' => ['votes_count_cache', 'created_at', 'id']],
+        'new' => ['created_at' => 'DESC', 'id' => 'DESC'],
+        'old' => ['created_at' => 'ASC', 'id' => 'ASC'],
+        'top' => ['votes_count_cache' => 'DESC', 'created_at' => 'DESC', 'id' => 'DESC'],
     ];
 
     public $parentId;
@@ -38,7 +38,7 @@ class CommentBundleParams
     public $page;
     public $sort;
 
-    public function __construct($params)
+    public function __construct($params, $user)
     {
         $this->parentId = null;
         $this->cursor = [
@@ -48,7 +48,7 @@ class CommentBundleParams
         ];
         $this->limit = static::DEFAULT_LIMIT;
         $this->page = static::DEFAULT_PAGE;
-        $this->sort = static::DEFAULT_SORT;
+        $this->sort = optional($user)->profileCustomization()->comments_sort ?? static::DEFAULT_SORT;
 
         $this->setAll($params);
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'Den begärda sidan är inte översatt till det valda språket (:language). Visar den Engelska versionen.',
-        'languages' => 'Språk',
+        'incomplete_or_outdated' => '',
         'missing' => 'Begärd sida kunde ej hittas.',
         'missing_title' => 'Hittades inte',
         'missing_translation' => 'Den begärda sidan kunde inte hittas för nuvarande valt språk.',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Engelsk version',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

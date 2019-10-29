@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,12 +26,19 @@ return [
     'voting' => [
         'over' => '这场评选的投票已经结束',
         'login_required' => '请登录后再投票.',
+
         'best_of' => [
             'none_played' => "没有符合此次评选条件的谱面！",
         ],
+
+        'button' => [
+            'add' => '投票',
+            'remove' => '取消投票',
+            'used_up' => '你已经用光了投票次数',
+        ],
     ],
     'entry' => [
-        '_' => '参加',
+        '_' => '列表',
         'login_required' => '请登录后再参加评选。',
         'silenced_or_restricted' => '账户受限时无法参加评选。',
         'preparation' => '我们正在准备这场评选，请耐心等待！',
@@ -50,7 +57,7 @@ return [
         'download' => '下载模板',
     ],
     'vote' => [
-        'list' => '投票',
+        'list' => '票数',
         'count' => ':count 票',
         'points' => ':count 分',
     ],

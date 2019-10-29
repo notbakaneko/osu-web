@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,22 @@
  */
 
 return [
+    'beatmapset_discussion_post' => [
+        'button' => '',
+        'title' => '',
+    ],
+
+    'comment' => [
+        'button' => 'Báo cáo',
+        'title' => 'Báo cáo bình luận của :username?',
+    ],
+
     'scores' => [
+        'button' => 'Báo Cáo Điểm',
+        'title' => 'Báo cáo điểm của :username?',
+    ],
+
+    'user' => [
         'button' => '',
         'title' => '',
     ],

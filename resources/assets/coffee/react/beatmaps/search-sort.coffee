@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, a, i, span} = ReactDOMFactories
+import core from 'osu-core-singleton'
+import * as React from 'react'
+import { div, a, i, span } from 'react-dom-factories'
 el = React.createElement
+controller = core.beatmapsetSearchController
 
-class Beatmaps.SearchSort extends React.PureComponent
+export class SearchSort extends React.PureComponent
   render: =>
     div className: 'sort sort--beatmapsets',
       div className: 'sort__items',
@@ -48,17 +51,18 @@ class Beatmaps.SearchSort extends React.PureComponent
       ranked: false
       rating: true
       plays: true
+      favourites: true
       relevance: false
       nominations: false
 
     if !_.isEmpty(@props.filters.query)
       fields.relevance = true
 
-    if @props.filters.status in [4, 5]
+    if @props.filters.status in ['graveyard', 'pending']
       fields.updated = true
       fields.nominations = true
       fields.plays = false
-    else if @props.filters.status == 6
+    else if @props.filters.status == 'mine'
       fields.updated = true
       fields.ranked = true
     else
@@ -78,7 +82,7 @@ class Beatmaps.SearchSort extends React.PureComponent
     else
       order = 'desc'
 
-    $(document).trigger 'beatmap:search:filtered', sort: "#{field}_#{order}"
+    controller.updateFilters sort: "#{field}_#{order}"
 
 
   selected: (field) =>

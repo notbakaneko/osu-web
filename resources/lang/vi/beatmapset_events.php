@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Được Chấp Nhận.',
         'discussion_delete' => 'Moderator đã xóa cuộc thảo luận :discussion.',
+        'discussion_lock' => 'Chức năng bàn luận của beatmap này đã bị vô hiệu hóa. (:text)',
         'discussion_post_delete' => 'Moderator đã xóa bài viết từ cuộc thảo luận :discussion.',
         'discussion_post_restore' => 'Moderator đã phục hồi bài viết từ cuộc thảo luận :discussion.',
         'discussion_restore' => 'Moderator đã phục hồi cuộc thảo luận :discussion.',
+        'discussion_unlock' => 'Chức năng bàn luận của beatmap này đã được kich hoạt.',
         'disqualify' => 'Disqualified bởi :user. Reason: :text.',
         'disqualify_legacy' => 'Disqualified bởi :user. Lí do: :text.',
         'issue_reopen' => 'Vấn đề đã giải quyết :discussion được mở lại.',

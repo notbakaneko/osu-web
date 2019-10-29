@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,12 +21,15 @@
 return [
     'buttons' => [
       'add' => '친구 추가',
+      'disabled' => '친구',
       'remove' => '친구 삭제',
     ],
 
-    'state' => [
-      'friends' => '친구',
-      'mutual' => '서로친구',
+    'index' => [
+        'title' => [
+            '_' => '메인 :info',
+            'info' => '친구',
+        ],
     ],
 
     'title' => '친구',

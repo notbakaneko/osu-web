@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, div, span} = ReactDOMFactories
+import { ClickToCopy } from 'click-to-copy'
+import * as React from 'react'
+import { a, div, span } from 'react-dom-factories'
 el = React.createElement
 
 
-class ProfilePage.Links extends React.PureComponent
+export class Links extends React.PureComponent
   bn = 'profile-links'
 
   rowValue = (value, attributes = {}, modifiers = []) ->
@@ -80,7 +82,9 @@ class ProfilePage.Links extends React.PureComponent
             className: 'js-tooltip-time'
             title: joinDateTitle
 
-    last_visit: (val) ->
+    last_visit: (val, user) ->
+      return html: osu.trans('users.show.lastvisit_online') if user.is_online
+
       html: osu.trans 'users.show.lastvisit',
         date: rowValue osu.timeago(val)
 
@@ -92,7 +96,7 @@ class ProfilePage.Links extends React.PureComponent
       html: osu.trans 'users.show.plays_with', devices: rowValue(playsWith)
 
     post_count: (val, user) ->
-      count = osu.transChoice 'users.show.post_count.count', val.toLocaleString()
+      count = osu.transChoice 'users.show.post_count.count', osu.formatNumber(val)
       url = laroute.route('users.posts', user: user.id)
 
       html:

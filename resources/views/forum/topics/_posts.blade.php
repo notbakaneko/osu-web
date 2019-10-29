@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -36,11 +36,14 @@
     @include('forum.topics._post', [
         'post' => $post,
         'options' => [
-            'deleteLink' => !$isBeatmapsetPost && $withDeleteLink,
-            'editLink' => !$isBeatmapsetPost && priv_check('ForumPostEdit', $post)->can(),
             'postPosition' => $postPosition,
-            'replyLink' => priv_check('ForumTopicReply', $topic)->can(),
             'signature' => $topic->forum->enable_sigs,
+
+            'buttons' => [
+                'delete' => !$isBeatmapsetPost && $withDeleteLink,
+                'edit' => !$isBeatmapsetPost && priv_check('ForumPostEdit', $post)->can(),
+                'quote' => priv_check('ForumTopicReply', $topic)->can(),
+            ],
         ],
     ])
     @php

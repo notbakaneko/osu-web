@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,6 +21,7 @@
 namespace App\Transformers;
 
 use App\Models\Beatmap;
+use App\Models\BeatmapDiscussion;
 use App\Models\Beatmapset;
 use App\Models\BeatmapsetEvent;
 use App\Models\BeatmapsetWatch;
@@ -32,7 +33,6 @@ use League\Fractal;
 class BeatmapsetTransformer extends Fractal\TransformerAbstract
 {
     protected $availableIncludes = [
-        'availability',
         'beatmaps',
         'converts',
         'current_user_attributes',
@@ -79,9 +79,14 @@ class BeatmapsetTransformer extends Fractal\TransformerAbstract
             'storyboard' => $beatmapset->storyboard,
             'ranked' => $beatmapset->approved,
             'status' => $beatmapset->status(),
-            'has_scores' => $beatmapset->hasScores(),
+            'is_scoreable' => $beatmapset->isScoreable(),
             'discussion_enabled' => $beatmapset->discussion_enabled,
+            'discussion_locked' => $beatmapset->discussion_locked,
             'can_be_hyped' => $beatmapset->canBeHyped(),
+            'availability' => [
+                'download_disabled' => $beatmapset->download_disabled,
+                'more_information' => $beatmapset->download_disabled_url,
+            ],
             'hype' => [
                 'current' => $beatmapset->hype,
                 'required' => $beatmapset->requiredHype(),
@@ -90,22 +95,8 @@ class BeatmapsetTransformer extends Fractal\TransformerAbstract
                 'current' => $beatmapset->nominations,
                 'required' => $beatmapset->requiredNominationCount(),
             ],
-            'legacy_thread_url' => $beatmapset->thread_id !== 0 ? osu_url('legacy-forum-thread-prefix').$beatmapset->thread_id : null,
+            'legacy_thread_url' => $beatmapset->thread_id !== 0 ? route('forum.topics.show', $beatmapset->thread_id) : null,
         ];
-    }
-
-    public function includeAvailability(Beatmapset $beatmapset)
-    {
-        if (!$beatmapset->download_disabled && !present($beatmapset->download_disabled_url)) {
-            return;
-        }
-
-        return $this->item($beatmapset, function ($beatmapset) {
-            return [
-                'download_disabled' => $beatmapset->download_disabled,
-                'more_information' => $beatmapset->download_disabled_url,
-            ];
-        });
     }
 
     public function includeCurrentUserAttributes(Beatmapset $beatmapset)
@@ -287,6 +278,10 @@ class BeatmapsetTransformer extends Fractal\TransformerAbstract
                 $userIds[] = $post->user_id;
                 $userIds[] = $post->last_editor_id;
                 $userIds[] = $post->deleted_by_id;
+            }
+
+            foreach ($discussion->beatmapDiscussionVotes->sortByDesc('created_at')->take(BeatmapDiscussion::VOTES_TO_SHOW) as $vote) {
+                $userIds[] = $vote->user_id;
             }
         }
 

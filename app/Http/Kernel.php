@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -40,11 +40,11 @@ class Kernel extends HttpKernel
         Middleware\VerifyCsrfToken::class,
         Middleware\SetLocale::class,
         Middleware\AutologinFromLegacyCookie::class,
+        Middleware\UpdateUserLastvisit::class,
         Middleware\VerifyPrivilegedUser::class,
         Middleware\CheckUserBanStatus::class,
-        Middleware\UpdateUserLastvisit::class,
         Middleware\TurbolinksSupport::class,
-        \ChaseConey\LaravelDatadogHelper\Middleware\LaravelDatadogMiddleware::class,
+        Middleware\DatadogMetrics::class,
     ];
 
     protected $middlewareGroups = [
@@ -62,11 +62,12 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth-custom-api' => Middleware\AuthApi::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'check-user-restricted' => Middleware\CheckUserRestricted::class,
         'guest' => Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'require-scopes' => Middleware\RequireScopes::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verify-user' => Middleware\VerifyUser::class,
     ];
 }

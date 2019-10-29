@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -26,9 +26,8 @@
                 class="
                     js-ujs-submit-disable
                     js-edit-post-cancel
-                    btn-osu
-                    btn-osu--post-editor
-                    btn-osu-default
+                    btn-osu-big
+                    btn-osu-big--forum-primary
                 "
                 type="button"
             >
@@ -38,9 +37,8 @@
 
         <button
             class="
-                btn-osu
-                btn-osu--post-editor
-                btn-osu-default
+                btn-osu-big
+                btn-osu-big--forum-primary
             "
             type="submit"
             data-disable-with="{{ trans('common.buttons.saving') }}"

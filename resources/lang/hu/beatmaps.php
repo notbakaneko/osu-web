@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'kudosu engedélyezése',
+        'beatmap_information' => '',
         'delete' => 'törlés',
         'deleted' => 'Eltávolítva :editor által, :delete_time-kor.',
         'deny_kudosu' => 'kudosu megtagadása',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Utoljára frissítve :editor által, :update_time-kor.',
         'kudosu_denied' => 'Kudosu szerzéstől megtagadva.',
         'message_placeholder_deleted_beatmap' => 'Ez a nehézség törölve lett, ezért a beszélgetés nem lehetséges.',
+        'message_placeholder_locked' => 'A beatmap megbeszélése meg lett tiltva.',
         'message_type_select' => 'Komment-típus választása',
         'reply_notice' => 'Nyomj entert a válaszoláshoz.',
         'reply_placeholder' => 'Ide írd a válaszod',
         'require-login' => 'Kérlek jelentkezz be posztoláshoz illetve válaszoláshoz',
         'resolved' => 'Megoldott',
         'restore' => 'visszaállítás',
+        'show_deleted' => 'Töröltek megjelenítése',
         'title' => 'Megbeszélések',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Egyetlen megbeszélés sincs még!',
             'hidden' => 'Egyetlen megbeszélés sem egyezik a kijelölt szűrővel.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Megbeszélés zárolása',
+                'unlock' => 'Megbeszélés megnyitása',
+            ],
+
+            'prompt' => [
+                'lock' => 'Zárolás oka',
+                'unlock' => 'Biztos ki akarod nyitni?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Rögzítés',
             'timestamp' => 'Időbélyeg',
             'timestamp_missing' => 'Időbélyeg hozzáadásához nyomj ctrl-c billentyűkombinációt szerkesztő módban, majd illeszd be az üzenetedbe!',
             'title' => 'Új beszélgetés indítása',
+            'unpin' => 'Rögzítés feloldása',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Rendezve:',
-            'created_at' => 'létrehozás ideje',
-            'timeline' => 'idővonal',
-            'updated_at' => 'utolsó frissítés',
+            'created_at' => 'Létrehozás ideje',
+            'timeline' => 'Idővonal',
+            'updated_at' => 'Utolsó frissítés',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Megjegyzés: Ez a beatmap még készítés alatt áll.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Biztos vagy ebben? Egy új probléma posztolása alaphelyzetbe állítja a nominálási folyamatot.',
-            'disqualify' => '',
+            'disqualify' => 'Biztos vagy benne? Ezzel kizárod a beatmap-et a kvalifikálásból és alaphelyzetbe áll a nominálás.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Lejátszott',
             ],
             'sorting' => [
-                'title' => 'cím',
-                'artist' => 'előadó',
-                'difficulty' => 'nehézség',
-                'updated' => 'frissítve',
-                'ranked' => 'rangsorolt',
-                'rating' => 'értékelés',
-                'plays' => 'játszottság',
-                'relevance' => 'relevancia',
-                'nominations' => 'nominálások',
+                'title' => 'Cím',
+                'artist' => 'Előadó',
+                'difficulty' => 'Nehézség',
+                'favourites' => 'Kedvencek',
+                'updated' => 'Frissítve',
+                'ranked' => 'Rangsorolt',
+                'rating' => 'Értékelés',
+                'plays' => 'Játszások',
+                'relevance' => 'Relevancia',
+                'nominations' => 'Nominációk',
             ],
             'supporter_filter_quote' => [
                 '_' => ':filters általi szűrés aktív :link-et igényel',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Bármelyik',
-        'ranked-approved' => 'Rangsorolt & Jóváhagyott',
         'approved' => 'Jóváhagyott',
-        'qualified' => 'Kvalifikált',
-        'loved' => 'Loved',
-        'faves' => 'Kedvencek',
-        'pending' => 'Függőben lévő & WIP',
+        'favourites' => 'Kedvencek',
         'graveyard' => 'Temető',
-        'my-maps' => 'Saját Map-jeim',
+        'leaderboard' => 'Van Ranglistája',
+        'loved' => 'Loved',
+        'mine' => 'Saját mapjaim',
+        'pending' => 'Függőben lévő & WIP',
+        'qualified' => 'Kvalifikált',
+        'ranked' => 'Rangsorolt',
     ],
     'genre' => [
         'any' => 'Bármelyik',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => 'Mirror',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Játékszám: :count',
+        'favourites' => 'Kedvencek: :count',
     ],
 ];

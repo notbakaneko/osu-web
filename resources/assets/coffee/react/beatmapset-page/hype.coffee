@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, p, span} = ReactDOMFactories
+import { BigButton } from 'big-button'
+import { route } from 'laroute'
+import * as React from 'react'
+import { a, div, p, span } from 'react-dom-factories'
+import { StringWithComponent } from 'string-with-component'
 el = React.createElement
 
 bn = 'beatmapset-hype'
 
-class BeatmapsetPage.Hype extends React.PureComponent
+export class Hype extends React.PureComponent
   render: =>
     div className: bn,
       div className: "#{bn}__box #{bn}__box--description",
@@ -31,10 +35,22 @@ class BeatmapsetPage.Hype extends React.PureComponent
         p className: "#{bn}__description-row #{bn}__description-row--current",
           osu.trans 'beatmapsets.show.hype.current._',
             status: osu.trans("beatmapsets.show.hype.current.status.#{@props.beatmapset.status}")
-        p
-          className: "#{bn}__description-row #{bn}__description-row--action"
-          dangerouslySetInnerHTML:
-            __html: osu.trans('beatmapsets.show.hype.action')
+        if @props.beatmapset.status == 'qualified'
+          p
+            className: "#{bn}__description-row #{bn}__description-row--action"
+            el StringWithComponent,
+              mappings:
+                ':link': a
+                  href: @reportUrl()
+                  key: 'link'
+                  osu.trans 'beatmapsets.show.hype.report.link'
+              pattern: osu.trans('beatmapsets.show.hype.report._')
+
+        else
+          p
+            className: "#{bn}__description-row #{bn}__description-row--action"
+            dangerouslySetInnerHTML:
+              __html: osu.trans('beatmapsets.show.hype.action')
 
       div className: "#{bn}__box #{bn}__box--float",
         div className: "#{bn}__lights-header",
@@ -59,7 +75,7 @@ class BeatmapsetPage.Hype extends React.PureComponent
             text: osu.trans('beatmaps.hype.button')
             icon: 'fas fa-bullhorn'
             props:
-              href: "#{laroute.route 'beatmapsets.discussion',
+              href: "#{route 'beatmapsets.discussion',
                 beatmapset: @props.beatmapset.id
                 beatmap: '-'
                 mode: 'generalAll'
@@ -69,3 +85,17 @@ class BeatmapsetPage.Hype extends React.PureComponent
                   !@props.beatmapset.current_user_attributes.can_hype
                 else
                   false
+
+        if @props.beatmapset.status == 'qualified'
+          div
+            className: "#{bn}__button"
+            title: osu.trans('beatmapsets.show.hype.report.button_title')
+            el BigButton,
+              modifiers: ['full']
+              text: osu.trans('beatmapsets.show.hype.report.button')
+              icon: 'fas fa-exclamation-triangle'
+              props:
+                href: @reportUrl()
+
+  reportUrl: =>
+    "#{route('beatmapsets.discussion', beatmapset: @props.beatmapset.id, beatmap: '-', mode: 'generalAll')}#new"

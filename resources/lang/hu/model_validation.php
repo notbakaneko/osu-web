@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'A megbeszélés zárolva van.',
         'first_post' => 'Nem lehet a kezdő posztot törölni.',
+
+        'attributes' => [
+            'message' => 'Az üzenet',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Érvénytelen nehézség lett megadva.',
         'invalid_beatmapset_id' => 'Érvénytelen beatmap lett megadva.',
         'locked' => 'A megbeszélés zárolva van.',
+
+        'attributes' => [
+            'message_type' => 'Üzenet típus',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'A hype-oláshoz bejelentkezve kell lenned.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Törölt hozzászólásokra nem lehet válaszolni.',
+
+        'attributes' => [
+            'message' => 'Az üzenet',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Érvénytelen :attribute lett megadva.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Beatmap metaadat törlése nem engedélyezett.',
             'beatmapset_post_no_edit' => 'Beatmap metaadat poszt szerkesztése nem engedélyezett.',
+            'only_quote' => 'A válaszod csak egy idézetet tartalmaz.',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Téma cím',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Duplikálás nem engedélyezett.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Nem lehet szerkeszteni a szavazást több mint :limit óra után',
+            'hiding_results_forever' => 'Egy végtelen szavazás eredményeit nem lehet elrejteni.',
             'invalid_max_options' => 'Felhasználónkénti opciók száma nem haladhatja meg az elérhető opciók mennyiségét.',
             'minimum_one_selection' => 'Minimum egy opció kell felhasználónként.',
             'minimum_two_options' => 'Legalább 2 választási lehetőség kell.',
             'too_many_options' => 'Elérted a maximum opciók számát.',
+
+            'attributes' => [
+                'title' => 'Szavazás címe',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Válassz egy opciót szavazásnál.',
             'too_many' => 'Az engedélyezettnél több opciót választottál.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Ez a felhasználónév bármelyik pillanatban elérhető lehet!',
         'username_invalid_characters' => 'A kért felhasználónév nem felhasználható karaktereket tartalmaz.',
         'username_in_use' => 'Foglalt felhasználónév!',
+        'username_locked' => 'A név már használatban van!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Vagy alsóvonalat használj, vagy space gomb lenyomásával üres teret, nem menő mind a kettő!',
         'username_no_spaces' => "A felhasználóneved nem kezdődhet és nem is végződhet üres hellyel!",
         'username_not_allowed' => 'Ez a felhasználónév nem engedett.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Jelszó megerősítés nem egyezik.',
         'too_long' => 'Elérted a maximum hosszúságot - maximum :limit karaktert használhatsz.',
 
+        'attributes' => [
+            'username' => 'Felhasználónév',
+            'user_email' => 'E-mail cím',
+            'password' => 'Jelszó',
+        ],
+
         'change_username' => [
+            'restricted' => 'Felfüggesztett állapotban nem változtathatsz felhasználónevet.',
             'supporter_required' => [
                 '_' => ':link szükséges a névváltoztatáshoz!',
                 'link_text' => 'támogatta osu!-t',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Nem jelentheted magadat!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Mennyiség',
+                'cost' => 'Ár',
+            ],
+        ],
     ],
 ];

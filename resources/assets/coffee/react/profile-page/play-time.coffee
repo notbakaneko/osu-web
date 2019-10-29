@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{span} = ReactDOMFactories
+import * as React from 'react'
+import { span } from 'react-dom-factories'
+import { ValueDisplay } from 'value-display'
 el = React.createElement
 
 
-ProfilePage.PlayTime = ({stats}) ->
+export PlayTime = ({stats}) ->
   playTime = moment.duration stats.play_time, 'seconds'
 
   daysLeftOver = Math.floor playTime.asDays()
@@ -38,7 +40,7 @@ ProfilePage.PlayTime = ({stats}) ->
   title = osu.transChoice("common.count.#{titleUnit}", titleValue)
 
   timeString = ''
-  timeString = "#{daysLeftOver.toLocaleString()}d " if daysLeftOver > 0
+  timeString = "#{osu.formatNumber(daysLeftOver)}d " if daysLeftOver > 0
   timeString += "#{hours}h #{minutes}m"
 
   el ValueDisplay,

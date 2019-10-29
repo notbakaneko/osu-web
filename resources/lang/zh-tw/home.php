@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => '<strong>:players</strong> 名線上玩家, <strong>:games</strong> 個遊戲房間',
         'peak' => '最高線上人數 :count 人',
         'players' => '<strong>:count</strong> 名已註冊玩家',
+        'title' => '歡迎',
 
         'slogan' => [
             'main' => '最棒的音樂遊戲',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => '進階搜尋',
         'button' => '搜尋',
         'empty_result' => '沒有結果！',
-        'missing_query' => '搜尋內容至少包含 :n 個字',
+        'keyword_required' => '至少需要一個搜尋關鍵字。',
         'placeholder' => '請輸入以搜尋',
         'title' => '搜尋',
 

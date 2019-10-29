@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,6 @@
 
 namespace App\Libraries;
 
-use App\Models\Beatmap;
 use App\Models\User;
 use App\Models\UsernameChangeHistory;
 use Carbon\Carbon;
@@ -109,16 +108,6 @@ class UsernameValidation
             if ($user->beatmapsets()->rankedOrApproved()->exists()) {
                 return $errors->add('username', '.username_locked');
             }
-
-            // ranks
-            foreach (Beatmap::MODES as $mode => $_modeInt) {
-                $stats = $user->statistics($mode);
-                if ($stats !== null
-                    && $stats->rank_score_index > 0
-                    && $stats->rank_score_index <= config('osu.user.username_lock_rank_limit')) {
-                    return $errors->add('username', '.username_locked');
-                }
-            }
         }
 
         return $errors;
@@ -126,8 +115,8 @@ class UsernameValidation
 
     public static function usersOfUsername(string $username) : Collection
     {
-        $userIds = UsernameChangeHistory::on('mysql-readonly')->where('username_last', $username)->pluck('user_id');
-        $users = User::on('mysql-readonly')->whereIn('user_id', $userIds)->get();
+        $userIds = UsernameChangeHistory::where('username_last', $username)->pluck('user_id');
+        $users = User::whereIn('user_id', $userIds)->get();
         $existing = User::findByUsernameForInactive($username);
         if ($existing !== null) {
             $users->push($existing);

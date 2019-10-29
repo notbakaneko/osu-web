@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'επίτρεψε kudosu',
+        'beatmap_information' => '',
         'delete' => 'διαγραφή',
         'deleted' => 'Διαγράφηκε από :editor :delete_time.',
         'deny_kudosu' => 'αρνήσου kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Τελευταία επεξεργασία από: :editor :update_time.',
         'kudosu_denied' => 'Αδύνατη η απόκτηση kudosu.',
         'message_placeholder_deleted_beatmap' => 'Η δυσκολία αυτή έχει διαγραφεί για αυτό δεν συζητιέται πλέον.',
+        'message_placeholder_locked' => 'Η συζήτηση για αυτό το beatmap έχει απενεργοποιηθεί.',
         'message_type_select' => 'Επιλέξτε Τύπο Σχολίου',
         'reply_notice' => 'Πατήστε enter για να απαντήσετε.',
         'reply_placeholder' => 'Πληκτρολογήστε την απάντησή σας εδώ',
         'require-login' => 'Παρακαλώ συνδεθείτε για να δημοσιεύσετε ή να απαντήσετε',
         'resolved' => 'Επιλύθηκε',
         'restore' => 'επαναφορά',
+        'show_deleted' => 'Εμφάνιση διαγραμμένου',
         'title' => 'Συζητήσεις',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Καμία συζήτηση ακόμα!',
             'hidden' => 'Καμία συζήτηση δεν ταιριάζει με το φίλτρο.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Κλείδωμα συζήτησης',
+                'unlock' => 'Ξεκλείδωμα συζήτησης',
+            ],
+
+            'prompt' => [
+                'lock' => 'Λόγος κλειδώματος',
+                'unlock' => 'Είστε σίγουρος ότι θέλετε να το ξεκλειδώσετε;',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Καρφίτσωμα',
             'timestamp' => 'Χρονική σήμανση',
             'timestamp_missing' => 'Ctrl + C στη λειτουργία τροποποίησης και επικολλήστε στο μήνυμα σας για να προσθέσετε μία χρονική σήμανση!',
             'title' => 'Νέα Συζήτηση',
+            'unpin' => 'Ξεκαρφίτσωμα',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Ταξινόμηση κατά:',
-            'created_at' => 'ημερομηνία δημιουργίας',
-            'timeline' => 'χρονολόγιο',
-            'updated_at' => 'τελευταία ενημέρωση',
+            'created_at' => 'Ημερομηνία δημιουργίας',
+            'timeline' => 'Χρονολόγιο',
+            'updated_at' => 'Τελευταία ενημέρωση',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Σημείωση: Αυτό το beatmap χαρακτηρίζεται ως έργο-σε-εξέλιξη από τον δημιουργό.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Δεν υπάρχουν ακόμα downvotes',
+                'up' => 'Δεν υπάρχουν ακόμα upvotes',
+            ],
+            'latest' => [
+                'down' => 'Πιο πρόσφατα downvotes',
+                'up' => 'Πιο πρόσφατα upvotes',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -144,9 +170,9 @@ return [
     ],
 
     'nominations' => [
-        'delete' => '',
-        'delete_own_confirm' => '',
-        'delete_other_confirm' => '',
+        'delete' => 'Διαγραφή',
+        'delete_own_confirm' => 'Είστε σίγουρος; Το beatmap θα διαγραφεί και θα ανακατευθυνθείτε πίσω στο προφίλ σας.',
+        'delete_other_confirm' => 'Είστε σίγουρος; Το beatmap θα διαγραφεί και θα ανακατευθυνθείτε πίσω στο προφίλ του χρήστη.',
         'disqualification_prompt' => 'Λόγος αποκλεισμού;',
         'disqualified_at' => 'Disqualified :time_ago (:reason).',
         'disqualified_no_reason' => 'δεν έχει καθοριστεί κάποιος λόγος',
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Είστε σίγουροι; Η δημοσίευση ενός νέου προβλήματος θα επανεκκινήσει την διαδικασία υποψηφιότητας.',
-            'disqualify' => '',
+            'disqualify' => 'Είστε σίγουρος; Αυτό θα αφαιρέσει το beatmap απο τα προκριματικά και θα επαναφέρει την διαδικασία πιστοποίησης.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Που έχετε παίξει',
             ],
             'sorting' => [
-                'title' => 'τίτλος',
-                'artist' => 'καλλιτέχνης',
-                'difficulty' => 'δυσκολία',
-                'updated' => 'ενημερωμένο',
-                'ranked' => 'ranked',
-                'rating' => 'βαθμολογία',
-                'plays' => 'προσπάθειες',
-                'relevance' => 'σχετικότητα',
-                'nominations' => 'nominations',
+                'title' => 'Τίτλος',
+                'artist' => 'Καλλιτέχνης',
+                'difficulty' => 'Δυσκολία',
+                'favourites' => 'Αγαπημένα',
+                'updated' => 'Ενημερώθηκε',
+                'ranked' => 'Ranked',
+                'rating' => 'Βαθμολογία',
+                'plays' => 'Προσπάθειες',
+                'relevance' => 'Συνάφεια',
+                'nominations' => 'Nominations',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Το φιλτράρισμα κατά :filters απαιτεί ένα ενεργό :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Οποιοδήποτε',
-        'ranked-approved' => 'Ranked & Approved',
         'approved' => 'Approved',
-        'qualified' => 'Qualified',
-        'loved' => 'Loved',
-        'faves' => 'Αγαπημένα',
-        'pending' => 'Pending & WIP',
+        'favourites' => 'Αγαπημένα',
         'graveyard' => 'Νεκροταφείο',
-        'my-maps' => 'Τα maps μου',
+        'leaderboard' => 'Έχει Πίνακα Βαθμολογίας',
+        'loved' => 'Loved',
+        'mine' => 'Τα Maps Μου',
+        'pending' => 'Pending & WIP',
+        'qualified' => 'Qualified',
+        'ranked' => 'Ranked',
     ],
     'genre' => [
         'any' => 'Οποιοδήποτε',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Φορές που παίχτηκε: :count',
+        'favourites' => 'Αγαπημένα: :count',
     ],
 ];

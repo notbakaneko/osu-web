@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -43,5 +43,10 @@ class ArtistAlbum extends Model
     public function tracks()
     {
         return $this->hasMany(ArtistTrack::class, 'album_id', 'id');
+    }
+
+    public function isNew()
+    {
+        return $this->created_at->isAfter(now()->subMonth(1));
     }
 }

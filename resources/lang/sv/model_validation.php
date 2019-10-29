@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Diskussion är låst.',
         'first_post' => 'Kan inte radera ursprungs inlägg.',
+
+        'attributes' => [
+            'message' => '',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Ogiltig svårighetgrad angiven.',
         'invalid_beatmapset_id' => 'Ogiltig beatmap angiven.',
         'locked' => 'Diskussion är låst.',
+
+        'attributes' => [
+            'message_type' => '',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'Måste vara inloggad för att hypa.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => '',
+
+        'attributes' => [
+            'message' => '',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => '',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Radera beatmap metadata inlägg är inte tillåtet.',
             'beatmapset_post_no_edit' => 'Redigera beatmap metadata inlägg är inte tillåtet.',
+            'only_quote' => '',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => '',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Duplicerade val är ej tillåtet.',
             'grace_period_expired' => '',
+            'hiding_results_forever' => '',
             'invalid_max_options' => 'Val per användare får inte överskrida antalet tillgängliga val.',
             'minimum_one_selection' => 'Minst ett val per användare krävs.',
             'minimum_two_options' => 'Behöver åtminstone två val.',
             'too_many_options' => 'Överskred max antal tillåtna val.',
+
+            'attributes' => [
+                'title' => '',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Välj ett alternativ att rösta på.',
             'too_many' => 'Valde mer val än tillåtet.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Detta användarnamn kommer att bli tillgängligt vilken minut som helst!',
         'username_invalid_characters' => 'Det begärda användarnamnet innehåller ogiltiga tecken.',
         'username_in_use' => 'Användarnamnet används redan!',
+        'username_locked' => '', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Använd antingen understreck eller blanksteg, inte båda!',
         'username_no_spaces' => "Användarnamn kan inte börja eller sluta med blanksteg!",
         'username_not_allowed' => 'Det valda användarnamnet är inte tillåtet.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Lösenordsbekräftelse matchar inte.',
         'too_long' => 'Överskred maxlängd - kan endast vara upp till :limit karaktärer.',
 
+        'attributes' => [
+            'username' => '',
+            'user_email' => '',
+            'password' => '',
+        ],
+
         'change_username' => [
+            'restricted' => '',
             'supporter_required' => [
                 '_' => 'Du måste ha :link för att byta ditt användarnamn!',
                 'link_text' => 'stödjer osu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
+        'reason_not_valid' => '',
         'self' => "",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => '',
+                'cost' => '',
+            ],
+        ],
     ],
 ];

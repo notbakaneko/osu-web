@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! fóruns',
 
     'covers' => [
+        'edit' => 'Editar capa',
+
         'create' => [
             '_' => 'Definir imagem de capa',
             'button' => 'Enviar imagem',
@@ -42,28 +44,26 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Última Publicação',
+
+        'index' => [
+            'title' => 'Índice do Fórum',
+        ],
+
         'topics' => [
             'empty' => 'Sem tópicos!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Marcar fórum como lido',
+        'forums' => 'Marcar fóruns como lido',
+        'busy' => 'Marcando como lido...',
     ],
 
     'post' => [
-        'confirm_destroy' => 'Excluir mesmo a publicação?',
-        'confirm_restore' => 'Restaurar mesmo a publicação?',
+        'confirm_destroy' => 'Deseja mesmo a excluir publicação?',
+        'confirm_restore' => 'Deseja mesmo restaurar a publicação?',
         'edited' => 'Última edição por :user :when, editado :count vezes no total.',
         'posted_at' => 'publicado :when',
 
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Excluir publicação',
             'restore' => 'Restaurar publicação',
             'edit' => 'Editar publicação',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nova resposta',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited publicação|:count_delimited publicações',
+            'topic_starter' => 'Autor do tópico',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'publicado por :user',
 
         'create' => [
+            'close' => 'Fechar',
             'preview' => 'Pré-visualizar',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Criação de Enquete',
 
+            'preview' => 'Pré-visualizar a publicação',
+
             'create_poll_button' => [
                 'add' => 'Criar enquete',
                 'remove' => 'Cancelar criação de enquete',
             ],
 
             'poll' => [
+                'hide_results' => 'Esconder os resultados da enquete.',
+                'hide_results_info' => 'Eles apenas serão exibidos após a conclusão da enquete.',
                 'length' => 'Manter enquete aberta por',
                 'length_days_suffix' => 'dias',
                 'length_info' => 'Deixe em branco para uma votação sem fim',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'visualizações',
+            'feature_votes' => 'prioridade de estrela',
             'replies' => 'respostas',
+            'views' => 'visualizações',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Tópico fixado e marcado como anúncio',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Publicações Excluídas',
             'total_posts' => 'Total de publicações',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Prioridade Atual: +:count',
                 'do' => 'Promover este pedido',
+
+                'info' => [
+                    '_' => 'Esse é um :feature_request. Pedidos de recursos podem ser votados por :supporters.',
+                    'feature_request' => 'pedido de recurso',
+                    'supporters' => 'supporters',
+                ],
 
                 'user' => [
                     'count' => '{0} sem votos|{1} :count voto|[2,*] :count votos',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Edição de enquete',
+                'edit_warning' => 'Editar uma enquete irá remover os resultados atuais!',
                 'vote' => 'Votar',
+
+                'button' => [
+                    'change_vote' => 'Alterar voto',
+                    'edit' => 'Editar enquete',
+                    'view_results' => 'Ir para resultados',
+                    'vote' => 'Votar',
+                ],
 
                 'detail' => [
                     'end_time' => 'A votação encerrará às :time',
                     'ended' => 'Votação encerrada :time',
+                    'results_hidden' => 'Os resultados serão exibidos após a conclusão da enquete.',
                     'total' => 'Total de votos: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Não marcada',
             'to_watching' => 'Marcar',
             'to_watching_mail' => 'Marcar com notificação',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Notificação está habilitada. Clique para desativar',
+            'tooltip_mail_enable' => 'Notificação está desativada. Clique para habilitar',
         ],
     ],
 ];

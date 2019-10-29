@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -17,6 +17,8 @@
 --}}
 @extends('forum.topics.replace_delete_button', ['countDifference' => 1])
 
-@section('moderatorAction')
-    $el.removeClass("js-forum-post--hidden");
+@section('action')
+    @if(priv_check('ForumModerate', $post->forum)->can())
+        $el.removeClass("js-forum-post--hidden");
+    @endif
 @endsection

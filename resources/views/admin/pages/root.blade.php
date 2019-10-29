@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,13 +15,13 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-@extends('master')
+@extends('admin/master')
 
 @section('content')
-    <div class="osu-layout__row osu-layout__row--page">
+    <div class="osu-layout__row osu-layout__row--page-admin">
         <h1>{{ trans('admin.pages.root.title') }}</h1>
 
-        <h2>{{ trans('admin.pages.root.sections.general') }}</h2>
+        <h2 class="title">{{ trans('admin.pages.root.sections.general') }}</h2>
         <ul>
             <li>
                 <a href="{{ route('admin.logs.index') }}">
@@ -33,7 +33,7 @@
             </li>
         </ul>
 
-        <h2>{{ trans('admin.pages.root.sections.store') }}</h2>
+        <h2 class="title">{{ trans('admin.pages.root.sections.store') }}</h2>
         <ul>
             <li>
                 <a href="{{ route('admin.store.orders.index') }}">
@@ -42,7 +42,7 @@
             </li>
         </ul>
 
-        <h2>{{ trans('admin.pages.root.sections.forum') }}</h2>
+        <h2 class="title">{{ trans('admin.pages.root.sections.forum') }}</h2>
         <ul>
             <li>
                 <a href="{{ route('admin.forum.forum-covers.index') }}">

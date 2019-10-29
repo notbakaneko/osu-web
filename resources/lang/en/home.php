@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,8 @@ return [
         'online' => '<strong>:players</strong> currently online in <strong>:games</strong> games',
         'peak' => 'Peak, :count online users',
         'players' => '<strong>:count</strong> registered players',
+        'title' => 'welcome',
+        'see_more_news' => 'see more news',
 
         'slogan' => [
             'main' => 'the bestest free-to-win rhythm game',
@@ -35,7 +37,7 @@ return [
         'advanced_link' => 'Advanced search',
         'button' => 'Search',
         'empty_result' => 'Nothing found!',
-        'missing_query' => 'Search keyword of minimum :n characters is required',
+        'keyword_required' => 'A search keyword is required',
         'placeholder' => 'type to search',
         'title' => 'Search',
 
@@ -119,7 +121,7 @@ return [
         ],
         'header' => [
             'welcome' => 'Hello, <strong>:username</strong>!',
-            'messages' => 'You have :count new message|You have :count new messages',
+            'messages' => 'You have :count_delimited new message|You have :count_delimited new messages',
             'stats' => [
                 'friends' => 'Online Friends',
                 'games' => 'Games',

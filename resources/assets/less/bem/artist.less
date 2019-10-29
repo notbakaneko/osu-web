@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,92 +19,38 @@
 .artist {
   @_top: artist;
   &__index {
-    background-color: @gray-blue-dark;
+    background-color: @osu-colour-b5;
     padding: 10px;
     font-weight: 300;
     .default-box-shadow();
-
     display: flex;
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  &__badge-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    pointer-events: none;
   }
 
   &__box {
     margin: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     &--hidden {
       opacity: 0.25;
     }
   }
 
-  &__album {
-    background-color: #161A1C;
-    padding: 20px;
-    align-items: center;
-    .default-box-shadow();
-    overflow: hidden;
-    @media @desktop {
-      margin-bottom: 10px;
-    }
-  }
-
-  &__album-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  &__album-header-overlay {
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    filter: blur(20px);
-    -webkit-filter: blur(20px);
-    opacity: 0.5;
-    transition: 1s ease-in-out;
-    top: 0;
-    // Hide this overlay in Internet Explorer
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      display: none;
-    }
-    &--sidebar {
-      opacity: 0;
-    }
-  }
-
-  &__album-cover {
-    width: 64px;
-    height: 64px;
-    .default-box-shadow();
-
-    &--sidebar {
-      width: 128px;
-      height: 128px;
-    }
-  }
-
-  &__sidebar-album-link {
-    display: block;
-    text-align: center;
-    margin: 20px;
-    color: white;
-    &:hover, &:active {
-      color: white;
-      text-decoration: none;
-    }
-
-    &:hover {
-      .@{_top}__album-header-overlay {
-        opacity: 0.2;
-      }
-    }
-  }
-
   &__admin-note {
-    background-color: @yellow-dark;
+    background-color: @osu-colour-h2;
     color: black;
     font-weight: bold;
     padding: 20px;
@@ -117,37 +63,25 @@
     }
   }
 
-  &__album-title {
-    padding: 10px;
-    font-size: 2em;
-    color: white;
-    .default-text-shadow();
-    &--sidebar {
-      padding: 0;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-  }
-
   &__name {
-    text-align: center;
-    color: #FFCD23;
+    white-space: nowrap;
+    color: @osu-colour-l1;
     font-size: 14px;
     margin-top: 5px;
     display: block;
     &:hover {
-      color: #FFCD23;
+      color: white;
     }
   }
 
   &__track-count {
-    color: #777777;
+    color: @osu-colour-f1;
     font-size: 12px;
     text-align: center;
   }
 
   &__description {
-    background-color: @gray-blue-dark;
+    background-color: @osu-colour-b4;
     color: white;
     font-size: 14px;
     font-weight: 300;
@@ -165,17 +99,12 @@
 
     &--index {
       padding: 30px;
-      background-color: @community-grayblue-page-background;
     }
   }
 
   &__portrait-wrapper {
-    width: 250px;
-    height: 250px;
-    &--index {
-      width: 200px;
-      height: 200px;
-    }
+    width: 200px;
+    height: 200px;
   }
 
   &__portrait {
@@ -202,6 +131,10 @@
         margin: 0;
       }
     }
+
+    &--new {
+      box-shadow: 25px -10px 50px .osu-hsla(@osu-colour-orange-1, 0.2)[@hsla];
+    }
   }
 
   &__label-overlay {
@@ -221,10 +154,15 @@
 
     @media @desktop {
       .default-box-shadow();
-      background: #2A3336;
+      background: @osu-colour-b5;
     }
 
     &--albums {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
       @media @mobile {
         display: none;
       }

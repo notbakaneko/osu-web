@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,17 +18,18 @@
 
 .bbcode-size-select {
   .default-box-shadow();
-  .default-border-radius();
   .center-content();
 
-  background-color: #fff;
-  color: @text-color;
+  background-color: @osu-colour-b2;
+  color: @osu-colour-c1;
   text-transform: none;
   text-shadow: none;
   font-size: @font-size--normal;
+  font-weight: normal;
   padding: 5px 10px;
   margin: 2px;
   height: @btn-circle-diameter;
+  border-radius: 10000px;
 
   &__label {
     margin-right: 10px;
@@ -42,5 +43,6 @@
     left: 0;
     opacity: 0;
     cursor: pointer;
+    color: initial;
   }
 }

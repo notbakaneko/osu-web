@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Has alcanzado tu límite de nominaciones diarias, por favor inténtalo de nuevo mañana.',
+            'full_bn_required' => 'Debes ser un nominador para realizar esta nominación.',
+            'full_bn_required_hybrid' => 'Debes ser un nominador para nominar conjuntos de beatmaps con más de un modo de juego.',
             'incorrect_state' => 'Error al realizar esa acción, intenta actualizando la página.',
             'owner' => "No puedes nominar tu propio beatmap.",
         ],
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => 'Solo puedes eliminar tus publicaciones.',
+            'resolved' => 'No puedes eliminar una publicación de una discusión resuelta.',
+            'system_generated' => 'La publicación generada automáticamente no puede ser eliminada.',
+        ],
+
         'edit' => [
-            'system_generated' => 'Una publicación generada automáticamente no se puede editar.',
             'not_owner' => 'Solo el creador puede editar la publicación.',
+            'resolved' => 'No puedes editar una publicación de una discusión resuelta.',
+            'system_generated' => 'Una publicación generada automáticamente no se puede editar.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Este beatmap está bloqueado para discusión.',
         ],
     ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Se requiere acceso al foro solicitado.',
                 'over' => 'La encuesta terminó y ya no se puede votar.',
+                'play_more' => 'Necesitas jugar más antes de votar en el foro.',
                 'voted' => 'Cambiar el voto no está permitido.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Portada especificada inválida.',
                 'not_owner' => 'Solo el dueño puede editar la portada.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Este foro no acepta portadas de temas.',
             ],
         ],
 

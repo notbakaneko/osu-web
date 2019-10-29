@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -27,14 +27,25 @@ class @PostPreview
 
   loadPreview: (target) =>
     $form = $(target).closest('form')
-    url = laroute.route('bbcode-preview')
     body = target.value
-    $preview = $form.find('.js-post-preview--body')
+    $preview = $form.find('.js-post-preview--preview')
+    preview = $preview[0]
     $previewBox = $form.find('.js-post-preview--box')
 
-    return if $preview.attr('data-raw') == body
+    if !preview?
+      return
 
-    $.post(url, text: body)
+    preview._xhr?.abort()
+
+    if body == ''
+      $previewBox.addClass 'hidden'
+      return
+
+    if $preview.attr('data-raw') == body
+      $previewBox.removeClass 'hidden'
+      return
+
+    preview._xhr = $.post(laroute.route('bbcode-preview'), text: body)
     .done (data) =>
       $preview.html data
       $preview.attr 'data-raw', body

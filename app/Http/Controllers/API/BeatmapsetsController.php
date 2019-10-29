@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,22 +21,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Beatmap;
-use App\Transformers\BeatmapsetTransformer;
-use Auth;
 use Request;
 
 class BeatmapsetsController extends Controller
 {
-    public function favourites()
-    {
-        $favourites = Auth::user()->favouriteBeatmapsets();
-
-        return json_collection(
-            $favourites->get(),
-            new BeatmapsetTransformer()
-        );
-    }
-
     public function lookup()
     {
         $beatmapId = Request::input('beatmap_id');

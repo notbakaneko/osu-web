@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, table, tr, a, tbody, h4, thead, th} = ReactDOMFactories
+import { UserEntry } from './user-entry'
+import { UserArtEntry } from './user-art-entry'
+import * as React from 'react'
+import { div, table, tr, a, tbody, h4, thead, th } from 'react-dom-factories'
 el = React.createElement
 
-class @Admin.Contest.UserEntryList extends React.Component
+export class UserEntryList extends React.Component
   constructor: (props) ->
     super props
 
@@ -76,22 +79,29 @@ class @Admin.Contest.UserEntryList extends React.Component
               "#{if @state.showDeleted then 'hide' else 'show'} deleted"
 
       if @props.contest.type == 'art'
-        table className: 'table table-striped table-bordered table-hover admin-contest__table',
-          tbody {}, entries.map (entry) ->
-            el @Admin.Contest.UserArtEntry,
-              key: entry.id
-              entry: entry
+        div className: 'osu-table osu-table--with-handle',
+          table className: 'osu-table__table',
+            thead {},
+              tr {},
+                th className: 'osu-table__header admin-contest__table-column--username'
+                th className: 'osu-table__header'
+                th className: 'osu-table__header admin-contest__table-column--button'
+            tbody {}, entries.map (entry) ->
+              el UserArtEntry,
+                key: entry.id
+                entry: entry
 
       else
-        table className: 'table table-striped table-bordered table-hover admin-contest__table',
-          thead {},
-            tr {},
-              th className: 'admin-contest__table-column--username', 'Username'
-              th {}, 'Filename'
-              th className: 'admin-contest__table-column--filesize', 'Filesize'
-              th className: 'admin-contest__table-column--button'
+        div className: 'osu-table osu-table--taller-rows osu-table--with-handle',
+          table className: 'osu-table__table',
+            thead {},
+              tr {},
+                th className: 'osu-table__header admin-contest__table-column--username', 'Username'
+                th className: 'osu-table__header', 'Filename'
+                th className: 'osu-table__header admin-contest__table-column--filesize', 'Filesize'
+                th className: 'osu-table__header admin-contest__table-column--button'
 
-          tbody {}, entries.map (entry) ->
-            el @Admin.Contest.UserEntry,
-              key: entry.id
-              entry: entry
+            tbody {}, entries.map (entry) ->
+              el UserEntry,
+                key: entry.id
+                entry: entry

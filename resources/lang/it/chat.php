@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,32 +19,32 @@
  */
 
 return [
-    'coming_soon' => '',
-    'limitation_notice' => '',
-    'talking_in' => '',
-    'talking_with' => '',
-    'title_compact' => '',
-    'title' => '',
+    'coming_soon' => 'prossimamente',
+    'limitation_notice' => 'NOTA: Solamente gli utenti che utilizzano <a href=":lazer_link">osu!lazer</a> o il nuovo sito web riceveranno messaggi privati tramite questo sistema.<br/>Se non sei sicuro, invia un messaggio dalla <a href=":oldpm_link">pagina dei messaggi privati del vecchio forum</a>.',
+    'talking_in' => 'parlando in :channel',
+    'talking_with' => 'parlando con :name',
+    'title_compact' => 'chat',
+    'title' => 'Chat',
     'cannot_send' => [
-        'channel' => '',
-        'user' => '',
+        'channel' => 'Al momento non puoi inviare messaggi in questo canale. Ciò può essere dovuto a uno dei seguenti motivi:',
+        'user' => 'Al momento non puoi inviare messaggi a questo utente. Ciò può essere dovuto ad uno dei seguenti motivi:',
         'reasons' => [
-            'blocked' => '',
-            'channel_moderated' => '',
-            'friends_only' => '',
-            'restricted' => '',
-            'target_restricted' => '',
+            'blocked' => 'Sei stato bloccato dal destinatario',
+            'channel_moderated' => 'Questo canale è stato moderato',
+            'friends_only' => 'Il destinatario accetta messaggi solamente da utenti nella sua lista amici',
+            'restricted' => 'Sei attualmente limitato',
+            'target_restricted' => 'Il destinatario è attualmente limitato',
         ],
     ],
     'input' => [
-        'disabled' => '',
-        'placeholder' => '',
-        'send' => '',
+        'disabled' => 'impossibile inviare il messaggio...',
+        'placeholder' => 'scrivi un messaggio...',
+        'send' => 'Invia',
     ],
     'no-conversations' => [
-        'howto' => "",
-        'lazer' => '',
-        'pm_limitations' => '',
-        'title' => '',
+        'howto' => "Inizia le conversazioni dal profilo di un utente o dal popup della sua carta utente.",
+        'lazer' => 'I canali pubblici in cui entri attraverso <a href=":link">osu!lazer</a> saranno visibili anche qui.',
+        'pm_limitations' => 'Solamente gli utenti che usano <a href=":link">osu!lazer</a> o il nuovo sito web riceveranno i messaggi privati.',
+        'title' => 'nessuna conversazione al momento',
     ],
 ];

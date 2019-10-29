@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,18 +16,26 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, button, div, p, span} = ReactDOMFactories
+import { BigButton } from 'big-button'
+import * as React from 'react'
+import { a, button, div, p, span } from 'react-dom-factories'
 el = React.createElement
 
 bn = 'beatmap-discussion-nomination'
 
-class BeatmapDiscussions.Nominations extends React.PureComponent
+export class Nominations extends React.PureComponent
+  constructor: (props) ->
+    super props
+
+    @xhr = {}
+
+
   componentDidMount: =>
     osu.pageChange()
 
 
   componentWillUnmount: =>
-    @xhr?.abort()
+    xhr?.abort() for _name, xhr of @xhr
     Timeout.clear @hypeFocusTimeout if @hypeFocusTimeout
 
 
@@ -91,7 +99,7 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
                       osu.trans 'beatmaps.discussions.status-messages.graveyard',
                         date: moment(@props.beatmapset.last_updated).format(dateFormat)
 
-          if currentUser.id?
+          if currentUser.id? && !@props.beatmapset.discussion_locked
             div className: "#{bn}__row-right",
               el BigButton,
                 modifiers: ['full', 'wrap-text']
@@ -193,6 +201,8 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
               props:
                 onClick: @delete
 
+      @renderLockArea()
+
       if showHype
         div
           className: "#{bn}__footer #{if mapCanBeNominated then "#{bn}__footer--extended" else ''}",
@@ -231,6 +241,41 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
                           'data-user-id': user.id
 
 
+  renderLockArea: =>
+    canModeratePost = BeatmapDiscussionHelper.canModeratePosts(currentUser)
+
+    return null if !@props.beatmapset.discussion_locked && !canModeratePost
+
+    if @props.beatmapset.discussion_locked
+      lockEvent = _.findLast @props.events, type: 'discussion_lock'
+
+    div className: "#{bn}__row #{bn}__row--status-message",
+      div className: "#{bn}__row-left",
+        if lockEvent?
+          div className: "#{bn}__header",
+            span
+              className: "#{bn}__status-message"
+              dangerouslySetInnerHTML: __html: osu.trans 'beatmapset_events.event.discussion_lock',
+                text: BeatmapDiscussionHelper.format(lockEvent.comment.reason, newlines: false)
+
+      if canModeratePost
+        if @props.beatmapset.discussion_locked
+          action = 'unlock'
+          icon = 'fas fa-unlock'
+          onClick = @discussionUnlock
+        else
+          action = 'lock'
+          icon = 'fas fa-lock'
+          onClick = @discussionLock
+
+        div className: "#{bn}__row-right",
+          el BigButton,
+            modifiers: ['full', 'wrap-text']
+            text: osu.trans "beatmaps.discussions.lock.button.#{action}"
+            icon: icon
+            props: { onClick }
+
+
   renderLights: (lightsOn, lightsTotal) ->
     lightsOff = lightsTotal - lightsOn
 
@@ -256,29 +301,66 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
 
     LoadingOverlay.show()
 
-    @xhr?.abort()
+    @xhr.delete?.abort()
 
     user = @props.beatmapset.user_id
     url = laroute.route('beatmapsets.destroy', beatmapset: @props.beatmapset.id)
     params = method: 'DELETE'
 
-    @xhr = $.ajax(url, params)
+    @xhr.delete = $.ajax(url, params)
       .done ->
         Turbolinks.visit laroute.route('users.show', { user })
       .fail osu.ajaxError
       .always LoadingOverlay.hide
+
+
+  discussionLock: =>
+    reason = osu.presence(prompt(osu.trans('beatmaps.discussions.lock.prompt.lock')))
+
+    return unless reason?
+
+    @xhr.discussionLock?.abort()
+
+    url = laroute.route('beatmapsets.discussion-lock', beatmapset: @props.beatmapset.id)
+    params =
+      method: 'POST'
+      data: { reason }
+
+    @xhr.discussionLock = $.ajax(url, params)
+      .done (response) =>
+        $.publish 'beatmapsetDiscussions:update', beatmapset: response
+      .fail osu.ajaxError
+      .always LoadingOverlay.hide
+
+
+  discussionUnlock: =>
+    return unless confirm(osu.trans('beatmaps.discussions.lock.prompt.unlock'))
+
+    LoadingOverlay.show()
+
+    @xhr.discussionLock?.abort()
+
+    url = laroute.route('beatmapsets.discussion-unlock', beatmapset: @props.beatmapset.id)
+    params = method: 'POST'
+
+    @xhr.discussionLock = $.ajax(url, params)
+      .done (response) =>
+        $.publish 'beatmapsetDiscussions:update', beatmapset: response
+      .fail osu.ajaxError
+      .always LoadingOverlay.hide
+
 
   love: =>
     return unless confirm(osu.trans('beatmaps.nominations.love_confirm'))
 
     LoadingOverlay.show()
 
-    @xhr?.abort()
+    @xhr.love?.abort()
 
     url = laroute.route('beatmapsets.love', beatmapset: @props.beatmapset.id)
     params = method: 'PUT'
 
-    @xhr = $.ajax(url, params)
+    @xhr.love = $.ajax(url, params)
       .done (response) =>
         $.publish 'beatmapsetDiscussions:update', beatmapset: response
       .fail osu.ajaxError
@@ -290,12 +372,12 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
 
     LoadingOverlay.show()
 
-    @xhr?.abort()
+    @xhr.nominate?.abort()
 
     url = laroute.route('beatmapsets.nominate', beatmapset: @props.beatmapset.id)
     params = method: 'PUT'
 
-    @xhr = $.ajax(url, params)
+    @xhr.nominate = $.ajax(url, params)
       .done (response) =>
         $.publish 'beatmapsetDiscussions:update', beatmapset: response
       .fail osu.ajaxError
@@ -379,11 +461,11 @@ class BeatmapDiscussions.Nominations extends React.PureComponent
 
 
   userCanNominate: =>
-    !@userIsOwner() && (@props.currentUser.is_admin || @props.currentUser.is_bng || @props.currentUser.is_qat)
+    !@userIsOwner() && (@props.currentUser.is_admin || @props.currentUser.is_bng || @props.currentUser.is_nat)
 
 
   userCanDisqualify: =>
-    !@userIsOwner() && (@props.currentUser.is_admin || @props.currentUser.is_qat)
+    !@userIsOwner() && (@props.currentUser.is_admin || @props.currentUser.can_moderate || @props.currentUser.is_full_bn)
 
 
   userIsOwner: =>

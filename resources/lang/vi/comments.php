@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,11 +19,12 @@
  */
 
 return [
-    'deleted' => 'đã chỉnh sửa',
+    'deleted' => 'đã xóa',
+    'deleted_count' => ':count_delimited bình luận đã bị xóa',
     'edited' => 'đã chỉnh sửa :timeago bởi :user',
     'empty' => 'Chưa có bình luận nào.',
+    'load_replies' => 'hiển thị những trả lời',
     'replies' => 'Câu trả lời',
-    'show_replies' => 'hiển thị câu trả lời',
     'title' => 'Bình luận',
 
     'commentable_name' => [
@@ -65,12 +66,5 @@ return [
             '_' => 'Bình luận :info',
             'info' => 'Chi tiết',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

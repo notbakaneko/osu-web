@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - rytm jest tylko o *klik* stąd! Z Ouendanem/EBA, Taiko i oryginalnymi trybami gry, a także w pełni funkcjonalnym edytorem!',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Społeczność »',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Zamknij (Esc)',
+        'fullscreen' => 'Przełącz tryb pełnoekranowy',
+        'zoom' => 'Przybliż/oddal',
+        'previous' => 'Wstecz (strzałka w lewo)',
+        'next' => 'Dalej (strzałka w prawo)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'strona główna',
             'account-edit' => 'ustawienia',
+            'account-verifyLink' => 'Weryfikacja zakończona',
             'friends-index' => 'znajomi',
             'changelog-index' => 'zmiany',
             'changelog-build' => 'kompilacja',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'grupy',
             'index' => 'przegląd',
             'legal-show' => 'informacje',
-            'messages-index' => '',
-            'news-index' => 'wiadomości',
-            'news-show' => 'wiadomości',
+            'messages-index' => 'wiadomości',
+            'news-index' => 'aktualności',
+            'news-show' => 'aktualności',
             'password-reset-index' => 'zresetuj hasło',
             'search' => 'wyszukiwarka',
             'supportTheGame' => 'wspomóż grę',
             'team' => 'zespół',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'pomoc',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'społeczność',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'czat',
+            'chat-index' => 'czat',
             'dev' => 'rozwój',
             'getForum' => 'forum',
             'getLive' => 'na żywo',
@@ -118,16 +140,18 @@ return [
             'reset' => 'odzyskaj dostęp',
             'new' => 'nowy',
 
-            'messages' => 'Wiadomości',
-            'settings' => 'Ustawienia',
-            'logout' => 'Wyloguj się',
             'help' => 'Pomoc',
+            'logout' => 'Wyloguj się',
+            'messages' => 'Wiadomości',
             'modding-history-discussions' => 'dyskusje',
             'modding-history-events' => 'historia zdarzeń',
             'modding-history-index' => 'historia użytkownika',
             'modding-history-posts' => 'historia postów',
             'modding-history-votesGiven' => 'głosy oddane',
             'modding-history-votesReceived' => 'głosy otrzymane',
+            'oauth_login' => 'zaloguj się, aby użyć oauth',
+            'oauth_request' => 'autoryzacja oauth',
+            'settings' => 'Ustawienia',
         ],
         'store' => [
             '_' => 'sklep',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Potrzebujesz konta. Dlaczego by takiego nie stworzyć?",
+            'download' => '',
+            'info' => 'Potrzebujesz konta. Dlaczego by takiego nie stworzyć?',
             'title' => "Nie posiadasz konta?",
         ],
     ],

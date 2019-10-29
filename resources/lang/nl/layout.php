@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ritme is slechts een *klik* verwijderd!  Met Ouendan/EBA, Taiko en originele spelmodi, en zelfs een volledig functionele level editor.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Community',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Sluiten (esc)',
+        'fullscreen' => 'Schakelen naar volledig scherm',
+        'zoom' => 'Zoom in/uit',
+        'previous' => 'Vorige (pijl links)',
+        'next' => 'Volgende (pijl rechts)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'start',
             'account-edit' => 'instellingen',
+            'account-verifyLink' => 'Verificatie voltooid',
             'friends-index' => 'vrienden',
             'changelog-index' => 'changelog',
             'changelog-build' => 'versie',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'groepen',
             'index' => 'dashboard',
             'legal-show' => 'informatie',
-            'messages-index' => '',
+            'messages-index' => 'berichten',
             'news-index' => 'nieuws',
             'news-show' => 'nieuws',
             'password-reset-index' => 'wachtwoord resetten',
             'search' => 'zoeken',
             'supportTheGame' => 'ondersteun het spel',
             'team' => 'team',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'hulp',
@@ -71,15 +93,15 @@ return [
             '_' => 'rankings',
             'index' => 'prestaties',
             'performance' => 'prestatie',
-            'charts' => 'grafieken',
+            'charts' => 'in de schijnwerpers',
             'score' => 'score',
             'country' => 'land',
             'kudosu' => 'kudosu',
         ],
         'community' => [
             '_' => 'community',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'ontwikkeling',
             'getForum' => 'forum',
             'getLive' => 'live',
@@ -118,16 +140,18 @@ return [
             'reset' => 'herstellen',
             'new' => 'nieuw',
 
-            'messages' => 'Berichten',
-            'settings' => 'Instellingen',
-            'logout' => 'Uitloggen',
             'help' => 'Help',
+            'logout' => 'Uitloggen',
+            'messages' => 'Berichten',
             'modding-history-discussions' => 'gebruiker mod discussie',
             'modding-history-events' => 'gebruiker mod evenementen',
             'modding-history-index' => 'gebruiker mod geschiedenis',
             'modding-history-posts' => 'gebruiker mod post',
             'modding-history-votesGiven' => 'gebruiker mod stemmen gegeven',
             'modding-history-votesReceived' => 'gebruiker mod stemmen ontvangen',
+            'oauth_login' => 'log in voor oauth',
+            'oauth_request' => 'oauth-authenticatie',
+            'settings' => 'Instellingen',
         ],
         'store' => [
             '_' => 'winkel',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Je hebt een account nodig, meneer. Waarom heeft u er niet al eentje?",
+            'download' => '',
+            'info' => 'Je hebt een account nodig, meneer. Waarom heeft u er niet al eentje?',
             'title' => "Heb je geen account?",
         ],
     ],

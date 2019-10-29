@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -30,22 +30,55 @@ class NewsController extends Controller
 
     public function index()
     {
-        return view('news.index', [
-            'posts' => NewsPost::default()->paginate(),
-        ]);
+        $isAtom = request('format') === 'atom';
+        $limit = $isAtom ? 20 : 12;
+
+        $search = NewsPost::search(array_merge(['limit' => $limit], request()->all()));
+
+        $posts = $search['query']->get();
+
+        if ($isAtom) {
+            return response()
+                ->view('news.index-atom', compact('posts'))
+                ->header('Content-Type', 'application/atom+xml');
+        }
+
+        $postsJson = [
+            'news_posts' => json_collection($posts, 'NewsPost', ['preview']),
+            'search' => $search['params'],
+        ];
+
+        if (is_json_request()) {
+            return $postsJson;
+        } else {
+            $atom = [
+                'url' => route('news.index', ['format' => 'atom']),
+                'title' => 'osu!news Feed',
+            ];
+
+            return view('news.index', compact('postsJson', 'atom'));
+        }
     }
 
     public function show($slug)
     {
+        if (request('key') === 'id') {
+            $post = NewsPost::findOrFail($slug);
+
+            return ujs_redirect(route('news.show', $post->slug));
+        }
+
         $post = NewsPost::lookupAndSync($slug);
 
-        if ($post === null || $post->published_at === null) {
+        if ($post === null) {
             abort(404);
         }
 
-        $commentBundle = CommentBundle::forEmbed($post);
-
-        return view('news.show', compact('post', 'commentBundle'));
+        return view('news.show', [
+            'commentBundle' => CommentBundle::forEmbed($post),
+            'post' => $post,
+            'postJson' => json_item($post, 'NewsPost', ['content', 'navigation']),
+        ]);
     }
 
     public function store()

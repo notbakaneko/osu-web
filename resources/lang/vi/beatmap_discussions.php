@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,7 +22,7 @@ return [
     'authorizations' => [
         'update' => [
             'null_user' => 'Cần phải đăng nhập để chỉnh sửa.',
-            'system_generated' => 'Không thể chỉnh sửa bài đăng được tạo tự động.',
+            'system_generated' => 'Không thể chỉnh sửa bài đăng được tạo bởi hệ thống.',
             'wrong_user' => 'Chỉ chủ bài đăng mới được chỉnh sửa.',
         ],
     ],
@@ -72,13 +72,6 @@ return [
             'true' => 'Đã đánh dấu là được giải quyết bởi :user',
             'false' => 'Đã mở lại bởi :user',
         ],
-    ],
-
-    'user' => [
-        'admin' => 'admin',
-        'bng' => 'người đề cử',
-        'owner' => 'mapper',
-        'qat' => 'qat',
     ],
 
     'user_filter' => [

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Góc Thảo Luận',
 
         'details' => [
+            'approved' => 'được chấp nhận vào ',
+            'favourite' => 'Yêu thích beatmapset này',
+            'logged-out' => 'Bạn cần phải đăng nhập trước khi tải xuống beatmap!',
+            'loved' => 'loved vào ',
             'mapped_by' => 'được tạo bởi :mapper',
+            'qualified' => 'qualified vào ',
+            'ranked' => 'được xếp hạng vào ',
             'submitted' => 'tải lên vào ',
+            'unfavourite' => 'Bỏ yêu thích beatmapset này',
             'updated' => 'cập nhật lần cuối lúc ',
             'updated_timeago' => 'cập nhật lần cuối vào :timeago',
-            'ranked' => 'được xếp hạng vào ',
-            'approved' => 'được chấp nhận vào ',
-            'qualified' => 'qualified vào ',
-            'loved' => 'loved vào ',
-            'logged-out' => 'Bạn cần phải đăng nhập trước khi tải xuống beatmap!',
+
             'download' => [
                 '_' => 'Tải Xuống',
-                'video' => 'cùng Video',
-                'no-video' => 'không Video',
                 'direct' => 'osu!direct',
+                'no-video' => 'không Video',
+                'video' => 'cùng Video',
             ],
-            'favourite' => 'Yêu thích beatmapset này',
-            'unfavourite' => 'Bỏ yêu thích beatmapset này',
-            'favourited_count' => '+ :count nữa!',
+
+            'login_required' => [
+                'bottom' => 'để truy cập vào nhiều tính năng hơn',
+                'top' => 'Đăng Nhập',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Bạn có quá nhiều beatmap yêu thích! Hãy hũy yêu thích vài beatmap và thử lại sau.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Hype nếu bạn thích map này để giúp nó tiến tới trạng thái <strong>Được xếp hạng</strong>.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Map này đang ở trạng thái :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'chờ',
+                    'qualified' => 'qualified',
+                    'wip' => 'đang thực hiện',
                 ],
             ],
         ],

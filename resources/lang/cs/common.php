@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', a ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Zpátky nahoru',
+        'admin' => 'Admin',
         'back_to_previous' => 'Zpátky na předchozí pozici',
+        'back_to_top' => 'Zpátky nahoru',
         'cancel' => 'Zrušit',
         'change' => 'změnit',
         'click_to_copy' => 'klikněte pro zkopírování do schránky',
         'click_to_copy_copied' => 'zkopírováno do schránky!',
+        'close' => '',
+        'collapse' => 'zabalit',
         'delete' => 'Smazat',
         'edit' => 'Upravit',
+        'expand' => 'rozbalit',
         'hide' => 'skrýt',
         'permalink' => 'trvalý odkaz',
         'permalink_copied' => 'odkaz zkopírován',
@@ -52,8 +60,16 @@ return [
         'search' => 'Hledat',
         'see_more' => 'zobrazit více',
         'show' => 'zobrazit',
+        'show_deleted' => 'Zobrazit smazané',
         'show_more' => 'zobrazit více',
+        'show_more_options' => 'zobrazit více možností',
+        'update' => '',
         'upload_image' => 'nahrát obrázek',
+
+        'watch' => [
+            'to_0' => 'Přestat sledovat',
+            'to_1' => 'Sledovat',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count hodina|:count hodin',
         'item' => ':count jednotka|:count jednotek',
         'minute_short_unit' => 'min',
-        'minutes' => '',
+        'minutes' => ':count minuta|:count minuty|:count minut',
         'months' => ':count měsíc|:count měsíců',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 'sek',
+        'star_priority' => '',
+        'update' => ':count_delimited aktualizace|:count_delimited aktualizace',
+        'view' => '',
         'years' => ':count rok|:count let',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'přetáhněte sem soubor pro nahrání',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

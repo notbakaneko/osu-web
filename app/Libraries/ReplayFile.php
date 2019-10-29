@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ use Storage;
 
 class ReplayFile
 {
+    const DEFAULT_VERSION = 20151228;
+
     private $diskName;
     private $filename;
     private $score;
@@ -57,13 +59,22 @@ class ReplayFile
         return pack('q', $this->score->score_id);
     }
 
+    public function getDiskName()
+    {
+        return $this->diskName;
+    }
+
+    public function getVersion()
+    {
+        return optional($this->score->replayViewCount)->version ?? static::DEFAULT_VERSION;
+    }
+
     /**
      * Generates the header chunk for replay files.
      *
-     * @param string $version client version.
      * @return string Binary string of the chunk.
      */
-    public function headerChunk(string $version = '20151228') : string
+    public function headerChunk() : string
     {
         $score = $this->score;
         $beatmap = $score->beatmap;
@@ -76,7 +87,7 @@ class ReplayFile
         // easier debugging with array and implode instead of plain string concatenation.
         $components = [
             pack('c', $mode),
-            pack('i', $version),
+            pack('i', $this->getVersion()),
             pack_str($beatmap->checksum),
             pack_str($user->username),
             pack_str($md5),

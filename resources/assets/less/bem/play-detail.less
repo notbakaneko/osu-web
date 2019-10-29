@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,13 +24,12 @@
   @_padding-horizontal: 20px;
   @_menu-button-width: (@_padding-horizontal * 2);
   @_border-radius: 10px;
-  @_bg-main: @community-user-graygreen-dark;
-  @_bg-main-hover: @community-user-graygreen;
-  @_bg-extra: @community-user-graygreen-darker;
-  @_bg-extra-hover: @community-user-graygreen-dark;
+  @_bg-main: @osu-colour-b3;
+  @_bg-main-hover: @osu-colour-b2;
+  @_bg-extra-hover: @osu-colour-b3;
 
   border-radius: @_border-radius;
-  background-color: @community-user-graygreen-darker;
+  background-color: @osu-colour-b4;
   line-height: normal;
   color: #fff;
   font-size: @font-size--normal;
@@ -207,7 +206,7 @@
     flex: none;
     font-size: @font-size--title-small-3;
     font-weight: 700;
-    color: @community-user-green-light;
+    color: @osu-colour-h1;
 
     @media @desktop {
       .center-content();
@@ -239,7 +238,7 @@
 
   &__pp-unit {
     font-size: @font-size--normal;
-    color: @community-user-green-dark;
+    color: @osu-colour-l3;
   }
 
   &__score-detail {
@@ -271,7 +270,7 @@
   }
 
   &__time {
-    color: #999;
+    color: @osu-colour-f1;
     margin-left: 15px;
   }
 

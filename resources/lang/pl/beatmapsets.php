@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Dyskusja',
 
         'details' => [
+            'approved' => 'zatwierdzona od ',
+            'favourite' => 'Dodaj do ulubionych',
+            'logged-out' => 'Zaloguj się, aby zacząć pobierać beatmapy!',
+            'loved' => 'ulubiona społeczności od ',
             'mapped_by' => 'autorstwa :mapper',
+            'qualified' => 'zakwalifikowana od ',
+            'ranked' => 'rankingowa od ',
             'submitted' => 'dodana ',
+            'unfavourite' => 'Usuń z ulubionych',
             'updated' => 'ostatnio aktualizowana ',
             'updated_timeago' => 'ostatnio zaktualizowana :timeago',
-            'ranked' => 'rankingowa od ',
-            'approved' => 'zatwierdzona od ',
-            'qualified' => 'zakwalifikowana od ',
-            'loved' => 'ulubiona społeczności od ',
-            'logged-out' => 'Zaloguj się, aby zacząć pobierać beatmapy!',
+
             'download' => [
                 '_' => 'Pobierz',
-                'video' => 'z wideo',
-                'no-video' => 'bez wideo',
                 'direct' => 'osu!direct',
+                'no-video' => 'bez wideo',
+                'video' => 'z wideo',
             ],
-            'favourite' => 'Dodaj do ulubionych',
-            'unfavourite' => 'Usuń z ulubionych',
-            'favourited_count' => '+ 1 inna!|+ :count inne!|+ :count innych!',
+
+            'login_required' => [
+                'bottom' => 'aby uzyskać dostęp do pozostałych funkcji',
+                'top' => 'Zaloguj się',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Masz za dużo ulubionych beatmap! Usuń kilka, jeżeli chcesz kontynuować.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Nagłośnij tę beatmapę, aby pomóc jej w uzyskaniu statusu <strong>rankingowego</strong>.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Ta beatmapa jest obecnie :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'oczekująca',
+                    'qualified' => 'zakwalifikowana',
+                    'wip' => 'rozwijana',
                 ],
             ],
         ],
@@ -90,7 +99,7 @@ return [
             'title' => 'Tabela wyników',
 
             'headers' => [
-                'accuracy' => 'Precyzja',
+                'accuracy' => 'Celność',
                 'combo' => 'Combo',
                 'miss' => 'Pudła',
                 'mods' => 'Modyfikatory',
@@ -121,7 +130,7 @@ return [
             'accuracy' => 'Precyzja',
             'ar' => 'Prędkość otoczki',
             'stars' => 'Trudność',
-            'total_length' => 'Długość',
+            'total_length' => 'Długość (długość aktywnej gry: :hit_length)',
             'bpm' => 'BPM',
             'count_circles' => 'Liczba kółek',
             'count_sliders' => 'Liczba sliderów',

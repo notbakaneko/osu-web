@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,16 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div, form, input, label, span, i} = ReactDOMFactories
+import { MessageLengthCounter } from './message-length-counter'
+import { BigButton } from 'big-button'
+import * as React from 'react'
+import { button, div, form, input, label, span, i } from 'react-dom-factories'
+import { UserAvatar } from 'user-avatar'
 el = React.createElement
 
 bn = 'beatmap-discussion-post'
 
-class BeatmapDiscussions.NewReply extends React.PureComponent
+export class NewReply extends React.PureComponent
   ACTION_ICONS =
     reply_resolve: 'fas fa-check'
     reply_reopen: 'fas fa-exclamation-circle'
@@ -30,6 +34,7 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
   constructor: (props) ->
     super props
 
+    @box = React.createRef()
     @throttledPost = _.throttle @post, 1000
     @handleKeyDown = InputHandler.textarea @handleKeyDownCallback
 
@@ -70,12 +75,12 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
             onChange: @setMessage
             onKeyDown: @handleKeyDown
             placeholder: osu.trans 'beatmaps.discussions.reply_placeholder'
-            innerRef: (el) => @box = el
+            ref: @box
 
       div
         className: "#{bn}__footer #{bn}__footer--notice"
         osu.trans 'beatmaps.discussions.reply_notice'
-        el BeatmapDiscussions.MessageLengthCounter, message: @state.message, isTimeline: @isTimeline()
+        el MessageLengthCounter, message: @state.message, isTimeline: @isTimeline()
 
       div
         className: "#{bn}__footer"
@@ -119,7 +124,8 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
     div className: "#{bn}__action",
       el BigButton,
         text: osu.trans("common.buttons.#{action}")
-        icon: if @state.posting == action then '_spinner' else ACTION_ICONS[action]
+        icon: ACTION_ICONS[action]
+        isBusy: @state.posting == action
         props:
           disabled: !@validPost() || @state.posting?
           onClick: @throttledPost
@@ -140,7 +146,7 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
       return
 
     @setState editing: true, =>
-      @box?.focus()
+      @box.current?.focus()
 
 
   handleKeyDownCallback: (type, event) =>
@@ -161,7 +167,8 @@ class BeatmapDiscussions.NewReply extends React.PureComponent
 
     @postXhr?.abort()
 
-    action = event.currentTarget.dataset.action
+    # in case the event came from input box, do 'reply'.
+    action = event.currentTarget.dataset.action ? 'reply'
     @setState posting: action
 
     resolved = switch action

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! fóra',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Přidat titulní obrázek',
             'button' => 'Nahrát obrázek',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Žádná témata!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Označit fórum jako přečtené',
+        'forums' => 'Označit fóra jako přečtená',
+        'busy' => 'Označuju jako přečtené...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Odstranit příspěvek',
             'restore' => 'Obnovit příspěvek',
             'edit' => 'Upravit příspěvek',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited příspěvek|:count_delimited příspěvky|:count_delimited příspěvků',
+            'topic_starter' => '',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'započal :user',
 
         'create' => [
+            'close' => '',
             'preview' => 'Náhled',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Vytvoření ankety',
 
+            'preview' => 'Náhled příspěvku',
+
             'create_poll_button' => [
                 'add' => 'Vytvořit anketu',
                 'remove' => 'Zrušit vytváření ankety',
             ],
 
             'poll' => [
+                'hide_results' => '',
+                'hide_results_info' => '',
                 'length' => 'Spustit anketu po dobu',
                 'length_days_suffix' => 'dnů',
                 'length_info' => 'Ponechte prázdné pro dobu neurčitou',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'zobrazení',
+            'feature_votes' => 'priorita hvězd',
             'replies' => 'odpovědi',
+            'views' => 'zobrazení',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Téma bylo připnuto a označeno jako oznámení',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Odstraněné příspěvky',
             'total_posts' => 'Celkem příspěvků',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Aktuální priorita: +:count',
                 'do' => 'Promovat tento požadavek',
+
+                'info' => [
+                    '_' => 'Tohle je :feature_request. Žádosti o nové funkce mohou dostávat hlasy od :supporters.',
+                    'feature_request' => 'žádost o novou funkci',
+                    'supporters' => 'podporovatelů',
+                ],
 
                 'user' => [
                     'count' => '{0} žádné hlasy | {1} :count hlas | [2,*] :count hlasů',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => '',
                 'vote' => 'Hlasovat',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => '',
+                ],
 
                 'detail' => [
                     'end_time' => 'Hlasování skončí za :time',
                     'ended' => 'Hlasování skončilo :time',
+                    'results_hidden' => '',
                     'total' => 'Celkem hlasů: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Nezáložkováno',
             'to_watching' => 'Záložka',
             'to_watching_mail' => 'Záložka s oznámením',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Notifikace je zapnutá. Klikněte pro vypnutí',
+            'tooltip_mail_enable' => 'Notifikace je vypnutá. Klikněte pro zapnutí',
         ],
     ],
 ];

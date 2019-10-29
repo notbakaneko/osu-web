@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,12 +27,13 @@ return [
 
     'discussion-votes' => [
         'update' => [
-            'error' => 'Äänen päivittäminen epäonnistui',
+            'error' => 'Äänen päivitys ei onnistunut',
         ],
     ],
 
     'discussions' => [
         'allow_kudosu' => 'salli kudosu',
+        'beatmap_information' => '',
         'delete' => 'poista',
         'deleted' => 'Poistanut :editor :delete_time.',
         'deny_kudosu' => 'hylkää kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Viimeksi muokannut :editor :update_time.',
         'kudosu_denied' => 'Evätty saamasta kudosua.',
         'message_placeholder_deleted_beatmap' => 'Tämä vaikeustaso on poistettu, joten siitä ei voi enää keskustella.',
+        'message_placeholder_locked' => 'Keskustelu tällä beatmapille on poistettu käytöstä.',
         'message_type_select' => 'Valitse kommentin tyyppi',
         'reply_notice' => 'Vastaa painamalla enter-näppäintä.',
         'reply_placeholder' => 'Kirjoita vastauksesi tähän',
         'require-login' => 'Kirjaudu sisään lähettääksesi viestejä tai vastauksia',
         'resolved' => 'Ratkaistu',
         'restore' => 'palauta',
+        'show_deleted' => 'Näytä poistetut',
         'title' => 'Keskustelut',
 
         'collapse' => [
@@ -55,7 +58,19 @@ return [
 
         'empty' => [
             'empty' => 'Keskustelut puuttuu!',
-            'hidden' => 'Mikään keskustelu ei vastaa valittua suodatinta.',
+            'hidden' => 'Yksikään keskusteluista ei täsmää hakuehtoihisi.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Lukitse keskustelu',
+                'unlock' => 'Avaa keskustelu',
+            ],
+
+            'prompt' => [
+                'lock' => 'Syy lukitsemiseen',
+                'unlock' => '',
+            ],
         ],
 
         'message_hint' => [
@@ -85,14 +100,16 @@ return [
             'timeline' => 'Aikajana',
             'scopes' => [
                 'general' => 'Tämä vaikeustaso',
-                'generalAll' => 'Kaikki vaikeusasteet',
+                'generalAll' => 'Kaikki vaikeustasot',
             ],
         ],
 
         'new' => [
+            'pin' => 'Kiinnitä',
             'timestamp' => 'Aikaleima',
             'timestamp_missing' => 'Paina ctrl-c editointitilassa ja liitä viestiisi lisätäksesi aikaleiman!',
             'title' => 'Uusi keskustelu',
+            'unpin' => 'Poista kiinnitys',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Lajiteltu:',
-            'created_at' => 'luontiaika',
-            'timeline' => 'aikajana',
-            'updated_at' => 'viimeisin päivitys',
+            'created_at' => 'Luomisaika',
+            'timeline' => 'Aikajana',
+            'updated_at' => 'Viimeisin päivitys',
         ],
 
         'stats' => [
@@ -117,13 +133,23 @@ return [
         ],
 
         'status-messages' => [
-            'approved' => 'Tämä rytmikartta hyväksyttiiin :date!',
-            'graveyard' => "Tätä beatmappia ei ole päivitetty sitten :date ja sen tekijä on todennäköisesti hyljännyt sen...",
+            'approved' => 'Tämä beatmappi hyväksyttiiin :date!',
+            'graveyard' => "Tätä beatmappia ei ole päivitetty sitten :date ja sen tekijä on todennäköisesti hylännyt sen...",
             'loved' => 'Tämä beatmap lisättiin Rakastettuihin :date!',
             'ranked' => 'Tämä beatmap hyväksyttiin :date!',
             'wip' => 'Huomaa: Tämän beatmapin tekijä on merkannut sen keskeneräiseksi.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -147,7 +173,7 @@ return [
         'delete' => 'Poista',
         'delete_own_confirm' => 'Oletko varma? Tämä beatmap poistetaan ja sinut uudelleenohjataan takaisin profiiliisi.',
         'delete_other_confirm' => 'Oletko varma? Tämä beatmap poistetaan ja sinut uudelleenohjataan käyttäjän profiiliin.',
-        'disqualification_prompt' => 'Syy hylkäykseen?',
+        'disqualification_prompt' => 'Hylkäyksen syy?',
         'disqualified_at' => 'Hylättiin :time_ago sitten (:reason).',
         'disqualified_no_reason' => 'ei määriteltyä syytä',
         'disqualify' => 'Hylkää',
@@ -171,18 +197,18 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Oletko varma? Uuden ongelman lähettäminen kumoaa suositusprosessin.',
-            'disqualify' => '',
+            'disqualify' => 'Oletko varma? Tämä poistaa beatmapin esihyväksytyistä ja kumoaa suositusprosessin.',
         ],
     ],
 
     'listing' => [
         'search' => [
             'prompt' => 'anna hakusana...',
-            'login_required' => 'Kirjaudu sisään etsiäksesi.',
-            'options' => 'Lisää Hakuasetuksia',
+            'login_required' => 'Kirjaudu sisään hakeaksesi.',
+            'options' => 'Enemmän Hakuasetuksia',
             'supporter_filter' => 'Tunnisteella :filters rajaaminen vaatii aktiivisen osu!supporter-tagin',
             'not-found' => 'ei tuloksia',
-            'not-found-quote' => '... Eip, mitään ei löytynyt.',
+            'not-found-quote' => '... mitään ei löytynyt.',
             'filters' => [
                 'general' => 'Yleinen',
                 'mode' => 'Pelitila',
@@ -194,15 +220,16 @@ return [
                 'played' => 'Pelatut',
             ],
             'sorting' => [
-                'title' => 'nimi',
-                'artist' => 'artisti',
-                'difficulty' => 'vaikeustaso',
-                'updated' => 'päivitetty',
-                'ranked' => 'hyväksytty',
-                'rating' => 'arvosana',
-                'plays' => 'pelikerrat',
-                'relevance' => 'osuvuus',
-                'nominations' => 'suositukset',
+                'title' => 'Nimi',
+                'artist' => 'Esittäjä',
+                'difficulty' => 'Vaikeustaso',
+                'favourites' => 'Suosikit',
+                'updated' => 'Päivitetty',
+                'ranked' => 'Hyväksytty',
+                'rating' => 'Luokitus',
+                'plays' => 'Pelikerrat',
+                'relevance' => 'Osuvuus',
+                'nominations' => 'Äänestykset',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Rajataksesi tunnisteella :filters sinulla on oltava aktiivinen :link',
@@ -223,18 +250,19 @@ return [
     ],
     'status' => [
         'any' => 'Kaikki',
-        'ranked-approved' => 'Hyväksytyt & Vahvistetut',
         'approved' => 'Vahvistettu',
-        'qualified' => 'Esihyväksytty',
-        'loved' => 'Rakastettu',
-        'faves' => 'Suosikit',
-        'pending' => 'Vireillä & WIP',
+        'favourites' => 'Suosikit',
         'graveyard' => 'Hautausmaa',
-        'my-maps' => 'Omat kartat',
+        'leaderboard' => '',
+        'loved' => 'Rakastettu',
+        'mine' => '',
+        'pending' => 'Vireillä & WIP',
+        'qualified' => 'Esihyväksytty',
+        'ranked' => '',
     ],
     'genre' => [
         'any' => 'Kaikki',
-        'unspecified' => 'Määrittelemättömät',
+        'unspecified' => 'Määrittelemätön',
         'video-game' => 'Videopeli',
         'anime' => 'Anime',
         'rock' => 'Rock',
@@ -259,6 +287,7 @@ return [
         'HD' => '',
         'HR' => '',
         'HT' => '',
+        'MR' => '',
         'NC' => '',
         'NF' => '',
         'NM' => '',
@@ -301,5 +330,9 @@ return [
         'B' => '',
         'C' => '',
         'D' => '',
+    ],
+    'panel' => [
+        'playcount' => 'Pelikerrat :count',
+        'favourites' => 'Suosikit :count',
     ],
 ];

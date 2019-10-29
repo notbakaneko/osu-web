@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -135,14 +135,23 @@ class RankHistory extends Model
             $data[] = intval($this->$column);
         }
 
-        if (count($data) > 2) {
-            $diffHead = $data[0] - $data[1];
-            $diffTail = $data[0] - array_last($data);
+        $diffHead = $data[0] - $data[1];
+        $diffTail = $data[0] - array_last($data);
 
-            if (abs($diffTail) < abs($diffHead)) {
-                $lastRank = array_shift($data);
-                $data[] = $lastRank;
+        $shiftData = abs($diffTail) < abs($diffHead);
+
+        if (!$shiftData) {
+            $userStatistics = $this->user->statistics($this->mode);
+
+            if ($userStatistics !== null) {
+                $currentRank = $userStatistics->globalRank();
+                $shiftData = $currentRank === $data[0];
             }
+        }
+
+        if ($shiftData) {
+            $lastRank = array_shift($data);
+            $data[] = $lastRank;
         }
 
         return $data;

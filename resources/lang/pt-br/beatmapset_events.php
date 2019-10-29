@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Aprovado.',
         'discussion_delete' => 'Moderador excluiu a discussão :discussion.',
-        'discussion_post_delete' => 'Moderador excluiu postagem da discussão :discussion.',
-        'discussion_post_restore' => 'Moderador restaurou postagem da discussão :discussion.',
+        'discussion_lock' => 'A discussão para este beatmap foi desabilitada. (:text)',
+        'discussion_post_delete' => 'Um moderador excluiu a publicação da discussão :discussion.',
+        'discussion_post_restore' => 'Um moderador restaurou a publicação da discussão :discussion.',
         'discussion_restore' => 'Moderador restaurou discussão :discussion.',
+        'discussion_unlock' => 'A discussão para este beatmap foi habilitada.',
         'disqualify' => 'Desqualificado por :user. Motivo: :discussion (:text).',
         'disqualify_legacy' => 'Desqualificado por :user. Motivo: :text.',
         'issue_reopen' => 'Reaberto problema :discussion já resolvido.',

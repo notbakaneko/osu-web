@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'разрешить кудосу',
+        'beatmap_information' => 'Страница карты',
         'delete' => 'удалить',
         'deleted' => 'Удалено :editor в :delete_time',
         'deny_kudosu' => 'запретить кудосу',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Последний раз изменён :editor в :update_time',
         'kudosu_denied' => 'Отказано в получении кудосу.',
         'message_placeholder_deleted_beatmap' => 'Эта сложность была удалена и отзываться о ней нельзя.',
+        'message_placeholder_locked' => 'Обсуждение этой карты было отключено.',
         'message_type_select' => 'Выбрать тип комментария',
         'reply_notice' => 'Нажмите Enter для ответа.',
         'reply_placeholder' => 'Введите тут ответ',
         'require-login' => 'Войди для публикации или ответа',
         'resolved' => 'Решено',
         'restore' => 'восстановить',
+        'show_deleted' => 'Показать удалённые',
         'title' => 'Отзывы',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Нет отзывов!',
             'hidden' => 'Ни один отзыв не соответствует указанному фильтру.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Заблокировать возможность обсуждения',
+                'unlock' => 'Разблокировать возможность обсуждения',
+            ],
+
+            'prompt' => [
+                'lock' => 'Причина блокировки',
+                'unlock' => 'Вы уверены, что хотите разблокировать обсуждение?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,20 +105,21 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Закрепить',
             'timestamp' => 'Временная отметка',
             'timestamp_missing' => 'нажмите ctrl-c в редакторе чтобы скопировать временную отметку!',
             'title' => 'Новый отзыв',
+            'unpin' => 'Открепить',
         ],
 
         'show' => [
-            'title' => ':title сделанный :mapper',
+            'title' => ':title от :mapper',
         ],
 
         'sort' => [
-            '_' => 'Отсортировано по:',
             'created_at' => 'дате создания',
-            'timeline' => 'графику',
-            'updated_at' => 'дате обновления',
+            'timeline' => 'хронологии',
+            'updated_at' => 'дате изменения',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Заметьте: Эта карта была помечена создателем как незавершённая.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Отрицательных оценок пока нет',
+                'up' => 'Положительных оценок пока нет',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Вы уверены? Сообщение о новой проблеме сбросит статус номинации.',
-            'disqualify' => '',
+            'disqualify' => 'Уверены? Карта будет снята с квалификации и статус номинирования будет сброшен.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Сыграно',
             ],
             'sorting' => [
-                'title' => 'название',
-                'artist' => 'исполнитель',
-                'difficulty' => 'сложность',
-                'updated' => 'обновлено',
-                'ranked' => 'рейтинговые',
-                'rating' => 'рейтинг',
-                'plays' => 'количество игр',
-                'relevance' => 'релевантность',
-                'nominations' => 'номинации',
+                'title' => 'названию',
+                'artist' => 'исполнителю',
+                'difficulty' => 'сложности',
+                'favourites' => 'Избранное',
+                'updated' => 'дате обновления',
+                'ranked' => 'дате ранка',
+                'rating' => 'рейтингу',
+                'plays' => 'количеству игр',
+                'relevance' => 'релевантности',
+                'nominations' => 'номинациям',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Фильтрация по :filters требует :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Все',
-        'ranked-approved' => 'Рейтинговые и одобренные',
         'approved' => 'Одобренные',
-        'qualified' => 'Квалифицированные',
-        'loved' => 'Любимые',
-        'faves' => 'Избранные',
-        'pending' => 'Ожидающие и в процессе разработки',
+        'favourites' => 'Избранные',
         'graveyard' => 'Заброшенные',
-        'my-maps' => 'Мои карты',
+        'leaderboard' => 'С таблицей рекордов',
+        'loved' => 'Любимые',
+        'mine' => 'Мои карты',
+        'pending' => 'Ожидающие и в процессе разработки',
+        'qualified' => 'Квалифицированные',
+        'ranked' => 'Рейтинговые',
     ],
     'genre' => [
         'any' => 'Все',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'Зеркало',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -278,7 +307,7 @@ return [
         'japanese' => 'Японский',
         'korean' => 'Корейский',
         'spanish' => 'Испанский',
-        'swedish' => 'Швецкий',
+        'swedish' => 'Шведский',
         'instrumental' => 'Инструментальный',
         'other' => 'Другой',
     ],
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Количество игр: :count',
+        'favourites' => 'В любимых: :count',
     ],
 ];

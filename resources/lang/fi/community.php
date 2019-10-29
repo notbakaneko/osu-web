@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,49 +20,63 @@
 
 return [
     'support' => [
-        'header' => [
-            // size in font-size
-            'big_description' => 'Rakastatko osua!?<br/>
-                                Tue osun kehittämistä! :D',
-            'small_description' => '',
-            'support_button' => 'Haluan tukea osu!:a',
+        'convinced' => [
+            'title' => 'Vakuutuin! :D',
+            'support' => 'tue osua!',
+            'gift' => 'tai lahjoita Tukija toiselle pelaajalle',
+            'instructions' => 'klikkaa sydäntä jatkaaksesi osu!kauppaan',
         ],
+        'why-support' => [
+            'title' => '',
 
-        'dev_quote' => 'osu! on täysin ilmainen peli, mutta sen pystyssä pitäminen ei todellakaan ole ilmaista.
-        Palvelimien järjestämisen ja korkealaatuisen kansainvälisen kaistan lisäksi järjestelmän -ja yhteisön ylläpito,  
-        palkintojen tarjoaminen kilpailuihin, tukipyyntöihin vastaaminen ja yleisesti porukan pitäminen tyytyväisenä kuluttaa huomattavan summan rahaa!
-        Äläkä unohda, teemme tämän kaiken ilman mainoksia, työkalupalkkeja tai vastaavia.
-            <br/><br/>Minä, joka yleisimmin tunnetaan nimellä "peppy" pitää osun! toiminnassa suurilta osin yksinään.
-            Jouduin Lopettamaan päivätyöni pysyäkseni osun! mukana
-            ja silti itse asettamieni laatuvaatimusten pitäminen on ajoittain hankalaa.
-            Haluaisin henkilökohtaisesti kiittää kaikkia, jotka ovat tukeneet osun! toimintaa tähän mennessä 
-            kuten myös heitä, jotka tukevat tätä loistavaa peliä ja yhteisöä tulevaisuudessa :).',
-
-        'supporter_status' => [
-            'contribution' => 'Kiitos tuestasi tähän saakka! Olet tukenut kokonaisuudessaan :dollars :tags tukijaostoksella!',
-            'gifted' => 'Tagiostoksistasi :giftedTags on lahjoitettu (yhteensä :giftedDollars), kuinka anteliasta!',
-            'not_yet' => "Et vielä ole Tukija :(",
-            'title' => 'Nykyinen tukija-tila',
-            'valid_until' => 'Nykyinen tukijatagi on voimassa :date asti!',
-            'was_valid_until' => 'Tukijatagisi oli voimassa :date asti.',
-        ],
-
-        'why_support' => [
-            'title' => 'Miksi tukisin osu!:a?',
-            'blocks' => [
-                'dev' => 'Kehitetty ja ylläpidetty yhden australialaisen henkilön voimin',
-                'time' => 'Ylläpito on niin aikaavievää, että osu!:a ei voi kutsua enään "harrastukseksi".',
-                'ads' => 'Mainoksia ei ole missään. <br/><br/>
- Toisin kuin 99.95% verkosta, me emme tee voittoa tunkemalla asioita naamallesi.',
-                'goodies' => 'Sinä saat ylimääräisiä ominaisuuksia käyttöösi!',
+            'team' => [
+                'title' => '',
+                'description' => '',
+            ],
+            'infra' => [
+                'title' => '',
+                'description' => '',
+            ],
+            'featured-artists' => [
+                'title' => '',
+                'description' => '',
+                'link_text' => '',
+            ],
+            'ads' => [
+                'title' => '',
+                'description' => '',
+            ],
+            'tournaments' => [
+                'title' => '',
+                'description' => '',
+                'link_text' => '',
+            ],
+            'bounty-program' => [
+                'title' => '',
+                'description' => '',
+                'link_text' => '',
             ],
         ],
-
         'perks' => [
-            'title' => 'Ai? Mitä saan?!',
+            'title' => 'Aha. No mitä minä sitten saan?!',
             'osu_direct' => [
                 'title' => 'osu!direct',
-                'description' => 'nopea ja helppo tapa etsiä beatmappejä ilman tarvetta poistua pelistä.',
+                'description' => 'Nopea ja helppo tapa etsiä beatmappejä ilman tarvetta poistua pelistä.',
+            ],
+
+            'friend_ranking' => [
+                'title' => '',
+                'description' => "",
+            ],
+
+            'country_ranking' => [
+                'title' => '',
+                'description' => '',
+            ],
+
+            'mod_filtering' => [
+                'title' => '',
+                'description' => '',
             ],
 
             'auto_downloads' => [
@@ -71,28 +85,28 @@ return [
             ],
 
             'upload_more' => [
-                'title' => 'Lähetä lisää',
+                'title' => 'Lataa enemmän',
                 'description' => 'Lisäpaikkoja vireillä oleville beatmapeille jokaista hyväksyttyä beatmappiä vastaan. (Max. 10)',
             ],
 
             'early_access' => [
                 'title' => 'Ennakkojulkaisut',
-                'description' => 'Pääsy uusimpiin versioihin, joissa voit kokeilla uusia ominaisuuksia ennen päivitysten julkaisua!',
+                'description' => 'Pääsy uusimpiin versioihin, joissa voit kokeilla uusia ominaisuuksia ennen niiden julkaisua!',
             ],
 
             'customisation' => [
                 'title' => 'Kustomointi',
-                'description' => 'Tee profiilistasi omalaatuinen lisäämällä täysin muokattava käyttäjä-sivu.',
+                'description' => "Tee profiilistasi omalaatuinen lisäämällä täysin muokattava käyttäjä-sivu.",
             ],
 
             'beatmap_filters' => [
-                'title' => 'Beatmappien Suodatus',
+                'title' => 'Beatmap Suodattimet',
                 'description' => 'Suodata beatmappien hakua pelatun, pelaamattoman sekä kartassa saavutetun luokituksen mukaan.',
             ],
 
             'yellow_fellow' => [
                 'title' => 'Keltainen Kaveri',
-                'description' => 'Sinut tunnistaa pelinsisäisissä keskusteluissa kirkkaankeltaisesta käyttäjänimen väristä.',
+                'description' => 'Saat pelinsisäisiin keskusteluihin keltaisen käyttäjänimen, jolla sinut otetaan varmasti huomioon.',
             ],
 
             'speedy_downloads' => [
@@ -107,7 +121,7 @@ return [
 
             'skinnables' => [
                 'title' => 'Ulkonäöllisyyksiä',
-                'description' => 'Lisää muokattavia pelinsisäisiä kohteita, kuten päävalikon tausta.',
+                'description' => 'Lisää muokattavia pelinsisäisiä kohteita, kuten esimerkiksi päävalikon taustakuva.',
             ],
 
             'feature_votes' => [
@@ -120,22 +134,30 @@ return [
                 'description' => 'Näet beatmapin maa-, kaveri- ja modikohtaiset sijoitukset pelissä.',
             ],
 
-            'feel_special' => [
-                'title' => 'Tunne itsesi erityiseksi',
-                'description' => 'Lämmin ja mukava tunne tehdessäsi osuuttasi, jotta osu! pysyy pystyssä sulavasti!',
-            ],
-
-            'more_to_come' => [
-                'title' => 'Lisää tulossa',
+            'more_favourites' => [
+                'title' => '',
                 'description' => '',
             ],
-        ],
+            'more_friends' => [
+                'title' => '',
+                'description' => '',
+            ],
+            'more_beatmaps' => [
+                'title' => '',
+                'description' => '',
+            ],
+            'friend_filtering' => [
+                'title' => '',
+                'description' => '',
+            ],
 
-        'convinced' => [
-            'title' => 'Vakuutuin! :D',
-            'support' => 'tue osua!',
-            'gift' => 'tai lahjoita Tukija toiselle pelaajalle',
-            'instructions' => 'klikkaa sydäntä jatkaaksesi osu!kauppaan',
+        ],
+        'supporter_status' => [
+            'contribution' => 'Kiitos tuestasi tähän saakka! Olet tukenut kokonaisuudessaan :dollars :tags tukijaostoksella!',
+            'gifted' => "Tagiostoksistasi :giftedTags on lahjoitettu (yhteensä :giftedDollars), kuinka anteliasta!",
+            'not_yet' => "Et ole vielä tukija :(",
+            'valid_until' => 'Nykyinen tukijatagi on voimassa :date asti!',
+            'was_valid_until' => 'Tukijatagisi oli voimassa :date asti.',
         ],
     ],
 ];

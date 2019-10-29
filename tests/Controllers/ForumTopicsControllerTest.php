@@ -1,20 +1,16 @@
 <?php
 
+namespace Tests\Controllers;
+
 use App\Models\Forum;
 use App\Models\User;
 use App\Models\UserGroup;
+use App\Models\UserStatistics\Osu as StatisticsOsu;
+use DB;
+use Tests\TestCase;
 
 class ForumTopicsControllerTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        // initial user for forum posts and stuff
-        // FIXME: this is actually a hidden dependency
-        factory(User::class)->create();
-    }
-
     public function testReply()
     {
         $forum = factory(Forum\Forum::class, 'child')->create();
@@ -179,6 +175,15 @@ class ForumTopicsControllerTest extends TestCase
         $this->assertSame($initialTitle, $topic->fresh()->topic_title);
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // initial user for forum posts and stuff
+        // FIXME: this is actually a hidden dependency
+        factory(User::class)->create();
+    }
+
     private function defaultUserGroup($user)
     {
         $table = (new UserGroup)->getTable();
@@ -203,9 +208,15 @@ class ForumTopicsControllerTest extends TestCase
     {
         $playcount ?? $playcount = config('osu.forum.minimum_plays');
 
-        $user->monthlyPlaycounts()->create([
-            'year_month' => '0111',
-            'playcount' => $playcount,
-        ]);
+        if ($user->statisticsOsu === null) {
+            factory(StatisticsOsu::class)->create([
+                'playcount' => $playcount,
+                'user_id' => $user->getKey(),
+            ]);
+        } else {
+            $user->statisticsOsu->update(['playcount' => $playcount]);
+        }
+
+        $user->refresh();
     }
 }

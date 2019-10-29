@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Osiągnięto dzienny limit nominacji, spróbuj ponownie jutro.',
+            'full_bn_required' => 'Musisz posiadać pełne uprawnienia nominatora, aby zakwalifikować tę beatmapę.',
+            'full_bn_required_hybrid' => 'Musisz posiadać pełne uprawnienia nominatora, aby nominować zestawy z beatmapami dla kilku trybów gry.',
             'incorrect_state' => 'Wystąpił błąd podczas wykonywania tej czynności, spróbuj odświeżyć stronę.',
             'owner' => "Nie możesz nominować własnej beatmapy.",
         ],
@@ -34,7 +36,7 @@ return [
         ],
 
         'store' => [
-            'mapper_note_wrong_user' => 'Adnotacje mogą być dodawane tylko przez twórcę mapy, nominatora lub członka QAT.',
+            'mapper_note_wrong_user' => 'Adnotacje mogą być dodawane tylko przez twórcę mapy, nominatora lub członka NAT.',
         ],
 
         'vote' => [
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => 'Możesz usuwać tylko swoje posty.',
+            'resolved' => 'Nie możesz usunąć posta z rozwiązanej dyskusji.',
+            'system_generated' => 'Nie możesz usunąć automatycznie wygenerowanego posta.',
+        ],
+
         'edit' => [
-            'system_generated' => 'Nie możesz edytować automatycznie wygenerowanego posta.',
             'not_owner' => 'Tylko autor posta może go edytować.',
+            'resolved' => 'Nie możesz edytować posta z rozwiązanej dyskusji.',
+            'system_generated' => 'Nie możesz edytować automatycznie wygenerowanego posta.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Tworzenie dyskusji dla tej beatmapy zostało zablokowane.',
         ],
     ],
 
@@ -91,8 +104,8 @@ return [
             ],
 
             'store' => [
-                'play_more' => 'Zagraj w osu! przed rozpoczęciem pisania na forum! Jeżeli masz jakiś problem, utwórz post w forum Help bądź Support.',
-                'too_many_help_posts' => "Musisz zagrać w osu! przed utworzeniem kolejnych postów. Jeżeli nadal doświadczasz problemów, napisz na adres e-mail support@ppy.sh", // FIXME: unhardcode email address.
+                'play_more' => 'Zagraj w osu! przed rozpoczęciem pisania na forum! Jeżeli masz jakiś problem, utwórz nowy wątek w forum dot. pomocy.',
+                'too_many_help_posts' => "Musisz zagrać w osu! przed utworzeniem kolejnych postów. Jeżeli nadal doświadczasz problemów, wyślij wiadomość na adres e-mail support@ppy.sh", // FIXME: unhardcode email address.
             ],
         ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Nie posiadasz dostępu do tego forum.',
                 'over' => 'Ankieta została zakończona i nie możesz już w niej głosować.',
+                'play_more' => 'Nie grasz wystarczająco długo, aby głosować na forum.',
                 'voted' => 'Nie możesz zmienić swojego głosu.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Wybrano nieprawidłowe tło.',
                 'not_owner' => 'Tylko autor może edytować tło.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Nie możesz ustawić tła wątku na tym forum.',
             ],
         ],
 

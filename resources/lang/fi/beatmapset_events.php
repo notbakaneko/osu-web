@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Vahvistettu.',
         'discussion_delete' => 'Moderaattori poisti keskustelun :discussion.',
+        'discussion_lock' => '',
         'discussion_post_delete' => 'Moderaattori poisti viestin keskustelusta :discussion.',
         'discussion_post_restore' => 'Moderaattori toi viestin takaisin keskusteluun :discussion.',
         'discussion_restore' => 'Moderaattori toi keskustelun :discussion takaisin.',
+        'discussion_unlock' => '',
         'disqualify' => 'Hyväksymisen keskeytti :user. Syy: :discussion (:text).',
         'disqualify_legacy' => ':user keskeytti hyväksymisen. Syy: :text.',
         'issue_reopen' => 'Ratkaistu ongelma :discussion uudelleenavattu.',
@@ -37,7 +39,7 @@ return [
         'love' => ':user rakastaa',
         'nominate' => 'Käyttäjän :user suosittelema.',
         'nomination_reset' => 'Uusi ongelma :discussion (:text) nollasi suositukset.',
-        'qualify' => 'Tämä beatmap sai vaaditun määrän suosituksia tarkasteluvaihetta varten.',
+        'qualify' => 'Tämä beatmap sai vaaditun määrän suosituksia hyväksymisvaihetta varten.',
         'rank' => 'Hyväksytty.',
     ],
 
@@ -45,8 +47,8 @@ return [
         'title' => 'Beatmapin Tapahtumat',
 
         'form' => [
-            'period' => '',
-            'types' => '',
+            'period' => 'Piste',
+            'types' => 'Tyypit',
         ],
     ],
 
@@ -57,23 +59,23 @@ return [
     ],
 
     'type' => [
-        'approve' => '',
-        'discussion_delete' => '',
-        'discussion_post_delete' => '',
-        'discussion_post_restore' => '',
-        'discussion_restore' => '',
-        'disqualify' => '',
-        'issue_reopen' => '',
-        'issue_resolve' => '',
-        'kudosu_allow' => '',
-        'kudosu_deny' => '',
-        'kudosu_gain' => '',
-        'kudosu_lost' => '',
-        'kudosu_recalculate' => '',
-        'love' => '',
-        'nominate' => '',
-        'nomination_reset' => '',
-        'qualify' => '',
-        'rank' => '',
+        'approve' => 'Hyväksyntä',
+        'discussion_delete' => 'Poista keskustelu',
+        'discussion_post_delete' => 'Keskustelun vastauksen poistaminen',
+        'discussion_post_restore' => 'Keskustelun vastauksen palautus',
+        'discussion_restore' => 'Keskustelun palauttaminen',
+        'disqualify' => 'Epähyväksyntä',
+        'issue_reopen' => 'Keskustelun uudelleenavaaminen',
+        'issue_resolve' => 'Keskustelun ratkaiseminen',
+        'kudosu_allow' => 'Kusodun hyväksyntä',
+        'kudosu_deny' => 'Kusodun kieltäminen',
+        'kudosu_gain' => 'Kusodun ansaitseminen',
+        'kudosu_lost' => 'Kusodun menettäminen',
+        'kudosu_recalculate' => 'Kusodun uudelleenlaskenta',
+        'love' => 'Rakkaus',
+        'nominate' => 'Äänestetty',
+        'nomination_reset' => 'Äänestyksen resetointi',
+        'qualify' => 'Hyväksyntä',
+        'rank' => 'Luokittelu',
     ],
 ];

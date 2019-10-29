@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -72,13 +72,6 @@ return [
             'true' => ':user님이 토론을 끝마쳤습니다',
             'false' => ':user님이 토론을 재개했습니다',
         ],
-    ],
-
-    'user' => [
-        'admin' => '관리자',
-        'bng' => 'nominator',
-        'owner' => '매퍼',
-        'qat' => 'QAT',
     ],
 
     'user_filter' => [

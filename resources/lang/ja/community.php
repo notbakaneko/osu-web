@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,56 +20,73 @@
 
 return [
     'support' => [
-        'header' => [
-            // size in font-size
-            'big_description' => 'Osu!を楽しんでますか?<br/>
-                                開発者を支援しよう！',
-            'small_description' => '',
-            'support_button' => 'osu!の支援をする！',
+        'convinced' => [
+            'title' => 'いいですね！',
+            'support' => 'osu!をサポートする！',
+            'gift' => 'もしくはギフトを送る',
+            'instructions' => 'ハートボタンをクリックでosu!storeに飛びます(英語)',
         ],
+        'why-support' => [
+            'title' => 'なぜosu!を支援する必要があるんですか？お金はどこにいきますか？',
 
-        'dev_quote' => 'osu!は利用するには完全に無料ですが、維持するのには確実に費用がかかります。 サーバーの確保や広帯域の国際ネットワーク接続、システムの整備、コミュニティの管理、大会の賞品の提供、サポートの対応、プレイヤーが満足のいく環境づくりなど、osu!の稼働には膨大な費用がかかっています。 広告やアフィリエイトなども導入していません。
-            <br/><br/>osu!はほぼ私（peppy）の手だけで稼働しています。
-            私はosu!の為に仕事を辞め、
-            自分に課した基準を維持する為に日々奮闘しています。
-            osu!をこれまで支援してくれた方々には大変感謝していて、
-            この素晴らしいゲームとコミュニティをこれからも支援し続けてくれる方々には感謝の気持ちでいっぱいです。',
-
-        'supporter_status' => [
-            'contribution' => 'osu!を支えてくれてありがとうございます！今までに:dollarsで:tags個のタグを購入しました！',
-            'gifted' => '今までのサポータータグ購入のうち:giftedTags個がギフト（合計金額：:giftedDollars）として送られました。あなたの寛大さに拍手！',
-            'not_yet' => "サポータータグをまだ持っていません :(",
-            'title' => '現在のサポーターの状態',
-            'valid_until' => 'あなたのサポータータグは:dateまで有効です！',
-            'was_valid_until' => 'あなたのサポータータグは:dateに期限切れになりました。',
-        ],
-
-        'why_support' => [
-            'title' => 'osu!を支援する理由とは？',
-            'blocks' => [
-                'dev' => 'オーストラリアのある男一人によってほぼ稼働している',
-                'time' => '維持する為にかかる手間が「趣味」の範疇を超える',
-                'ads' => '広告ゼロ。<br/><br/>
-                        見たくもない物を見せつけて利益を得る事はしない',
-                'goodies' => 'いろいろ特典をゲット！',
+            'team' => [
+                'title' => 'チームを支援する',
+                'description' => 'osu!は小規模なチームによって開発されていす。あなたのサポートがチームを助けます。',
+            ],
+            'infra' => [
+                'title' => 'サーバーインフラ',
+                'description' => '寄付はウェブサイト、マルチプレイサービス、オンラインリーダーボードを実行するサーバーの為に使われます。',
+            ],
+            'featured-artists' => [
+                'title' => '注目アーティスト',
+                'description' => 'あなたのサポートで私達は素晴らしいアーティストにアプローチして、osu!で使用するための素晴らしい音楽をライセンスすることができます。',
+                'link_text' => '現在の一覧を見る &raquo;',
+            ],
+            'ads' => [
+                'title' => 'osu!の独立性を保つ',
+                'description' => 'あなたの貢献によってゲームは独立し、広告や外部のスポンサーから自由になることができます。',
+            ],
+            'tournaments' => [
+                'title' => '公式トーナメント',
+                'description' => '公式osu!ワールドカップトーナメントに資金（および賞品）を提供してください！',
+                'link_text' => 'トーナメントを検索 &raquo;',
+            ],
+            'bounty-program' => [
+                'title' => 'オープンソースバウンティプログラム',
+                'description' => 'osu!を改善するために時間と労力を費やしてきたコミュニティの貢献者を支援します。',
+                'link_text' => '詳細を見る &raquo;',
             ],
         ],
-
         'perks' => [
-            'title' => '特典とは？',
+            'title' => '特典って？',
             'osu_direct' => [
                 'title' => 'osu!direct',
-                'description' => 'ゲーム内でブラウザを開くことなく譜面を素早くダウンロード。',
+                'description' => 'ゲームから離れることなくビートマップを素早くダウンロード。',
+            ],
+
+            'friend_ranking' => [
+                'title' => 'フレンドランキング',
+                'description' => "ゲーム内とウェブサイトのリーダーボードで、フレンドと競い合う方法をご覧ください。",
+            ],
+
+            'country_ranking' => [
+                'title' => '国別ランキング',
+                'description' => '世界を征服する前に、国を征服してください。',
+            ],
+
+            'mod_filtering' => [
+                'title' => 'Modsで絞り込む',
+                'description' => 'HDHRをプレイする人と関連付けますか？問題ありません！',
             ],
 
             'auto_downloads' => [
                 'title' => '自動ダウンロード',
-                'description' => 'スペクト中やマルチ部屋で自動的にダウンロードが完了します。譜面リンクもクリックひとつで導入が終わります。',
+                'description' => '観戦やマルチプレイをする時に自動的にビートマップをダウンロードします。リンクもクリックだけで終わります。',
             ],
 
             'upload_more' => [
                 'title' => 'アップロード上限解放',
-                'description' => 'Pending譜面をアップロードできる数が増えます。（Ranked譜面ひとつにつき）上限は10個です。',
+                'description' => '保留中のビートマップをアップロードできる数が増えます。（ランクビートマップ一つあたり）上限は10個です。',
             ],
 
             'early_access' => [
@@ -79,12 +96,12 @@ return [
 
             'customisation' => [
                 'title' => 'カスタマイズ',
-                'description' => '自分のユーザーページに自由に編集できる領域が追加されます。',
+                'description' => "自分のユーザーページに自由に編集できる領域が追加されます。",
             ],
 
             'beatmap_filters' => [
-                'title' => '譜面の検索フィルター',
-                'description' => '譜面がプレイ・未プレイや取得ランクで検索できるようになります。',
+                'title' => 'ビートマップの検索フィルター',
+                'description' => 'ビートマップがプレイ・未プレイや取得したランクで検索できるようになります。',
             ],
 
             'yellow_fellow' => [
@@ -98,41 +115,49 @@ return [
             ],
 
             'change_username' => [
-                'title' => 'ユーザーネームの変更',
-                'description' => 'ユーザーネームの変更を一回だけ追加料金なしで利用できます。',
+                'title' => 'ユーザー名の変更',
+                'description' => 'ユーザー名の変更を一回だけ追加料金なしで利用できます。',
             ],
 
             'skinnables' => [
                 'title' => 'スキンの拡張',
-                'description' => 'メインメニューの背景などが追加でスキンで変更できるようになります。',
+                'description' => 'メインメニューの背景のような追加スキンを変更できるようになります。',
             ],
 
             'feature_votes' => [
                 'title' => '機能リクエスト',
-                'description' => '機能リクエストに投票できるようになります。（月2回、投票権を取得）',
+                'description' => '機能リクエストに投票できるようになります。（月あたり２回）',
             ],
 
             'sort_options' => [
-                'title' => 'ランキングオプション',
-                'description' => '国別・フレンド・Mod別ランキングが利用できるようになります。',
+                'title' => '並び替えオプション',
+                'description' => 'ゲーム内でビートマップの国別・フレンド・Mod別ランキングが利用できるようになります。',
             ],
 
-            'feel_special' => [
-                'title' => '特別な気持ち',
-                'description' => 'osu!の支援をしているというポカポカの暖かい気持ちを満喫しましょう。',
+            'more_favourites' => [
+                'title' => 'その他のお気に入り',
+                'description' => 'お気に入りに登録できるビートマップの数は:normally &rarr; :supporterに増加します',
+            ],
+            'more_friends' => [
+                'title' => 'その他のフレンド',
+                'description' => '登録できるフレンドの数は:normally &rarr; :supporterに増加します',
+            ],
+            'more_beatmaps' => [
+                'title' => '他のビートマップをアップロード',
+                'description' => '一度に保持できるRankedされていないビートマップ数は、基準値とRankedされたビートマップの追加ボーナス値から計算されます。<br/><br/>通常これは4つで、Rankedされたビートマップごとに1つ追加されます。（最大２）サポーターになると、8つになりRankedされるごとに2つ追加されます。',
+            ],
+            'friend_filtering' => [
+                'title' => 'フレンドリーダーボード',
+                'description' => 'フレンドと競い合って、自分がどのようにランクアップしていくか見てください！*<br/><br/><small>*新しいサイトはまだ利用できません。近日公開予定',
             ],
 
-            'more_to_come' => [
-                'title' => '追加予定',
-                'description' => '',
-            ],
         ],
-
-        'convinced' => [
-            'title' => 'いいですね！',
-            'support' => 'osu!を支援する！',
-            'gift' => 'もしくはギフトを送る',
-            'instructions' => 'ハートボタンをクリックでosu!ストアに飛びます',
+        'supporter_status' => [
+            'contribution' => 'osu!をサポートしてくれてありがとうございます！今までに:dollarsで:tags個のタグを購入しました！',
+            'gifted' => "今まで購入したサポータータグのうち:giftedTags個がギフト（ギフト合計金額：:giftedDollars）として送られました。あなたの寛大さに拍手！",
+            'not_yet' => "osu!サポータータグをまだ持っていません :(",
+            'valid_until' => 'あなたのosu!サポータータグは:dateまで有効です！',
+            'was_valid_until' => 'あなたのosu!サポータータグは:dateに期限切れになりました。',
         ],
     ],
 ];

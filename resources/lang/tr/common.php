@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', ve ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Yukarıya geri dön',
+        'admin' => 'Yönetici',
         'back_to_previous' => 'Bir önceki pozisyona dön',
+        'back_to_top' => 'Yukarıya geri dön',
         'cancel' => 'İptal',
         'change' => 'değiştir',
         'click_to_copy' => 'panoya kopyalamak için tıklayın',
         'click_to_copy_copied' => 'panoya kopyalandı!',
+        'close' => '',
+        'collapse' => 'daraltın',
         'delete' => 'Sil',
         'edit' => 'Düzenle',
+        'expand' => 'genişletin',
         'hide' => 'gizle',
         'permalink' => 'kalıcı bağlantı',
         'permalink_copied' => 'bağlantı kopyalandı',
@@ -52,8 +60,16 @@ return [
         'search' => 'Arama',
         'see_more' => 'daha fazla',
         'show' => 'göster',
+        'show_deleted' => 'Silineni göster',
         'show_more' => 'daha fazla göster',
+        'show_more_options' => 'daha fazla seçenek göster',
+        'update' => '',
         'upload_image' => 'görsel yükle',
+
+        'watch' => [
+            'to_0' => 'İzlemeyi Bırak',
+            'to_1' => 'İzle',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count saat|:count saat',
         'item' => ':count birim|:count birim',
         'minute_short_unit' => 'dk|dk',
-        'minutes' => '',
+        'minutes' => ':count dakika |:count dakika',
         'months' => ':count ay|:count ay',
+        'plus_others' => '',
+        'post' => ':count_delimited gönderi|:count_delimited gönderi',
         'second_short_unit' => 'sn|sn',
+        'star_priority' => '',
+        'update' => ':count_delimited güncelleme|:count_delimited güncellemeler',
+        'view' => '',
         'years' => ':count yıl|:count yıl',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'yüklemek için buraya bırak',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

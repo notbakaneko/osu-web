@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,13 +19,6 @@
  */
 
 return [
-    'button' => [
-        'action' => [
-            'to_0' => 'Ne plus suivre',
-            'to_1' => 'Suivre',
-        ],
-    ],
-
     'index' => [
         'description' => 'Voici les discussions de beatmap que vous suivez. Vous serez notifié quand il y aura de nouveaux posts ou des changements.',
         'title_compact' => 'liste d\'abonnement des modifications',

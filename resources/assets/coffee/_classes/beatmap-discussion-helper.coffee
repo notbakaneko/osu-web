@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -28,12 +28,18 @@ class @BeatmapDiscussionHelper
   @FILTERS = ['deleted', 'hype', 'mapperNotes', 'mine', 'pending', 'praises', 'resolved', 'total']
 
 
+  @canModeratePosts: (user) =>
+    user ?= currentUser
+
+    user.is_admin || user.can_moderate
+
+
   # text should be pre-escaped.
   @discussionLinkify: (text) =>
     currentUrl = new URL(window.location)
     currentBeatmapsetDiscussions = @urlParse(currentUrl.href)
 
-    text.replace osu.urlRegex, (url) =>
+    text.replace osu.urlRegex, (url, _, displayUrl) =>
       targetUrl = new URL(url)
 
       if targetUrl.host == currentUrl.host
@@ -47,6 +53,8 @@ class @BeatmapDiscussionHelper
           else
             # different beatmapset, format: 1234#567
             linkText = "#{targetBeatmapsetDiscussions.beatmapsetId}##{targetBeatmapsetDiscussions.discussionId}"
+
+      linkText ?= displayUrl
 
       "<a href='#{url}' rel='nofollow' #{attrs ? ''}>#{linkText ? url}</a>"
 
@@ -120,10 +128,6 @@ class @BeatmapDiscussionHelper
       suggestion: ['far', '&#xf111;']
 
 
-  @moderationGroup: (user) =>
-    _.intersection(_.concat(user.default_group, user.groups), ['qat', 'bng'])[0]
-
-
   @previewMessage = (message) =>
     if message.length > @MAX_MESSAGE_PREVIEW_LENGTH
       _.chain(message)
@@ -188,8 +192,7 @@ class @BeatmapDiscussionHelper
         params.beatmap = discussionState.beatmapId
         params.mode = discussionState.mode
 
-    url = new URL(document.location)
-    url.pathname = laroute.route 'beatmapsets.discussion', params
+    url = new URL(laroute.route('beatmapsets.discussion', params))
     url.hash = if discussionId? then url.hash = "/#{discussionId}" else ''
 
     if user?

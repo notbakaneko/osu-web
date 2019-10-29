@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -90,6 +90,7 @@ return [
 
         'invoice' => '查看发票',
         'no_orders' => '没有可显示的订单。',
+        'resume' => '恢复结帐',
 
         'item' => [
             'display_name' => [
@@ -114,7 +115,7 @@ return [
             'delivered' => '已送达',
             'paid' => '已付款',
             'processing' => '待确认',
-            'shipped' => '运输中',
+            'shipped' => '运送中',
         ],
     ],
 

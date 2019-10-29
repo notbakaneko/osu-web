@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,7 +34,7 @@ class CurrentStats
 
     public function __construct()
     {
-        $data = Cache::remember('current_stats:v1', 5, function () {
+        $data = Cache::remember('current_stats:v1', 300, function () {
             $stats = BanchoStats::stats();
             $latest = array_last($stats);
 

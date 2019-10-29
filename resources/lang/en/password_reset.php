@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,7 +34,7 @@ return [
 
     'error' => [
         'contact_support' => 'Please contact support to recover account.',
-        'is_privileged' => 'Contact peppy lulz.',
+        'is_privileged' => 'Please contact a high level admin to recover account.',
         'missing_key' => 'Required.',
         'too_many_tries' => 'Too many failed attempts.',
         'user_not_found' => 'Requested user does not exist.',
@@ -55,5 +55,10 @@ return [
 
     'starting' => [
         'username' => 'Enter email address or username',
+
+        'support' => [
+            '_' => 'Need further assistance? Contact us via our :button.',
+            'button' => 'support system',
+        ],
     ],
 ];

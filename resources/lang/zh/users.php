@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => ":user 的摸图历史",
-        'title_compact' => '',
+        'title_compact' => '摸图',
 
         'discussions' => [
             'title_recent' => '最近打开的讨论',
@@ -88,9 +88,6 @@ return [
         'title' => ':username 的帖子',
     ],
 
-    'signup' => [
-        '_' => '注册',
-    ],
     'anonymous' => [
         'login_link' => '点击登录',
         'login_text' => '登录',
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!supporter',
         'joined_at' => '注册时间：:date',
         'lastvisit' => '上次登录：:date',
+        'lastvisit_online' => '当前在线',
         'missingtext' => '未找到用户！（或者该用户已经被 ban）',
         'origin_country' => '来自 :country',
         'page_description' => 'osu! - 你想知道的关于 :username 的一切!',
@@ -148,10 +146,14 @@ return [
                     'button' => '上传图片',
                     'dropzone' => '拖拽到此处',
                     'dropzone_info' => '将图片拖动到这里也可以上传',
-                    'restriction_info' => "自定义头图只有 <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> 可用",
                     'size_info' => '图片大小最好是 2800x620 像素',
                     'too_large' => '上传的图片过大。',
                     'unsupported_format' => '不支持的格式。',
+
+                    'restriction_info' => [
+                        '_' => '自定义头图只有 :link 可用',
+                        'link' => 'osu! 支持者',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => '关注者：:count',
+            'none' => '无',
             'unranked' => '最近没有玩过',
 
             'achievements' => [
                 'achieved-on' => '达成于 :date',
-                'locked' => '',
+                'locked' => '锁定',
                 'title' => '成就',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'by :artist',
                 'none' => '暂时没有...',
                 'title' => '谱面',
 
@@ -191,13 +193,23 @@ return [
                     'title' => 'Pending 的谱面',
                 ],
             ],
+            'discussions' => [
+                'title' => '讨论',
+                'title_longer' => '最近讨论',
+                'show_more' => '查看更多讨论',
+            ],
+            'events' => [
+                'title' => '事件',
+                'title_longer' => '最近事件',
+                'show_more' => '查看更多事件',
+            ],
             'historical' => [
                 'empty' => '没有游戏记录。:(',
                 'title' => '历史记录',
 
                 'monthly_playcounts' => [
                     'title' => '游玩记录',
-                    'count_label' => '',
+                    'count_label' => '游玩次数',
                 ],
                 'most_played' => [
                     'count' => '游玩次数',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => '回放被观看记录',
-                    'count_label' => '',
+                    'count_label' => '回放被观看次数',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => '最近 Kudosu 记录',
                 'title' => 'Kudosu!',
                 'total' => '总共获得 kudosu',
-                'total_info' => '取决于你对制谱的贡献如何。查看 <a href="'.osu_url('user.kudosu').'">这个页面</a> 以得到更多信息。',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,14 +269,24 @@ return [
                         'revoke' => '在帖子 :post 中被 :giver 移除 kudosu ',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '取决于你对制谱的贡献如何。查看 :link 获得更多信息。',
+                    'link' => '这个页面',
+                ],
             ],
             'me' => [
                 'title' => '个人介绍',
             ],
             'medals' => [
                 'empty' => "该用户还没有获得成就。;_;",
-                'recent' => '',
+                'recent' => '最近取得',
                 'title' => '成就',
+            ],
+            'posts' => [
+                'title' => '回复',
+                'title_longer' => '最近回复',
+                'show_more' => '查看更多回复',
             ],
             'recent_activity' => [
                 'title' => '最近活动',
@@ -274,7 +295,7 @@ return [
                 'download_replay' => '下载回放',
                 'empty' => '还没有上传过成绩。 :(',
                 'not_ranked' => '只有 ranked 谱面才能得到 pp。',
-                'pp_weight' => '',
+                'pp_weight' => '权重：:percentage',
                 'title' => '成绩',
 
                 'best' => [
@@ -283,6 +304,13 @@ return [
                 'first' => [
                     'title' => '第一名',
                 ],
+            ],
+            'votes' => [
+                'given' => '给予投票（最近三个月）',
+                'received' => '所得投票（最近三个月）',
+                'title' => '投票',
+                'title_longer' => '最近投票',
+                'vote_count' => ':count_delimited 票',
             ],
             'account_standing' => [
                 'title' => '帐号状态',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => '玩家 :info',
+            'info' => '资料',
         ],
 
         'info' => [
@@ -330,10 +358,15 @@ return [
             'title' => '找不到指定的用户',
         ],
         'page' => [
+            'button' => '修改资料页面',
             'description' => '<strong>个人介绍</strong> 是您可以自定义的展示区.',
             'edit_big' => '编辑',
             'placeholder' => '在这里编辑',
-            'restriction_info' => "需要成为 <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> 以解锁该特性.",
+
+            'restriction_info' => [
+                '_' => '你需要成为 :link 才能使用此功能。',
+                'link' => 'osu!支持者',
+            ],
         ],
         'post_count' => [
             '_' => '发表了 :link',
@@ -341,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => ':mode 模式的国内排名',
-            'country_simple' => '',
+            'country_simple' => '国内排名',
             'global' => ':mode 模式的全球排名',
-            'global_simple' => '',
+            'global_simple' => '全球排名',
         ],
         'stats' => [
             'hit_accuracy' => '准确率',
             'level' => '等级 :level',
-            'level_progress' => '',
+            'level_progress' => '到下一级的进度',
             'maximum_combo' => '最大连击',
-            'medals' => '',
+            'medals' => '奖章',
             'play_count' => '游戏次数',
             'play_time' => '游戏时间',
             'ranked_score' => 'Ranked 谱面总分',
@@ -358,9 +391,16 @@ return [
             'score_ranks' => '得分等级',
             'total_hits' => '总命中次数',
             'total_score' => '总分',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Ranked & Approved 的谱面',
+            'loved_beatmapset_count' => 'Loved 的谱面',
+            'unranked_beatmapset_count' => 'Pending 的谱面',
+            'graveyard_beatmapset_count' => '坟场里的谱面',
         ],
     ],
+
     'status' => [
+        'all' => '所有',
         'online' => '在线',
         'offline' => '离线',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => '账户认证',
+    ],
+
+    'view_mode' => [
+        'card' => '卡片检视',
+        'list' => '列表检视',
     ],
 ];

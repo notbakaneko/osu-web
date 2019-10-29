@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,7 @@
 
 return [
     'availability' => [
-        'disabled' => 'Este beatmap não está disponível actualmente para transferência.',
+        'disabled' => 'Este beatmap não está disponível atualmente para transferência.',
         'parts-removed' => 'Porções deste beatmap foram removidas a pedido do criador ou dum titular de direitos de terceiros.',
         'more-info' => 'Clica aqui para mais informações.',
     ],
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Discussão',
 
         'details' => [
-            'mapped_by' => 'mapeado por :mapper',
-            'submitted' => 'submetido em ',
-            'updated' => 'última actualização em ',
-            'updated_timeago' => 'última actualização :timeago',
-            'ranked' => 'classificado em ',
             'approved' => 'aprovado em ',
-            'qualified' => 'qualificado em ',
+            'favourite' => 'Marcar este beatmapset como favorito',
+            'logged-out' => 'Precisas de iniciar sessão antes de transferir quaisquer beatmaps!',
             'loved' => 'adorado em ',
-            'logged-out' => 'Precisas de iniciar sessão antes de descarregar quaisquer beatmaps!',
+            'mapped_by' => 'mapeado por :mapper',
+            'qualified' => 'qualificado em ',
+            'ranked' => 'classificado em ',
+            'submitted' => 'submetido em ',
+            'unfavourite' => 'Desmarcar este beatmapset como favorito',
+            'updated' => 'última atualização em ',
+            'updated_timeago' => 'última atualização :timeago',
+
             'download' => [
                 '_' => 'Descarregar',
-                'video' => 'com Vídeo',
-                'no-video' => 'sem Vídeo',
                 'direct' => '',
+                'no-video' => 'sem Vídeo',
+                'video' => 'com Vídeo',
             ],
-            'favourite' => 'Marcar este beatmapset como favorito',
-            'unfavourite' => 'Desmarcar este beatmapset como favorito',
-            'favourited_count' => '+ 1 outro!|+ :count outros!',
+
+            'login_required' => [
+                'bottom' => 'para aceder a mais funcionalidades',
+                'top' => 'Iniciar Sessão',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Tens demasiados beatmaps como favoritos! Por favor remove alguns antes de tentares novamente.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Hypeia este mapa se gostaste de o jogar para ajudá-lo a progredir ao estado <strong>Classificado</strong>.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Este mapa está atualmente :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'pendente',
+                    'qualified' => 'qualificado',
+                    'wip' => 'trabalho em progresso',
                 ],
             ],
         ],

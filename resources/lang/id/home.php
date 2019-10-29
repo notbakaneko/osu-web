@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => '<strong>:players</strong> saat ini terhubung dalam <strong>:games</strong> permainan',
         'peak' => 'Tercatat maksimal sebanyak :count pengguna online',
         'players' => '<strong>:count</strong> pengguna terdaftar',
+        'title' => 'selamat datang',
 
         'slogan' => [
             'main' => 'game ritme free-to-win terbaik',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Pencarian lanjutan',
         'button' => 'Cari',
         'empty_result' => 'Tidak ditemukan!',
-        'missing_query' => 'Kata kunci pencarian harus mengandung setidaknya :n karakter',
+        'keyword_required' => 'Kata kunci pencarian diperlukan',
         'placeholder' => 'ketik untuk mencari',
         'title' => 'Pencarian',
 

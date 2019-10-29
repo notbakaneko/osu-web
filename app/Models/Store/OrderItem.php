@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -179,11 +179,6 @@ class OrderItem extends Model
 
     public function validationErrorsTranslationPrefix()
     {
-        return 'store/order_item';
-    }
-
-    public function validationErrorsKeyBase()
-    {
-        return 'model_validation/';
+        return 'store.order_item';
     }
 }

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,7 +16,10 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, button, div, i, p, span} = ReactDOMFactories
+import { Discussion } from './discussion'
+import { IconExpand } from 'icon-expand'
+import * as React from 'react'
+import { a, button, div, i, p, span } from 'react-dom-factories'
 el = React.createElement
 
 bn = 'beatmap-discussions'
@@ -26,10 +29,10 @@ sortPresets =
   updated_at:
     text: osu.trans('beatmaps.discussions.sort.updated_at')
     sort: (a, b) ->
-      if a.updated_at == b.updated_at
+      if a.last_post_at == b.last_post_at
         b.id - a.id
       else
-        Date.parse(b.updated_at) - Date.parse(a.updated_at)
+        Date.parse(b.last_post_at) - Date.parse(a.last_post_at)
 
   created_at:
     text: osu.trans('beatmaps.discussions.sort.created_at')
@@ -49,7 +52,7 @@ sortPresets =
         a.timestamp - b.timestamp
 
 
-class BeatmapDiscussions.Discussions extends React.PureComponent
+export class Discussions extends React.PureComponent
   constructor: (props) ->
     super props
 
@@ -76,8 +79,10 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
               className: "#{bn}__toolbar-item"
               @renderSortOptions()
           div className: "#{bn}__toolbar-content #{bn}__toolbar-content--right",
-            a
-              href: '#'
+            @renderShowDeletedToggle()
+
+            button
+              type: 'button'
               className: "#{bn}__toolbar-item #{bn}__toolbar-item--link"
               'data-type': 'collapse'
               onClick: @expand
@@ -87,8 +92,8 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
               span className: "#{bn}__toolbar-link-content",
                 osu.trans('beatmaps.discussions.collapse.all-collapse')
 
-            a
-              href: '#'
+            button
+              type: 'button'
               className: "#{bn}__toolbar-item #{bn}__toolbar-item--link"
               'data-type': 'expand'
               onClick: @expand
@@ -120,6 +125,20 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
             @timelineCircle()
 
 
+  renderShowDeletedToggle: =>
+    return null unless BeatmapDiscussionHelper.canModeratePosts(@props.currentUser)
+
+    button
+      type: 'button'
+      className: "#{bn}__toolbar-item #{bn}__toolbar-item--link"
+      onClick: @toggleShowDeleted
+      span className: "#{bn}__toolbar-link-content",
+        span
+          className: if @props.showDeleted then 'fas fa-check-square' else 'far fa-square'
+      span className: "#{bn}__toolbar-link-content",
+        osu.trans('beatmaps.discussions.show_deleted')
+
+
   renderSortOptions: =>
     presets =
       switch @props.mode
@@ -135,6 +154,7 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
         span className: 'sort__item sort__item--title', osu.trans('sort._')
         for preset in presets
           button
+            key: preset
             type: 'button'
             className: "sort__item sort__item--button #{if @currentSort() == preset then 'sort__item--active' else ''}"
             'data-sort-preset': preset
@@ -152,7 +172,7 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
     div
       key: discussion.id
       className: className
-      el BeatmapDiscussions.Discussion,
+      el Discussion,
         discussion: discussion
         users: @props.users
         currentUser: @props.currentUser
@@ -161,6 +181,7 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
         readPostIds: @props.readPostIds
         isTimelineVisible: @isTimelineVisible()
         visible: visible
+        showDeleted: @props.showDeleted
 
 
   changeSort: (e) =>
@@ -216,3 +237,7 @@ class BeatmapDiscussions.Discussions extends React.PureComponent
     div
       'data-visibility': if !@isTimelineVisible() then 'hidden'
       className: "#{bn}__mode-circle #{bn}__mode-circle--active hidden-xs"
+
+
+  toggleShowDeleted: =>
+    $.publish 'beatmapDiscussionPost:toggleShowDeleted'

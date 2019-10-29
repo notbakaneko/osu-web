@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,15 +17,16 @@
  */
 // tslint:disable:max-classes-per-file
 import Message from 'models/chat/message';
+import { PresenceJSON } from '../chat/chat-api-responses';
 import DispatcherAction from './dispatcher-action';
 
-export class ChatChannelSwitchAction implements DispatcherAction {
+export class ChatChannelPartAction implements DispatcherAction {
   constructor(public channelId: number) {
   }
 }
 
-export class ChatMessageSendAction implements DispatcherAction {
-  constructor(public message: Message) {
+export class ChatChannelSwitchAction implements DispatcherAction {
+  constructor(public channelId: number) {
   }
 }
 
@@ -34,7 +35,17 @@ export class ChatMessageAddAction implements DispatcherAction {
   }
 }
 
+export class ChatMessageSendAction implements DispatcherAction {
+  constructor(public message: Message) {
+  }
+}
+
 export class ChatMessageUpdateAction implements DispatcherAction {
   constructor(public message: Message) {
+  }
+}
+
+export class ChatPresenceUpdateAction implements DispatcherAction {
+  constructor(public presence: PresenceJSON) {
   }
 }

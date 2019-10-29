@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,18 +19,18 @@
  */
 
 return [
-    'deleted' => '[削除されたユーザーです]',
+    'deleted' => '[削除されたユーザー]',
 
     'beatmapset_activities' => [
         'title' => ":userのModding履歴",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
-            'title_recent' => '最近のディスカッション',
+            'title_recent' => '最近開始されたディスカッション',
         ],
 
         'events' => [
-            'title_recent' => '最近の出来事',
+            'title_recent' => '最近のイベント',
         ],
 
         'posts' => [
@@ -71,26 +71,23 @@ return [
         'password' => 'パスワード',
         'button' => 'ログイン',
         'button_posting' => 'ログイン中・・・',
-        'remember' => 'ログイン状態を保存する',
+        'remember' => 'ログイン状態を保持する',
         'title' => '続行するにはログインが必要です',
-        'failed' => '認証に失敗しました',
-        'register' => "osu!アカウントがない方はこちらから",
-        'forgot' => 'パスワードを紛失した場合',
+        'failed' => 'ログインに失敗しました',
+        'register' => "osu!アカウントを持っていませんか？新しいアカウントを作るにはこちらから",
+        'forgot' => 'パスワードを忘れましたか？',
         'beta' => [
             'main' => 'ベータアクセスは権限があるユーザーのみに付与されます',
-            'small' => '(osu!サポーターは間もなくもらえます)',
+            'small' => '(osu!サポーターはすぐ手に入ります)',
         ],
 
         'here' => 'こちら', // this is substituted in when generating a link above. change it to suit the language.
     ],
 
     'posts' => [
-        'title' => ':username\\の投稿',
+        'title' => ':usernameの投稿',
     ],
 
-    'signup' => [
-        '_' => '新規登録',
-    ],
     'anonymous' => [
         'login_link' => 'クリックしてログイン',
         'login_text' => 'ログイン',
@@ -101,7 +98,7 @@ return [
     'report' => [
         'button_text' => '報告',
         'comments' => '追加のコメント',
-        'placeholder' => '',
+        'placeholder' => 'あなたが役に立つと思う情報を書いて下さい。',
         'reason' => '理由',
         'thanks' => 'ご報告ありがとうございます！',
         'title' => ':usernameを報告しますか？',
@@ -112,27 +109,28 @@ return [
         ],
 
         'options' => [
-            'cheating' => '不正行為・チート',
-            'insults' => 'あなた、もしくは第三者への罵倒',
-            'spam' => 'スパム行為',
-            'unwanted_content' => '不適切なコンテンツ',
+            'cheating' => '不正行為/チート',
+            'insults' => 'あなた/他の人への侮辱',
+            'spam' => 'スパム',
+            'unwanted_content' => '不適切なコンテンツへのリンク',
             'nonsense' => 'ナンセンスな行為',
-            'other' => 'その他 (下に入力してください)',
+            'other' => 'その他（下記に入力）',
         ],
     ],
     'restricted_banner' => [
-        'title' => 'あなたのアカウントは制限されました。',
-        'message' => '制限中は他のプレイヤーとの干渉ができなくなり、自分のスコアも他人には表示されなくなります。制限のほとんどは自動的な処理で、２４時間以内に解決します。制限が不当な物だと感じた場合、<a href="mailto:accounts@ppy.sh">サポートにお問い合わせください</a>。',
+        'title' => 'アカウントが制限されました！',
+        'message' => '制限中は他のプレイヤーと交流ができなくなり、スコアが他人には表示されなくなります。ほとんどの場合、自動的に行われた処理で通常２４時間以内に解除されます。この制限に異議を申し立てたい場合は<a href="mailto:accounts@ppy.sh">サポート</a>に問い合わせて下さい。',
     ],
     'show' => [
-        'age' => ':age',
+        'age' => ':age歳',
         'change_avatar' => 'アバター画像の変更',
         'first_members' => '創設時からのメンバー',
         'is_developer' => 'osu!開発者',
         'is_supporter' => 'osu!サポーター',
-        'joined_at' => '登録日時 :date',
+        'joined_at' => '登録日 :date',
         'lastvisit' => '最終ログイン :date',
-        'missingtext' => '内容を再度確認してください。（ユーザーが削除されている可能性もあります）',
+        'lastvisit_online' => '現在オンライン',
+        'missingtext' => '打ち間違いがないか確認してください！（ユーザーが削除されている可能性もあります）',
         'origin_country' => '所在国 :country',
         'page_description' => 'osu! - :usernameについていろいろ！',
         'previous_usernames' => '以前の名前',
@@ -142,16 +140,20 @@ return [
         'edit' => [
             'cover' => [
                 'button' => 'カバー画像の変更',
-                'defaults_info' => 'カバーの選択肢は増える予定です',
+                'defaults_info' => 'カバー画像の選択肢は増える予定です',
                 'upload' => [
-                    'broken_file' => '画像の処理に失敗しました。ファイルの破損か形式が合っているかを確認してください。',
+                    'broken_file' => '画像の処理に失敗しました。アップロードした画像を確認してもう一度やり直して下さい。',
                     'button' => '画像のアップロード',
-                    'dropzone' => 'ここにドロップでアップロード',
+                    'dropzone' => 'ここにドロップしてアップロード',
                     'dropzone_info' => 'ここにドラッグ＆ドロップでアップロードが可能です。',
-                    'restriction_info' => "<a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!サポーター</a>のみアップロードできます",
                     'size_info' => '推奨の画像サイズは2800x620です',
-                    'too_large' => '画像ファイルの容量が大きすぎます。',
-                    'unsupported_format' => '対応している画像形式ではありません。',
+                    'too_large' => 'アップロードファイルが大きすぎます。',
+                    'unsupported_format' => 'サポートされていないフォーマットです。',
+
+                    'restriction_info' => [
+                        '_' => 'アップロードは :link でのみ可能です',
+                        'link' => 'osu!サポーター',
+                    ],
                 ],
             ],
 
@@ -162,101 +164,115 @@ return [
         ],
 
         'extra' => [
-            'followers' => ':count フォロワー',
-            'unranked' => '最近のスコアはありません',
+            'none' => 'なし',
+            'unranked' => '最近のプレイはありません',
 
             'achievements' => [
                 'achieved-on' => '取得日時 :date',
-                'locked' => '',
+                'locked' => 'ロック',
                 'title' => '実績',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'by :artist',
                 'none' => 'まだ、空っぽ。',
-                'title' => '譜面',
+                'title' => 'ビートマップ',
 
                 'favourite' => [
-                    'title' => 'お気に入りの譜面',
+                    'title' => 'お気に入りのビートマップ',
                 ],
                 'graveyard' => [
-                    'title' => 'Graveyardの譜面',
+                    'title' => 'Graveyardのビートマップ',
                 ],
                 'loved' => [
-                    'title' => 'Lovedされた譜面',
+                    'title' => 'Lovedされたビートマップ',
                 ],
                 'ranked_and_approved' => [
-                    'title' => 'RankedかApprovedの譜面',
+                    'title' => 'Ranked & Approvedのビートマップ',
                 ],
                 'unranked' => [
-                    'title' => 'Pendingの譜面',
+                    'title' => '保留中のビートマップ',
                 ],
             ],
+            'discussions' => [
+                'title' => 'ディスカッション',
+                'title_longer' => '最近のディスカッション',
+                'show_more' => '他のディスカッションを見る',
+            ],
+            'events' => [
+                'title' => 'イベント',
+                'title_longer' => '最近のイベント',
+                'show_more' => '他のイベントを見る',
+            ],
             'historical' => [
-                'empty' => 'パフォーマンス測定可能の記録がまだありません。',
-                'title' => 'プレイの記録',
+                'empty' => 'パフォーマンスの記録がありません。',
+                'title' => '履歴',
 
                 'monthly_playcounts' => [
                     'title' => 'プレイ回数の履歴',
-                    'count_label' => '',
+                    'count_label' => 'プレイ数',
                 ],
                 'most_played' => [
-                    'count' => 'times played',
-                    'title' => '最もプレイ回数の多い譜面順',
+                    'count' => 'プレイ回数',
+                    'title' => 'プレイ回数の多いビートマップ',
                 ],
                 'recent_plays' => [
-                    'accuracy' => 'accuracy: :percentage',
+                    'accuracy' => '精度: :percentage',
                     'title' => '最近のプレイ（24時間以内）',
                 ],
                 'replays_watched_counts' => [
                     'title' => 'リプレイの再生回数',
-                    'count_label' => '',
+                    'count_label' => 'リプレイ再生回数',
                 ],
             ],
             'kudosu' => [
-                'available' => '使用可能のKudosu',
-                'available_info' => "Kudosuは譜面の優先順位に関わるKudosu starと交換できます。これは未交換のKudosuの数です。",
+                'available' => '使用可能なKudosu',
+                'available_info' => "KudosuはKudosuスターと交換ができ、ビートマップに注目を集めるのに役立ちます。これは交換されていないKudosuの数です。",
                 'recent_entries' => '最近のKudosu履歴',
                 'title' => 'Kudosu!',
-                'total' => '累計Kudosu取得数',
-                'total_info' => '譜面制作のModdingなどの貢献度を表す数値です。詳細は<a href="'.osu_url('user.kudosu').'">Kudosu!</a> wikiを参照。',
+                'total' => 'Kudosuの累計獲得数',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
-                    'empty' => "このユーザーはまだkudosu!を取得していません。",
+                    'empty' => "このユーザーはまだkudosu!を獲得していません！",
 
                     'beatmap_discussion' => [
                         'allow_kudosu' => [
-                            'give' => ':postのkudosu取得拒否の取り消しにより:amount取得',
+                            'give' => 'Modding投稿:post のkudosu獲得拒否の取り消しにより :amount 獲得',
                         ],
 
                         'deny_kudosu' => [
-                            'reset' => ':postの:amount取得を拒否',
+                            'reset' => ':postの :amount 獲得を拒否',
                         ],
 
                         'delete' => [
-                            'reset' => 'postの削除により:amount取り消し',
+                            'reset' => ':post の削除により :amount 取り消し',
                         ],
 
                         'restore' => [
-                            'give' => ':postの復元により:amount取得',
+                            'give' => ':post の復元により :amount 獲得',
                         ],
 
                         'vote' => [
-                            'give' => ':postのvoteにより:amount取得',
-                            'reset' => ':postのvote減少により:amount取り消し',
+                            'give' => ':post での投票により :amount 獲得',
+                            'reset' => ':post の投票損失により :amount 取り消し',
                         ],
 
                         'recalculate' => [
-                            'give' => ':postのvotes再計算により:amount取得',
-                            'reset' => ':postびvotes再計算により:amount取り消し',
+                            'give' => ':post の投票再計算により :amount 獲得',
+                            'reset' => ':post の投票再計算により :amount 取り消し',
                         ],
                     ],
 
                     'forum_post' => [
-                        'give' => ':postの投稿で:amount取得',
+                        'give' => ':post の投稿で:giverから :amount 獲得',
                         'reset' => ':postの:giverによるkudosuリセット',
                         'revoke' => ':postの:giverによるkudosu拒否',
                     ],
+                ],
+
+                'total_info' => [
+                    '_' => 'ユーザーのビートマップモデレーションへの貢献度に基いています。詳細は :link を確認して下さい。',
+                    'link' => 'このページ',
                 ],
             ],
             'me' => [
@@ -264,17 +280,22 @@ return [
             ],
             'medals' => [
                 'empty' => "このユーザーはまだメダルを取得していません。",
-                'recent' => '',
+                'recent' => '最新',
                 'title' => 'メダル',
             ],
+            'posts' => [
+                'title' => '投稿',
+                'title_longer' => '最近の投稿',
+                'show_more' => '他の投稿を見る',
+            ],
             'recent_activity' => [
-                'title' => '最近の活動',
+                'title' => '最近のアクティビティ',
             ],
             'top_ranks' => [
-                'download_replay' => 'リプレイの保存',
-                'empty' => 'まだ記録を作ってません！',
-                'not_ranked' => 'Ranked譜面のみがppを授与します。',
-                'pp_weight' => '',
+                'download_replay' => 'リプレイをダウンロード',
+                'empty' => 'まだ記録がありません！',
+                'not_ranked' => 'Rankedビートマップのみがppを与えます。',
+                'pp_weight' => '割合 :percentage',
                 'title' => 'ランク',
 
                 'best' => [
@@ -284,15 +305,22 @@ return [
                     'title' => '1位の記録',
                 ],
             ],
+            'votes' => [
+                'given' => '与えた投票（３ヶ月）',
+                'received' => '受け取った投票（３ヶ月）',
+                'title' => '投票',
+                'title_longer' => '最近の投票',
+                'vote_count' => ':count_delimited 投票',
+            ],
             'account_standing' => [
                 'title' => 'アカウントの状態',
                 'bad_standing' => "<strong>:username</strong>のアカウントはルール違反の記録があります。",
-                'remaining_silence' => '<strong>:username</strong>:durationで発言禁止が解かれます。',
+                'remaining_silence' => '<strong>:username</strong>は:durationで再び発言ができるようになります。',
 
                 'recent_infringements' => [
                     'title' => '最近の違反',
                     'date' => '日付',
-                    'action' => '行為',
+                    'action' => 'アクション',
                     'length' => '期間',
                     'length_permanent' => '永久',
                     'description' => '詳細',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'プレイヤー :info',
+            'info' => '情報',
         ],
 
         'info' => [
@@ -320,47 +348,59 @@ return [
             'occupation' => '職業',
             'skype' => 'Skype',
             'twitter' => 'Twitter',
-            'website' => 'サイト',
+            'website' => 'ウェブサイト',
         ],
         'not_found' => [
-            'reason_1' => '対象はユーザーネームを変更した可能性があります。',
-            'reason_2' => 'セキュリティの問題や不正利用の可能性によりアカウントが一時的に利用不可能になっている場合があります。',
+            'reason_1' => 'ユーザー名を変更した可能性があります。',
+            'reason_2' => 'セキュリティの問題や不正利用の可能性によりアカウントが一時的に利用できなくなる可能性があります。',
             'reason_3' => '打ち間違いがないか確認してください！',
-            'reason_header' => '考えられる主な理由：',
+            'reason_header' => '考えられる理由：',
             'title' => 'ユーザーが見つかりませんでした。 ｡･ﾟ･(ﾉД` )･ﾟ･｡',
         ],
         'page' => [
+            'button' => 'プロフィールページを編集する',
             'description' => '<strong>me!</strong>はプロフィール上で自由に編集できる領域です。',
             'edit_big' => 'me!を編集',
-            'placeholder' => '内容はここ',
-            'restriction_info' => "<a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!サポーター</a>限定の機能です。",
+            'placeholder' => 'ここにページの内容を入力',
+
+            'restriction_info' => [
+                '_' => 'この機能を解除するには:linkする必要があります。',
+                'link' => 'osu!サポーター',
+            ],
         ],
         'post_count' => [
-            '_' => 'フォーラム投稿 :link',
+            '_' => 'フォーラム投稿数 :link',
             'count' => ':count個',
         ],
         'rank' => [
             'country' => ':modeの国内ランク',
-            'country_simple' => '',
+            'country_simple' => '国別ランキング',
             'global' => ':modeの世界ランク',
-            'global_simple' => '',
+            'global_simple' => '世界ランキング',
         ],
         'stats' => [
-            'hit_accuracy' => '精度（Accuracy）',
+            'hit_accuracy' => '精度',
             'level' => 'レベル :level',
-            'level_progress' => '',
+            'level_progress' => '次のレベルまで',
             'maximum_combo' => '最大コンボ',
-            'medals' => '',
+            'medals' => 'メダル',
             'play_count' => 'プレイ回数',
             'play_time' => 'プレイ時間',
             'ranked_score' => '合計Rankedスコア',
-            'replays_watched_by_others' => 'リプレイの再生回数',
+            'replays_watched_by_others' => 'リプレイが再生された回数',
             'score_ranks' => 'スコアランク',
             'total_hits' => '合計ヒット数',
             'total_score' => '合計スコア',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Ranked & Approvedのビートマップ',
+            'loved_beatmapset_count' => 'Lovedされたビートマップ',
+            'unranked_beatmapset_count' => '保留中のビートマップ',
+            'graveyard_beatmapset_count' => 'Graveyardのビートマップ',
         ],
     ],
+
     'status' => [
+        'all' => '全て',
         'online' => 'オンライン',
         'offline' => 'オフライン',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'アカウントの認証',
+    ],
+
+    'view_mode' => [
+        'card' => 'カードビュー',
+        'list' => '一覧表示',
     ],
 ];

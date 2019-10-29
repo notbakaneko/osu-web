@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,18 +21,18 @@
 return [
     'match' => [
         'beatmap-deleted' => 'beatmap ที่ถูกลบ',
-        'difference' => 'โดยคะแนน :difference',
+        'difference' => 'ผลต่าง :difference',
         'failed' => 'ล้มเหลว',
         'header' => 'แข่งขันแบบหลายคน',
         'in-progress' => '(การแข่งขันกำลังดำเนินการ)',
-        'in_progress_spinner_label' => '',
+        'in_progress_spinner_label' => 'การแข่งขันกำลังดำเนินการ',
         'loading-events' => 'กำลังโหลดสิ่งที่เกิดขึ้น...',
         'winner' => ':team ชนะ',
 
         'events' => [
             'player-left' => ':user ออกจากแมตช์',
             'player-joined' => ':user เข้าร่วมแมตช์',
-            'player-kicked' => ':user ถูกเตะออกจากการแข่งขันแล้ว',
+            'player-kicked' => ':user ถูกเตะออกจากการแข่งขัน',
             'match-created' => ':user ได้สร้างการแข่งขัน',
             'match-disbanded' => 'การแข่งขันถูกยกเลิก',
             'host-changed' => ':user กลายเป็นโฮส',

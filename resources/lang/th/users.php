@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => ":user's ประวัติการมอด",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'การสนทนาล่าสุด',
@@ -47,15 +47,15 @@ return [
     ],
 
     'blocks' => [
-        'banner_text' => '',
-        'blocked_count' => '',
-        'hide_profile' => '',
-        'not_blocked' => '',
-        'show_profile' => '',
-        'too_many' => '',
+        'banner_text' => 'คุณได้บล็อกผู้ใช้รายนี้แล้ว',
+        'blocked_count' => 'บล็อกผู้ใช้งาน (:count)',
+        'hide_profile' => 'ซ่อนโปรไฟล์',
+        'not_blocked' => 'ผู้ใช้นี้ไม่ได้ถูกบล็อก',
+        'show_profile' => 'แสดงโปรไฟล์',
+        'too_many' => 'จำนวนการบล็อกถึงขีดจำกัดแล้ว',
         'button' => [
-            'block' => '',
-            'unblock' => '',
+            'block' => 'บล็อก',
+            'unblock' => 'ยกเลิกการบล็อค',
         ],
     ],
 
@@ -78,7 +78,7 @@ return [
         'forgot' => 'ลืมรหัสผ่าน?',
         'beta' => [
             'main' => 'การเข้าถึงข้อมูลนี้มีข้อจำกัด จำกัดเฉพาะผู้ใช้ที่ได้รับการยกเว้นเท่านั้น',
-            'small' => '',
+            'small' => '(กำลังจะได้รับ osu!supporters เร็วๆนี้)',
         ],
 
         'here' => 'ที่นี่', // this is substituted in when generating a link above. change it to suit the language.
@@ -88,9 +88,6 @@ return [
         'title' => 'โพสต์ทั้งหมดของ:username',
     ],
 
-    'signup' => [
-        '_' => 'สมัครสมาชิก',
-    ],
     'anonymous' => [
         'login_link' => 'คลิกเพื่อลงชื่อเข้าใช้',
         'login_text' => 'ลงชื่อเข้าใช้',
@@ -99,25 +96,25 @@ return [
     ],
     'logout_confirm' => 'คุณแน่ใจหรือว่าต้องการออกจากระบบ? :(',
     'report' => [
-        'button_text' => '',
-        'comments' => '',
-        'placeholder' => '',
-        'reason' => '',
-        'thanks' => '',
-        'title' => '',
+        'button_text' => 'รายงาน',
+        'comments' => 'ความคิดเห็นเพิ่มเติม',
+        'placeholder' => 'โปรดให้ข้อมูลที่คุณคิดว่าจะมีประโยชน์',
+        'reason' => 'เหตุผล',
+        'thanks' => 'ขอบคุณสำหรับการรายงาน',
+        'title' => 'รายงาน :username?',
 
         'actions' => [
-            'send' => '',
-            'cancel' => '',
+            'send' => 'ส่งการรายงาน',
+            'cancel' => 'ยกเลิก',
         ],
 
         'options' => [
-            'cheating' => '',
-            'insults' => '',
-            'spam' => '',
-            'unwanted_content' => '',
-            'nonsense' => '',
-            'other' => '',
+            'cheating' => 'เล่นผิดกติกา / โกง',
+            'insults' => 'ดูหมิ่น เหยียดหยามตนเอง / ผู้อื่น',
+            'spam' => 'สแปม',
+            'unwanted_content' => 'ส่งลิงก์ที่มีเนื้อหาที่ไม่เหมาะสม',
+            'nonsense' => 'เรื่องไร้สาระ',
+            'other' => 'อื่นๆ (ระบุ)',
         ],
     ],
     'restricted_banner' => [
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!ผู้สนับสนุน',
         'joined_at' => 'เข้าร่วมเมื่อ :date',
         'lastvisit' => 'ออนไลน์ล่าสุด :date',
+        'lastvisit_online' => 'ออนไลน์ในขณะนี้',
         'missingtext' => 'คุณอาจจะผิดพลาดนะ! (หรือไม่ก็ผู้ใช้อาจจะถูกแบน)',
         'origin_country' => 'มาจาก :country',
         'page_description' => 'osu! - ทุกสิ่งทุกอย่างที่คุณอยากรู้เกี่ยวกับ :username!',
@@ -148,10 +146,14 @@ return [
                     'button' => 'อัพโหลดรูปภาพ',
                     'dropzone' => 'วางที่นี่เพื่ออัพโหลด',
                     'dropzone_info' => 'นอกจากนี้คุณยังสามารถวางรูปภาพเพื่ออัปโหลด',
-                    'restriction_info' => "อัพโหลดพร้อมแล้ว สำหรับ <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!ผู้สนับสนุน</a> เท่านั้น",
                     'size_info' => 'รูปภาพหน้าปกควรจะมีขนาด 2800x620',
                     'too_large' => 'ไฟล์มีขนาดใหญ่เกินไป',
                     'unsupported_format' => 'ไม่รองรับไฟล์นามสกุลนี้',
+
+                    'restriction_info' => [
+                        '_' => '',
+                        'link' => '',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => ':count ผู้ติดตาม',
+            'none' => '',
             'unranked' => 'ยังไม่มีการเล่น',
 
             'achievements' => [
                 'achieved-on' => 'สำเร็จเมื่อวันที่ :date',
-                'locked' => '',
+                'locked' => 'ล็อค',
                 'title' => 'รางวัลความสำเร็จ',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'โดย :artist',
                 'none' => 'ยังไม่มี... อะ.',
                 'title' => 'บีทแมพ',
 
@@ -182,7 +184,7 @@ return [
                     'title' => 'สุสานบีทแมพ',
                 ],
                 'loved' => [
-                    'title' => '',
+                    'title' => 'Beatmaps ที่ชื่นชอบ',
                 ],
                 'ranked_and_approved' => [
                     'title' => 'แรงค์บีทแมพ & บีทแมพที่ได้รับการยอมรับ',
@@ -191,13 +193,23 @@ return [
                     'title' => 'บีทแมพที่กำลังทำ',
                 ],
             ],
+            'discussions' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
+            ],
+            'events' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
+            ],
             'historical' => [
                 'empty' => 'ไม่มี performance ที่บันทึกไว้. :(',
                 'title' => 'ประวัติ',
 
                 'monthly_playcounts' => [
                     'title' => 'ประวัติการเล่น',
-                    'count_label' => '',
+                    'count_label' => 'จำนวนการเล่น',
                 ],
                 'most_played' => [
                     'count' => 'จำนวนครั้งที่เล่น',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'ประวัติการดูรีเพลย์',
-                    'count_label' => '',
+                    'count_label' => 'การดูรีเพลย์',
                 ],
             ],
             'kudosu' => [
@@ -218,8 +230,6 @@ return [
                 'recent_entries' => 'ประวัติ Kudosu ล่าสุด',
                 'title' => 'Kudosu!',
                 'total' => 'Kudosu ที่ได้รับ',
-                'total_info' => 'ขึ้นอยู่กับจำนวนผู้ใช้ที่ได้รับการดูแล บีทแมพ. 
-ดู <a href="'.osu_url('user.kudosu').'">this page</a> สำหรับข้อมูลเพิ่มเติม',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -259,23 +269,33 @@ return [
                         'revoke' => 'Denied kudosu by :giver for the post :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => '',
+                    'link' => '',
+                ],
             ],
             'me' => [
                 'title' => 'ฉัน!',
             ],
             'medals' => [
                 'empty' => "ผู้ใช้คนนี้ยังไม่มีอะไรเลย. ;_;",
-                'recent' => '',
+                'recent' => 'ล่าสุด',
                 'title' => 'เหรียญตรา',
+            ],
+            'posts' => [
+                'title' => '',
+                'title_longer' => '',
+                'show_more' => '',
             ],
             'recent_activity' => [
                 'title' => 'ล่า​สุด',
             ],
             'top_ranks' => [
-                'download_replay' => '',
+                'download_replay' => 'ดาวน์โหลดรีเพลย์',
                 'empty' => 'ยังไม่มี performance ที่เจ๋งๆบันทึกไว้เลย . :(',
                 'not_ranked' => 'บีทแมพแรงค์เท่านั้นที่ให้พีพี',
-                'pp_weight' => '',
+                'pp_weight' => 'weighted :percentage',
                 'title' => 'อันดับ',
 
                 'best' => [
@@ -284,6 +304,13 @@ return [
                 'first' => [
                     'title' => 'First Place Ranks',
                 ],
+            ],
+            'votes' => [
+                'given' => '',
+                'received' => '',
+                'title' => '',
+                'title_longer' => '',
+                'vote_count' => '',
             ],
             'account_standing' => [
                 'title' => 'ชื่อเสียงของบัญชี',
@@ -309,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'ผู้เล่น :info',
+            'info' => 'ข้อมูล',
         ],
 
         'info' => [
@@ -331,10 +358,15 @@ return [
             'title' => 'ไม่พบผู้ใช้นี้',
         ],
         'page' => [
+            'button' => 'แก้ไขโปรไฟล์',
             'description' => '<strong>me!</strong> is a personal customisable area in your profile page.',
             'edit_big' => 'Edit me!',
             'placeholder' => 'Type page content here',
-            'restriction_info' => "You need to be an <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> to unlock this feature.",
+
+            'restriction_info' => [
+                '_' => '',
+                'link' => '',
+            ],
         ],
         'post_count' => [
             '_' => 'การมีส่วนร่วม :link',
@@ -342,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => 'อันดับประเทศของ :mode',
-            'country_simple' => '',
+            'country_simple' => 'อันดับในประเทศ',
             'global' => 'อันดับทั่วโลกของ :mode',
-            'global_simple' => '',
+            'global_simple' => 'อันดับทั่วโลก',
         ],
         'stats' => [
             'hit_accuracy' => 'ความแม่นยำเฉลี่ย',
             'level' => 'เลเวล :level',
-            'level_progress' => '',
+            'level_progress' => 'ความคืบหน้าในการอัพเลเวล',
             'maximum_combo' => 'คอมโบสูงสุด',
-            'medals' => '',
+            'medals' => 'เหรียญตรา',
             'play_count' => 'จำนวนครั้งที่เล่น',
             'play_time' => 'เวลาการเล่นทั้งหมด',
             'ranked_score' => 'คะแนนแรงค์',
@@ -359,9 +391,16 @@ return [
             'score_ranks' => 'Score Ranks',
             'total_hits' => 'Total Hits',
             'total_score' => 'คะแนนรวมทั้งหมด',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => '',
+            'loved_beatmapset_count' => '',
+            'unranked_beatmapset_count' => '',
+            'graveyard_beatmapset_count' => '',
         ],
     ],
+
     'status' => [
+        'all' => 'ทั้งหมด',
         'online' => 'ออนไลน์',
         'offline' => 'ออฟไลน์',
     ],
@@ -370,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'ยืนยันตัวตนบัญชี',
+    ],
+
+    'view_mode' => [
+        'card' => '',
+        'list' => '',
     ],
 ];

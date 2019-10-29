@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', και ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => '',
-        'back_to_previous' => '',
+        'admin' => 'Διαχειριστής',
+        'back_to_previous' => 'Επιστροφή στην προηγούμενη κατάσταση',
+        'back_to_top' => 'Πίσω στην αρχή',
         'cancel' => 'Ακύρωση',
         'change' => 'κάντε αλλαγές',
         'click_to_copy' => 'κάντε κλικ για να αντιγράψετε στο πρόχειρο',
         'click_to_copy_copied' => 'αντιγράφτηκε στο πρόχειρο!',
+        'close' => '',
+        'collapse' => 'σύμπτυξη',
         'delete' => 'Διαγραφή',
-        'edit' => '',
+        'edit' => 'Επεξεργασία',
+        'expand' => 'επέκταση',
         'hide' => 'απόκρυψη',
         'permalink' => 'permalink',
         'permalink_copied' => 'το link αντιγράφτηκε',
@@ -46,14 +54,22 @@ return [
         'reply_reopen' => 'Απάντηση και εκ νέου άνοιγμα',
         'reply_resolve' => 'Απάντηση και Αρχειοθέτηση',
         'reset' => 'Επαναφορά',
-        'restore' => '',
+        'restore' => 'Επαναφορά',
         'save' => 'Αποθήκευση',
         'saving' => 'Γίνεται αποθήκευση...',
         'search' => 'Αναζήτηση',
         'see_more' => 'δείτε περισσότερα',
         'show' => 'προβολή',
+        'show_deleted' => 'Εμφάνιση διαγραμμένου',
         'show_more' => 'εμφάνιση περισσότερων',
+        'show_more_options' => 'περισσότερες επιλογές',
+        'update' => '',
         'upload_image' => 'ανεβάστε εικόνα',
+
+        'watch' => [
+            'to_0' => '',
+            'to_1' => '',
+        ],
     ],
 
     'count' => [
@@ -63,17 +79,22 @@ return [
         'hours' => ':count ώρα|:count ώρες',
         'item' => ':count μονάδα|:count μονάδες',
         'minute_short_unit' => 'λεπτό|λεπτά',
-        'minutes' => '',
+        'minutes' => ':count λεπτό|:count λεπτά',
         'months' => ':count μήνας|:count μήνες',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 'δευτ.|δευτ.',
+        'star_priority' => '',
+        'update' => '',
+        'view' => '',
         'years' => ':count χρόνος|:count χρόνια',
     ],
 
     'countdown' => [
-        'days' => '',
-        'hours' => '',
-        'minutes' => '',
-        'seconds' => '',
+        'days' => 'μέρες',
+        'hours' => 'ώρες',
+        'minutes' => 'λεπτά',
+        'seconds' => 'δευτερόλεπτα',
     ],
 
     'datetime' => [
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'αφήστε εδώ για να ανεβάσετε',
+    ],
+
+    'input' => [
+        'search' => '',
     ],
 
     'pagination' => [

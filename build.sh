@@ -9,11 +9,6 @@ if [ -z "${OSU_SKIP_CACHE_PERMISSION_OVERRIDE:-}" ]; then
     chmod -R 777 storage bootstrap/cache || true
 fi
 
-if [ ! -d node_modules ]; then
-  mkdir -p ~/node_modules
-  ln -snf ~/node_modules node_modules
-fi
-
 if [ -f composer.phar ]; then
   php composer.phar self-update
 else
@@ -26,19 +21,36 @@ php composer.phar config -g github-oauth.github.com 98cbc568911ef1e060a3a31623f2
 
 rm -f bootstrap/cache/*.php bootstrap/cache/*.json
 
-php composer.phar install
+if [ -z "${OSU_INSTALL_DEV:-}" ]; then
+  php composer.phar install --no-dev
+else
+  php composer.phar install
+fi
 
 php artisan view:clear
 
 # e.g. OSU_SKIP_DB_MIGRATION=1 ./build.sh to bypass running migrations
 if [ -z "${OSU_SKIP_DB_MIGRATION:-}" ]; then
   php artisan migrate --force
+else
+  echo "OSU_SKIP_DB_MIGRATION set, skipping DB migration."
 fi
 
 php artisan passport:keys
-php artisan lang:js resources/assets/js/messages.js
-php artisan laroute:generate
 
-command -v yarn || npm install -g yarn
-yarn
-yarn run production
+# e.g. OSU_SKIP_ASSET_BUILD=1 ./build.sh to bypass building javascript assets
+if [ -z "${OSU_SKIP_ASSET_BUILD:-}" ]; then
+  if [ ! -d node_modules ]; then
+    mkdir -p ~/node_modules
+    ln -snf ~/node_modules node_modules
+  fi
+
+  php artisan ziggy:generate
+
+  command -v yarn || npm install -g yarn
+  yarn
+  yarn run generate-localizations
+  yarn run production
+else
+  echo "OSU_SKIP_ASSET_BUILD set, skipping javascript asset build."
+fi

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Historique des modifications de :user",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'Discussions commencées récemment',
@@ -88,9 +88,6 @@ return [
         'title' => 'Posts de :username',
     ],
 
-    'signup' => [
-        '_' => 'S\'inscrire',
-    ],
     'anonymous' => [
         'login_link' => 'Cliquez pour vous connecter',
         'login_text' => 'Se connecter',
@@ -132,6 +129,7 @@ return [
         'is_supporter' => 'osu!supporter',
         'joined_at' => 'Ici depuis :date',
         'lastvisit' => 'Vu pour la dernière fois :date',
+        'lastvisit_online' => 'Actuellement en ligne',
         'missingtext' => 'Vous avez peut-être fait une faute de frappe ! (ou l\'utilisateur est banni)',
         'origin_country' => 'De :country',
         'page_description' => 'osu! - Tout ce que vous devez savoir à propos de :username!',
@@ -148,10 +146,14 @@ return [
                     'button' => 'Mettre en ligne l\'image',
                     'dropzone' => 'Déplacez ici pour uploader',
                     'dropzone_info' => 'Vous pouvez aussi glisser-déposer l\'image ici pour la mettre en ligne',
-                    'restriction_info' => "Mise en ligne disponible pour les <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporters</a> uniquement",
                     'size_info' => 'La taille de la bannière devrait être de 2800x620',
                     'too_large' => 'Le fichier est trop volumineux.',
                     'unsupported_format' => 'Format non supporté.',
+
+                    'restriction_info' => [
+                        '_' => 'Mise en ligne disponible pour les :link uniquement',
+                        'link' => 'osu!supporters',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => ':count abonné|:count abonnés',
+            'none' => 'aucun',
             'unranked' => 'Aucune partie récente',
 
             'achievements' => [
                 'achieved-on' => 'Acquis le :date',
-                'locked' => '',
+                'locked' => 'Verrouillé',
                 'title' => 'Succès',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'par :artist',
                 'none' => 'Aucune... pour le moment.',
                 'title' => 'Beatmaps',
 
@@ -191,13 +193,23 @@ return [
                     'title' => 'Beatmaps en attente',
                 ],
             ],
+            'discussions' => [
+                'title' => 'Discussions',
+                'title_longer' => 'Discussions récentes',
+                'show_more' => 'voir plus de discussions',
+            ],
+            'events' => [
+                'title' => 'Événements',
+                'title_longer' => 'Événements récents',
+                'show_more' => 'voir plus d\'événements',
+            ],
             'historical' => [
                 'empty' => 'Aucune performance enregistrée. :(',
                 'title' => 'Historique',
 
                 'monthly_playcounts' => [
                     'title' => 'Historique des parties',
-                    'count_label' => '',
+                    'count_label' => 'Parties',
                 ],
                 'most_played' => [
                     'count' => 'Nombre de fois jouée',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Historique des replays regardées',
-                    'count_label' => '',
+                    'count_label' => 'Replays Regardés',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => 'Historique de Kudosu récent',
                 'title' => 'Kudosu!',
                 'total' => 'Kudosu reçus au total',
-                'total_info' => 'Basé sur la contribution de l\'utilisateur à la modération de beatmaps. Voir <a href="'.osu_url('user.kudosu').'">cette page</a> pour plus d\'informations.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,14 +269,24 @@ return [
                         'revoke' => 'Kudosu refusé par :giver pour le post sur :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => 'Basé sur la quantité d\'une contribution que l\'utilisateur a apportée à la modération de la beatmap. Voir :link pour plus d\'informations.',
+                    'link' => 'cette page',
+                ],
             ],
             'me' => [
                 'title' => 'moi !',
             ],
             'medals' => [
                 'empty' => "Cet utilisateur n'en a encore jamais reçue. ;_;",
-                'recent' => '',
+                'recent' => 'Dernier',
                 'title' => 'Médailles',
+            ],
+            'posts' => [
+                'title' => 'Messages',
+                'title_longer' => 'Messages récents',
+                'show_more' => 'voir plus de messages',
             ],
             'recent_activity' => [
                 'title' => 'Activité récente',
@@ -274,7 +295,7 @@ return [
                 'download_replay' => 'Télécharger le replay',
                 'empty' => 'Pas de première place. :(',
                 'not_ranked' => 'Seules les beatmaps classées accordent des pp.',
-                'pp_weight' => '',
+                'pp_weight' => 'pondéré :percentage',
                 'title' => 'Classements',
 
                 'best' => [
@@ -283,6 +304,13 @@ return [
                 'first' => [
                     'title' => 'Premières places',
                 ],
+            ],
+            'votes' => [
+                'given' => 'Votes donnés (3 derniers mois)',
+                'received' => 'Votes reçus (3 derniers mois)',
+                'title' => 'Votes',
+                'title_longer' => 'Votes récents',
+                'vote_count' => ':count_delimited vote|:count_delimited votes',
             ],
             'account_standing' => [
                 'title' => 'Statut du compte',
@@ -308,8 +336,8 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'Joueur :info',
+            'info' => 'Info',
         ],
 
         'info' => [
@@ -330,10 +358,15 @@ return [
             'title' => 'Utilisateur non trouvé! ;_;',
         ],
         'page' => [
+            'button' => 'Modifier le profil',
             'description' => '<strong>Moi !</strong> est une zone personnalisable du profil.',
             'edit_big' => 'Éditez-moi !',
             'placeholder' => 'Tapez le contenu de la page',
-            'restriction_info' => "Vous devez être <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> pour débloquer cette fonctionnalité.",
+
+            'restriction_info' => [
+                '_' => 'Vous devez être un :link pour déverrouiller cette fonctionnalité.',
+                'link' => 'osu!supporter',
+            ],
         ],
         'post_count' => [
             '_' => 'A contribué à :link',
@@ -341,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => 'Classement national en :mode',
-            'country_simple' => '',
+            'country_simple' => 'Classement Pays',
             'global' => 'Classement global en :mode',
-            'global_simple' => '',
+            'global_simple' => 'Classement Global',
         ],
         'stats' => [
             'hit_accuracy' => 'Précision',
             'level' => 'Niveau :level',
-            'level_progress' => '',
+            'level_progress' => 'Progression jusqu’au prochain niveau',
             'maximum_combo' => 'Combo maximum',
-            'medals' => '',
+            'medals' => 'Médailles',
             'play_count' => 'Nombres de parties',
             'play_time' => 'Temps de jeu total',
             'ranked_score' => 'Score classé',
@@ -358,9 +391,16 @@ return [
             'score_ranks' => 'Classements de Scores',
             'total_hits' => 'Nombre de clics',
             'total_score' => 'Score total',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Beatmaps classées et approuvées',
+            'loved_beatmapset_count' => 'Beatmaps adorées',
+            'unranked_beatmapset_count' => 'Beatmaps en attente',
+            'graveyard_beatmapset_count' => 'Beatmaps dans le cimetière',
         ],
     ],
+
     'status' => [
+        'all' => 'Tous',
         'online' => 'En ligne',
         'offline' => 'Hors-ligne',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'Vérification de compte',
+    ],
+
+    'view_mode' => [
+        'card' => 'Vue en carte',
+        'list' => 'Vue en liste',
     ],
 ];

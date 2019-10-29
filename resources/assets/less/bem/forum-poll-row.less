@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,44 +18,29 @@
 
 .forum-poll-row {
   @_top: forum-poll-row;
+  margin: 3px 0; // vertical +2px from __row
+  display: flex;
+  flex-direction: column;
 
-  &--voted {
-    font-weight: bold;
-  }
-
-  &__column {
-    padding: 5px;
-    white-space: nowrap;
-
-    &--bar {
-      width: 100%;
-      min-width: 100px;
-    }
-
-    &--option-text {
-      max-width: 450px; // less than (@screen-sm-min - (<bar size> + <extras>))
-    }
-
-    &--percentage {
-      color: @pink-darker;
-
-      .@{_top}--voted & {
-        color: @purple-darker;
-      }
-    }
-  }
-
-  &__option-text {
-    margin-left: 5px;
-    overflow: hidden;
-  }
-
-  &__option-text-container {
+  &__row {
+    margin: 2px 0;
     display: flex;
-    align-items: center;
-    margin: 0;
-    font-size: inherit;
-    font-weight: inherit;
-    text-transform: none;
+    flex-wrap: wrap;
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__result {
+    flex: none;
+    min-width: 60px;
+    padding-right: 5px;
+
+    @media @desktop {
+      text-align: right;
+      padding-right: 0;
+      padding-left: 5px;
+    }
   }
 }

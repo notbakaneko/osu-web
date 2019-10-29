@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,44 +17,30 @@
  */
 
 import { MessageJSON } from 'chat/chat-api-responses';
-import { action, observable} from 'mobx';
+import * as _ from 'lodash';
+import { action, computed, observable } from 'mobx';
 import User from 'models/user';
+import * as moment from 'moment';
 
 export default class Message {
-  @observable messageId: number = -1;
-  @observable uuid: string = osu.uuid();
   @observable channelId: number = -1;
-  @observable sender: User;
   @observable content: string = '';
-  @observable timestamp: string = moment().toISOString();
-  @observable isAction: boolean = false;
-
-  @observable persisted: boolean = false;
   @observable errored: boolean = false;
+  @observable isAction: boolean = false;
+  @observable messageId: number | string = -1;
+  @observable persisted: boolean = false;
+  @observable sender: User;
+  @observable timestamp: string = moment().toISOString();
+  @observable uuid: string = osu.uuid();
+
+  @computed
+  get parsedContent(): string {
+    return osu.linkify(_.escape(this.content), true);
+  }
 
   constructor() {
     this.uuid = osu.uuid();
     this.sender = new User(-1); // placeholder user
-  }
-
-  @action
-  update(message: Message): Message {
-    this.messageId = message.messageId;
-    this.channelId = message.channelId;
-    this.content = message.content;
-    this.timestamp = message.timestamp;
-    this.isAction = message.isAction;
-    this.errored = message.errored;
-    this.sender = message.sender;
-
-    return this;
-  }
-
-  @action
-  persist(): Message {
-    this.persisted = true;
-
-    return this;
   }
 
   static fromJSON(json: MessageJSON): Message {
@@ -68,5 +54,25 @@ export default class Message {
       timestamp: json.timestamp,
       uuid: osu.uuid(),
     });
+  }
+
+  @action
+  persist(): Message {
+    this.persisted = true;
+
+    return this;
+  }
+
+  @action
+  update(message: Message): Message {
+    this.messageId = message.messageId;
+    this.channelId = message.channelId;
+    this.content = message.content;
+    this.timestamp = message.timestamp;
+    this.isAction = message.isAction;
+    this.errored = message.errored;
+    this.sender = message.sender;
+
+    return this;
   }
 }

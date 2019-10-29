@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Discussie is vergrendeld.',
         'first_post' => 'Je kan de startpost niet verwijderen.',
+
+        'attributes' => [
+            'message' => 'Het bericht',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Ongeldige moeilijkheidsgraad opgegeven.',
         'invalid_beatmapset_id' => 'Ongeldige beatmap opgegeven.',
         'locked' => 'Discussie is vergrendeld.',
+
+        'attributes' => [
+            'message_type' => 'Berichttype',
+            'timestamp' => 'Timestamp',
+        ],
 
         'hype' => [
             'guest' => 'He moet ingelogd zijn om te hypen.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Op een verwijderde comment reageren is niet toegestaan.',
+
+        'attributes' => [
+            'message' => 'Het bericht',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Ongeldig :attribute opgegeven.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Beatmap metadata post verwijderen is niet toegestaan.',
             'beatmapset_post_no_edit' => 'Beatmap metadata post bewerken is niet toegestaan.',
+            'only_quote' => 'Uw antwoord bevat slechts een citaat.',
+
+            'attributes' => [
+                'post_text' => 'Post body',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Onderwerptitel',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Een optie dupliceren is niet toegestaan.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Kan een poll niet bewerken na meer dan :limit uren.',
+            'hiding_results_forever' => 'Kan resultaten van een poll die nooit eindigt niet verbergen.',
             'invalid_max_options' => 'Opties per gebruiker mag niet groter zijn dan het aantal opties.',
             'minimum_one_selection' => 'Minstens een optie per gebruiker is vereist.',
             'minimum_two_options' => 'Moet ten minste twee opties hebben.',
             'too_many_options' => 'Maximum aantal opties overschreden.',
+
+            'attributes' => [
+                'title' => 'Poll titel',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Selecteer een optie om te stemmen.',
             'too_many' => 'Meer opties selecteren is niet toegestaan.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Het maximum aantal toegestane OAuth toepassingen is overschreden.',
+            'url' => 'Voer een geldige URL in.',
+
+            'attributes' => [
+                'name' => 'Applicatienaam',
+                'redirect' => 'Applicatie Terugbel URL',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Deze gebruikersnaam kan elk moment beschikbaar worden!',
         'username_invalid_characters' => 'De opgevraagde gebruikersnaam bevat ongeldige tekens.',
         'username_in_use' => 'Gebruikersnaam is al in gebruik!',
+        'username_locked' => 'Gebruikersnaam is al in gebruik!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Gebruik oftewel underscores of spaties, niet beide!',
         'username_no_spaces' => "Gebruikersnaam kan niet beginnen of eindigen met spaties!",
         'username_not_allowed' => 'Deze gebruikersnaam is niet toegestaan.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Wachtwoord bevestiging komt niet overeen.',
         'too_long' => 'Maximum lengte overschreden - kan enkel tot :limit karakters zijn.',
 
+        'attributes' => [
+            'username' => 'Gebruikersnaam',
+            'user_email' => 'E-mailadres',
+            'password' => 'Wachtwoord',
+        ],
+
         'change_username' => [
+            'restricted' => 'Je kan je gebruikersnaam niet wijzigen terwijl je restricted bent.',
             'supporter_required' => [
                 '_' => 'Je moet :link hebben om je naam te veranderen!',
                 'link_text' => 'support osu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Je kunt jezelf niet rapporteren!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Hoeveelheid',
+                'cost' => 'Kosten',
+            ],
+        ],
     ],
 ];

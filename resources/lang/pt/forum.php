@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'Fóruns osu!',
 
     'covers' => [
+        'edit' => 'Editar capa',
+
         'create' => [
             '_' => 'Colocar imagem de capa',
             'button' => 'Carregar imagem',
@@ -42,35 +44,44 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Última Publicação',
+
+        'index' => [
+            'title' => 'Índice do Fórum',
+        ],
+
         'topics' => [
             'empty' => 'Sem tópicos!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Marcar o fórum como visto',
+        'forums' => 'Marcar os fóruns como vistos',
+        'busy' => 'A marcar como visto...',
     ],
 
     'post' => [
         'confirm_destroy' => 'Queres mesmo apagar a publicação?',
         'confirm_restore' => 'Queres mesmo restaurar a publicação?',
-        'edited' => 'Editado pela ultima vez por :user :when, editado :count vezes no total.',
+        'edited' => 'Editado pela última vez por :user :when, editado :count vezes no total.',
         'posted_at' => 'publicado :when',
 
         'actions' => [
             'destroy' => 'Eliminar publicação',
             'restore' => 'Restaurar publicação',
             'edit' => 'Editar publicação',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nova resposta',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited publicação|:count_delimited publicações',
+            'topic_starter' => 'Criador do Tópico',
         ],
     ],
 
@@ -85,7 +96,7 @@ return [
         'go_to_latest' => 'ver ultima publicação',
         'latest_post' => ':when por :user',
         'latest_reply_by' => 'última resposta por :user',
-        'new_topic' => 'Publicar um novo tópico',
+        'new_topic' => 'Novo tópico',
         'new_topic_login' => 'Inicia sessão para publicar um novo tópico',
         'post_reply' => 'Publicar',
         'reply_box_placeholder' => 'Escreve aqui para responder',
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'começado por :user',
 
         'create' => [
+            'close' => 'Fechar',
             'preview' => 'Amostra',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -101,10 +113,10 @@ return [
             'submit' => 'Publicar',
 
             'necropost' => [
-                'default' => 'Este tópico tem estado inactivo há já algum tempo. Publica aqui só se tiveres uma razão específica para o fazer.',
+                'default' => 'Este tópico tem estado inativo há já algum tempo. Publica aqui só se tiveres uma razão específica para o fazer.',
 
                 'new_topic' => [
-                    '_' => "Este tópico tem estado inactivo há já algum tempo. Se não tiveres uma razão específica para publicar aqui, por favor :create como alternativa.",
+                    '_' => "Este tópico tem estado inativo há já algum tempo. Se não tiveres uma razão específica para publicar aqui, por favor :create como alternativa.",
                     'create' => 'criar um novo tópico',
                 ],
             ],
@@ -142,7 +154,7 @@ return [
 
             'info' => [
                 'total' => 'Subscreveste a :total tópicos.',
-                'unread' => 'Tu tens :unread respostas não-lidas a tópicos subscritos.',
+                'unread' => 'Tu tens :unread respostas não lidas a tópicos subscritos.',
             ],
         ],
 
@@ -167,22 +179,26 @@ return [
         'create' => [
             'create_poll' => 'Criação de Sondagem',
 
+            'preview' => 'Publicar Amostra',
+
             'create_poll_button' => [
                 'add' => 'Criar uma sondagem',
-                'remove' => 'Cancelar a criação de uma sondagem',
+                'remove' => 'Cancelar a criação duma sondagem',
             ],
 
             'poll' => [
+                'hide_results' => 'Ocultar os resultados da sondagem.',
+                'hide_results_info' => 'Eles serão mostrados só quando a sondagem concluir.',
                 'length' => 'Manter a sondagem por',
                 'length_days_suffix' => 'dias',
                 'length_info' => 'Deixa em branco para uma sondagem interminável',
                 'max_options' => 'Opções por utilizador',
-                'max_options_info' => 'Este é o número de opções que cada utilizador poderá seleccionar ao votar.',
+                'max_options_info' => 'Este é o número de opções que cada utilizador poderá selecionar ao votar.',
                 'options' => 'Opções',
                 'options_info' => 'Coloca cada conjunto de opções numa nova linha. Poderás inserir até 10 opções.',
                 'title' => 'Pergunta',
                 'vote_change' => 'Permitir re-votação.',
-                'vote_change_info' => 'Se activada, os utilizadores são capazes de alterar o seu voto.',
+                'vote_change_info' => 'Se ativada, os utilizadores são capazes de alterar o seu voto.',
             ],
         ],
 
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'visualizações',
+            'feature_votes' => 'prioridade estrela',
             'replies' => 'respostas',
+            'views' => 'visualizações',
         ],
 
         'issue_tag_added' => [
@@ -258,13 +275,24 @@ return [
             'to_2_done' => 'O tópico foi afixado e marcado como uma declaração pública',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Publicações Eliminadas',
             'total_posts' => 'Publicações Totais',
 
             'feature_vote' => [
-                'current' => 'Prioridade Actual: +:count',
+                'current' => 'Prioridade Atual: +:count',
                 'do' => 'Promover este pedido',
+
+                'info' => [
+                    '_' => 'Isto é um :feature_request. Pedidos de características e funcionalidades podem ser votados por :supporters.',
+                    'feature_request' => 'solicitação de características/funcionalidades',
+                    'supporters' => 'apoiantes',
+                ],
 
                 'user' => [
                     'count' => '{0} sem voto|{1} :count voto|[2,*] :count votos',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Edição de Sondagem',
+                'edit_warning' => 'Ao editar uma sondagem, isto irá remover os resultados atuais!',
                 'vote' => 'Votar',
+
+                'button' => [
+                    'change_vote' => 'Trocar de voto',
+                    'edit' => 'Editar a sondagem',
+                    'view_results' => 'Ir para os resultados',
+                    'vote' => 'Votar',
+                ],
 
                 'detail' => [
                     'end_time' => 'A sondagem irá terminar em :time',
                     'ended' => 'A sondagem terminou a :time',
+                    'results_hidden' => 'Os resultados serão mostrados após a sondagem terminar.',
                     'total' => 'Votos totais :count',
                 ],
             ],
@@ -286,10 +324,10 @@ return [
 
         'watch' => [
             'to_not_watching' => 'Não marcado',
-            'to_watching' => 'Marcado',
-            'to_watching_mail' => 'Marcado com notificação',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'to_watching' => 'Marcador',
+            'to_watching_mail' => 'Marcador com notificação',
+            'tooltip_mail_disable' => 'A notificação está ativada. Clica para desativares',
+            'tooltip_mail_enable' => 'A notificação está desativada. Clica para ativares',
         ],
     ],
 ];

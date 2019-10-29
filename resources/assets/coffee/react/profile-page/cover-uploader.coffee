@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,11 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, label, p, strong} = ReactDOMFactories
+import { CoverSelection } from './cover-selection'
+import * as React from 'react'
+import { a, div, label, p, strong } from 'react-dom-factories'
+import { StringWithComponent } from 'string-with-component'
 el = React.createElement
 
 
-class ProfilePage.CoverUploader extends React.Component
+export class CoverUploader extends React.Component
   constructor: (props) ->
     super props
 
@@ -66,7 +69,7 @@ class ProfilePage.CoverUploader extends React.Component
     labelClass += ' disabled' unless @props.canUpload
 
     div className: 'profile-cover-uploader',
-      el ProfilePage.CoverSelection,
+      el CoverSelection,
         url: @props.cover.custom_url
         thumbUrl: @props.cover.custom_url
         isSelected: !@props.cover.id?
@@ -80,9 +83,15 @@ class ProfilePage.CoverUploader extends React.Component
 
       div className: 'profile-cover-uploader__info',
         p className: 'profile-cover-uploader__info-entry',
-          strong
-            dangerouslySetInnerHTML:
-              __html: osu.trans 'users.show.edit.cover.upload.restriction_info'
+          strong null,
+            el StringWithComponent,
+              mappings:
+                ':link': a
+                  href: laroute.route('store.products.show', product: 'supporter-tag')
+                  key: 'link'
+                  target: '_blank'
+                  osu.trans 'users.show.edit.cover.upload.restriction_info.link'
+              pattern: osu.trans 'users.show.edit.cover.upload.restriction_info._'
 
         p className: 'profile-cover-uploader__info-entry',
           osu.trans 'users.show.edit.cover.upload.dropzone_info'

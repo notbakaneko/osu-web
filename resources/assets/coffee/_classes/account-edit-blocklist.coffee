@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -17,7 +17,7 @@
 ###
 
 class @AccountEditBlocklist
-  element: 'user-list__content'
+  element: 'block-list__content'
   jsClass: '.js-account-edit-blocklist'
 
   constructor: ->
@@ -28,7 +28,7 @@ class @AccountEditBlocklist
   updateBlockCount: =>
     return unless currentUser.id?
 
-    $("#{@jsClass}-count").text osu.trans('users.blocks.blocked_count', count: currentUser.blocks.length)
+    $("#{@jsClass}-count").text osu.trans('users.blocks.blocked_count', count: currentUser.blocks?.length ? 0)
 
 
   toggle: (e) =>

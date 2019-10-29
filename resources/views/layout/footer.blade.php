@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,14 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-@php
-    $blockClass = 'no-print footer';
-
-    foreach ($modifiers ?? [] as $modifier) {
-        $blockClass .= " footer--{$modifier}";
-    }
-@endphp
-<footer class="{{ $blockClass }}">
+<footer class="no-print {{ class_with_modifiers('footer', $modifiers ?? []) }}">
     @if ($withLinks ?? true)
         <div class="footer__row">
             @foreach (footer_legal_links() as $action => $link)

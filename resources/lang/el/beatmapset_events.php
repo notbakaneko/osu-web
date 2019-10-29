@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Approved.',
         'discussion_delete' => 'Ένας συντονιστής διέγραψε τη συζήτηση :discussion.',
+        'discussion_lock' => 'Η συζήτηση για αυτό το beatmap έχει απενεργοποιηθεί. (:text)',
         'discussion_post_delete' => 'Ένας συντονιστής διέγραψε μια δημοσίευση από τη συζήτηση :discussion.',
         'discussion_post_restore' => 'Ένας συντονιστής επανέφερε μία δημοσίευση στη συζήτηση :discussion.',
         'discussion_restore' => 'Ένας συντονιστής επανέφερε τη συζήτηση :discussion.',
+        'discussion_unlock' => 'Η συζήτηση για αυτό το beatmap έχει ενεργοποιηθεί.',
         'disqualify' => 'Disqualified από :user. Αιτία: :discussion (:text).',
         'disqualify_legacy' => 'Disqualified από :user. Αιτία: :text.',
         'issue_reopen' => 'Το ζήτημα επιλύθηκε, η συζήτηση :discussion ξανάνοιξε.',
@@ -45,8 +47,8 @@ return [
         'title' => 'Γεγονότα Beatmapset',
 
         'form' => [
-            'period' => '',
-            'types' => '',
+            'period' => 'Περίοδος',
+            'types' => 'Τύποι',
         ],
     ],
 
@@ -57,23 +59,23 @@ return [
     ],
 
     'type' => [
-        'approve' => '',
-        'discussion_delete' => '',
-        'discussion_post_delete' => '',
-        'discussion_post_restore' => '',
-        'discussion_restore' => '',
-        'disqualify' => '',
-        'issue_reopen' => '',
-        'issue_resolve' => '',
-        'kudosu_allow' => '',
-        'kudosu_deny' => '',
-        'kudosu_gain' => '',
-        'kudosu_lost' => '',
-        'kudosu_recalculate' => '',
-        'love' => '',
-        'nominate' => '',
-        'nomination_reset' => '',
-        'qualify' => '',
-        'rank' => '',
+        'approve' => 'Έγκριση',
+        'discussion_delete' => 'Διαγραφή συζήτησης',
+        'discussion_post_delete' => 'Διαγραφή απάντησης συζήτησης',
+        'discussion_post_restore' => 'Αποκατάσταση απάντησης συζήτησης',
+        'discussion_restore' => 'Αποκατάσταση συζήτησης',
+        'disqualify' => 'Αποκλεισμός',
+        'issue_reopen' => 'Επανάνοιγμα συζήτησης',
+        'issue_resolve' => 'Επίλυση συζήτησης',
+        'kudosu_allow' => 'Επίδομα Kudosu',
+        'kudosu_deny' => 'Άρνηση Kudosu',
+        'kudosu_gain' => 'Κέρδος Kudosu',
+        'kudosu_lost' => 'Απώλεια Kudosu',
+        'kudosu_recalculate' => 'Επαναϋπολογισμός Kudosu',
+        'love' => 'Αγαπημένο',
+        'nominate' => 'Διορισμός',
+        'nomination_reset' => 'Επαναφορά διορισμού',
+        'qualify' => 'Προσόντα',
+        'rank' => 'Κατάταξη',
     ],
 ];

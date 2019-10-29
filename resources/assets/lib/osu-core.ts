@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -16,6 +16,8 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { BeatmapsetSearchController } from 'beatmaps/beatmapset-search-controller';
+import { UserJSON } from 'chat/chat-api-responses';
 import ChatOrchestrator from 'chat/chat-orchestrator';
 import ChatWorker from 'chat/chat-worker';
 import RootDataStore from 'stores/root-data-store';
@@ -23,19 +25,27 @@ import UserLoginObserver from 'user-login-observer';
 import Dispatcher from './dispatcher';
 import WindowFocusObserver from './window-focus-observer';
 
+declare global {
+  interface Window {
+    currentUser: UserJSON;
+  }
+}
+
 // will this replace main.coffee eventually?
 export default class OsuCore {
-  window: Window;
-  dispatcher: Dispatcher;
-  dataStore: RootDataStore;
-  chatWorker: ChatWorker;
+  beatmapsetSearchController: BeatmapsetSearchController;
   chatOrchestrator: ChatOrchestrator;
+  chatWorker: ChatWorker;
+  dataStore: RootDataStore;
+  dispatcher: Dispatcher;
   userLoginObserver: UserLoginObserver;
+  window: Window;
   windowFocusObserver: WindowFocusObserver;
 
   constructor(window: Window) {
     this.window = window;
     // should probably figure how to conditionally or lazy initialize these so they don't all init when not needed.
+    // TODO: requires dynamic imports to lazy load modules.
     this.dispatcher = new Dispatcher();
     this.dataStore = new RootDataStore(this.dispatcher);
     this.chatWorker = new ChatWorker(this.dispatcher, this.dataStore);
@@ -43,8 +53,24 @@ export default class OsuCore {
     this.userLoginObserver = new UserLoginObserver(this.window, this.dispatcher);
     this.windowFocusObserver = new WindowFocusObserver(this.window, this.dispatcher);
 
-    if (currentUser !== null) {
-      this.dataStore.userStore.getOrCreate(currentUser.id, currentUser);
-    }
+    this.beatmapsetSearchController = new BeatmapsetSearchController(this.dataStore.beatmapsetSearch);
+
+    // script could load before currentUser is set, so wait until page loaded.
+    $(document).on('turbolinks:load.osu-core', () => {
+      if (window.currentUser != null) {
+        this.dataStore.userStore.getOrCreate(window.currentUser.id, window.currentUser);
+      }
+      $(document).off('turbolinks:load.osu-core');
+    });
+
+    $.subscribe('user:update', this.setUser);
+  }
+
+  get currentUser() {
+    return window.currentUser;
+  }
+
+  private setUser = (event: JQuery.Event, user: UserJSON) => {
+    this.dataStore.userStore.getOrCreate(user.id, user);
   }
 }

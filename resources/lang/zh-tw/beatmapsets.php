@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => '討論',
 
         'details' => [
+            'approved' => '批准於 ',
+            'favourite' => '收藏這張圖譜',
+            'logged-out' => '下載圖譜前請先登入！',
+            'loved' => 'loved 於 ',
             'mapped_by' => '由 :mapper 製作',
+            'qualified' => '提名於 ',
+            'ranked' => '進榜於 ',
             'submitted' => '發佈於 ',
+            'unfavourite' => '取消收藏',
             'updated' => '上次更新於 ',
             'updated_timeago' => '最後更新時間 :timeago',
-            'ranked' => '進榜於 ',
-            'approved' => '批准於 ',
-            'qualified' => '提名於 ',
-            'loved' => 'loved 於 ',
-            'logged-out' => '下載圖譜前請先登入！',
+
             'download' => [
                 '_' => '下載',
-                'video' => '含影像',
-                'no-video' => '不含影像',
                 'direct' => 'osu!direct',
+                'no-video' => '不含影像',
+                'video' => '含影像',
             ],
-            'favourite' => '收藏這張圖譜',
-            'unfavourite' => '取消收藏',
-            'favourited_count' => '還有很多人...',
+
+            'login_required' => [
+                'bottom' => '以使用更多的功能',
+                'top' => '登入',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => '您收藏的圖譜已達上限，請取消一張再試。',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => '推薦這個圖譜如果你喜歡玩它來幫助它進度至 <strong>進榜</strong> 狀態。',
 
             'current' => [
-                '_' => '',
+                '_' => '此地圖目前是 :status 的。',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => '待處理',
+                    'qualified' => '已提名',
+                    'wip' => '此功能仍在開發中',
                 ],
             ],
         ],

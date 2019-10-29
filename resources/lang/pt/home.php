@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,12 +21,13 @@
 return [
     'landing' => [
         'download' => 'Descarregar agora',
-        'online' => '<strong>:players</strong> actualmente online em <strong>:games</strong> jogos',
+        'online' => '<strong>:players</strong> atualmente online em <strong>:games</strong> jogos',
         'peak' => 'Pico, :count utilizadores online',
         'players' => '<strong>:count</strong> jogadores registados',
+        'title' => 'bem-vindo',
 
         'slogan' => [
-            'main' => 'o melhor grátis-para-ganhar jogo de ritmo',
+            'main' => 'o melhor jogo de ritmo grátis',
             'sub' => 'o ritmo está a um clique de distância',
         ],
     ],
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Pesquisa avançada',
         'button' => 'Pesquisar',
         'empty_result' => 'Nada encontrado!',
-        'missing_query' => 'Uma palavra-chave de pesquisa com um mínimo de :n caracteres é exigida',
+        'keyword_required' => 'Uma palavra-chave de pesquisa é necessária',
         'placeholder' => 'escreve para procurar',
         'title' => 'Procurar',
 
@@ -115,7 +116,7 @@ return [
         'title' => 'painel de controlo',
         'news' => [
             'title' => 'Notícias',
-            'error' => 'Erro ao carregar notícias, tentar recarregar a página?...',
+            'error' => 'Erro ao carregar notícias, tenta recarregar a página?...',
         ],
         'header' => [
             'welcome' => 'Olá, <strong>:username</strong>!',
@@ -143,8 +144,8 @@ return [
         'title' => 'Uau!',
         'subtitle' => 'Pareces estar a ter um momento agradável! :D',
         'body' => [
-            'part-1' => 'Sabias que o osu! corre sem nenhuma publicidade, e que depende de jogadores para apoiar o seu desenvolvimento e custos de execução?',
-            'part-2' => 'Também sabias que ao apoiar o osu! recebes um monte de funcionalidades úteis, tal como <strong>downloads dentro do jogo</strong> que acciona automaticamente em jogos de espectador e multijogador?',
+            'part-1' => 'Sabias que o osu! corre sem nenhuma publicidade, e que depende de jogadores para apoiar o seu desenvolvimento e custos de manutenção?',
+            'part-2' => 'Também sabias que ao apoiar o osu! recebes um monte de funcionalidades úteis, tal como <strong>downloads dentro do jogo</strong> que aciona automaticamente em jogos de espectador e multijogador?',
         ],
         'find-out-more' => 'Clica aqui para descobrir mais!',
         'download-starting' => "Ah, e não te preocupes - o teu download já foi iniciado para ti ;)",

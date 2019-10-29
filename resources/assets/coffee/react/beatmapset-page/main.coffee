@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,10 +16,17 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div} = ReactDOMFactories
+import { Header } from './header'
+import { Hype } from './hype'
+import { Info } from './info'
+import { Scoreboard } from './scoreboard'
+import { Comments } from 'comments'
+import { CommentsManager } from 'comments-manager'
+import * as React from 'react'
+import { div } from 'react-dom-factories'
 el = React.createElement
 
-class BeatmapsetPage.Main extends React.Component
+export class Main extends React.Component
   constructor: (props) ->
     super props
 
@@ -145,7 +152,7 @@ class BeatmapsetPage.Main extends React.Component
 
   toggleFavourite: =>
     @favouriteXhr = $.ajax
-      url: laroute.route('beatmapsets.update-favourite', beatmapset: @props.beatmapset.id)
+      url: laroute.route('beatmapsets.favourites.store', beatmapset: @props.beatmapset.id)
       method: 'post'
       dataType: 'json'
       data:
@@ -153,8 +160,8 @@ class BeatmapsetPage.Main extends React.Component
 
     .done (data) =>
       @setState
-        favcount: data.favcount
-        hasFavourited: data.favourited
+        favcount: data.favourite_count
+        hasFavourited: !@state.hasFavourited
 
     .fail (xhr, status) =>
       if status == 'abort'
@@ -185,7 +192,7 @@ class BeatmapsetPage.Main extends React.Component
   render: ->
     div className: 'osu-layout osu-layout--full',
       div className: 'osu-layout__row osu-layout__row--page-compact',
-        el BeatmapsetPage.Header,
+        el Header,
           beatmapset: @props.beatmapset
           beatmaps: @state.beatmaps
           currentBeatmap: @state.currentBeatmap
@@ -193,20 +200,20 @@ class BeatmapsetPage.Main extends React.Component
           favcount: @state.favcount
           hasFavourited: @state.hasFavourited
 
-        el BeatmapsetPage.Info,
+        el Info,
           beatmapset: @props.beatmapset
           beatmap: @state.currentBeatmap
 
       div className: 'osu-layout__section osu-layout__section--extra',
         if @props.beatmapset.can_be_hyped
           div className: 'osu-page osu-page--generic-compact',
-            el BeatmapsetPage.Hype,
+            el Hype,
               beatmapset: @props.beatmapset
               currentUser: currentUser
 
-        if @props.beatmapset.has_scores
+        if @props.beatmapset.is_scoreable
           div className: 'osu-page osu-page--generic',
-            el BeatmapsetPage.Scoreboard,
+            el Scoreboard,
               type: @state.currentScoreboardType
               beatmap: @state.currentBeatmap
               scores: @state.scores
@@ -215,7 +222,7 @@ class BeatmapsetPage.Main extends React.Component
               enabledMods: @state.enabledMods
               countries: @props.countries
               loading: @state.loading
-              hasScores: @props.beatmapset.has_scores
+              isScoreable: @props.beatmapset.is_scoreable
 
         div className: 'osu-page osu-page--generic-compact',
           el CommentsManager,

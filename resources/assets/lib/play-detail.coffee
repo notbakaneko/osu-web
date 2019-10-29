@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,8 +16,10 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { Mods } from 'mods'
 import { PlayDetailMenu } from 'play-detail-menu'
 import { createElement as el, PureComponent } from 'react'
+import * as React from 'react'
 import { a, button, div, i, img, small, span } from 'react-dom-factories'
 import { ScoreHelper } from 'score-helper'
 
@@ -47,7 +49,7 @@ export class PlayDetail extends PureComponent
       div className: "#{bn}__group #{bn}__group--top",
         div
           className: "#{bn}__icon #{bn}__icon--main"
-          div className: "score-rank-v2 score-rank-v2--full score-rank-v2--#{score.rank}"
+          div className: "score-rank score-rank--full score-rank--#{score.rank}"
 
         div className: "#{bn}__detail",
           a
@@ -77,23 +79,23 @@ export class PlayDetail extends PureComponent
         div className: "#{bn}__score-detail #{bn}__score-detail--score",
           div
             className: "#{bn}__icon #{bn}__icon--extra"
-            div className: "score-rank-v2 score-rank-v2--full score-rank-v2--#{score.rank}"
+            div className: "score-rank score-rank--full score-rank--#{score.rank}"
           div className: "#{bn}__score-detail-top-right",
             div
               className: "#{bn}__accuracy-and-weighted-pp"
               span
                 className: "#{bn}__accuracy"
-                "#{(score.accuracy * 100).toFixed(2)}%"
+                "#{osu.formatNumber(score.accuracy * 100, 2)}%"
               if score.weight?
                 span
                   className: "#{bn}__weighted-pp"
-                  Math.round(score.weight.pp).toLocaleString()
+                  osu.formatNumber(Math.round(score.weight.pp))
                   'pp'
             if score.weight?
               div
                 className: "#{bn}__pp-weight"
                 osu.trans 'users.show.extra.top_ranks.pp_weight',
-                  percentage: "#{Math.round(score.weight.percentage)}%"
+                  percentage: "#{osu.formatNumber(Math.round(score.weight.percentage))}%"
         div
           className: "#{bn}__score-detail #{bn}__score-detail--mods"
           el Mods, mods: score.mods, modifiers: ['profile-page']
@@ -102,7 +104,7 @@ export class PlayDetail extends PureComponent
           className: "#{bn}__pp"
           if pp > 0
             span null,
-              Math.round(pp).toLocaleString()
+              osu.formatNumber(Math.round(pp))
               span className: "#{bn}__pp-unit", 'pp'
           else
             span
@@ -115,17 +117,7 @@ export class PlayDetail extends PureComponent
           className: "#{bn}__more"
           if ScoreHelper.hasMenu(score)
             el PlayDetailMenu,
-              onHide: @hide
-              onShow: @show
-              score: score
-
-
-  hide: =>
-    @props.onMenuActive?(active: false, index: @props.index)
-
-
-  show: =>
-    @props.onMenuActive?(active: true, index: @props.index)
+              { score }
 
 
   toggleCompact: =>

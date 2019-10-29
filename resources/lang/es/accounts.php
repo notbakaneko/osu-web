@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
 
         'avatar' => [
             'title' => 'Avatar',
+            'rules' => 'Por favor asegúrese de que su avatar se adhiere a :link.<br/>Esto significa que debe ser <strong>adecuado para todas las edades</strong>. Es decir, no desnudez, profanidad o contenido sugestivo.',
+            'rules_link' => 'las reglas de la comunidad',
         ],
 
         'email' => [
@@ -46,13 +48,13 @@ return [
             'title' => 'Perfil',
 
             'user' => [
+                'user_discord' => 'discord',
                 'user_from' => 'ubicación actual',
                 'user_interests' => 'intereses',
                 'user_msnm' => 'skype',
                 'user_occ' => 'ocupación',
                 'user_twitter' => 'twitter',
                 'user_website' => 'sitio web',
-                'user_discord' => 'discord',
             ],
         ],
 
@@ -60,6 +62,40 @@ return [
             'title' => 'Firma',
             'update' => 'actualizar',
         ],
+    ],
+
+    'notifications' => [
+        'title' => 'Notificaciones',
+        'topic_auto_subscribe' => 'activa automáticamente las notificaciones en nuevos temas del foro que crees',
+    ],
+
+    'oauth' => [
+        'authorized_clients' => 'clientes autorizados',
+        'own_clients' => 'clientes propios',
+        'title' => 'OAuth',
+    ],
+
+    'playstyles' => [
+        'keyboard' => 'teclado',
+        'mouse' => 'ratón',
+        'tablet' => 'tableta',
+        'title' => 'Estilos de juego',
+        'touch' => 'táctil',
+    ],
+
+    'privacy' => [
+        'friends_only' => 'Bloquear mensajes privados de gente que no está en tu lista de amigos',
+        'hide_online' => 'mostrarse como desconectado',
+        'title' => 'Privacidad',
+    ],
+
+    'security' => [
+        'current_session' => 'actual',
+        'end_session' => 'Cerrar sesión',
+        'end_session_confirmation' => 'Esto cerrará inmediatamente su sesión en ese dispositivo. ¿Esta seguro?',
+        'last_active' => 'Última vez activo:',
+        'title' => 'Seguridad',
+        'web_sessions' => 'sesiones web',
     ],
 
     'update_email' => [
@@ -72,26 +108,12 @@ return [
         'update' => 'actualizar',
     ],
 
-    'playstyles' => [
-        'title' => 'Estilos de juego',
-        'mouse' => 'ratón',
-        'keyboard' => 'teclado',
-        'tablet' => 'tableta',
-        'touch' => 'táctil',
+    'verification_completed' => [
+        'text' => 'Ya puedes cerrar esta pestaña/ventana',
+        'title' => 'Verificación completada',
     ],
 
-    'privacy' => [
-        'title' => 'Privacidad',
-        'friends_only' => 'Bloquear mensajes privados de gente que no está en tu lista de amigos',
-        'hide_online' => 'mostrarse como desconectado',
-    ],
-
-    'security' => [
-        'current_session' => 'actual',
-        'end_session' => 'Cerrar sesión',
-        'end_session_confirmation' => 'Esto cerrará inmediatamente su sesión en ese dispositivo. ¿Esta seguro?',
-        'last_active' => 'Última vez activo:',
-        'title' => 'Seguridad',
-        'web_sessions' => 'sesiones web',
+    'verification_invalid' => [
+        'title' => 'Enlace de verificación inválido o caducado',
     ],
 ];

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,7 @@
 .counter-box {
   @top: counter-box;
 
-  @color-deleted: @gray;
+  @color-deleted: black;
   @color-mapper-notes: @beatmap-discussion--color-mapper-note;
   @color-mine: @yellow-darker;
   @color-pending: @pink-darker;
@@ -41,10 +41,10 @@
   }
 
   .default-border-radius();
-  .border(fade(#000, 50%));
-  background-color: fade(#000, 70%);
+  .border(.osu-hsla(@osu-colour-b5, 0.25)[@hsla]);
+  background-color: @osu-colour-b5;
 
-  color: #fff;
+  color: @osu-colour-c1;
 
   display: inline-flex;
   justify-content: space-between;
@@ -54,17 +54,19 @@
   &:focus,
   &:active {
     text-decoration: none;
-    color: #fff;
+    color: @osu-colour-c1;
   }
 
   &--forum {
     margin: 5px;
+    padding: 0;
     width: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   &--beatmap-discussions {
-    .border(fade(#000, 25%));
-    background-color: #222;
     margin: 5px;
     height: 50px; // 50 is just what beatmap-list__item happens to end up at.
   }
@@ -104,6 +106,10 @@
   &__count {
     font-size: @font-size--large;
     font-weight: 300;
+
+    .@{top}--forum & {
+      color: @osu-colour-c2;
+    }
   }
 
   &__line {
@@ -112,10 +118,6 @@
     margin-left: 10px;
 
     .@{top}--deleted & {
-      background-color: @color-deleted;
-    }
-
-    .@{top}--forum-deleted & {
       background-color: @color-deleted;
     }
 
@@ -152,6 +154,10 @@
 
     .@{top}--beatmap-discussions & {
       margin-right: 10px;
+    }
+
+    .@{top}--forum & {
+      font-weight: normal;
     }
   }
 }

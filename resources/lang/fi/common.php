@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => ', ja ',
     ],
 
+    'badges' => [
+        'new' => '',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Takaisin ylös',
+        'admin' => 'Ylläpitäjä',
         'back_to_previous' => 'Takaisin',
+        'back_to_top' => 'Takaisin ylös',
         'cancel' => 'Peruuta',
-        'change' => 'muuta',
+        'change' => 'vaihda',
         'click_to_copy' => 'kopioi leikepöydälle',
         'click_to_copy_copied' => 'kopioitu leikepöydälle!',
+        'close' => '',
+        'collapse' => 'kutista',
         'delete' => 'Poista',
         'edit' => 'Muokkaa',
+        'expand' => 'suurenna',
         'hide' => 'piilota',
         'permalink' => 'pysyvä linkki',
         'permalink_copied' => 'linkki kopioitu',
@@ -49,11 +57,19 @@ return [
         'restore' => 'Palauta',
         'save' => 'Tallenna',
         'saving' => 'Tallennetaan...',
-        'search' => 'Etsi',
+        'search' => 'Hae',
         'see_more' => 'katso lisää',
         'show' => 'näytä',
+        'show_deleted' => 'Näytä poistetut',
         'show_more' => 'näytä lisää',
+        'show_more_options' => 'näytä lisävaihtoehtoja',
+        'update' => '',
         'upload_image' => 'lataa kuva',
+
+        'watch' => [
+            'to_0' => 'Lopeta seuraaminen',
+            'to_1' => 'Seuraa',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count tunti|:count tuntia',
         'item' => ':count kappale|:count kappaletta',
         'minute_short_unit' => 'm | m',
-        'minutes' => '',
+        'minutes' => ':count_delimited minuutti|:count_delimited minuuttia',
         'months' => ':count kuukausi|:count kuukautta',
+        'plus_others' => '',
+        'post' => '',
         'second_short_unit' => 's|s',
+        'star_priority' => '',
+        'update' => '',
+        'view' => '',
         'years' => ':count vuosi|:count vuotta',
     ],
 
@@ -97,6 +118,10 @@ return [
         'target' => 'pudota tähän ladataksesi',
     ],
 
+    'input' => [
+        'search' => '',
+    ],
+
     'pagination' => [
         'previous' => 'edellinen',
         'next' => 'seuraava',
@@ -112,8 +137,8 @@ return [
     ],
 
     'time' => [
-        'days_ago' => ':count päivä sitten |:count päivää sitten',
-        'hours_ago' => ':count tunti sitten |:count tuntia sitten',
+        'days_ago' => 'eilen |:count_delimited päivää sitten',
+        'hours_ago' => ':count_delimited tunti sitten |:count_delimited tuntia sitten',
         'now' => 'nyt',
         'remaining' => 'Aikaa jäljellä',
     ],

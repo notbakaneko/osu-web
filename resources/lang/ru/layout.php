@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ритм всего лишь в *клике* от тебя! Игра с Ouendan/EBA, Taiko и оригинальным типом игры, с многофункциональным редактором карт.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Сообщество',
+
+            'forum' => 'Форум',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Закрыть (Esc)',
+        'fullscreen' => 'Полноэкранный режим',
+        'zoom' => 'Увеличить / уменьшить',
+        'previous' => 'Предыдущий (стрелка влево)',
+        'next' => 'Следующий (стрелка вправо)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'общее',
             'account-edit' => 'настройки',
+            'account-verifyLink' => 'Проверка завершена',
             'friends-index' => 'друзья',
             'changelog-index' => 'список изменений',
             'changelog-build' => 'сборка',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'группы',
             'index' => 'главная',
             'legal-show' => 'информация',
-            'messages-index' => '',
+            'messages-index' => 'сообщения',
             'news-index' => 'новости',
             'news-show' => 'новости',
             'password-reset-index' => 'сброс пароля',
             'search' => 'поиск',
             'supportTheGame' => 'поддержать игру',
             'team' => 'команда',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'помощь',
@@ -53,7 +75,7 @@ return [
         ],
         'beatmaps' => [
             '_' => 'карты',
-            'artists' => 'featured artists',
+            'artists' => 'osu!featured artists',
             'beatmap_discussion_posts-index' => 'публикации в обсуждений карты',
             'beatmap_discussions-index' => 'обсуждения карты',
             'beatmapset-watches-index' => 'подписки на карты',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'сообщество',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'сообщения',
+            'chat-index' => 'сообщения',
             'dev' => 'разработка',
             'getForum' => 'форумы',
             'getLive' => 'прямые трансляции',
@@ -118,16 +140,18 @@ return [
             'reset' => 'восстановить',
             'new' => 'новый',
 
-            'messages' => 'Сообщения',
-            'settings' => 'Настройки',
-            'logout' => 'Выход',
             'help' => 'Помощь',
+            'logout' => 'Выход',
+            'messages' => 'Сообщения',
             'modding-history-discussions' => 'обсуждение',
             'modding-history-events' => 'история событий',
             'modding-history-index' => 'активность карты пользователя',
             'modding-history-posts' => 'история публикаций',
             'modding-history-votesGiven' => 'голоса',
             'modding-history-votesReceived' => 'полученные голоса',
+            'oauth_login' => 'вход для oauth',
+            'oauth_request' => 'авторизация oauth',
+            'settings' => 'Настройки',
         ],
         'store' => [
             '_' => 'магазин',
@@ -233,7 +257,7 @@ return [
     'popup_login' => [
         'login' => [
             'email' => 'почта или никнейм',
-            'forgot' => "Я забыл свои данные",
+            'forgot' => "я не помню, помогите",
             'password' => 'пароль',
             'title' => 'Войдите для продолжения',
 
@@ -244,8 +268,9 @@ return [
         ],
 
         'register' => [
-            'info' => "Вам нужен аккаунт, сэр. Почему у вас его всё ещё нет?",
-            'title' => "У вас нет аккаунта?",
+            'download' => '',
+            'info' => 'Вам нужен аккаунт, сэр. Почему у вас его всё ещё нет?',
+            'title' => "Нет аккаунта?",
         ],
     ],
 

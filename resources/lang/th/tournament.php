@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,7 @@
 
 return [
     'index' => [
-        'none_running' => 'ไม่มีทัวร์นาเมนต์ในขณะนี้ โปรดตรวจสอบในภายหลัง',
+        'none_running' => 'ไม่มีทัวร์นาเมนต์ในขณะนี้ มาทีหลังนะ',
         'registration_period' => 'Registration: :start to :end',
 
         'header' => [
@@ -29,7 +29,7 @@ return [
         ],
 
         'item' => [
-            'registered' => '',
+            'registered' => 'ผู้เล่นที่ลงทะเบียน',
         ],
 
         'state' => [
@@ -40,7 +40,7 @@ return [
 
     'show' => [
         'banner' => 'สนับสนุนทีมของคุณ',
-        'entered' => 'คุณลงทะเบียนการแข่งขันนี้แล้ว.<br><br>โปรดทราบ นี่ไม่ได้หมายความว่าคุณได้รับการแต่งตั้งในทีม<br><br>คำแนะนำเพิ่มเติมจะถูกส่งไปที่อีเมล์ของคุณเมื่อการแข่งขันใกล้จะเริ่ม กรุณาตรวจสอบให้แน่ใจว่าที่อยู่อีเมล์ osu! account ของคุณนั้นถูกต้อง',
+        'entered' => 'คุณลงทะเบียนการแข่งขันนี้แล้ว.<br><br>โปรดทราบว่าข้อความนี้<b>ไม่ได้</b>แปลว่าคุณจะได้อยู่ในทีม<br><br>และจะมีอีเมล์ที่มีคำแนะนำเพิ่มเติมส่งไปใกล้วันแข่ง และกรุณาตรวจสอบว่าอีเมล์ของบัญชี osu! นั้นถูกต้อง',
         'info_page' => 'หน้าข้อมูล',
         'login_to_register' => 'กรุณา :login เพื่อดูข้อมูลการลงทะเบียน',
         'not_yet_entered' => 'คุณไม่สามารถลงทะเบียนการแข่งขันนี้ได้',

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -58,8 +58,8 @@ return [
     ],
     'vote' => [
         'list' => 'votes',
-        'count' => ':count vote|:count votes',
-        'points' => ':count point|:count points',
+        'count' => ':count_delimited vote|:count_delimited votes',
+        'points' => ':count_delimited point|:count_delimited points',
     ],
     'dates' => [
         'ended' => 'Ended :date',

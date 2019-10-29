@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -67,7 +67,7 @@ class MultiSearch
 
     public function hasQuery()
     {
-        return mb_strlen($this->query) >= config('osu.search.minimum_length');
+        return present($this->query);
     }
 
     public function searches()

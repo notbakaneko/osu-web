@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,26 +16,37 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{div, h3, ul, li, p, span} = ReactDOMFactories
+import { ExtraHeader } from './extra-header'
+import * as React from 'react'
+import { a, div, h3, ul, li, p, span } from 'react-dom-factories'
+import { ShowMoreLink } from 'show-more-link'
+import { StringWithComponent } from 'string-with-component'
+import { ValueDisplay } from 'value-display'
 el = React.createElement
 
-class ProfilePage.Kudosu extends React.Component
+export class Kudosu extends React.Component
   render: =>
     div className: 'page-extra',
-      el ProfilePage.ExtraHeader, name: @props.name, withEdit: @props.withEdit
+      el ExtraHeader, name: @props.name, withEdit: @props.withEdit
 
       div className: 'kudosu-box',
         el ValueDisplay,
           modifiers: ['kudosu']
           label: osu.trans('users.show.extra.kudosu.total')
-          value: @props.user.kudosu.total.toLocaleString()
-          description: span dangerouslySetInnerHTML:
-            __html: osu.trans('users.show.extra.kudosu.total_info')
+          value: osu.formatNumber(@props.user.kudosu.total)
+          description:
+            el StringWithComponent,
+              mappings:
+                ':link': a
+                  href: laroute.route('wiki.show', page: 'Kudosu')
+                  key: 'link'
+                  osu.trans 'users.show.extra.kudosu.total_info.link'
+              pattern: osu.trans('users.show.extra.kudosu.total_info._')
 
         el ValueDisplay,
           modifiers: ['kudosu']
           label: osu.trans('users.show.extra.kudosu.available')
-          value: @props.user.kudosu.available.toLocaleString()
+          value: osu.formatNumber(@props.user.kudosu.available)
           description: osu.trans('users.show.extra.kudosu.available_info')
 
       if @props.recentlyReceivedKudosu?.length
@@ -51,9 +62,13 @@ class ProfilePage.Kudosu extends React.Component
               else
                 _.escape osu.trans('users.deleted')
 
-            post = osu.link kudosu.post?.url,
-              kudosu.post?.title
-              classNames: ['profile-extra-entries__link profile-extra-entries__link--kudosu']
+            post =
+              if kudosu.post?.url?
+                osu.link kudosu.post?.url,
+                  kudosu.post?.title
+                  classNames: ['profile-extra-entries__link profile-extra-entries__link--kudosu']
+              else
+                kudosu.post?.title
 
             li key: "kudosu-#{kudosu.id}", className: 'profile-extra-entries__item',
               div className: 'profile-extra-entries__detail',
@@ -67,7 +82,7 @@ class ProfilePage.Kudosu extends React.Component
 
           li className: 'profile-extra-entries__item',
             el ShowMoreLink,
-              modifiers: ['profile-page', 't-community-user-graygreen-darker']
+              modifiers: ['profile-page', 't-greyseafoam-dark']
               event: 'profile:showMore'
               hasMore: @props.pagination.recentlyReceivedKudosu.hasMore
               loading: @props.pagination.recentlyReceivedKudosu.loading

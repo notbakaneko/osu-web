@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Diskuze je uzamčená.',
         'first_post' => 'Počáteční příspěvek nelze odstranit.',
+
+        'attributes' => [
+            'message' => '',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Byla zadaná neplatná obtížnost.',
         'invalid_beatmapset_id' => 'Byla zadaná neplatná beatmapa.',
         'locked' => 'Diskuze je uzamčená.',
+
+        'attributes' => [
+            'message_type' => '',
+            'timestamp' => '',
+        ],
 
         'hype' => [
             'guest' => 'Musíš být přihlášek k nadšení.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Odpovídat na smazaný komentář není povoleno.',
+
+        'attributes' => [
+            'message' => '',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => '',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Mazání metadat beatmapy není povoleno.',
             'beatmapset_post_no_edit' => 'Editace metadat beatmapy není povoleno.',
+            'only_quote' => 'Tvoje odpověď obsahuje jenom citát.',
+
+            'attributes' => [
+                'post_text' => '',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => '',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Duplikované možnosti nejsou povoleny.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Nemůžete upravovat hlasování po více jak :limit hodinách',
+            'hiding_results_forever' => '',
             'invalid_max_options' => 'Možnost jednoho uživatele by neměla přesáhnout hodnotu povolených možností.',
             'minimum_one_selection' => 'Minimálně jedna možnost na uživatele je vyžadována.',
             'minimum_two_options' => 'Jsou vyžadovány alespoň dvě možnosti.',
             'too_many_options' => 'Byl překročen limit povolených možností.',
+
+            'attributes' => [
+                'title' => '',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Vyber možnost při hlasování.',
             'too_many' => 'Vybral jsi moc možností, než je povoleno.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => '',
+            'url' => '',
+
+            'attributes' => [
+                'name' => '',
+                'redirect' => '',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Toto uživatelské jméno bude k dispozici pro použití každou chvíli!',
         'username_invalid_characters' => 'Žádané uživatelské jméno obsahuje neplatné znaky.',
         'username_in_use' => 'Uživatelské jméno je již používáno!',
+        'username_locked' => 'Tohle jméno už někdo používá!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Použijte prosím podtržítka nebo mezery, ne obojí!',
         'username_no_spaces' => "Uživatelské jméno nesmí začínat nebo končit mezerou!",
         'username_not_allowed' => 'Toto uživatelské jméno není povoleno.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Zadaná hesla se neshodují.',
         'too_long' => 'Překročena maximální délka - maximální délka je :limit znaků.',
 
+        'attributes' => [
+            'username' => '',
+            'user_email' => '',
+            'password' => '',
+        ],
+
         'change_username' => [
+            'restricted' => '',
             'supporter_required' => [
                 '_' => 'Musíš mít :link na změnu jména!',
                 'link_text' => 'podpořit osu! nákupem supporter tagu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Nemůžete nahlásit sám sebe!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => '',
+                'cost' => '',
+            ],
+        ],
     ],
 ];

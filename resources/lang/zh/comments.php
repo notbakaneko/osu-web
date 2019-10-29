@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => '已删除',
+    'deleted_count' => ':count_delimited 已删除评论|:count_delimited 已删除评论',
     'edited' => ':user 编辑于 :timeago',
     'empty' => '暂无评论。',
+    'load_replies' => '加载回复',
     'replies' => '回复',
-    'show_replies' => '显示回复',
     'title' => '评论',
 
     'commentable_name' => [
@@ -43,7 +44,7 @@ return [
     ],
 
     'guest_button' => [
-        'new' => '登陆以评论',
+        'new' => '登录以评论',
         'reply' => '登录以回复',
     ],
 
@@ -65,12 +66,5 @@ return [
             '_' => '评论 :info',
             'info' => '详情',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

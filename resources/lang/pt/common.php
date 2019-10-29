@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,17 +29,25 @@ return [
         'last_word_connector' => ', e ',
     ],
 
+    'badges' => [
+        'new' => 'NOVOS',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'Voltar ao topo',
+        'admin' => 'Administrador',
         'back_to_previous' => 'Voltar à posição anterior',
+        'back_to_top' => 'Voltar ao topo',
         'cancel' => 'Cancelar',
         'change' => 'mudar',
         'click_to_copy' => 'clica para copiar para o bloco de notas',
         'click_to_copy_copied' => 'copiado para o bloco de notas!',
+        'close' => 'Fechar',
+        'collapse' => 'colapsar',
         'delete' => 'Apagar',
         'edit' => 'Editar',
+        'expand' => 'expandir',
         'hide' => 'ocultar',
-        'permalink' => 'permalink',
+        'permalink' => 'link permanente',
         'permalink_copied' => 'link copiado',
         'post' => 'Publicar',
         'reply' => 'Resposta',
@@ -52,8 +60,16 @@ return [
         'search' => 'Procurar',
         'see_more' => 'ver mais',
         'show' => 'mostrar',
+        'show_deleted' => 'Exibir eliminados',
         'show_more' => 'mostrar mais',
+        'show_more_options' => 'mostrar mais opções',
+        'update' => 'Atualizar',
         'upload_image' => 'carregar imagem',
+
+        'watch' => [
+            'to_0' => 'Deixar de ver',
+            'to_1' => 'Ver',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count hora|:count horas',
         'item' => ':count unidade|:count unidades',
         'minute_short_unit' => 'min|mins',
-        'minutes' => '',
+        'minutes' => ':count minuto|:count minutos',
         'months' => ':count mês|:count meses',
+        'plus_others' => '+ :count_delimited outro!|+ :count_delimited outros!',
+        'post' => ':count_delimited publicação|:count_delimited publicações',
         'second_short_unit' => 'seg|segs',
+        'star_priority' => ':count_delimited prioridade estrela|:count_delimited prioridades estrela',
+        'update' => ':count_delimited atualização|:count_delimited atualizações',
+        'view' => ':count_delimited visualização|:count_delimited visualizações',
         'years' => ':count ano|:count anos',
     ],
 
@@ -90,11 +111,15 @@ return [
         'keyboard' => 'Teclado',
         'mouse' => 'Rato',
         'tablet' => 'Tablet',
-        'touch' => 'Ecrã Táctil',
+        'touch' => 'Ecrã Tátil',
     ],
 
     'dropzone' => [
         'target' => 'larga aqui para carregar',
+    ],
+
+    'input' => [
+        'search' => 'pesquisar...',
     ],
 
     'pagination' => [

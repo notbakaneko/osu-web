@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -24,6 +24,7 @@ return [
         'online' => 'из них <strong>:players</strong> сейчас в <strong>:games</strong> играх',
         'peak' => 'Пик, :count активных игроков',
         'players' => 'зарегистрировано <strong>:count</strong> игроков',
+        'title' => 'добро пожаловать',
 
         'slogan' => [
             'main' => 'лучшая бесплатная ритм-игра',
@@ -35,7 +36,7 @@ return [
         'advanced_link' => 'Расширенный поиск',
         'button' => 'Найти',
         'empty_result' => 'Ничего не найдено!',
-        'missing_query' => 'Для поиска необходимо как минимум :n символов',
+        'keyword_required' => 'Требуется ключевое слово для поиска',
         'placeholder' => 'начинайте вводить',
         'title' => 'Поиск',
 

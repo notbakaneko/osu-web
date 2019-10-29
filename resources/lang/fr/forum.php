@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! forum',
 
     'covers' => [
+        'edit' => 'Modifier la couverture',
+
         'create' => [
             '_' => 'Définir la bannière',
             'button' => 'Uploader une image',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Dernier message',
+
+        'index' => [
+            'title' => 'Accueil du forum',
+        ],
+
         'topics' => [
             'empty' => 'Pas de sujets!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Marquer le forum comme lu',
+        'forums' => 'Marquer les forums comme lus',
+        'busy' => 'Marquer comme lu...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Supprimer le post',
             'restore' => 'Restaurer le post',
             'edit' => 'Modifier le post',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Nouvelle réponse',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited discussion|:count_delimited discussions',
+            'topic_starter' => 'Créateur du sujet',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'suivi par :user',
 
         'create' => [
+            'close' => 'Fermer',
             'preview' => 'Prévisualisation',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Créer un sondage',
 
+            'preview' => 'Aperçu de la discussion',
+
             'create_poll_button' => [
                 'add' => 'Créer un sondage',
                 'remove' => 'Annuler la création du sondage',
             ],
 
             'poll' => [
+                'hide_results' => 'Masquer les résultats du sondage.',
+                'hide_results_info' => 'Ils ne seront affichés qu\'après la clôture du sondage.',
                 'length' => 'Durée du sondage',
                 'length_days_suffix' => 'jours',
                 'length_info' => 'Laissez vide pour un sondage sans fin',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'vues',
+            'feature_votes' => 'priorité d\'étoiles',
             'replies' => 'réponses',
+            'views' => 'vues',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Le sujet a été épinglé et marqué en tant qu\'annonce',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Posts Supprimés',
             'total_posts' => 'Total des Posts',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Priorité : +:count',
                 'do' => 'Promouvoir cette requête',
+
+                'info' => [
+                    '_' => 'Il s\'agit d\'une :feature_request. Les demandes de fonctionnalité peuvent être votées par des :supporters.',
+                    'feature_request' => 'demande de fonctionnalité',
+                    'supporters' => 'supporters',
+                ],
 
                 'user' => [
                     'count' => '{0} pas de vote|{1} :count vote|[2,*] :count votes',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Édition du sondage',
+                'edit_warning' => 'Éditer un sondage supprimera les résultats actuels !',
                 'vote' => 'Voter',
+
+                'button' => [
+                    'change_vote' => 'Changer le vote',
+                    'edit' => 'Éditer le sondage',
+                    'view_results' => 'Passer aux résultats',
+                    'vote' => 'Voter',
+                ],
 
                 'detail' => [
                     'end_time' => 'Le sondage termine à :time',
                     'ended' => 'Sondage terminé :time',
+                    'results_hidden' => 'Les résultats seront affichés après la fin du sondage.',
                     'total' => 'Total de votes: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Vous ne suivez pas ce sujet',
             'to_watching' => 'Suivre',
             'to_watching_mail' => 'Suivre avec notifications',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'La notification est activée. Cliquez pour désactiver',
+            'tooltip_mail_enable' => 'La notification est désactivée. Cliquez pour activer',
         ],
     ],
 ];

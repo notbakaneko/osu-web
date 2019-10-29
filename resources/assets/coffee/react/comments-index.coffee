@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,6 +16,14 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { CommentsManager } from 'comments-manager'
+import core from 'osu-core-singleton'
+import { Main } from './comments-index/main'
+
+
 reactTurbolinks.registerPersistent 'comments-index', CommentsManager, true, ->
-  component: CommentsIndex.Main
-  commentBundle: osu.parseJson('json-index')
+  commentBundle = osu.parseJson('json-index')
+  core.dataStore.updateWithCommentBundleJSON(commentBundle)
+  core.dataStore.uiState.initializeWithCommentBundleJSON(commentBundle)
+
+  component: Main

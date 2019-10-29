@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'Pagina solicitată nu este încă tradusă în limba selectată (:language). Se afișează versiunea în limba engleză.',
-        'languages' => 'Limbi',
+        'incomplete_or_outdated' => 'Conținutul acestei pagini este incomplet sau învechit. Daca poți să ajuti, te rog ia în considerare actualizare acestui articol!',
         'missing' => 'Pagina solicitată ":keyword" nu a putut fi găsită.',
         'missing_title' => 'Nu a fost găsit',
         'missing_translation' => 'Pagina solicitată nu a putut fi găsită pentru limba selectată momentan.',
@@ -33,9 +33,18 @@ return [
             'refresh' => 'Reîmprospătează',
         ],
 
-        'outdated' => [
-            '_' => 'Această pagină conține o traducere învechită a conținutului original. Te rugăm să verifici :default pentru o informație cât mai exactă (ia în considerare actualizarea traducerii dacă ești în măsură să ajuți)!',
-            'default' => 'Versiunea în limba engleză',
+        'translation' => [
+            'legal' => 'Această traducere este dată doar pentru comoditate. Originalul :default este singura versiune din punct de vedere legal al acestui text.',
+            'outdated' => 'Această pagină conține o traducere învechită a conținutului original. Te rugăm să verifici :default pentru o informație cât mai exactă (ia în considerare actualizarea traducerii dacă ești în măsură să ajuți)!',
+
+            'default' => 'versiunea în limba engleză',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

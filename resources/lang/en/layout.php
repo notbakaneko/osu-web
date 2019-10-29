@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Rhythm is just a *click* away!  With Ouendan/EBA, Taiko and original gameplay modes, as well as a fully functional level editor.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Community',
+
+            'forum' => 'Forum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Close (Esc)',
+        'fullscreen' => 'Toggle fullscreen',
+        'zoom' => 'Zoom in/out',
+        'previous' => 'Previous (arrow left)',
+        'next' => 'Next (arrow right)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'home',
             'account-edit' => 'settings',
+            'account-verifyLink' => 'Verification Completed',
             'friends-index' => 'friends',
             'changelog-index' => 'changelog',
             'changelog-build' => 'build',
@@ -42,6 +59,11 @@ return [
             'search' => 'search',
             'supportTheGame' => 'support the game',
             'team' => 'team',
+        ],
+        'profile' => [
+            '_' => 'profile',
+            'friends' => 'friends',
+            'settings' => 'settings',
         ],
         'help' => [
             '_' => 'help',
@@ -97,7 +119,7 @@ return [
             'forum-forums-show' => 'forums',
         ],
         'multiplayer' => [
-            '_' => 'multiplayer',
+            '_' => 'multi',
             'show' => 'match',
         ],
         'error' => [
@@ -118,16 +140,18 @@ return [
             'reset' => 'recover',
             'new' => 'new',
 
-            'messages' => 'Messages',
-            'settings' => 'Settings',
-            'logout' => 'Sign Out',
             'help' => 'Help',
+            'logout' => 'Sign Out',
+            'messages' => 'Messages',
             'modding-history-discussions' => 'user modding discussions',
             'modding-history-events' => 'user modding events',
             'modding-history-index' => 'user modding history',
             'modding-history-posts' => 'user modding posts',
             'modding-history-votesGiven' => 'user modding votes given',
             'modding-history-votesReceived' => 'user modding votes received',
+            'oauth_login' => 'sign in for oauth',
+            'oauth_request' => 'oauth authorisation',
+            'settings' => 'Settings',
         ],
         'store' => [
             '_' => 'store',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "You need an account, sir. Why don't you have one already?",
+            'download' => 'Download',
+            'info' => 'Download osu! to create your own account!',
             'title' => "Don't have an account?",
         ],
     ],

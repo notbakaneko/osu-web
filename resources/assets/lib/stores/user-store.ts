@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,31 +19,20 @@
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLogoutAction } from 'actions/user-login-actions';
 import { UserJSON } from 'chat/chat-api-responses';
-import DispatchListener from 'dispatch-listener';
-import Dispatcher from 'dispatcher';
-import {action, observable} from 'mobx';
+import { action, observable } from 'mobx';
 import User from 'models/user';
-import RootDataStore from './root-data-store';
+import Store from 'stores/store';
 
-export default class UserStore implements DispatchListener {
-  root: RootDataStore;
-
+export default class UserStore extends Store {
   @observable users = observable.map<number, User>();
-
-  constructor(root: RootDataStore, dispatcher: Dispatcher) {
-    this.root = root;
-    dispatcher.register(this);
-  }
-
-  handleDispatchAction(dispatchedAction: DispatcherAction) {
-    if (dispatchedAction instanceof UserLogoutAction) {
-      this.flushStore();
-    }
-  }
 
   @action
   flushStore() {
     this.users = observable.map<number, User>();
+  }
+
+  get(id: number) {
+    return this.users.get(id);
   }
 
   @action
@@ -68,5 +57,20 @@ export default class UserStore implements DispatchListener {
     }
 
     return user;
+  }
+
+  handleDispatchAction(dispatchedAction: DispatcherAction) {
+    if (dispatchedAction instanceof UserLogoutAction) {
+      this.flushStore();
+    }
+  }
+
+  @action
+  updateWithJSON(data: UserJSON[] | undefined | null) {
+    if (data == null) { return; }
+    for (const json of data) {
+      const user = User.fromJSON(json);
+      this.users.set(user.id, user);
+    }
   }
 }

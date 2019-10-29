@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Discussão está trancada.',
         'first_post' => 'Não é possível excluir a publicação inicial.',
+
+        'attributes' => [
+            'message' => 'A mensagem',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Dificuldade especificada inválida.',
         'invalid_beatmapset_id' => 'Beatmap inválido especificado.',
         'locked' => 'Discussão está trancada.',
+
+        'attributes' => [
+            'message_type' => 'Tipo de mensagem',
+            'timestamp' => 'Marcação de Tempo',
+        ],
 
         'hype' => [
             'guest' => 'Precisa estar conectado para hypar.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Não é permitido responder comentários excluídos.',
+
+        'attributes' => [
+            'message' => 'A mensagem',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => ':attribute especificado é invalido.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Deletar postagem de metadados de um beatmap não é permitido.',
             'beatmapset_post_no_edit' => 'Editar postagem de metadados de um beatmap não é permitido.',
+            'only_quote' => 'Sua resposta contém apenas uma citação.',
+
+            'attributes' => [
+                'post_text' => 'Corpo da publicação',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Título do tópico',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Opção duplicada não é permitida.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Não é possível editar uma enquete após :limit horas',
+            'hiding_results_forever' => 'Não é possível esconder os resultados de uma enquete que nunca acabará.',
             'invalid_max_options' => 'Opções por usuário não deve exceder o número de opções disponíveis.',
             'minimum_one_selection' => 'É necessário no mínimo uma opção por usuário.',
             'minimum_two_options' => 'É necessário no mínimo duas opções.',
             'too_many_options' => 'Número máximo de opções permitidas excedido.',
+
+            'attributes' => [
+                'title' => 'Título da enquete',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Selecione uma opção quando votar.',
             'too_many' => 'Mais opções selecionadas do que permitidas.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Número máximo de aplicações OAuth excedido.',
+            'url' => 'Por favor, insira uma URL válida.',
+
+            'attributes' => [
+                'name' => 'Nome da Aplicação',
+                'redirect' => 'URL de Callback da Aplicação',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Este nome de usuário estará disponível a qualquer momento!',
         'username_invalid_characters' => 'O nome de usuário contém caracteres inválidos.',
         'username_in_use' => 'Nome de usuário já está em uso!',
+        'username_locked' => 'Nome de usuário já está em uso!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Por favor use underscores ou espaços, não os dois!',
         'username_no_spaces' => "Nome de usuário não pode começar ou terminar com espaços!",
         'username_not_allowed' => 'Nome de usuário não permitido.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Confirmação de senha não confere.',
         'too_long' => 'ultrapassou tamanho máximo - deve ser até :limit caracteres.',
 
+        'attributes' => [
+            'username' => 'Nome de Usuário',
+            'user_email' => 'Endereço de email',
+            'password' => 'Senha',
+        ],
+
         'change_username' => [
+            'restricted' => 'Não é possível alterar seu nome de usuário enquanto estiver em modo restrito.',
             'supporter_required' => [
                 '_' => 'Você precisa ser um :link para mudar seu nome de usuário!',
                 'link_text' => 'osu!supporter',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Você não pode se denunciar!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Quantidade',
+                'cost' => 'Custo',
+            ],
+        ],
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,58 +19,52 @@
  */
 
 return [
-    'deleted' => '',
-    'edited' => '',
-    'empty' => '',
-    'replies' => '',
-    'show_replies' => '',
-    'title' => '',
+    'deleted' => 'διαγράφηκε',
+    'deleted_count' => ':count_delimited διαγραμμένο σχόλιο|:count_delimited διαγραμμένα σχόλια',
+    'edited' => 'επεξεργάστηκε :timeago απο :user',
+    'empty' => 'Κανένα σχόλιο ακόμη.',
+    'load_replies' => '',
+    'replies' => 'Απαντήσεις',
+    'title' => 'Σχόλια',
 
     'commentable_name' => [
-        'beatmapset' => '',
-        'build' => '',
-        'news_post' => '',
-        '_deleted' => '',
+        'beatmapset' => 'Beatmap',
+        'build' => 'Αλλαγές',
+        'news_post' => 'Ειδήσεις',
+        '_deleted' => 'Διαγραμμένο στοιχείο',
     ],
 
     'editor' => [
         'textarea_hint' => [
-            '_' => '',
-            'edit' => '',
-            'new' => '',
-            'reply' => '',
+            '_' => 'Πατήστε enter για να :action. Χρησιμοποιήστε shift + enter για νέα γραμμή.',
+            'edit' => 'αποθήκευση',
+            'new' => 'δημοσίευση',
+            'reply' => 'απάντηση',
         ],
     ],
 
     'guest_button' => [
-        'new' => '',
-        'reply' => '',
+        'new' => 'Συνδεθείτε για να σχολιάσετε',
+        'reply' => 'Συνδεθείτε για να απαντήσετε',
     ],
 
     'index' => [
         'title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'Σχόλια :info',
+            'info' => 'Καταχώρηση',
         ],
     ],
 
     'placeholder' => [
-        'edit' => '',
-        'new' => '',
-        'reply' => '',
+        'edit' => 'Επεξεργαστείτε το σχόλιο εδώ',
+        'new' => 'Πληκτρολόγηση σχολίου εδώ',
+        'reply' => 'Πληκτρολόγηση απάντησης εδώ',
     ],
 
     'show' => [
         'title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'Σχόλια :info',
+            'info' => 'Λεπτομέρειες',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

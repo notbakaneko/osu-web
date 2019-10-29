@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'cho phép kudosu',
+        'beatmap_information' => '',
         'delete' => 'xóa',
         'deleted' => 'Đã xóa bởi :editor :delete_time.',
         'deny_kudosu' => 'từ chối kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Sửa đổi lần cuối bởi :editor :update_time.',
         'kudosu_denied' => 'Đã từ chối nhận kudosu.',
         'message_placeholder_deleted_beatmap' => 'Difficulty này đã bị xóa nên nó có thể sẽ không còn được thảo luận nữa.',
+        'message_placeholder_locked' => 'Chức năng bàn luận của beatmap này đã bị vô hiệu hóa.',
         'message_type_select' => 'Chọn Loại Nhận Xét',
         'reply_notice' => 'Nhấn enter để trả lời.',
         'reply_placeholder' => 'Nhập câu trả lời của bạn tại đây',
         'require-login' => 'Hãy đăng nhập để đăng hoặc trả lời',
         'resolved' => 'Đã giải quyết',
         'restore' => 'hoàn lại',
+        'show_deleted' => 'Hiển thị đã bị xóa',
         'title' => 'Góc Thảo Luận',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Chưa có cuộc thảo luận nào hết!',
             'hidden' => 'Không có cuộc thảo luận nào tương ứng với bộ lọc đã chọn.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Khóa thảo luận',
+                'unlock' => 'Mở khóa thảo luận',
+            ],
+
+            'prompt' => [
+                'lock' => 'Lí do khóa',
+                'unlock' => 'Bạn có chắc chắn muốn mở khóa không ?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Ghim',
             'timestamp' => 'Mốc thời gian',
             'timestamp_missing' => 'ctrl-c trong chế độ chỉnh sửa (edit mode) và dán trong bài đăng của bạn để thêm một mốc thời gian!',
             'title' => 'Cuộc Thảo Luận Mới',
+            'unpin' => 'Bỏ ghim',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sắp xếp bởi:',
-            'created_at' => 'thời gian tạo',
-            'timeline' => 'mốc thời gian',
-            'updated_at' => 'cập nhật gần đây',
+            'created_at' => 'Thời gian tạo',
+            'timeline' => 'Timeline',
+            'updated_at' => 'Cập nhật lần cuối',
         ],
 
         'stats' => [
@@ -124,6 +140,16 @@ return [
             'wip' => 'Ghi chú: Beatmap này được đánh dấu là đang thực hiện bởi mapper.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => '',
+                'up' => '',
+            ],
+            'latest' => [
+                'down' => '',
+                'up' => '',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Bạn chắc không? Đăng một vấn đề mới sẽ thiết lập lại quá trình đề cử (nomination).',
-            'disqualify' => '',
+            'disqualify' => 'Bạn chắc không? Việc này sẽ loại bỏ beatmap khỏi qualify và thiết lập lại quá trình đề cử.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Đã chơi',
             ],
             'sorting' => [
-                'title' => 'tiêu đề',
-                'artist' => 'nghệ sĩ',
-                'difficulty' => 'độ khó',
-                'updated' => 'ngày cập nhật',
-                'ranked' => 'ngày xếp hạng',
-                'rating' => 'đánh giá',
-                'plays' => 'lượt chơi',
-                'relevance' => 'độ liên quan',
-                'nominations' => 'số đề cử',
+                'title' => 'Tiêu đề',
+                'artist' => 'Nghệ sĩ',
+                'difficulty' => 'Độ khó',
+                'favourites' => 'Số yêu thích',
+                'updated' => 'Ngày cập nhật',
+                'ranked' => 'Ngày xếp hạng',
+                'rating' => 'Đánh giá',
+                'plays' => 'Lượt chơi',
+                'relevance' => 'Độ liên quan',
+                'nominations' => 'Số đề cử',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Lọc theo :filters cần một :link đang hoạt động',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Bất Kì',
-        'ranked-approved' => 'Được Xếp Hạng & Được Chấp Nhận',
         'approved' => 'Được Chấp Nhận',
-        'qualified' => 'Qualified',
-        'loved' => 'Loved',
-        'faves' => 'Yêu Thích',
-        'pending' => 'Đang chờ & WIP',
+        'favourites' => 'Yêu thích',
         'graveyard' => 'Graveyard',
-        'my-maps' => 'Map Của Tôi',
+        'leaderboard' => 'Có danh sách xếp hạng',
+        'loved' => 'Loved',
+        'mine' => 'Map của tôi',
+        'pending' => 'Đang chờ & WIP',
+        'qualified' => 'Qualified',
+        'ranked' => 'Đã được xếp hạng',
     ],
     'genre' => [
         'any' => 'Bất Kì',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => '',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'No mods',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Số lượt chơi: :count',
+        'favourites' => 'Yêu thích: :count',
     ],
 ];

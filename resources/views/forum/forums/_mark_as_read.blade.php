@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -17,14 +17,16 @@
 --}}
 @php
     $forum = $forum ?? null;
+    $recursive = $recursive ?? null;
+    $blockClass = $blockClass ?? 'btn-osu-big btn-osu-big--forum-button';
 @endphp
 
-<button class="btn-osu-big btn-osu-big--forum-button"
+<button
+    class="{{ $blockClass }}"
     data-disable-with="{{ trans('forum.mark_as_read.busy') }}"
     data-method="POST"
-    data-params="forum_id={{ optional($forum)->getKey() }}"
     data-remote="1"
-    data-url="{{ route('forum.forums.mark-as-read') }}"
+    data-url="{{ route('forum.forums.mark-as-read', ['forum_id' => optional($forum)->getKey(), 'recursive' => $recursive]) }}"
     @if (!auth()->check())
         disabled
     @endif

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,42 +16,41 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
+import { runInAction } from 'mobx'
+import { Observer } from 'mobx-react'
+import core from 'osu-core-singleton'
+
+uiState = core.dataStore.uiState
+
 el = React.createElement
 
-class @CommentsManager extends React.PureComponent
+export class CommentsManager extends React.PureComponent
   SORTS: ['new', 'old', 'top']
 
 
   constructor: (props) ->
     super props
 
+    if props.commentableType? && props.commentableId?
+      # FIXME no initialization from component?
+      json = osu.parseJson("json-comments-#{props.commentableType}-#{props.commentableId}", true)
+      if json?
+        core.dataStore.updateWithCommentBundleJSON(json)
+        uiState.initializeWithCommentBundleJSON(json)
+
+      state = osu.parseJson @jsonStorageId()
+      uiState.importCommentsUIState(state) if state?
+
     @id = "comments-#{osu.uuid()}"
-
-    @state = osu.parseJson @jsonStorageId()
-
-    if !@state?
-      commentBundle = osu.jsonClone(@props.commentBundle) ?
-        osu.parseJson("json-comments-#{@props.commentableType}-#{@props.commentableId}")
-
-
-      # also props of the containing component
-      @state =
-        comments: commentBundle.comments ? []
-        userVotes: commentBundle.user_votes
-        users: commentBundle.users ? []
-        topLevelCount: commentBundle.top_level_count
-        commentableMeta: commentBundle.commentable_meta ? []
-        loadingSort: null
-        currentSort: 'new'
-        moreComments: {}
 
 
   componentDidMount: =>
-    $.subscribe "comments:added.#{@id}", @appendBundle
+    $.subscribe "comments:added.#{@id}", @handleCommentsAdded
+    $.subscribe "comments:new.#{@id}", @handleCommentsNew
     $.subscribe "comments:sort.#{@id}", @updateSort
-    $.subscribe "comment:updated.#{@id}", @update
-    $.subscribe "commentVote:added.#{@id}", @addVote
-    $.subscribe "commentVote:removed.#{@id}", @removeVote
+    $.subscribe "comments:toggle-show-deleted.#{@id}", @toggleShowDeleted
+    $.subscribe "comments:toggle-follow.#{@id}", @toggleFollow
+    $.subscribe "comment:updated.#{@id}", @handleCommentUpdated
     $(document).on "turbolinks:before-cache.#{@id}", @saveState
 
 
@@ -60,62 +59,29 @@ class @CommentsManager extends React.PureComponent
 
 
   render: =>
-    componentProps = _.assign {}, @props.componentProps, @state
-    componentProps.commentableId = @props.commentableId
-    componentProps.commentableType = @props.commentableType
-    componentProps.userVotesByCommentId = _.keyBy @state.userVotes
-    componentProps.usersById = _.keyBy(@state.users ? [], 'id')
-    componentProps.commentableMetaById = _(@state.commentableMeta ? [])
-      .filter (item) -> item?
-      .keyBy (item) -> "#{item.type ? ''}-#{item.id ? ''}"
-      .value()
+    el Observer, null, () =>
+      componentProps = _.assign {}, @props.componentProps
+      componentProps.commentableId = @props.commentableId
+      componentProps.commentableType = @props.commentableType
 
-    el @props.component, componentProps
+      el @props.component, componentProps
 
 
-  appendBundle: (_event, {commentBundle, prepend}) =>
-    moreComments = osu.jsonClone @state.moreComments
-    moreComments[commentBundle.has_more_id] = commentBundle.has_more
-
-    @setState
-      comments: @mergeCollection @state.comments, commentBundle.comments, prepend
-      users: @mergeCollection @state.users, commentBundle.users
-      commentableMeta: _.concat @state.commentableMeta, commentBundle.commentable_meta
-      moreComments: moreComments
+  handleCommentsAdded: (_event, commentBundle) =>
+    runInAction () ->
+      core.dataStore.updateWithCommentBundleJSON commentBundle
+      uiState.updateFromCommentsAdded commentBundle
 
 
-  update: (_event, {comment}) =>
-    @setState
-      comments: @mergeCollection @state.comments, [comment]
-      users: @mergeCollection @state.users, [comment.user, comment.editor]
-      commentableMeta: _.concat @state.commentableMeta, comment.commentable_meta
+  handleCommentsNew: (_event, commentBundle) =>
+    runInAction () ->
+      core.dataStore.updateWithCommentBundleJSON commentBundle
+      uiState.updateFromCommentsNew commentBundle
 
 
-  mergeCollection: (array, values, prepend) =>
-    result = osu.jsonClone array
-    prepend ?= false
-
-    method = if prepend then 'unshift' else 'push'
-
-    for item in values
-      continue unless item?
-
-      pos = _.findIndex result, (i) -> i.id == item.id
-
-      if pos == -1
-        result[method] item
-      else
-        result[pos] = item
-
-    result
-
-
-  addVote: (_event, {id}) =>
-    @setState userVotes: _.concat @state.userVotes, id
-
-
-  removeVote: (_event, {id}) =>
-    @setState userVotes: _.filter @state.userVotes, (commentId) -> commentId != id
+  handleCommentUpdated: (_event, commentBundle) =>
+    runInAction () ->
+      core.dataStore.updateWithCommentBundleJSON commentBundle
 
 
   jsonStorageId: =>
@@ -123,7 +89,37 @@ class @CommentsManager extends React.PureComponent
 
 
   saveState: =>
-    osu.storeJson @jsonStorageId(), @state
+    if @props.commentableType? && @props.commentableId?
+      osu.storeJson @jsonStorageId(), uiState.exportCommentsUIState()
+
+
+  toggleShowDeleted: =>
+    runInAction () ->
+      uiState.comments.isShowDeleted = !uiState.comments.isShowDeleted
+
+
+  toggleFollow: =>
+    params = follow:
+      notifiable_type: @props.commentableType
+      notifiable_id: @props.commentableId
+      subtype: 'comment'
+
+    return if uiState.comments.loadingFollow
+
+    uiState.comments.loadingFollow = true
+
+    $.ajax laroute.route('follows.store'),
+      data: params
+      dataType: 'json'
+      method: if uiState.comments.userFollow then 'DELETE' else 'POST'
+    .always =>
+      uiState.comments.loadingFollow = false
+    .done =>
+      uiState.comments.userFollow = !uiState.comments.userFollow
+    .fail (xhr, status) =>
+      return if status == 'abort'
+
+      osu.ajaxError xhr
 
 
   updateSort: (_event, {sort}) =>
@@ -131,7 +127,8 @@ class @CommentsManager extends React.PureComponent
 
     return unless sort in @SORTS
 
-    @setState loadingSort: sort
+    runInAction () ->
+      uiState.comments.loadingSort = sort
 
     params =
       commentable_type: @props.commentableType
@@ -143,14 +140,15 @@ class @CommentsManager extends React.PureComponent
       data: params
       dataType: 'json'
     .done (data) =>
-      @setState
-        comments: data.comments ? []
-        users: data.users ? []
-        commentableMeta: data.commentable_meta ? []
-        userVotes: data.user_votes ? []
-        topLevelCount: data.top_level_count
-        currentSort: sort
-        moreComments: {}
+      $.ajax laroute.route('account.options'),
+        method: 'PUT'
+        data: user_profile_customization: comments_sort: sort
+
+      runInAction () ->
+        core.dataStore.commentStore.flushStore()
+        core.dataStore.updateWithCommentBundleJSON data
+        uiState.initializeWithCommentBundleJSON data
     .always =>
-      @setState
-        loadingSort: null
+      runInAction () ->
+        uiState.comments.loadingSort = null
+

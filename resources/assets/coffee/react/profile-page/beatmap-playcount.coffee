@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2018 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,12 +16,13 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{a, div, h2, h3, img, p, small, span} = ReactDOMFactories
+import * as React from 'react'
+import { a, div, h2, h3, img, p, small, span } from 'react-dom-factories'
 el = React.createElement
 
 bn = 'beatmap-playcount'
 
-class ProfilePage.BeatmapPlaycount extends React.PureComponent
+export class BeatmapPlaycount extends React.PureComponent
   render: =>
     beatmap = @props.playcount.beatmap
     beatmapset = @props.playcount.beatmapset
@@ -77,4 +78,4 @@ class ProfilePage.BeatmapPlaycount extends React.PureComponent
       span
         className: "#{bn}__count-icon"
         span className: 'fas fa-play'
-      @props.playcount.count.toLocaleString()
+      osu.formatNumber(@props.playcount.count)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,7 +22,7 @@ return [
     'codes' => [
         'http-401' => 'กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อไป',
         'http-403' => 'ไม่มีสิทธิ์การเข้าถึง',
-        'http-404' => '',
+        'http-404' => 'ไม่่พบข้อมูลที่ต้องการ',
         'http-429' => 'คุณพยายามเข้าถี่เกินไป กรุณารออีกสักพักแล้วเข้าใหม่',
     ],
     'account' => [
@@ -34,9 +34,14 @@ return [
         'invalid_mode' => 'โหมดที่ระบุไม่ถูกต้อง',
         'standard_converts_only' => 'ไม่พบคะแนนสำหรับโหมดและระดับความยากที่เลือกไว้',
     ],
-    'beatmapsets' => [
-        'too-many-favourites' => 'คุณมีแมปโปรดมากเกินไป กรุณาเอาบางรายการออกแล้วลองใหม่อีกครั้ง',
+    'checkout' => [
+        'generic' => 'เกิดข้อผิดพลาดระหว่างการชำระเงินของคุณ',
     ],
+    'search' => [
+        'default' => '',
+        'operation_timeout_exception' => '',
+    ],
+
     'logged_out' => 'คุณได้ออกจากระบบแล้ว ลองเข้าใหม่แล้วลองอีกครั้ง',
     'supporter_only' => 'คุณต้องเป็นผู้สนับสนุนถึงจะเข้าใช้งานได้',
     'no_restricted_access' => 'คุณไม่สามารถทำสิ่งนี้ได้ระหว่างที่บัญชีคุณกำลังอยู่ในสถานะจำกัดสิทธิ์',

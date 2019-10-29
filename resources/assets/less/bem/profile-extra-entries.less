@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,9 +18,11 @@
 
 .profile-extra-entries {
   list-style: none;
+  display: flex;
+  flex-direction: column;
   padding: 0;
-  margin: 0;
-  @item-height: 25px;
+  margin: -2px 0;
+  @item-height: 22px;
 
   &--kudosu {
     margin-top: 20px;
@@ -30,8 +32,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 5px;
-    min-height: @item-height;
+    margin: 2px 0;
+    line-height: @item-height;
 
     &--top-ranks {
       height: auto;
@@ -63,11 +65,11 @@
   &__kudosu-amount {
     font-weight: inherit;
     font-style: italic;
-    color: @pink;
+    color: @osu-colour-l1;
   }
 
   &__link {
-    .link-blue-light();
+    .link-default();
 
     &--kudosu {
       font-style: italic;
@@ -127,13 +129,13 @@
     .center-content();
     align-self: flex-start;
     flex: none;
-    width: 40px;
+    width: 28px;
     height: @item-height;
-    margin-right: 10px;
-    font-size: 20px; // icon size
+    margin-right: 5px;
+    font-size: 14px; // icon size
   }
 
   &__time {
-    color: @community-user-graygreen-lighter;
+    color: @osu-colour-f1;
   }
 }

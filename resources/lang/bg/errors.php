@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,9 +34,14 @@ return [
         'invalid_mode' => 'Невалиден режим на игра зададен.',
         'standard_converts_only' => 'Няма налични резултати за исканият режим на игра на тази бийтмап трудност.',
     ],
-    'beatmapsets' => [
-        'too-many-favourites' => 'Вие имате прекалено много харесани бийтмапове. Моля махнете един от списъка преди да продължите.',
+    'checkout' => [
+        'generic' => 'Възникна грешка при подготовката за разплащане.',
     ],
+    'search' => [
+        'default' => '',
+        'operation_timeout_exception' => '',
+    ],
+
     'logged_out' => 'Вие бяхте изхвърлени от профила си. Моля влезте и опитайте отново.',
     'supporter_only' => 'Трябва да сте osu!supporter, за да използвате тази функция.',
     'no_restricted_access' => 'Не сте в състояние да изпълните това действие, докато акаунта ви е с ограничен статут.',

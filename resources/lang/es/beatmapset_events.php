@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -22,9 +22,11 @@ return [
     'event' => [
         'approve' => 'Aprobado.',
         'discussion_delete' => 'Un moderador eliminó la discusión :discussion.',
+        'discussion_lock' => 'La discusión para este beatmap ha sido desactivada. (:text)',
         'discussion_post_delete' => 'Un moderador eliminó un publicación en la discusión :discussion.',
         'discussion_post_restore' => 'Un moderador restauró una publicación de la discusión :discussion.',
         'discussion_restore' => 'Un moderador restauró la discusión :discussion.',
+        'discussion_unlock' => 'La discusión para este beatmap ha sido activada.',
         'disqualify' => 'Descalificado por :user. Motivo: :discussion (:text).',
         'disqualify_legacy' => 'Descalificado por :user. Motivo: :text.',
         'issue_reopen' => 'El problema resuelto :discussion ha sido reabierto.',
@@ -57,22 +59,22 @@ return [
     ],
 
     'type' => [
-        'approve' => '',
-        'discussion_delete' => '',
-        'discussion_post_delete' => '',
-        'discussion_post_restore' => '',
-        'discussion_restore' => '',
-        'disqualify' => '',
-        'issue_reopen' => '',
-        'issue_resolve' => '',
-        'kudosu_allow' => '',
-        'kudosu_deny' => '',
+        'approve' => 'Aprovado',
+        'discussion_delete' => 'Borrar discusion',
+        'discussion_post_delete' => 'Borrar respuesta a la discusion',
+        'discussion_post_restore' => 'Recuperar respuesta a la discusion',
+        'discussion_restore' => 'Recuperar discusion',
+        'disqualify' => 'Descalificar',
+        'issue_reopen' => 'Reabrir discusion',
+        'issue_resolve' => 'Resolver discusion',
+        'kudosu_allow' => 'Permitir kudosu',
+        'kudosu_deny' => 'Denegar kudosu',
         'kudosu_gain' => 'Ganancia de Kudosu',
         'kudosu_lost' => 'Kudosu perdidos',
         'kudosu_recalculate' => 'Recalculación de Kudosu',
-        'love' => '',
+        'love' => 'Amor',
         'nominate' => 'Nominación',
-        'nomination_reset' => '',
+        'nomination_reset' => 'Reiniciar nominacion',
         'qualify' => 'Calificación',
         'rank' => 'Clasificación',
     ],

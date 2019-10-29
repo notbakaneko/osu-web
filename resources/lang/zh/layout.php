@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - 节奏跃然指上！内含来自「押忍！战斗应援团」、「精英节拍特工」、太鼓的以及 osu! 原创的游戏模式，以及为其设计的全功能谱面编辑器。',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => '社区',
+
+            'forum' => '论坛',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => '关闭（ESC）',
+        'fullscreen' => '切换全屏',
+        'zoom' => '放大/缩小',
+        'previous' => '前一个（左箭头）',
+        'next' => '后一个（右箭头）',
+    ],
+
     'menu' => [
         'home' => [
             '_' => '主页',
             'account-edit' => '设置',
+            'account-verifyLink' => '验证完成',
             'friends-index' => '好友',
             'changelog-index' => '更新日志',
             'changelog-build' => '版本',
@@ -35,13 +52,18 @@ return [
             'groups-show' => '用户组',
             'index' => '看板',
             'legal-show' => '信息',
-            'messages-index' => '',
+            'messages-index' => '消息',
             'news-index' => '新闻',
             'news-show' => '新闻',
             'password-reset-index' => '重置密码',
             'search' => '搜索',
             'supportTheGame' => '支持 osu!',
             'team' => '团队',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => '帮助',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => '社区',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => '聊天',
+            'chat-index' => '聊天',
             'dev' => '开发',
             'getForum' => '论坛',
             'getLive' => '直播',
@@ -118,16 +140,18 @@ return [
             'reset' => '重置',
             'new' => '新增',
 
-            'messages' => '信息',
-            'settings' => '设置',
-            'logout' => '退出',
             'help' => '帮助',
+            'logout' => '退出',
+            'messages' => '信息',
             'modding-history-discussions' => '用户摸图讨论',
             'modding-history-events' => '用户摸图事件',
             'modding-history-index' => '用户摸图历史',
             'modding-history-posts' => '用户摸图帖',
             'modding-history-votesGiven' => '用户摸图投票数',
             'modding-history-votesReceived' => '用户摸图获得票数',
+            'oauth_login' => '登录以授权',
+            'oauth_request' => 'OAuth 授权',
+            'settings' => '设置',
         ],
         'store' => [
             '_' => '商店',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "点击下方的注册按钮以成为 osu! 大家庭中的一员！",
+            'download' => '',
+            'info' => '点击下方的注册按钮以成为 osu! 大家庭中的一员！',
             'title' => "没有账号？",
         ],
     ],

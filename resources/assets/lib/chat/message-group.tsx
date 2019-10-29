@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -16,14 +16,18 @@
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { route } from 'laroute';
+import * as _ from 'lodash';
 import Message from 'models/chat/message';
+import * as moment from 'moment';
 import * as React from 'react';
+import { Spinner } from 'spinner';
 
-interface PropsInterface {
+interface Props {
   messages: Message[];
 }
 
-export default class MessageGroup extends React.Component<PropsInterface, any> {
+export default class MessageGroup extends React.Component<Props, any> {
   render(): React.ReactNode {
     const messages = this.props.messages;
     const sender = messages[0].sender;
@@ -40,7 +44,7 @@ export default class MessageGroup extends React.Component<PropsInterface, any> {
     return (
       <div className={className}>
         <div className='chat-message-group__sender'>
-          <a className='js-usercard' data-user-id={sender.id} data-tooltip-position='top center' href='#'>
+          <a className='js-usercard' data-user-id={sender.id} data-tooltip-position='top center' href={route('users.show', { user: sender.id })}>
             <img className='chat-message-group__avatar' src={sender.avatarUrl} />
           </a>
           <div className='u-ellipsis-overflow' style={{maxWidth: '60px'}}>
@@ -49,7 +53,7 @@ export default class MessageGroup extends React.Component<PropsInterface, any> {
         </div>
         <div className='chat-message-group__bubble'>
           {messages.map((message: Message, key: number) => {
-            if (!message.content) {
+            if (!message.parsedContent) {
               return;
             }
 
@@ -73,7 +77,7 @@ export default class MessageGroup extends React.Component<PropsInterface, any> {
             return (
               <div className={classes} key={message.uuid}>
                 <div className={`chat-message-group__message-content${innerClasses ? innerClasses : ''}`}>
-                  {message.content}
+                  <span dangerouslySetInnerHTML={{__html: message.parsedContent}} />
                   {!message.persisted && !message.errored &&
                     <div className='chat-message-group__message-status'>
                       <Spinner />

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2019 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,7 @@
 
     if (optional($forum ?? null)->isFeatureForum()) {
         $menu['feature-votes'] = [
-            'url' => route('forum.forums.show', ['forums' => $forum, 'sort' => 'feature-votes']),
+            'url' => route('forum.forums.show', ['forum' => $forum, 'sort' => 'feature-votes']),
             'title' => trans('sort.forum_topics.feature_votes'),
         ];
     }
@@ -28,7 +28,7 @@
 @if (count($menu) > 0)
     @php
         $defaultMenu = ['new' => [
-            'url' => route('forum.forums.show', ['forums' => $forum]),
+            'url' => route('forum.forums.show', ['forum' => $forum]),
             'title' => trans('sort.forum_topics.new'),
         ]];
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,15 +29,23 @@ return [
         'last_word_connector' => '和',
     ],
 
+    'badges' => [
+        'new' => '全新功能！',
+    ],
+
     'buttons' => [
-        'back_to_top' => '返回頂部',
+        'admin' => '管理員',
         'back_to_previous' => '返回到上一個位置',
+        'back_to_top' => '返回頂部',
         'cancel' => '取消',
         'change' => '變更',
         'click_to_copy' => '點擊以複製到剪貼簿',
         'click_to_copy_copied' => '已複製到剪貼簿！',
+        'close' => '關閉',
+        'collapse' => '摺疊',
         'delete' => '刪除',
         'edit' => '編輯',
+        'expand' => '展開',
         'hide' => '隱藏',
         'permalink' => '永久連結',
         'permalink_copied' => '連結已複製',
@@ -52,8 +60,16 @@ return [
         'search' => '搜尋',
         'see_more' => '查看更多',
         'show' => '顯示',
+        'show_deleted' => '顯示刪除的項目',
         'show_more' => '顯示更多',
+        'show_more_options' => '顯示更多選項',
+        'update' => '更新',
         'upload_image' => '上傳圖片',
+
+        'watch' => [
+            'to_0' => '取消關注',
+            'to_1' => '關注',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count 小時',
         'item' => ':count 個',
         'minute_short_unit' => '分',
-        'minutes' => '',
+        'minutes' => ':count_delimited 分鐘|:count_delimited 分鐘',
         'months' => ':count 個月',
+        'plus_others' => '+ :count_delimited 其他!|+ :count_delimited 其他!',
+        'post' => '',
         'second_short_unit' => '秒',
+        'star_priority' => ':count_delimited 星數優先|:count_delimited 星數優先',
+        'update' => ':count_delimited 更新|:count_delimited 更新',
+        'view' => '',
         'years' => ':count 年',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => '拉到此處以上傳',
+    ],
+
+    'input' => [
+        'search' => '搜尋...',
     ],
 
     'pagination' => [

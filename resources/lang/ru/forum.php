@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! форум',
 
     'covers' => [
+        'edit' => 'Редактировать обложку',
+
         'create' => [
             '_' => 'Установить обложку',
             'button' => 'Загрузить изображение',
@@ -42,35 +44,44 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => '',
+
+        'index' => [
+            'title' => '',
+        ],
+
         'topics' => [
             'empty' => 'Нет тем!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Отметить раздел прочитанным',
+        'forums' => 'Отметить разделы прочитанными',
+        'busy' => 'Отмечается как прочитанное...',
     ],
 
     'post' => [
         'confirm_destroy' => 'Удалить ответ?',
         'confirm_restore' => 'Восстановить ответ?',
-        'edited' => 'Последний раз отредактирован :user в :when, отредактирован :count раз.',
+        'edited' => 'Последний раз отредактирован :user :when, отредактирован :count раз.',
         'posted_at' => 'написано :when',
 
         'actions' => [
             'destroy' => 'Удалить ответ',
             'restore' => 'Восстановить ответ',
             'edit' => 'Редактировать ответ',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => 'Новый ответ',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited пост|:count_delimited поста|:count_delimited постов',
+            'topic_starter' => 'Автор темы',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => 'начато :user',
 
         'create' => [
+            'close' => 'Закрыть',
             'preview' => 'Предпросмотр',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Создание опроса',
 
+            'preview' => 'Предпросмотр',
+
             'create_poll_button' => [
                 'add' => 'Прикрепить опрос',
                 'remove' => 'Отменить опрос',
             ],
 
             'poll' => [
+                'hide_results' => 'Скрыть результаты опроса.',
+                'hide_results_info' => 'Они будут показаны только после окончания опроса.',
                 'length' => 'Ограничить опрос по времени на',
                 'length_days_suffix' => 'дней',
                 'length_info' => 'Оставьте пустым для снятия ограничения',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'просмотров',
+            'feature_votes' => 'количество голосов',
             'replies' => 'ответов',
+            'views' => 'просмотров',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Тема закреплена и отмечена как анонс',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Удалено ответов',
             'total_posts' => 'Всего ответов',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Текущий приоритет: +:count',
                 'do' => 'Продвинуть данный запрос',
+
+                'info' => [
+                    '_' => 'Это :feature_request. За идею можно проголосовать только с :supporters.',
+                    'feature_request' => 'предложенная идея',
+                    'supporters' => 'osu!supporter',
+                ],
 
                 'user' => [
                     'count' => ':count голос|:count голоса|:count голосов',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => '',
+                'edit_warning' => 'Изменение опроса удалит текущие результаты!',
                 'vote' => 'Голосовать',
+
+                'button' => [
+                    'change_vote' => 'Изменить голос',
+                    'edit' => '',
+                    'view_results' => 'Посмотреть результаты',
+                    'vote' => 'Голосовать',
+                ],
 
                 'detail' => [
                     'end_time' => 'Опрос будет закрыт :time',
                     'ended' => 'Опрос закончен :time',
+                    'results_hidden' => 'Результаты будут показаны после окончания опроса.',
                     'total' => 'Всего голосов: :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Не в закладках',
             'to_watching' => 'Заметка',
             'to_watching_mail' => 'В закладки с оповещением',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Уведомления включены. Нажмите, чтобы отключить',
+            'tooltip_mail_enable' => 'Уведомления отключены. Нажмите, чтобы включить',
         ],
     ],
 ];

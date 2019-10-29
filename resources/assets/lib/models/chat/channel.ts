@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,32 +17,50 @@
  */
 
 import { ChannelJSON, ChannelType } from 'chat/chat-api-responses';
-import { action, computed, observable, transaction} from 'mobx';
+import * as _ from 'lodash';
+import { action, computed, observable, transaction } from 'mobx';
 import User from 'models/user';
 import Message from './message';
 
 export default class Channel {
-  private backlogSize: number = 100;
-
   @observable channelId: number;
-  @observable type: ChannelType = 'NEW';
-  @observable name: string = '';
   @observable description?: string;
   @observable icon?: string;
-
-  @observable messages: Message[] = observable([]);
-
   @observable lastMessageId: number = -1;
   @observable lastReadId?: number;
-
-  @observable users: number[] = [];
-
-  @observable metaLoaded: boolean = false;
-  @observable loading: boolean = false;
   @observable loaded: boolean = false;
+  @observable loading: boolean = false;
+  @observable messages: Message[] = observable([]);
+  @observable metaLoaded: boolean = false;
   @observable moderated: boolean = false;
-
+  @observable name: string = '';
   @observable newChannel: boolean = false;
+  @observable type: ChannelType = 'NEW';
+  @observable users: number[] = [];
+  private backlogSize: number = 100;
+
+  @computed
+  get isUnread(): boolean {
+    if (this.lastReadId != null) {
+      return this.lastMessageId > this.lastReadId;
+    } else {
+      return this.lastMessageId > -1;
+    }
+  }
+
+  @computed
+  get exists(): boolean {
+    return this.channelId > 0;
+  }
+
+  @computed
+  get pmTarget(): number | undefined {
+    if (this.type !== 'PM') {
+      return;
+    }
+
+    return this.users.find((userId: number) => userId !== currentUser.id);
+  }
 
   constructor(channelId: number) {
     this.channelId = channelId;
@@ -73,24 +91,6 @@ export default class Channel {
     return channel;
   }
 
-  @computed
-  get pmTarget(): number | undefined {
-    if (this.type !== 'PM') {
-      return;
-    }
-
-    return this.users.find((userId: number) => userId !== currentUser.id);
-  }
-
-  @computed
-  get isUnread(): boolean {
-    if (this.lastReadId != null) {
-      return this.lastMessageId > this.lastReadId;
-    } else {
-      return this.lastMessageId > -1;
-    }
-  }
-
   @action
   addMessages(messages: Message | Message[], skipSort: boolean = false) {
     transaction(() => {
@@ -104,11 +104,35 @@ export default class Channel {
         this.messages = _.drop(this.messages, this.messages.length - this.backlogSize);
       }
 
-      const lastMessageId = _.maxBy(([] as Message[]).concat(messages), 'messageId').messageId;
+      const lastMessage = _(([] as Message[]).concat(messages))
+        .filter((message) => typeof message.messageId === 'number')
+        .maxBy('messageId');
+      let lastMessageId;
+
+      // The type check is redundant due to the filter above.
+      if (lastMessage != null && typeof lastMessage.messageId === 'number') {
+        lastMessageId = lastMessage.messageId;
+      } else {
+        lastMessageId = -1;
+      }
       if (lastMessageId > this.lastMessageId) {
         this.lastMessageId = lastMessageId;
       }
     });
+  }
+
+  @action
+  resortMessages() {
+    let newMessages = this.messages.slice();
+    newMessages = _.sortBy(newMessages, 'timestamp');
+    newMessages = _.uniqBy(newMessages, 'messageId');
+
+    this.messages = newMessages;
+  }
+
+  @action
+  unload() {
+    this.messages = observable([]);
   }
 
   @action
@@ -127,15 +151,6 @@ export default class Channel {
   }
 
   @action
-  resortMessages() {
-    let newMessages = this.messages.slice();
-    newMessages = _.sortBy(newMessages, 'timestamp');
-    newMessages = _.uniqBy(newMessages, 'messageId');
-
-    this.messages = newMessages;
-  }
-
-  @action
   updatePresence = (presence: ChannelJSON) => {
     this.name = presence.name;
     this.description = presence.description;
@@ -143,14 +158,10 @@ export default class Channel {
     this.icon = presence.icon || '/images/layout/chat/channel-default.png'; // TODO: update with channel-specific icons?
     this.lastReadId = presence.last_read_id;
 
-    this.lastMessageId = _.max([this.lastMessageId, presence.last_message_id]);
+    const lastMessageId = _.max([this.lastMessageId, presence.last_message_id]);
+    this.lastMessageId = lastMessageId == null ? -1 : lastMessageId;
 
     this.users = presence.users;
     this.metaLoaded = true;
-  }
-
-  @action
-  unload() {
-    this.messages = observable([]);
   }
 }

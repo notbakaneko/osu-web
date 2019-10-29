@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
 
         'avatar' => [
             'title' => 'Аватар',
+            'rules' => 'Пожалуйста, убедитесь, что ваш аватар придерживается :link.<br/>Это значит, что он должен <strong>подходить для всех возрастов</strong>, т.е.: никакой наготы, ругательств или вызывающего контента.',
+            'rules_link' => 'правил сообщества',
         ],
 
         'email' => [
@@ -46,13 +48,13 @@ return [
             'title' => 'Профиль',
 
             'user' => [
+                'user_discord' => 'discord',
                 'user_from' => 'место проживания',
                 'user_interests' => 'интересы',
                 'user_msnm' => 'skype',
                 'user_occ' => 'род деятельности',
                 'user_twitter' => 'twitter',
                 'user_website' => 'веб-сайт',
-                'user_discord' => 'discord',
             ],
         ],
 
@@ -60,6 +62,40 @@ return [
             'title' => 'Подпись на форуме',
             'update' => 'сохранить',
         ],
+    ],
+
+    'notifications' => [
+        'title' => 'Уведомления',
+        'topic_auto_subscribe' => 'автоматически включать уведомления для тем на форуме, когда вы их создаёте',
+    ],
+
+    'oauth' => [
+        'authorized_clients' => 'авторизованные клиенты',
+        'own_clients' => 'мои клиенты',
+        'title' => 'OAuth',
+    ],
+
+    'playstyles' => [
+        'keyboard' => 'клавиатура',
+        'mouse' => 'мышь',
+        'tablet' => 'графический планшет',
+        'title' => 'Устройства',
+        'touch' => 'сенсорный экран',
+    ],
+
+    'privacy' => [
+        'friends_only' => 'блокировать личные сообщения от людей, не входящих в мой список друзей',
+        'hide_online' => 'скрыть ваше присутствие',
+        'title' => 'Приватность',
+    ],
+
+    'security' => [
+        'current_session' => 'это вы',
+        'end_session' => 'Закончить сеанс',
+        'end_session_confirmation' => 'Сеанс на этом устройстве будет немедленно завершён. Вы уверены?',
+        'last_active' => 'Был активен:',
+        'title' => 'Безопасность',
+        'web_sessions' => 'последняя активность',
     ],
 
     'update_email' => [
@@ -72,26 +108,12 @@ return [
         'update' => 'сменить',
     ],
 
-    'playstyles' => [
-        'title' => 'Устройства',
-        'mouse' => 'мышь',
-        'keyboard' => 'клавиатура',
-        'tablet' => 'графический планшет',
-        'touch' => 'сенсорный экран',
+    'verification_completed' => [
+        'text' => 'Теперь вы можете закрыть эту вкладку/окно',
+        'title' => 'Проверка завершена',
     ],
 
-    'privacy' => [
-        'title' => 'Приватность',
-        'friends_only' => 'разрешить писать мне только друзьям',
-        'hide_online' => 'быть невидимкой',
-    ],
-
-    'security' => [
-        'current_session' => 'это вы',
-        'end_session' => 'отозвать доступ',
-        'end_session_confirmation' => 'Сеанс на этом устройстве будет немедленно завершён. Вы уверены?',
-        'last_active' => 'был активен',
-        'title' => 'Безопасность',
-        'web_sessions' => 'последняя активность',
+    'verification_invalid' => [
+        'title' => 'Неверная или устаревшая ссылка для подтверждения',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -72,13 +72,6 @@ return [
             'true' => 'Gemarkeerd als opgelost door :user',
             'false' => 'Heropend door :user',
         ],
-    ],
-
-    'user' => [
-        'admin' => 'administrator',
-        'bng' => 'nominator',
-        'owner' => 'mapper',
-        'qat' => 'qat',
     ],
 
     'user_filter' => [

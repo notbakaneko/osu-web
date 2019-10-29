@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'raderad',
+    'deleted_count' => '',
     'edited' => 'redigerad :timeago av :user',
     'empty' => 'Inga kommentarer ännu.',
+    'load_replies' => '',
     'replies' => 'Svar',
-    'show_replies' => 'visa svar',
     'title' => 'Kommentarer',
 
     'commentable_name' => [
@@ -43,8 +44,8 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Logga in för att kommentera',
-        'reply' => 'Logga in för att svara',
+        'new' => '',
+        'reply' => '',
     ],
 
     'index' => [
@@ -65,12 +66,5 @@ return [
             '_' => '',
             'info' => '',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

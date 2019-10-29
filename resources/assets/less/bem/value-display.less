@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,10 @@
   min-width: 60px;
 
   &::before {
-    height: 4px;
+    height: 2px;
     display: block;
     content: '';
-    background-color: @yellow;
+    background-color: @osu-colour-h1;
     border-radius: 10000px;
     margin-bottom: 2px;
   }
@@ -37,7 +37,7 @@
   }
 
   &--kudosu::before {
-    background-color: @yellow-dark;
+    background-color: @osu-colour-h1;
   }
 
   &--medals::before {
@@ -50,10 +50,10 @@
 
   &__description {
     font-size: @font-size--title-small;
-    color: @community-user-graygreen-lighter;
+    color: white;
 
     a {
-      color: @community-user-graygreen-light;
+      .link-default();
     }
   }
 

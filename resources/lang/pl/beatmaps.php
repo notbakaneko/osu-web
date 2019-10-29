@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'discussion-posts' => [
         'store' => [
-            'error' => 'Zapisywanie postu nie powiodło się',
+            'error' => 'Nie udało się zapisać posta',
         ],
     ],
 
@@ -33,6 +33,7 @@ return [
 
     'discussions' => [
         'allow_kudosu' => 'zezwól na kudosu',
+        'beatmap_information' => 'Informacje o beatmapie',
         'delete' => 'usuń',
         'deleted' => 'Usunięte przez :editor :delete_time',
         'deny_kudosu' => 'odrzuć kudosu',
@@ -40,12 +41,14 @@ return [
         'edited' => 'Ostatnio edytowane przez :editor :update_time',
         'kudosu_denied' => 'Odmówiono uzyskania kudosu.',
         'message_placeholder_deleted_beatmap' => 'Ten poziom trudności został usunięty, więc nie można umieszczać w nim postów.',
+        'message_placeholder_locked' => 'Tworzenie dyskusji dla tej beatmapy zostało wyłączone.',
         'message_type_select' => 'Wybierz typ komentarza',
         'reply_notice' => 'Naciśnij Enter, aby odpowiedzieć.',
         'reply_placeholder' => 'Napisz tutaj swoją odpowiedź',
         'require-login' => 'Zaloguj się, aby odpowiedzieć bądź opublikować uwagę',
         'resolved' => 'Rozwiązane',
         'restore' => 'przywróć',
+        'show_deleted' => 'Pokaż usunięte',
         'title' => 'Dyskusje',
 
         'collapse' => [
@@ -56,6 +59,18 @@ return [
         'empty' => [
             'empty' => 'Brak dyskusji!',
             'hidden' => 'Żadna dyskusja nie pasuje do wybranego filtru.',
+        ],
+
+        'lock' => [
+            'button' => [
+                'lock' => 'Zablokuj dyskusję',
+                'unlock' => 'Odblokuj dyskusję',
+            ],
+
+            'prompt' => [
+                'lock' => 'Powód zablokowania',
+                'unlock' => 'Czy na pewno chcesz odblokować tę dyskusję?',
+            ],
         ],
 
         'message_hint' => [
@@ -90,9 +105,11 @@ return [
         ],
 
         'new' => [
+            'pin' => 'Przypnij',
             'timestamp' => 'Znacznik czasu',
             'timestamp_missing' => 'Naciśnij Ctrl+C w edytorze i wklej swoją wiadomość, aby dodać znacznik czasu!',
             'title' => 'Nowa dyskusja',
+            'unpin' => 'Odepnij',
         ],
 
         'show' => [
@@ -100,10 +117,9 @@ return [
         ],
 
         'sort' => [
-            '_' => 'Sortowane według:',
-            'created_at' => 'data utworzenia',
-            'timeline' => 'oś czasu',
-            'updated_at' => 'ostatnie aktualizacje',
+            'created_at' => 'Data utworzenia',
+            'timeline' => 'Oś czasu',
+            'updated_at' => 'Ostatnie aktualizacje',
         ],
 
         'stats' => [
@@ -118,12 +134,22 @@ return [
 
         'status-messages' => [
             'approved' => 'Ta beatmapa została zatwierdzona :date!',
-            'graveyard' => "Ta beatmapa nie była aktualizowana od :date i najprawdopodobniej została porzucona przez swojego twórcę...",
+            'graveyard' => "Ta beatmapa nie była aktualizowana od :date i trafiła do kategorii porzuconych...",
             'loved' => 'Ta beatmapa otrzymała status ulubionej społeczności :date!',
             'ranked' => 'Ta beatmapa otrzymała status rankingowy :date!',
             'wip' => 'Ważne: Ta beatmapa została oznaczona przez twórcę jako aktualnie rozwijana.',
         ],
 
+        'votes' => [
+            'none' => [
+                'down' => 'Brak negatywnych ocen',
+                'up' => 'Brak pozytywnych ocen',
+            ],
+            'latest' => [
+                'down' => 'Ostatnie negatywne oceny',
+                'up' => 'Ostatnie pozytywne oceny',
+            ],
+        ],
     ],
 
     'hype' => [
@@ -171,7 +197,7 @@ return [
 
         'reset_confirm' => [
             'nomination_reset' => 'Na pewno? Zgłoszenie nowego problemu zresetuje proces nominacji.',
-            'disqualify' => '',
+            'disqualify' => 'Czy na pewno chcesz to zrobić? Ta czynność odbierze tej beatmapie status zakwalifikowanej i zresetuje proces nominacji.',
         ],
     ],
 
@@ -194,15 +220,16 @@ return [
                 'played' => 'Ukończenie',
             ],
             'sorting' => [
-                'title' => 'tytuł',
-                'artist' => 'wykonawca',
-                'difficulty' => 'poziom trudności',
-                'updated' => 'data modyfikacji',
-                'ranked' => 'data',
-                'rating' => 'ocena',
-                'plays' => 'liczba zagrań',
-                'relevance' => 'trafność',
-                'nominations' => 'nominacje',
+                'title' => 'Tytuł',
+                'artist' => 'Wykonawca',
+                'difficulty' => 'Poziom trudności',
+                'favourites' => 'Polubienia',
+                'updated' => 'Ostatnie aktualizacje',
+                'ranked' => 'Data',
+                'rating' => 'Ocena',
+                'plays' => 'Liczba zagrań',
+                'relevance' => 'Trafność',
+                'nominations' => 'Nominacje',
             ],
             'supporter_filter_quote' => [
                 '_' => 'Użycie wybranych filtrów (:filters) wymaga :link',
@@ -223,14 +250,15 @@ return [
     ],
     'status' => [
         'any' => 'Jakikolwiek',
-        'ranked-approved' => 'Rankingowe i zatwierdzone',
         'approved' => 'Zatwierdzone',
-        'qualified' => 'Zakwalifikowane',
-        'loved' => 'Ulubione społeczności',
-        'faves' => 'Ulubione',
-        'pending' => 'Oczekujące i rozwijane',
+        'favourites' => 'Ulubione',
         'graveyard' => 'Porzucone',
-        'my-maps' => 'Moje beatmapy',
+        'leaderboard' => 'Z tabelą wyników',
+        'loved' => 'Ulubione społeczności',
+        'mine' => 'Moje beatmapy',
+        'pending' => 'Oczekujące i rozwijane',
+        'qualified' => 'Zakwalifikowane',
+        'ranked' => 'Rankingowe',
     ],
     'genre' => [
         'any' => 'Jakikolwiek',
@@ -259,6 +287,7 @@ return [
         'HD' => 'Hidden',
         'HR' => 'Hard Rock',
         'HT' => 'Half Time',
+        'MR' => 'Mirror',
         'NC' => 'Nightcore',
         'NF' => 'No Fail',
         'NM' => 'Brak modyfikatorów',
@@ -301,5 +330,9 @@ return [
         'B' => 'B',
         'C' => 'C',
         'D' => 'D',
+    ],
+    'panel' => [
+        'playcount' => 'Liczba zagrań: :count',
+        'favourites' => 'Liczba polubień: :count',
     ],
 ];

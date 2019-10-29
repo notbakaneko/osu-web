@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'terhapus',
+    'deleted_count' => ':count_delimited komentar yang dihapus|:count_delimited komentar yang dihapus',
     'edited' => 'disunting :timeago oleh :user',
     'empty' => 'Belum ada komentar.',
+    'load_replies' => 'muat lebih banyak balasan',
     'replies' => 'Balasan',
-    'show_replies' => 'perlihatkan balasan',
     'title' => 'Komentar',
 
     'commentable_name' => [
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => 'Tekan enter untuk :action. Gunakan shift+enter untuk memulai garis baru.',
+            '_' => 'Tekan enter untuk mengirimkan :action. Gunakan shift+enter untuk memulai garis baru.',
             'edit' => 'simpan',
             'new' => 'post',
             'reply' => 'balas',
@@ -65,12 +66,5 @@ return [
             '_' => 'Komentar :info',
             'info' => 'Rincian',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,35 +16,34 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{button, div, input, label, p, i, span} = ReactDOMFactories
+import { MessageLengthCounter } from './message-length-counter'
+import { BigButton } from 'big-button'
+import * as React from 'react'
+import { button, div, input, label, p, i, span } from 'react-dom-factories'
+import { UserAvatar } from 'user-avatar'
 el = React.createElement
 
 bn = 'beatmap-discussion-new'
 
-class BeatmapDiscussions.NewDiscussion extends React.PureComponent
+export class NewDiscussion extends React.PureComponent
   constructor: (props) ->
     super props
 
+    @inputBox = React.createRef()
     @throttledPost = _.throttle @post, 1000
     @handleKeyDown = InputHandler.textarea @handleKeyDownCallback
-    @cache = {}
 
     # FIXME: should save state on navigation?
     @state =
       cssTop: null
       message: ''
-      timestamp: null
       timestampConfirmed: false
       posting: null
 
 
   componentDidMount: =>
     $(window).on 'throttled-resize.new-discussion', @setTop
-    @inputBox?.focus() if @props.autoFocus
-
-
-  componentWillUpdate: =>
-    @cache = {}
+    @inputBox.current?.focus() if @props.autoFocus
 
 
   componentWillUnmount: =>
@@ -78,7 +77,7 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
     canPostNote =
       @props.currentUser.id == @props.beatmapset.user_id ||
       @props.currentUser.is_bng ||
-      @props.currentUser.is_qat
+      @props.currentUser.is_nat
 
     buttonCssClasses = 'btn-circle'
     buttonCssClasses += ' btn-circle--activated' if @props.pinned
@@ -94,6 +93,8 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
             span
               className: buttonCssClasses
               onClick: @toggleSticky
+              title: osu.trans("beatmaps.discussions.new.#{if @props.pinned then 'unpin' else 'pin'}")
+
               span className: 'btn-circle__content',
                 i className: 'fas fa-thumbtack'
 
@@ -113,15 +114,10 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
                   onChange: @setMessage
                   onKeyDown: @handleKeyDown
                   onFocus: @onFocus
-                  innerRef: @setInputBox
-                  placeholder:
-                    if @canPost()
-                      osu.trans "beatmaps.discussions.message_placeholder.#{@props.mode}", version: @props.currentBeatmap.version
-                    else
-                      # FIXME: reason should be passed from beatmap state
-                      osu.trans 'beatmaps.discussions.message_placeholder_deleted_beatmap'
+                  ref: @inputBox
+                  placeholder: @messagePlaceholder()
 
-                el BeatmapDiscussions.MessageLengthCounter,
+                el MessageLengthCounter,
                   key: 'counter'
                   message: @state.message
                   isTimeline: @isTimeline()
@@ -145,8 +141,8 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
               key: 'timestamp'
               className: "#{bn}__timestamp-col"
               if @props.mode == 'timeline'
-                if @state.timestamp?
-                  BeatmapDiscussionHelper.formatTimestamp @state.timestamp
+                if @timestamp()?
+                  BeatmapDiscussionHelper.formatTimestamp @timestamp()
                 else
                   osu.trans 'beatmaps.discussions.new.timestamp_missing'
               else if @props.beatmapset.can_be_hyped # mode == 'generalAll'
@@ -177,7 +173,7 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
             @submitButton 'problem'
 
         if @nearbyDiscussions().length > 0
-          currentTimestamp = BeatmapDiscussionHelper.formatTimestamp @state.timestamp
+          currentTimestamp = BeatmapDiscussionHelper.formatTimestamp @timestamp()
           timestamps =
             for discussion in @nearbyDiscussions()
               osu.link BeatmapDiscussionHelper.url(discussion: discussion),
@@ -194,22 +190,20 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
                   existing_timestamps: timestampsString
 
             label className: "#{bn}__notice-checkbox",
-              div className: 'osu-checkbox osu-checkbox--beatmap-discussion',
+              div className: 'osu-switch-v2',
                 input
-                  className: 'osu-checkbox__input'
+                  className: 'osu-switch-v2__input'
                   type: 'checkbox'
                   checked: @state.timestampConfirmed
                   onChange: @toggleTimestampConfirmation
-
-                span className: 'osu-checkbox__box'
-                span className: 'osu-checkbox__tick',
-                  i className: 'fas fa-check'
+                span className: 'osu-switch-v2__content'
 
               osu.trans('beatmap_discussions.nearby_posts.confirm')
 
 
   canPost: =>
-    !@props.currentBeatmap.deleted_at? || @props.mode == 'generalAll'
+    (!@props.beatmapset.discussion_locked || BeatmapDiscussionHelper.canModeratePosts(@props.currentUser)) &&
+    (!@props.currentBeatmap.deleted_at? || @props.mode == 'generalAll')
 
 
   cssTop: (sticky) =>
@@ -228,16 +222,29 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
     @props.mode == 'timeline'
 
 
-  nearbyDiscussions: =>
-    return [] if !@state.timestamp?
+  messagePlaceholder: =>
+    if @canPost()
+      osu.trans "beatmaps.discussions.message_placeholder.#{@props.mode}", version: @props.currentBeatmap.version
+    else
+      if @props.beatmapset.discussion_locked
+        osu.trans 'beatmaps.discussions.message_placeholder_locked'
+      else
+        osu.trans 'beatmaps.discussions.message_placeholder_deleted_beatmap'
 
-    if !@cache.nearbyDiscussions? || @cache.nearbyDiscussions.timestamp != @state.timestamp
+
+  nearbyDiscussions: =>
+    return [] if !@timestamp()?
+
+    if @nearbyDiscussionsCache? && (@nearbyDiscussionsCache.beatmap != @props.currentBeatmap || @nearbyDiscussionsCache.timestamp != @timestamp())
+      @nearbyDiscussionsCache = null
+
+    if !@nearbyDiscussionsCache?
       discussions = {}
 
       for discussion in @props.currentDiscussions.timelineAllUsers
         continue if discussion.message_type not in ['suggestion', 'problem']
 
-        distance = Math.abs(discussion.timestamp - @state.timestamp)
+        distance = Math.abs(discussion.timestamp - @timestamp())
 
         continue if distance > 5000
 
@@ -255,11 +262,12 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
 
       shownDiscussions = discussions.d0 ? discussions.d100 ? discussions.d1000 ? discussions.other ? []
 
-      @cache.nearbyDiscussions =
-        timestamp: @state.timestamp
+      @nearbyDiscussionsCache =
+        beatmap: @props.currentBeatmap
+        timestamp: @timestamp()
         discussions: _.sortBy shownDiscussions, 'timestamp'
 
-    @cache.nearbyDiscussions.discussions
+    @nearbyDiscussionsCache.discussions
 
 
   onFocus: =>
@@ -281,8 +289,6 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
 
     type = e.currentTarget.dataset.type
 
-    userCanResetNominations = currentUser.is_admin || currentUser.is_qat || currentUser.is_bng
-
     if type == 'problem'
       problemType = @problemType()
 
@@ -300,7 +306,7 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
       beatmapset_id: @props.currentBeatmap.beatmapset_id
       beatmap_discussion:
         message_type: type
-        timestamp: @state.timestamp
+        timestamp: @timestamp()
         beatmap_id: @props.currentBeatmap.id unless @props.mode == 'generalAll'
       beatmap_discussion_post:
         message: @state.message
@@ -312,7 +318,7 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
     .done (data) =>
       @setState
         message: ''
-        timestamp: null
+        timestampConfirmed: false
 
       $.publish 'beatmapDiscussionPost:markRead', id: data.beatmap_discussion_post_id
       $.publish 'beatmapsetDiscussions:update', beatmapset: data.beatmapset
@@ -325,12 +331,12 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
 
 
   problemType: =>
-    canDisqualify = currentUser.is_admin || currentUser.is_qat
+    canDisqualify = currentUser.is_admin || currentUser.can_moderate || currentUser.is_full_bn
     willDisqualify = @props.beatmapset.status == 'qualified'
 
     return 'disqualify' if canDisqualify && willDisqualify
 
-    canReset = currentUser.is_admin || currentUser.is_qat || currentUser.is_bng
+    canReset = currentUser.is_admin || currentUser.is_nat || currentUser.is_bng
     willReset = @props.beatmapset.status == 'pending' && @props.beatmapset.nominations.current > 0
 
     return 'nomination_reset' if canReset && willReset
@@ -338,15 +344,8 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
     'problem'
 
 
-  setInputBox: (elem) =>
-    @inputBox = elem
-
-
   setMessage: (e) =>
-    message = e.currentTarget.value
-    timestamp = @parseTimestamp(message) if @props.mode == 'timeline'
-
-    @setState {message, timestamp}
+    @setState message: e.currentTarget.value
 
 
   setSticky: (sticky = true) =>
@@ -361,23 +360,13 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
       cssTop: @cssTop(@props.pinned)
 
 
-  setTimestamp: (e) =>
-    @setState timestamp: e.currentTarget.value
-
-
   submitButton: (type, extraProps) =>
-    icon =
-      if @state.posting == type
-        # for some reason the spinner wobbles
-        '_spinner'
-      else
-        BeatmapDiscussionHelper.messageType.icon[_.camelCase(type)]
-
     typeText = if type == 'problem' then @problemType() else type
 
     el BigButton,
-      modifiers: ['beatmap-discussion']
-      icon: icon
+      modifiers: ['beatmap-discussion-new']
+      icon: BeatmapDiscussionHelper.messageType.icon[_.camelCase(type)]
+      isBusy: @state.posting == type
       text: osu.trans("beatmaps.discussions.message_type.#{typeText}")
       key: type
       props: _.merge
@@ -385,6 +374,20 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
           'data-type': type
           onClick: @post
           extraProps
+
+
+  timestamp: =>
+    return unless @props.mode == 'timeline'
+
+    if @timestampCache?.message != @state.message
+      @timestampCache = null
+
+    if !@timestampCache?
+      @timestampCache =
+        message: @state.message
+        timestamp: @parseTimestamp(@state.message)
+
+    @timestampCache.timestamp
 
 
   toggleSticky: =>
@@ -399,6 +402,6 @@ class BeatmapDiscussions.NewDiscussion extends React.PureComponent
     return false if !BeatmapDiscussionHelper.validMessageLength(@state.message, @isTimeline())
 
     if @isTimeline()
-      @state.timestamp? && (@nearbyDiscussions().length == 0 || @state.timestampConfirmed)
+      @timestamp()? && (@nearbyDiscussions().length == 0 || @state.timestampConfirmed)
     else
       true

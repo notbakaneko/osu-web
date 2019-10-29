@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ class ChangeUsername
 {
     use Validatable;
 
+    const LESS_VALIDATION_TYPES = ['admin', 'revert', 'support'];
+
+    protected $type;
+
     /** @var User */
     protected $user;
 
@@ -42,8 +46,9 @@ class ChangeUsername
         return trans('model_validation.user.change_username.supporter_required._', ['link' => $link]);
     }
 
-    public function __construct(User $user, string $newUsername)
+    public function __construct(User $user, string $newUsername, string $type = 'paid')
     {
+        $this->type = $type;
         $this->username = $newUsername;
         $this->user = $user;
     }
@@ -55,7 +60,11 @@ class ChangeUsername
             return $this->validationErrors()->addTranslated('user_id', 'This user cannot be renamed');
         }
 
-        if (!$this->user->hasSupported()) {
+        if ($this->hasExtraValidations() && $this->user->isRestricted()) {
+            return $this->validationErrors()->add('username', '.change_username.restricted');
+        }
+
+        if ($this->hasExtraValidations() && !$this->user->hasSupported()) {
             return $this->validationErrors()->addTranslated('username', static::requireSupportedMessage());
         }
 
@@ -67,15 +76,20 @@ class ChangeUsername
             return $this->validationErrors();
         }
 
-        if ($this->validationErrors()->merge(UsernameValidation::validateAvailability($this->username))->isAny()) {
+        if ($this->validationErrors()->merge(UsernameValidation::validateUsersOfUsername($this->username))->isAny()) {
             return $this->validationErrors();
         }
 
-        return $this->validationErrors()->merge(UsernameValidation::validateUsersOfUsername($this->username));
+        return $this->validationErrors()->merge(UsernameValidation::validateAvailability($this->username));
     }
 
     public function validationErrorsTranslationPrefix()
     {
         return 'user';
+    }
+
+    private function hasExtraValidations()
+    {
+        return !in_array($this->type, static::LESS_VALIDATION_TYPES, true);
     }
 }

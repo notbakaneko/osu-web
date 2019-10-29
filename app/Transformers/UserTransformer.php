@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -35,6 +35,7 @@ class UserTransformer extends Fractal\TransformerAbstract
         'follower_count',
         'friends',
         'graveyard_beatmapset_count',
+        'group_badge',
         'is_admin',
         'loved_beatmapset_count',
         'monthly_playcounts',
@@ -46,7 +47,9 @@ class UserTransformer extends Fractal\TransformerAbstract
         'statistics',
         'support_level',
         'unranked_beatmapset_count',
+        'unread_pm_count',
         'user_achievements',
+        'user_preferences',
     ];
 
     public function transform(User $user)
@@ -69,15 +72,19 @@ class UserTransformer extends Fractal\TransformerAbstract
             'is_supporter' => $user->osu_subscriber,
             'has_supported' => $user->hasSupported(),
             'is_gmt' => $user->isGMT(),
-            'is_qat' => $user->isQAT(),
+            'is_nat' => $user->isNAT(),
             'is_bng' => $user->isBNG(),
+            'is_full_bn' => $user->isFullBN(),
+            'is_limited_bn' => $user->isLimitedBN(),
             'is_bot' => $user->isBot(),
             'is_active' => $user->isActive(),
+            'can_moderate' => $user->canModerate(),
             'interests' => $user->user_interests,
             'occupation' => $user->user_occ,
             'title' => $user->title(),
             'location' => $user->user_from,
             'last_visit' => json_time($user->displayed_last_visit),
+            'is_online' => $user->isOnline(),
             'twitter' => $user->user_twitter,
             'lastfm' => $user->user_lastfm,
             'skype' => $user->user_msnm,
@@ -142,11 +149,7 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeFavouriteBeatmapsetCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [
-                $user->profileBeatmapsetsFavourite()->count(),
-            ];
-        });
+        return $this->primitive($user->profileBeatmapsetsFavourite()->count());
     }
 
     public function includeBlocks(User $user)
@@ -159,9 +162,7 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeFollowerCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [$user->followerCount()];
-        });
+        return $this->primitive($user->followerCount());
     }
 
     public function includeFriends(User $user)
@@ -174,11 +175,12 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeGraveyardBeatmapsetCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [
-                $user->profileBeatmapsetsGraveyard()->count(),
-            ];
-        });
+        return $this->primitive($user->profileBeatmapsetsGraveyard()->count());
+    }
+
+    public function includeGroupBadge(User $user)
+    {
+        return $this->primitive($user->groupBadge());
     }
 
     public function includeIsAdmin(User $user)
@@ -190,11 +192,7 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeLovedBeatmapsetCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [
-                $user->profileBeatmapsetsLoved()->count(),
-            ];
-        });
+        return $this->primitive($user->profileBeatmapsetsLoved()->count());
     }
 
     public function includeMonthlyPlaycounts(User $user)
@@ -222,27 +220,13 @@ class UserTransformer extends Fractal\TransformerAbstract
     public function includePreviousUsernames(User $user)
     {
         return $this->item($user, function ($user) {
-            return $user
-                ->usernameChangeHistory()
-                ->visible()
-                ->select(['username_last', 'timestamp'])
-                ->withPresent('username_last')
-                ->where('username_last', '<>', $user->username)
-                ->orderBy('timestamp', 'ASC')
-                ->get()
-                ->pluck('username_last')
-                ->unique()
-                ->toArray();
+            return $user->previousUsernames()->unique()->values()->toArray();
         });
     }
 
     public function includeRankedAndApprovedBeatmapsetCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [
-                $user->profileBeatmapsetsRankedAndApproved()->count(),
-            ];
-        });
+        return $this->primitive($user->profileBeatmapsetsRankedAndApproved()->count());
     }
 
     public function includeReplaysWatchedCounts(User $user)
@@ -257,9 +241,7 @@ class UserTransformer extends Fractal\TransformerAbstract
     {
         $mode = $params->get('mode')[0];
 
-        return $this->item($user, function ($user) use ($mode) {
-            return [$user->scoresFirst($mode)->count()];
-        });
+        return $this->primitive($user->scoresFirst($mode)->count());
     }
 
     public function includeStatistics(User $user, Fractal\ParamBag $params)
@@ -278,10 +260,13 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeUnrankedBeatmapsetCount(User $user)
     {
-        return $this->item($user, function ($user) {
-            return [
-                $user->profileBeatmapsetsUnranked()->count(),
-            ];
+        return $this->primitive($user->profileBeatmapsetsUnranked()->count());
+    }
+
+    public function includeUnreadPmCount(User $user)
+    {
+        return $this->primitive($user, function ($user) {
+            return $user->notificationCount();
         });
     }
 
@@ -291,5 +276,14 @@ class UserTransformer extends Fractal\TransformerAbstract
             $user->userAchievements()->orderBy('date', 'desc')->get(),
             new UserAchievementTransformer()
         );
+    }
+
+    public function includeUserPreferences(User $user)
+    {
+        return $this->item($user, function ($user) {
+            return [
+                'ranking_expanded' => $user->profileCustomization()->ranking_expanded,
+            ];
+        });
     }
 }

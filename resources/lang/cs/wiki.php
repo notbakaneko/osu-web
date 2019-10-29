@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'Vyžadovaná stránka ještě nebyla přeložena do vybraného jazyka (:language). Zobrazuji Anglickou verzi.',
-        'languages' => 'Jazyky',
+        'incomplete_or_outdated' => '',
         'missing' => 'Požadovaná stránka ":keyword" nebyla nalezena.',
         'missing_title' => 'Nenalezeno',
         'missing_translation' => 'Požadovaná stránka nebyla nalezena pro zvolený jazyk.',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Anglická verze',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -32,5 +32,5 @@ return [
     'user_support_again' => '<strong>:user</strong> decyduje się ponownie wspomóc osu! - dziękujemy za szczodrość!',
     'user_support_first' => '<strong>:user</strong> zdecydował(a) się wspomóc osu! - dziękujemy za szczodrość!',
     'user_support_gift' => '<strong>:user</strong> otrzymuje prezent w postaci statusu donatora!',
-    'username_change' => '<strong>:previousUsername</strong> zmienia swój nick na <strong><em>:user</strong></em>!',
+    'username_change' => '<strong>:previousUsername</strong> zmienia swoją nazwę użytkownika na <strong><em>:user</em></strong>!',
 ];

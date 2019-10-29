@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,6 +25,8 @@ return [
     'title' => 'osu! fórumok',
 
     'covers' => [
+        'edit' => '',
+
         'create' => [
             '_' => 'Borítókép megadása',
             'button' => 'Kép feltöltése',
@@ -42,23 +44,21 @@ return [
     ],
 
     'forums' => [
+        'latest_post' => 'Legújabb Poszt',
+
+        'index' => [
+            'title' => 'Fórum Index',
+        ],
+
         'topics' => [
             'empty' => 'Nincsenek témák!',
         ],
     ],
 
     'mark_as_read' => [
-        'forum' => '',
-        'forums' => '',
-        'busy' => '',
-    ],
-
-    'poll' => [
-        'edit_warning' => '',
-
-        'actions' => [
-            'edit' => '',
-        ],
+        'forum' => 'Fórum megjelölése olvasottként',
+        'forums' => 'Fórumok megjelölése olvasottként',
+        'busy' => 'Olvasottnak jelölés...',
     ],
 
     'post' => [
@@ -71,6 +71,17 @@ return [
             'destroy' => 'Poszt törlése',
             'restore' => 'Poszt visszaállítása',
             'edit' => 'Poszt szerkesztése',
+        ],
+
+        'create' => [
+            'title' => [
+                'reply' => '',
+            ],
+        ],
+
+        'info' => [
+            'post_count' => ':count_delimited poszt|-:count_delimited poszt',
+            'topic_starter' => '',
         ],
     ],
 
@@ -94,6 +105,7 @@ return [
         'started_by_verbose' => ':user által indítva',
 
         'create' => [
+            'close' => 'Bezár',
             'preview' => 'Előnézet',
             // TL note: this is used in the topic reply preview, when
             // the user goes back from previewing to editing the reply
@@ -167,12 +179,16 @@ return [
         'create' => [
             'create_poll' => 'Szavazás Létrehozása',
 
+            'preview' => 'Poszt előnézet',
+
             'create_poll_button' => [
                 'add' => 'Szavazás létrehozása',
                 'remove' => 'Szavazás létrehozásának megszakítása',
             ],
 
             'poll' => [
+                'hide_results' => 'A szavazás eredményeinek elrejtése.',
+                'hide_results_info' => 'Csak a szavazás vége után fognak megjelenni.',
                 'length' => 'Szavazás futtatása',
                 'length_days_suffix' => 'nap',
                 'length_info' => 'Hagyja üresen a soha véget nem érő szavazást',
@@ -191,8 +207,9 @@ return [
         ],
 
         'index' => [
-            'views' => 'megtekintések',
+            'feature_votes' => 'csillagos prioritás',
             'replies' => 'válaszok',
+            'views' => 'megtekintések',
         ],
 
         'issue_tag_added' => [
@@ -258,6 +275,11 @@ return [
             'to_2_done' => 'Téma kitűzve és bejelentésnek jelölve',
         ],
 
+        'moderate_toggle_deleted' => [
+            'show' => '',
+            'hide' => '',
+        ],
+
         'show' => [
             'deleted-posts' => 'Törölt posztok',
             'total_posts' => 'Összes poszt',
@@ -265,6 +287,12 @@ return [
             'feature_vote' => [
                 'current' => 'Jelenlegi prioritás: +:count',
                 'do' => 'Kérés promotálása',
+
+                'info' => [
+                    '_' => 'Ez egy :feature_request. A funkciókérések felszavazhatóak :supporters által.',
+                    'feature_request' => 'funkciókérés',
+                    'supporters' => 'támogatók',
+                ],
 
                 'user' => [
                     'count' => '{0} nincs szavazat|{1} :count szavazat|[2,*] :count szavazat',
@@ -274,11 +302,21 @@ return [
             ],
 
             'poll' => [
+                'edit' => 'Szavazás Szerkesztése',
+                'edit_warning' => 'A szavazás szerkesztése eltörli a jelenlegi eredményeket!',
                 'vote' => 'Szavazat',
+
+                'button' => [
+                    'change_vote' => '',
+                    'edit' => '',
+                    'view_results' => '',
+                    'vote' => 'Szavaz',
+                ],
 
                 'detail' => [
                     'end_time' => 'Szavazás vége :time -kor lesz',
                     'ended' => 'Szavazás végetért :time -kor',
+                    'results_hidden' => 'Az eredmények a szavazás vége után jelennek meg.',
                     'total' => 'Leadott szavazatok száma :count',
                 ],
             ],
@@ -288,8 +326,8 @@ return [
             'to_not_watching' => 'Nincs könyvjelzőnek állítva',
             'to_watching' => 'Könyvjelző',
             'to_watching_mail' => 'Könyvjelző értesítéssel',
-            'tooltip_mail_disable' => '',
-            'tooltip_mail_enable' => '',
+            'tooltip_mail_disable' => 'Értesítés engedélyezve van. Ide kattintva letilthatod',
+            'tooltip_mail_enable' => 'Értesítés le van tiltva. Ide kattintva engedélyezheted',
         ],
     ],
 ];

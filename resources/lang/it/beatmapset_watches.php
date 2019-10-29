@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,15 +19,8 @@
  */
 
 return [
-    'button' => [
-        'action' => [
-            'to_0' => 'Non guardare',
-            'to_1' => 'Guarda',
-        ],
-    ],
-
     'index' => [
-        'description' => 'Queste sono le discussion di beatmap che stai seguendo. Verrai avvisato quando ci saranno nuovi post o aggiornamenti.',
+        'description' => 'Queste sono le discussioni di beatmap che stai seguendo. Verrai notificato quando ci sono nuovi post o aggiornamenti.',
         'title_compact' => 'lista modding',
         'title_main' => 'Lista Modding',
 

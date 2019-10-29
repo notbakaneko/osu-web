@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,11 @@
 # Anchor navigation with turbolinks. Works around [1].
 # [1] https://github.com/turbolinks/turbolinks/issues/75
 $(document).on 'click', 'a[href^="#"]', (e) ->
-  href = e.currentTarget.href
+  link = e.currentTarget
+
+  return if link.dataset.toggle == 'collapse'
+
+  href = link.href
   targetId = decodeURIComponent href[href.indexOf('#') + 1..]
 
   return if targetId == ''
@@ -49,7 +53,9 @@ Turbolinks.HttpRequest::requestLoaded = ->
 Turbolinks.Controller::advanceHistory = (url) ->
   return if url == document.location.href
 
-  @cacheSnapshot()
+  snapshot = @view.getSnapshot()
+  location = @lastRenderedLocation
+  @cache.put location, snapshot.clone()
   @lastRenderedLocation = Turbolinks.Location.wrap(url)
   @pushHistoryWithLocationAndRestorationIdentifier url, Turbolinks.uuid()
 

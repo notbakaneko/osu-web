@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,7 +19,7 @@
  */
 
 return [
-    'title' => 'Reestablecer Contraseña',
+    'title' => 'Reestablecer contraseña',
 
     'button' => [
         'cancel' => 'Cancelar',
@@ -55,5 +55,10 @@ return [
 
     'starting' => [
         'username' => 'Ingresa correo electrónico o nombre de usuario',
+
+        'support' => [
+            '_' => '¿Necesitas asistencia? Contáctanos a través de nuestro :button.',
+            'button' => 'sistema de soporte',
+        ],
     ],
 ];

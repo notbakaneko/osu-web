@@ -1,12 +1,14 @@
 # Local configuration.
-/.env
-/.env.testing
+/.env*
+!/.env*.example
 
 # ignore the compiled class file from artisan optimize
 /bootstrap/compiled.php
 
 # ignore _ide_helper.php
 _ide_helper.php
+
+/.phpunit.result.cache
 
 # composer files/dirs
 /vendor
@@ -29,7 +31,6 @@ desktop.ini
 /public/fonts/vendor
 /public/js
 /public/css
-/public/build
 /public/vendor
 /public/uploads
 /public/uploads-avatar
@@ -81,9 +82,8 @@ sftp-settings.json
 /storage/htmlpurifier/
 /bootstrap/cache/
 
-/resources/assets/js/messages.js
-/resources/assets/js/laroute.js
-/resources/assets/js/build/
+/resources/assets/js/ziggy.js
+/resources/assets/build/
 
 composer-installer
 
@@ -91,3 +91,5 @@ composer-installer
 /storage/oauth-private.key
 
 /storage/paypal_auth.cache
+
+/notification-server/

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -29,19 +29,27 @@ return [
         'last_word_connector' => ', и ',
     ],
 
+    'badges' => [
+        'new' => 'НОВОЕ',
+    ],
+
     'buttons' => [
-        'back_to_top' => 'В начало',
+        'admin' => 'Администратор',
         'back_to_previous' => 'Возвратить предыдущее состояние',
+        'back_to_top' => 'В начало',
         'cancel' => 'Отмена',
         'change' => 'изменить',
         'click_to_copy' => 'нажмите чтобы скопировать',
         'click_to_copy_copied' => 'скопировано!',
+        'close' => 'Закрыть',
+        'collapse' => 'свернуть',
         'delete' => 'Удалить',
         'edit' => 'Изменить',
+        'expand' => 'развернуть',
         'hide' => 'скрыть',
         'permalink' => 'прямая ссылка',
         'permalink_copied' => 'ссылка скопирована',
-        'post' => 'Публикация',
+        'post' => 'Опубликовать',
         'reply' => 'Ответить',
         'reply_reopen' => 'Ответить и возобновить',
         'reply_resolve' => 'Ответить и разрешить',
@@ -52,8 +60,16 @@ return [
         'search' => 'Найти',
         'see_more' => 'показать ещё',
         'show' => 'показать',
+        'show_deleted' => 'Показать удалённые',
         'show_more' => 'показать больше',
+        'show_more_options' => 'показать больше опций',
+        'update' => 'Обновить',
         'upload_image' => 'выбрать файл',
+
+        'watch' => [
+            'to_0' => 'Не следить',
+            'to_1' => 'Следить',
+        ],
     ],
 
     'count' => [
@@ -63,9 +79,14 @@ return [
         'hours' => ':count час|:count часа|:count часов',
         'item' => ':count единица|:count единицы|:count единиц',
         'minute_short_unit' => 'мин',
-        'minutes' => '',
+        'minutes' => ':count минута|:count минуты|:count минут',
         'months' => ':count месяц|:count месяца|:count месяцев',
+        'plus_others' => '',
+        'post' => ':count_delimited пост|:count_delimited поста|:count_delimited постов',
         'second_short_unit' => 'сек',
+        'star_priority' => '',
+        'update' => ':count_delimited обновление|:count_delimited обновления',
+        'view' => '',
         'years' => ':count год|:count года|:count лет',
     ],
 
@@ -95,6 +116,10 @@ return [
 
     'dropzone' => [
         'target' => 'бросьте файл сюда',
+    ],
+
+    'input' => [
+        'search' => 'найти...',
     ],
 
     'pagination' => [

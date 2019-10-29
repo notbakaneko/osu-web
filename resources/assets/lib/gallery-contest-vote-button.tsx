@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -18,15 +18,15 @@
 
 import * as React from 'react';
 
-interface PropsInterface {
+interface Props {
   pswp: any;
 }
 
-export default class GalleryContestVoteButton extends React.PureComponent<PropsInterface, any> {
+export default class GalleryContestVoteButton extends React.PureComponent<Props, any> {
   private eventId = `gallery-contest-${osu.uuid()}`;
   private mainRef = React.createRef<HTMLButtonElement>();
 
-  constructor(props: PropsInterface) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -50,9 +50,11 @@ export default class GalleryContestVoteButton extends React.PureComponent<PropsI
   }
 
   render() {
-    return <button ref={this.mainRef} className={this.mainClass()} onClick={this.vote} title={this.buttonTitle()}>
-      <span className={this.iconClass()} />
-    </button>;
+    return (
+      <button ref={this.mainRef} className={this.mainClass()} onClick={this.vote} title={this.buttonTitle()}>
+        <span className={this.iconClass()} />
+      </button>
+    );
   }
 
   private button() {

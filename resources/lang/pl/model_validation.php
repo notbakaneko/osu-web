@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -27,6 +27,10 @@ return [
     'beatmap_discussion_post' => [
         'discussion_locked' => 'Dyskusja została zablokowana.',
         'first_post' => 'Nie możesz usunąć posta rozpoczynającego.',
+
+        'attributes' => [
+            'message' => 'Wiadomość',
+        ],
     ],
 
     'beatmapset_discussion' => [
@@ -36,6 +40,11 @@ return [
         'invalid_beatmap_id' => 'Ustawiono niewłaściwy poziom trudności.',
         'invalid_beatmapset_id' => 'Ustawiono niewłaściwą beatmapę.',
         'locked' => 'Dyskusja została zablokowana.',
+
+        'attributes' => [
+            'message_type' => 'Rodzaj wiadomości',
+            'timestamp' => 'Znacznik czasu',
+        ],
 
         'hype' => [
             'guest' => 'Musisz się zalogować, aby nagłośnić tę beatmapę.',
@@ -53,6 +62,14 @@ return [
 
     'comment' => [
         'deleted_parent' => 'Nie możesz odpowiedzieć na usunięty komentarz.',
+
+        'attributes' => [
+            'message' => 'Wiadomość',
+        ],
+    ],
+
+    'follow' => [
+        'invalid' => 'Nieprawidłowa wartość: :attribute.',
     ],
 
     'forum' => [
@@ -68,20 +85,48 @@ return [
         'post' => [
             'beatmapset_post_no_delete' => 'Nie możesz usuwać posta z metadanymi beatmapy.',
             'beatmapset_post_no_edit' => 'Nie możesz edytować posta z metadanymi beatmapy.',
+            'only_quote' => 'Twoja odpowiedź zawiera tylko cytat.',
+
+            'attributes' => [
+                'post_text' => 'Zawartość posta',
+            ],
+        ],
+
+        'topic' => [
+            'attributes' => [
+                'topic_title' => 'Tytuł tematu',
+            ],
         ],
 
         'topic_poll' => [
             'duplicate_options' => 'Nie możesz dodawać takich samych możliwości wyboru.',
-            'grace_period_expired' => '',
+            'grace_period_expired' => 'Nie możesz edytować ankiety po upływie :limit godzin.',
+            'hiding_results_forever' => 'Nie możesz ukryć wyników ankiety bez daty zakończenia.',
             'invalid_max_options' => 'Liczba odpowiedzi do zaznaczenia przez użytkownika nie może przekroczyć liczby wyborów.',
             'minimum_one_selection' => 'Wymagany jest conajmniej jeden wybór na użytkownika.',
             'minimum_two_options' => 'Wymagane są conajmniej dwie możliwości wyboru.',
             'too_many_options' => 'Przekroczono maksymalną liczbę możliwości wyboru.',
+
+            'attributes' => [
+                'title' => 'Tytuł ankiety',
+            ],
         ],
 
         'topic_vote' => [
             'required' => 'Wybierz jedną z opcji, aby zagłosować.',
             'too_many' => 'Wybrano więcej opcji, niż jest to dozwolone.',
+        ],
+    ],
+
+    'oauth' => [
+        'client' => [
+            'too_many' => 'Przekroczono maksymalną liczbę dozwolonych aplikacji OAuth.',
+            'url' => 'Wprowadź prawidłowy adres URL.',
+
+            'attributes' => [
+                'name' => 'Nazwa aplikacji',
+                'redirect' => 'Adres URL wywołań zwrotnych aplikacji',
+            ],
         ],
     ],
 
@@ -97,6 +142,7 @@ return [
         'username_available_soon' => 'Ta nazwa użytkownika będzie dostępna niedługo!',
         'username_invalid_characters' => 'Ta nazwa użytkownika zawiera nieprawidłowe znaki.',
         'username_in_use' => 'Ta nazwa użytkownika jest już w użyciu!',
+        'username_locked' => 'Ta nazwa użytkownika jest już w użyciu!', // TODO: language for this should be slightly different.
         'username_no_space_userscore_mix' => 'Używaj spacji albo znaków podkreślenia, nie obu naraz!',
         'username_no_spaces' => "Nazwa użytkownika nie może zaczynać się ani kończyć spacjami!",
         'username_not_allowed' => 'Ta nazwa użytkownika nie jest dozwolona.',
@@ -108,7 +154,14 @@ return [
         'wrong_password_confirmation' => 'Podane hasła nie są zgodne.',
         'too_long' => 'Przekroczono maksymalną liczbę znaków - możliwe jest użycie tylko :limit znaków.',
 
+        'attributes' => [
+            'username' => 'Nazwa użytkownika',
+            'user_email' => 'Adres e-mail',
+            'password' => 'Hasło',
+        ],
+
         'change_username' => [
+            'restricted' => 'Nie możesz zmienić swojej nazwy użytkownika podczas blokady konta.',
             'supporter_required' => [
                 '_' => 'Musisz posiadać :link, aby zmienić nazwę użytkownika!',
                 'link_text' => 'status donatora osu!',
@@ -118,6 +171,16 @@ return [
     ],
 
     'user_report' => [
-        'self' => "",
+        'reason_not_valid' => '',
+        'self' => "Nie możesz zgłosić swojego konta!",
+    ],
+
+    'store' => [
+        'order_item' => [
+            'attributes' => [
+                'quantity' => 'Liczba',
+                'cost' => 'Koszt',
+            ],
+        ],
     ],
 ];

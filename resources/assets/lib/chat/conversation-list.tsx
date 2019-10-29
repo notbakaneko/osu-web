@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -30,12 +30,7 @@ export default class ConversationList extends React.Component<any, {}> {
     const conversationList: React.ReactNode[] = [];
 
     nonPmChannels.forEach((conversation) => {
-      conversationList.push(
-        <ConversationListItem
-            key={conversation.channelId}
-            channelId={conversation.channelId}
-        />,
-      );
+      conversationList.push(<ConversationListItem key={conversation.channelId} channelId={conversation.channelId} />);
     });
 
     if (nonPmChannels.length > 0 && pmChannels.length > 0) {
@@ -45,18 +40,9 @@ export default class ConversationList extends React.Component<any, {}> {
     }
 
     pmChannels.forEach((conversation) => {
-      conversationList.push(
-        <ConversationListItem
-            key={conversation.channelId}
-            channelId={conversation.channelId}
-        />,
-      );
+      conversationList.push(<ConversationListItem key={conversation.channelId} channelId={conversation.channelId} />);
     });
 
-    return(
-      <div className='chat-conversation-list'>
-        {conversationList}
-      </div>
-    );
+    return <div className='chat-conversation-list'>{conversationList}</div>;
   }
 }

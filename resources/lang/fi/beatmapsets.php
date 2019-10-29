@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -34,36 +34,45 @@ return [
         'discussion' => 'Keskustelu',
 
         'details' => [
-            'mapped_by' => 'luonut: :mapper',
-            'submitted' => 'Julkaistu ',
-            'updated' => 'viimeisin päivitys ',
-            'updated_timeago' => 'viimeksi päivitetty :timeago',
-            'ranked' => 'hyväksytty ',
             'approved' => 'vahvistettu ',
-            'qualified' => 'esihyväksytty ',
-            'loved' => 'rakastettu ',
+            'favourite' => 'Lisää tämä beatmap-setti suosikkeihin',
             'logged-out' => 'Sinun täytyy kirjautua sisään ladataksesi beatmappeja!',
+            'loved' => 'rakastettu ',
+            'mapped_by' => 'luonut: :mapper',
+            'qualified' => 'esihyväksytty ',
+            'ranked' => 'hyväksytty ',
+            'submitted' => 'julkaistu ',
+            'unfavourite' => 'Poista tämä beatmapkokoelma suosikeista',
+            'updated' => 'viimeisin päivitys ',
+            'updated_timeago' => 'päivitetty viimeksi :timeago',
+
             'download' => [
                 '_' => 'Lataa',
-                'video' => 'videon kanssa',
-                'no-video' => 'ilman videota',
                 'direct' => '',
+                'no-video' => 'ilman videota',
+                'video' => 'videon kanssa',
             ],
-            'favourite' => 'Lisää tämä beatmap-setti suosikkeihin',
-            'unfavourite' => 'Poista nämä beatmap-setti suosikeista',
-            'favourited_count' => '+ 1 muu!|+ :count muuta!',
+
+            'login_required' => [
+                'bottom' => 'lisäomimaisuuksien käyttämiseen',
+                'top' => 'Kirjaudu sisään',
+            ],
+        ],
+
+        'favourites' => [
+            'limit_reached' => 'Sinulla on liian monta lempikappaletta! Poista joitain suosikeistasi ennen uudelleenyrittämistä.',
         ],
 
         'hype' => [
-            'action' => '',
+            'action' => 'Jos nautit tästä kartasta, hurraa sitä edistääksesi sen siirtymistä <strong>Hyväksyttyyn</strong> tilaan.',
 
             'current' => [
-                '_' => '',
+                '_' => 'Tämä kartta on :status.',
 
                 'status' => [
-                    'pending' => '',
-                    'qualified' => '',
-                    'wip' => '',
+                    'pending' => 'vireillä',
+                    'qualified' => 'hyväksytty',
+                    'wip' => 'keskeneräinen',
                 ],
             ],
         ],
@@ -91,7 +100,7 @@ return [
 
             'headers' => [
                 'accuracy' => 'Tarkkuus',
-                'combo' => 'Max Combo',
+                'combo' => 'Maksimikombo',
                 'miss' => 'Ohi',
                 'mods' => 'Modit',
                 'player' => 'Pelaaja',
@@ -103,8 +112,8 @@ return [
 
             'no_scores' => [
                 'country' => 'Kartasta ei vielä löydy maansisäisiä tuloksia!',
-                'friend' => 'Kukaan kavereistasi ei vielä ole saanut tulosta tässä kartassa!',
-                'global' => 'Tuloksia ei ole. Ehkä voisit yrittää saada sellaisen?',
+                'friend' => 'Kukaan kavereistasi ei vielä ole saanut tulosta tässä mapissa!',
+                'global' => 'Tuloksia ei ole. Voisit hankkia niitä.',
                 'loading' => 'Ladataan tuloksia...',
                 'unranked' => 'Beatmap ei ole hyväksytyssä tilassa.',
             ],
@@ -116,7 +125,7 @@ return [
 
         'stats' => [
             'cs' => 'Ympyräkoko',
-            'cs-mania' => 'Koskettimien määrä',
+            'cs-mania' => 'Näppäinten määrä',
             'drain' => 'HP Drain',
             'accuracy' => 'Tarkkuus',
             'ar' => 'Lähestymisnopeus',

@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -50,14 +50,14 @@
                         {{ trans('beatmap_discussions.index.form.types') }}
                     </div>
                     <div class="simple-form__checkboxes-inline">
-                        @foreach (array_keys(App\Models\BeatmapDiscussion::MESSAGE_TYPES) as $type)
+                        @foreach (array_keys(App\Models\BeatmapDiscussion::MESSAGE_TYPES) as $messageType)
                             <label class="simple-form__checkbox simple-form__checkbox--inline">
-                                @include('objects._checkbox', [
+                                @include('objects._switch', [
+                                    'checked' => in_array($messageType, $search['params']['message_types'], true),
                                     'name' => 'message_types[]',
-                                    'value' => $type,
-                                    'checked' => in_array($type, $search['params']['message_types'], true),
+                                    'value' => $messageType,
                                 ])
-                                {{ trans("beatmaps.discussions.message_type.{$type}") }}
+                                {{ trans("beatmaps.discussions.message_type.{$messageType}") }}
                             </label>
                         @endforeach
                     </div>
@@ -66,10 +66,9 @@
                 @if (priv_check('BeatmapDiscussionModerate')->can())
                     <div class="simple-form__row simple-form__row--no-label">
                         <label class="simple-form__checkbox">
-                            @include('objects._checkbox', [
+                            @include('objects._switch', [
+                                'checked' => $search['params']['with_deleted'],
                                 'name' => 'with_deleted',
-                                'value' => 1,
-                                'checked' => $search['params']['with_deleted']
                             ])
                             {{ trans('beatmap_discussions.index.form.deleted') }}
                         </label>
@@ -77,8 +76,15 @@
                 @endif
 
                 <div class="simple-form__row simple-form__row--no-label">
-                    <button class="btn-osu-lite btn-osu-lite--default" type="submit">
-                        {{ trans('common.buttons.search') }}
+                    <button class="btn-osu-big btn-osu-big--rounded" type="submit">
+                        <span class="btn-osu-big__content">
+                            <span class="btn-osu-big__left">
+                                {{ trans('common.buttons.search') }}
+                            </span>
+                            <span class="btn-osu-big__icon btn-osu-big__icon--normal">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </span>
                     </button>
                 </div>
             </form>
@@ -89,7 +95,7 @@
                 @endforeach
             </div>
 
-            @include('objects._pagination_v0', ['object' => $discussions])
+            @include('objects._pagination_simple', ['object' => $discussions])
         </div>
     </div>
 @endsection

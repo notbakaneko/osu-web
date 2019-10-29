@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ namespace App\Events\Fulfillments;
 use App\Events\MessageableEvent;
 use App\Models\Store\Order;
 use ArrayAccess;
-use Sentry;
+use Sentry\State\Scope;
 
 class SupporterTagEvent implements HasOrder, MessageableEvent
 {
@@ -51,9 +51,10 @@ class SupporterTagEvent implements HasOrder, MessageableEvent
         foreach ($this->orderItems as $item) {
             if ($item->product->custom_class !== 'supporter-tag') {
                 // sanity; it shouldn't happen but also make sure it doesn't die.
-                Sentry::captureMessage(
-                    'SupporterTagEvent order %s contains non supporter-tag items.'
-                    [$this->order->order_id]
+                app('sentry')->getClient()->captureMessage(
+                    'SupporterTagEvent order contains non supporter-tag items.',
+                    null,
+                    (new Scope)->setExtra('order_id', $this->order->order_id)
                 );
 
                 continue;

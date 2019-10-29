@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,8 +26,15 @@ return [
     'voting' => [
         'over' => 'Голосование окончено',
         'login_required' => 'Войдите для голосования.',
+
         'best_of' => [
             'none_played' => "Не похоже чтобы вы играли в те карты, которые участвуют в этом конкурсе.",
+        ],
+
+        'button' => [
+            'add' => 'Голосовать',
+            'remove' => 'Отменить голос',
+            'used_up' => 'Вы уже использовали все свои голоса',
         ],
     ],
     'entry' => [

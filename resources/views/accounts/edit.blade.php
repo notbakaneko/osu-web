@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -112,6 +112,16 @@
                                 data-url="{{ route('account.avatar') }}"
                             >
                         </label>
+
+                        <div class="account-edit-entry__rules">
+                            {!! trans('accounts.edit.avatar.rules', [
+                                'link' => link_to(
+                                    wiki_url('Rules'),
+                                    trans('accounts.edit.avatar.rules_link'),
+                                    ['class' => 'account-edit-entry__link']
+                                )
+                            ]) !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,6 +141,10 @@
     </div>
 
     <div class="osu-page osu-page--small u-has-anchor">
+        @include('accounts._edit_notifications')
+    </div>
+
+    <div class="osu-page osu-page--small u-has-anchor">
         @include('accounts._edit_password')
     </div>
 
@@ -141,4 +155,20 @@
     <div class="osu-page osu-page--small u-has-anchor">
         @include('accounts._edit_sessions')
     </div>
+
+    <div class="osu-page osu-page--small u-has-anchor">
+        @include('accounts._edit_oauth')
+    </div>
+@endsection
+
+@section("script")
+  <script id="json-authorized-clients" type="application/json">
+    {!! json_encode($authorizedClients) !!}
+  </script>
+
+  <script id="json-own-clients" type="application/json">
+    {!! json_encode($ownClients) !!}
+  </script>
+
+  @include('layout._extra_js', ['src' => 'js/react/account-edit.js'])
 @endsection

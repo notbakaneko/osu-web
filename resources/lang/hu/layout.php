@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,10 +23,27 @@ return [
         'page_description' => 'osu! - Ritmus csak egy *kattintásra*! Quendan/EBA, Taiko és más eredeti játékmódok, emellett egy teljes pálya szerkesztő.',
     ],
 
+    'header' => [
+        'community' => [
+            '_' => 'Közösség',
+
+            'forum' => 'Fórum',
+        ],
+    ],
+
+    'gallery' => [
+        'close' => 'Bezár (Esc)',
+        'fullscreen' => 'Teljes képernyő be/ki',
+        'zoom' => '',
+        'previous' => 'Előző (bal kurzor)',
+        'next' => 'Következő (jobb kurzor)',
+    ],
+
     'menu' => [
         'home' => [
             '_' => 'főoldal',
             'account-edit' => 'beállítások',
+            'account-verifyLink' => 'Sikeres hitelesítés',
             'friends-index' => 'barátok',
             'changelog-index' => 'változtatások',
             'changelog-build' => 'verzió',
@@ -35,13 +52,18 @@ return [
             'groups-show' => 'csoportok',
             'index' => 'áttekintés',
             'legal-show' => 'információ',
-            'messages-index' => '',
+            'messages-index' => 'üzenetek',
             'news-index' => 'újdonságok',
             'news-show' => 'újdonságok',
             'password-reset-index' => 'jelszó visszaállítása',
             'search' => 'keresés',
             'supportTheGame' => 'támogasd a játékot',
             'team' => 'csapat',
+        ],
+        'profile' => [
+            '_' => '',
+            'friends' => '',
+            'settings' => '',
         ],
         'help' => [
             '_' => 'segítség',
@@ -78,8 +100,8 @@ return [
         ],
         'community' => [
             '_' => 'közösség',
-            'chat' => '',
-            'chat-index' => '',
+            'chat' => 'chat',
+            'chat-index' => 'chat',
             'dev' => 'fejlesztés',
             'getForum' => 'fórumok',
             'getLive' => 'élő',
@@ -118,16 +140,18 @@ return [
             'reset' => 'visszaállitás',
             'new' => 'új',
 
-            'messages' => 'Üzenetek',
-            'settings' => 'Beállitások',
-            'logout' => 'Kijelentkezés',
             'help' => 'Súgó',
+            'logout' => 'Kijelentkezés',
+            'messages' => 'Üzenetek',
             'modding-history-discussions' => 'felhasználói modoló megbeszélések',
             'modding-history-events' => 'felhasználói modoló események',
             'modding-history-index' => 'felhasználói modoló előzmények',
             'modding-history-posts' => 'felhasználói modoló előzmények',
             'modding-history-votesGiven' => 'felhasználói modoló szavazat adva',
             'modding-history-votesReceived' => 'felhasználói modoló szavazat kapva',
+            'oauth_login' => 'jelentkezz be az oauth-ért',
+            'oauth_request' => 'oauth felhatalmazás',
+            'settings' => 'Beállitások',
         ],
         'store' => [
             '_' => 'áruház',
@@ -244,7 +268,8 @@ return [
         ],
 
         'register' => [
-            'info' => "Önnek szüksége van egy fiókra uram. Miért nem rendelkezik még egyel?",
+            'download' => '',
+            'info' => 'Önnek szüksége van egy fiókra uram. Miért nem rendelkezik még egyel?',
             'title' => "Nincs még fiókod?",
         ],
     ],

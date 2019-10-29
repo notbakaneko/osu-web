@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,17 +17,23 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace Tests\Controllers;
+
 use App\Models\Beatmap;
 use App\Models\User;
+use Tests\TestCase;
 
 class BeatmapControllerTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
+    private $user;
+    private $beatmap;
 
-        $this->user = factory(User::class)->create();
-        $this->beatmap = factory(Beatmap::class)->states('approved')->create();
+    public function testInvalidMode()
+    {
+        $this->json('GET', route('beatmaps.scores', $this->beatmap), [
+            'mode' => 'nope',
+        ])->assertStatus(404);
     }
 
     /**
@@ -37,7 +43,7 @@ class BeatmapControllerTest extends TestCase
      */
     public function testNonGeneralScoreboardLoggedOut()
     {
-        $this->json('GET', route('beatmaps.scores', ['id' => $this->beatmap->beatmap_id]), [
+        $this->json('GET', route('beatmaps.scores', $this->beatmap), [
             'type' => 'country',
         ])->assertStatus(422)
         ->assertJson(['error' => trans('errors.supporter_only')]);
@@ -50,7 +56,7 @@ class BeatmapControllerTest extends TestCase
     public function testNonGeneralScoreboardSupporter()
     {
         $this->actingAs($this->user)
-            ->json('GET', route('beatmaps.scores', ['id' => $this->beatmap->beatmap_id]), [
+            ->json('GET', route('beatmaps.scores', $this->beatmap), [
                 'type' => 'country',
             ])->assertStatus(422)
             ->assertJson(['error' => trans('errors.supporter_only')]);
@@ -59,8 +65,16 @@ class BeatmapControllerTest extends TestCase
         $this->user->save();
 
         $this->actingAs($this->user)
-            ->json('GET', route('beatmaps.scores', ['id' => $this->beatmap->beatmap_id]), [
+            ->json('GET', route('beatmaps.scores', $this->beatmap), [
                 'type' => 'country',
             ])->assertStatus(200);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create();
+        $this->beatmap = factory(Beatmap::class)->states('approved')->create();
     }
 }

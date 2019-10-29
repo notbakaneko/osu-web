@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'verwijderd',
+    'deleted_count' => ':count_delimited verwijderde opmerking|:count_delimited verwijderde opmerkingen',
     'edited' => 'gewijzigd :timeago door :user',
     'empty' => 'Nog geen commentaar.',
+    'load_replies' => 'antwoorden laden',
     'replies' => 'Reacties',
-    'show_replies' => 'reacties tonen',
     'title' => 'Opmerkingen',
 
     'commentable_name' => [
@@ -43,7 +44,7 @@ return [
     ],
 
     'guest_button' => [
-        'new' => 'Login om een opmerking achter te laten',
+        'new' => 'Log in om een opmerking achter te laten',
         'reply' => 'Log in om te reageren',
     ],
 
@@ -65,12 +66,5 @@ return [
             '_' => 'Opmerkingen :info',
             'info' => 'Detail',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

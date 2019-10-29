@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'La page demandée n\'est pas encore traduite dans votre langue (:language). Affichage de la version anglaise',
-        'languages' => 'Langues',
+        'incomplete_or_outdated' => 'Le contenu de cette page est incomplet ou obsolète. Si vous êtes en mesure d\'aider, veuillez envisager de mettre à jour l\'article !',
         'missing' => 'La page demandée n\'a pas pu être trouvée.',
         'missing_title' => 'Non Trouvée',
         'missing_translation' => 'La page demandée n\'a pas pu être trouvée pour la langue sélectionnée actuellement',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Version anglaise',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

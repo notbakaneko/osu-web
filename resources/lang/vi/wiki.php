@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,7 +21,7 @@
 return [
     'show' => [
         'fallback_translation' => 'Trang yêu cầu chưa được dịch sang ngôn ngữ đã chọn (:language). Đang hiển thị phiên bản tiếng Anh.',
-        'languages' => 'Ngôn ngữ',
+        'incomplete_or_outdated' => '',
         'missing' => 'Không thể tìm thấy trang ":keyword".',
         'missing_title' => 'Không Tìm Thấy',
         'missing_translation' => 'Không thể tìm trang đã yêu cầu cho ngôn ngữ bạn đã chọn.',
@@ -39,5 +39,12 @@ return [
 
             'default' => 'Phiên bản tiếng Anh',
         ],
+    ],
+    'main' => [
+        'title' => '',
+        'subtitle' => '',
+    ],
+    'search' => [
+        'path' => '',
     ],
 ];

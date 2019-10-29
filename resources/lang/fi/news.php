@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,32 +19,37 @@
  */
 
 return [
-    'breadcrumbs' => [
-        'news-index' => 'lista',
-        'news-show' => 'viesti',
-    ],
-
     'index' => [
-        'title' => 'osu!uutiset',
+        'title_page' => 'osu!uutiset',
 
         'nav' => [
             'newer' => 'Uudemmat viestit',
             'older' => 'Vanhemmat viestit',
         ],
+
+        'title' => [
+            '_' => 'Uutiset :info',
+            'info' => 'Etusivu',
+        ],
     ],
 
     'show' => [
-        'posted' => 'julkaistu :time',
+        'by' => ':user\'lta',
 
         'nav' => [
             'newer' => 'Uudempi viesti',
             'older' => 'Vanhempi viesti',
         ],
+
+        'title' => [
+            '_' => 'Uutiset :info',
+            'info' => 'Viesti',
+        ],
     ],
 
     'store' => [
         'button' => 'Päivitä',
-        'ok' => 'Lista päivitetty.',
+        'ok' => 'Listaus päivitetty.',
     ],
 
     'update' => [

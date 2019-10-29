@@ -1,5 +1,5 @@
 ###
-#    Copyright 2015-2017 ppy Pty. Ltd.
+#    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 #
 #    This file is part of osu!web. osu!web is distributed with the hope of
 #    attracting more community contributions to the core ecosystem of osu!.
@@ -16,19 +16,22 @@
 #    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-{tr, td, a, div} = ReactDOMFactories
+import { UserEntryDeleteButton } from './user-entry-delete-button'
+import * as React from 'react'
+import { tr, td, a, div } from 'react-dom-factories'
+import { UserAvatar } from 'user-avatar'
 el = React.createElement
 
-class @Admin.Contest.UserEntry extends React.Component
+export class UserEntry extends React.Component
   render: =>
-    className = 'admin-contest-entry'
+    className = 'osu-table__body-row osu-table__body-row--highlightable admin-contest-entry'
     className += ' admin-contest-entry__deleted' if @props.entry.deleted
 
     tr
       className: className
       key: @props.entry.id,
 
-      td className: 'admin-contest-entry__column',
+      td className: 'osu-table__cell admin-contest-entry__column',
         a
           className: 'admin-contest-entry__user-link'
           href: laroute.route('users.show', user: @props.entry.user.id),
@@ -36,12 +39,12 @@ class @Admin.Contest.UserEntry extends React.Component
             el UserAvatar, user: @props.entry.user, modifiers: ['full-rounded']
           @props.entry.user.username
 
-      td className: 'admin-contest-entry__column',
+      td className: 'osu-table__cell admin-contest-entry__column',
           a download: @props.entry.original_filename, href: @props.entry.url, @props.entry.filename
 
-      td className: 'admin-contest-entry__column',
+      td className: 'osu-table__cell admin-contest-entry__column',
           osu.formatBytes(@props.entry.filesize)
 
       td className: 'admin-contest-entry__column admin-contest-entry__column--button',
-        el Admin.Contest.UserEntryDeleteButton,
+        el UserEntryDeleteButton,
           entry: @props.entry

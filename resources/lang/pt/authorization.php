@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,6 +26,8 @@ return [
         ],
         'nominate' => [
             'exhausted' => 'Tu alcançaste o teu limite de nomeações por dia, por favor tenta outra vez amanhã.',
+            'full_bn_required' => 'Tu tens que ser um nomeador por completo para desempenhar esta nomeação de qualificação.',
+            'full_bn_required_hybrid' => 'Tu tens que ser um nomeador por completo para nomear grupos de beatmaps com mais de um modo de jogo.',
             'incorrect_state' => 'Erro ao executar essa ação, por favor recarrega a página.',
             'owner' => "Não é possível nomear o próprio beatmap.",
         ],
@@ -45,9 +47,20 @@ return [
     ],
 
     'beatmap_discussion_post' => [
+        'destroy' => [
+            'not_owner' => 'Só podes eliminar as tuas próprias publicações.',
+            'resolved' => 'Não podes eliminar uma publicação duma discussão resolvida.',
+            'system_generated' => 'Uma publicação automaticamente gerada não pode ser apagada.',
+        ],
+
         'edit' => [
-            'system_generated' => 'Uma publicação gerada automaticamente não pode ser editada.',
             'not_owner' => 'Só o publicador é que pode editar uma publicação.',
+            'resolved' => 'Não podes editar uma publicação duma discussão resolvida.',
+            'system_generated' => 'Uma publicação gerada automaticamente não pode ser editada.',
+        ],
+
+        'store' => [
+            'beatmapset_locked' => 'Este beatmap está bloqueado para discussão.',
         ],
     ],
 
@@ -119,6 +132,7 @@ return [
             'vote' => [
                 'no_forum_access' => 'Acesso ao fórum solicitado é obrigatório.',
                 'over' => 'A sondagem acabou e não se pode votar mais nela.',
+                'play_more' => 'Precisas de jogar mais antes de votar no fórum.',
                 'voted' => 'A troca de voto não é permitida.',
 
                 'user' => [
@@ -137,6 +151,9 @@ return [
             'edit' => [
                 'uneditable' => 'Capa especificada inválida.',
                 'not_owner' => 'Só o proprietário é que pode editar a capa.',
+            ],
+            'store' => [
+                'forum_not_allowed' => 'Este fórum não aceita capas de tópico.',
             ],
         ],
 

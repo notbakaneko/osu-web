@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -30,7 +30,7 @@
                 @include('beatmapset_discussion_votes._item', compact('vote'))
             @endforeach
 
-            @include('objects._pagination_v0', ['object' => $votes])
+            @include('objects._pagination_v2', ['object' => $votes])
         </div>
     </div>
 @endsection

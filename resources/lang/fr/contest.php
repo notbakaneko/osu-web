@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -26,8 +26,15 @@ return [
     'voting' => [
         'over' => 'Le vote pour ce concours est terminé',
         'login_required' => 'Veuillez vous connecter pour voter.',
+
         'best_of' => [
             'none_played' => "Il semble que vous n'ayez joué aucune beatmap qualifiée pour ce concours !",
+        ],
+
+        'button' => [
+            'add' => 'Voter',
+            'remove' => 'Supprimer le vote',
+            'used_up' => 'Vous avez utilisé tous vos votes',
         ],
     ],
     'entry' => [

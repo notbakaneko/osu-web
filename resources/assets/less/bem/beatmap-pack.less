@@ -1,5 +1,5 @@
 /**
- *    Copyright 2015-2017 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -17,25 +17,16 @@
  */
 
 .beatmap-pack {
+  @_top: beatmap-pack;
+
   .default-box-shadow();
+  color: white;
   width: 100%;
   margin: 2px 0;
 
-  &__body {
-    background-color: #eee;
-  }
-
-  &__header {
-    padding: @beatmappack-listing--gutter;
-    background-color: #fff;
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken(#fff, 5%);
-      .js-accordion__item--expanded & {
-        background-color: #fff;
-      }
-    }
+  &.js-accordion__item--expanded, &--expanded  {
+    .thicker-box-shadow();
+    z-index: 1;
   }
 
   &__author {
@@ -46,24 +37,41 @@
     }
   }
 
+  &__body {
+    background-color: @osu-colour-b3;
+  }
+
   &__date {
     font-size: 90%;
   }
 
-  &__name {
-    color: @purple-dark;
+  &__details {
+    margin-left: auto;
+    padding-left: @beatmappack-listing--gutter;
+    text-align: right;
+    justify-content: flex-end;
+    color: @osu-colour-c1;
+  }
 
-    &.beatmap-packs__cell {
-      flex-grow: 4;
+  &__header {
+    .link-plain();
+    .link-white();
+    padding: @beatmappack-listing--gutter;
+    background-color: @osu-colour-b3;
+    display: flex;
+
+    .js-accordion__item--expanded &, .@{_top}--expanded & {
+      background-color: @osu-colour-b2;
     }
 
-    .js-accordion__item--expanded & {
-      font-weight: 600;
+    &:hover {
+      background-color: @osu-colour-b2;
     }
   }
 
-  &.js-accordion__item--expanded {
-    .thicker-box-shadow();
-    z-index: 1;
+  &__name {
+    .js-accordion__item--expanded &, .@{_top}--expanded & {
+      font-weight: 600;
+    }
   }
 }

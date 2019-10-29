@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-<div class="osu-layout__row osu-layout__row--page-compact header-row no-print">
+<div class="osu-layout__row osu-layout__row--page-compact header-row no-print osu-layout--store">
     <div class="store-header">
         <div class="store-header__main">
             <a href="{{ route('store.products.index') }}" class="store-logo">
@@ -44,7 +44,7 @@
                 </h2>
 
                 <div class="store-header__notice-text">
-                    {!! Markdown::convertToHtml(config('osu.store.notice')) !!}
+                    {!! markdown(config('osu.store.notice')) !!}
                 </div>
             </div>
         @endif

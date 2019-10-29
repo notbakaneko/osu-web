@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,10 +20,11 @@
 
 return [
     'deleted' => 'excluído',
+    'deleted_count' => ':count_delimited comentário excluído|:count_delimited comentários excluídos',
     'edited' => 'editado por :user :timeago',
     'empty' => 'Sem comentários no momento.',
+    'load_replies' => 'carregar respostas',
     'replies' => 'Respostas',
-    'show_replies' => 'mostrar respostas',
     'title' => 'Comentários',
 
     'commentable_name' => [
@@ -35,7 +36,7 @@ return [
 
     'editor' => [
         'textarea_hint' => [
-            '_' => 'Pressione enter para :action, use Shift+Enter para adicionar nova uma nova linha.',
+            '_' => 'Pressione enter para :action, use Shift+Enter para adicionar uma nova linha.',
             'edit' => 'salvar',
             'new' => 'publicar',
             'reply' => 'responder',
@@ -65,12 +66,5 @@ return [
             '_' => 'Comentários :info',
             'info' => 'Detalhes',
         ],
-    ],
-
-    'sort' => [
-        '_' => '',
-        'new' => '',
-        'old' => '',
-        'top' => '',
     ],
 ];

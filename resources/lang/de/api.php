@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -21,12 +21,17 @@
 return [
     'error' => [
         'chat' => [
+            'empty' => 'Leere Nachricht kann nicht gesendet werden.',
             'limit_exceeded' => 'Du sendest zu viele Nachrichten! Bitte warte kurz, bevor du es erneut versuchst.',
             'too_long' => 'Die Nachricht, die du versuchst zu senden, ist zu lang.',
         ],
     ],
 
     'scopes' => [
-        'identify' => '',
+        'identify' => 'Identifiziere dich und lies dein öffentliches Profil.',
+
+        'friends' => [
+            'read' => 'Sieh, wem du folgst.',
+        ],
     ],
 ];

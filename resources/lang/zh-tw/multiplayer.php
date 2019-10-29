@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -25,8 +25,8 @@ return [
         'failed' => '失敗',
         'header' => '多人遊戲',
         'in-progress' => '遊戲中...',
-        'in_progress_spinner_label' => '',
-        'loading-events' => '載入事件..。',
+        'in_progress_spinner_label' => '房間正在進行中',
+        'loading-events' => '正在載入事件...',
         'winner' => ':team 勝利',
 
         'events' => [

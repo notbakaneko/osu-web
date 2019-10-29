@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2017 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -46,20 +46,6 @@
 
     <li class="page-mode__item">
         <a
-            href="{{ route('account.edit') }}"
-            class="
-                page-mode-link
-                {{ $currentAction === 'account-edit' ? 'page-mode-link--is-active' : '' }}
-            "
-        >
-            {{ trans('accounts.edit.title_compact') }}
-
-            <span class="page-mode-link__stripe"></span>
-        </a>
-    </li>
-
-    <li class="page-mode__item">
-        <a
             href="{{ route('forum.topic-watches.index') }}"
             class="
                 page-mode-link
@@ -81,6 +67,20 @@
             "
         >
             {{ trans('beatmapset_watches.index.title_compact') }}
+
+            <span class="page-mode-link__stripe"></span>
+        </a>
+    </li>
+
+    <li class="page-mode__item">
+        <a
+            href="{{ route('account.edit') }}"
+            class="
+                page-mode-link
+                {{ $currentAction === 'account-edit' ? 'page-mode-link--is-active' : '' }}
+            "
+        >
+            {{ trans('accounts.edit.title_compact') }}
 
             <span class="page-mode-link__stripe"></span>
         </a>

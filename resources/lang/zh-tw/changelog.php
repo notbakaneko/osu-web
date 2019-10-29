@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -19,11 +19,10 @@
  */
 
 return [
-    'feed_title' => '詳細',
     'generic' => '修復已知問題並做了改進.',
 
     'build' => [
-        'title' => '',
+        'title' => '自 :version 以來的更新',
     ],
 
     'builds' => [
@@ -36,18 +35,18 @@ return [
 
     'index' => [
         'page_title' => [
-            '_' => '',
-            '_from' => '',
-            '_from_to' => '',
-            '_stream' => '',
-            '_stream_from' => '',
-            '_stream_from_to' => '',
-            '_stream_to' => '',
-            '_to' => '',
+            '_' => '更新日誌',
+            '_from' => '從 :from 以來的變化',
+            '_from_to' => '自 :from 到 :to 之間的更新',
+            '_stream' => ':stream 中的更新',
+            '_stream_from' => '自 :from 以來 :stream 的更新',
+            '_stream_from_to' => '自 :from 到 :to 之間 :stream 的更新',
+            '_stream_to' => '直到 :to 為止 :stream 的更新',
+            '_to' => '直到 :to 為止的更新',
         ],
 
         'title' => [
-            '_' => '更新記錄 :info',
+            '_' => '更新日誌 :info',
             'info' => '列表',
         ],
     ],

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -23,7 +23,7 @@ return [
 
     'beatmapset_activities' => [
         'title' => "Histórico de Modificações do :user",
-        'title_compact' => '',
+        'title_compact' => 'Modding',
 
         'discussions' => [
             'title_recent' => 'Discussões recentemente iniciadas',
@@ -73,11 +73,11 @@ return [
         'button_posting' => 'A iniciar sessão...',
         'remember' => 'Lembrar este computador',
         'title' => 'Por favor inicia sessão para proceder',
-        'failed' => 'Início de sessão incorrecto',
+        'failed' => 'Início de sessão incorreto',
         'register' => "Não tens uma conta osu? Cria uma nova",
         'forgot' => 'Esqueceste-te da palavra-passe?',
         'beta' => [
-            'main' => 'O acesso beta está actualmente restrito a utilizadores privilegiados.',
+            'main' => 'O acesso beta está atualmente restrito a utilizadores privilegiados.',
             'small' => '(osu!supporters terão acesso em breve)',
         ],
 
@@ -88,9 +88,6 @@ return [
         'title' => 'Publicações de :username',
     ],
 
-    'signup' => [
-        '_' => 'Registar',
-    ],
     'anonymous' => [
         'login_link' => 'clica para iniciar sessão',
         'login_text' => 'iniciar sessão',
@@ -131,7 +128,8 @@ return [
         'is_developer' => 'osu!developer',
         'is_supporter' => 'osu!supporter',
         'joined_at' => 'Juntou-se em :date',
-        'lastvisit' => 'Visto pela ultima vez em :date',
+        'lastvisit' => 'Visto pela última vez em :date',
+        'lastvisit_online' => 'Atualmente online',
         'missingtext' => 'Poderás ter escrito mal! (ou o utilizador poderá ter sido banido)',
         'origin_country' => 'De :country',
         'page_description' => 'osu! - Tudo o que sempre quiseste saber sobre :username!',
@@ -148,10 +146,14 @@ return [
                     'button' => 'Carregar imagem',
                     'dropzone' => 'Larga aqui para carregar',
                     'dropzone_info' => 'Também podes largar aqui a tua imagem para carregar',
-                    'restriction_info' => "Carregamento disponível para <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporters</a> só",
                     'size_info' => 'O tamanho da capa deveria ser 2800x620',
                     'too_large' => 'O ficheiro carregado é demasiado grande.',
                     'unsupported_format' => 'Formato não suportado.',
+
+                    'restriction_info' => [
+                        '_' => 'Carregamento disponível apenas para :link',
+                        'link' => 'osu!supporters',
+                    ],
                 ],
             ],
 
@@ -162,16 +164,16 @@ return [
         ],
 
         'extra' => [
-            'followers' => '1 seguidor|:count seguidores',
+            'none' => 'nenhum',
             'unranked' => 'Nenhuma partida recente',
 
             'achievements' => [
                 'achieved-on' => 'Conseguida em :date',
-                'locked' => '',
+                'locked' => 'Bloqueado',
                 'title' => 'Proezas',
             ],
             'beatmaps' => [
-                'by_artist' => '',
+                'by_artist' => 'por :artist',
                 'none' => 'Nenhuns... por agora.',
                 'title' => 'Beatmaps',
 
@@ -185,11 +187,21 @@ return [
                     'title' => 'Beatmaps Adorados',
                 ],
                 'ranked_and_approved' => [
-                    'title' => 'Beatmaps Classificados & Aprovados',
+                    'title' => 'Beatmaps Classificados e Aprovados',
                 ],
                 'unranked' => [
                     'title' => 'Beatmaps Pendentes',
                 ],
+            ],
+            'discussions' => [
+                'title' => 'Discussões',
+                'title_longer' => 'Discussões Recentes',
+                'show_more' => 'ver mais discussões',
+            ],
+            'events' => [
+                'title' => 'Eventos',
+                'title_longer' => 'Eventos Recentes',
+                'show_more' => 'ver mais eventos',
             ],
             'historical' => [
                 'empty' => 'Sem registos de desempenho. :(',
@@ -197,7 +209,7 @@ return [
 
                 'monthly_playcounts' => [
                     'title' => 'Histórico de Jogos',
-                    'count_label' => '',
+                    'count_label' => 'Partidas',
                 ],
                 'most_played' => [
                     'count' => 'vezes jogados',
@@ -209,7 +221,7 @@ return [
                 ],
                 'replays_watched_counts' => [
                     'title' => 'Historial de Repetições Vistas',
-                    'count_label' => '',
+                    'count_label' => 'Repetições Assistidas',
                 ],
             ],
             'kudosu' => [
@@ -218,7 +230,6 @@ return [
                 'recent_entries' => 'Historial Recente de Kudosu',
                 'title' => 'Kudosu!',
                 'total' => 'Total de Kudosu Ganhos',
-                'total_info' => 'Baseado no quão o utilizador contribuiu para a moderação do beatmap. Confirma em <a href="'.osu_url('user.kudosu').'">esta página</a> para mais informação.',
 
                 'entry' => [
                     'amount' => ':amount kudosu',
@@ -258,14 +269,24 @@ return [
                         'revoke' => 'Kudosu negado por :giver para a publicação :post',
                     ],
                 ],
+
+                'total_info' => [
+                    '_' => 'Baseado no quão o utilizador contribuiu para a moderação do beatmap. Vê :link para mais informações.',
+                    'link' => 'esta página',
+                ],
             ],
             'me' => [
                 'title' => 'eu!',
             ],
             'medals' => [
                 'empty' => "Este utilizador ainda não conseguiu nenhuma. ;_;",
-                'recent' => '',
+                'recent' => 'As mais recentes',
                 'title' => 'Medalhas',
+            ],
+            'posts' => [
+                'title' => 'Publicações',
+                'title_longer' => 'Publicações Recentes',
+                'show_more' => 'ver mais publicações',
             ],
             'recent_activity' => [
                 'title' => 'Recente',
@@ -274,7 +295,7 @@ return [
                 'download_replay' => 'Transferir Repetição',
                 'empty' => 'Nenhum registo de desempenhos espectaculares ainda. :(',
                 'not_ranked' => 'Somente beatmaps classificados é que dão pp.',
-                'pp_weight' => '',
+                'pp_weight' => 'ponderada :percentage',
                 'title' => 'Classificações',
 
                 'best' => [
@@ -284,15 +305,22 @@ return [
                     'title' => 'Classificações de Primeiro Lugar',
                 ],
             ],
+            'votes' => [
+                'given' => 'Votos Dados (últimos 3 meses)',
+                'received' => 'Votos Recebidos (últimos 3 meses)',
+                'title' => 'Votos',
+                'title_longer' => 'Votos Recentes',
+                'vote_count' => ':count_delimited voto|:count_delimited votos',
+            ],
             'account_standing' => [
                 'title' => 'Reputação da Conta',
                 'bad_standing' => "A conta de <strong>:username</strong> não tem uma boa reputação :(",
                 'remaining_silence' => '<strong>:username</strong> será capaz de falar outra vez em :duration.',
 
                 'recent_infringements' => [
-                    'title' => 'Infracções Recentes',
+                    'title' => 'Infrações Recentes',
                     'date' => 'data',
-                    'action' => 'acção',
+                    'action' => 'ação',
                     'length' => 'duração',
                     'length_permanent' => 'Permanente',
                     'description' => 'descrição',
@@ -308,15 +336,15 @@ return [
         ],
 
         'header_title' => [
-            '_' => '',
-            'info' => '',
+            '_' => 'Jogador :info',
+            'info' => 'Informação',
         ],
 
         'info' => [
             'discord' => '',
             'interests' => 'Interesses',
             'lastfm' => 'Last.fm',
-            'location' => 'Localização Actual',
+            'location' => 'Localização Atual',
             'occupation' => 'Ocupação',
             'skype' => '',
             'twitter' => '',
@@ -330,10 +358,15 @@ return [
             'title' => 'Utilizador não encontrado! ;_;',
         ],
         'page' => [
+            'button' => 'Editar a página de perfil',
             'description' => '<strong>eu!</strong> é uma área pessoal personalizável na tua página de perfil.',
             'edit_big' => 'Edita-me!',
             'placeholder' => 'Escreve o conteúdo da página aqui',
-            'restriction_info' => "Precisas de ser um <a href='".route('store.products.show', 'supporter-tag')."' target='_blank'>osu!supporter</a> para desbloquear esta funcionalidade.",
+
+            'restriction_info' => [
+                '_' => 'Tu precisas de ser um :link para desbloquear esta funcionalidade.',
+                'link' => 'osu!supporter',
+            ],
         ],
         'post_count' => [
             '_' => 'Contribuiu em :link',
@@ -341,16 +374,16 @@ return [
         ],
         'rank' => [
             'country' => 'Classificação nacional para :mode',
-            'country_simple' => '',
+            'country_simple' => 'Classificação Nacional',
             'global' => 'Classificação global para :mode',
-            'global_simple' => '',
+            'global_simple' => 'Classificação Global',
         ],
         'stats' => [
             'hit_accuracy' => 'Precisão de Acertos',
             'level' => 'Nível :level',
-            'level_progress' => '',
+            'level_progress' => 'Progresso para o próximo nível',
             'maximum_combo' => 'Combo Máximo',
-            'medals' => '',
+            'medals' => 'Medalhas',
             'play_count' => 'Número de Partidas',
             'play_time' => 'Tempo Total de Jogo',
             'ranked_score' => 'Pontuação Classificada',
@@ -358,9 +391,16 @@ return [
             'score_ranks' => 'Classificações de Pontuação',
             'total_hits' => 'Acertos Totais',
             'total_score' => 'Pontuação Total',
+            // modding stats
+            'ranked_and_approved_beatmapset_count' => 'Beatmaps Classificados e Aprovados',
+            'loved_beatmapset_count' => 'Beatmaps Adorados',
+            'unranked_beatmapset_count' => 'Beatmaps Pendentes',
+            'graveyard_beatmapset_count' => 'Beatmaps no Cemitério',
         ],
     ],
+
     'status' => [
+        'all' => 'Todos',
         'online' => 'Online',
         'offline' => 'Offline',
     ],
@@ -369,5 +409,10 @@ return [
     ],
     'verify' => [
         'title' => 'Verificação da Conta',
+    ],
+
+    'view_mode' => [
+        'card' => 'Vista do cartão',
+        'list' => 'Vista da lista',
     ],
 ];

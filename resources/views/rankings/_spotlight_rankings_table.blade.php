@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2018 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -55,10 +55,8 @@
                             'country_name' => $score->user->country->name,
                             'country_code' => $score->user->country->acronym,
                         ])
-                        <a href="{{route('users.show', $score->user_id)}}">
-                            <span class="ranking-page-table__user-link-text js-usercard" data-user-id="{{$score->user_id}}" data-tooltip-position="right center">
-                                {{ $score->user->username }}
-                            </span>
+                        <a href="{{route('users.show', $score->user_id)}}" class="ranking-page-table__user-link-text js-usercard" data-user-id="{{$score->user_id}}" data-tooltip-position="right center">
+                            {{ $score->user->username }}
                         </a>
                     </div>
                 </td>
@@ -66,7 +64,7 @@
                     {{ format_percentage($score->accuracy * 100) }}
                 </td>
                 <td class="ranking-page-table__column ranking-page-table__column--dimmed">
-                    {{ number_format($score->playcount) }}
+                    {{ i18n_number_format($score->playcount) }}
                 </td>
                 <td class="ranking-page-table__column ranking-page-table__column--dimmed">
                     {!! suffixed_number_format_tag($score->total_score) !!}
@@ -75,13 +73,13 @@
                     {!! suffixed_number_format_tag($score->ranked_score) !!}
                 </td>
                 <td class="ranking-page-table__column ranking-page-table__column--dimmed">
-                    {{ number_format(max(0, $score->x_rank_count + $score->xh_rank_count)) }}
+                    {{ i18n_number_format(max(0, $score->x_rank_count + $score->xh_rank_count)) }}
                 </td>
                 <td class="ranking-page-table__column ranking-page-table__column--dimmed">
-                    {{ number_format(max(0, $score->s_rank_count + $score->sh_rank_count)) }}
+                    {{ i18n_number_format(max(0, $score->s_rank_count + $score->sh_rank_count)) }}
                 </td>
                 <td class="ranking-page-table__column ranking-page-table__column--dimmed">
-                    {{ number_format(max(0, $score->a_rank_count)) }}
+                    {{ i18n_number_format(max(0, $score->a_rank_count)) }}
                 </td>
             </tr>
         @endforeach

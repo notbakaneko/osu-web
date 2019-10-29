@@ -1,5 +1,5 @@
 {{--
-    Copyright 2015-2019 ppy Pty. Ltd.
+    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
 
     This file is part of osu!web. osu!web is distributed with the hope of
     attracting more community contributions to the core ecosystem of osu!.
@@ -18,11 +18,7 @@
 @php
     $bn = 'show-more-link';
 
-    $blockClass = $bn;
-
-    foreach ($modifiers ?? [] as $mod) {
-        $blockClass .= " {$bn}--{$mod}";
-    }
+    $blockClass = class_with_modifiers($bn, $modifiers ?? []);
 
     if ($hidden ?? false) {
         $blockClass .= ' hidden';

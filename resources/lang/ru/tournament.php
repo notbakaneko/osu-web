@@ -1,7 +1,7 @@
 <?php
 
 /**
- *    Copyright 2015-2018 ppy Pty. Ltd.
+ *    Copyright (c) ppy Pty Ltd <contact@ppy.sh>.
  *
  *    This file is part of osu!web. osu!web is distributed with the hope of
  *    attracting more community contributions to the core ecosystem of osu!.
@@ -20,7 +20,7 @@
 
 return [
     'index' => [
-        'none_running' => 'На данный момент нет турниров, пожалуйста, попробуйте позже!',
+        'none_running' => 'На данный момент не проходит никаких турниров, пожалуйста, загляните позже!',
         'registration_period' => 'Регистрация: с :start до :end',
 
         'header' => [
@@ -45,7 +45,7 @@ return [
         'login_to_register' => 'Пожалуйста :login чтобы видеть больше информации о турнире!',
         'not_yet_entered' => 'Вы не зарегистрированы на этом турнире.',
         'rank_too_low' => 'Простите, но вы не подходите по требованиям, необходимым на данный турнир!',
-        'registration_ends' => 'Регистрация закрыта до :date',
+        'registration_ends' => 'Регистрация закрывается :date',
 
         'button' => [
             'cancel' => 'Отменить регистрацию',
