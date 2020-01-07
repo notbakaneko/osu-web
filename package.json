@@ -75,7 +75,7 @@
     "karma-jasmine": "^3.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-typescript": "^4.1.0",
-    "karma-webpack": "3.0.0",
+    "karma-webpack": "https://github.com/notbakaneko/karma-webpack.git#dd5d621",
     "laravel-mix": "~4.0.16",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
