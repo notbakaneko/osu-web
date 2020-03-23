@@ -12,6 +12,10 @@ class @CurrentUserObserver
 
 
   reinit: =>
+    json = osu.parseJson('js-current-user', true)
+    if json?
+      window.currentUser = json
+
     @setAvatars()
     @setCovers()
     @setSentryUser()

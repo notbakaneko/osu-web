@@ -52,8 +52,8 @@ reactTurbolinks.register 'comments', CommentsManager, (el) ->
   props
 
 notificationWorker = new NotificationWorker()
-resetNotificationWorker = -> notificationWorker.setUserId(currentUser.id)
-$(document).ready resetNotificationWorker
+resetNotificationWorker = (_e, json) -> notificationWorker.setUserId(json.id)
+$(document).ready -> resetNotificationWorker(null, currentUser)
 $.subscribe 'user:update', resetNotificationWorker
 
 reactTurbolinks.registerPersistent 'chat-icon', ChatIcon, true, (el) ->
