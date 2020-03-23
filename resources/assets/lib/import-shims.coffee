@@ -9,6 +9,7 @@ import Enchant from 'enchant'
 import ForumPoll from 'forum-poll'
 import * as laroute from 'laroute'
 import MobileToggle from 'mobile-toggle'
+import User from 'models/user'
 import { StoreCheckout } from 'store-checkout'
 import Promise from 'promise-polyfill'
 import TextareaAutosize from 'react-autosize-textarea'
@@ -30,6 +31,7 @@ window._exported = {
   MobileToggle
   OsuUrlHelper
   TurbolinksReload
+  User
   WindowVHPatcher
 }
 

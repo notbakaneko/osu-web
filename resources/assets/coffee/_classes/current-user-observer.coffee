@@ -13,8 +13,7 @@ class @CurrentUserObserver
 
   reinit: =>
     json = osu.parseJson('js-current-user', true)
-    if json?
-      window.currentUser = json
+    @initUser(json) if json?
 
     @setAvatars()
     @setCovers()
@@ -38,7 +37,7 @@ class @CurrentUserObserver
 
 
   setData: (_e, data) =>
-    window.currentUser = data
+    @initUser(data)
 
     @reinit()
 
@@ -48,3 +47,11 @@ class @CurrentUserObserver
 
     Sentry.configureScope (scope) ->
       scope.setUser id: currentUser.id, username: currentUser.username
+
+
+  initUser: (json) ->
+    handler =
+      get: (obj, prop) ->
+        if prop of obj then obj[prop] else json[prop]
+
+    window.currentUser = new Proxy(_exported.User.fromJSON(json), handler)
