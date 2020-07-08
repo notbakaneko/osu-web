@@ -45,7 +45,7 @@ class EsCreateSearchBlacklist extends Command
         }
 
         $index = $alias.'_'.time();
-        $this->info("{$alias} does exist, creating aliased index {$index}...");
+        $this->info("{$alias} does not exist, creating aliased index {$index}...");
         $client->indices()->create([
             'body' => [
                 'aliases' => [$alias => new \stdClass],
