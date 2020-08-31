@@ -20,9 +20,9 @@ class ChatController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        parent::__construct();
 
-        return parent::__construct();
+        $this->middleware('require-scopes:chat.read', ['only' => ['presence', 'updates']]);
     }
 
     /**

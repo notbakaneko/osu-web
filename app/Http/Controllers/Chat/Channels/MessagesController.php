@@ -17,6 +17,13 @@ use Request;
  */
 class MessagesController extends BaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('require-scopes:chat.read', ['only' => ['index']]);
+    }
+
     /**
      * Get Channel Messages
      *

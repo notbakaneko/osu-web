@@ -145,9 +145,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChatController@updates",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/updates",
@@ -155,9 +158,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChatController@updates",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/presence",
@@ -165,9 +171,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChatController@presence",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/presence",
@@ -175,9 +184,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChatController@presence",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/channels/{channel}/messages",
@@ -185,9 +197,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\Channels\\MessagesController@index",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/channels/{channel}/messages",
@@ -195,9 +210,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\Channels\\MessagesController@index",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/channels/{channel}/messages",
@@ -245,9 +263,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChannelsController@index",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/channels",
@@ -255,9 +276,12 @@
         "controller": "App\\Http\\Controllers\\Chat\\ChannelsController@index",
         "middlewares": [
             "require-scopes",
-            "auth"
+            "auth",
+            "require-scopes:chat.read"
         ],
-        "scopes": []
+        "scopes": [
+            "chat.read"
+        ]
     },
     {
         "uri": "api/v2/chat/channels",
