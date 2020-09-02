@@ -7,6 +7,7 @@ namespace App\Models\Chat;
 
 use App\Models\User;
 use App\Models\UserNotification;
+use App\Transformers\Chat\ChannelTransformer;
 use DB;
 
 /**
@@ -125,20 +126,16 @@ class UserChannel extends Model
 
         // End getting user list.
 
-        $collection = json_collection($userChannels, function ($userChannel) use ($channelMessageIds, $user, $userIdsByChannelId, $usersById) {
+        $channelTransformer = new ChannelTransformer;
+        $collection = json_collection($userChannels, function ($userChannel) use ($channelMessageIds, $channelTransformer, $user, $userIdsByChannelId, $usersById) {
             $channel = $userChannel->channel;
             $messageEnds = $channelMessageIds[$channel->getKey()] ?? null;
 
-            $presence = [
-                'channel_id' => $channel->channel_id,
-                'type' => $channel->type,
-                'name' => $channel->name,
-                'description' => presence($channel->description),
-                'last_read_id' => $userChannel->last_read_id,
-                'first_message_id' => optional($messageEnds)->first_message_id,
-                'last_message_id' => optional($messageEnds)->last_message_id,
-                'moderated' => $channel->moderated,
-            ];
+            $presence = $channelTransformer->transform($channel);
+
+            $presence['last_read_id'] = $userChannel->last_read_id;
+            $presence['first_message_id'] = optional($messageEnds)->first_message_id;
+            $presence['last_message_id'] = optional($messageEnds)->last_message_id;
 
             $channelUserIds = [];
             // filter out restricted users from the listing
