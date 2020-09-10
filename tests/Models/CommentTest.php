@@ -43,10 +43,10 @@ class CommentTest extends TestCase
 
         $notification = new CommentNew($comment, $commenter);
 
-        if ($option) {
-            $this->assertSame([$user->getKey()], $notification->getReceiverIds());
-        } else {
+        if ($option === false) {
             $this->assertEmpty($notification->getReceiverIds());
+        } else {
+            $this->assertSame([$user->getKey()], $notification->getReceiverIds());
         }
     }
 
