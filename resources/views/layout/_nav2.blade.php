@@ -136,34 +136,18 @@
         </div>
 
         @if (Auth::user() !== null)
-            <div class="nav2__col">
-                <a
-                    class="nav-button nav-button--stadium js-react--chat-icon"
-                    href="{{ route('chat.index') }}"
-                >
+            <div class="nav2__col js-react--notification-chat-icon">
+                <button class="nav-button nav-button--stadium">
                     <span class="notification-icon">
                         <i class="fas fa-comment-alt"></i>
                         <span class="notification-icon__count">...</span>
                     </span>
-                </a>
-            </div>
 
-            <div class="nav2__col">
-                <button
-                    class="nav-button nav-button--stadium js-click-menu js-react--notification-icon"
-                    data-click-menu-target="nav2-notification-widget"
-                >
                     <span class="notification-icon">
                         <i class="fas fa-inbox"></i>
                         <span class="notification-icon__count">...</span>
                     </span>
                 </button>
-                <div
-                    class="nav-click-popup js-click-menu js-react--notification-widget"
-                    data-click-menu-id="nav2-notification-widget"
-                    data-visibility="hidden"
-                    data-notification-widget="{{ json_encode(['extraClasses' => 'js-nav2--centered-popup']) }}"
-                ></div>
             </div>
         @endif
 

@@ -7,6 +7,7 @@ import core from 'osu-core-singleton';
 import * as React from 'react';
 
 interface Props {
+  onClick?: () => void;
   type?: string;
   worker: Worker;
 }
@@ -19,7 +20,7 @@ export default class ChatIcon extends React.Component<Props> {
     }
 
     return (
-      <span className={this.mainClass()}>
+      <span className={this.mainClass()} onClick={this.props.onClick}>
         <i className='fas fa-comment-alt' />
         <span className='notification-icon__count'>
           {this.unreadCountDisplay()}

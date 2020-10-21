@@ -13,6 +13,7 @@ import { FriendButton } from 'friend-button'
 import { LandingNews } from 'landing-news'
 import { keyBy } from 'lodash'
 import MultiplayerSelectOptions from 'multiplayer-select-options'
+import NotificationChatIcon from 'notification-chat-icon'
 import NotificationIcon from 'notification-icon'
 import NotificationWidget from 'notification-widget/main'
 import NotificationWorker from 'notifications/worker'
@@ -86,6 +87,11 @@ reactTurbolinks.registerPersistent 'chat-icon', ChatIcon, true, (el) ->
   props.worker = notificationWorker
 
   props
+
+reactTurbolinks.registerPersistent 'notification-chat-icon', NotificationChatIcon, true, (el) ->
+  chat: (try JSON.parse(el.dataset.chatIcon)) ? {}
+  notifications: (try JSON.parse(el.dataset.notificationIcon)) ? {}
+  worker: notificationWorker
 
 reactTurbolinks.registerPersistent 'notification-icon', NotificationIcon, true, (el) ->
   props = (try JSON.parse(el.dataset.notificationIcon)) ? {}

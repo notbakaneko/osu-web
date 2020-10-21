@@ -6,6 +6,7 @@ import Worker from 'notifications/worker';
 import * as React from 'react';
 
 interface Props {
+  onClick?: () => void;
   type?: string;
   worker: Worker;
 }
@@ -18,7 +19,7 @@ export default class NotificationIcon extends React.Component<Props> {
     }
 
     return (
-      <span className={this.mainClass()}>
+      <span className={this.mainClass()} onClick={this.props.onClick}>
         <i className='fas fa-inbox' />
         <span className='notification-icon__count'>
           {this.unreadCount()}
