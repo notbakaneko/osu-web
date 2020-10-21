@@ -5,6 +5,7 @@ import { CommentBundleJSON } from 'interfaces/comment-json';
 import { Dictionary, orderBy } from 'lodash';
 import { action, observable } from 'mobx';
 import { Comment, CommentSort } from 'models/comment';
+import { Name } from 'models/notification-type';
 import { OwnClient } from 'models/oauth/own-client';
 import CommentStore from 'stores/comment-store';
 
@@ -25,6 +26,11 @@ interface CommentsUIState {
   topLevelCount: number;
   total: number;
   userFollow: boolean;
+}
+
+interface NotificationWidgetUIState {
+  currentFilter: Name;
+  isVisible: boolean;
 }
 
 const defaultCommentsUIState: CommentsUIState = {
@@ -49,6 +55,7 @@ export default class UIStateStore {
 
   // only for the currently visible page
   @observable comments = Object.assign({}, defaultCommentsUIState);
+  @observable notifications: NotificationWidgetUIState = { currentFilter: null, isVisible: false };
 
   private orderedCommentsByParentId: Dictionary<Comment[]> = {};
 

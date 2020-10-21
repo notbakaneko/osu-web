@@ -2,9 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import ChatIcon from 'chat-icon';
+import { action } from 'mobx';
+import { observer } from 'mobx-react';
 import NotificationIcon from 'notification-icon';
 import NotificationWidget from 'notification-widget/main';
 import Worker from 'notifications/worker';
+import core from 'osu-core-singleton';
 import * as React from 'react';
 
 interface Props {
@@ -21,17 +24,16 @@ interface State {
   isShowingWidget: boolean;
 }
 
+@observer
 export default class NotificationChatIcon extends React.Component<Props, State> {
-  readonly state = {
-    isShowingWidget: false,
-  };
+  readonly notificationsUIState = core.dataStore.uiState.notifications;
 
   render() {
     return (
       <>
         <button className='nav-button nav-button--stadium'>
-          <ChatIcon onClick={this.handleClick} type={this.props.chat.type} worker={this.props.worker} />
-          <NotificationIcon onClick={this.handleClick} type={this.props.notifications.type} worker={this.props.worker} />
+          <ChatIcon onClick={this.handleChatIconClick} type={this.props.chat.type} worker={this.props.worker} />
+          <NotificationIcon onClick={this.handleNotificationIconClick} type={this.props.notifications.type} worker={this.props.worker} />
 
         </button>
         {this.renderNotificationWidget()}
@@ -40,7 +42,7 @@ export default class NotificationChatIcon extends React.Component<Props, State> 
   }
 
   renderNotificationWidget() {
-    if (!this.state.isShowingWidget) return null;
+    if (!this.notificationsUIState.isVisible) return null;
 
     return (
       <div className='nav-click-popup'>
@@ -49,7 +51,14 @@ export default class NotificationChatIcon extends React.Component<Props, State> 
     );
   }
 
-  private handleClick = () => {
-    this.setState({ isShowingWidget: !this.state.isShowingWidget });
+  @action
+  private handleChatIconClick = () => {
+    this.notificationsUIState.isVisible = !this.notificationsUIState.isVisible;
+    this.notificationsUIState.currentFilter = 'channel';
+  }
+
+  @action
+  private handleNotificationIconClick = () => {
+    this.notificationsUIState.isVisible = !this.notificationsUIState.isVisible;
   }
 }

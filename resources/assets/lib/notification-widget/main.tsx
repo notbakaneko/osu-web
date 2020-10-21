@@ -33,7 +33,11 @@ export default class Main extends React.Component<Props, State> {
     hasError: false,
   };
 
-  private readonly controller = new NotificationController(core.dataStore.notificationStore, { isWidget: true }, null);
+  private readonly controller = new NotificationController(
+    core.dataStore.notificationStore,
+    { isWidget: true },
+    core.dataStore.uiState.notifications.currentFilter,
+  );
 
   static getDerivedStateFromError(error: Error) {
     // tslint:disable-next-line: no-console

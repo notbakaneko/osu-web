@@ -2,15 +2,28 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { action, computed, observable } from 'mobx';
-import { getValidName, Name as NotificationTypeName } from 'models/notification-type';
+import { getValidName, Name, Name as NotificationTypeName } from 'models/notification-type';
 import { NotificationContextData } from 'notifications-context';
+import core from 'osu-core-singleton';
 import NotificationStackStore from 'stores/notification-stack-store';
 import NotificationStore from 'stores/notification-store';
 
 export default class NotificationController {
-  @observable currentFilter: NotificationTypeName;
+  @observable internalCurrentFilter: NotificationTypeName = null;
 
   private store: NotificationStackStore;
+
+  @computed get currentFilter() {
+    return this.contextType.isWidget ? core.dataStore.uiState.notifications.currentFilter : this.internalCurrentFilter;
+  }
+
+  set currentFilter(value: Name) {
+    if (this.contextType.isWidget) {
+      core.dataStore.uiState.notifications.currentFilter = value;
+    } else {
+      this.internalCurrentFilter = value;
+    }
+  }
 
   @computed
   get legacyPm() {
@@ -36,7 +49,7 @@ export default class NotificationController {
   constructor(
     readonly notificationStore: NotificationStore,
     protected readonly contextType: NotificationContextData,
-    filter?: NotificationTypeName,
+    filter?: NotificationTypeName, // TODO: need to move this?
   ) {
     // TODO: should probably not infer from url here.
     this.currentFilter = filter !== undefined ? filter : this.typeNameFromUrl;
