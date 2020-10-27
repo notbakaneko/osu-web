@@ -8,10 +8,13 @@ namespace Tests\Libraries;
 use App\Exceptions\ValidationException;
 use App\Libraries\UserRegistration;
 use App\Models\User;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function testBasicFunctionality()
     {
         $attrs = $this->basicAttributes();

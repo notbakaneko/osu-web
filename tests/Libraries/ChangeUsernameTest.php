@@ -9,11 +9,14 @@ use App\Exceptions\ChangeUsernameException;
 use App\Libraries\ChangeUsername;
 use App\Models\User;
 use Carbon\Carbon;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Tests\TestCase;
 
 // FIXME: need more tests
 class ChangeUsernameTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     public function testUserCannotBeRenamed()
     {
         $user = $this->createUser(['user_id' => 1]);
