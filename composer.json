@@ -17,6 +17,7 @@
   "require": {
     "anhskohbo/no-captcha": "^3.2",
     "chaseconey/laravel-datadog-helper": ">=1.2.0",
+    "composer/package-versions-deprecated": "^1.11",
     "doctrine/dbal": "*",
     "egulias/email-validator": "*",
     "elasticsearch/elasticsearch": "^6.7.0",
