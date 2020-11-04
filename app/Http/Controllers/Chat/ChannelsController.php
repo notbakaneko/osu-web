@@ -116,6 +116,22 @@ class ChannelsController extends Controller
         return response([], 204);
     }
 
+    public function show($channelId)
+    {
+        $channel = Channel::where('channel_id', $channelId)->firstOrFail();
+
+        priv_check('ChatChannelRead', $channel)->ensureCan();
+
+        $includes = ['first_message_id', 'last_message_id'];
+        if (!$channel->isPublic()) {
+            $includes[] = 'users';
+        }
+
+        return [
+            'channel' => json_item($channel, 'Chat\Channel', $includes),
+        ];
+    }
+
     /**
      * Create Channel
      *
