@@ -5,6 +5,7 @@
 
 namespace App\Models\Chat;
 
+use App\Events\ChatMessageEvent;
 use App\Exceptions\API;
 use App\Jobs\Notifications\ChannelMessage;
 use App\Models\Match\Match;
@@ -255,6 +256,8 @@ class Channel extends Model
         if ($userChannel) {
             $userChannel->markAsRead($message->message_id);
         }
+
+        event(new ChatMessageEvent($message, $sender->user_id));
 
         if ($this->isPM()) {
             $this->unhide();
