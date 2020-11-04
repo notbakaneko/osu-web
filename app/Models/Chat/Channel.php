@@ -5,6 +5,7 @@
 
 namespace App\Models\Chat;
 
+use App\Events\ChatChannelEvent;
 use App\Events\ChatMessageEvent;
 use App\Exceptions\API;
 use App\Jobs\Notifications\ChannelMessage;
@@ -289,6 +290,8 @@ class Channel extends Model
             $this->resetMemoized();
         }
 
+        event(new ChatChannelEvent($userChannel->channel, $user, 'join'));
+
         Datadog::increment('chat.channel.join', 1, ['type' => $this->type]);
     }
 
@@ -309,6 +312,8 @@ class Channel extends Model
         } else {
             $userChannel->delete();
         }
+
+        event(new ChatChannelEvent($userChannel->channel, $user, 'part'));
 
         Datadog::increment('chat.channel.part', 1, ['type' => $this->type]);
     }
