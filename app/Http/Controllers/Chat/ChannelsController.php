@@ -135,6 +135,7 @@ class ChannelsController extends Controller
 
         return [
             'channel' => json_item($channel, 'Chat\Channel', $includes),
+            'users' => $channel->isPublic() ? [] : json_collection($channel->users()->get(), 'UserCompact'),
         ];
     }
 
