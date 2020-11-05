@@ -17,7 +17,7 @@ class ChatChannelEvent implements ShouldBroadcast
 
     public $broadcastQueue;
     public $action;
-    public $channelId;
+    public $channel;
     public $userId;
 
     public function __construct(ChatChannel $channel, User $user, string $action)
@@ -26,7 +26,8 @@ class ChatChannelEvent implements ShouldBroadcast
         $this->broadcastQueue = config('osu.notification.queue_name');
 
         $this->action = $action;
-        $this->channelId = $channel->getKey();
+        // TODO: don't seralize laravel model to skip lookup.
+        $this->channel = $channel;
         $this->userId = $user->getKey();
     }
 
@@ -47,6 +48,6 @@ class ChatChannelEvent implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return ['channel_id' => $this->channelId];
+        return json_item($this->channel, 'Chat\Channel');
     }
 }

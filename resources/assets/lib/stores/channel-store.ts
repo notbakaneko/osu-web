@@ -10,6 +10,7 @@ import { UserLogoutAction } from 'actions/user-login-actions';
 import { dispatch, dispatchListener } from 'app-dispatcher';
 import ChatAPI from 'chat/chat-api';
 import { ChannelJson, GetUpdatesJson, MessageJson, PresenceJson } from 'chat/chat-api-responses';
+import { ChatChannelJoinEvent, ChatChannelPartEvent, ChatMessageNewEvent } from 'chat/chat-events';
 import { groupBy, maxBy } from 'lodash';
 import { action, computed, observable, runInAction } from 'mobx';
 import Channel from 'models/chat/channel';
@@ -127,7 +128,13 @@ export default class ChannelStore {
   }
 
   handleDispatchAction(event: DispatcherAction) {
-    if (event instanceof ChatMessageSendAction) {
+    if (event instanceof ChatChannelJoinEvent) {
+      this.handleChatChannelJoinEvent(event);
+    } else if (event instanceof ChatChannelPartEvent) {
+      this.handleChatChannelPartEvent(event);
+    } else if (event instanceof ChatMessageNewEvent) {
+      this.handleChatMessageNewEvent(event);
+    } else if (event instanceof ChatMessageSendAction) {
       this.handleChatMessageSendAction(event);
     } else if (event instanceof UserLogoutAction) {
       this.handleUserLogoutAction(event);
@@ -266,6 +273,11 @@ export default class ChannelStore {
   }
 
   @action
+  private handleChatChannelJoinEvent(event: ChatChannelJoinEvent) {
+    this.channels.set(event.channel.channelId, event.channel);
+  }
+
+  @action
   private handleChatChannelNewMessages(channelId: number, json: MessageJson[]) {
     const messages = json.map((messageJson) => {
       if (messageJson.sender != null) this.userStore.getOrCreate(messageJson.sender_id, messageJson.sender);
@@ -283,6 +295,20 @@ export default class ChannelStore {
 
     channel.addMessages(messages);
     channel.loaded = true;
+  }
+
+  @action
+  private handleChatChannelPartEvent(event: ChatChannelPartEvent) {
+    this.channels.delete(event.channelId);
+  }
+
+  @action
+  private handleChatMessageNewEvent(event: ChatMessageNewEvent) {
+    const channel = this.channels.get(event.message.channelId);
+    if (channel == null) return;
+
+    channel.addMessages([event.message]);
+    channel.loaded = true; // TODO: don't set?
   }
 
   @action
