@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { dispatch } from 'app-dispatcher';
+import { dispatchNewEventFromJson, isChatEvent } from 'chat/chat-events';
 import { NotificationBundleJson } from 'interfaces/notification-json';
 import XHRCollection from 'interfaces/xhr-collection';
 import { route } from 'laroute';
@@ -139,7 +140,6 @@ export default class Worker {
 
   @action handleNewEvent = (event: MessageEvent) => {
     let eventData: any;
-
     try {
       eventData = JSON.parse(event.data);
     } catch {
@@ -148,7 +148,9 @@ export default class Worker {
       return;
     }
 
-    if (isNotificationEventDeleteJson(eventData)) {
+    if (isChatEvent(eventData)) {
+      dispatchNewEventFromJson(eventData);
+    } else if (isNotificationEventDeleteJson(eventData)) {
       // ignore delete events that occured before the bundle is loaded
       const timestamp = new Date(eventData.data.timestamp);
       if (this.firstLoadedAt != null && timestamp > this.firstLoadedAt) {
