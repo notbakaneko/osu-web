@@ -4,6 +4,8 @@
 import DispatcherAction from 'actions/dispatcher-action';
 import { dispatch } from 'app-dispatcher';
 import { ChannelJson, MessageJson } from 'chat/chat-api-responses';
+import Channel from 'models/chat/channel';
+import Message from 'models/chat/message';
 
 // tslint:disable: max-classes-per-file
 
@@ -17,19 +19,19 @@ interface MaybeEvent {
 }
 
 export class ChatChannelJoinEvent extends DispatcherAction {
-  constructor(readonly data: ChannelJson) {
+  constructor(readonly channel: Channel) {
     super();
   }
 }
 
 export class ChatChannelPartEvent extends DispatcherAction {
-  constructor(readonly data: ChannelJson) {
+  constructor(readonly channelId: number) {
     super();
   }
 }
 
 export class ChatMessageNewEvent extends DispatcherAction {
-  constructor(readonly data: MessageJson) {
+  constructor(readonly message: Message) {
     super();
   }
 }
@@ -42,11 +44,13 @@ export function fromJson(json: ChatEventJson) {
   // TODO: how to typed dynamic factory?
   switch (json.event) {
     case 'chat.channel.join':
-      return new ChatChannelJoinEvent(json.data);
+      const channel = new Channel(json.data.channel_id);
+      channel.updateWithJson(json.data);
+      return new ChatChannelJoinEvent(channel);
     case 'chat.channel.part':
-      return new ChatChannelPartEvent(json.data);
+      return new ChatChannelPartEvent(json.data.channel_id);
     case 'chat.message.new':
-      return new ChatMessageNewEvent(json.data);
+      return new ChatMessageNewEvent(Message.fromJson(json.data));
   }
 
   // tslint:disable-next-line: no-console
