@@ -4,6 +4,7 @@
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLogoutAction } from 'actions/user-login-actions';
 import { dispatch, dispatchListener } from 'app-dispatcher';
+import { dispatchNewEventFromJson, isChatEvent } from 'chat/chat-events';
 import DispatchListener from 'dispatch-listener';
 import { NotificationBundleJson } from 'interfaces/notification-json';
 import { route } from 'laroute';
@@ -74,7 +75,9 @@ export default class Worker implements DispatchListener {
     if (!(event instanceof SocketMessageEvent)) return;
 
     const message = event.message;
-    if (isNotificationEventDeleteJson(message)) {
+    if (isChatEvent(message)) {
+      dispatchNewEventFromJson(message);
+    } else if (isNotificationEventDeleteJson(message)) {
       // ignore delete events that occured before the bundle is loaded
       const timestamp = new Date(message.data.timestamp);
       if (this.firstLoadedAt != null && timestamp > this.firstLoadedAt) {
