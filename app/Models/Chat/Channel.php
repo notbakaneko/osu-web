@@ -99,6 +99,17 @@ class Channel extends Model
         return '#pm_'.implode('-', $userIds);
     }
 
+    public function displayNameFor(?int $userId)
+    {
+        if (!$this->isPM() || $userId === null) {
+            return $this->name;
+        }
+
+        return $this->users()->get()->filter(function ($user) use ($userId) {
+            return $userId !== $user->getKey();
+        })->first()->username;
+    }
+
     public function messages()
     {
         return $this->hasMany(Message::class);

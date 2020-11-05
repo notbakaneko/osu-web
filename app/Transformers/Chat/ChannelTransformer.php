@@ -10,6 +10,8 @@ use App\Transformers\TransformerAbstract;
 
 class ChannelTransformer extends TransformerAbstract
 {
+    public $userId;
+
     protected $availableIncludes = [
         'first_message_id',
         'last_message_id',
@@ -23,7 +25,7 @@ class ChannelTransformer extends TransformerAbstract
             'channel_id' => $channel->channel_id,
             'description' => $channel->description,
             'moderated' => $channel->moderated,
-            'name' => $channel->name,
+            'name' => $channel->displayNameFor($this->userId),
             'type' => $channel->type,
         ];
     }
