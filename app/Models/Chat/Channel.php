@@ -86,6 +86,17 @@ class Channel extends Model
         return '#pm_'.implode('-', $userIds);
     }
 
+    public function displayNameFor(?int $userId)
+    {
+        if (!$this->isPM() || $userId === null) {
+            return $this->name;
+        }
+
+        return $this->users()->get()->filter(function ($user) use ($userId) {
+            return $userId !== $user->getKey();
+        })->first()->username;
+    }
+
     public function messages()
     {
         return $this->hasMany(Message::class);
@@ -111,6 +122,7 @@ class Channel extends Model
 
     public function users()
     {
+        // TODO: can this be cached like a normal relation, though?
         // This isn't a has-many-through because the relationship is cross-database.
         return User::whereIn('user_id', UserChannel::where('channel_id', $this->channel_id)->pluck('user_id'));
     }

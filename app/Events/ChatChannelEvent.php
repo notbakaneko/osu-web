@@ -7,6 +7,7 @@ namespace App\Events;
 
 use App\Models\Chat\Channel as ChatChannel;
 use App\Models\User;
+use App\Transformers\Chat\ChannelTransformer;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
@@ -48,6 +49,9 @@ class ChatChannelEvent implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return json_item($this->channel, 'Chat\Channel');
+        $transformer = new ChannelTransformer();
+        $transformer->userId = $this->userId;
+
+        return json_item($this->channel, $transformer);
     }
 }
