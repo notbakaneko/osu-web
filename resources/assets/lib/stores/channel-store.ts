@@ -155,7 +155,7 @@ export default class ChannelStore {
     // TODO:
     // current implementation should always have this loaded already,
     // but future versions may skip having all the initial metadata on chat load.
-
+    // also should be changed to messages loaded or something.
     if (channel.loaded) {
       return;
     }
@@ -164,7 +164,10 @@ export default class ChannelStore {
 
     try {
       const response = await this.api.getMessages(channelId);
-      this.handleChatChannelNewMessages(channelId, response);
+      runInAction(() => {
+        this.handleChatChannelNewMessages(channelId, response);
+        channel.loaded = true;
+      });
     } finally {
       runInAction(() => {
         channel.loading = false;
@@ -292,7 +295,6 @@ export default class ChannelStore {
     if (channel == null) return;
 
     channel.addMessages(messages);
-    channel.loaded = true;
   }
 
   @action
@@ -306,7 +308,6 @@ export default class ChannelStore {
     if (channel == null) return;
 
     channel.addMessages([event.message]);
-    channel.loaded = true; // TODO: don't set?
   }
 
   @action
