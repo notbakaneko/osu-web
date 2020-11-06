@@ -256,7 +256,7 @@ class Channel extends Model
             $userChannel->markAsRead($message->message_id);
         }
 
-        event(new ChatMessageEvent($message, $sender->user_id));
+        event(new ChatMessageEvent($message, $this->user_id));
 
         if ($this->isPM()) {
             $this->unhide();

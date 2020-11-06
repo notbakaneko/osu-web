@@ -43,12 +43,17 @@ class ChatMessageEvent implements ShouldBroadcast
         if ($this->message->channel->isPublic()) {
             return new Channel("chat:channel:{$this->message->channel->getKey()}");
         } else {
-            return new Channel("private:user:{$this->userId}");
+            // filter out sender.
+            return $this->message->channel->users()->pluck('user_id')->filter(function ($userId) {
+                return $userId !== $this->userId;
+            })->map(function ($userId) {
+                return new Channel("private:user:{$userId}");
+            })->all();
         }
     }
 
     public function broadcastWith()
     {
-        return $this->message->toArray();
+        return json_item($this->message, 'Chat\Message');
     }
 }
