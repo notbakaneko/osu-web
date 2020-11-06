@@ -175,6 +175,12 @@ export default class Channel {
 
   @action
   updateWithJson(json: ChannelJson) {
+    // TODO: for debugging
+    if (this.type === 'PM' && (json.users == null || json.users.length === 0)) {
+      // tslint:disable-next-line: no-console
+      console.error(`PM channel missing users in update: ${this.channelId} ${this.name}`);
+    }
+
     this.name = json.name;
     this.description = json.description;
     this.type = json.type;
