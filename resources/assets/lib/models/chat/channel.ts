@@ -171,9 +171,9 @@ export default class Channel {
     this.name = json.name;
     this.description = json.description;
     this.type = json.type;
-    this.icon = json?.icon ?? '/images/layout/chat/channel-default.png'; // TODO: update with channel-specific icons?
+    this.icon = json.icon ?? '/images/layout/chat/channel-default.png'; // TODO: update with channel-specific icons?
     this.moderated = json.moderated;
-    this.users = json.users;
+    this.users = json.users ?? this.users;
 
     this.initialLastMessageId = json.last_message_id ?? this.lastMessageId;
 
