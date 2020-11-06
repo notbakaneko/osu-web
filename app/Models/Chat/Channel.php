@@ -86,6 +86,17 @@ class Channel extends Model
         return '#pm_'.implode('-', $userIds);
     }
 
+    public function displayIconFor(?int $userId)
+    {
+        if (!$this->isPM() || $userId === null) {
+            return;
+        }
+
+        return $this->users()->get()->filter(function ($user) use ($userId) {
+            return $userId !== $user->getKey();
+        })->first()->user_avatar;
+    }
+
     public function displayNameFor(?int $userId)
     {
         if (!$this->isPM() || $userId === null) {
