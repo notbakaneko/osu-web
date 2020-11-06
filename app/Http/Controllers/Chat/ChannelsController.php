@@ -122,13 +122,8 @@ class ChannelsController extends Controller
 
         priv_check('ChatChannelRead', $channel)->ensureCan();
 
-        $includes = ['first_message_id', 'last_message_id'];
-        if (!$channel->isPublic()) {
-            $includes[] = 'users';
-        }
-
         return [
-            'channel' => json_item($channel, 'Chat\Channel', $includes),
+            'channel' => json_item($channel, 'Chat\Channel', ['first_message_id', 'last_message_id', 'users']),
             'users' => $channel->isPublic() ? [] : json_collection($channel->users()->get(), 'UserCompact'),
         ];
     }

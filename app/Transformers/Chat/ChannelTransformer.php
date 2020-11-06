@@ -61,6 +61,10 @@ class ChannelTransformer extends TransformerAbstract
 
     public function includeUsers(Channel $channel)
     {
-        return $this->primitive($channel->userChannels()->pluck('user_id'));
+        if ($channel->isPM()) {
+            return $this->primitive($channel->userChannels()->pluck('user_id'));
+        }
+
+        return $this->primitive([]);
     }
 }
