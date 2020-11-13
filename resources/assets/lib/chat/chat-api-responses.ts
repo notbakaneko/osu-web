@@ -30,6 +30,11 @@ export interface ChannelJsonExtended extends ChannelJson {
   last_read_id: number;
 }
 
+export interface GetChannelJson {
+  channel: ChannelJson;
+  users: UserJson[];
+}
+
 export type GetMessagesJson =
   MessageJson[];
 

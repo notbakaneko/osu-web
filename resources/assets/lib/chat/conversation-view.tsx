@@ -65,7 +65,7 @@ export default class ConversationView extends React.Component<Props> {
       return;
     }
 
-    if (!this.currentChannel?.loaded) {
+    if (!this.currentChannel?.messagesLoaded) {
       return;
     }
 

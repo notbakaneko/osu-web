@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Chat;
 use App\Models\Chat\Channel;
 use App\Models\Chat\UserChannel;
 use App\Models\User;
+use App\Transformers\Chat\ChannelTransformer;
 use Auth;
 
 /**
@@ -128,8 +129,11 @@ class ChannelsController extends Controller
 
         priv_check('ChatChannelRead', $channel)->ensureCan();
 
+        $transformer = new ChannelTransformer();
+        $transformer->userId = auth()->user()->getKey();
+
         return [
-            'channel' => json_item($channel, 'Chat\Channel', ['first_message_id', 'last_message_id', 'users']),
+            'channel' => json_item($channel, $transformer, ['first_message_id', 'last_message_id', 'users']),
             'users' => $channel->isPublic() ? [] : json_collection($channel->users()->get(), 'UserCompact'),
         ];
     }
