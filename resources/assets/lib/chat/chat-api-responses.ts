@@ -35,6 +35,11 @@ export interface ChatInitialJson {
   send_to?: SendToJson;
 }
 
+export interface GetChannelJson {
+  channel: ChannelJson;
+  users: UserJson[];
+}
+
 export type GetMessagesJson =
   MessageJson[];
 

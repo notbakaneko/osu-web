@@ -14,10 +14,10 @@ export default class Channel {
   @observable icon?: string;
   @observable inputText: string = '';
   @observable lastReadId?: number;
-  @observable loaded: boolean = false;
   @observable loading: boolean = false;
   @observable loadingEarlierMessages: boolean = false;
   @observable messages: Message[] = observable([]);
+  @observable messagesLoaded: boolean = false;
   @observable moderated: boolean = false;
   @observable name: string = '';
   @observable newPmChannel = false;
@@ -122,6 +122,7 @@ export default class Channel {
 
   @action
   addMessages(messages: Message[], skipSort: boolean = false) {
+    this.messagesLoaded = true;
     this.messages.push(...messages);
 
     if (!skipSort) {

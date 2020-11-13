@@ -36,7 +36,7 @@ export default class ChannelStore {
   get nonPmChannels(): Channel[] {
     const sortedChannels: Channel[] = [];
     this.channels.forEach((channel) => {
-      if (channel.type !== 'PM' && channel.metaLoaded) {
+      if (channel.type !== 'PM' && channel.messagesLoaded) {
         sortedChannels.push(channel);
       }
     });
@@ -152,7 +152,7 @@ export default class ChannelStore {
     // current implementation should always have this loaded already,
     // but future versions may skip having all the initial metadata on chat load.
     // also should be changed to messages loaded or something.
-    if (channel.loaded) {
+    if (channel.messagesLoaded) {
       return;
     }
 
@@ -162,7 +162,6 @@ export default class ChannelStore {
       const response = await this.api.getMessages(channelId);
       runInAction(() => {
         this.handleChatChannelNewMessages(channelId, response);
-        channel.loaded = true;
       });
     } finally {
       runInAction(() => {
@@ -305,9 +304,17 @@ export default class ChannelStore {
   }
 
   @action
-  private handleChatMessageNewEvent(event: ChatMessageNewEvent) {
-    const channel = this.channels.get(event.message.channelId);
-    if (channel == null) return;
+  private async handleChatMessageNewEvent(event: ChatMessageNewEvent) {
+    const channel = this.getOrCreate(event.message.channelId);
+    if (!channel.metaLoaded) {
+      try {
+        const response = await this.api.getChannel(event.message.channelId);
+        channel.updateWithJson(response.channel);
+      } catch {
+        // skip adding messages if channel fails to load
+        return;
+      }
+    }
 
     channel.addMessages([event.message]);
   }
