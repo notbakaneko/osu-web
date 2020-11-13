@@ -6,11 +6,12 @@
 namespace App\Transformers\Chat;
 
 use App\Models\Chat\Channel;
+use App\Models\User;
 use App\Transformers\TransformerAbstract;
 
 class ChannelTransformer extends TransformerAbstract
 {
-    public $userId;
+    private $userId;
 
     protected $availableIncludes = [
         'first_message_id',
@@ -18,6 +19,14 @@ class ChannelTransformer extends TransformerAbstract
         'recent_messages',
         'users',
     ];
+
+    public static function forUser(?User $user)
+    {
+        $transformer = new static();
+        $transformer->userId = optional($user)->getKey();
+
+        return $transformer;
+    }
 
     public function transform(Channel $channel)
     {
