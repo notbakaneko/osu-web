@@ -152,10 +152,11 @@ export default class ChannelStore {
       return;
     }
 
-    // TODO:
-    // current implementation should always have this loaded already,
-    // but future versions may skip having all the initial metadata on chat load.
-    // also should be changed to messages loaded or something.
+    if (!channel.metaLoaded) {
+      const response = await this.api.getChannel(channelId);
+      channel.updateWithJson(response.channel);
+    }
+
     if (channel.messagesLoaded) {
       return;
     }
