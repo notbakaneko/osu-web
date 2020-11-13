@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import ChatAPI from 'chat/chat-api';
-import { ChannelJson, ChannelJsonExtended, ChannelType, MessageJson } from 'chat/chat-api-responses';
+import { ChannelJson, ChannelJsonExtended, ChannelType, GetChannelJson, MessageJson } from 'chat/chat-api-responses';
 import * as _ from 'lodash';
 import { action, computed, observable } from 'mobx';
 import User from 'models/user';
@@ -27,6 +27,9 @@ export default class Channel {
   @observable users: number[] = [];
 
   private initialLastMessageId?: number;
+  private pendingRequests = {
+    load: null as JQuery.jqXHR<GetChannelJson> | null,
+  };
 
   @computed
   get firstMessage() {
@@ -36,6 +39,15 @@ export default class Channel {
   @computed
   get hasEarlierMessages() {
     return this.firstMessageId !== this.minMessageId;
+  }
+
+  /**
+   * Minimum required to display the channel.
+   */
+  @computed
+  get isDisplayable() {
+    return this.name.length > 0
+      && this.icon != null;
   }
 
   @computed
@@ -50,15 +62,6 @@ export default class Channel {
   @computed
   get lastMessage(): Message | undefined {
     return this.messages[this.messages.length - 1];
-  }
-
-  /**
-   * Minimum required to display the channel.
-   */
-  @computed
-  get metaLoaded() {
-    return this.name.length > 0
-      && this.icon != null;
   }
 
   @computed
@@ -148,18 +151,24 @@ export default class Channel {
 
   @action
   // TODO: don't pass api through
-  load(api: ChatAPI) {
-    if (this.metaLoaded || this.loading || this.newPmChannel) {
+  async load(api: ChatAPI) {
+    if (this.isDisplayable || this.newPmChannel) {
       return;
     }
 
-    this.loading = true;
-    // this isn't returned because the early return above makes it messy for promise handlers to await properly.
-    api.getChannel(this.channelId).then((response) => {
-      this.updateWithJson(response.channel);
-    }).always(action(() => {
-      this.loading = false;
-    }));
+    if (this.pendingRequests.load == null) {
+      this.pendingRequests.load = api.getChannel(this.channelId);
+      this.loading = true;
+
+      this.pendingRequests.load.then((response) => {
+        this.updateWithJson(response.channel);
+      }).always(action(() => {
+        this.loading = false;
+        this.pendingRequests.load = null;
+      }));
+    }
+
+    return this.pendingRequests.load;
   }
 
   @action

@@ -36,7 +36,7 @@ export default class ChannelStore {
   get nonPmChannels(): Channel[] {
     const sortedChannels: Channel[] = [];
     this.channels.forEach((channel) => {
-      if (channel.type !== 'PM' && channel.messagesLoaded) {
+      if (channel.type !== 'PM' && channel.isDisplayable) {
         sortedChannels.push(channel);
       }
     });
@@ -54,7 +54,7 @@ export default class ChannelStore {
   get pmChannels(): Channel[] {
     const sortedChannels: Channel[] = [];
     this.channels.forEach((channel) => {
-      if (channel.newPmChannel || (channel.type === 'PM' && channel.metaLoaded)) {
+      if (channel.newPmChannel || (channel.type === 'PM' && channel.isDisplayable)) {
         sortedChannels.push(channel);
       }
     });
@@ -144,7 +144,8 @@ export default class ChannelStore {
   @action
   async loadChannel(channelId: number) {
     const channel = this.getOrCreate(channelId);
-    channel.load(this.api);
+    await channel.load(this.api);
+
     if (channel.messagesLoaded) {
       return;
     }
@@ -297,7 +298,7 @@ export default class ChannelStore {
   @action
   private async handleChatMessageNewEvent(event: ChatMessageNewEvent) {
     const channel = this.getOrCreate(event.message.channelId);
-    if (!channel.metaLoaded) {
+    if (!channel.isDisplayable) {
       try {
         const response = await this.api.getChannel(event.message.channelId);
         channel.updateWithJson(response.channel);
