@@ -149,20 +149,6 @@ export default class ChannelStore {
   async loadChannel(channelId: number) {
     const channel = this.getOrCreate(channelId);
     await channel.load(this.api);
-    if (channel.messagesLoaded || channel.newPmChannel) {
-      return;
-    }
-
-    channel.loading = true;
-
-    try {
-      const response = await this.api.getMessages(channelId);
-      this.handleChatChannelNewMessages(channelId, response);
-    } finally {
-      runInAction(() => {
-        channel.loading = false;
-      });
-    }
   }
 
   @action
@@ -186,6 +172,24 @@ export default class ChannelStore {
     } finally {
       runInAction(() => {
         channel.loadingEarlierMessages = false;
+      });
+    }
+  }
+
+  @action
+  async loadMessages(channel: Channel) {
+    if (channel.messagesLoaded || channel.newPmChannel) {
+      return;
+    }
+
+    channel.loading = true;
+
+    try {
+      const response = await this.api.getMessages(channel.channelId);
+      this.handleChatChannelNewMessages(channel.channelId, response);
+    } finally {
+      runInAction(() => {
+        channel.loading = false;
       });
     }
   }
