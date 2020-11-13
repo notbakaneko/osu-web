@@ -49,10 +49,7 @@ class ChatChannelEvent implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        $transformer = new ChannelTransformer();
-        $transformer->userId = $this->userId;
-
         // TODO: parting channel only needs channel id.
-        return json_item($this->channel, $transformer, ['first_message_id', 'last_message_id', 'users']);
+        return json_item($this->channel, ChannelTransformer::forUser(auth()->user()), ['first_message_id', 'last_message_id', 'users']);
     }
 }
