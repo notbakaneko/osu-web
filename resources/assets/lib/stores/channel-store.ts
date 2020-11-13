@@ -295,14 +295,11 @@ export default class ChannelStore {
   @action
   private async handleChatMessageNewEvent(event: ChatMessageNewEvent) {
     const channel = this.getOrCreate(event.message.channelId);
-    if (!channel.isDisplayable) {
-      try {
-        const response = await this.api.getChannel(event.message.channelId);
-        channel.updateWithJson(response.channel);
-      } catch {
-        // skip adding messages if channel fails to load
-        return;
-      }
+    try {
+      await channel.load(this.api);
+    } catch {
+      // skip adding messages if channel fails to load
+      return;
     }
 
     channel.addMessages([event.message]);
