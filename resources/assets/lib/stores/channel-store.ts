@@ -164,9 +164,7 @@ export default class ChannelStore {
 
     try {
       const response = await this.api.getMessages(channelId);
-      runInAction(() => {
-        this.handleChatChannelNewMessages(channelId, response);
-      });
+      this.handleChatChannelNewMessages(channelId, response);
     } finally {
       runInAction(() => {
         channel.loading = false;
