@@ -152,8 +152,8 @@ export default class ConversationView extends React.Component<Props> {
     const channel = this.currentChannel;
     this.assumeHasBacklog = false;
 
-    if (channel == null) {
-      return <div className='conversation' />;
+    if (channel == null || !channel.messagesLoaded) {
+      return <div className='chat-conversation' />;
     }
 
     const conversationStack: JSX.Element[] = [];

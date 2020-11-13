@@ -4,7 +4,7 @@
 import ChatAPI from 'chat/chat-api';
 import { ChannelJson, ChannelJsonExtended, ChannelType, GetChannelJson, MessageJson } from 'chat/chat-api-responses';
 import * as _ from 'lodash';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import User from 'models/user';
 import Message from './message';
 
@@ -25,10 +25,6 @@ export default class Channel {
   @observable newPmChannel = false;
   @observable type: ChannelType = 'NEW';
   @observable users: number[] = [];
-
-  private pendingRequests = {
-    load: null as JQuery.jqXHR<GetChannelJson> | null,
-  };
 
   @computed
   get firstMessage() {
@@ -160,19 +156,16 @@ export default class Channel {
       return;
     }
 
-    if (this.pendingRequests.load == null) {
-      this.pendingRequests.load = api.getChannel(this.channelId);
-      this.loading = true;
+    this.loading = true;
+    const response = await api.getChannel(this.channelId);
 
-      this.pendingRequests.load.then((response) => {
-        this.updateWithJson(response.channel);
-      }).always(action(() => {
+    try {
+      this.updateWithJson(response.channel);
+    } finally {
+      runInAction(() => {
         this.loading = false;
-        this.pendingRequests.load = null;
-      }));
+      });
     }
-
-    return this.pendingRequests.load;
   }
 
   @action
