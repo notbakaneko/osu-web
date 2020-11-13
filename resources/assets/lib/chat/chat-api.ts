@@ -6,6 +6,10 @@ import Message from 'models/chat/message';
 import * as ApiResponses from './chat-api-responses';
 
 export default class ChatAPI {
+  getChannel(channelId: number): JQuery.jqXHR<ApiResponses.GetChannelJson> {
+    return $.get(route('chat.channels.show', { channel: channelId }));
+  }
+
   getMessages(channelId: number, params?: { since?: number; until?: number }): JQuery.jqXHR<ApiResponses.GetMessagesJson> {
     return $.get(route('chat.channels.messages.index', { channel: channelId, ...params }));
   }
