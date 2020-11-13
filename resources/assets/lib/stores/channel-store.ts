@@ -144,15 +144,7 @@ export default class ChannelStore {
   @action
   async loadChannel(channelId: number) {
     const channel = this.getOrCreate(channelId);
-    if (channel.loading || channel.newPmChannel) {
-      return;
-    }
-
-    if (!channel.metaLoaded) {
-      const response = await this.api.getChannel(channelId);
-      channel.updateWithJson(response.channel);
-    }
-
+    channel.load(this.api);
     if (channel.messagesLoaded) {
       return;
     }

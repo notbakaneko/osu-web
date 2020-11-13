@@ -1,6 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import ChatAPI from 'chat/chat-api';
 import { ChannelJson, ChannelJsonExtended, ChannelType, MessageJson } from 'chat/chat-api-responses';
 import * as _ from 'lodash';
 import { action, computed, observable } from 'mobx';
@@ -143,6 +144,22 @@ export default class Channel {
     }
 
     this.resortMessages();
+  }
+
+  @action
+  // TODO: don't pass api through
+  load(api: ChatAPI) {
+    if (this.metaLoaded || this.loading || this.newPmChannel) {
+      return;
+    }
+
+    this.loading = true;
+    // this isn't returned because the early return above makes it messy for promise handlers to await properly.
+    api.getChannel(this.channelId).then((response) => {
+      this.updateWithJson(response.channel);
+    }).always(action(() => {
+      this.loading = false;
+    }));
   }
 
   @action
