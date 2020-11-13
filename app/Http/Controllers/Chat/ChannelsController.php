@@ -129,11 +129,8 @@ class ChannelsController extends Controller
 
         priv_check('ChatChannelRead', $channel)->ensureCan();
 
-        $transformer = new ChannelTransformer();
-        $transformer->userId = auth()->user()->getKey();
-
         return [
-            'channel' => json_item($channel, $transformer, ['first_message_id', 'last_message_id', 'users']),
+            'channel' => json_item($channel, ChannelTransformer::forUser(auth()->user()), ['first_message_id', 'last_message_id', 'users']),
             'users' => $channel->isPublic() ? [] : json_collection($channel->users()->get(), 'UserCompact'),
         ];
     }
