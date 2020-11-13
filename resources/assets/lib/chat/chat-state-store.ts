@@ -59,7 +59,7 @@ export default class ChatStateStore {
   }
 
   @action
-  selectChannel(channelId: number) {
+  async selectChannel(channelId: number) {
     if (this.selected === channelId) return;
 
     const channel = this.channelStore.get(channelId);
@@ -78,9 +78,9 @@ export default class ChatStateStore {
     this.selectedIndex = this.channelStore.channelList.indexOf(channel);
 
     // TODO: should this be here or have something else figure out if channel needs to be loaded?
-    this.channelStore.loadChannel(channelId).then(() => {
-      this.channelStore.markAsRead(channelId);
-    });
+    await this.channelStore.loadChannel(channelId);
+    await this.channelStore.loadMessages(channel);
+    this.channelStore.markAsRead(channelId);
   }
 
   @action
