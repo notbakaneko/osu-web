@@ -271,6 +271,8 @@ export default class ChannelStore {
 
   @action
   private handleChatChannelJoinEvent(event: ChatChannelJoinEvent) {
+    // TODO: upadte data?
+    if (this.channels.get(event.channel.channelId) != null) return;
     this.channels.set(event.channel.channelId, event.channel);
   }
 
