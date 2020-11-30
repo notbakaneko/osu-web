@@ -156,8 +156,15 @@ export default class Channel {
 
     this.loading = true;
     if (!this.connected) {
-      await api.joinChannel(this.channelId, currentUser.id);
-      this.connected = true;
+      try {
+        if (this.type === 'PUBLIC') {
+          await api.joinChannel(this.channelId, currentUser.id);
+        }
+      } finally {
+        runInAction(() => {
+          this.connected = true;
+        });
+      }
     }
 
     const response = await api.getChannel(this.channelId);
