@@ -156,14 +156,11 @@ export default class Channel {
 
     this.loading = true;
     if (!this.connected) {
-      try {
-        if (this.type === 'PUBLIC') {
-          await api.joinChannel(this.channelId, currentUser.id);
-        }
-      } finally {
-        runInAction(() => {
-          this.connected = true;
-        });
+      if (this.type === 'PUBLIC') {
+        api.joinChannel(this.channelId, currentUser.id);
+      } else {
+        // TODO: dispatch join event instead?
+        this.connected = true;
       }
     }
 
