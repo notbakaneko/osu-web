@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import ChatAPI from 'chat/chat-api';
-import { ChannelJson, ChannelJsonExtended, ChannelType, GetChannelJson, MessageJson } from 'chat/chat-api-responses';
+import { ChannelJson, ChannelJsonExtended, ChannelType, MessageJson } from 'chat/chat-api-responses';
 import * as _ from 'lodash';
 import { action, computed, observable, runInAction } from 'mobx';
 import User from 'models/user';
@@ -153,11 +153,16 @@ export default class Channel {
   @action
   // TODO: don't pass api through
   async load(api: ChatAPI) {
-    if (this.isDisplayable || this.newPmChannel) {
+    if (this.connected && this.isDisplayable || this.newPmChannel) {
       return;
     }
 
     this.loading = true;
+    if (!this.connected) {
+      await api.joinChannel(this.channelId, currentUser.id);
+      this.connected = true;
+    }
+
     const response = await api.getChannel(this.channelId);
 
     try {
