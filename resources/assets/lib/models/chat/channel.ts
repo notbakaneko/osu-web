@@ -10,6 +10,7 @@ import Message from './message';
 
 export default class Channel {
   @observable channelId: number;
+  @observable connected = false;
   @observable description?: string;
   @observable firstMessageId: number = -1;
   @observable icon?: string;

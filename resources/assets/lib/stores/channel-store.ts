@@ -142,6 +142,11 @@ export default class ChannelStore {
   }
 
   @action
+  async joinChannel(channelId: number) {
+    return this.api.joinChannel(channelId, currentUser.id);
+  }
+
+  @action
   async loadChannel(channelId: number) {
     const channel = this.getOrCreate(channelId);
     await channel.load(this.api);
