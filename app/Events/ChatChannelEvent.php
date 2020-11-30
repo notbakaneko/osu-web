@@ -19,7 +19,7 @@ class ChatChannelEvent implements ShouldBroadcast
     public $broadcastQueue;
     public $action;
     public $channel;
-    public $userId;
+    public $user;
 
     public function __construct(ChatChannel $channel, User $user, string $action)
     {
@@ -29,7 +29,7 @@ class ChatChannelEvent implements ShouldBroadcast
         $this->action = $action;
         // TODO: don't seralize laravel model to skip lookup.
         $this->channel = $channel;
-        $this->userId = $user->getKey();
+        $this->user = $user;
     }
 
     public function broadcastAs()
@@ -44,12 +44,12 @@ class ChatChannelEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel("private:user:{$this->userId}");
+        return new Channel("private:user:{$this->user->getKey()}");
     }
 
     public function broadcastWith()
     {
         // TODO: parting channel only needs channel id.
-        return json_item($this->channel, ChannelTransformer::forUser(auth()->user()), ['first_message_id', 'last_message_id', 'users']);
+        return json_item($this->channel, ChannelTransformer::forUser($this->user), ['first_message_id', 'last_message_id', 'users']);
     }
 }
