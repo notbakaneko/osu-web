@@ -76,9 +76,7 @@ class ChannelsController extends Controller
             abort(403);
         }
 
-        if (!$channel->hasUser(Auth::user())) {
-            $channel->addUser(Auth::user());
-        }
+        $channel->addUser(Auth::user());
 
         return response([], 204);
     }

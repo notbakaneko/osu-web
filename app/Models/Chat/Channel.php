@@ -298,6 +298,8 @@ class Channel extends Model
 
         if ($userChannel) {
             if (!$userChannel->isHidden()) {
+                // tell notification server to forward events for this user.
+                event(new ChatChannelEvent($userChannel->channel, $user, 'join'));
                 return;
             }
 

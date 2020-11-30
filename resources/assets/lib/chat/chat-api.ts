@@ -18,6 +18,13 @@ export default class ChatAPI {
     return $.get(route('chat.updates'), { since, history_since: lastHistoryId });
   }
 
+  joinChannel(channelId: number, userId: number): JQuery.jqXHR<void> {
+    return $.ajax({
+      method: 'PUT',
+      url: route('chat.channels.join', { channel: channelId, user: userId }),
+    });
+  }
+
   markAsRead(channelId: number, messageId: number): JQuery.jqXHR<ApiResponses.MarkAsReadJson> {
     return $.ajax({
       type: 'PUT',
