@@ -82,7 +82,6 @@ export default class ChatStateStore {
     // TODO: should this be here or have something else figure out if channel needs to be loaded?
 
     await this.channelStore.loadChannel(channelId);
-    await this.channelStore.loadMessages(channel);
     this.channelStore.markAsRead(channelId);
   }
 

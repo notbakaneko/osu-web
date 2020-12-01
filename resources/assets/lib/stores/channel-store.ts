@@ -149,7 +149,8 @@ export default class ChannelStore {
   @action
   async loadChannel(channelId: number) {
     const channel = this.getOrCreate(channelId);
-    await channel.load(this.api);
+    // call load and then wait for ChatChannelJoin to arrive over the websocket.
+    return channel.load(this.api);
   }
 
   @action
@@ -277,14 +278,15 @@ export default class ChannelStore {
   @action
   private handleChatChannelJoinEvent(event: ChatChannelJoinEvent) {
     // TODO: upadte data?
-    const existingChannel = this.channels.get(event.channel.channelId);
-    if (existingChannel != null) {
-      existingChannel.connected = true;
-      return;
+    let channel = this.channels.get(event.channel.channelId);
+    if (channel == null) {
+      this.channels.set(event.channel.channelId, event.channel);
+      channel = event.channel;
     }
 
-    event.channel.connected = true;
-    this.channels.set(event.channel.channelId, event.channel);
+    channel.connected = true;
+
+    this.loadMessages(event.channel);
   }
 
   @action
