@@ -10,7 +10,7 @@ import { UserLogoutAction } from 'actions/user-login-actions';
 import { dispatch, dispatchListener } from 'app-dispatcher';
 import ChatAPI from 'chat/chat-api';
 import { ChannelJson, GetUpdatesJson, MessageJson, PresenceJson } from 'chat/chat-api-responses';
-import { ChatChannelJoinEvent, ChatChannelPartEvent, ChatMessageNewEvent } from 'chat/chat-events';
+import { ChatChannelJoinEvent, ChatChannelNewMessagesEvent, ChatChannelPartEvent, ChatMessageNewEvent } from 'chat/chat-events';
 import { groupBy, maxBy } from 'lodash';
 import { action, computed, observable, runInAction } from 'mobx';
 import Channel from 'models/chat/channel';
@@ -86,7 +86,7 @@ export default class ChannelStore {
   addNewConversation(json: ChannelJson, message: MessageJson) {
     const channel = this.getOrCreate(json.channel_id);
     channel.updateWithJson(json);
-    this.handleChatChannelNewMessages(channel.channelId, [message]);
+    this.handleChatChannelNewMessages({ channelId: channel.channelId, json: [message] });
 
     return channel;
   }
@@ -134,6 +134,8 @@ export default class ChannelStore {
   handleDispatchAction(event: DispatcherAction) {
     if (event instanceof ChatChannelJoinEvent) {
       this.handleChatChannelJoinEvent(event);
+    } else if (event instanceof ChatChannelNewMessagesEvent) {
+      this.handleChatChannelNewMessages(event);
     } else if (event instanceof ChatChannelPartEvent) {
       this.handleChatChannelPartEvent(event);
     } else if (event instanceof ChatMessageNewEvent) {
@@ -173,8 +175,7 @@ export default class ChannelStore {
     }
 
     try {
-      const response = await this.api.getMessages(channel.channelId, { until });
-      this.handleChatChannelNewMessages(channelId, response);
+      await this.api.getMessages(channel.channelId, { until });
     } finally {
       runInAction(() => {
         channel.loadingEarlierMessages = false;
@@ -184,20 +185,7 @@ export default class ChannelStore {
 
   @action
   async loadMessages(channel: Channel) {
-    if (channel.messagesLoaded || channel.newPmChannel) {
-      return;
-    }
-
-    channel.loading = true;
-
-    try {
-      const response = await this.api.getMessages(channel.channelId);
-      this.handleChatChannelNewMessages(channel.channelId, response);
-    } finally {
-      runInAction(() => {
-        channel.loading = false;
-      });
-    }
+    channel.loadMessages(this.api);
   }
 
   @action
@@ -249,7 +237,7 @@ export default class ChannelStore {
     const groups = groupBy(updateJson.messages, 'channel_id');
     for (const key of Object.keys(groups)) {
       const channelId = parseInt(key, 10);
-      this.handleChatChannelNewMessages(channelId, groups[channelId]);
+      this.handleChatChannelNewMessages({ channelId, json: groups[channelId] });
     }
 
     // TODO: convert silence handling back to action when updating through websocket is figured out.
@@ -286,13 +274,14 @@ export default class ChannelStore {
       channel = event.channel;
     }
 
-    channel.connected = true;
+    channel.loadingState.connected = true;
 
     this.loadMessages(event.channel);
   }
 
   @action
-  private handleChatChannelNewMessages(channelId: number, json: MessageJson[]) {
+  private handleChatChannelNewMessages(event: ChatChannelNewMessagesEvent) {
+    const { channelId, json } = event;
     const messages = json.map((messageJson) => {
       if (messageJson.sender != null) this.userStore.getOrCreate(messageJson.sender_id, messageJson.sender);
       return Message.fromJson(messageJson);

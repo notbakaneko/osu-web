@@ -1,17 +1,21 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import { dispatch } from 'app-dispatcher';
 import { route } from 'laroute';
 import Message from 'models/chat/message';
 import * as ApiResponses from './chat-api-responses';
+import { ChatChannelNewMessagesEvent } from './chat-events';
 
 export default class ChatAPI {
   getChannel(channelId: number): JQuery.jqXHR<ApiResponses.GetChannelJson> {
     return $.get(route('chat.channels.show', { channel: channelId }));
   }
 
-  getMessages(channelId: number, params?: { since?: number; until?: number }): JQuery.jqXHR<ApiResponses.GetMessagesJson> {
-    return $.get(route('chat.channels.messages.index', { channel: channelId, ...params }));
+  getMessages(channelId: number, params?: { since?: number; until?: number }) {
+    return $.get(route('chat.channels.messages.index', { channel: channelId, ...params })).then((response: ApiResponses.GetMessagesJson) => {
+      dispatch(new ChatChannelNewMessagesEvent(channelId, response));
+    });
   }
 
   getUpdates(since: number, lastHistoryId?: number | null): JQuery.jqXHR<ApiResponses.GetUpdatesJson> {

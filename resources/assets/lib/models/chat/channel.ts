@@ -10,17 +10,19 @@ import Message from './message';
 
 export default class Channel {
   @observable channelId: number;
-  @observable connected = false;
   @observable description?: string;
   firstMessageId: number = -1;
   @observable icon?: string;
   @observable inputText: string = '';
   @observable lastMessageId: number = -1;
   @observable lastReadId?: number;
-  @observable loading: boolean = false;
   @observable loadingEarlierMessages: boolean = false;
+  @observable loadingState = {
+    connected: null as boolean | null,
+    messages: null as boolean | null,
+    metadata: null as boolean | null,
+  };
   @observable messages: Message[] = observable([]);
-  @observable messagesLoaded: boolean = false;
   @observable moderated: boolean = false;
   @observable name: string = '';
   @observable newPmChannel = false;
@@ -58,6 +60,11 @@ export default class Channel {
   @computed
   get lastMessage(): Message | undefined {
     return this.messages[this.messages.length - 1];
+  }
+
+  @computed
+  get loading() {
+    return !(this.loadingState.connected && this.loadingState.messages);
   }
 
   @computed
@@ -113,7 +120,7 @@ export default class Channel {
 
   @action
   addMessages(messages: Message[], skipSort: boolean = false) {
-    this.messagesLoaded = true;
+    this.loadingState.messages = true;
     this.messages.push(...messages);
 
     if (!skipSort) {
@@ -153,27 +160,47 @@ export default class Channel {
   @action
   // TODO: don't pass api through
   async load(api: ChatAPI) {
-    if (this.connected && this.isDisplayable || this.newPmChannel) {
-      return;
-    }
+    // nothing to load
+    if (this.newPmChannel) return;
 
-    this.loading = true;
-    if (!this.connected) {
+    if (this.loadingState.connected == null) {
+      this.loadingState.connected = false;
       if (this.type === 'PUBLIC') {
-        api.joinChannel(this.channelId, currentUser.id);
+        await api.joinChannel(this.channelId, currentUser.id);
+        this.loadingState.connected = true;
       } else {
         // TODO: dispatch join event instead?
-        this.connected = true;
+        this.loadingState.connected = true;
+        this.loadMessages(api);
       }
     }
 
-    const response = await api.getChannel(this.channelId);
+    // TODO: change to metadata check.
+    if (!this.isDisplayable) {
+      this.loadingState.metadata = false;
+      const response = await api.getChannel(this.channelId);
+
+      try {
+        this.updateWithJson(response.channel);
+      } finally {
+        runInAction(() => {
+          this.loadingState.metadata = true;
+        });
+      }
+    }
+  }
+
+  @action
+  async loadMessages(api: ChatAPI) {
+    if (this.newPmChannel || this.loadingState.messages != null) return;
+
+    this.loadingState.messages = false;
 
     try {
-      this.updateWithJson(response.channel);
+      await api.getMessages(this.channelId);
     } finally {
       runInAction(() => {
-        this.loading = false;
+        this.loadingState.messages = true;
       });
     }
   }

@@ -24,6 +24,12 @@ export class ChatChannelJoinEvent extends DispatcherAction {
   }
 }
 
+export class ChatChannelNewMessagesEvent extends DispatcherAction {
+  constructor(readonly channelId: number, readonly json: MessageJson[]) {
+    super();
+  }
+}
+
 export class ChatChannelPartEvent extends DispatcherAction {
   constructor(readonly channelId: number) {
     super();
@@ -59,6 +65,7 @@ export function fromJson(json: ChatEventJson) {
 
 export function dispatchNewEventFromJson(json: ChatEventJson) {
   const event = fromJson(json);
+  console.log(event);
   if (event != null) {
     dispatch(event);
   }
