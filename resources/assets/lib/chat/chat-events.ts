@@ -65,7 +65,6 @@ export function fromJson(json: ChatEventJson) {
 
 export function dispatchNewEventFromJson(json: ChatEventJson) {
   const event = fromJson(json);
-  console.log(event);
   if (event != null) {
     dispatch(event);
   }
