@@ -25,20 +25,14 @@ class BeatmapsetDiscussionVotesController extends Controller
 
         $search = BeatmapDiscussionVote::search($params);
 
-        $data = $search['query']->with([
-            'user',
-            'beatmapDiscussion',
-            'beatmapDiscussion.user',
-            'beatmapDiscussion.beatmapset',
-            'beatmapDiscussion.startingPost',
-        ])->get();
-
-        if (is_json_request()) {
-            return ['votes' => json_collection($data, new BeatmapsetDiscussionVoteTransformer())];
-        }
-
         $votes = new LengthAwarePaginator(
-            $data,
+            $search['query']->with([
+                'user',
+                'beatmapDiscussion',
+                'beatmapDiscussion.user',
+                'beatmapDiscussion.beatmapset',
+                'beatmapDiscussion.startingPost',
+            ])->get(),
             $search['query']->realCount(),
             $search['params']['limit'],
             $search['params']['page'],
@@ -47,6 +41,16 @@ class BeatmapsetDiscussionVotesController extends Controller
                 'query' => $search['params'],
             ]
         );
+
+        if (is_json_request()) {
+            return [
+                'cursor' => $votes->hasMorePages() ? [
+                    'limit' => $votes->perPage(),
+                    'page' => $votes->currentPage() + 1,
+                ] : null,
+                'votes' => json_collection($votes->getCollection(), new BeatmapsetDiscussionVoteTransformer()),
+            ];
+        }
 
         return ext_view('beatmapset_discussion_votes.index', compact('votes'));
     }
