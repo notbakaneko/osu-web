@@ -11,6 +11,7 @@ use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
 use App\Models\Beatmapset;
 use App\Models\User;
+use App\Transformers\BeatmapDiscussionTransformer;
 use Auth;
 use Illuminate\Pagination\Paginator;
 use Request;
@@ -20,6 +21,7 @@ class BeatmapDiscussionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('require-scopes:public', ['only' => ['index', 'show']]);
 
         return parent::__construct();
     }
@@ -154,6 +156,10 @@ class BeatmapDiscussionsController extends Controller
             ),
         ];
 
+        if (is_json_request()) {
+            return $jsonChunks;
+        }
+
         return ext_view('beatmap_discussions.index', compact('jsonChunks', 'search', 'paginator'));
     }
 
@@ -192,6 +198,11 @@ class BeatmapDiscussionsController extends Controller
         if ($discussion->beatmapset === null) {
             abort(404);
         }
+
+        if (is_json_request()) {
+            return ['discussion' => json_item($discussion, new BeatmapDiscussionTransformer())];
+        }
+
 
         return ujs_redirect(route('beatmapsets.discussion', $discussion->beatmapset).'#/'.$id);
     }
