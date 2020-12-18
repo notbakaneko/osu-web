@@ -65,14 +65,8 @@ class BeatmapDiscussionPostsController extends Controller
             'beatmapDiscussion.startingPost',
         ])->limit($search['params']['limit'] + 1);
 
-        $data = $query->get();
-
-        if (is_json_request()) {
-            return ['posts' => json_collection($data, new BeatmapDiscussionPostTransformer())];
-        }
-
         $posts = new Paginator(
-            $data,
+            $query->get(),
             $search['params']['limit'],
             $search['params']['page'],
             [
@@ -80,6 +74,16 @@ class BeatmapDiscussionPostsController extends Controller
                 'query' => $search['params'],
             ]
         );
+
+        if (is_json_request()) {
+            return [
+                'cursor' => $posts->hasMorePages() ? [
+                    'limit' => $posts->perPage(),
+                    'page' => $posts->currentPage() + 1,
+                ] : null,
+                'posts' => json_collection($posts->getCollection(), new BeatmapDiscussionPostTransformer()),
+            ];
+        }
 
         return ext_view('beatmap_discussion_posts.index', compact('posts'));
     }

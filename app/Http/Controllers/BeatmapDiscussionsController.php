@@ -134,6 +134,10 @@ class BeatmapDiscussionsController extends Controller
         $relatedBeatmaps = Beatmap::whereIn('beatmapset_id', array_keys($relatedBeatmapsetIds))->get();
 
         $jsonChunks = [
+            'cursor' => $paginator->hasMorePages() ? [
+                'limit' => $paginator->perPage(),
+                'page' => $paginator->currentPage() + 1,
+            ] : null,
             'discussions' => json_collection(
                 $discussions,
                 'BeatmapDiscussion',
