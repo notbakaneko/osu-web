@@ -15,6 +15,7 @@ use App\Models\BeatmapDiscussionPost;
 use App\Models\Beatmapset;
 use App\Models\BeatmapsetEvent;
 use App\Models\BeatmapsetWatch;
+use App\Transformers\BeatmapDiscussionPostTransformer;
 use Auth;
 use DB;
 use Illuminate\Pagination\Paginator;
@@ -24,6 +25,7 @@ class BeatmapDiscussionPostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('require-scopes:public', ['only' => ['index']]);
 
         return parent::__construct();
     }
@@ -63,8 +65,14 @@ class BeatmapDiscussionPostsController extends Controller
             'beatmapDiscussion.startingPost',
         ])->limit($search['params']['limit'] + 1);
 
+        $data = $query->get();
+
+        if (is_json_request()) {
+            return ['posts' => json_collection($data, new BeatmapDiscussionPostTransformer())];
+        }
+
         $posts = new Paginator(
-            $query->get(),
+            $data,
             $search['params']['limit'],
             $search['params']['page'],
             [
