@@ -78,26 +78,28 @@ class BeatmapDiscussionPostsController extends Controller
             ]
         );
 
-        if (is_json_request()) {
-            $paginator = $posts;
-            $posts = $posts->getCollection();
-            $beatmapsetDiscussions = $posts->pluck('beatmapDiscussion')->unique('id');
-            $beatmapsets = $beatmapsetDiscussions->pluck('beatmapset')->unique('beatmapset_id');
-            $users = $beatmapsetDiscussions->pluck('user')->merge($posts->pluck('user'))->unique('user_id');
+        $paginator = $posts;
+        $posts = $posts->getCollection();
+        $beatmapsetDiscussions = $posts->pluck('beatmapDiscussion')->unique('id');
+        $beatmapsets = $beatmapsetDiscussions->pluck('beatmapset')->unique('beatmapset_id');
+        $users = $beatmapsetDiscussions->pluck('user')->merge($posts->pluck('user'))->unique('user_id');
 
-            return [
-                'beatmapsets' => json_collection($beatmapsets, new BeatmapsetCompactTransformer()),
-                'beatmapset_discussion' => json_collection($beatmapsetDiscussions, new BeatmapDiscussionTransformer(), ['starting_post']),
-                'cursor' => $paginator->hasMorePages() ? [
-                    'limit' => $paginator->perPage(),
-                    'page' => $paginator->currentPage() + 1,
-                ] : null,
-                'posts' => json_collection($posts, new BeatmapDiscussionPostTransformer()),
-                'users' => json_collection($users, new UserCompactTransformer()),
-            ];
+        $json = [
+            'beatmapsets' => json_collection($beatmapsets, new BeatmapsetCompactTransformer()),
+            'beatmapset_discussion' => json_collection($beatmapsetDiscussions, new BeatmapDiscussionTransformer(), ['starting_post']),
+            'cursor' => $paginator->hasMorePages() ? [
+                'limit' => $paginator->perPage(),
+                'page' => $paginator->currentPage() + 1,
+            ] : null,
+            'posts' => json_collection($posts, new BeatmapDiscussionPostTransformer()),
+            'users' => json_collection($users, new UserCompactTransformer()),
+        ];
+
+        if (is_json_request()) {
+            return $json;
         }
 
-        return ext_view('beatmap_discussion_posts.index', compact('posts'));
+        return ext_view('beatmap_discussion_posts.index', compact('json', 'paginator'));
     }
 
     public function restore($id)

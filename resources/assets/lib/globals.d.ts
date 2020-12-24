@@ -135,6 +135,7 @@ interface BeatmapsetDiscussionJson {
 
 // TODO: incomplete
 interface BeatmapsetDiscussionPostJson {
+  id: number;
   message: string;
 }
 

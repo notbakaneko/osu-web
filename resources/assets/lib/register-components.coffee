@@ -62,7 +62,6 @@ reactTurbolinks.register 'beatmap-discussion-events', Events, (container) ->
 
   props
 
-
 reactTurbolinks.register 'beatmapset-panel', BeatmapsetPanel, (el) ->
   JSON.parse(el.dataset.beatmapsetPanel)
 

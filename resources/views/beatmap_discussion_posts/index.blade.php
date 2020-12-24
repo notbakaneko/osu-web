@@ -13,13 +13,26 @@
                 <h2>{{ trans('users.beatmapset_activities.title', ['user' => $user->username]) }}</h2>
             @endif
 
-            <div>
-                @foreach ($posts as $post)
-                    @include('beatmap_discussion_posts._item', compact('post'))
-                @endforeach
+            <div class="js-react--beatmapset-discussion-posts-index">
+            </div>
 
-                @include('objects._pagination_simple', ['object' => $posts])
+            <div>
+                {{-- @foreach ($posts as $post)
+                    @include('beatmap_discussion_posts._item', compact('post'))
+                @endforeach --}}
+
+                @include('objects._pagination_simple', ['object' => $paginator])
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    @parent
+
+    <script id="json-beatmapset-discussion-posts-index" type="application/json">
+        {!! json_encode($json) !!}
+    </script>
+
+    @include('layout._extra_js', ['src' => 'js/react/beatmapset-discussion-posts-index.js'])
 @endsection
