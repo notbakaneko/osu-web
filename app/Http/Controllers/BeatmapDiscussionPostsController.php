@@ -16,6 +16,9 @@ use App\Models\Beatmapset;
 use App\Models\BeatmapsetEvent;
 use App\Models\BeatmapsetWatch;
 use App\Transformers\BeatmapDiscussionPostTransformer;
+use App\Transformers\BeatmapDiscussionTransformer;
+use App\Transformers\BeatmapsetCompactTransformer;
+use App\Transformers\UserCompactTransformer;
 use Auth;
 use DB;
 use Illuminate\Pagination\Paginator;
@@ -76,12 +79,21 @@ class BeatmapDiscussionPostsController extends Controller
         );
 
         if (is_json_request()) {
+            $paginator = $posts;
+            $posts = $posts->getCollection();
+            $beatmapsetDiscussions = $posts->pluck('beatmapDiscussion')->unique('id');
+            $beatmapsets = $beatmapsetDiscussions->pluck('beatmapset')->unique('beatmapset_id');
+            $users = $beatmapsetDiscussions->pluck('user')->merge($posts->pluck('user'))->unique('user_id');
+
             return [
-                'cursor' => $posts->hasMorePages() ? [
-                    'limit' => $posts->perPage(),
-                    'page' => $posts->currentPage() + 1,
+                'beatmapsets' => json_collection($beatmapsets, new BeatmapsetCompactTransformer()),
+                'beatmapset_discussion' => json_collection($beatmapsetDiscussions, new BeatmapDiscussionTransformer(), ['starting_post']),
+                'cursor' => $paginator->hasMorePages() ? [
+                    'limit' => $paginator->perPage(),
+                    'page' => $paginator->currentPage() + 1,
                 ] : null,
-                'posts' => json_collection($posts->getCollection(), new BeatmapDiscussionPostTransformer()),
+                'posts' => json_collection($posts, new BeatmapDiscussionPostTransformer()),
+                'users' => json_collection($users, new UserCompactTransformer()),
             ];
         }
 
