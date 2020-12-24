@@ -137,6 +137,7 @@ const coffeeReactComponents = [
 const tsReactComponents = [
   'account-edit',
   'beatmaps',
+  'beatmapset-discussion-posts-index',
   'chat',
   'follows-comment',
   'follows-mapping',
