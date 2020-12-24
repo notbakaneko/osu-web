@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 type GroupJson = import('interfaces/group-json').default;
+type UserJsonExtended = import('interfaces/user-json-extended').default;
 
 // interfaces for using process.env
 interface Process {
@@ -45,6 +46,7 @@ interface DiscussionMessageType {
 interface BeatmapDiscussionHelperClass {
   messageType: DiscussionMessageType;
   TIMESTAMP_REGEX: RegExp;
+  canModeratePosts(user: UserJsonExtended): boolean;
   format(text: string, options?: any): string;
   formatTimestamp(value: number | null): string | undefined;
   nearbyDiscussions(discussions: BeatmapsetDiscussionJson[], timestamp: number): BeatmapsetDiscussionJson[];
@@ -134,8 +136,12 @@ interface BeatmapsetDiscussionJson {
 
 // TODO: incomplete
 interface BeatmapsetDiscussionPostJson {
+  beatmap_discussion_id: number;
+  deleted_at: string | null;
   id: number;
+  last_editor_id: number | null;
   message: string;
+  user_id: number | null;
 }
 
 interface LangClass {

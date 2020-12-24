@@ -15,6 +15,28 @@ declare module 'back-to-top' {
   }
 }
 
+declare module 'react/beatmap-discussions/post' {
+  type BeatmapsetJson = import('beatmapsets/beatmapset-json').BeatmapsetJson;
+  type UserJson = import('interfaces/user-json').default;
+
+  interface Props {
+    beatmapset: BeatmapsetJson;
+    discussion: BeatmapsetDiscussionJson;
+    post: BeatmapsetDiscussionPostJson;
+    type: string;
+    users: Record<number | string, UserJson>;
+    user: UserJson;
+    read: boolean;
+    lastEditor: UserJson;
+    canBeEdited: boolean;
+    canBeDeleted: boolean;
+    canBeRestored: boolean;
+    currentUser: UserJson;
+  }
+
+  class Post extends React.Component<Props> {}
+}
+
 declare module 'block-button' {
   interface Props {
     modifiers?: string[];

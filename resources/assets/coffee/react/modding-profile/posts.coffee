@@ -4,7 +4,7 @@
 import * as React from 'react'
 import { div, h2, a, img, span } from 'react-dom-factories'
 import { ValueDisplay } from 'value-display'
-import { Post } from "../beatmap-discussions/post"
+import { Post } from '../beatmap-discussions/post'
 
 el = React.createElement
 
@@ -16,9 +16,10 @@ export class Posts extends React.Component
         if @props.posts.length == 0
           div className: 'modding-profile-list__empty', osu.trans('users.show.extra.none')
         else
+          canModeratePosts = BeatmapDiscussionHelper.canModeratePosts(currentUser)
+
           [
             for post in @props.posts
-              canModeratePosts = BeatmapDiscussionHelper.canModeratePosts(currentUser)
               canBeDeleted = canModeratePosts || currentUser.id? == post.user_id
 
               discussionClasses = 'beatmap-discussion beatmap-discussion--preview'

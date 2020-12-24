@@ -3,10 +3,18 @@
 
 import Main from 'beatmapset-discussion-posts-index/main';
 
-reactTurbolinks.registerPersistent('beatmapset-discussion-posts-index', Main, true, (container: HTMLElement) => {
-  console.log(osu.parseJson('json-beatmapset-discussion-posts-index'));
-  const { beatmapset_discussion, beatmapsets, posts, users } = osu.parseJson('json-beatmapset-discussion-posts-index');
+reactTurbolinks.registerPersistent('beatmapset-discussion-posts-index', Main, true, () => {
+  const {
+    beatmapset_discussions: beatmapsetDiscussions,
+    beatmapsets,
+    posts,
+    users,
+  } = osu.parseJson('json-beatmapset-discussion-posts-index');
 
-  console.log(posts);
-  return { posts };
+  return {
+    beatmapsetDiscussions,
+    beatmapsets,
+    posts,
+    users,
+  };
 });

@@ -86,13 +86,13 @@ class BeatmapDiscussionPostsController extends Controller
 
         $json = [
             'beatmapsets' => json_collection($beatmapsets, new BeatmapsetCompactTransformer()),
-            'beatmapset_discussion' => json_collection($beatmapsetDiscussions, new BeatmapDiscussionTransformer(), ['starting_post']),
+            'beatmapset_discussions' => json_collection($beatmapsetDiscussions, new BeatmapDiscussionTransformer(), ['starting_post']),
             'cursor' => $paginator->hasMorePages() ? [
                 'limit' => $paginator->perPage(),
                 'page' => $paginator->currentPage() + 1,
             ] : null,
             'posts' => json_collection($posts, new BeatmapDiscussionPostTransformer()),
-            'users' => json_collection($users, new UserCompactTransformer()),
+            'users' => json_collection($users, new UserCompactTransformer(), ['groups']),
         ];
 
         if (is_json_request()) {
