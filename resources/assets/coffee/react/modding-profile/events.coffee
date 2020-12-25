@@ -8,18 +8,15 @@ el = React.createElement
 
 export class Events extends React.Component
   render: =>
-    div className: 'page-extra',
-      h2 className: 'title title--page-extra', osu.trans('users.show.extra.events.title_longer')
-      div className: 'modding-profile-list',
-        if @props.events.length == 0
-          div className: 'modding-profile-list__empty', osu.trans('users.show.extra.none')
-        else
-          div className: 'beatmapset-events beatmapset-events--profile',
-            el DiscussionEvents,
-              events: @props.events
-              users: @props.users
+    if @props.events.length == 0
+      div className: 'modding-profile-list__empty', osu.trans('users.show.extra.none')
+    else
+      div className: 'beatmapset-events beatmapset-events--profile',
+        el DiscussionEvents,
+          events: @props.events
+          users: @props.users
 
-            a
-              className: 'modding-profile-list__show-more'
-              href: laroute.route('beatmapsets.events.index', user: @props.user.id),
-              osu.trans('users.show.extra.events.show_more')
+        a
+          className: 'modding-profile-list__show-more'
+          href: laroute.route('beatmapsets.events.index', user: @props.user.id),
+          osu.trans('users.show.extra.events.show_more')
