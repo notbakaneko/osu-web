@@ -124,7 +124,7 @@ export class Main extends React.PureComponent
 
       users.push(newUser)
 
-    @cache.users = @cache.discussions = @cache.userDiscussions = @cache.beatmaps = null
+    @cache.users = @cache.discussions = @cache.userDiscussions = @cache.beatmaps = @cache.beatmapsets = null
     @setState
       discussions: _.reverse(_.sortBy(discussions, (d) -> Date.parse(d.starting_post.created_at)))
       posts: _.reverse(_.sortBy(posts, (p) -> Date.parse(p.created_at)))
@@ -143,6 +143,10 @@ export class Main extends React.PureComponent
 
   beatmaps: =>
     @cache.beatmaps ?= _.keyBy(this.state.beatmaps, 'id')
+
+
+  beatmapsets: =>
+    @cache.beatmapsets ?= _.keyBy(this.state.beatmapsets, 'id')
 
 
   render: =>
@@ -248,6 +252,8 @@ export class Main extends React.PureComponent
 
       when 'posts'
         props:
+          beatmapetDiscussions: @discussions()
+          beatmapsets: @beatmapsets()
           posts: @state.posts
           user: @state.user
           users: @users()

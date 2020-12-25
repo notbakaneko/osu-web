@@ -9,6 +9,7 @@ use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
 use App\Models\BeatmapDiscussionPost;
 use App\Models\BeatmapDiscussionVote;
+use App\Models\Beatmapset;
 use App\Models\BeatmapsetEvent;
 use App\Models\User;
 use App\Traits\Memoizes;
@@ -110,6 +111,11 @@ class ModdingHistoryEventsBundle
                     ['starting_post', 'beatmap', 'beatmapset', 'current_user_attributes']
                 );
 
+                $array['beatmapsets'] = json_collection(
+                    $this->getBeatmapsets(),
+                    'BeatmapsetCompact'
+                );
+
                 $array['posts'] = json_collection(
                     $this->getPosts(),
                     'BeatmapDiscussionPost',
@@ -176,6 +182,19 @@ class ModdingHistoryEventsBundle
                 ->toArray();
 
             return Beatmap::whereIn('beatmapset_id', $beatmapsetId)->get();
+        });
+    }
+
+    private function getBeatmapsets()
+    {
+        // TODO: less bad
+        return $this->memoize(__FUNCTION__, function () {
+            $beatmapsetIds =  $this->getDiscussions()
+                ->pluck('beatmapset_id')
+                ->unique()
+                ->toArray();
+
+            return Beatmapset::whereIn('beatmapset_id', $beatmapsetIds)->get();
         });
     }
 

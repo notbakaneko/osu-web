@@ -12,6 +12,7 @@ interface Props {
   users: Record<number | string, UserJson>;
 }
 
+// TODO: handle empty case.
 export default class Posts extends React.Component<Props> {
   render() {
     const canModeratePosts = BeatmapDiscussionHelper.canModeratePosts(currentUser);
