@@ -16,7 +16,7 @@ export default class Posts extends React.Component<Props> {
   render() {
     const canModeratePosts = BeatmapDiscussionHelper.canModeratePosts(currentUser);
 
-    return this.props.posts.map((post) => {
+    const posts = this.props.posts.map((post) => {
       const canBeDeleted = canModeratePosts || currentUser.id != null && currentUser.id === post.user_id;
       const canBeEdited = currentUser.is_admin || currentUser.id != null && currentUser.id === post.user_id;
 
@@ -32,19 +32,18 @@ export default class Posts extends React.Component<Props> {
       const lastEditor = post.last_editor_id != null ? this.props.users[post.last_editor_id] : this.props.users.null;
 
       return (
-        <div className='modding-profile-list__row' key={post.id}>
+        <div className='beatmapset-discussion-posts__container' key={post.id}>
+          {/* should give Post an optional render or something */}
           <a
-            className='modding-profile-list__thumbnail'
+            className='beatmapset-discussion-posts__container-thumbnail'
             href={BeatmapDiscussionHelper.url({ discussion })}
           >
             {/* post.beatmap_discussion.beatmapset.covers.list */}
             <img className='beatmapset-cover' src={beatmapset.covers.list} />
           </a>
-          <div className='modding-profile-list__timestamp hidden-xs'>
-            <div className='beatmap-discussion-timestamp'>
-              <div className='beatmap-discussion-timestamp__icons-container'>
-                <span className='fas fa-reply' />
-              </div>
+          <div className='beatmap-discussion-timestamp hidden-xs'>
+            <div className='beatmap-discussion-timestamp__icons-container'>
+              <span className='fas fa-reply' />
             </div>
           </div>
           <div className={osu.classWithModifiers('beatmap-discussion', discussionModifiers)}>
@@ -69,5 +68,11 @@ export default class Posts extends React.Component<Props> {
         </div>
       );
     });
+
+    return (
+      <div className='beatmapset-discussion-posts'>
+        {posts}
+      </div>
+    );
   }
 }
