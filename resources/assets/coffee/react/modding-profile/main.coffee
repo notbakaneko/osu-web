@@ -14,7 +14,7 @@ import { BlockButton } from 'block-button'
 import { NotificationBanner } from 'notification-banner'
 import Posts from 'beatmap-discussions/posts'
 import * as React from 'react'
-import { a, button, div, i, span } from 'react-dom-factories'
+import { a, button, div, h1, i, span } from 'react-dom-factories'
 el = React.createElement
 
 pages = document.getElementsByClassName("js-switchable-mode-page--scrollspy")
@@ -213,7 +213,7 @@ export class Main extends React.PureComponent
 
 
   extraPage: (name) =>
-    {extraClass, props, component} = @extraPageParams name
+    {extraClass, props, component, showMore} = @extraPageParams name
     classes = 'user-profile-pages__item js-switchable-mode-page--scrollspy js-switchable-mode-page--page'
     classes += " #{extraClass}" if extraClass?
     props.name = name
@@ -225,7 +225,16 @@ export class Main extends React.PureComponent
       'data-page-id': name
       className: classes
       ref: (el) => @extraPages[name] = el
-      el component, props
+      div className: 'page-extra',
+        h1 className: 'title title--page-extra', osu.trans("users.show.extra.#{name}.title_longer")
+        div className: 'modding-profile-list',
+          el component, props
+          if showMore?
+            a
+              key: 'show-more'
+              className: 'modding-profile-list__show-more'
+              href: laroute.route("users.modding.#{name}", { user: @props.user.id }),
+              osu.trans("users.show.extra.#{name}.show_more")
 
 
   extraPageParams: (name) =>
@@ -259,6 +268,7 @@ export class Main extends React.PureComponent
           user: @state.user
           users: @users()
         component: Posts
+        showMore: true
 
       when 'votes'
         props:

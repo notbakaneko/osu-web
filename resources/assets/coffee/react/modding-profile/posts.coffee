@@ -8,6 +8,7 @@ import { Post } from '../beatmap-discussions/post'
 
 el = React.createElement
 
+# TODO: remove
 export class Posts extends React.Component
   render: =>
     div className: 'page-extra',

@@ -10,24 +10,19 @@ el = React.createElement
 
 export class Votes extends React.Component
   render: =>
+    for direction in ['received', 'given']
+      el React.Fragment, key: direction,
+        h2
+          className: 'title title--page-extra-small'
+          osu.trans("users.show.extra.votes.#{direction}")
+          if @props.votes[direction].length == 0
+            span className: 'title__count', osu.formatNumber(0)
 
-    div className: 'page-extra',
-      h1 className: 'title title--page-extra',
-        osu.trans("users.show.extra.votes.title_longer")
-
-      for direction in ['received', 'given']
-        el React.Fragment, key: direction,
-          h2
-            className: 'title title--page-extra-small'
-            osu.trans("users.show.extra.votes.#{direction}")
-            if @props.votes[direction].length == 0
-              span className: 'title__count', osu.formatNumber(0)
-
-          if @props.votes[direction].length > 0
-            div
-              className: 'modding-profile-list modding-profile-list--votes'
-              for vote in @props.votes[direction]
-                @renderUser(@props.users[vote.user_id], vote.score, vote.count)
+        if @props.votes[direction].length > 0
+          div
+            className: 'modding-profile-list modding-profile-list--votes'
+            for vote in @props.votes[direction]
+              @renderUser(@props.users[vote.user_id], vote.score, vote.count)
 
 
   renderUser: (user, score, count) =>
