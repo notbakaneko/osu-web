@@ -12,7 +12,7 @@ import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import { BlockButton } from 'block-button'
 import { NotificationBanner } from 'notification-banner'
-import { Posts } from "./posts"
+import Posts from 'beatmap-discussions/posts'
 import * as React from 'react'
 import { a, button, div, i, span } from 'react-dom-factories'
 import UserProfileContainer from 'user-profile-container'
@@ -41,6 +41,7 @@ export class Main extends React.PureComponent
 
       @state =
         beatmaps: props.beatmaps
+        beatmapsets: props.beatmapsets
         discussions: props.discussions
         events: props.events
         user: props.user
@@ -228,7 +229,7 @@ export class Main extends React.PureComponent
 
       when 'posts'
         props:
-          beatmapetDiscussions: @discussions()
+          beatmapsetDiscussions: @discussions()
           beatmapsets: @beatmapsets()
           posts: @state.posts
           user: @state.user

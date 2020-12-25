@@ -189,7 +189,7 @@ class ModdingHistoryEventsBundle
     {
         // TODO: less bad
         return $this->memoize(__FUNCTION__, function () {
-            $beatmapsetIds =  $this->getDiscussions()
+            $beatmapsetIds = $this->getDiscussions()
                 ->pluck('beatmapset_id')
                 ->unique()
                 ->toArray();
@@ -231,7 +231,7 @@ class ModdingHistoryEventsBundle
                 $children->visible();
             }
 
-            return $discussions->merge($children->get());
+            return $discussions->merge($children->get())->merge($this->getPosts()->pluck('beatmapDiscussion'));
         });
     }
 
