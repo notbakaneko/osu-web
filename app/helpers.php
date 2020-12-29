@@ -900,10 +900,28 @@ function post_url($topicId, $postId, $jumpHash = true, $tail = false)
 
 function wiki_url($path = null, $locale = null, $api = null, $fullUrl = true)
 {
+    // from Illuminate\Routing\RouteUrlGenerator
+    static $dontEncode = [
+        '%2F' => '/',
+        '%40' => '@',
+        '%3A' => ':',
+        '%3B' => ';',
+        '%2C' => ',',
+        '%3D' => '=',
+        '%2B' => '+',
+        '%21' => '!',
+        '%2A' => '*',
+        '%7C' => '|',
+        '%3F' => '?',
+        '%26' => '&',
+        '%23' => '#',
+        '%25' => '%',
+    ];
+
     // FIXME: remove `rawurlencode` workaround when fixed upstream.
     // Reference: https://github.com/laravel/framework/issues/26715
     $params = [
-        'path' => $path === null ? 'Main_Page' : str_replace('%2F', '/', rawurlencode($path)),
+        'path' => $path === null ? 'Main_Page' : strtr(rawurlencode($path), $dontEncode),
         'locale' => $locale ?? App::getLocale(),
     ];
 
