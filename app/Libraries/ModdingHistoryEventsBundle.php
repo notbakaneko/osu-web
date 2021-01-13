@@ -23,6 +23,8 @@ class ModdingHistoryEventsBundle
 
     const KUDOSU_PER_PAGE = 5;
 
+    public $withExtras = false; // TODO: change to includes list instead.
+
     protected $isModerator;
     protected $isKudosuModerator;
     protected $searchParams;
@@ -30,7 +32,6 @@ class ModdingHistoryEventsBundle
     private $params;
     private $total;
     private $user;
-    private $withExtras = false; // TODO: change to includes list instead.
 
     public static function forProfile(User $user, array $searchParams)
     {
@@ -124,45 +125,48 @@ class ModdingHistoryEventsBundle
 
                 $array['votes'] = $this->getVotes();
 
-                $kudosu = $this->user
-                    ->receivedKudosu()
-                    ->with('post', 'post.topic', 'giver')
-                    ->with(['kudosuable' => function (MorphTo $morphTo) {
-                        $morphTo->morphWith([BeatmapDiscussion::class => ['beatmap', 'beatmapset']]);
-                    }])
-                    ->orderBy('exchange_id', 'desc')
-                    ->limit(static::KUDOSU_PER_PAGE + 1)
-                    ->get();
 
-                $array['extras'] = [
-                    'recentlyReceivedKudosu' => json_collection($kudosu, 'KudosuHistory'),
-                ];
-                // only recentlyReceivedKudosu is set, do we even need it?
-                // every other item has a show more link that goes to a listing.
-                $array['perPage'] = [
-                    'recentlyReceivedKudosu' => static::KUDOSU_PER_PAGE,
-                ];
+                if ($this->user !== null) {
+                    $kudosu = $this->user
+                        ->receivedKudosu()
+                        ->with('post', 'post.topic', 'giver')
+                        ->with(['kudosuable' => function (MorphTo $morphTo) {
+                            $morphTo->morphWith([BeatmapDiscussion::class => ['beatmap', 'beatmapset']]);
+                        }])
+                        ->orderBy('exchange_id', 'desc')
+                        ->limit(static::KUDOSU_PER_PAGE + 1)
+                        ->get();
 
-                $transformer = new UserTransformer();
-                $transformer->mode = $this->user->playmode;
-                $array['user'] = json_item(
-                    $this->user,
-                    $transformer,
-                    [
-                        'active_tournament_banner',
-                        'badges',
-                        'follower_count',
-                        'graveyard_beatmapset_count',
-                        'groups',
-                        'loved_beatmapset_count',
-                        'previous_usernames',
-                        'ranked_and_approved_beatmapset_count',
-                        'statistics',
-                        'statistics.rank',
-                        'support_level',
-                        'unranked_beatmapset_count',
-                    ]
-                );
+                    $array['extras'] = [
+                        'recentlyReceivedKudosu' => json_collection($kudosu, 'KudosuHistory'),
+                    ];
+                    // only recentlyReceivedKudosu is set, do we even need it?
+                    // every other item has a show more link that goes to a listing.
+                    $array['perPage'] = [
+                        'recentlyReceivedKudosu' => static::KUDOSU_PER_PAGE,
+                    ];
+
+                    $transformer = new UserTransformer();
+                    $transformer->mode = $this->user->playmode;
+                    $array['user'] = json_item(
+                        $this->user,
+                        $transformer,
+                        [
+                            'active_tournament_banner',
+                            'badges',
+                            'follower_count',
+                            'graveyard_beatmapset_count',
+                            'groups',
+                            'loved_beatmapset_count',
+                            'previous_usernames',
+                            'ranked_and_approved_beatmapset_count',
+                            'statistics',
+                            'statistics.rank',
+                            'support_level',
+                            'unranked_beatmapset_count',
+                        ]
+                    );
+                }
             }
 
             return $array;
