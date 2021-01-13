@@ -4,4 +4,4 @@
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import * as React from 'react';
 
-export const BeatmapsContext = React.createContext([] as BeatmapJsonExtended[]);
+export const BeatmapsContext = React.createContext<Record<number, BeatmapJsonExtended>>({});
