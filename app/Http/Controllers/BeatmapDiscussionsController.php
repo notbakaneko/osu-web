@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ModelNotSavedException;
 use App\Libraries\BeatmapsetDiscussionReview;
+use App\Libraries\ModdingHistoryEventsBundle;
 use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
 use App\Models\Beatmapset;
@@ -97,68 +98,77 @@ class BeatmapDiscussionsController extends Controller
             ]
         );
 
-        $discussions = $paginator->getCollection();
+        // $discussions = $paginator->getCollection();
 
-        // TODO: remove this when reviews are released
-        $relatedDiscussions = [];
-        $relatedBeatmapsetIds = [];
+        // // TODO: remove this when reviews are released
+        // $relatedDiscussions = [];
+        // $relatedBeatmapsetIds = [];
 
-        $children = BeatmapDiscussion::whereIn('parent_id', $discussions->pluck('id'))
-            ->with([
-                'beatmap',
-                'beatmapDiscussionVotes',
-                'beatmapset',
-                'startingPost',
-            ]);
+        // $children = BeatmapDiscussion::whereIn('parent_id', $discussions->pluck('id'))
+        //     ->with([
+        //         'beatmap',
+        //         'beatmapDiscussionVotes',
+        //         'beatmapset',
+        //         'startingPost',
+        //     ]);
 
-        if ($isModerator) {
-            $children->visibleWithTrashed();
-        } else {
-            $children->visible();
-        }
+        // if ($isModerator) {
+        //     $children->visibleWithTrashed();
+        // } else {
+        //     $children->visible();
+        // }
 
-        $relatedDiscussions = $children->get();
+        // $relatedDiscussions = $children->get();
 
-        $userIds = [];
-        foreach ($discussions->merge($relatedDiscussions) as $discussion) {
-            $userIds[$discussion->user_id] = true;
-            $userIds[$discussion->startingPost->last_editor_id] = true;
-            $relatedBeatmapsetIds[$discussion->beatmapset_id] = true;
-        }
+        // $userIds = [];
+        // foreach ($discussions->merge($relatedDiscussions) as $discussion) {
+        //     $userIds[$discussion->user_id] = true;
+        //     $userIds[$discussion->startingPost->last_editor_id] = true;
+        //     $relatedBeatmapsetIds[$discussion->beatmapset_id] = true;
+        // }
 
-        $users = User::whereIn('user_id', array_keys($userIds))
-            ->with('userGroups')
-            ->default()
-            ->get();
+        // $users = User::whereIn('user_id', array_keys($userIds))
+        //     ->with('userGroups')
+        //     ->default()
+        //     ->get();
 
-        $relatedBeatmaps = Beatmap::whereIn('beatmapset_id', array_keys($relatedBeatmapsetIds))->get();
+        // $relatedBeatmaps = Beatmap::whereIn('beatmapset_id', array_keys($relatedBeatmapsetIds))->get();
 
-        $jsonChunks = [
-            'cursor' => $paginator->hasMorePages() ? [
-                'limit' => $paginator->perPage(),
-                'page' => $paginator->currentPage() + 1,
-            ] : null,
-            'discussions' => json_collection(
-                $discussions,
-                'BeatmapDiscussion',
-                ['starting_post', 'beatmap', 'beatmapset', 'current_user_attributes']
-            ),
-            'related-beatmaps' => json_collection(
-                $relatedBeatmaps,
-                'Beatmap'
-            ),
-            'related-discussions' => json_collection(
-                $relatedDiscussions,
-                'BeatmapDiscussion',
-                ['starting_post', 'beatmap', 'beatmapset', 'current_user_attributes']
-            ),
-            'reviews-config' => BeatmapsetDiscussionReview::config(),
-            'users' => json_collection(
-                $users,
-                'UserCompact',
-                ['groups']
-            ),
-        ];
+        $bundle = ModdingHistoryEventsBundle::forListing(null, $params);
+        $bundle->withExtras = true;
+        $jsonChunks = $bundle->toArray();
+        $jsonChunks['cursor'] = $paginator->hasMorePages() ? [
+            'limit' => $paginator->perPage(),
+            'page' => $paginator->currentPage() + 1,
+        ] : null;
+        $jsonChunks['reviews-config'] = BeatmapsetDiscussionReview::config();
+
+        // $jsonChunks = [
+        //     'cursor' => $paginator->hasMorePages() ? [
+        //         'limit' => $paginator->perPage(),
+        //         'page' => $paginator->currentPage() + 1,
+        //     ] : null,
+        //     'discussions' => json_collection(
+        //         $discussions,
+        //         'BeatmapDiscussion',
+        //         ['starting_post', 'beatmap', 'beatmapset', 'current_user_attributes']
+        //     ),
+        //     'related-beatmaps' => json_collection(
+        //         $relatedBeatmaps,
+        //         'Beatmap'
+        //     ),
+        //     'related-discussions' => json_collection(
+        //         $relatedDiscussions,
+        //         'BeatmapDiscussion',
+        //         ['starting_post', 'beatmap', 'beatmapset', 'current_user_attributes']
+        //     ),
+        //     'reviews-config' => BeatmapsetDiscussionReview::config(),
+        //     'users' => json_collection(
+        //         $users,
+        //         'UserCompact',
+        //         ['groups']
+        //     ),
+        // ];
 
         if (is_json_request()) {
             return $jsonChunks;
