@@ -19,10 +19,9 @@ export class Main extends React.PureComponent
 
     if !@restoredState
       @state =
+        beatmaps: props.beatmaps
         discussions: props.discussions
         users: props.users
-        relatedBeatmaps: props.relatedBeatmaps
-        relatedDiscussions: props.relatedDiscussions
 
 
   componentDidMount: =>
@@ -43,23 +42,23 @@ export class Main extends React.PureComponent
 
     discussions = [@state.discussions...]
     users = [@state.users...]
-    relatedDiscussions = [@state.relatedDiscussions...]
 
     discussionIds = _.map discussions, 'id'
     userIds = _.map users, 'id'
 
     # Due to the entire hierarchy of discussions being sent back when a post is updated (instead of just the modified post),
     #   we need to iterate over each discussion and their posts to extract the updates we want.
-    _.each beatmapset.discussions, (newDiscussion) ->
-      if discussionIds.includes(newDiscussion.id)
-        discussion = _.find discussions, id: newDiscussion.id
-        discussions = _.reject discussions, id: newDiscussion.id
-        newDiscussion = _.merge(discussion, newDiscussion)
-        # The discussion list shows discussions started by the current user, so it can be assumed that the first post is theirs
-        newDiscussion.starting_post = newDiscussion.posts[0]
-        discussions.push(newDiscussion)
-      else
-        relatedDiscussions.push(newDiscussion)
+    # TODO: this
+    # _.each beatmapset.discussions, (newDiscussion) ->
+    #   if discussionIds.includes(newDiscussion.id)
+    #     discussion = _.find discussions, id: newDiscussion.id
+    #     discussions = _.reject discussions, id: newDiscussion.id
+    #     newDiscussion = _.merge(discussion, newDiscussion)
+    #     # The discussion list shows discussions started by the current user, so it can be assumed that the first post is theirs
+    #     newDiscussion.starting_post = newDiscussion.posts[0]
+    #     discussions.push(newDiscussion)
+    #   else
+    #     relatedDiscussions.push(newDiscussion)
 
     _.each beatmapset.related_users, (newUser) ->
       if userIds.includes(newUser.id)
@@ -67,18 +66,17 @@ export class Main extends React.PureComponent
 
       users.push(newUser)
 
-    @cache.users = @cache.discussions = @cache.beatmaps = @state.relatedDiscussions = null
+    @cache.users = @cache.discussions = @cache.beatmaps = null
     @setState
       discussions: _.reverse(_.sortBy(discussions, (d) -> Date.parse(d.starting_post.created_at)))
       users: users
-      relatedDiscussions: relatedDiscussions
 
 
   discussions: =>
     # skipped discussions
     # - not privileged (deleted discussion)
     # - deleted beatmap
-    @cache.discussions ?= _ @state.relatedDiscussions
+    @cache.discussions ?= _ @state.discussions
                             .filter (d) -> !_.isEmpty(d)
                             .keyBy 'id'
                             .value()
@@ -87,7 +85,7 @@ export class Main extends React.PureComponent
   beatmaps: =>
     return @cache.beatmaps if @cache.beatmaps?
 
-    @cache.beatmaps = _.keyBy(this.props.relatedBeatmaps, 'id')
+    @cache.beatmaps = _.keyBy(this.props.beatmaps, 'id')
 
 
   saveStateToContainer: =>

@@ -4,9 +4,12 @@
 import { Main } from './beatmap-discussions-history/main'
 
 reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (target) ->
-  discussions: osu.parseJson 'json-discussions'
-  users: osu.parseJson 'json-users'
-  relatedBeatmaps: osu.parseJson 'json-related-beatmaps'
-  relatedDiscussions: osu.parseJson 'json-related-discussions'
-  reviewsConfig: osu.parseJson 'json-reviews-config'
+  beatmaps: osu.parseJson('json-beatmaps')
+  beatmapsets: osu.parseJson('json-beatmapsets')
   container: target
+  discussions: osu.parseJson('json-discussions')
+  events: osu.parseJson('json-events')
+  posts: osu.parseJson('json-posts')
+  reviewsConfig: osu.parseJson 'json-reviewsConfig'
+  users: osu.parseJson('json-users')
+  votes: osu.parseJson('json-votes')
