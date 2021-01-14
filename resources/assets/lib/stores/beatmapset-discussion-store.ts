@@ -3,15 +3,14 @@
 
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
-import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import { action, observable } from 'mobx';
 
-export class BeatmapsetStore {
+export class BeatmapsetDiscussionStore {
   // store json for now to make it easier to work with existing coffeescript.
-  @observable beatmapsets = observable.map<number, BeatmapsetJson>();
+  @observable discussions = observable.map<number, BeatmapsetDiscussionJson>();
 
   get(id: number) {
-    return this.beatmapsets.get(id);
+    return this.discussions.get(id);
   }
 
   handleDispatchAction(dispatcherAction: DispatcherAction) {
@@ -22,13 +21,13 @@ export class BeatmapsetStore {
   }
 
   @action
-  update(beatmapset: BeatmapsetJson) {
+  update(discussion: BeatmapsetDiscussionJson) {
     // just override the value for now, we can do something fancier in the future.
-    this.beatmapsets.set(beatmapset.id, beatmapset);
+    this.discussions.set(discussion.id, discussion);
   }
 
   @action
-  updateWithJson(json: BeatmapsetJson[]) {
+  updateWithJson(json: BeatmapsetDiscussionJson[]) {
     // FIXME
     const update = this.update.bind(this);
     json.forEach(update);
@@ -36,6 +35,6 @@ export class BeatmapsetStore {
 
   @action
   private flushStore() {
-    this.beatmapsets.clear();
+    this.discussions.clear();
   }
 }
