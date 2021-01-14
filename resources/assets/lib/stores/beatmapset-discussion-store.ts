@@ -3,6 +3,7 @@
 
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
+import { isEmpty } from 'lodash';
 import { action, observable } from 'mobx';
 
 export class BeatmapsetDiscussionStore {
@@ -22,6 +23,9 @@ export class BeatmapsetDiscussionStore {
 
   @action
   update(discussion: BeatmapsetDiscussionJson) {
+    // skip if empty
+    if (isEmpty(discussion)) return;
+
     // just override the value for now, we can do something fancier in the future.
     this.discussions.set(discussion.id, discussion);
   }

@@ -19,6 +19,10 @@ export default class UserStore {
     return this.users.get(id);
   }
 
+  getAsJson(id: number) {
+    return this.users.get(id)?.toJson();
+  }
+
   @action
   getOrCreate(userId: number, props?: UserJson): User {
     let user = this.users.get(userId);

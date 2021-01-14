@@ -5,6 +5,7 @@ import { NewReply } from './new-reply'
 import { Post } from './post'
 import { SystemPost } from './system-post'
 import { UserCard } from './user-card'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import mapperGroup from 'beatmap-discussions/mapper-group'
 import * as React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -16,7 +17,7 @@ el = React.createElement
 
 bn = 'beatmap-discussion'
 
-VoterList = ({type, discussion, users}) =>
+VoterList = ({type, discussion, userStore}) =>
   div
     className: 'user-list-popup user-list-popup--blank'
     if discussion.votes[type] < 1
@@ -32,13 +33,15 @@ VoterList = ({type, discussion, users}) =>
             className: 'js-usercard user-list-popup__user'
             key: userId
             'data-user-id': userId
-            el UserAvatar, user: users[userId] ? [], modifiers: ['full']
+            el UserAvatar, user: userStore.getAsJson(userId) ? [], modifiers: ['full']
         if discussion.votes[type] > discussion.votes['voters'][type].length
           div className: 'user-list-popup__remainder-count',
             osu.transChoice 'common.count.plus_others', discussion.votes[type] - discussion.votes['voters'][type].length
 
 
 export class Discussion extends React.PureComponent
+  @contextType = DiscussionsStoreContext
+
   constructor: (props) ->
     super props
 
@@ -77,8 +80,11 @@ export class Discussion extends React.PureComponent
       unread: !@isRead(firstPost)
     topClasses += ' js-beatmap-discussion-jump'
 
-    user = @props.users[@props.discussion.user_id]
-    group = if user.id == @props.beatmapset.user_id then mapperGroup else user.groups[0]
+    user = @context.userStore.getAsJson(@props.discussion.user_id)
+    group = if user.id == @props.beatmapset.user_id
+      mapperGroup
+    else
+      user.groups[0] if user.groups?.length > 0
 
     div
       className: topClasses
@@ -167,7 +173,7 @@ export class Discussion extends React.PureComponent
 
     topClasses = "#{vbn} #{vbn}--#{type}"
     topClasses += " #{vbn}--inactive" if score != 0
-    user = @props.users[@props.discussion.user_id]
+    user = @context.userStore.getAsJson(@props.discussion.user_id)
     disabled = @isOwner() || user.is_bot || (type == 'down' && !@canDownvote()) || !@canBeRepliedTo()
 
     button
@@ -181,7 +187,7 @@ export class Discussion extends React.PureComponent
 
 
   getTooltipContent: (type) =>
-    renderToStaticMarkup el(VoterList, type: type, discussion: @props.discussion, users: @props.users)
+    renderToStaticMarkup el(VoterList, type: type, discussion: @props.discussion, users: @context.userStore)
 
 
   refreshTooltip: (api, type) =>
@@ -285,9 +291,9 @@ export class Discussion extends React.PureComponent
       post: post
       type: type
       read: @isRead(post)
-      users: @props.users
-      user: @props.users[post.user_id]
-      lastEditor: @props.users[post.last_editor_id]
+      # users: @props.users # FIXME: this was passed in because Post needs to get the user that deleted the post.
+      user: @context.userStore.getAsJson(post.user_id)
+      lastEditor: @context.userStore.getAsJson(post.last_editor_id)
       canBeEdited: @props.currentUser.is_admin || canBeEdited
       canBeDeleted: canBeDeleted
       canBeRestored: canModeratePosts

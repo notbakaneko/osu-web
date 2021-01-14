@@ -7,6 +7,7 @@ import { action, observable } from 'mobx';
 export default class User {
   @observable avatarUrl: string = '/images/layout/avatar-guest.png'; // TODO: move to a global config store?
   @observable countryCode: string = 'XX';
+  @observable groups?: GroupJson[];
   @observable id: number;
   @observable isActive: boolean = false;
   @observable isBot: boolean = false;
@@ -26,6 +27,7 @@ export default class User {
     return Object.assign(user, {
       avatarUrl: json.avatar_url,
       countryCode: json.country_code,
+      groups: json.groups,
       id: json.id,
       isActive: json.is_active,
       isBot: json.is_bot,
@@ -54,6 +56,7 @@ export default class User {
     return {
       avatar_url: this.avatarUrl,
       country_code: this.countryCode,
+      groups: this.groups,
       id: this.id,
       is_active: this.isActive,
       is_bot: this.isBot,
