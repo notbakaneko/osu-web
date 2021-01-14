@@ -10,6 +10,7 @@ import UserStore from 'stores/user-store'
 
 
 reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (target) ->
+  # FIXME: problem is the dispatcher means these don't get cleaned up.
   stores =
     beatmapsetStore: new BeatmapsetStore
     beatmapStore: new BeatmapStore
@@ -32,5 +33,7 @@ reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (t
   stores.beatmapStore.updateWithJson(props.beatmaps)
   stores.discussionStore.updateWithJson(props.discussions)
   stores.userStore.updateWithJson(props.users)
+
+  console.log('beatmap-discussions-history')
 
   props

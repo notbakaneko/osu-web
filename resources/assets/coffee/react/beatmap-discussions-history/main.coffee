@@ -94,7 +94,7 @@ export class Main extends React.PureComponent
 
 
   render: =>
-    el DiscussionsStoreContext.Provider, null,
+    el DiscussionsStoreContext.Provider, value: @props.stores,
       el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
         el DiscussionsContext.Provider, value: @discussions(),
           el BeatmapsContext.Provider, value: @beatmaps(),
@@ -115,7 +115,7 @@ export class Main extends React.PureComponent
 
                     el Discussion,
                       discussion: discussion
-                      users: @users()
+                      # users: @users()
                       currentUser: currentUser
                       beatmapset: discussion.beatmapset
                       isTimelineVisible: false
