@@ -4,8 +4,7 @@
 import { BeatmapIcon } from 'beatmap-icon';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-import { BeatmapsContext } from './beatmaps-context';
-import { DiscussionsContext } from './discussions-context';
+import { DiscussionsStoreContext } from './discussions-store-context';
 
 interface Props {
   data: {
@@ -15,9 +14,10 @@ interface Props {
 
 export const ReviewPostEmbed: FunctionComponent<Props> = ({data}) => {
   const bn = 'beatmap-discussion-review-post-embed-preview';
-  const discussions = React.useContext(DiscussionsContext);
-  const beatmaps = React.useContext(BeatmapsContext);
-  const discussion = discussions[data.discussion_id];
+  const stores = React.useContext(DiscussionsStoreContext);
+  const discussions = stores.discussionStore;
+  const beatmaps = stores.beatmapStore;
+  const discussion = discussions.get(data.discussion_id);
 
   if (!discussion) {
     // if a discussion has been deleted or is otherwise missing
@@ -35,8 +35,8 @@ export const ReviewPostEmbed: FunctionComponent<Props> = ({data}) => {
     additionalClasses.push('resolved');
   }
 
-  const hasBeatmap = discussion.beatmap_id !== null;
-  if (!hasBeatmap) {
+  const beatmap = beatmaps.get(discussion.beatmap_id ?? 0);
+  if (!beatmap) {
     additionalClasses.push('general-all');
   }
 
@@ -86,12 +86,10 @@ export const ReviewPostEmbed: FunctionComponent<Props> = ({data}) => {
       <div className={`${bn}__content`}>
         <div className={`${bn}__selectors`}>
           <div className='icon-dropdown-menu icon-dropdown-menu--disabled'>
-            {discussion.beatmap_id &&
-              <BeatmapIcon
-                beatmap={beatmaps[discussion.beatmap_id]}
-              />
+            {beatmap &&
+              <BeatmapIcon beatmap={beatmap} />
             }
-            {!discussion.beatmap_id &&
+            {!beatmap &&
               <i className='fas fa-fw fa-star-of-life' title={osu.trans('beatmaps.discussions.mode.scopes.generalAll')} />
             }
           </div>

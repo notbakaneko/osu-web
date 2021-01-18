@@ -96,32 +96,29 @@ export class Main extends React.PureComponent
   render: =>
     el DiscussionsStoreContext.Provider, value: @props.stores,
       el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-        el DiscussionsContext.Provider, value: @discussions(),
-          el BeatmapsContext.Provider, value: @beatmaps(),
-            div className: 'modding-profile-list modding-profile-list--index',
-              if @props.discussions.length == 0
-                div className: 'modding-profile-list__empty', osu.trans('beatmap_discussions.index.none_found')
-              else
-                for discussion in @props.discussions when discussion?
-                  div
-                    className: 'modding-profile-list__row'
-                    key: discussion.id,
+        div className: 'modding-profile-list modding-profile-list--index',
+          if @props.discussions.length == 0
+            div className: 'modding-profile-list__empty', osu.trans('beatmap_discussions.index.none_found')
+          else
+            for discussion in @props.discussions when discussion?
+              div
+                className: 'modding-profile-list__row'
+                key: discussion.id,
 
-                    a
-                      className: 'modding-profile-list__thumbnail'
-                      href: BeatmapDiscussionHelper.url(discussion: discussion),
+                a
+                  className: 'modding-profile-list__thumbnail'
+                  href: BeatmapDiscussionHelper.url(discussion: discussion),
 
-                      img className: 'beatmapset-cover', src: discussion.beatmapset.covers.list
+                  img className: 'beatmapset-cover', src: discussion.beatmapset.covers.list
 
-                    el Discussion,
-                      discussion: discussion
-                      # users: @users()
-                      currentUser: currentUser
-                      beatmapset: discussion.beatmapset
-                      isTimelineVisible: false
-                      visible: false
-                      showDeleted: true
-                      preview: true
+                el Discussion,
+                  discussion: discussion
+                  currentUser: currentUser
+                  beatmapset: discussion.beatmapset
+                  isTimelineVisible: false
+                  visible: false
+                  showDeleted: true
+                  preview: true
 
 
   users: =>

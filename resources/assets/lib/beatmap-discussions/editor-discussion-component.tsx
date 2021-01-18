@@ -3,11 +3,11 @@
 
 import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
-import * as _ from 'lodash';
 import * as React from 'react';
 import { Element as SlateElement, Path, Transforms } from 'slate';
 import { RenderElementProps } from 'slate-react';
 import { ReactEditor } from 'slate-react';
+import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store';
 import { DraftsContext } from './drafts-context';
 import EditorBeatmapSelector from './editor-beatmap-selector';
 import EditorIssueTypeSelector from './editor-issue-type-selector';
@@ -26,7 +26,8 @@ interface Props extends RenderElementProps {
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
   discussionId?: number;
-  discussions: Record<number, BeatmapsetDiscussionJson>;
+  discussions: BeatmapsetDiscussionStore;
+  // discussions: Record<number, BeatmapsetDiscussionJson>;
   editMode?: boolean;
   readOnly?: boolean;
 }
@@ -152,7 +153,8 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
     }
 
     if (!this.cache.nearbyDiscussions || this.cache.nearbyDiscussions.timestamp !== timestamp || (this.cache.nearbyDiscussions.beatmap_id !== this.selectedBeatmap())) {
-      const relevantDiscussions = _.filter(this.props.discussions, (discussion: BeatmapsetDiscussionJson) => discussion.beatmap_id === this.selectedBeatmap());
+      const relevantDiscussions = [...this.props.discussions.discussions.values()].filter((discussion) => discussion.beatmap_id === this.selectedBeatmap());
+
       this.cache.nearbyDiscussions = {
         beatmap_id: this.selectedBeatmap(),
         discussions: BeatmapDiscussionHelper.nearbyDiscussions(relevantDiscussions, timestamp),

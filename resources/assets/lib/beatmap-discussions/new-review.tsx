@@ -1,7 +1,6 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
 import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import UserJson from 'interfaces/user-json';
@@ -9,7 +8,6 @@ import * as React from 'react';
 import Editor from './editor';
 
 interface Props {
-  beatmaps: BeatmapJsonExtended[];
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
   currentDiscussions: BeatmapsetDiscussionJson[];
@@ -35,7 +33,6 @@ declare global {
 }
 
 export default class NewReview extends React.Component<Props, State> {
-
   constructor(props: Props) {
     super(props);
 
@@ -94,20 +91,12 @@ export default class NewReview extends React.Component<Props, State> {
                 </div>
                 {
                   this.props.currentUser.id ?
-                    <DiscussionsContext.Consumer>
-                      {
-                        (discussions) => {
-                          return <Editor
-                            beatmapset={this.props.beatmapset}
-                            beatmaps={this.props.beatmaps}
-                            currentBeatmap={this.props.currentBeatmap}
-                            currentDiscussions={this.props.currentDiscussions}
-                            discussions={discussions}
-                            onFocus={this.onFocus}
-                          />;
-                        }
-                      }
-                    </DiscussionsContext.Consumer>
+                    <Editor
+                      beatmapset={this.props.beatmapset}
+                      currentBeatmap={this.props.currentBeatmap}
+                      currentDiscussions={this.props.currentDiscussions}
+                      onFocus={this.onFocus}
+                    />
                   :
                     <div className='beatmap-discussion-new__login-required'>{osu.trans('beatmaps.discussions.require-login')}</div>
                 }
