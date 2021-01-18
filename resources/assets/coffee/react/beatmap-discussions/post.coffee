@@ -3,6 +3,7 @@
 
 import { MessageLengthCounter } from './message-length-counter'
 import { UserCard } from './user-card'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import mapperGroup from 'beatmap-discussions/mapper-group'
 import { ReviewPost } from 'beatmap-discussions/review-post'
 import { BigButton } from 'big-button'
@@ -20,6 +21,8 @@ el = React.createElement
 bn = 'beatmap-discussion-post'
 
 export class Post extends React.PureComponent
+  @contextType = DiscussionsStoreContext
+
   constructor: (props) ->
     super props
 
@@ -103,20 +106,16 @@ export class Post extends React.PureComponent
 
     div className: "#{bn}__message-container",
       if @props.discussion.message_type == 'review' && @props.type == 'discussion'
-        el DiscussionsContext.Consumer, null,
-          (discussions) =>
-            el BeatmapsContext.Consumer, null,
-              (beatmaps) =>
-                el Editor,
-                  beatmapset: @props.beatmapset
-                  beatmaps: beatmaps
-                  document: @props.post.message
-                  discussion: @props.discussion
-                  discussions: discussions
-                  editMode: true
-                  editing: @state.editing
-                  ref: @reviewEditor
-                  onChange: @updateCanSave
+        el Editor,
+          beatmaps: @context.beatmapStore
+          beatmapset: @props.beatmapset
+          document: @props.post.message
+          discussion: @props.discussion
+          discussions: @context.discussionStore
+          editMode: true
+          editing: @state.editing
+          ref: @reviewEditor
+          onChange: @updateCanSave
       else
         el React.Fragment, null,
           el TextareaAutosize,
@@ -160,7 +159,6 @@ export class Post extends React.PureComponent
         div
           className: "#{bn}__message"
           el ReviewPost,
-            discussions: @context.discussions
             message: @props.post.message
       else
         div

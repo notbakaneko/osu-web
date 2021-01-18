@@ -7,13 +7,18 @@ import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import isHotkey from 'is-hotkey';
 import { route } from 'laroute';
 import * as _ from 'lodash';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createEditor, Element as SlateElement, Node as SlateNode, NodeEntry, Range, Text, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
 import { Spinner } from 'spinner';
+import BeatmapStore from 'stores/beatmap-store';
+import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store';
 import { sortWithMode } from 'utils/beatmap-helper';
 import { nominationsCount } from 'utils/beatmapset-helper';
+import { DiscussionsStoreContext } from './discussions-store-context';
 import { DraftsContext } from './drafts-context';
 import EditorDiscussionComponent from './editor-discussion-component';
 import {
@@ -37,12 +42,14 @@ interface CacheInterface {
 }
 
 interface Props {
-  beatmaps: Record<number, BeatmapJsonExtended>;
+  beatmaps: BeatmapStore;
+  // beatmaps: Record<number, BeatmapJsonExtended>;
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
   currentDiscussions: BeatmapsetDiscussionJson[];
   discussion?: BeatmapsetDiscussionJson;
-  discussions: Record<number, BeatmapsetDiscussionJson>;
+  discussions: BeatmapsetDiscussionStore;
+  // discussions: Record<number, BeatmapsetDiscussionJson>;
   document?: string;
   editing: boolean;
   editMode?: boolean;
@@ -60,15 +67,16 @@ interface TimestampRange extends Range {
   timestamp: string;
 }
 
+@observer
 export default class Editor extends React.Component<Props, State> {
-  static contextType = ReviewEditorConfigContext;
+  static contextType = DiscussionsStoreContext;
   static defaultProps = {
     editing: false,
   };
 
   bn = 'beatmap-discussion-editor';
   cache: CacheInterface = {};
-  context!: React.ContextType<typeof ReviewEditorConfigContext>;
+  context!: React.ContextType<typeof DiscussionsStoreContext>;
   emptyDocTemplate = [{children: [{text: ''}], type: 'paragraph'}];
   insertMenuRef: React.RefObject<EditorInsertionMenu>;
   localStorageKey: string;
@@ -120,7 +128,19 @@ export default class Editor extends React.Component<Props, State> {
   }
 
   get canSave() {
-    return !this.state.posting && this.state.blockCount <= this.context.max_blocks;
+    return !this.state.posting && this.state.blockCount <= 10; // this.context.max_blocks;
+  }
+
+  @computed
+  get sortedBeatmaps() {
+    if (this.cache.sortedBeatmaps == null) {
+      // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
+      const beatmaps = [...this.context.beatmapStore.beatmaps.values()].filter((x) => x.beatmapset_id === this.props.beatmapset.id);
+      // const beatmaps = filter(this.context.beatmapStore.beatmaps.values, { beatmapset_id: this.props.beatmapset.id });
+      this.cache.sortedBeatmaps = sortWithMode(beatmaps);
+    }
+
+    return this.cache.sortedBeatmaps ?? [];
   }
 
   componentDidMount() {
@@ -319,10 +339,10 @@ export default class Editor extends React.Component<Props, State> {
     return (
       <CircularProgress
         current={this.state.blockCount}
-        max={this.context.max_blocks}
+        max={10} // TODO: reviewsConfig.max_blocks
         onlyShowAsWarning={true}
         theme={theme}
-        tooltip={osu.trans('beatmap_discussions.review.block_count', {used: this.state.blockCount, max: this.context.max_blocks})}
+        tooltip={osu.trans('beatmap_discussions.review.block_count', {used: this.state.blockCount, max: 10})}
       />
     );
   }
@@ -334,11 +354,11 @@ export default class Editor extends React.Component<Props, State> {
       case 'embed':
         el = (
           <EditorDiscussionComponent
+            beatmaps={this.sortedBeatmaps}
             beatmapset={this.props.beatmapset}
             currentBeatmap={this.props.currentBeatmap}
-            discussions={this.props.discussions}
+            discussions={this.context.discussionStore}
             editMode={this.props.editMode}
-            beatmaps={this.sortedBeatmaps()}
             readOnly={this.state.posting}
             {...props}
           />
@@ -407,16 +427,6 @@ export default class Editor extends React.Component<Props, State> {
     return true;
   }
 
-  sortedBeatmaps = () => {
-    if (this.cache.sortedBeatmaps == null) {
-      // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
-      const beatmaps = _.filter(this.props.beatmaps, {beatmapset_id: this.props.beatmapset.id});
-      this.cache.sortedBeatmaps = sortWithMode(beatmaps);
-    }
-
-    return this.cache.sortedBeatmaps;
-  }
-
   updateDrafts = () => {
     this.cache.draftEmbeds = this.state.value.filter((block) => block.type === 'embed' && !block.discussion_id);
   }
@@ -457,8 +467,11 @@ export default class Editor extends React.Component<Props, State> {
 
           // clear invalid beatmapId references (for pasted embed content)
           const beatmapId = node.beatmapId as number | undefined;
-          if (beatmapId && (!this.props.beatmaps[beatmapId] || this.props.beatmaps[beatmapId].deleted_at)) {
-            Transforms.setNodes(editor, {beatmapId: null}, {at: path});
+          if (beatmapId != null) {
+            const beatmap = this.props.beatmaps.get(beatmapId);
+            if (beatmap == null || beatmap.deleted_at != null) {
+              Transforms.setNodes(editor, {beatmapId: null}, {at: path});
+            }
           }
         }
       }
@@ -474,6 +487,6 @@ export default class Editor extends React.Component<Props, State> {
       return [];
     }
 
-    return parseFromJson(this.props.document, this.props.discussions);
+    return parseFromJson(this.props.document, this.props.discussions.discussions);
   }
 }

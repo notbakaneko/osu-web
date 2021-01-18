@@ -286,7 +286,6 @@ export class Discussion extends React.PureComponent
     el elementName,
       key: post.id
       beatmapset: @props.beatmapset
-      beatmap: @props.currentBeatmap
       discussion: @props.discussion
       post: post
       type: type
