@@ -2,17 +2,37 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Main } from './modding-profile/main'
+import BeatmapStore from 'stores/beatmap-store'
+import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store'
+import { BeatmapsetStore } from 'stores/beatmapset-store'
+import UserStore from 'stores/user-store'
 
 reactTurbolinks.registerPersistent 'modding-profile', Main, true, (target) ->
-  beatmaps: osu.parseJson('json-beatmaps')
-  beatmapsets: osu.parseJson('json-beatmapsets')
-  container: target
-  discussions: osu.parseJson('json-discussions')
-  events: osu.parseJson('json-events')
-  extras: osu.parseJson('json-extras')
-  perPage: osu.parseJson('json-perPage')
-  posts: osu.parseJson('json-posts')
-  reviewsConfig: osu.parseJson 'json-reviewsConfig'
-  user: osu.parseJson('json-user')
-  users: osu.parseJson('json-users')
-  votes: osu.parseJson('json-votes')
+  # FIXME: problem is the dispatcher means these don't get cleaned up.
+  stores =
+    beatmapsetStore: new BeatmapsetStore
+    beatmapStore: new BeatmapStore
+    discussionStore: new BeatmapsetDiscussionStore
+    userStore: new UserStore
+
+  props =
+    beatmaps: osu.parseJson('json-beatmaps')
+    beatmapsets: osu.parseJson('json-beatmapsets')
+    container: target
+    discussions: osu.parseJson('json-discussions')
+    events: osu.parseJson('json-events')
+    extras: osu.parseJson('json-extras')
+    perPage: osu.parseJson('json-perPage')
+    posts: osu.parseJson('json-posts')
+    reviewsConfig: osu.parseJson 'json-reviewsConfig'
+    user: osu.parseJson('json-user')
+    users: osu.parseJson('json-users')
+    votes: osu.parseJson('json-votes')
+    stores: stores
+
+  stores.beatmapsetStore.updateWithJson(props.beatmapsets)
+  stores.beatmapStore.updateWithJson(props.beatmaps)
+  stores.discussionStore.updateWithJson(props.discussions)
+  stores.userStore.updateWithJson(props.users)
+
+  props

@@ -2,9 +2,7 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Discussion } from '../beatmap-discussions/discussion'
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
 import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import * as React from 'react'
 import { a, div, img } from 'react-dom-factories'

@@ -7,8 +7,7 @@ import { Discussions } from './discussions'
 import { Header } from './header'
 import { Kudosu } from '../profile-page/kudosu'
 import { Votes } from './votes'
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import { BlockButton } from 'block-button'
 import { NotificationBanner } from 'notification-banner'
@@ -155,38 +154,37 @@ export class Main extends React.PureComponent
   render: =>
     profileOrder = @state.profileOrder
 
-    el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-      el DiscussionsContext.Provider, value: @discussions(),
-        el BeatmapsContext.Provider, value: @beatmaps(),
-          el UserProfileContainer,
-            user: @state.user,
-            el Header,
-              user: @state.user
-              stats: @state.user.statistics
-              userAchievements: @props.userAchievements
+    el DiscussionsStoreContext.Provider, value: @props.stores,
+      el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
+        el UserProfileContainer,
+          user: @state.user,
+          el Header,
+            user: @state.user
+            stats: @state.user.statistics
+            userAchievements: @props.userAchievements
 
-            div
-              className: 'hidden-xs page-extra-tabs page-extra-tabs--profile-page js-switchable-mode-page--scrollspy-offset'
-              div className: 'osu-page',
-                div
-                  className: 'page-mode page-mode--profile-page-extra'
-                  ref: @tabs
-                  for m in profileOrder
-                    a
-                      className: 'page-mode__item'
-                      key: m
-                      'data-page-id': m
-                      onClick: @tabClick
-                      href: "##{m}"
-                      el ExtraTab,
-                        page: m
-                        currentPage: @state.currentPage
-                        currentMode: @state.currentMode
+          div
+            className: 'hidden-xs page-extra-tabs page-extra-tabs--profile-page js-switchable-mode-page--scrollspy-offset'
+            div className: 'osu-page',
+              div
+                className: 'page-mode page-mode--profile-page-extra'
+                ref: @tabs
+                for m in profileOrder
+                  a
+                    className: 'page-mode__item'
+                    key: m
+                    'data-page-id': m
+                    onClick: @tabClick
+                    href: "##{m}"
+                    el ExtraTab,
+                      page: m
+                      currentPage: @state.currentPage
+                      currentMode: @state.currentMode
 
-            div
-              className: 'user-profile-pages'
-              ref: @pages
-              @extraPage name for name in profileOrder
+          div
+            className: 'user-profile-pages'
+            ref: @pages
+            @extraPage name for name in profileOrder
 
 
   extraPage: (name) =>
