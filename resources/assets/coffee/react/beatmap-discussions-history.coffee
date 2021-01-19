@@ -2,7 +2,6 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Main } from './beatmap-discussions-history/main'
-import { Props } from 'beatmap-discussions/discussions-store-context'
 import BeatmapStore from 'stores/beatmap-store'
 import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store'
 import { BeatmapsetStore } from 'stores/beatmapset-store'
