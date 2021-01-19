@@ -33,6 +33,4 @@ reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (t
   stores.discussionStore.updateWithJson(props.discussions)
   stores.userStore.updateWithJson(props.users)
 
-  console.log('beatmap-discussions-history')
-
   props
