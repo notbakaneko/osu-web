@@ -5,6 +5,7 @@ import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import UserJson from 'interfaces/user-json';
 import * as React from 'react';
+import { DiscussionsStoreContext } from './discussions-store-context';
 import Editor from './editor';
 
 interface Props {
@@ -33,6 +34,9 @@ declare global {
 }
 
 export default class NewReview extends React.Component<Props, State> {
+  static contextType = DiscussionsStoreContext;
+  context!: React.ContextType<typeof DiscussionsStoreContext>;
+
   constructor(props: Props) {
     super(props);
 
@@ -92,9 +96,11 @@ export default class NewReview extends React.Component<Props, State> {
                 {
                   this.props.currentUser.id ?
                     <Editor
+                      beatmaps={this.context.beatmapStore}
                       beatmapset={this.props.beatmapset}
                       currentBeatmap={this.props.currentBeatmap}
                       currentDiscussions={this.props.currentDiscussions}
+                      discussions={this.context.discussionStore}
                       onFocus={this.onFocus}
                     />
                   :
