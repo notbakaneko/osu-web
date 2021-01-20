@@ -14,6 +14,7 @@ reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (t
     beatmapsetStore: new BeatmapsetStore
     beatmapStore: new BeatmapStore
     discussionStore: new BeatmapsetDiscussionStore
+    reviewsConfig: osu.parseJson 'json-reviewsConfig'
     userStore: new UserStore
 
   props =

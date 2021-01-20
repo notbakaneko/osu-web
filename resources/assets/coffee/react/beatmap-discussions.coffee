@@ -15,6 +15,7 @@ reactTurbolinks.registerPersistent 'beatmap-discussions', Main, true, (target) -
     beatmapsetStore: new BeatmapsetStore
     beatmapStore: new BeatmapStore
     discussionStore: new BeatmapsetDiscussionStore
+    reviewsConfig: {}
     userStore: new UserStore
 
   console.log(initial)
@@ -22,17 +23,6 @@ reactTurbolinks.registerPersistent 'beatmap-discussions', Main, true, (target) -
   stores.beatmapStore.updateWithJson([initial.beatmapset.beatmaps])
   stores.discussionStore.updateWithJson(initial.beatmapset.discussions)
   stores.userStore.updateWithJson(initial.beatmapset.related_users)
-
-    # beatmaps: osu.parseJson('json-beatmaps')
-    # beatmapsets: osu.parseJson('json-beatmapsets')
-    # container: target
-    # discussions: osu.parseJson('json-discussions')
-    # events: osu.parseJson('json-events')
-    # posts: osu.parseJson('json-posts')
-    # reviewsConfig: osu.parseJson 'json-reviewsConfig'
-    # users: osu.parseJson('json-users')
-    # votes: osu.parseJson('json-votes')
-    # stores: stores
 
   container: target
   initial: initial

@@ -33,7 +33,6 @@ import {
 import { EditorInsertionMenu } from './editor-insertion-menu';
 import { EditorToolbar } from './editor-toolbar';
 import { parseFromJson } from './review-document';
-import { ReviewEditorConfigContext } from './review-editor-config-context';
 import { SlateContext } from './slate-context';
 
 interface CacheInterface {
@@ -128,7 +127,7 @@ export default class Editor extends React.Component<Props, State> {
   }
 
   get canSave() {
-    return !this.state.posting && this.state.blockCount <= 10; // this.context.max_blocks;
+    return !this.state.posting && this.state.blockCount <= this.context.reviewsConfig.max_blocks;
   }
 
   @computed
@@ -339,10 +338,10 @@ export default class Editor extends React.Component<Props, State> {
     return (
       <CircularProgress
         current={this.state.blockCount}
-        max={10} // TODO: reviewsConfig.max_blocks
+        max={this.context.reviewsConfig.max_blocks}
         onlyShowAsWarning={true}
         theme={theme}
-        tooltip={osu.trans('beatmap_discussions.review.block_count', {used: this.state.blockCount, max: 10})}
+        tooltip={osu.trans('beatmap_discussions.review.block_count', {used: this.state.blockCount, max: this.context.reviewsConfig.max_blocks})}
       />
     );
   }
