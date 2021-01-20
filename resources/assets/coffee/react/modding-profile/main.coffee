@@ -235,11 +235,11 @@ export class Main extends React.PureComponent
 
       when 'posts'
         props:
-          beatmapsetDiscussions: @discussions()
-          beatmapsets: @beatmapsets()
+          beatmapsetDiscussions: @props.stores.discussionStore
+          beatmapsets: @props.stores.beatmapsetStore
           posts: @state.posts
           user: @state.user
-          users: @users()
+          users: @props.stores.userStore
         component: Posts
         showMore: true
 
@@ -364,10 +364,7 @@ export class Main extends React.PureComponent
     @cache.users
 
   userDiscussions: =>
-    if !@cache.userDiscussions
-      @cache.userDiscussions = _.filter @state.discussions, (d) => d.user_id == @state.user.id
-
-    @cache.userDiscussions
+    @props.stores.discussionStore.getUserDiscussions(@state.user.id)
 
 
   ujsDiscussionUpdate: (_e, data) =>

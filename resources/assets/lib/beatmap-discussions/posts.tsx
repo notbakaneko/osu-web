@@ -2,14 +2,15 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import UserJson from 'interfaces/user-json';
+import { deletedUserJson } from 'models/user';
 import * as React from 'react';
 import { BeatmapsetJson, Post } from 'react/beatmap-discussions/post';
 
 interface Props {
-  beatmapsetDiscussions: Record<number, BeatmapsetDiscussionJson>;
-  beatmapsets: Record<number, BeatmapsetJson>;
+  beatmapsetDiscussions: Map<number, BeatmapsetDiscussionJson>;
+  beatmapsets: Map<number, BeatmapsetJson>;
   posts: BeatmapsetDiscussionPostJson[];
-  users: Record<number | string, UserJson>;
+  users: Map<number | string, UserJson>;
 }
 
 // TODO: handle empty case.
@@ -27,10 +28,14 @@ export default class Posts extends React.Component<Props> {
         discussionModifiers.push('deleted');
       }
 
-      const discussion = this.props.beatmapsetDiscussions[post.beatmap_discussion_id];
-      const beatmapset = this.props.beatmapsets[discussion.beatmapset_id];
-      const user = post.user_id != null ? this.props.users[post.user_id] : this.props.users.null;
-      const lastEditor = post.last_editor_id != null ? this.props.users[post.last_editor_id] : this.props.users.null;
+      const discussion = this.props.beatmapsetDiscussions.get(post.beatmap_discussion_id);
+      if (discussion == null) return null; // TODO: handle deleted
+
+      const beatmapset = this.props.beatmapsets.get(discussion?.beatmapset_id ?? 0);
+      if (beatmapset == null) return null; // TODO: handle deleted
+
+      const user = this.props.users.get(post.user_id ?? 0) ?? deletedUserJson;
+      const lastEditor = post.last_editor_id != null ? this.props.users.get(post.last_editor_id) : deletedUserJson;
 
       return (
         <div className='beatmapset-discussion-posts__container' key={post.id}>
@@ -55,7 +60,6 @@ export default class Posts extends React.Component<Props> {
                 discussion={discussion}
                 post={post}
                 type='reply'
-                users={this.props.users}
                 user={user}
                 read={true}
                 lastEditor={lastEditor}

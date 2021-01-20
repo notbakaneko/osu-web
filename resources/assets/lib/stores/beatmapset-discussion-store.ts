@@ -14,6 +14,10 @@ export class BeatmapsetDiscussionStore {
     return this.discussions.get(id);
   }
 
+  getUserDiscussions(userId: number) {
+    return [...this.discussions.values()].filter((d) => d.user_id === userId);
+  }
+
   handleDispatchAction(dispatcherAction: DispatcherAction) {
     if (dispatcherAction instanceof UserLoginAction
       || dispatcherAction instanceof UserLogoutAction) {
