@@ -9,7 +9,6 @@ import { NewDiscussion } from './new-discussion'
 import { BackToTop } from 'back-to-top'
 import * as React from 'react'
 import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
-import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import { div } from 'react-dom-factories'
 import NewReview from 'beatmap-discussions/new-review'
 import * as BeatmapHelper from 'utils/beatmap-helper'
@@ -37,7 +36,6 @@ export class Main extends React.PureComponent
       @state.readPostIds = new Set(@state.readPostIdsArray)
     else
       beatmapset = props.initial.beatmapset
-      reviewsConfig = props.initial.reviews_config
       showDeleted = true
       readPostIds = new Set
 
@@ -45,7 +43,7 @@ export class Main extends React.PureComponent
         for post in discussion?.posts ? []
           readPostIds.add(post.id) if post?
 
-      @state = {beatmapset, currentUser, readPostIds, reviewsConfig, showDeleted}
+      @state = {beatmapset, currentUser, readPostIds, showDeleted}
 
     # Current url takes priority over saved state.
     query = @queryFromLocation(@state.beatmapset.discussions)
@@ -130,39 +128,38 @@ export class Main extends React.PureComponent
         div
           className: 'osu-layout__section osu-layout__section--extra'
           el DiscussionsStoreContext.Provider, value: @props.stores,
-            el ReviewEditorConfigContext.Provider, value: @state.reviewsConfig,
-              if @state.currentMode == 'reviews'
-                el NewReview,
-                  beatmapset: @state.beatmapset
-                  currentBeatmap: @currentBeatmap()
-                  currentDiscussions: @currentDiscussions()
-                  currentUser: @state.currentUser
-                  pinned: @state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-              else
-                el NewDiscussion,
-                  beatmapset: @state.beatmapset
-                  currentUser: @state.currentUser
-                  currentBeatmap: @currentBeatmap()
-                  currentDiscussions: @currentDiscussions()
-                  innerRef: @newDiscussionRef
-                  mode: @state.currentMode
-                  pinned: @state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-                  autoFocus: @focusNewDiscussion
-
-              el Discussions,
+            if @state.currentMode == 'reviews'
+              el NewReview,
                 beatmapset: @state.beatmapset
                 currentBeatmap: @currentBeatmap()
                 currentDiscussions: @currentDiscussions()
-                currentFilter: @state.currentFilter
                 currentUser: @state.currentUser
+                pinned: @state.pinnedNewDiscussion
+                setPinned: @setPinnedNewDiscussion
+                stickTo: @modeSwitcherRef
+            else
+              el NewDiscussion,
+                beatmapset: @state.beatmapset
+                currentUser: @state.currentUser
+                currentBeatmap: @currentBeatmap()
+                currentDiscussions: @currentDiscussions()
+                innerRef: @newDiscussionRef
                 mode: @state.currentMode
-                readPostIds: @state.readPostIds
-                showDeleted: @state.showDeleted
-                users: @users()
+                pinned: @state.pinnedNewDiscussion
+                setPinned: @setPinnedNewDiscussion
+                stickTo: @modeSwitcherRef
+                autoFocus: @focusNewDiscussion
+
+            el Discussions,
+              beatmapset: @state.beatmapset
+              currentBeatmap: @currentBeatmap()
+              currentDiscussions: @currentDiscussions()
+              currentFilter: @state.currentFilter
+              currentUser: @state.currentUser
+              mode: @state.currentMode
+              readPostIds: @state.readPostIds
+              showDeleted: @state.showDeleted
+              users: @users()
 
       el BackToTop
 
