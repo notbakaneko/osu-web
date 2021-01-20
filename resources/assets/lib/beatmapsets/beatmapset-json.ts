@@ -5,6 +5,7 @@ import BeatmapJson from 'interfaces/beatmap-json';
 import GameMode from 'interfaces/game-mode';
 import GenreJson from 'interfaces/genre-json';
 import LanguageJson from 'interfaces/language-json';
+import { UserJson } from 'react/beatmap-discussions/post';
 
 interface BeatmapsetCovers {
   card: string;
@@ -95,4 +96,9 @@ export interface BeatmapsetJson {
   title: string;
   title_unicode: string | null;
   user_id: number;
+}
+
+export interface BeatmapsetWithDiscussionsJson extends BeatmapsetJson {
+  discussions: BeatmapsetDiscussionJson[];
+  related_users: UserJson[];
 }

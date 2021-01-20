@@ -12,7 +12,7 @@ interface Props {
   tooltip?: string;
 }
 
-export class CircularProgress extends React.PureComponent<Props, any> {
+export class CircularProgress extends React.PureComponent<Props> {
   bn = 'circular-progress';
 
   render() {

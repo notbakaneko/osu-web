@@ -290,7 +290,6 @@ export class Discussion extends React.PureComponent
       post: post
       type: type
       read: @isRead(post)
-      # users: @props.users # FIXME: this was passed in because Post needs to get the user that deleted the post.
       user: @context.userStore.getAsJson(post.user_id)
       lastEditor: @context.userStore.getAsJson(post.last_editor_id)
       canBeEdited: @props.currentUser.is_admin || canBeEdited

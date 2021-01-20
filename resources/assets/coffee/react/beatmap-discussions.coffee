@@ -15,7 +15,7 @@ reactTurbolinks.registerPersistent 'beatmap-discussions', Main, true, (target) -
     beatmapsetStore: new BeatmapsetStore
     beatmapStore: new BeatmapStore
     discussionStore: new BeatmapsetDiscussionStore
-    reviewsConfig: {}
+    reviewsConfig: { max_blocks: 10 } # FIXME
     userStore: new UserStore
 
   console.log(initial)
