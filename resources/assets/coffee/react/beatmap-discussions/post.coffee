@@ -179,7 +179,7 @@ export class Post extends React.PureComponent
             dangerouslySetInnerHTML:
               __html: osu.trans 'beatmaps.discussions.deleted',
                 editor: osu.link laroute.route('users.show', user: deleteModel.deleted_by_id),
-                  deleteModel.deleted_by_id # @props.users[deleteModel.deleted_by_id]?.username # FIXME: need to not have users in @props
+                  @context.userStore.get(deleteModel.deleted_by_id)
                   classNames: ["#{bn}__info-user"]
                 delete_time: osu.timeago @props.post.deleted_at
 

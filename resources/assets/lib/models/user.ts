@@ -82,3 +82,13 @@ export default class User {
     this.loaded = true;
   }
 }
+
+const deletedUser = new User(-1);
+deletedUser.username = osu.trans('users.deleted');
+
+const deletedUserJson = deletedUser.toJson() as UserJson; // TODO: need to fix this cast?
+
+export {
+  deletedUser,
+  deletedUserJson,
+};

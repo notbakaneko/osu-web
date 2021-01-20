@@ -24,10 +24,9 @@ declare module 'react/beatmap-discussions/post' {
     discussion: BeatmapsetDiscussionJson;
     post: BeatmapsetDiscussionPostJson;
     type: string;
-    users: Record<number | string, UserJson>;
     user: UserJson;
     read: boolean;
-    lastEditor: UserJson;
+    lastEditor?: UserJson;
     canBeEdited: boolean;
     canBeDeleted: boolean;
     canBeRestored: boolean;
