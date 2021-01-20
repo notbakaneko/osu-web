@@ -15,6 +15,7 @@ export class Main extends React.PureComponent
     @state = JSON.parse(props.container.dataset.discussionsState ? null)
     @restoredState = @state?
 
+    # FIXME do something about this for turbolinks
     if !@restoredState
       @state =
         beatmaps: props.beatmaps
@@ -38,11 +39,13 @@ export class Main extends React.PureComponent
     {beatmapset} = options
     return unless beatmapset?
 
-    discussions = [@state.discussions...]
-    users = [@state.users...]
+    # discussions = [@state.discussions...]
+    # users = [@state.users...]
 
-    discussionIds = _.map discussions, 'id'
-    userIds = _.map users, 'id'
+    # discussionIds = _.map discussions, 'id'
+    # userIds = _.map users, 'id'
+
+    @props.stores.discussionStore.updateWithBeatmapset(beatmapset)
 
     # Due to the entire hierarchy of discussions being sent back when a post is updated (instead of just the modified post),
     #   we need to iterate over each discussion and their posts to extract the updates we want.
@@ -58,32 +61,16 @@ export class Main extends React.PureComponent
     #   else
     #     relatedDiscussions.push(newDiscussion)
 
-    _.each beatmapset.related_users, (newUser) ->
-      if userIds.includes(newUser.id)
-        users = _.reject users, id: newUser.id
+    # _.each beatmapset.related_users, (newUser) ->
+    #   if userIds.includes(newUser.id)
+    #     users = _.reject users, id: newUser.id
 
-      users.push(newUser)
+    #   users.push(newUser)
 
-    @cache.users = @cache.discussions = @cache.beatmaps = null
-    @setState
-      discussions: _.reverse(_.sortBy(discussions, (d) -> Date.parse(d.starting_post.created_at)))
-      users: users
-
-
-  discussions: =>
-    # skipped discussions
-    # - not privileged (deleted discussion)
-    # - deleted beatmap
-    @cache.discussions ?= _ @state.discussions
-                            .filter (d) -> !_.isEmpty(d)
-                            .keyBy 'id'
-                            .value()
-
-
-  beatmaps: =>
-    return @cache.beatmaps if @cache.beatmaps?
-
-    @cache.beatmaps = _.keyBy(this.props.beatmaps, 'id')
+    # @cache.users = @cache.discussions = @cache.beatmaps = null
+    # @setState
+    #   discussions: _.reverse(_.sortBy(discussions, (d) -> Date.parse(d.starting_post.created_at)))
+    #   users: users
 
 
   saveStateToContainer: =>
@@ -91,12 +78,14 @@ export class Main extends React.PureComponent
 
 
   render: =>
+    discussions = @props.stores.discussionStore.orderedDiscussions
+
     el DiscussionsStoreContext.Provider, value: @props.stores,
       div className: 'modding-profile-list modding-profile-list--index',
-        if @props.discussions.length == 0
+        if discussions.length == 0
           div className: 'modding-profile-list__empty', osu.trans('beatmap_discussions.index.none_found')
         else
-          for discussion in @props.discussions when discussion?
+          for discussion in discussions
             div
               className: 'modding-profile-list__row'
               key: discussion.id,
@@ -115,15 +104,6 @@ export class Main extends React.PureComponent
                 visible: false
                 showDeleted: true
                 preview: true
-
-
-  users: =>
-    if !@cache.users?
-      @cache.users = _.keyBy @state.users, 'id'
-      @cache.users[null] = @cache.users[undefined] =
-        username: osu.trans 'users.deleted'
-
-    @cache.users
 
 
   ujsDiscussionUpdate: (_e, data) =>

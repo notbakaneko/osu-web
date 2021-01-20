@@ -27,7 +27,7 @@ export default class Main extends React.Component<Props> {
     // FIXME: dodgy
     const users = keyBy(this.props.users, 'id');
     users.null = users.undefined = {
-      username: osu.trans('users.deleted')
+      username: osu.trans('users.deleted'),
     } as any;
 
     return users;

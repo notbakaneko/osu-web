@@ -138,6 +138,7 @@ interface BeatmapsetDiscussionJson {
 // TODO: incomplete
 interface BeatmapsetDiscussionPostJson {
   beatmap_discussion_id: number;
+  created_at: string;
   deleted_at: string | null;
   id: number;
   last_editor_id: number | null;
