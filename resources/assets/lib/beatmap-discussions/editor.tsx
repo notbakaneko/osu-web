@@ -7,7 +7,6 @@ import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import isHotkey from 'is-hotkey';
 import { route } from 'laroute';
 import * as _ from 'lodash';
-import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createEditor, Element as SlateElement, Node as SlateNode, NodeEntry, Range, Text, Transforms } from 'slate';
@@ -44,8 +43,6 @@ interface Props {
   beatmaps: BeatmapStore;
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
-  currentDiscussions: BeatmapsetDiscussionJson[];
-  discussion?: BeatmapsetDiscussionJson;
   discussions: BeatmapsetDiscussionStore;
   document?: string;
   editing: boolean;
@@ -128,12 +125,11 @@ export default class Editor extends React.Component<Props, State> {
     return !this.state.posting && this.state.blockCount <= this.context.reviewsConfig.max_blocks;
   }
 
-  @computed
+  // @computed memoization doesn't been to work here unless it's called before the render prop?
   get sortedBeatmaps() {
     if (this.cache.sortedBeatmaps == null) {
       // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
       const beatmaps = [...this.context.beatmapStore.beatmaps.values()].filter((x) => x.beatmapset_id === this.props.beatmapset.id);
-      // const beatmaps = filter(this.context.beatmapStore.beatmaps.values, { beatmapset_id: this.props.beatmapset.id });
       this.cache.sortedBeatmaps = sortWithMode(beatmaps);
     }
 
@@ -352,11 +348,9 @@ export default class Editor extends React.Component<Props, State> {
         el = (
           <EditorDiscussionComponent
             beatmaps={this.sortedBeatmaps}
-            beatmapset={this.props.beatmapset}
-            currentBeatmap={this.props.currentBeatmap}
-            discussions={this.context.discussionStore}
             editMode={this.props.editMode}
             readOnly={this.state.posting}
+            stores={this.context}
             {...props}
           />
         );

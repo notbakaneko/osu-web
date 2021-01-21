@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapReviewDiscussionType } from 'interfaces/beatmap-discussion-review';
-import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import * as React from 'react';
 import { Element, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
@@ -20,7 +19,6 @@ const discussionTypeIcons = {
 };
 
 interface Props {
-  beatmaps: BeatmapJsonExtended[];
   disabled: boolean;
   element: Element;
 }
