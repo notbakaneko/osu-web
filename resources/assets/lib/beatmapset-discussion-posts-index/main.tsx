@@ -2,10 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import Posts from 'beatmap-discussions/posts';
+import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import UserJson from 'interfaces/user-json';
 import { keyBy } from 'lodash';
 import * as React from 'react';
-import { BeatmapsetJson } from 'react/beatmap-discussions/post';
 
 interface Props {
   beatmapsetDiscussions: BeatmapsetDiscussionJson[];

@@ -1,10 +1,11 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import UserJson from 'interfaces/user-json';
 import { deletedUserJson } from 'models/user';
 import * as React from 'react';
-import { BeatmapsetJson, Post } from 'react/beatmap-discussions/post';
+import { Post } from 'react/beatmap-discussions/post';
 
 interface Props {
   beatmapsetDiscussions: Map<number, BeatmapsetDiscussionJson>;

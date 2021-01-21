@@ -42,13 +42,11 @@ interface CacheInterface {
 
 interface Props {
   beatmaps: BeatmapStore;
-  // beatmaps: Record<number, BeatmapJsonExtended>;
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
   currentDiscussions: BeatmapsetDiscussionJson[];
   discussion?: BeatmapsetDiscussionJson;
   discussions: BeatmapsetDiscussionStore;
-  // discussions: Record<number, BeatmapsetDiscussionJson>;
   document?: string;
   editing: boolean;
   editMode?: boolean;
