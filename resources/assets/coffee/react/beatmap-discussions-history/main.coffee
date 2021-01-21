@@ -3,24 +3,24 @@
 
 import { Discussion } from '../beatmap-discussions/discussion'
 import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
+import { Observer } from 'mobx-react'
 import * as React from 'react'
 import { a, div, img } from 'react-dom-factories'
 el = React.createElement
 
-export class Main extends React.PureComponent
+export class Main extends React.Component
   constructor: (props) ->
     super props
 
-    @cache = {}
-    @state = JSON.parse(props.container.dataset.discussionsState ? null)
-    @restoredState = @state?
+    # @state = JSON.parse(props.container.dataset.discussionsState ? null)
+    # @restoredState = @state?
 
-    # FIXME do something about this for turbolinks
-    if !@restoredState
-      @state =
-        beatmaps: props.beatmaps
-        discussions: props.discussions
-        users: props.users
+    # # FIXME do something about this for turbolinks
+    # if !@restoredState
+    #   @state =
+    #     beatmaps: props.beatmaps
+    #     discussions: props.discussions
+    #     users: props.users
 
 
   componentDidMount: =>
@@ -45,7 +45,7 @@ export class Main extends React.PureComponent
     # discussionIds = _.map discussions, 'id'
     # userIds = _.map users, 'id'
 
-    @props.stores.discussionStore.updateWithBeatmapset(beatmapset)
+    @props.stores.updateWithBeatmapset(beatmapset)
 
     # Due to the entire hierarchy of discussions being sent back when a post is updated (instead of just the modified post),
     #   we need to iterate over each discussion and their posts to extract the updates we want.
@@ -74,36 +74,39 @@ export class Main extends React.PureComponent
 
 
   saveStateToContainer: =>
-    @props.container.dataset.discussionsState = JSON.stringify(@state)
+    # @props.container.dataset.discussionsState = JSON.stringify(@state)
 
 
   render: =>
-    discussions = @props.stores.discussionStore.orderedDiscussions
+    el Observer, null, () =>
+      discussions = @props.stores.discussionStore.orderedDiscussions
 
-    el DiscussionsStoreContext.Provider, value: @props.stores,
-      div className: 'modding-profile-list modding-profile-list--index',
-        if discussions.length == 0
-          div className: 'modding-profile-list__empty', osu.trans('beatmap_discussions.index.none_found')
-        else
-          for discussion in discussions
-            div
-              className: 'modding-profile-list__row'
-              key: discussion.id,
+      el DiscussionsStoreContext.Provider, value: @props.stores,
+        div className: 'modding-profile-list modding-profile-list--index',
+          if discussions.length == 0
+            div className: 'modding-profile-list__empty', osu.trans('beatmap_discussions.index.none_found')
+          else
+            for discussion in discussions
+              beatmapset = @props.stores.beatmapsetStore.get(discussion.beatmapset_id)
 
-              a
-                className: 'modding-profile-list__thumbnail'
-                href: BeatmapDiscussionHelper.url(discussion: discussion),
+              div
+                className: 'modding-profile-list__row'
+                key: discussion.id,
 
-                img className: 'beatmapset-cover', src: discussion.beatmapset.covers.list
+                a
+                  className: 'modding-profile-list__thumbnail'
+                  href: BeatmapDiscussionHelper.url(discussion: discussion),
 
-              el Discussion,
-                discussion: discussion
-                currentUser: currentUser
-                beatmapset: discussion.beatmapset
-                isTimelineVisible: false
-                visible: false
-                showDeleted: true
-                preview: true
+                  img className: 'beatmapset-cover', src: beatmapset.covers.list
+
+                el Discussion,
+                  discussion: discussion
+                  currentUser: currentUser
+                  beatmapset: beatmapset
+                  isTimelineVisible: false
+                  visible: false
+                  showDeleted: true
+                  preview: true
 
 
   ujsDiscussionUpdate: (_e, data) =>

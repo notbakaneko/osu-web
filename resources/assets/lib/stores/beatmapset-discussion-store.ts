@@ -3,7 +3,6 @@
 
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
-import { BeatmapsetWithDiscussionsJson } from 'beatmapsets/beatmapset-json';
 import { isEmpty } from 'lodash';
 import { action, computed, observable } from 'mobx';
 
@@ -15,7 +14,6 @@ export class BeatmapsetDiscussionStore {
     return this.discussions.get(id);
   }
 
-  @computed
   get orderedDiscussions() {
     return [...this.discussions.values()].sort((a, b) => {
       return Date.parse(a.starting_post.created_at) > Date.parse(b.starting_post.created_at) ? 1 : -1;
@@ -38,24 +36,15 @@ export class BeatmapsetDiscussionStore {
     // skip if empty
     if (isEmpty(discussion)) return;
 
+    // fill in starting_post if missing
+    if (discussion.starting_post == null) {
+      // The discussion list shows discussions started by the current user, so it can be assumed that the first post is theirs
+      console.warn(`discussion ${discussion.id} missing starting_post`);
+      discussion.starting_post = discussion.posts[0];
+    }
+
     // just override the value for now, we can do something fancier in the future.
     this.discussions.set(discussion.id, discussion);
-  }
-
-  @action
-  updateWithBeatmapset(beatmapset: BeatmapsetWithDiscussionsJson) {
-    for (const discussion of beatmapset.discussions) {
-      // when updating from beatmapset for history listing, skip the ones
-      // that don't exist yet because the list shouldn't change.
-      if (this.discussions.get(discussion.id) == null) continue;
-
-      this.update(discussion);
-      // TODO: starting_post?
-    }
-
-    for (const user of beatmapset.related_users) {
-      // update users
-    }
   }
 
   @action
