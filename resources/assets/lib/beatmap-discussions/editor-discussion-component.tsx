@@ -1,13 +1,12 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import * as React from 'react';
 import { Element as SlateElement, Path, Transforms } from 'slate';
 import { RenderElementProps } from 'slate-react';
 import { ReactEditor } from 'slate-react';
-import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store';
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store';
 import { DraftsContext } from './drafts-context';
 import EditorBeatmapSelector from './editor-beatmap-selector';
 import EditorIssueTypeSelector from './editor-issue-type-selector';
@@ -23,13 +22,9 @@ interface Cache {
 
 interface Props extends RenderElementProps {
   beatmaps: BeatmapJsonExtended[];
-  beatmapset: BeatmapsetJson;
-  currentBeatmap: BeatmapJsonExtended;
-  discussionId?: number;
-  discussions: BeatmapsetDiscussionStore;
-  // discussions: Record<number, BeatmapsetDiscussionJson>;
   editMode?: boolean;
   readOnly?: boolean;
+  stores: BeatmapsetDiscussionRootStore;
 }
 
 export default class EditorDiscussionComponent extends React.Component<Props> {
@@ -153,7 +148,7 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
     }
 
     if (!this.cache.nearbyDiscussions || this.cache.nearbyDiscussions.timestamp !== timestamp || (this.cache.nearbyDiscussions.beatmap_id !== this.selectedBeatmap())) {
-      const relevantDiscussions = [...this.props.discussions.discussions.values()].filter((discussion) => discussion.beatmap_id === this.selectedBeatmap());
+      const relevantDiscussions = [...this.props.stores.discussionStore.discussions.values()].filter((discussion) => discussion.beatmap_id === this.selectedBeatmap());
 
       this.cache.nearbyDiscussions = {
         beatmap_id: this.selectedBeatmap(),

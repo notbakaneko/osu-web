@@ -11,7 +11,6 @@ import Editor from './editor';
 interface Props {
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJsonExtended;
-  currentDiscussions: BeatmapsetDiscussionJson[];
   currentUser: UserJson;
   pinned?: boolean;
   setPinned?: (sticky: boolean) => void;
@@ -99,7 +98,6 @@ export default class NewReview extends React.Component<Props, State> {
                       beatmaps={this.context.beatmapStore}
                       beatmapset={this.props.beatmapset}
                       currentBeatmap={this.props.currentBeatmap}
-                      currentDiscussions={this.props.currentDiscussions}
                       discussions={this.context.discussionStore}
                       onFocus={this.onFocus}
                     />
