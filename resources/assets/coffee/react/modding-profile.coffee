@@ -2,19 +2,12 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Main } from './modding-profile/main'
-import BeatmapStore from 'stores/beatmap-store'
-import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store'
-import { BeatmapsetStore } from 'stores/beatmapset-store'
-import UserStore from 'stores/user-store'
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store'
 
 reactTurbolinks.registerPersistent 'modding-profile', Main, true, (target) ->
   # FIXME: problem is the dispatcher means these don't get cleaned up.
-  stores =
-    beatmapsetStore: new BeatmapsetStore
-    beatmapStore: new BeatmapStore
-    discussionStore: new BeatmapsetDiscussionStore
-    reviewsConfig: osu.parseJson 'json-reviewsConfig'
-    userStore: new UserStore
+  stores = new BeatmapsetDiscussionRootStore
+  stores.reviewsConfig = osu.parseJson 'json-reviewsConfig'
 
   props =
     beatmaps: osu.parseJson('json-beatmaps')

@@ -2,21 +2,14 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Main } from './beatmap-discussions/main'
-import BeatmapStore from 'stores/beatmap-store'
-import { BeatmapsetDiscussionStore } from 'stores/beatmapset-discussion-store'
-import { BeatmapsetStore } from 'stores/beatmapset-store'
-import UserStore from 'stores/user-store'
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store'
 
 reactTurbolinks.registerPersistent 'beatmap-discussions', Main, true, (target) ->
   initial = osu.parseJson 'json-beatmapset-discussion'
 
   # FIXME: problem is the dispatcher means these don't get cleaned up.
-  stores =
-    beatmapsetStore: new BeatmapsetStore
-    beatmapStore: new BeatmapStore
-    discussionStore: new BeatmapsetDiscussionStore
-    reviewsConfig: { max_blocks: 10 } # FIXME
-    userStore: new UserStore
+  stores = new BeatmapsetDiscussionRootStore
+  stores.reviewsConfig = { max_blocks: 10 } # FIXME
 
   console.log(initial)
   stores.beatmapsetStore.updateWithJson([initial.beatmapset])
