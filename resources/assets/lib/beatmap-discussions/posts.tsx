@@ -2,8 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
-import UserJson from 'interfaces/user-json';
-import { deletedUserJson } from 'models/user';
+import User, { deletedUser } from 'models/user';
 import * as React from 'react';
 import { Post } from 'react/beatmap-discussions/post';
 
@@ -11,7 +10,7 @@ interface Props {
   beatmapsetDiscussions: Map<number, BeatmapsetDiscussionJson>;
   beatmapsets: Map<number, BeatmapsetJson>;
   posts: BeatmapsetDiscussionPostJson[];
-  users: Map<number | string, UserJson>;
+  users: Map<number, User>;
 }
 
 // TODO: handle empty case.
@@ -35,8 +34,8 @@ export default class Posts extends React.Component<Props> {
       const beatmapset = this.props.beatmapsets.get(discussion?.beatmapset_id ?? 0);
       if (beatmapset == null) return null; // TODO: handle deleted
 
-      const user = this.props.users.get(post.user_id ?? 0) ?? deletedUserJson;
-      const lastEditor = post.last_editor_id != null ? this.props.users.get(post.last_editor_id) : deletedUserJson;
+      const user = this.props.users.get(post.user_id ?? 0) ?? deletedUser;
+      const lastEditor = post.last_editor_id != null ? this.props.users.get(post.last_editor_id) : deletedUser;
 
       return (
         <div className='beatmapset-discussion-posts__container' key={post.id}>
@@ -61,9 +60,9 @@ export default class Posts extends React.Component<Props> {
                 discussion={discussion}
                 post={post}
                 type='reply'
-                user={user}
+                user={user.toJson()}
                 read={true}
-                lastEditor={lastEditor}
+                lastEditor={lastEditor?.toJson()}
                 canBeEdited={canBeEdited}
                 canBeDeleted={canBeDeleted}
                 canBeRestored={canModeratePosts}

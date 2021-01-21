@@ -2,38 +2,23 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import Posts from 'beatmap-discussions/posts';
-import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
-import UserJson from 'interfaces/user-json';
-import { keyBy } from 'lodash';
 import * as React from 'react';
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store';
 
 interface Props {
-  beatmapsetDiscussions: BeatmapsetDiscussionJson[];
-  beatmapsets: BeatmapsetJson[];
   posts: BeatmapsetDiscussionPostJson[];
-  users: UserJson[];
+  stores: BeatmapsetDiscussionRootStore;
 }
 
 export default class Main extends React.Component<Props> {
-  get beatmapsetDiscussions() {
-    return keyBy(this.props.beatmapsetDiscussions, 'id');
-  }
-
-  get beatmapsets() {
-    return keyBy(this.props.beatmapsets, 'id');
-  }
-
-  get users() {
-    // FIXME: dodgy
-    const users = keyBy(this.props.users, 'id');
-    users.null = users.undefined = {
-      username: osu.trans('users.deleted'),
-    } as any;
-
-    return users;
-  }
-
   render() {
-    return <Posts beatmapsetDiscussions={this.beatmapsetDiscussions} beatmapsets={this.beatmapsets} posts={this.props.posts} users={this.users} />;
+    return (
+      <Posts
+        beatmapsetDiscussions={this.props.stores.discussionStore.discussions}
+        beatmapsets={this.props.stores.beatmapsetStore.beatmapsets}
+        posts={this.props.posts}
+        users={this.props.stores.userStore.users}
+      />
+    );
   }
 }
