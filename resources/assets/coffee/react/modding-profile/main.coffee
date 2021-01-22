@@ -173,7 +173,6 @@ export class Main extends React.PureComponent
         props:
           discussions: @userDiscussions()
           user: @state.user
-          users: @users()
         component: Discussions
 
       when 'events'

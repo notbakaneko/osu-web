@@ -159,7 +159,6 @@ export class Main extends React.PureComponent
               mode: @state.currentMode
               readPostIds: @state.readPostIds
               showDeleted: @state.showDeleted
-              users: @users()
 
       el BackToTop
 
