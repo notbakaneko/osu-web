@@ -22,6 +22,7 @@ import QuickSearchButton from 'quick-search-button'
 import QuickSearchWorker from 'quick-search/worker'
 import RankingFilter from 'ranking-filter'
 import SocketWorker from 'socket-worker'
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store'
 import { SpotlightSelectOptions } from 'spotlight-select-options'
 import { UserCard } from 'user-card'
 import { UserCardStore } from 'user-card-store'
@@ -47,18 +48,14 @@ reactTurbolinks.register 'blockButton', BlockButton, (target) ->
 
 
 reactTurbolinks.register 'beatmap-discussion-events', Events, (container) ->
+  stores = new BeatmapsetDiscussionRootStore
+  stores.userStore.updateWithJson(osu.parseJson('json-users'))
+
   props = {
     container
-    discussions: osu.parseJson('json-discussions')
     events: osu.parseJson('json-events')
-    posts: osu.parseJson('json-posts')
+    stores: stores
   }
-
-  # TODO: move to store?
-  users = osu.parseJson('json-users')
-  props.users = _.keyBy(users, 'id')
-  props.users[null] = props.users[undefined] =
-    username: osu.trans 'users.deleted'
 
   props
 

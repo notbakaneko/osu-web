@@ -1,26 +1,30 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context';
 import BeatmapsetEventJson from 'interfaces/beatmapset-event-json';
 import GameMode from 'interfaces/game-mode';
-import UserJson from 'interfaces/user-json';
 import { route } from 'laroute';
 import { kebabCase } from 'lodash';
+import { observer } from 'mobx-react';
+import { deletedUser } from 'models/user';
 import * as React from 'react';
 import TimeWithTooltip from 'time-with-tooltip';
 
 interface Props {
-  discussions?: Record<string, BeatmapsetDiscussionJson>;
   event: BeatmapsetEventJson;
   mode: 'discussions' | 'profile';
   time?: string;
-  users: Record<string, UserJson>;
 }
 
-export default class Event extends React.PureComponent<Props> {
+@observer
+export default class Event extends React.Component<Props> {
+  static contextType = DiscussionsStoreContext;
   static readonly defaultProps = {
     mode: 'discussions',
   };
+
+  context!: React.ContextType<typeof DiscussionsStoreContext>;
 
   private get beatmapsetId(): number | undefined {
     return this.props.event.beatmapset?.id;
@@ -32,7 +36,7 @@ export default class Event extends React.PureComponent<Props> {
 
   // discussion page doesn't include the discussion as part of the event.
   private get discussion() {
-    return this.props.event.discussion ?? this.props.discussions?.[this.discussionId ?? ''];
+    return this.props.event.discussion ?? this.context.discussionStore.get(this.discussionId ?? 0);
   }
 
   private get firstPost() {
@@ -136,7 +140,8 @@ export default class Event extends React.PureComponent<Props> {
     }
 
     if (this.props.event.user_id != null) {
-      user = osu.link(route('users.show', { user: this.props.event.user_id }), this.props.users[this.props.event.user_id]?.username);
+      const userLookup = this.context.userStore.get(this.props.event.user_id) ?? deletedUser;
+      user = osu.link(route('users.show', { user: this.props.event.user_id }), userLookup.username);
     }
 
     const params = {

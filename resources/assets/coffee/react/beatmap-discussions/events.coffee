@@ -37,6 +37,4 @@ export class Events extends React.PureComponent
                 el Event,
                   event: event
                   time: event.created_at
-                  users: @props.users
-                  discussions: @props.discussions
             ]

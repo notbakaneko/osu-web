@@ -2,17 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import BeatmapsetEventJson from 'interfaces/beatmapset-event-json';
-import UserJson from 'interfaces/user-json';
 import * as React from 'react';
+import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store';
+import { DiscussionsStoreContext } from './discussions-store-context';
 import Event from './event';
 
 interface Props {
   events: BeatmapsetEventJson[];
-  users: Record<string, UserJson>;
+  stores: BeatmapsetDiscussionRootStore;
 }
 
 export default class Events extends React.PureComponent<Props> {
   render() {
-    return this.props.events.map((event) => <Event event={event} key={event.id} mode='profile' users={this.props.users} />);
+    return (
+      <DiscussionsStoreContext.Provider value={this.props.stores}>
+        {this.props.events.map((event) => <Event event={event} key={event.id} mode='profile' />)}
+      </DiscussionsStoreContext.Provider>
+    );
   }
 }

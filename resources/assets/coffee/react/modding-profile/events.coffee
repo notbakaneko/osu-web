@@ -14,7 +14,6 @@ export class Events extends React.Component
       div className: 'beatmapset-events beatmapset-events--profile',
         el DiscussionEvents,
           events: @props.events
-          users: @props.users
 
         a
           className: 'modding-profile-list__show-more'
