@@ -13,7 +13,7 @@ reactTurbolinks.registerPersistent 'beatmap-discussions', Main, true, (target) -
 
   console.log(initial)
   stores.beatmapsetStore.updateWithJson([initial.beatmapset])
-  stores.beatmapStore.updateWithJson([initial.beatmapset.beatmaps])
+  stores.beatmapStore.updateWithJson(initial.beatmapset.beatmaps)
   stores.discussionStore.updateWithJson(initial.beatmapset.discussions)
   stores.userStore.updateWithJson(initial.beatmapset.related_users)
 
