@@ -43,6 +43,7 @@ export class BeatmapsetDiscussionStore {
       discussion.starting_post = discussion.posts[0];
     }
 
+    // FIXME: old one did merge and reject for discussions and posts, should check if all the needed data is already returned instead.
     // just override the value for now, we can do something fancier in the future.
     this.discussions.set(discussion.id, discussion);
   }

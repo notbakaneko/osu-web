@@ -22,6 +22,12 @@ export default class BeatmapsetDiscussionRootStore {
       // when updating from beatmapset for history listing, skip the ones
       // that don't exist yet because the list shouldn't change.
       if (this.discussionStore.get(discussion.id) == null) continue;
+      // FIXME: need to check discussion.beatmapset?
+      if (discussion.beatmapset == null) {
+        console.warn(`discussion ${discussion.id} has no beatmapset`);
+      } else {
+        console.warn(`discussion ${discussion.id} has beatmapset`);
+      }
 
       this.discussionStore.update(discussion);
     }
