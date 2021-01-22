@@ -60,7 +60,7 @@ export class Main extends React.PureComponent
 
 
   componentDidMount: =>
-    $.subscribe 'user:update.profilePage', @userUpdate
+    $.subscribe 'user:update.moddingProfilePage', @userUpdate
     $.subscribe 'profile:showMore.moddingProfilePage', @showMore
     $.subscribe 'beatmapsetDiscussions:update.moddingProfilePage', @discussionUpdate
     $(document).on 'ajax:success.moddingProfilePage', '.js-beatmapset-discussion-update', @ujsDiscussionUpdate
