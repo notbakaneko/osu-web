@@ -18,6 +18,7 @@ el = React.createElement
 
 pages = document.getElementsByClassName("js-switchable-mode-page--scrollspy")
 pagesOffset = document.getElementsByClassName("js-switchable-mode-page--scrollspy-offset")
+profileOrder = ['events', 'discussions', 'posts', 'votes', 'kudosu']
 
 currentLocation = ->
   "#{document.location.pathname}#{document.location.search}"
@@ -35,14 +36,6 @@ export class Main extends React.PureComponent
     @initialPage = page if page?
 
     @state =
-      beatmaps: props.beatmaps
-      beatmapsets: props.beatmapsets
-      discussions: props.discussions
-      profileOrder: ['events', 'discussions', 'posts', 'votes', 'kudosu']
-      rankedAndApprovedBeatmapsets: @props.extras.rankedAndApprovedBeatmapsets
-      lovedBeatmapsets: @props.extras.lovedBeatmapsets
-      unrankedBeatmapsets: @props.extras.unrankedBeatmapsets
-      graveyardBeatmapsets: @props.extras.graveyardBeatmapsets
       recentlyReceivedKudosu: @props.extras.recentlyReceivedKudosu
       showMorePagination: {}
 
@@ -83,8 +76,6 @@ export class Main extends React.PureComponent
 
 
   render: =>
-    profileOrder = @state.profileOrder
-
     el DiscussionsStoreContext.Provider, value: @props.stores,
       el UserProfileContainer,
         user: @props.user,
