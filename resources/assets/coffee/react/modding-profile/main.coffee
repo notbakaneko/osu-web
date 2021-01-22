@@ -88,24 +88,6 @@ export class Main extends React.PureComponent
     @props.stores.updateWithBeatmapset(beatmapset)
 
 
-  discussions: =>
-    # skipped discussions
-    # - not privileged (deleted discussion)
-    # - deleted beatmap
-    @cache.discussions ?= _ @state.discussions
-                            .filter (d) -> !_.isEmpty(d)
-                            .keyBy 'id'
-                            .value()
-
-
-  beatmaps: =>
-    @cache.beatmaps ?= _.keyBy(this.state.beatmaps, 'id')
-
-
-  beatmapsets: =>
-    @cache.beatmapsets ?= _.keyBy(this.state.beatmapsets, 'id')
-
-
   render: =>
     profileOrder = @state.profileOrder
 
@@ -170,7 +152,7 @@ export class Main extends React.PureComponent
     switch name
       when 'discussions'
         props:
-          discussions: @userDiscussions()
+          discussions: @props.stores.discussionStore.getUserDiscussions(@state.user.id)
           user: @state.user
         component: Discussions
 
@@ -315,9 +297,6 @@ export class Main extends React.PureComponent
         username: osu.trans 'users.deleted'
 
     @cache.users
-
-  userDiscussions: =>
-    @props.stores.discussionStore.getUserDiscussions(@state.user.id)
 
 
   ujsDiscussionUpdate: (_e, data) =>
