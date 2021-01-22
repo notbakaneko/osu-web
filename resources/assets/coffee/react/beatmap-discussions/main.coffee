@@ -93,41 +93,39 @@ export class Main extends React.PureComponent
 
 
   render: =>
-    div className: 'osu-layout osu-layout--full',
-      el Header,
-        beatmaps: @groupedBeatmaps()
-        beatmapset: @state.beatmapset
-        currentBeatmap: @currentBeatmap()
-        currentDiscussions: @currentDiscussions()
-        currentFilter: @state.currentFilter
-        currentUser: @state.currentUser
-        discussions: @discussions()
-        discussionStarters: @discussionStarters()
-        events: @state.beatmapset.events
-        mode: @state.currentMode
-        selectedUserId: @state.selectedUserId
-        users: @users()
+    el DiscussionsStoreContext.Provider, value: @props.stores,
+      div className: 'osu-layout osu-layout--full',
+        el Header,
+          beatmaps: @groupedBeatmaps()
+          beatmapset: @state.beatmapset
+          currentBeatmap: @currentBeatmap()
+          currentDiscussions: @currentDiscussions()
+          currentFilter: @state.currentFilter
+          currentUser: @state.currentUser
+          discussions: @discussions()
+          discussionStarters: @discussionStarters()
+          events: @state.beatmapset.events
+          mode: @state.currentMode
+          selectedUserId: @state.selectedUserId
+          users: @users()
 
-      el ModeSwitcher,
-        innerRef: @modeSwitcherRef
-        mode: @state.currentMode
-        beatmapset: @state.beatmapset
-        currentBeatmap: @currentBeatmap()
-        currentDiscussions: @currentDiscussions()
-        currentFilter: @state.currentFilter
+        el ModeSwitcher,
+          innerRef: @modeSwitcherRef
+          mode: @state.currentMode
+          beatmapset: @state.beatmapset
+          currentBeatmap: @currentBeatmap()
+          currentDiscussions: @currentDiscussions()
+          currentFilter: @state.currentFilter
 
-      if @state.currentMode == 'events'
-        div
-          className: 'osu-layout__section osu-layout__section--extra'
-          el Events,
-            events: @state.beatmapset.events
-            users: @users()
-            discussions: @discussions()
+        if @state.currentMode == 'events'
+          div
+            className: 'osu-layout__section osu-layout__section--extra'
+            el Events,
+              events: @state.beatmapset.events
 
-      else
-        div
-          className: 'osu-layout__section osu-layout__section--extra'
-          el DiscussionsStoreContext.Provider, value: @props.stores,
+        else
+          div
+            className: 'osu-layout__section osu-layout__section--extra'
             if @state.currentMode == 'reviews'
               el NewReview,
                 beatmapset: @state.beatmapset
@@ -160,7 +158,7 @@ export class Main extends React.PureComponent
               readPostIds: @state.readPostIds
               showDeleted: @state.showDeleted
 
-      el BackToTop
+        el BackToTop
 
 
   beatmaps: =>

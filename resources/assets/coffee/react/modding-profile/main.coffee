@@ -178,7 +178,6 @@ export class Main extends React.PureComponent
         props:
           events: @state.events
           user: @state.user
-          users: @users()
         component: Events
 
       when 'kudosu'
