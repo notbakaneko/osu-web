@@ -47,7 +47,7 @@ interface Props {
   discussions: BeatmapsetDiscussionStore;
   document?: string;
   editing: boolean;
-  editMode?: boolean;
+  editMode: boolean;
   onChange?: () => void;
   onFocus?: () => void;
 }
@@ -67,6 +67,7 @@ export default class Editor extends React.Component<Props, State> {
   static contextType = DiscussionsStoreContext;
   static defaultProps = {
     editing: false,
+    editMode: false,
   };
 
   bn = 'beatmap-discussion-editor';
