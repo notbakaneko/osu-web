@@ -22,13 +22,17 @@ interface Cache {
 
 interface Props extends RenderElementProps {
   beatmaps: BeatmapJsonExtended[];
-  editMode?: boolean;
-  readOnly?: boolean;
+  editMode: boolean;
+  readOnly: boolean;
   stores: BeatmapsetDiscussionRootStore;
 }
 
 export default class EditorDiscussionComponent extends React.Component<Props> {
   static contextType = SlateContext;
+  static defaultProps = {
+    editMode: false,
+    readOnly: false,
+  };
 
   bn = 'beatmap-discussion-review-post-embed-preview';
   cache: Cache = {};
