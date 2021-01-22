@@ -7,7 +7,8 @@ import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import isHotkey from 'is-hotkey';
 import { route } from 'laroute';
 import * as _ from 'lodash';
-import { observer } from 'mobx-react';
+import { computed } from 'mobx';
+import { Observer, observer } from 'mobx-react';
 import * as React from 'react';
 import { createEditor, Element as SlateElement, Node as SlateNode, NodeEntry, Range, Text, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
@@ -125,15 +126,11 @@ export default class Editor extends React.Component<Props, State> {
     return !this.state.posting && this.state.blockCount <= this.context.reviewsConfig.max_blocks;
   }
 
-  // @computed memoization doesn't been to work here unless it's called before the render prop?
+  @computed
   get sortedBeatmaps() {
-    if (this.cache.sortedBeatmaps == null) {
-      // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
-      const beatmaps = [...this.context.beatmapStore.beatmaps.values()].filter((x) => x.beatmapset_id === this.props.beatmapset.id);
-      this.cache.sortedBeatmaps = sortWithMode(beatmaps);
-    }
-
-    return this.cache.sortedBeatmaps ?? [];
+    // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
+    const beatmaps = [...this.context.beatmapStore.beatmaps.values()].filter((x) => x.beatmapset_id === this.props.beatmapset.id);
+    return sortWithMode(beatmaps);
   }
 
   componentDidMount() {
@@ -346,13 +343,18 @@ export default class Editor extends React.Component<Props, State> {
     switch (props.element.type) {
       case 'embed':
         el = (
-          <EditorDiscussionComponent
-            beatmaps={this.sortedBeatmaps}
-            editMode={this.props.editMode}
-            readOnly={this.state.posting}
-            stores={this.context}
-            {...props}
-          />
+          // Observer is needed for @computed to memoize since this is in a render prop
+          <Observer>
+            {() => (
+              <EditorDiscussionComponent
+                beatmaps={this.sortedBeatmaps}
+                editMode={this.props.editMode}
+                readOnly={this.state.posting}
+                stores={this.context}
+                {...props}
+              />
+            )}
+          </Observer>
         );
         break;
 
