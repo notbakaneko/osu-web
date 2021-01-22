@@ -38,11 +38,6 @@ export class Main extends React.PureComponent
       beatmaps: props.beatmaps
       beatmapsets: props.beatmapsets
       discussions: props.discussions
-      events: props.events
-      user: props.user
-      users: props.users
-      posts: props.posts
-      votes: props.votes
       profileOrder: ['events', 'discussions', 'posts', 'votes', 'kudosu']
       rankedAndApprovedBeatmapsets: @props.extras.rankedAndApprovedBeatmapsets
       lovedBeatmapsets: @props.extras.lovedBeatmapsets
@@ -92,10 +87,10 @@ export class Main extends React.PureComponent
 
     el DiscussionsStoreContext.Provider, value: @props.stores,
       el UserProfileContainer,
-        user: @state.user,
+        user: @props.user,
         el Header,
-          user: @state.user
-          stats: @state.user.statistics
+          user: @props.user
+          stats: @props.user.statistics
           userAchievements: @props.userAchievements
 
         div
@@ -151,19 +146,20 @@ export class Main extends React.PureComponent
     switch name
       when 'discussions'
         props:
-          discussions: @props.stores.discussionStore.getUserDiscussions(@state.user.id)
-          user: @state.user
+          discussions: @props.stores.discussionStore.getUserDiscussions(@props.user.id)
+          user: @props.user
         component: Discussions
 
       when 'events'
         props:
-          events: @state.events
-          user: @state.user
+          events: @props.events
+          stores: @props.stores
+          user: @props.user
         component: Events
 
       when 'kudosu'
         props:
-          user: @state.user
+          user: @props.user
           recentlyReceivedKudosu: @state.recentlyReceivedKudosu
           pagination: @state.showMorePagination
         component: Kudosu
@@ -172,16 +168,16 @@ export class Main extends React.PureComponent
         props:
           beatmapsetDiscussions: @props.stores.discussionStore
           beatmapsets: @props.stores.beatmapsetStore
-          posts: @state.posts
-          user: @state.user
+          posts: @props.posts
+          user: @props.user
           users: @props.stores.userStore
         component: Posts
         showMore: true
 
       when 'votes'
         props:
-          votes: @state.votes
-          user: @state.user
+          votes: @props.votes
+          user: @props.user
           users: @users()
         component: Votes
 
@@ -284,7 +280,7 @@ export class Main extends React.PureComponent
 
   users: =>
     if !@cache.users?
-      @cache.users = _.keyBy @state.users, 'id'
+      @cache.users = _.keyBy @props.users, 'id'
       @cache.users[null] = @cache.users[undefined] =
         username: osu.trans 'users.deleted'
 

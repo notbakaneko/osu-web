@@ -15,6 +15,7 @@ interface Props {
 export default class Events extends React.PureComponent<Props> {
   render() {
     return (
+      // FIXME: handle cases where context already exists.
       <DiscussionsStoreContext.Provider value={this.props.stores}>
         {this.props.events.map((event) => <Event event={event} key={event.id} mode='profile' />)}
       </DiscussionsStoreContext.Provider>
