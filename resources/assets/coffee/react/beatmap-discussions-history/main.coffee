@@ -39,38 +39,7 @@ export class Main extends React.Component
     {beatmapset} = options
     return unless beatmapset?
 
-    # discussions = [@state.discussions...]
-    # users = [@state.users...]
-
-    # discussionIds = _.map discussions, 'id'
-    # userIds = _.map users, 'id'
-
     @props.stores.updateWithBeatmapset(beatmapset)
-
-    # Due to the entire hierarchy of discussions being sent back when a post is updated (instead of just the modified post),
-    #   we need to iterate over each discussion and their posts to extract the updates we want.
-    # TODO: this
-    # _.each beatmapset.discussions, (newDiscussion) ->
-    #   if discussionIds.includes(newDiscussion.id)
-    #     discussion = _.find discussions, id: newDiscussion.id
-    #     discussions = _.reject discussions, id: newDiscussion.id
-    #     newDiscussion = _.merge(discussion, newDiscussion)
-    #     # The discussion list shows discussions started by the current user, so it can be assumed that the first post is theirs
-    #     newDiscussion.starting_post = newDiscussion.posts[0]
-    #     discussions.push(newDiscussion)
-    #   else
-    #     relatedDiscussions.push(newDiscussion)
-
-    # _.each beatmapset.related_users, (newUser) ->
-    #   if userIds.includes(newUser.id)
-    #     users = _.reject users, id: newUser.id
-
-    #   users.push(newUser)
-
-    # @cache.users = @cache.discussions = @cache.beatmaps = null
-    # @setState
-    #   discussions: _.reverse(_.sortBy(discussions, (d) -> Date.parse(d.starting_post.created_at)))
-    #   users: users
 
 
   saveStateToContainer: =>
