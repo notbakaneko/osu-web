@@ -178,7 +178,6 @@ export class Main extends React.PureComponent
         props:
           votes: @props.votes
           user: @props.user
-          users: @users()
         component: Votes
 
 

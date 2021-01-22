@@ -1,6 +1,8 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
+import { deletedUser } from 'models/user'
 import * as React from 'react'
 import { a, div, h1, h2, span } from 'react-dom-factories'
 import { UserAvatar } from 'user-avatar'
@@ -9,6 +11,8 @@ import UserGroupBadge from 'user-group-badge'
 el = React.createElement
 
 export class Votes extends React.Component
+  @contextType = DiscussionsStoreContext
+
   render: =>
     for direction in ['received', 'given']
       el React.Fragment, key: direction,
@@ -22,11 +26,13 @@ export class Votes extends React.Component
           div
             className: 'modding-profile-list modding-profile-list--votes'
             for vote in @props.votes[direction]
-              @renderUser(@props.users[vote.user_id], vote.score, vote.count)
+              @renderUser(vote.user_id, vote.score, vote.count)
 
 
-  renderUser: (user, score, count) =>
+  renderUser: (userId, score, count) =>
     bn = 'modding-profile-vote-card'
+
+    user = (@context.userStore.get(userId) ? deletedUser).toJson()
     userBadge = user.groups[0]
     topClasses = bn
     style = osu.groupColour(userBadge)
