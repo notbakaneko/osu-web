@@ -31,42 +31,38 @@ export class Main extends React.PureComponent
     @cache = {}
     @tabs = React.createRef()
     @pages = React.createRef()
-    @state = JSON.parse(props.container.dataset.profilePageState ? null)
-    @restoredState = @state?
 
-    if !@restoredState
-      page = location.hash.slice(1)
-      @initialPage = page if page?
+    page = location.hash.slice(1)
+    @initialPage = page if page?
 
-      @state =
-        beatmaps: props.beatmaps
-        beatmapsets: props.beatmapsets
-        discussions: props.discussions
-        events: props.events
-        user: props.user
-        users: props.users
-        posts: props.posts
-        votes: props.votes
-        profileOrder: ['events', 'discussions', 'posts', 'votes', 'kudosu']
-        rankedAndApprovedBeatmapsets: @props.extras.rankedAndApprovedBeatmapsets
-        lovedBeatmapsets: @props.extras.lovedBeatmapsets
-        unrankedBeatmapsets: @props.extras.unrankedBeatmapsets
-        graveyardBeatmapsets: @props.extras.graveyardBeatmapsets
-        recentlyReceivedKudosu: @props.extras.recentlyReceivedKudosu
-        showMorePagination: {}
+    @state =
+      beatmaps: props.beatmaps
+      beatmapsets: props.beatmapsets
+      discussions: props.discussions
+      events: props.events
+      user: props.user
+      users: props.users
+      posts: props.posts
+      votes: props.votes
+      profileOrder: ['events', 'discussions', 'posts', 'votes', 'kudosu']
+      rankedAndApprovedBeatmapsets: @props.extras.rankedAndApprovedBeatmapsets
+      lovedBeatmapsets: @props.extras.lovedBeatmapsets
+      unrankedBeatmapsets: @props.extras.unrankedBeatmapsets
+      graveyardBeatmapsets: @props.extras.graveyardBeatmapsets
+      recentlyReceivedKudosu: @props.extras.recentlyReceivedKudosu
+      showMorePagination: {}
 
-      for own elem, perPage of @props.perPage
-        @state.showMorePagination[elem] ?= {}
-        @state.showMorePagination[elem].hasMore = @state[elem].length > perPage
+    for own elem, perPage of @props.perPage
+      @state.showMorePagination[elem] ?= {}
+      @state.showMorePagination[elem].hasMore = @state[elem].length > perPage
 
-        if @state.showMorePagination[elem].hasMore
-          @state[elem].pop()
+      if @state.showMorePagination[elem].hasMore
+        @state[elem].pop()
 
 
   componentDidMount: =>
     $.subscribe 'user:update.profilePage', @userUpdate
     $.subscribe 'profile:showMore.moddingProfilePage', @showMore
-    $.subscribe 'profile:page:jump.moddingProfilePage', @pageJump
     $.subscribe 'beatmapsetDiscussions:update.moddingProfilePage', @discussionUpdate
     $(document).on 'ajax:success.moddingProfilePage', '.js-beatmapset-discussion-update', @ujsDiscussionUpdate
     $(window).on 'scroll.moddingProfilePage', @pageScan
@@ -75,8 +71,7 @@ export class Main extends React.PureComponent
 
     @modeScrollUrl = currentLocation()
 
-    if !@restoredState
-      Timeout.set 0, => @pageJump null, @initialPage
+    Timeout.set 0, => @pageJump null, @initialPage
 
 
   componentWillUnmount: =>

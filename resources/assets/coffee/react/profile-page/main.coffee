@@ -74,7 +74,6 @@ export class Main extends React.PureComponent
     $.subscribe 'user:update.profilePage', @userUpdate
     $.subscribe 'user:page:update.profilePage', @userPageUpdate
     $.subscribe 'profile:showMore.profilePage', @showMore
-    $.subscribe 'profile:page:jump.profilePage', @pageJump
     $(window).on 'scroll.profilePage', @pageScan
     $(document).on 'turbolinks:before-cache.profilePage', @saveStateToContainer
 
