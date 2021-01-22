@@ -4,7 +4,7 @@
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
 import { isEmpty } from 'lodash';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 export class BeatmapsetDiscussionStore {
   // store json for now to make it easier to work with existing coffeescript.
