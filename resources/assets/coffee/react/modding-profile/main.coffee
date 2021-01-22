@@ -269,15 +269,6 @@ export class Main extends React.PureComponent
     @pageJump null, e.currentTarget.dataset.pageId
 
 
-  users: =>
-    if !@cache.users?
-      @cache.users = _.keyBy @props.users, 'id'
-      @cache.users[null] = @cache.users[undefined] =
-        username: osu.trans 'users.deleted'
-
-    @cache.users
-
-
   ujsDiscussionUpdate: (_e, data) =>
     # to allow ajax:complete to be run
     Timeout.set 0, => @discussionUpdate(null, beatmapset: data)
