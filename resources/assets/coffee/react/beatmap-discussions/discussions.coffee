@@ -176,7 +176,6 @@ export class Discussions extends React.PureComponent
       className: "#{bn}__discussion"
       el Discussion,
         discussion: discussion
-        users: @props.users
         currentUser: @props.currentUser
         beatmapset: @props.beatmapset
         currentBeatmap: @props.currentBeatmap
