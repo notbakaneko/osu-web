@@ -123,7 +123,7 @@ export default class Event extends React.Component<Props> {
         url = BeatmapDiscussionHelper.url({ discussion: this.discussion });
         text = firstPostMessage != null ? BeatmapDiscussionHelper.previewMessage(firstPostMessage) : '[no preview]';
 
-        const discussionUser = this.props.users[this.discussion.user_id];
+        const discussionUser = this.context.userStore.get(this.discussion.user_id);
 
         if (discussionUser != null) {
           discussionUserLink = osu.link(route('users.show', { user: discussionUser.id }), discussionUser.username);
