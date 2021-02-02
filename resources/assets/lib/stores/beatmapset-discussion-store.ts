@@ -3,6 +3,7 @@
 
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
+import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import { isEmpty } from 'lodash';
 import { action, observable } from 'mobx';
 

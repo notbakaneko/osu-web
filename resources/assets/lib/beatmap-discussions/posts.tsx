@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
+import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
+import BeatmapsetDiscussionPostJson from 'interfaces/beatmapset-discussion-post-json';
 import User, { deletedUser } from 'models/user';
 import * as React from 'react';
 import { Post } from 'react/beatmap-discussions/post';

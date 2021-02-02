@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import Posts from 'beatmap-discussions/posts';
+import BeatmapsetDiscussionPostJson from 'interfaces/beatmapset-discussion-post-json';
 import * as React from 'react';
 import BeatmapsetDiscussionRootStore from 'stores/beatmapset-discussion-root-store';
 

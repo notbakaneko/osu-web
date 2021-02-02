@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import BeatmapJson from 'interfaces/beatmap-json';
+import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import GameMode from 'interfaces/game-mode';
 import GenreJson from 'interfaces/genre-json';
 import LanguageJson from 'interfaces/language-json';

@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
+import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import * as React from 'react';
 import { Element as SlateElement, Path, Transforms } from 'slate';
 import { RenderElementProps } from 'slate-react';

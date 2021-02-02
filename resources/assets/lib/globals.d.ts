@@ -120,34 +120,6 @@ interface BeatmapFailTimesArray {
   fail: number[];
 }
 
-// TODO: incomplete
-interface BeatmapsetDiscussionJson {
-  beatmap_id: number | null;
-  // discussion on beatmapset page may include beatmapset.
-  beatmapset?: import('beatmapsets/beatmapset-json').BeatmapsetJson;
-  beatmapset_id: number;
-  deleted_at: string | null;
-  id: number;
-  message_type: string;
-  parent_id: number | null;
-  posts: BeatmapsetDiscussionPostJson[];
-  resolved: boolean;
-  starting_post: BeatmapsetDiscussionPostJson;
-  timestamp: number | null;
-  user_id: number;
-}
-
-// TODO: incomplete
-interface BeatmapsetDiscussionPostJson {
-  beatmap_discussion_id: number;
-  created_at: string;
-  deleted_at: string | null;
-  id: number;
-  last_editor_id: number | null;
-  message: string;
-  user_id: number | null;
-}
-
 interface LangClass {
   _getPluralForm: (count: number, locale: string) => number;
   _origGetPluralForm: (count: number, locale: string) => number;

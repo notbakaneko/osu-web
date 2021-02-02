@@ -2,7 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
-import GameMode from './game-mode';
+import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
+import GameMode from 'interfaces/game-mode';
 
 export default interface BeatmapsetEventJson {
   beatmapset?: BeatmapsetJson;
