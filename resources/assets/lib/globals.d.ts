@@ -123,6 +123,8 @@ interface BeatmapFailTimesArray {
 // TODO: incomplete
 interface BeatmapsetDiscussionJson {
   beatmap_id: number | null;
+  // discussion on beatmapset page may include beatmapset.
+  beatmapset?: import('beatmapsets/beatmapset-json').BeatmapsetJson;
   beatmapset_id: number;
   deleted_at: string | null;
   id: number;
