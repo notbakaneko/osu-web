@@ -23,6 +23,8 @@ export default class BeatmapStore {
 
   @action
   update(beatmap: BeatmapJsonExtended) {
+    // ignore deleted beatmaps for the moment to make it simpler
+    if (beatmap.deleted_at != null) return;
     // just override the value for now, we can do something fancier in the future.
     this.beatmaps.set(beatmap.id, beatmap);
   }

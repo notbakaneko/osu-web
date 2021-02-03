@@ -15,6 +15,10 @@ export class BeatmapsetDiscussionStore {
     return this.discussions.get(id);
   }
 
+  get beatmapIds() {
+    return uniq([...this.discussions.values()].map((discussion) => discussion.beatmap_id));
+  }
+
   get discussionStarters() {
     return uniq([...this.discussions.values()].map((discussion) => discussion.user_id));
   }

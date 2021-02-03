@@ -96,7 +96,6 @@ export class Main extends React.PureComponent
     el DiscussionsStoreContext.Provider, value: @props.stores,
       div className: 'osu-layout osu-layout--full',
         el Header,
-          beatmaps: @groupedBeatmaps()
           beatmapset: @state.beatmapset
           currentBeatmap: @currentBeatmap()
           currentDiscussions: @currentDiscussions()
@@ -104,6 +103,7 @@ export class Main extends React.PureComponent
           currentUser: currentUser
           events: @state.beatmapset.events
           mode: @state.currentMode
+          groupedBeatmaps: @groupedBeatmaps()
           selectedUserId: @state.selectedUserId
 
         el ModeSwitcher,
@@ -158,21 +158,6 @@ export class Main extends React.PureComponent
         el BackToTop
 
 
-  beatmaps: =>
-    return @cache.beatmaps if @cache.beatmaps?
-
-    hasDiscussion = {}
-    for discussion in @state.beatmapset.discussions
-      hasDiscussion[discussion.beatmap_id] = true if discussion?
-
-    @cache.beatmaps ?=
-      _(@state.beatmapset.beatmaps)
-      .filter (beatmap) ->
-        !_.isEmpty(beatmap) && (!beatmap.deleted_at? || hasDiscussion[beatmap.id]?)
-      .keyBy 'id'
-      .value()
-
-
   checkNew: =>
     @nextTimeout ?= @checkNewTimeoutDefault
 
@@ -198,7 +183,7 @@ export class Main extends React.PureComponent
 
 
   currentBeatmap: =>
-    @beatmaps()[@state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @groupedBeatmaps())
+    @props.stores.beatmapStore.get(@state.currentBeatmapId) ? BeatmapHelper.findDefault(group: @groupedBeatmaps())
 
 
   currentDiscussions: =>
@@ -228,12 +213,13 @@ export class Main extends React.PureComponent
       for own _filter, modes of byFilter
         modes[mode] = {}
 
+    # TODO: need to move this to ts to handle map iterator
     for own _id, d of @discussions()
       if !d.deleted_at?
         totalHype++ if d.message_type == 'hype'
 
         if d.can_be_resolved && !d.resolved
-          beatmap = @beatmaps()[d.beatmap_id]
+          beatmap = @props.stores.beatmapStore.get(d.beatmap_id)
 
           if !d.beatmap_id? || (beatmap? && !beatmap.deleted_at?)
             unresolvedIssues++
@@ -293,7 +279,7 @@ export class Main extends React.PureComponent
         byFilter[filter][mode][d.id] = d
 
       if filters.pending && d.parent_id?
-        parentDiscussion = @discussions()[d.parent_id]
+        parentDiscussion = @props.stores.discussionStore.discussions.get(d.parent_id)
 
         if parentDiscussion? && parentDiscussion.message_type == 'review'
           byFilter.pending.reviews[parentDiscussion.id] = parentDiscussion
@@ -317,8 +303,8 @@ export class Main extends React.PureComponent
                             .value()
 
 
-  groupedBeatmaps: (discussionSet) =>
-    @cache.groupedBeatmaps ?= BeatmapHelper.group _.values(@beatmaps())
+  groupedBeatmaps: =>
+    @cache.groupedBeatmaps ?= BeatmapHelper.group(Array.from(@props.stores.beatmapStore.beatmaps.values()))
 
 
   jumpToDiscussionByHash: =>
@@ -328,7 +314,7 @@ export class Main extends React.PureComponent
 
 
   jumpTo: (_e, {id}) =>
-    discussion = @discussions()[id]
+    discussion = @props.stores.discussionStore.get(id)
 
     return if !discussion?
 
