@@ -103,11 +103,9 @@ export class Main extends React.PureComponent
           currentFilter: @state.currentFilter
           currentUser: currentUser
           discussions: @discussions()
-          discussionStarters: @discussionStarters()
           events: @state.beatmapset.events
           mode: @state.currentMode
           selectedUserId: @state.selectedUserId
-          users: @users()
 
         el ModeSwitcher,
           innerRef: @modeSwitcherRef
@@ -319,15 +317,6 @@ export class Main extends React.PureComponent
                             .filter (d) -> !_.isEmpty(d)
                             .keyBy 'id'
                             .value()
-
-
-  discussionStarters: =>
-    _ @discussions()
-      .map 'user_id'
-      .uniq()
-      .map (user_id) => @users()[user_id]
-      .orderBy (user) -> user.username.toLocaleLowerCase()
-      .value()
 
 
   groupedBeatmaps: (discussionSet) =>

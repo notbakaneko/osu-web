@@ -5,6 +5,7 @@ import { BigButton } from 'big-button'
 import * as React from 'react'
 import { a, div, i, span } from 'react-dom-factories'
 import { StringWithComponent } from 'string-with-component'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import { Nominator } from 'beatmap-discussions/nominator'
 import { nominationsCount } from 'utils/beatmapset-helper'
 
@@ -14,6 +15,8 @@ bn = 'beatmap-discussion-nomination'
 dateFormat = 'LL'
 
 export class Nominations extends React.PureComponent
+  @contextType = DiscussionsStoreContext
+
   constructor: (props) ->
     super props
 
@@ -54,7 +57,6 @@ export class Nominations extends React.PureComponent
               currentHype: @props.currentDiscussions.totalHype
               currentUser: @props.currentUser
               unresolvedIssues: @props.currentDiscussions.unresolvedIssues
-              users: @props.users
         div className: "#{bn}__items-grouping",
           div className: "#{bn}__item", @discussionLockButton()
           div className: "#{bn}__item", @loveButton()
@@ -243,7 +245,7 @@ export class Nominations extends React.PureComponent
 
 
   parseEventData: (event) =>
-    user = @props.users[event.user_id]
+    user = @context.userStore.getAsJson(event.user_id)
     discussion = @props.discussions[event.comment.beatmap_discussion_id]
 
     if discussion?
@@ -389,7 +391,7 @@ export class Nominations extends React.PureComponent
       if event.type == 'disqualify' || event.type == 'nomination_reset'
         break
       else if event.type == 'nominate'
-        nominators.unshift @props.users[event.user_id]
+        nominators.unshift @context.userStore.getAsJson(event.user_id)
 
     return null if nominators.length == 0
 

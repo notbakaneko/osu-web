@@ -7,6 +7,7 @@ import { Nominations } from './nominations'
 import { Subscribe } from './subscribe'
 import { UserFilter } from './user-filter'
 import { BeatmapBasicStats } from 'beatmap-basic-stats'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import { BeatmapsetMapping } from 'beatmapset-mapping'
 import HeaderV4 from 'header-v4'
 import { PlaymodeTabs } from 'playmode-tabs'
@@ -18,6 +19,8 @@ import Chart from 'beatmap-discussions/chart'
 el = React.createElement
 
 export class Header extends React.PureComponent
+  @contextType = DiscussionsStoreContext
+
   render: =>
     el React.Fragment, null,
       el HeaderV4,
@@ -44,7 +47,7 @@ export class Header extends React.PureComponent
         div className: "#{bn}__details #{bn}__details--full",
           el BeatmapsetMapping,
             beatmapset: @props.beatmapset
-            user: @props.users[@props.beatmapset.user_id]
+            user: @context.userStore.getAsJson(@props.beatmapset.user_id)
 
         div className: "#{bn}__details",
           el Subscribe, beatmapset: @props.beatmapset
@@ -105,8 +108,8 @@ export class Header extends React.PureComponent
             className: "#{bn}__filter-group #{bn}__filter-group--stats"
             el UserFilter,
               ownerId: @props.beatmapset.user_id
-              selectedUser: if @props.selectedUserId? then @props.users[@props.selectedUserId] else null
-              users: @props.discussionStarters
+              selectedUser: if @props.selectedUserId? then @context.userStore.getAsJson(@props.selectedUserId) else null
+              users: @discussionStarters()
 
             div
               className: "#{bn}__stats"
@@ -119,6 +122,13 @@ export class Header extends React.PureComponent
 
           div className: "#{bn}__beatmap-stats",
             el BeatmapBasicStats, beatmap: @props.currentBeatmap
+
+
+  discussionStarters: =>
+    _ @context.discussionStore.discussionStarters
+      .map (user_id) => @context.userStore.getAsJson(user_id)
+      .orderBy (user) -> user.username.toLocaleLowerCase()
+      .value()
 
 
   setFilter: (e) =>

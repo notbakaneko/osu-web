@@ -8,20 +8,19 @@ import {
 } from 'beatmapsets/beatmapset-json';
 import { BigButton } from 'big-button';
 import GameMode from 'interfaces/game-mode';
-import UserJson from 'interfaces/user-json';
 import UserJSONExtended from 'interfaces/user-json-extended';
 import { route } from 'laroute';
 import * as _ from 'lodash';
 import { Modal } from 'modal';
 import * as React from 'react';
 import { classWithModifiers } from 'utils/css';
+import { DiscussionsStoreContext } from './discussions-store-context';
 
 interface Props {
   beatmapset: BeatmapsetJson;
   currentHype: number;
   currentUser: UserJSONExtended;
   unresolvedIssues: number;
-  users: UserJson[];
 }
 
 interface State {
@@ -31,6 +30,9 @@ interface State {
 }
 
 export class Nominator extends React.PureComponent<Props, State> {
+  static contextType = DiscussionsStoreContext;
+  context!: React.ContextType<typeof DiscussionsStoreContext>;
+
   private bn = 'nomination-dialog';
   private checkboxContainerRef = React.createRef<HTMLDivElement>();
   private xhr?: JQuery.jqXHR;
@@ -55,7 +57,7 @@ export class Nominator extends React.PureComponent<Props, State> {
         return false;
       }
 
-      return _.some(this.props.users[event.user_id].groups, (group) => {
+      return _.some(this.getUser(event.user_id)?.groups, (group) => {
         if (gameMode !== undefined) {
           return (group.identifier === 'bng' || group.identifier === 'nat') && group.playmodes?.includes(gameMode);
         } else {
@@ -318,6 +320,10 @@ export class Nominator extends React.PureComponent<Props, State> {
         </div>
       </>
     );
+  }
+
+  private getUser(id: number) {
+    return this.context.userStore.getAsJson(id);
   }
 
   private modalContentNormal() {

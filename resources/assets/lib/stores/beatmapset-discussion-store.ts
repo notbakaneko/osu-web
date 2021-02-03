@@ -4,7 +4,7 @@
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
-import { isEmpty } from 'lodash';
+import { isEmpty, uniq } from 'lodash';
 import { action, observable } from 'mobx';
 
 export class BeatmapsetDiscussionStore {
@@ -13,6 +13,10 @@ export class BeatmapsetDiscussionStore {
 
   get(id: number) {
     return this.discussions.get(id);
+  }
+
+  get discussionStarters() {
+    return uniq([...this.discussions.values()].map((discussion) => discussion.user_id));
   }
 
   get orderedDiscussions() {
