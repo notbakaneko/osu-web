@@ -65,9 +65,7 @@ export class Header extends React.PureComponent
           beatmapset: @props.beatmapset
           currentDiscussions: @props.currentDiscussions
           currentUser: @props.currentUser
-          discussions: @props.discussions
           events: @props.events
-          users: @props.users
 
 
   headerTop: =>

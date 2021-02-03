@@ -102,7 +102,6 @@ export class Main extends React.PureComponent
           currentDiscussions: @currentDiscussions()
           currentFilter: @state.currentFilter
           currentUser: currentUser
-          discussions: @discussions()
           events: @state.beatmapset.events
           mode: @state.currentMode
           selectedUserId: @state.selectedUserId

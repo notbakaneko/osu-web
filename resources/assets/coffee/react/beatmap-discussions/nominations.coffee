@@ -246,13 +246,13 @@ export class Nominations extends React.PureComponent
 
   parseEventData: (event) =>
     user = @context.userStore.getAsJson(event.user_id)
-    discussion = @props.discussions[event.comment.beatmap_discussion_id]
+    discussion = @context.discussionStore.get(event.comment.beatmap_discussion_id)
 
     if discussion?
       url = BeatmapDiscussionHelper.url discussion: discussion
 
       link = osu.link url, "##{discussion.id}", classNames: ['js-beatmap-discussion--jump']
-      message = BeatmapDiscussionHelper.previewMessage(discussion.posts[0].message)
+      message = BeatmapDiscussionHelper.previewMessage(discussion.starting_post.message)
     else
       link = "##{event.comment.beatmap_discussion_id}"
       message = osu.trans('beatmaps.nominations.reset_message_deleted')
