@@ -315,7 +315,7 @@ export class Main extends React.PureComponent
     # skipped discussions
     # - not privileged (deleted discussion)
     # - deleted beatmap
-    @cache.discussions ?= _ @state.beatmapset.discussions
+    @cache.discussions ?= _ Array.from(@props.stores.discussionStore.discussions.values())
                             .filter (d) -> !_.isEmpty(d)
                             .keyBy 'id'
                             .value()
