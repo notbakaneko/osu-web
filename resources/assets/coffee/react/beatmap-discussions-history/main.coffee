@@ -9,20 +9,6 @@ import { a, div, img } from 'react-dom-factories'
 el = React.createElement
 
 export class Main extends React.Component
-  constructor: (props) ->
-    super props
-
-    # @state = JSON.parse(props.container.dataset.discussionsState ? null)
-    # @restoredState = @state?
-
-    # # FIXME do something about this for turbolinks
-    # if !@restoredState
-    #   @state =
-    #     beatmaps: props.beatmaps
-    #     discussions: props.discussions
-    #     users: props.users
-
-
   componentDidMount: =>
     $.subscribe 'beatmapsetDiscussions:update.discussionHistory', @discussionUpdate
     $(document).on 'ajax:success.discussionHistory', '.js-beatmapset-discussion-update', @ujsDiscussionUpdate

@@ -9,17 +9,9 @@ reactTurbolinks.registerPersistent 'beatmap-discussions-history', Main, true, (t
   # FIXME: problem is the dispatcher means these don't get cleaned up.
   stores = new BeatmapsetDiscussionRootStore
   stores.reviewsConfig = osu.parseJson 'json-reviewsConfig'
-
-  props =
-    container: target
-    events: osu.parseJson('json-events')
-    posts: osu.parseJson('json-posts')
-    votes: osu.parseJson('json-votes')
-    stores: stores
-
   stores.beatmapsetStore.updateWithJson(osu.parseJson('json-beatmapsets'))
   stores.beatmapStore.updateWithJson(osu.parseJson('json-beatmaps'))
   stores.discussionStore.updateWithJson(osu.parseJson('json-discussions'))
   stores.userStore.updateWithJson(osu.parseJson('json-users'))
 
-  props
+  stores: stores
