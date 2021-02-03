@@ -43,7 +43,7 @@ export class Main extends React.PureComponent
         for post in discussion?.posts ? []
           readPostIds.add(post.id) if post?
 
-      @state = {beatmapset, currentUser, readPostIds, showDeleted}
+      @state = {beatmapset, readPostIds, showDeleted}
 
     # Current url takes priority over saved state.
     query = @queryFromLocation(@state.beatmapset.discussions)
@@ -101,7 +101,7 @@ export class Main extends React.PureComponent
           currentBeatmap: @currentBeatmap()
           currentDiscussions: @currentDiscussions()
           currentFilter: @state.currentFilter
-          currentUser: @state.currentUser
+          currentUser: currentUser
           discussions: @discussions()
           discussionStarters: @discussionStarters()
           events: @state.beatmapset.events
@@ -131,14 +131,14 @@ export class Main extends React.PureComponent
                 beatmapset: @state.beatmapset
                 currentBeatmap: @currentBeatmap()
                 currentDiscussions: @currentDiscussions()
-                currentUser: @state.currentUser
+                currentUser: currentUser
                 pinned: @state.pinnedNewDiscussion
                 setPinned: @setPinnedNewDiscussion
                 stickTo: @modeSwitcherRef
             else
               el NewDiscussion,
                 beatmapset: @state.beatmapset
-                currentUser: @state.currentUser
+                currentUser: currentUser
                 currentBeatmap: @currentBeatmap()
                 currentDiscussions: @currentDiscussions()
                 innerRef: @newDiscussionRef
@@ -153,7 +153,7 @@ export class Main extends React.PureComponent
               currentBeatmap: @currentBeatmap()
               currentDiscussions: @currentDiscussions()
               currentFilter: @state.currentFilter
-              currentUser: @state.currentUser
+              currentUser: currentUser
               mode: @state.currentMode
               readPostIds: @state.readPostIds
               showDeleted: @state.showDeleted
@@ -285,7 +285,7 @@ export class Main extends React.PureComponent
         else
           filters.pending = true
 
-      if d.user_id == @state.currentUser.id
+      if d.user_id == currentUser.id
         filters.mine = true
 
       if d.message_type == 'mapper_note'
