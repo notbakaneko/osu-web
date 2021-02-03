@@ -10,23 +10,19 @@ reactTurbolinks.registerPersistent 'modding-profile', Main, true, (target) ->
   stores.reviewsConfig = osu.parseJson 'json-reviewsConfig'
 
   props =
-    beatmaps: osu.parseJson('json-beatmaps')
-    beatmapsets: osu.parseJson('json-beatmapsets')
     container: target
-    discussions: osu.parseJson('json-discussions')
     events: osu.parseJson('json-events')
     extras: osu.parseJson('json-extras')
     perPage: osu.parseJson('json-perPage')
     posts: osu.parseJson('json-posts')
     reviewsConfig: osu.parseJson 'json-reviewsConfig'
     user: osu.parseJson('json-user')
-    users: osu.parseJson('json-users')
     votes: osu.parseJson('json-votes')
     stores: stores
 
-  stores.beatmapsetStore.updateWithJson(props.beatmapsets)
-  stores.beatmapStore.updateWithJson(props.beatmaps)
-  stores.discussionStore.updateWithJson(props.discussions)
-  stores.userStore.updateWithJson(props.users)
+  stores.beatmapsetStore.updateWithJson(osu.parseJson('json-beatmapsets'))
+  stores.beatmapStore.updateWithJson(osu.parseJson('json-beatmaps'))
+  stores.discussionStore.updateWithJson(osu.parseJson('json-discussions'))
+  stores.userStore.updateWithJson(osu.parseJson('json-users'))
 
   props
