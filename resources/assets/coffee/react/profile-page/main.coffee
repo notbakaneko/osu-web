@@ -135,7 +135,6 @@ export class Main extends React.PureComponent
       user: @state.user,
       el Header,
         user: @state.user
-        stats: @state.user.statistics
         currentMode: @state.currentMode
         withEdit: @props.withEdit
         userAchievements: @props.userAchievements

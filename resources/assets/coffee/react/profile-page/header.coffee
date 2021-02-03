@@ -78,20 +78,19 @@ export class Header extends React.Component
             if !@props.user.is_bot
               el React.Fragment, null,
                 el DetailMobile,
-                  stats: @props.stats
+                  stats: @props.user.statistics
                   userAchievements: @props.userAchievements
                   rankHistory: @props.user.rank_history
 
-                el Stats, stats: @props.stats
+                el Stats, stats: @props.user.statistics
 
                 div className: 'profile-header__rank-count-mobile',
-                  el RankCount, stats: @props.stats
+                  el RankCount, stats: @props.user.statistics
 
           if @props.user.is_bot
             el DetailBot, user: @props.user
           else
             el Detail,
-              stats: @props.stats
               userAchievements: @props.userAchievements
               user: @props.user
 

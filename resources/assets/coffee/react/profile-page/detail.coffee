@@ -22,10 +22,11 @@ export class Detail extends React.PureComponent
 
 
   render: =>
+    stats = @props.user.statistics
+
     div className: bn,
       div className: "#{bn}__bar",
         el DetailBar,
-          stats: @props.stats
           toggleExtend: @toggleExtend
           expanded: @state.expanded
           user: @props.user
@@ -34,20 +35,20 @@ export class Detail extends React.PureComponent
         div className: "#{bn}__row #{bn}__row--top",
           div className: "#{bn}__col #{bn}__col--top-left",
             div className: "#{bn}__top-left-item",
-              el PlayTime, stats: @props.stats
+              el PlayTime, stats: stats
             div className: "#{bn}__top-left-item",
               el MedalsCount, userAchievements: @props.userAchievements
             div className: "#{bn}__top-left-item",
-              el Pp, stats: @props.stats
+              el Pp, stats: stats
 
           div className: "#{bn}__col",
-            el RankCount, stats: @props.stats
+            el RankCount, stats: stats
         div className: "#{bn}__row",
           div className: "#{bn}__col #{bn}__col--bottom-left",
-            if @props.stats.is_ranked
+            if stats.is_ranked
               el RankChart,
                 rankHistory: @props.user.rank_history
-                stats: @props.stats
+                stats: stats
             else
               div className: "#{bn}__empty-chart",
                 osu.trans('users.show.extra.unranked')
@@ -57,12 +58,12 @@ export class Detail extends React.PureComponent
               el Rank,
                 modifiers: ['large']
                 type: 'global'
-                stats: @props.stats
+                stats: stats
 
             div className: "#{bn}__bottom-right-item",
               el Rank,
                 type: 'country'
-                stats: @props.stats
+                stats: stats
 
 
   toggleExtend: =>

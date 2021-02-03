@@ -82,7 +82,6 @@ export class Main extends React.PureComponent
         user: @props.user,
         el Header,
           user: @props.user
-          stats: @props.user.statistics
           userAchievements: @props.userAchievements
 
         div

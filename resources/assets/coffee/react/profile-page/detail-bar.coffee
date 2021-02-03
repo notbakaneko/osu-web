@@ -32,6 +32,7 @@ export class DetailBar extends React.PureComponent
 
   render: =>
     isBlocked = _.find(@state.currentUser.blocks, target_id: @props.user.id)?
+    stats = @props.user.statistics
 
     div className: bn,
       div className: "#{bn}__page-toggle",
@@ -52,7 +53,7 @@ export class DetailBar extends React.PureComponent
             followers: @props.user.follower_count
             modifiers: ['profile-page']
             alwaysVisible: true
-            
+
         div className: "#{bn}__entry",
           el FollowUserMappingButton,
             userId: @props.user.id
@@ -80,23 +81,23 @@ export class DetailBar extends React.PureComponent
               div
                 className: 'bar__fill'
                 style:
-                  width: "#{@props.stats.level.progress}%"
+                  width: "#{stats.level.progress}%"
               div className: "bar__text",
-                "#{@props.stats.level.progress}%"
+                "#{stats.level.progress}%"
 
         if !@props.expanded
           el React.Fragment, null,
             div className: "#{bn}__entry hidden-xs",
-              el Rank, type: 'global', stats: @props.stats
+              el Rank, type: 'global', stats: stats
 
             div className: "#{bn}__entry hidden-xs",
-              el Rank, type: 'country', stats: @props.stats
+              el Rank, type: 'country', stats: stats
 
         div className: "#{bn}__entry #{bn}__entry--level",
           div
             className: "#{bn}__level"
-            title: osu.trans('users.show.stats.level', level: @props.stats.level.current)
-            @props.stats.level.current
+            title: osu.trans('users.show.stats.level', level: stats.level.current)
+            stats.level.current
 
   renderExtraMenu: =>
     items = []

@@ -32,7 +32,6 @@ export class Header extends React.Component
 
           if !@props.user.is_bot
             el Detail,
-              stats: @props.stats
               userAchievements: @props.userAchievements
               user: @props.user
 
