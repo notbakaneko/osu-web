@@ -213,8 +213,7 @@ export class Main extends React.PureComponent
       for own _filter, modes of byFilter
         modes[mode] = {}
 
-    # TODO: need to move this to ts to handle map iterator
-    for own _id, d of @discussions()
+    for d in Array.from(@props.stores.discussionStore.discussions.values())
       if !d.deleted_at?
         totalHype++ if d.message_type == 'hype'
 
@@ -292,15 +291,6 @@ export class Main extends React.PureComponent
     reviews = byMode.reviews
 
     @cache.currentDiscussions = {general, generalAll, timeline, reviews, timelineAllUsers, byFilter, countsByBeatmap, countsByPlaymode, totalHype, unresolvedIssues}
-
-
-  discussions: =>
-    # skipped discussions
-    # - not privileged (deleted discussion)
-    # - deleted beatmap
-    @cache.discussions ?= _ Array.from(@props.stores.discussionStore.discussions.values())
-                            .keyBy 'id'
-                            .value()
 
 
   groupedBeatmaps: =>
