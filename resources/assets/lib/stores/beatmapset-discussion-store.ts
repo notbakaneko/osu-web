@@ -29,6 +29,10 @@ export class BeatmapsetDiscussionStore {
     });
   }
 
+  getByBeatmapset(beatmapsetId: number) {
+    return [...this.discussions.values()].filter((discussion) => discussion.beatmapset_id === beatmapsetId);
+  }
+
   getUserDiscussions(userId: number) {
     return [...this.discussions.values()].filter((d) => d.user_id === userId);
   }

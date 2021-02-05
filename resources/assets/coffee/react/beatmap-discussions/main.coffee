@@ -43,10 +43,11 @@ export class Main extends React.PureComponent
         for post in discussion?.posts ? []
           readPostIds.add(post.id) if post?
 
-      @state = {beatmapset, readPostIds, showDeleted}
+      @state = { readPostIds, showDeleted }
 
+    # FIXME: comment seems wrong now?
     # Current url takes priority over saved state.
-    query = @queryFromLocation(@state.beatmapset.discussions)
+    query = BeatmapDiscussionHelper.urlParse(null, @discussions())
     @state.currentMode = query.mode
     @state.currentFilter = query.filter
     @state.currentBeatmapId = query.beatmapId if query.beatmapId?
@@ -96,12 +97,12 @@ export class Main extends React.PureComponent
     el DiscussionsStoreContext.Provider, value: @props.stores,
       div className: 'osu-layout osu-layout--full',
         el Header,
-          beatmapset: @state.beatmapset
+          beatmapset: @beatmapset()
           currentBeatmap: @currentBeatmap()
           currentDiscussions: @currentDiscussions()
           currentFilter: @state.currentFilter
           currentUser: currentUser
-          events: @state.beatmapset.events
+          events: @beatmapset().events
           mode: @state.currentMode
           groupedBeatmaps: @groupedBeatmaps()
           selectedUserId: @state.selectedUserId
@@ -109,7 +110,7 @@ export class Main extends React.PureComponent
         el ModeSwitcher,
           innerRef: @modeSwitcherRef
           mode: @state.currentMode
-          beatmapset: @state.beatmapset
+          beatmapset: @beatmapset()
           currentBeatmap: @currentBeatmap()
           currentDiscussions: @currentDiscussions()
           currentFilter: @state.currentFilter
@@ -118,35 +119,34 @@ export class Main extends React.PureComponent
           div
             className: 'osu-layout__section osu-layout__section--extra'
             el Events,
-              events: @state.beatmapset.events
+              events: @beatmapset().events
 
         else
           div
             className: 'osu-layout__section osu-layout__section--extra'
             if @state.currentMode == 'reviews'
               el NewReview,
-                beatmapset: @state.beatmapset
+                beatmapset: @beatmapset()
                 currentBeatmap: @currentBeatmap()
-                currentDiscussions: @currentDiscussions()
                 currentUser: currentUser
                 pinned: @state.pinnedNewDiscussion
                 setPinned: @setPinnedNewDiscussion
                 stickTo: @modeSwitcherRef
             else
               el NewDiscussion,
-                beatmapset: @state.beatmapset
+                autoFocus: @focusNewDiscussion
+                beatmapset: @beatmapset()
                 currentUser: currentUser
                 currentBeatmap: @currentBeatmap()
-                currentDiscussions: @currentDiscussions()
                 innerRef: @newDiscussionRef
                 mode: @state.currentMode
                 pinned: @state.pinnedNewDiscussion
                 setPinned: @setPinnedNewDiscussion
                 stickTo: @modeSwitcherRef
-                autoFocus: @focusNewDiscussion
+                timelineDiscussions: @currentDiscussions().timelineAllUsers
 
             el Discussions,
-              beatmapset: @state.beatmapset
+              beatmapset: @beatmapset()
               currentBeatmap: @currentBeatmap()
               currentDiscussions: @currentDiscussions()
               currentFilter: @state.currentFilter
@@ -158,13 +158,21 @@ export class Main extends React.PureComponent
         el BackToTop
 
 
+  beatmapset: =>
+    @props.stores.beatmapsetStore.get(@props.initial.beatmapset.id)
+
+
+  discussions: =>
+    @props.stores.discussionStore.getByBeatmapset(@props.initial.beatmapset.id)
+
+
   checkNew: =>
     @nextTimeout ?= @checkNewTimeoutDefault
 
     Timeout.clear @timeouts.checkNew
     @xhr.checkNew?.abort()
 
-    @xhr.checkNew = $.get laroute.route('beatmapsets.discussion', beatmapset: @state.beatmapset.id),
+    @xhr.checkNew = $.get laroute.route('beatmapsets.discussion', beatmapset: @props.initial.beatmapset.id),
       format: 'json'
       last_updated: @lastUpdate()?.unix()
     .done (data, _textStatus, xhr) =>
@@ -298,7 +306,7 @@ export class Main extends React.PureComponent
 
 
   jumpToDiscussionByHash: =>
-    target = BeatmapDiscussionHelper.urlParse(null, @state.beatmapset.discussions)
+    target = BeatmapDiscussionHelper.urlParse(null, @discussions())
 
     @jumpTo(null, id: target.discussionId) if target.discussionId?
 
@@ -336,7 +344,7 @@ export class Main extends React.PureComponent
 
   jumpToClick: (e) =>
     url = e.currentTarget.getAttribute('href')
-    id = BeatmapDiscussionHelper.urlParse(url, @state.beatmapset.discussions).discussionId
+    id = BeatmapDiscussionHelper.urlParse(url, @discussions()).discussionId
 
     return if !id?
 
@@ -345,10 +353,11 @@ export class Main extends React.PureComponent
 
 
   lastUpdate: =>
+    beatmapset = @beatmapset()
     lastUpdate = _.max [
-      @state.beatmapset.last_updated
-      _.maxBy(@state.beatmapset.discussions, 'updated_at')?.updated_at
-      _.maxBy(@state.beatmapset.events, 'created_at')?.created_at
+      beatmapset.last_updated
+      _.maxBy(@discussions(), 'updated_at')?.updated_at
+      _.maxBy(beatmapset.events, 'created_at')?.created_at
     ]
 
     moment(lastUpdate) if lastUpdate?
@@ -364,10 +373,6 @@ export class Main extends React.PureComponent
       newSet.add(id)
 
     @setState readPostIds: newSet
-
-
-  queryFromLocation: (discussions = @state.beatmapsetDiscussion.beatmap_discussions) =>
-    BeatmapDiscussionHelper.urlParse(null, discussions)
 
 
   saveStateToContainer: =>
@@ -403,11 +408,10 @@ export class Main extends React.PureComponent
     newState = {}
 
     if beatmapset?
-      newState.beatmapset = beatmapset
+      @props.stores.updateWithBeatmapset(beatmapset)
 
     if watching?
-      newState.beatmapset ?= _.assign {}, @state.beatmapset
-      newState.beatmapset.current_user_attributes.is_watching = watching
+      @props.stores.beatmapsetStore.get(@props.initial.beatmapset.id)?.current_user_attributes.is_watching = watching
 
     if playmode?
       beatmap = BeatmapHelper.findDefault items: @groupedBeatmaps()[playmode]
@@ -451,15 +455,6 @@ export class Main extends React.PureComponent
       mode: @state.currentMode
       filter: @state.currentFilter
       user: @state.selectedUserId
-
-
-  users: =>
-    if !@cache.users?
-      @cache.users = _.keyBy @state.beatmapset.related_users, 'id'
-      @cache.users[null] = @cache.users[undefined] =
-        username: osu.trans 'users.deleted'
-
-    @cache.users
 
 
   ujsDiscussionUpdate: (_e, data) =>

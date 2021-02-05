@@ -229,7 +229,7 @@ export class NewDiscussion extends React.PureComponent
       @nearbyDiscussionsCache =
         beatmap: @props.currentBeatmap
         timestamp: @timestamp()
-        discussions: BeatmapDiscussionHelper.nearbyDiscussions(@props.currentDiscussions.timelineAllUsers, @timestamp())
+        discussions: BeatmapDiscussionHelper.nearbyDiscussions(@props.timelineDiscussions, @timestamp())
 
     @nearbyDiscussionsCache.discussions
 
