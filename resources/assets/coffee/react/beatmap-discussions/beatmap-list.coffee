@@ -46,7 +46,9 @@ export class BeatmapList extends React.PureComponent
     menuItemClasses = "#{bn}__item"
     menuItemClasses += " #{bn}__item--current" if beatmap.id == @props.currentBeatmap.id
 
-    count = if beatmap.deleted_at? then null else @props.currentDiscussions.countsByBeatmap[beatmap.id]
+    count = if !beatmap.deleted_at?
+              @props.discussions.filter((discussion) -> discussion.beatmap_id == beatmap.id).length
+
 
     a
       href: BeatmapDiscussionHelper.url beatmap: beatmap

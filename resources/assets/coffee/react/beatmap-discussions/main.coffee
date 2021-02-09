@@ -99,7 +99,6 @@ export class Main extends React.PureComponent
         el Header,
           beatmapset: @beatmapset()
           currentBeatmap: @currentBeatmap()
-          currentDiscussions: @currentDiscussions()
           currentFilter: @state.currentFilter
           currentUser: currentUser
           events: @beatmapset().events
@@ -112,7 +111,7 @@ export class Main extends React.PureComponent
           mode: @state.currentMode
           beatmapset: @beatmapset()
           currentBeatmap: @currentBeatmap()
-          currentDiscussions: @currentDiscussions()
+          discussions: @discussions()
           currentFilter: @state.currentFilter
 
         if @state.currentMode == 'events'
@@ -143,14 +142,14 @@ export class Main extends React.PureComponent
                 pinned: @state.pinnedNewDiscussion
                 setPinned: @setPinnedNewDiscussion
                 stickTo: @modeSwitcherRef
-                timelineDiscussions: @currentDiscussions().timelineAllUsers
+                timelineDiscussions: @props.stores.discussionStore.timelineDiscussions() # TODO: by beatmap?
 
             el Discussions,
               beatmapset: @beatmapset()
               currentBeatmap: @currentBeatmap()
-              currentDiscussions: @currentDiscussions()
               currentFilter: @state.currentFilter
               currentUser: currentUser
+              discussions: @props.stores.discussionStore.getDiscussions(@state.currentMode, @state.currentFilter, @currentBeatmap().id)
               mode: @state.currentMode
               readPostIds: @state.readPostIds
               showDeleted: @state.showDeleted
@@ -194,113 +193,6 @@ export class Main extends React.PureComponent
     @props.stores.beatmapStore.get(@state.currentBeatmapId) ? BeatmapHelper.findDefault(group: @groupedBeatmaps())
 
 
-  currentDiscussions: =>
-    return @cache.currentDiscussions if @cache.currentDiscussions?
-
-    countsByBeatmap = {}
-    countsByPlaymode = {}
-    totalHype = 0
-    unresolvedIssues = 0
-    byMode =
-      timeline: []
-      general: []
-      generalAll: []
-      reviews: []
-    byFilter =
-      deleted: {}
-      hype: {}
-      mapperNotes: {}
-      mine: {}
-      pending: {}
-      praises: {}
-      resolved: {}
-      total: {}
-    timelineAllUsers = []
-
-    for own mode, _items of byMode
-      for own _filter, modes of byFilter
-        modes[mode] = {}
-
-    for d in Array.from(@props.stores.discussionStore.discussions.values())
-      if !d.deleted_at?
-        totalHype++ if d.message_type == 'hype'
-
-        if d.can_be_resolved && !d.resolved
-          beatmap = @props.stores.beatmapStore.get(d.beatmap_id)
-
-          if !d.beatmap_id? || (beatmap? && !beatmap.deleted_at?)
-            unresolvedIssues++
-
-          if beatmap?
-            countsByBeatmap[beatmap.id] ?= 0
-            countsByBeatmap[beatmap.id]++
-
-            if !beatmap.deleted_at?
-              countsByPlaymode[beatmap.mode] ?= 0
-              countsByPlaymode[beatmap.mode]++
-
-      if d.message_type == 'review'
-        mode = 'reviews'
-      else
-        if d.beatmap_id?
-          if d.beatmap_id == @currentBeatmap().id
-            if d.timestamp?
-              mode = 'timeline'
-              timelineAllUsers.push d
-            else
-              mode = 'general'
-          else
-            mode = null
-        else
-          mode = 'generalAll'
-
-      # belongs to different beatmap, excluded
-      continue unless mode?
-
-      # skip if filtering users
-      continue if @state.selectedUserId? && d.user_id != @state.selectedUserId
-
-      filters = total: true
-
-      if d.deleted_at?
-        filters.deleted = true
-      else if d.message_type == 'hype'
-        filters.hype = true
-        filters.praises = true
-      else if d.message_type == 'praise'
-        filters.praises = true
-      else if d.can_be_resolved
-        if d.resolved
-          filters.resolved = true
-        else
-          filters.pending = true
-
-      if d.user_id == currentUser.id
-        filters.mine = true
-
-      if d.message_type == 'mapper_note'
-        filters.mapperNotes = true
-
-      # the value should always be true
-      for own filter, _isSet of filters
-        byFilter[filter][mode][d.id] = d
-
-      if filters.pending && d.parent_id?
-        parentDiscussion = @props.stores.discussionStore.discussions.get(d.parent_id)
-
-        if parentDiscussion? && parentDiscussion.message_type == 'review'
-          byFilter.pending.reviews[parentDiscussion.id] = parentDiscussion
-
-      byMode[mode].push d
-
-    timeline = byMode.timeline
-    general = byMode.general
-    generalAll = byMode.generalAll
-    reviews = byMode.reviews
-
-    @cache.currentDiscussions = {general, generalAll, timeline, reviews, timelineAllUsers, byFilter, countsByBeatmap, countsByPlaymode, totalHype, unresolvedIssues}
-
-
   groupedBeatmaps: =>
     @cache.groupedBeatmaps ?= BeatmapHelper.group(Array.from(@props.stores.beatmapStore.beatmaps.values()))
 
@@ -318,11 +210,12 @@ export class Main extends React.PureComponent
 
     newState = BeatmapDiscussionHelper.stateFromDiscussion(discussion)
 
-    newState.filter =
-      if @currentDiscussions().byFilter[@state.currentFilter][newState.mode][id]?
-        @state.currentFilter
-      else
-        BeatmapDiscussionHelper.DEFAULT_FILTER
+    # FIXME: fix changing to a type filter that doesn't contain the discussion.
+    # newState.filter =
+    #   if @currentDiscussions().byFilter[@state.currentFilter][newState.mode][id]?
+    #     @state.currentFilter
+    #   else
+    #     BeatmapDiscussionHelper.DEFAULT_FILTER
 
     if @state.selectedUserId? && @state.selectedUserId != discussion.user_id
       newState.selectedUserId = null

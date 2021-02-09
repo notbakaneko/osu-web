@@ -7,6 +7,7 @@ import { Nominations } from './nominations'
 import { Subscribe } from './subscribe'
 import { UserFilter } from './user-filter'
 import { BeatmapBasicStats } from 'beatmap-basic-stats'
+import { groupByFilter, groupByMode } from 'beatmapset-discussion-filters'
 import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import { BeatmapsetMapping } from 'beatmapset-mapping'
 import HeaderV4 from 'header-v4'
@@ -27,8 +28,9 @@ export class Header extends React.PureComponent
         theme: 'beatmapsets'
         titleAppend: el PlaymodeTabs,
           currentMode: @props.currentBeatmap.mode
-          beatmaps: @props.groupedBeatmaps
-          counts: @props.currentDiscussions.countsByPlaymode
+          # TODO
+          # counts: @props.currentDiscussions.countsByPlaymode
+          groupedBeatmaps: @props.groupedBeatmaps
 
       div
         className: 'osu-page'
@@ -63,7 +65,6 @@ export class Header extends React.PureComponent
       div className: "#{bn}__content #{bn}__content--nomination",
         el Nominations,
           beatmapset: @props.beatmapset
-          currentDiscussions: @props.currentDiscussions
           currentUser: @props.currentUser
           events: @props.events
 
@@ -97,10 +98,10 @@ export class Header extends React.PureComponent
           div
             className: "#{bn}__filter-group"
             el BeatmapList,
+              beatmaps: @props.groupedBeatmaps[@props.currentBeatmap.mode]
               beatmapset: @props.beatmapset
               currentBeatmap: @props.currentBeatmap
-              currentDiscussions: @props.currentDiscussions
-              beatmaps: @props.groupedBeatmaps[@props.currentBeatmap.mode]
+              discussions: @discussions()
 
           div
             className: "#{bn}__filter-group #{bn}__filter-group--stats"
@@ -115,11 +116,15 @@ export class Header extends React.PureComponent
 
         div className: 'u-relative',
           el Chart,
-            discussions: @props.currentDiscussions.byFilter[@props.currentFilter].timeline
+            discussions: groupByMode(@discussions()).timeline
             duration: @props.currentBeatmap.total_length * 1000
 
           div className: "#{bn}__beatmap-stats",
             el BeatmapBasicStats, beatmap: @props.currentBeatmap
+
+
+  discussions: =>
+    @context.discussionStore.getByBeatmapset(@props.beatmapset.id)
 
 
   discussionStarters: =>
@@ -129,6 +134,10 @@ export class Header extends React.PureComponent
       .value()
 
 
+  unresolvedDiscussionCounts: =>
+    @context.discussionStore.unresolvedDiscussions()
+
+
   setFilter: (e) =>
     e.preventDefault()
     $.publish 'beatmapsetDiscussions:update', filter: e.currentTarget.dataset.type
@@ -136,16 +145,13 @@ export class Header extends React.PureComponent
 
   stats: =>
     bn = 'counter-box'
+    groupedDiscussions = groupByFilter(@discussions(), @props.currentBeatmap.id)
 
     for type in ['mine', 'mapperNotes', 'resolved', 'pending', 'praises', 'deleted', 'total']
       continue if type == 'deleted' && !@props.currentUser.is_admin
 
       topClasses = "#{bn} #{bn}--beatmap-discussions #{bn}--#{_.kebabCase(type)}"
       topClasses += ' js-active' if @props.mode != 'events' && @props.currentFilter == type
-
-      total = 0
-      for own _mode, discussions of @props.currentDiscussions.byFilter[type]
-        total += _.size(discussions)
 
       a
         key: type
@@ -165,6 +171,6 @@ export class Header extends React.PureComponent
             osu.trans("beatmaps.discussions.stats.#{_.snakeCase(type)}")
           div
             className: "#{bn}__count"
-            total
+            groupedDiscussions[type].length
 
         div className: "#{bn}__line"

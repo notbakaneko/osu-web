@@ -2,6 +2,7 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Discussion } from './discussion'
+import { DiscussionsStoreContext } from 'beatmap-discussions/discussions-store-context'
 import { IconExpand } from 'icon-expand'
 import * as React from 'react'
 import { a, button, div, i, p, span } from 'react-dom-factories'
@@ -37,6 +38,8 @@ sortPresets =
 
 
 export class Discussions extends React.PureComponent
+  @contextType = DiscussionsStoreContext
+
   constructor: (props) ->
     super props
 
@@ -63,8 +66,6 @@ export class Discussions extends React.PureComponent
 
 
   render: =>
-    discussions = @props.currentDiscussions[@props.mode]
-
     div className: 'osu-page osu-page--small osu-page--full',
       div
         className: bn
@@ -102,26 +103,27 @@ export class Discussions extends React.PureComponent
                 osu.trans('beatmaps.discussions.collapse.all-expand')
 
 
-        if discussions.length == 0
-          div className: "#{bn}__discussions #{bn}__discussions--empty",
-            osu.trans 'beatmaps.discussions.empty.empty'
+        # TODO: this
+        # if discussions.length == 0
+        #   div className: "#{bn}__discussions #{bn}__discussions--empty",
+        #     osu.trans 'beatmaps.discussions.empty.empty'
 
-        else if _.size(@props.currentDiscussions.byFilter[@props.currentFilter][@props.mode]) == 0
-          div className: "#{bn}__discussions #{bn}__discussions--empty",
-            osu.trans 'beatmaps.discussions.empty.hidden'
+        # else if _.size(@props.currentDiscussions.byFilter[@props.currentFilter][@props.mode]) == 0
+        #   div className: "#{bn}__discussions #{bn}__discussions--empty",
+        #     osu.trans 'beatmaps.discussions.empty.hidden'
 
-        else
-          div
-            className: "#{bn}__discussions"
-            @timelineCircle()
+        # else
+        div
+          className: "#{bn}__discussions"
+          @timelineCircle()
 
-            if @isTimelineVisible()
-              div className: "#{bn}__timeline-line hidden-xs"
+          if @isTimelineVisible()
+            div className: "#{bn}__timeline-line hidden-xs"
 
-            div null,
-              @sortedDiscussions().map @discussionPage
+          div null,
+            @sortedDiscussions().map @discussionPage
 
-            @timelineCircle()
+          @timelineCircle()
 
 
   renderShowDeletedToggle: =>
@@ -164,12 +166,8 @@ export class Discussions extends React.PureComponent
   discussionPage: (discussion) =>
     return if !discussion.id?
 
-    visible = @props.currentDiscussions.byFilter[@props.currentFilter][@props.mode][discussion.id]?
-
-    return unless visible
-
     if discussion.parent_id?
-      parentDiscussion = @props.currentDiscussions.byFilter.total.reviews[discussion.parent_id]
+      parentDiscussion = @context.discussionStore.get(discussion.parent_id)
 
     div
       key: discussion.id
@@ -181,7 +179,7 @@ export class Discussions extends React.PureComponent
         currentBeatmap: @props.currentBeatmap
         readPostIds: @props.readPostIds
         isTimelineVisible: @isTimelineVisible()
-        visible: visible
+        visible: true
         showDeleted: @props.showDeleted
         parentDiscussion: parentDiscussion
         collapsed: @isDiscussionCollapsed(discussion.id)
@@ -231,7 +229,7 @@ export class Discussions extends React.PureComponent
 
 
   sortedDiscussions: ->
-    @props.currentDiscussions[@props.mode].slice().sort (a, b) =>
+    @props.discussions.slice().sort (a, b) =>
       mapperNoteCompare =
         # no sticky for timeline sort
         @currentSort() != 'timeline' &&

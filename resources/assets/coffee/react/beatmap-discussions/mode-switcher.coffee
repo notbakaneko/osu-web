@@ -1,7 +1,8 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
-import { snakeCase, size } from 'lodash'
+import { snakeCase } from 'lodash'
+import { groupByFilter, groupByMode } from 'beatmapset-discussion-filters'
 import * as React from 'react'
 import { a, div, li, span, ul } from 'react-dom-factories'
 import { StringWithComponent } from 'string-with-component'
@@ -79,9 +80,14 @@ export class ModeSwitcher extends React.PureComponent
 
                   if mode != 'events'
                     span className: 'page-mode-link__badge',
-                      size(@props.currentDiscussions.byFilter[@props.currentFilter][mode])
+                      @count(mode)
                   span className: 'page-mode-link__stripe'
     ]
+
+
+  count: (mode) =>
+    beatmapId = @props.currentBeatmap.id
+    groupByMode(groupByFilter(@props.discussions, beatmapId)[@props.currentFilter], beatmapId)[mode].length
 
 
   switch: (e) =>

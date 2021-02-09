@@ -1,6 +1,7 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
+import { groupByFilter } from 'beatmapset-discussion-filters'
 import { BigButton } from 'big-button'
 import * as React from 'react'
 import { a, div, i, span } from 'react-dom-factories'
@@ -54,9 +55,9 @@ export class Nominations extends React.PureComponent
           div className: "#{bn}__item",
             el Nominator,
               beatmapset: @props.beatmapset
-              currentHype: @props.currentDiscussions.totalHype
+              currentHype: @hypeCount()
               currentUser: @props.currentUser
-              unresolvedIssues: @props.currentDiscussions.unresolvedIssues
+              unresolvedIssues: @byFilter().pending.length
         div className: "#{bn}__items-grouping",
           div className: "#{bn}__item", @discussionLockButton()
           div className: "#{bn}__item", @loveButton()
@@ -327,7 +328,7 @@ export class Nominations extends React.PureComponent
     return null unless @props.beatmapset.can_be_hyped
 
     requiredHype = @props.beatmapset.hype.required
-    hypeRaw = @props.currentDiscussions.totalHype
+    hypeRaw = @hypeCount()
     hype = _.min([requiredHype, hypeRaw])
 
     div null,
@@ -340,9 +341,18 @@ export class Nominations extends React.PureComponent
       @renderLights(hype, requiredHype)
 
 
+  byFilter: () =>
+    groupByFilter(Array.from(@context.discussionStore.discussions), @props.beatmapset.id)
+
+
+  hypeCount: =>
+    { hype } = @byFilter()
+    hype.length
+
+
   nominationBar: =>
     requiredHype = @props.beatmapset.hype?.required
-    hypeRaw = @props.currentDiscussions.totalHype
+    hypeRaw = @hypeCount()
     mapCanBeNominated = @props.beatmapset.status == 'pending' && hypeRaw >= requiredHype
     mapIsQualified = @props.beatmapset.status == 'qualified'
 
@@ -429,7 +439,8 @@ export class Nominations extends React.PureComponent
   hypeButton: =>
     return null unless @props.beatmapset.can_be_hyped && @props.currentUser.id? && !@userIsOwner()
 
-    userAlreadyHyped = _.find(@props.currentDiscussions.byFilter.hype.generalAll, user_id: @props.currentUser.id)?
+    { hype } = @byFilter()
+    userAlreadyHyped = _.find(hype, user_id: @props.currentUser.id)?
 
     el BigButton,
       text: if userAlreadyHyped then osu.trans('beatmaps.hype.button_done') else osu.trans('beatmaps.hype.button')

@@ -242,7 +242,7 @@ export class Main extends React.Component
   renderPageHeader: ->
     unless @state.showingNsfwWarning
       titleAppend = el PlaymodeTabs,
-        beatmaps: @state.beatmaps
+        groupedBeatmaps: @state.beatmaps
         currentMode: @state.currentBeatmap.mode
         hrefFunc: @tabHrefFunc
         showCounts: true

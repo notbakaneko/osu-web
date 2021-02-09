@@ -3,6 +3,7 @@
 
 import DispatcherAction from 'actions/dispatcher-action';
 import { UserLoginAction, UserLogoutAction } from 'actions/user-login-actions';
+import { Filter, groupByFilter, groupByMode, Mode } from 'beatmapset-discussion-filters';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import { isEmpty, uniq } from 'lodash';
 import { action, observable } from 'mobx';
@@ -33,8 +34,22 @@ export class BeatmapsetDiscussionStore {
     return [...this.discussions.values()].filter((discussion) => discussion.beatmapset_id === beatmapsetId);
   }
 
+  getDiscussions(mode: Mode, filter: Filter, beatmapId?: number) {
+    console.log(groupByMode([...this.discussions.values()], beatmapId)[mode]));
+    return groupByFilter(groupByMode([...this.discussions.values()], beatmapId)[mode], beatmapId)[filter];
+  }
+
   getUserDiscussions(userId: number) {
     return [...this.discussions.values()].filter((d) => d.user_id === userId);
+  }
+
+  // some convenience methods
+  timelineDiscussions() {
+    return [...this.discussions.values()].filter((discussion) => discussion.deleted_at == null && discussion.timestamp != null);
+  }
+
+  unresolvedDiscussions() {
+    return [...this.discussions.values()].filter((discussion) => discussion.deleted_at == null && discussion.can_be_resolved && !discussion.resolved);
   }
 
   handleDispatchAction(dispatcherAction: DispatcherAction) {

@@ -3,10 +3,15 @@
 
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 
-const filters = ['deleted', 'hype', 'mapperNotes', 'mine', 'pending', 'praises', 'resolved', 'total'];
-const modes = ['general', 'generalAll', 'reviews', 'timeline'];
+export const typeNames = [null, 'user', 'beatmapset', 'forum_topic', 'news_post', 'build', 'channel'] as const;
+export type Name = (typeof typeNames)[number];
 
-export function groupByFilter(discussions: BeatmapsetDiscussionJson[], beatmapId: number) {
+const filterNames = ['deleted', 'hype', 'mapperNotes', 'mine', 'pending', 'praises', 'resolved', 'total'] as const;
+export type Filter = (typeof filterNames)[number];
+const modeNames = ['general', 'generalAll', 'reviews', 'timeline'] as const;
+export type Mode = (typeof modeNames)[number];
+
+export function groupByFilter(discussions: BeatmapsetDiscussionJson[], beatmapId?: number) {
   const deleted: BeatmapsetDiscussionJson[] = [];
   const hype: BeatmapsetDiscussionJson[] = [];
   const mapperNotes: BeatmapsetDiscussionJson[] = [];
@@ -17,7 +22,7 @@ export function groupByFilter(discussions: BeatmapsetDiscussionJson[], beatmapId
   const total: BeatmapsetDiscussionJson[] = [];
 
   for (const discussion of discussions) {
-    if (discussion.beatmap_id !== beatmapId) continue;
+    // if (beatmapId != null && discussion.beatmap_id !== beatmapId) continue;
 
     total.push(discussion);
 
@@ -26,7 +31,7 @@ export function groupByFilter(discussions: BeatmapsetDiscussionJson[], beatmapId
     }
 
     if (discussion.message_type === 'mapper_note') {
-      mapperNotes.push(discussion)
+      mapperNotes.push(discussion);
     }
 
     if (discussion.deleted_at != null) {
@@ -45,10 +50,10 @@ export function groupByFilter(discussions: BeatmapsetDiscussionJson[], beatmapId
     }
   }
 
-  return { deleted, hype, mapperNotes, mine, pending, praises, resolved, total }
+  return { deleted, hype, mapperNotes, mine, pending, praises, resolved, total };
 }
 
-export function groupByMode(discussions: BeatmapsetDiscussionJson[], beatmapId: number) {
+export function groupByMode(discussions: BeatmapsetDiscussionJson[], beatmapId?: number) {
   const general: BeatmapsetDiscussionJson[] = [];
   const generalAll: BeatmapsetDiscussionJson[] = [];
   const reviews: BeatmapsetDiscussionJson[] = [];
@@ -59,7 +64,7 @@ export function groupByMode(discussions: BeatmapsetDiscussionJson[], beatmapId: 
       reviews.push(discussion);
     } else {
       if (discussion.beatmap_id != null) {
-        if (discussion.beatmap_id === beatmapId) {
+        if (beatmapId != null && discussion.beatmap_id === beatmapId) {
           if (discussion.timestamp != null) {
             timeline.push(discussion);
           } else {

@@ -10,7 +10,7 @@ export class PlaymodeTabs extends React.Component
     div className: 'game-mode game-mode--beatmapsets',
       ul className: 'game-mode__items',
         for mode in modes
-          disabled = !(@props.enableAll || @props.beatmaps[mode]?)
+          disabled = !(@props.enableAll || @props.groupedBeatmaps[mode]?)
           active = mode == @props.currentMode
 
           linkClass = 'game-mode-link'
@@ -38,7 +38,7 @@ export class PlaymodeTabs extends React.Component
       return @props.counts[mode]
 
     if @props.showCounts
-      count = Number(_.sumBy(@props.beatmaps[mode], (beatmap) -> !beatmap.convert))
+      count = Number(_.sumBy(@props.groupedBeatmaps[mode], (beatmap) -> !beatmap.convert))
 
       return count if count > 0
 
