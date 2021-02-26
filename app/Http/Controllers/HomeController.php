@@ -219,9 +219,11 @@ class HomeController extends Controller
                 }
 
                 $total = $expiration->diffInDays($lastTagPurchaseDate);
-                $used = $lastTagPurchaseDate->diffInDays();
+                if ($total > 0) {
+                    $used = $lastTagPurchaseDate->diffInDays();
 
-                $supporterStatus['remainingRatio'] = 100 - round($used / $total * 100, 2);
+                    $supporterStatus['remainingRatio'] = 100 - round($used / $total * 100, 2);
+                }
             }
         }
 
