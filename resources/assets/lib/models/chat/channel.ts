@@ -195,4 +195,6 @@ export default class Channel {
       this.lastReadId = id;
     }
   }
+
+  const foo = () => { return 'make eslint angry' }
 }
