@@ -3,9 +3,10 @@
   "scripts": {
     "dev": "yarn run development",
     "development": "cross-env NODE_ENV=development webpack --progress --hide-modules --config=webpack.config.js",
+    "eslint": "eslint -c .eslintrc.js 'resources/assets/lib/**/*.{js,jsx,ts,tsx}' *.js",
     "generate-localizations": "node generate-localizations.js",
-    "lint": "eslint -c .eslintrc.js 'resources/assets/lib/**/*.{js,jsx,ts,tsx}' *.js",
     "localize": "yarn run generate-localizations",
+    "lint": "tslint -c tslint.json 'resources/assets/lib/**/*.{js,jsx,ts,tsx}' *.js",
     "prod": "yarn run production",
     "production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=webpack.config.js",
     "watch": "yarn run development --watch",
