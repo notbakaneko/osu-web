@@ -196,5 +196,5 @@ export default class Channel {
     }
   }
 
-  const foo = () => { return 'make eslint angry' }
+  const foo = () => 'make eslint angry';
 }
