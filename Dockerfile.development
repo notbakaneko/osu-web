@@ -40,9 +40,11 @@ RUN npm install -g yarn
 
 RUN curl -L "https://getcomposer.org/download/latest-2.x/composer.phar" > /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
 
-COPY install_chrome.sh ./
-
-RUN ./install_chrome.sh
+COPY debian.list /etc/apt/sources.list.d/
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138 && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y chromium-driver
 
 WORKDIR /app
 
