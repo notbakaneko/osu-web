@@ -30,7 +30,7 @@
     "laravel/slack-notification-channel": "^2.0",
     "laravel/tinker": "*",
     "laravelcollective/html": "*",
-    "league/commonmark": "^2.0",
+    "league/commonmark": "^2.2",
     "league/flysystem-aws-s3-v3": "*",
     "league/fractal": "*",
     "league/oauth2-server": "^8.3",
