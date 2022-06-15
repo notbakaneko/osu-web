@@ -117,9 +117,7 @@ export class BeatmapsetSearch implements DispatchListener {
       }
     }
 
-    const url = route('beatmapsets.search');
-    this.xhr = $.ajax(url, {
-      data: params,
+    this.xhr = $.ajax(route('beatmapsets.search', params), {
       dataType: 'json',
       method: 'get',
     });
