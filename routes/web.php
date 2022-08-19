@@ -410,13 +410,18 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
                 Route::apiResource('votes', 'BeatmapsetDiscussionVotesController', ['only' => ['index']]);
             });
 
-            Route::resource('discussions', 'BeatmapDiscussionsController', ['only' => ['index']]);
+            Route::apiResource('discussions', 'BeatmapDiscussionsController', ['only' => ['index']]);
+
+            Route::get('search/{filters?}', 'BeatmapsetsController@search');
+            Route::get('lookup', 'API\BeatmapsetsController@lookup');
+            Route::get('{beatmapset}/download', 'BeatmapsetsController@download')->withoutMiddleware(ThrottleRequests::getApiThrottle());
 
             // TODO: move other beatmapset routes here
             Route::group(['namespace' => 'Beatmapsets'], function () {
                 Route::apiResource('{beatmapset}/favourites', 'FavouritesController', ['only' => ['store']]);
             });
         });
+        Route::apiResource('beatmapsets', 'BeatmapsetsController', ['only' => ['show']]);
 
         Route::apiResource('comments', 'CommentsController');
         Route::post('comments/{comment}/vote', 'CommentsController@voteStore')->name('comments.vote');
@@ -468,16 +473,6 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
             Route::get('{score}/download', 'ScoresController@download')->middleware(ThrottleRequests::getApiThrottle('scores_download'))->name('download');
             Route::get('{score}', 'ScoresController@show')->name('show');
         });
-
-        // Beatmapsets
-        //   GET /api/v2/beatmapsets/search/:filters
-        Route::get('beatmapsets/search/{filters?}', 'BeatmapsetsController@search');
-        //   GET /api/v2/beatmapsets/lookup
-        Route::get('beatmapsets/lookup', 'API\BeatmapsetsController@lookup');
-        //   GET /api/v2/beatmapsets/:beatmapset/download
-        Route::get('beatmapsets/{beatmapset}/download', 'BeatmapsetsController@download')->withoutMiddleware(ThrottleRequests::getApiThrottle());
-        //   GET /api/v2/beatmapsets/:beatmapset_id
-        Route::resource('beatmapsets', 'BeatmapsetsController', ['only' => ['show']]);
 
         // Friends
         //  GET /api/v2/friends
