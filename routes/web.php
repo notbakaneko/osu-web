@@ -70,6 +70,19 @@ Route::group(['middleware' => ['web']], function () {
         route_redirect('watches', 'follows.index');
         Route::resource('watches', 'BeatmapsetWatchesController', ['only' => ['update', 'destroy']]);
 
+        Route::get('search/{filters?}', 'BeatmapsetsController@search')->name('search');
+
+        Route::group(['prefix' => '{beatmapset}'], function () {
+            Route::get('discussion/{beatmap?}/{mode?}/{filter?}', 'BeatmapsetsController@discussion')->name('discussion');
+            Route::post('discussion/review', 'BeatmapDiscussionsController@review')->name('discussion.review');
+            Route::post('discussion-lock', 'BeatmapsetsController@discussionLock')->name('discussion-lock');
+            Route::post('discussion-unlock', 'BeatmapsetsController@discussionUnlock')->name('discussion-unlock');
+            Route::get('download', 'BeatmapsetsController@download')->name('download');
+            Route::put('love', 'BeatmapsetsController@love')->name('love');
+            Route::delete('love', 'BeatmapsetsController@removeFromLoved')->name('remove-from-loved');
+            Route::put('nominate', 'BeatmapsetsController@nominate')->name('nominate');
+        });
+
         Route::group(['prefix' => 'discussions', 'as' => 'discussions.'], function () {
             Route::put('{discussion}/vote', 'BeatmapDiscussionsController@vote')->name('vote');
             Route::post('{discussion}/restore', 'BeatmapDiscussionsController@restore')->name('restore');
@@ -90,15 +103,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::apiResource('{beatmapset}/favourites', 'FavouritesController', ['only' => ['store']]);
         });
     });
-    Route::get('beatmapsets/search/{filters?}', 'BeatmapsetsController@search')->name('beatmapsets.search');
-    Route::get('beatmapsets/{beatmapset}/discussion/{beatmap?}/{mode?}/{filter?}', 'BeatmapsetsController@discussion')->name('beatmapsets.discussion');
-    Route::post('beatmapsets/{beatmapset}/discussion/review', 'BeatmapDiscussionsController@review')->name('beatmapsets.discussion.review');
-    Route::post('beatmapsets/{beatmapset}/discussion-lock', 'BeatmapsetsController@discussionLock')->name('beatmapsets.discussion-lock');
-    Route::post('beatmapsets/{beatmapset}/discussion-unlock', 'BeatmapsetsController@discussionUnlock')->name('beatmapsets.discussion-unlock');
-    Route::get('beatmapsets/{beatmapset}/download', 'BeatmapsetsController@download')->name('beatmapsets.download');
-    Route::put('beatmapsets/{beatmapset}/love', 'BeatmapsetsController@love')->name('beatmapsets.love');
-    Route::delete('beatmapsets/{beatmapset}/love', 'BeatmapsetsController@removeFromLoved')->name('beatmapsets.remove-from-loved');
-    Route::put('beatmapsets/{beatmapset}/nominate', 'BeatmapsetsController@nominate')->name('beatmapsets.nominate');
     Route::resource('beatmapsets', 'BeatmapsetsController', ['only' => ['destroy', 'index', 'show', 'update']]);
 
     Route::group(['prefix' => 'scores/{mode}', 'as' => 'scores.'], function () {
