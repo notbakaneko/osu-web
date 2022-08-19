@@ -474,6 +474,8 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
         Route::get('beatmapsets/search/{filters?}', 'BeatmapsetsController@search');
         //   GET /api/v2/beatmapsets/lookup
         Route::get('beatmapsets/lookup', 'API\BeatmapsetsController@lookup');
+        //   GET /api/v2/beatmapsets/:beatmapset/download
+        Route::get('beatmapsets/{beatmapset}/download', 'BeatmapsetsController@download')->withoutMiddleware(ThrottleRequests::getApiThrottle());
         //   GET /api/v2/beatmapsets/:beatmapset_id
         Route::resource('beatmapsets', 'BeatmapsetsController', ['only' => ['show']]);
 
@@ -516,12 +518,6 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
 
         Route::get('wiki/{locale}/{path}', 'WikiController@show')->name('wiki.show')->where('path', '.+');
     });
-});
-
-// Duplicate of the other api group but without throttle.
-Route::group(['as' => 'api.', 'prefix' => 'api/v2', 'middleware' => ['api', 'require-scopes']], function () {
-    //   GET /api/v2/beatmapsets/:beatmapset/download
-    Route::get('beatmapsets/{beatmapset}/download', 'BeatmapsetsController@download');
 });
 
 // Callbacks for legacy systems to interact with
