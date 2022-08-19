@@ -385,137 +385,135 @@ Route::group(['middleware' => ['web']], function () {
 // API
 // require-scopes is not in the api group at the moment to reduce the number of things that need immediate fixing.
 // There's also a different group which skips throttle middleware.
-Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', ThrottleRequests::getApiThrottle(), 'require-scopes']], function () {
-    Route::group(['prefix' => 'v2'], function () {
-        Route::group(['as' => 'beatmaps.', 'prefix' => 'beatmaps'], function () {
-            Route::get('lookup', 'BeatmapsController@lookup')->name('lookup');
+Route::group(['as' => 'api.', 'prefix' => 'api/v2', 'middleware' => ['api', ThrottleRequests::getApiThrottle(), 'require-scopes']], function () {
+    Route::group(['as' => 'beatmaps.', 'prefix' => 'beatmaps'], function () {
+        Route::get('lookup', 'BeatmapsController@lookup')->name('lookup');
 
-            Route::group(['prefix' => '{beatmap}'], function () {
-                Route::get('scores/users/{user}', 'BeatmapsController@userScore');
-                Route::get('scores/users/{user}/all', 'BeatmapsController@userScoreAll');
-                Route::get('scores', 'BeatmapsController@scores')->name('scores');
-                Route::get('solo-scores', 'BeatmapsController@soloScores')->name('solo-scores');
+        Route::group(['prefix' => '{beatmap}'], function () {
+            Route::get('scores/users/{user}', 'BeatmapsController@userScore');
+            Route::get('scores/users/{user}/all', 'BeatmapsController@userScoreAll');
+            Route::get('scores', 'BeatmapsController@scores')->name('scores');
+            Route::get('solo-scores', 'BeatmapsController@soloScores')->name('solo-scores');
 
-                Route::group(['as' => 'solo.', 'prefix' => 'solo'], function () {
-                    Route::group(['namespace' => 'Solo'], function () {
-                        Route::post('scores', 'ScoreTokensController@store')->name('score-tokens.store');
-                        Route::put('scores/{token}', 'ScoresController@store')->name('scores.store');
-                    });
+            Route::group(['as' => 'solo.', 'prefix' => 'solo'], function () {
+                Route::group(['namespace' => 'Solo'], function () {
+                    Route::post('scores', 'ScoreTokensController@store')->name('score-tokens.store');
+                    Route::put('scores/{token}', 'ScoresController@store')->name('scores.store');
                 });
             });
         });
-
-        Route::resource('beatmaps', 'BeatmapsController', ['only' => ['index', 'show']]);
-        Route::post('beatmaps/{beatmap}/attributes', 'BeatmapsController@attributes')->name('beatmaps.attributes');
-
-        Route::group(['as' => 'beatmapsets.', 'prefix' => 'beatmapsets'], function () {
-            Route::apiResource('events', 'BeatmapsetEventsController', ['only' => ['index']]);
-
-            Route::group(['as' => 'discussions.', 'prefix' => 'discussions'], function () {
-                Route::apiResource('posts', 'BeatmapDiscussionPostsController', ['only' => ['index']]);
-                Route::apiResource('votes', 'BeatmapsetDiscussionVotesController', ['only' => ['index']]);
-            });
-
-            Route::apiResource('discussions', 'BeatmapDiscussionsController', ['only' => ['index']]);
-
-            Route::get('search/{filters?}', 'BeatmapsetsController@search');
-            Route::get('lookup', 'API\BeatmapsetsController@lookup');
-            Route::get('{beatmapset}/download', 'BeatmapsetsController@download')->withoutMiddleware(ThrottleRequests::getApiThrottle());
-
-            // TODO: move other beatmapset routes here
-            Route::group(['namespace' => 'Beatmapsets'], function () {
-                Route::apiResource('{beatmapset}/favourites', 'FavouritesController', ['only' => ['store']]);
-            });
-        });
-        Route::apiResource('beatmapsets', 'BeatmapsetsController', ['only' => ['show']]);
-
-        Route::apiResource('comments', 'CommentsController');
-        Route::post('comments/{comment}/vote', 'CommentsController@voteStore')->name('comments.vote');
-        Route::delete('comments/{comment}/vote', 'CommentsController@voteDestroy');
-
-        Route::group(['as' => 'chat.', 'prefix' => 'chat', 'namespace' => 'Chat'], function () {
-            Route::post('new', 'ChatController@newConversation')->name('new');
-            Route::get('updates', 'ChatController@updates')->name('updates');
-            Route::get('presence', 'ChatController@presence')->name('presence');
-            Route::group(['as' => 'channels.', 'prefix' => 'channels'], function () {
-                Route::apiResource('{channel}/messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
-                Route::put('{channel}/users/{user}', 'ChannelsController@join')->name('join');
-                Route::delete('{channel}/users/{user}', 'ChannelsController@part')->name('part');
-                Route::put('{channel}/mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
-            });
-            Route::apiResource('channels', 'ChannelsController', ['only' => ['index', 'show', 'store']]);
-        });
-
-        Route::get('changelog/{stream}/{build}', 'ChangelogController@build')->name('changelog.build');
-        Route::resource('changelog', 'ChangelogController', ['only' => ['index', 'show']]);
-
-        Route::group(['as' => 'forum.', 'namespace' => 'Forum'], function () {
-            Route::group(['prefix' => 'forums'], function () {
-                Route::post('topics/{topic}/reply', 'TopicsController@reply')->name('topics.reply');
-                Route::resource('topics', 'TopicsController', ['only' => ['show', 'store', 'update']]);
-                Route::resource('posts', 'PostsController', ['only' => ['update']]);
-            });
-        });
-        Route::resource('matches', 'MatchesController', ['only' => ['index', 'show']]);
-
-        Route::group(['as' => 'rooms.', 'prefix' => 'rooms'], function () {
-            Route::get('{mode?}', 'Multiplayer\RoomsController@index')->name('index')->where('mode', 'owned|participated|ended');
-            Route::put('{room}/users/{user}', 'Multiplayer\RoomsController@join')->name('join');
-            Route::delete('{room}/users/{user}', 'Multiplayer\RoomsController@part')->name('part');
-            Route::get('{room}/leaderboard', 'Multiplayer\RoomsController@leaderboard');
-            Route::group(['as' => 'playlist.', 'prefix' => '{room}/playlist'], function () {
-                Route::get('{playlist}/scores/users/{user}', 'Multiplayer\Rooms\Playlist\ScoresController@showUser');
-                Route::apiResource('{playlist}/scores', 'Multiplayer\Rooms\Playlist\ScoresController', ['only' => ['index', 'show', 'store', 'update']]);
-            });
-        });
-
-        Route::resource('reports', 'ReportsController', ['only' => ['store']]);
-
-        Route::apiResource('rooms', 'Multiplayer\RoomsController', ['only' => ['show', 'store']]);
-
-        Route::apiResource('seasonal-backgrounds', 'SeasonalBackgroundsController', ['only' => ['index']]);
-
-        Route::group(['prefix' => 'scores/{mode}', 'as' => 'scores.'], function () {
-            Route::get('{score}/download', 'ScoresController@download')->middleware(ThrottleRequests::getApiThrottle('scores_download'))->name('download');
-            Route::get('{score}', 'ScoresController@show')->name('show');
-        });
-
-        Route::group(['as' => 'users.', 'prefix' => 'users/{user}'], function () {
-            Route::get('kudosu', 'UsersController@kudosu');
-            Route::get('scores/{type}', 'UsersController@scores');
-            Route::get('beatmapsets/{type}', 'UsersController@beatmapsets');
-            Route::get('recent_activity', 'UsersController@recentActivity');
-            Route::get('{mode?}', 'UsersController@show')->name('show');
-        });
-        Route::resource('users', 'UsersController', ['only' => ['index']]);
-
-        // Friends
-        //  GET /api/v2/friends
-        Route::resource('friends', 'FriendsController', ['only' => ['index']]);
-
-        //  GET /api/v2/me/download-quota-check
-        Route::get('me/download-quota-check', 'HomeController@downloadQuotaCheck')->name('download-quota-check');
-        //  GET /api/v2/me
-        Route::get('me/{mode?}', 'UsersController@me')->name('me');
-
-        Route::delete('oauth/tokens/current', 'OAuth\TokensController@destroyCurrent')->name('oauth.tokens.current');
-
-        Route::apiResource('news', 'NewsController', ['only' => ['index', 'show']]);
-
-        // Notifications
-        //  GET /api/v2/notifications
-        Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
-        //  POST /api/v2/notifications/mark-read
-        Route::post('notifications/mark-read', 'NotificationsController@markRead')->name('notifications.mark-read');
-
-        //  GET /api/v2/rankings/:mode/:type
-        Route::get('rankings/{mode}/{type}', 'RankingController@index');
-        Route::resource('spotlights', 'SpotlightsController', ['only' => ['index']]);
-
-        Route::get('search', 'HomeController@search');
-
-        Route::get('wiki/{locale}/{path}', 'WikiController@show')->name('wiki.show')->where('path', '.+');
     });
+
+    Route::resource('beatmaps', 'BeatmapsController', ['only' => ['index', 'show']]);
+    Route::post('beatmaps/{beatmap}/attributes', 'BeatmapsController@attributes')->name('beatmaps.attributes');
+
+    Route::group(['as' => 'beatmapsets.', 'prefix' => 'beatmapsets'], function () {
+        Route::apiResource('events', 'BeatmapsetEventsController', ['only' => ['index']]);
+
+        Route::group(['as' => 'discussions.', 'prefix' => 'discussions'], function () {
+            Route::apiResource('posts', 'BeatmapDiscussionPostsController', ['only' => ['index']]);
+            Route::apiResource('votes', 'BeatmapsetDiscussionVotesController', ['only' => ['index']]);
+        });
+
+        Route::apiResource('discussions', 'BeatmapDiscussionsController', ['only' => ['index']]);
+
+        Route::get('search/{filters?}', 'BeatmapsetsController@search');
+        Route::get('lookup', 'API\BeatmapsetsController@lookup');
+        Route::get('{beatmapset}/download', 'BeatmapsetsController@download')->withoutMiddleware(ThrottleRequests::getApiThrottle());
+
+        // TODO: move other beatmapset routes here
+        Route::group(['namespace' => 'Beatmapsets'], function () {
+            Route::apiResource('{beatmapset}/favourites', 'FavouritesController', ['only' => ['store']]);
+        });
+    });
+    Route::apiResource('beatmapsets', 'BeatmapsetsController', ['only' => ['show']]);
+
+    Route::apiResource('comments', 'CommentsController');
+    Route::post('comments/{comment}/vote', 'CommentsController@voteStore')->name('comments.vote');
+    Route::delete('comments/{comment}/vote', 'CommentsController@voteDestroy');
+
+    Route::group(['as' => 'chat.', 'prefix' => 'chat', 'namespace' => 'Chat'], function () {
+        Route::post('new', 'ChatController@newConversation')->name('new');
+        Route::get('updates', 'ChatController@updates')->name('updates');
+        Route::get('presence', 'ChatController@presence')->name('presence');
+        Route::group(['as' => 'channels.', 'prefix' => 'channels'], function () {
+            Route::apiResource('{channel}/messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
+            Route::put('{channel}/users/{user}', 'ChannelsController@join')->name('join');
+            Route::delete('{channel}/users/{user}', 'ChannelsController@part')->name('part');
+            Route::put('{channel}/mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
+        });
+        Route::apiResource('channels', 'ChannelsController', ['only' => ['index', 'show', 'store']]);
+    });
+
+    Route::get('changelog/{stream}/{build}', 'ChangelogController@build')->name('changelog.build');
+    Route::resource('changelog', 'ChangelogController', ['only' => ['index', 'show']]);
+
+    Route::group(['as' => 'forum.', 'namespace' => 'Forum'], function () {
+        Route::group(['prefix' => 'forums'], function () {
+            Route::post('topics/{topic}/reply', 'TopicsController@reply')->name('topics.reply');
+            Route::resource('topics', 'TopicsController', ['only' => ['show', 'store', 'update']]);
+            Route::resource('posts', 'PostsController', ['only' => ['update']]);
+        });
+    });
+    Route::resource('matches', 'MatchesController', ['only' => ['index', 'show']]);
+
+    Route::group(['as' => 'rooms.', 'prefix' => 'rooms'], function () {
+        Route::get('{mode?}', 'Multiplayer\RoomsController@index')->name('index')->where('mode', 'owned|participated|ended');
+        Route::put('{room}/users/{user}', 'Multiplayer\RoomsController@join')->name('join');
+        Route::delete('{room}/users/{user}', 'Multiplayer\RoomsController@part')->name('part');
+        Route::get('{room}/leaderboard', 'Multiplayer\RoomsController@leaderboard');
+        Route::group(['as' => 'playlist.', 'prefix' => '{room}/playlist'], function () {
+            Route::get('{playlist}/scores/users/{user}', 'Multiplayer\Rooms\Playlist\ScoresController@showUser');
+            Route::apiResource('{playlist}/scores', 'Multiplayer\Rooms\Playlist\ScoresController', ['only' => ['index', 'show', 'store', 'update']]);
+        });
+    });
+
+    Route::resource('reports', 'ReportsController', ['only' => ['store']]);
+
+    Route::apiResource('rooms', 'Multiplayer\RoomsController', ['only' => ['show', 'store']]);
+
+    Route::apiResource('seasonal-backgrounds', 'SeasonalBackgroundsController', ['only' => ['index']]);
+
+    Route::group(['prefix' => 'scores/{mode}', 'as' => 'scores.'], function () {
+        Route::get('{score}/download', 'ScoresController@download')->middleware(ThrottleRequests::getApiThrottle('scores_download'))->name('download');
+        Route::get('{score}', 'ScoresController@show')->name('show');
+    });
+
+    Route::group(['as' => 'users.', 'prefix' => 'users/{user}'], function () {
+        Route::get('kudosu', 'UsersController@kudosu');
+        Route::get('scores/{type}', 'UsersController@scores');
+        Route::get('beatmapsets/{type}', 'UsersController@beatmapsets');
+        Route::get('recent_activity', 'UsersController@recentActivity');
+        Route::get('{mode?}', 'UsersController@show')->name('show');
+    });
+    Route::resource('users', 'UsersController', ['only' => ['index']]);
+
+    // Friends
+    //  GET /api/v2/friends
+    Route::resource('friends', 'FriendsController', ['only' => ['index']]);
+
+    //  GET /api/v2/me/download-quota-check
+    Route::get('me/download-quota-check', 'HomeController@downloadQuotaCheck')->name('download-quota-check');
+    //  GET /api/v2/me
+    Route::get('me/{mode?}', 'UsersController@me')->name('me');
+
+    Route::delete('oauth/tokens/current', 'OAuth\TokensController@destroyCurrent')->name('oauth.tokens.current');
+
+    Route::apiResource('news', 'NewsController', ['only' => ['index', 'show']]);
+
+    // Notifications
+    //  GET /api/v2/notifications
+    Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
+    //  POST /api/v2/notifications/mark-read
+    Route::post('notifications/mark-read', 'NotificationsController@markRead')->name('notifications.mark-read');
+
+    //  GET /api/v2/rankings/:mode/:type
+    Route::get('rankings/{mode}/{type}', 'RankingController@index');
+    Route::resource('spotlights', 'SpotlightsController', ['only' => ['index']]);
+
+    Route::get('search', 'HomeController@search');
+
+    Route::get('wiki/{locale}/{path}', 'WikiController@show')->name('wiki.show')->where('path', '.+');
 });
 
 // Callbacks for legacy systems to interact with
