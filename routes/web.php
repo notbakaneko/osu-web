@@ -117,12 +117,14 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::resource('client-verifications', 'ClientVerificationsController', ['only' => ['create', 'store']]);
 
+    Route::group(['as' => 'comments.', 'prefix' => 'comments/{comment}'], function () {
+        Route::post('pin', 'CommentsController@pinStore')->name('pin');
+        Route::delete('pin', 'CommentsController@pinDestroy');
+        Route::post('restore', 'CommentsController@restore')->name('restore');
+        Route::post('vote', 'CommentsController@voteStore')->name('vote');
+        Route::delete('vote', 'CommentsController@voteDestroy');
+    });
     Route::resource('comments', 'CommentsController', ['except' => ['create', 'edit']]);
-    Route::post('comments/{comment}/pin', 'CommentsController@pinStore')->name('comments.pin');
-    Route::delete('comments/{comment}/pin', 'CommentsController@pinDestroy');
-    Route::post('comments/{comment}/restore', 'CommentsController@restore')->name('comments.restore');
-    Route::post('comments/{comment}/vote', 'CommentsController@voteStore')->name('comments.vote');
-    Route::delete('comments/{comment}/vote', 'CommentsController@voteDestroy');
 
     Route::group(['prefix' => 'community'], function () {
         Route::resource('contests', 'ContestsController', ['only' => ['index', 'show']]);
