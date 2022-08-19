@@ -7,9 +7,11 @@ use App\Http\Middleware\ThrottleRequests;
 
 Route::group(['middleware' => ['web']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
-        Route::get('/beatmapsets/{beatmapset}/covers', 'BeatmapsetsController@covers')->name('beatmapsets.covers');
-        Route::post('/beatmapsets/{beatmapset}/covers/regenerate', 'BeatmapsetsController@regenerateCovers')->name('beatmapsets.covers.regenerate');
-        Route::post('/beatmapsets/{beatmapset}/covers/remove', 'BeatmapsetsController@removeCovers')->name('beatmapsets.covers.remove');
+        Route::group(['as' => 'beatmapsets.', 'prefix' => 'beatmapsets'], function () {
+            Route::get('{beatmapset}/covers', 'BeatmapsetsController@covers')->name('covers');
+            Route::post('{beatmapset}/covers/regenerate', 'BeatmapsetsController@regenerateCovers')->name('covers.regenerate');
+            Route::post('{beatmapset}/covers/remove', 'BeatmapsetsController@removeCovers')->name('covers.remove');
+        });
         Route::resource('beatmapsets', 'BeatmapsetsController', ['only' => ['show', 'update']]);
 
         Route::post('contests/{contest}/zip', 'ContestsController@gimmeZip')->name('contests.get-zip');
@@ -271,38 +273,41 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('session', 'SessionsController@store')->name('login');
     Route::delete('session', 'SessionsController@destroy')->name('logout');
 
-    Route::post('users/check-username-availability', 'UsersController@checkUsernameAvailability')->name('users.check-username-availability');
-    Route::post('users/check-username-exists', 'UsersController@checkUsernameExists')->name('users.check-username-exists');
-    Route::get('users/disabled', 'UsersController@disabled')->name('users.disabled');
+    Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
+        Route::post('check-username-availability', 'UsersController@checkUsernameAvailability')->name('check-username-availability');
+        Route::post('check-username-exists', 'UsersController@checkUsernameExists')->name('check-username-exists');
+        Route::get('disabled', 'UsersController@disabled')->name('disabled');
 
-    Route::group(['as' => 'users.', 'prefix' => 'users/{user}'], function () {
-        Route::get('card', 'UsersController@card')->name('card');
-        Route::put('page', 'UsersController@updatePage')->name('page');
-        Route::group(['namespace' => 'Users'], function () {
-            Route::resource('{typeGroup}', 'MultiplayerController', ['only' => 'index'])->where(['typeGroup' => 'multiplayer|playlists|realtime'])->names('multiplayer');
+        Route::group(['prefix' => '{user}'], function () {
+            Route::get('card', 'UsersController@card')->name('card');
+            Route::put('page', 'UsersController@updatePage')->name('page');
+            Route::group(['namespace' => 'Users'], function () {
+                Route::resource('{typeGroup}', 'MultiplayerController', ['only' => 'index'])->where(['typeGroup' => 'multiplayer|playlists|realtime'])->names('multiplayer');
 
-            Route::group(['as' => 'modding.', 'prefix' => 'modding'], function () {
-                Route::get('/', 'ModdingHistoryController@index')->name('index');
-                Route::get('/posts', 'ModdingHistoryController@posts')->name('posts');
-                Route::get('/votes-given', 'ModdingHistoryController@votesGiven')->name('votes-given');
-                Route::get('/votes-received', 'ModdingHistoryController@votesReceived')->name('votes-received');
+                Route::group(['as' => 'modding.', 'prefix' => 'modding'], function () {
+                    Route::get('/', 'ModdingHistoryController@index')->name('index');
+                    Route::get('/posts', 'ModdingHistoryController@posts')->name('posts');
+                    Route::get('/votes-given', 'ModdingHistoryController@votesGiven')->name('votes-given');
+                    Route::get('/votes-received', 'ModdingHistoryController@votesReceived')->name('votes-received');
+                });
             });
+
+            Route::get('kudosu', 'UsersController@kudosu')->name('kudosu');
+            Route::get('posts', 'UsersController@posts')->name('posts');
+            Route::get('recent_activity', 'UsersController@recentActivity')->name('recent-activity');
+            Route::get('scores/{type}', 'UsersController@scores')->name('scores');
+            Route::get('beatmapsets/{type}', 'UsersController@beatmapsets')->name('beatmapsets');
+            Route::get('{mode?}', 'UsersController@show')->name('show');
         });
-
-        Route::get('kudosu', 'UsersController@kudosu')->name('kudosu');
-        Route::get('recent_activity', 'UsersController@recentActivity')->name('recent-activity');
-        Route::get('scores/{type}', 'UsersController@scores')->name('scores');
-        Route::get('beatmapsets/{type}', 'UsersController@beatmapsets')->name('beatmapsets');
     });
-
-    Route::get('users/{user}/posts', 'UsersController@posts')->name('users.posts');
-    Route::get('users/{user}/{mode?}', 'UsersController@show')->name('users.show');
     Route::resource('users', 'UsersController', ['only' => ['store']]);
 
-    Route::get('wiki/{locale}/Sitemap', 'WikiController@sitemap')->name('wiki.sitemap');
-    Route::get('wiki/images/{path}', 'WikiController@image')->name('wiki.image')->where('path', '.+');
-    Route::get('wiki/{locale?}/{path?}', 'WikiController@show')->name('wiki.show')->where('path', '.+');
-    Route::put('wiki/{locale}/{path}', 'WikiController@update')->where('path', '.+');
+    Route::group(['as' => 'wiki.', 'prefix' => 'wiki'], function () {
+        Route::get('{locale}/Sitemap', 'WikiController@sitemap')->name('sitemap');
+        Route::get('images/{path}', 'WikiController@image')->name('image')->where('path', '.+');
+        Route::get('{locale?}/{path?}', 'WikiController@show')->name('show')->where('path', '.+');
+        Route::put('{locale}/{path}', 'WikiController@update')->where('path', '.+');
+    });
     Route::get('wiki-suggestions', 'WikiController@suggestions')->name('wiki-suggestions');
 
     // FIXME: someone split this crap up into proper controllers
