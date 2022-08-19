@@ -85,11 +85,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::put('nominate', 'BeatmapsetsController@nominate')->name('nominate');
         });
 
-        Route::group(['prefix' => 'discussions', 'as' => 'discussions.'], function () {
-            Route::put('{discussion}/vote', 'BeatmapDiscussionsController@vote')->name('vote');
-            Route::post('{discussion}/restore', 'BeatmapDiscussionsController@restore')->name('restore');
-            Route::post('{discussion}/deny-kudosu', 'BeatmapDiscussionsController@denyKudosu')->name('deny-kudosu');
-            Route::post('{discussion}/allow-kudosu', 'BeatmapDiscussionsController@allowKudosu')->name('allow-kudosu');
+        Route::group(['as' => 'discussions.', 'prefix' => 'discussions/{discussion}'], function () {
+            Route::put('vote', 'BeatmapDiscussionsController@vote')->name('vote');
+            Route::post('restore', 'BeatmapDiscussionsController@restore')->name('restore');
+            Route::post('deny-kudosu', 'BeatmapDiscussionsController@denyKudosu')->name('deny-kudosu');
+            Route::post('allow-kudosu', 'BeatmapDiscussionsController@allowKudosu')->name('allow-kudosu');
 
             Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
                 Route::post('{post}/restore', 'BeatmapDiscussionPostsController@restore')->name('restore');
@@ -186,11 +186,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('new', 'ChatController@newConversation')->name('new');
             Route::get('presence', 'ChatController@presence')->name('presence');
             Route::get('updates', 'ChatController@updates')->name('updates');
-            Route::group(['as' => 'channels.', 'prefix' => 'channels'], function () {
-                Route::apiResource('{channel}/messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
-                Route::put('{channel}/users/{user}', 'ChannelsController@join')->name('join');
-                Route::delete('{channel}/users/{user}', 'ChannelsController@part')->name('part');
-                Route::put('{channel}/mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
+            Route::group(['as' => 'channels.', 'prefix' => 'channels/{channel}'], function () {
+                Route::apiResource('messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
+                Route::put('users/{user}', 'ChannelsController@join')->name('join');
+                Route::delete('users/{user}', 'ChannelsController@part')->name('part');
+                Route::put('mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
             });
             Route::apiResource('channels', 'ChannelsController', ['only' => ['index', 'show', 'store']]);
             Route::apiResource('users', 'UsersController', ['only' => ['index']]);
@@ -441,11 +441,11 @@ Route::group(['as' => 'api.', 'prefix' => 'api/v2', 'middleware' => ['api', Thro
         Route::post('new', 'ChatController@newConversation')->name('new');
         Route::get('updates', 'ChatController@updates')->name('updates');
         Route::get('presence', 'ChatController@presence')->name('presence');
-        Route::group(['as' => 'channels.', 'prefix' => 'channels'], function () {
-            Route::apiResource('{channel}/messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
-            Route::put('{channel}/users/{user}', 'ChannelsController@join')->name('join');
-            Route::delete('{channel}/users/{user}', 'ChannelsController@part')->name('part');
-            Route::put('{channel}/mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
+        Route::group(['as' => 'channels.', 'prefix' => 'channels/{channel}'], function () {
+            Route::apiResource('messages', 'Channels\MessagesController', ['only' => ['index', 'store']]);
+            Route::put('users/{user}', 'ChannelsController@join')->name('join');
+            Route::delete('users/{user}', 'ChannelsController@part')->name('part');
+            Route::put('mark-as-read/{message}', 'ChannelsController@markAsRead')->name('mark-as-read');
         });
         Route::apiResource('channels', 'ChannelsController', ['only' => ['index', 'show', 'store']]);
     });
