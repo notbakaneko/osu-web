@@ -1,7 +1,7 @@
 version: '3.4'
 
 x-env: &x-env
-  BEATMAPS_DIFFICULTY_CACHE_SERVER_URL: http://beatmap-difficulty-lookup-cache:5000
+  BEATMAPS_DIFFICULTY_CACHE_SERVER_URL: http://beatmap-difficulty-lookup-cache
   BROADCAST_DRIVER: redis
   CACHE_DRIVER: redis
   DB_HOST: db
@@ -48,7 +48,9 @@ services:
     command: ['migrate']
 
   beatmap-difficulty-lookup-cache:
-    image: pppy/osu-beatmap-difficulty-lookup-cache
+    build:
+      context: ./../osu-beatmap-difficulty-lookup-cache/BeatmapDifficultyLookupCache
+      dockerfile: Dockerfile
 
   notification-server:
     image: pppy/osu-notification-server

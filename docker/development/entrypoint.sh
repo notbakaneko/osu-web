@@ -48,7 +48,7 @@ _schedule() {
 }
 
 _serve() {
-    exec php-fpm8.0 -R -y docker/development/php-fpm.conf
+    exec /app/artisan octane:start --host=0.0.0.0 --watch
 }
 
 _test() {
