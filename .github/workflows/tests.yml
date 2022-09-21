@@ -144,28 +144,36 @@ jobs:
 
       - run: ./build.sh
 
+      - run: sudo apt-get install -y redis-tools
+
       - name: Setup indices
         run: |
           php artisan es:create-search-blacklist
           php artisan es:index-documents --yes
           php artisan es:index-wiki --create-only --yes
           php artisan es:index-scores:set-schema --schema test
+          curl http://localhost:9200/_cat/indices
+          curl http://localhost:9200/_cat/aliases
+          redis-cli get osu-queue:score-index:schema
 
-      - name: Generate docs
-        run: php artisan scribe:generate
+      - run: docker logs "${{ job.services.osu-elastic-indexer.id }}"
 
-      - name: Run karma
-        run: yarn karma start --single-run --browsers ChromeHeadless
 
-      - name: Run PHPUnit
-        run: ./bin/phpunit.sh
+      # - name: Generate docs
+      #   run: php artisan scribe:generate
 
-      - name: Run Dusk
-        run: ./bin/run_dusk.sh
+      # - name: Run karma
+      #   run: yarn karma start --single-run --browsers ChromeHeadless
 
-      # this only tests that the rollback functions are valid and doesn't check
-      # if they actually do what they're expected to do.
-      - name: Migration rollback test
-        run: |
-          php artisan migrate:reset | tee rollback.log
-          grep -Fq 'no rolling back from this migration =)' rollback.log
+      # - name: Run PHPUnit
+      #   run: ./bin/phpunit.sh
+
+      # - name: Run Dusk
+      #   run: ./bin/run_dusk.sh
+
+      # # this only tests that the rollback functions are valid and doesn't check
+      # # if they actually do what they're expected to do.
+      # - name: Migration rollback test
+      #   run: |
+      #     php artisan migrate:reset | tee rollback.log
+      #     grep -Fq 'no rolling back from this migration =)' rollback.log
