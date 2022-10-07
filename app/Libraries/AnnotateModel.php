@@ -1,22 +1,7 @@
 <?php
 
-/**
- *    Copyright 2015-2018 ppy Pty. Ltd.
- *
- *    This file is part of osu!web. osu!web is distributed with the hope of
- *    attracting more community contributions to the core ecosystem of osu!.
- *
- *    osu!web is free software: you can redistribute it and/or modify
- *    it under the terms of the Affero GNU General Public License version 3
- *    as published by the Free Software Foundation.
- *
- *    osu!web is distributed WITHOUT ANY WARRANTY; without even the implied
- *    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *    See the GNU Affero General Public License for more details.
- *
- *    You should have received a copy of the GNU Affero General Public License
- *    along with osu!web.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
+// See the LICENCE file in the repository root for full licence text.
 
 namespace App\Libraries;
 
@@ -132,7 +117,7 @@ class AnnotateModel
         return $methods;
     }
 
-    private static function extractMethodDeclarations(ClassDeclaration $classDeclaration) : array
+    private static function extractMethodDeclarations(ClassDeclaration $classDeclaration): array
     {
         $methods = [];
         $classMemberDeclarations = $classDeclaration->classMembers->classMemberDeclarations;
@@ -145,7 +130,7 @@ class AnnotateModel
         return $methods;
     }
 
-    private static function findClassDeclaration(Node $astNode) : ?ClassDeclaration
+    private static function findClassDeclaration(Node $astNode): ?ClassDeclaration
     {
         foreach ($astNode->statementList as $statement) {
             if ($statement instanceof ClassDeclaration) {
@@ -169,7 +154,7 @@ class AnnotateModel
         }
 
         if (!$this->reflectionClass->isAbstract()) {
-            $this->instance = $class::first() ?? new $class;
+            $this->instance = $class::first() ?? new $class();
         }
     }
 
@@ -305,7 +290,7 @@ class AnnotateModel
         $lines[] = ' */';
         $text = "\n\n".implode("\n", $lines)."\n";
 
-        $newContent = substr_replace($this->content, $text, $node->getStart() - $existingCommentLength, $existingCommentLength);
+        $newContent = substr_replace($this->content, $text, $node->getStartPosition() - $existingCommentLength, $existingCommentLength);
         File::put($this->file->getRealPath(), $newContent);
     }
 
@@ -324,7 +309,7 @@ class AnnotateModel
         }
     }
 
-    private function castType(string $field, string $type) : string
+    private function castType(string $field, string $type): string
     {
         $cast = $this->instance->getCasts()[$field] ?? null;
         if ($cast === 'boolean') {
@@ -421,7 +406,7 @@ class AnnotateModel
      * @param string $type
      * @return string
      */
-    private function parseType($column) : string
+    private function parseType($column): string
     {
         $type = $this->castType($column['Field'], $column['Type']);
 
@@ -432,7 +417,7 @@ class AnnotateModel
         return $type;
     }
 
-    private function tryExtractRelationship(MethodDeclaration $declaration) : ?MethodDeclaration
+    private function tryExtractRelationship(MethodDeclaration $declaration): ?MethodDeclaration
     {
         if (ends_with($declaration->getName(), 'Attribute') || $declaration->parameters !== null) {
             return null;
@@ -441,7 +426,7 @@ class AnnotateModel
         return $declaration;
     }
 
-    private function tryFindRelationshipFromCallExpression(CallExpression $expression) : ?array
+    private function tryFindRelationshipFromCallExpression(CallExpression $expression): ?array
     {
         $nodes = $expression->getDescendantNodes();
 
@@ -455,7 +440,7 @@ class AnnotateModel
         return null;
     }
 
-    private function tryFindRelationshipFromNode(Node $node) : ?array
+    private function tryFindRelationshipFromNode(Node $node): ?array
     {
         // keep going until probable relationship method.
         if (!$node instanceof MemberAccessExpression) {
@@ -466,7 +451,8 @@ class AnnotateModel
         $maybeThis = array_first($children);
         $maybeFunctionName = array_last($children);
 
-        if ($maybeThis === null
+        if (
+            $maybeThis === null
             || $maybeFunctionName === null
             || !($maybeThis instanceof Variable)
             || !($maybeFunctionName instanceof Token)
