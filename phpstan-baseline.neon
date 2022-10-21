@@ -1,21 +1,6 @@
 parameters:
   ignoreErrors:
     -
-      message: "#^Call to an undefined static method App\\\\Models\\\\UserNotification\\:\\:last\\(\\)\\.$#"
-      count: 1
-      path: app/Console/Commands/NotificationsSendMail.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Console\\\\Commands\\\\UserRecalculateRankCounts\\:\\:\\$from\\.$#"
-      count: 3
-      path: app/Console/Commands/UserRecalculateRankCounts.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Console\\\\Commands\\\\UserRecalculateRankCounts\\:\\:\\$until\\.$#"
-      count: 3
-      path: app/Console/Commands/UserRecalculateRankCounts.php
-
-    -
       message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
       count: 1
       path: app/Console/Commands/UserRecalculateRankCounts.php
@@ -29,11 +14,6 @@ parameters:
       message: "#^Result of method Illuminate\\\\Console\\\\Command\\:\\:error\\(\\) \\(void\\) is used\\.$#"
       count: 1
       path: app/Console/Commands/UserRecalculateRankCounts.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Events\\\\Fulfillments\\\\PaymentEvent\\:\\:\\$order\\.$#"
-      count: 2
-      path: app/Events/Fulfillments/PaymentEvent.php
 
     -
       message: "#^Method App\\\\Events\\\\NotificationEventBase\\:\\:__construct\\(\\) invoked with 1 parameter, 0 required\\.$#"
@@ -201,26 +181,6 @@ parameters:
       path: app/Http/Controllers/StoreController.php
 
     -
-      message: "#^Access to an undefined property App\\\\Http\\\\Controllers\\\\UsersController\\:\\:\\$mode\\.$#"
-      count: 9
-      path: app/Http/Controllers/UsersController.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Http\\\\Controllers\\\\UsersController\\:\\:\\$offset\\.$#"
-      count: 5
-      path: app/Http/Controllers/UsersController.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Http\\\\Controllers\\\\UsersController\\:\\:\\$perPage\\.$#"
-      count: 5
-      path: app/Http/Controllers/UsersController.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Http\\\\Controllers\\\\UsersController\\:\\:\\$user\\.$#"
-      count: 28
-      path: app/Http/Controllers/UsersController.php
-
-    -
       message: "#^Result of method App\\\\Http\\\\Controllers\\\\Controller\\:\\:__construct\\(\\) \\(void\\) is used\\.$#"
       count: 1
       path: app/Http/Controllers/UsersController.php
@@ -246,11 +206,6 @@ parameters:
       path: app/Jobs/MarkNotificationsRead.php
 
     -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\BBCodeFromDB\\:\\:\\$options\\.$#"
-      count: 6
-      path: app/Libraries/BBCodeFromDB.php
-
-    -
       message: "#^Method App\\\\Libraries\\\\BeatmapsetDiscussionsBundle\\:\\:getRelatedDiscussions\\(\\) invoked with 1 parameter, 0 required\\.$#"
       count: 1
       path: app/Libraries/BeatmapsetDiscussionsBundle.php
@@ -266,19 +221,9 @@ parameters:
       path: app/Libraries/CleanHTML.php
 
     -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\CurrentStats\\:\\:\\$onlineFriends\\.$#"
-      count: 1
-      path: app/Libraries/CurrentStats.php
-
-    -
       message: "#^Class App\\\\Libraries\\\\Elasticsearch\\\\SearchResponse constructor invoked with 2 parameters, 1 required\\.$#"
       count: 1
       path: app/Libraries/Elasticsearch/Hit.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\Elasticsearch\\\\SearchParams\\:\\:\\$queryString\\.$#"
-      count: 1
-      path: app/Libraries/Elasticsearch/SearchParams.php
 
     -
       message: "#^Call to an undefined method App\\\\Libraries\\\\ForumDefaultTopicCover\\:\\:delete\\(\\)\\.$#"
@@ -291,11 +236,6 @@ parameters:
       path: app/Libraries/Fulfillments/UsernameChangeFulfillment.php
 
     -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\ImageProcessorService\\:\\:\\$endpoint\\.$#"
-      count: 2
-      path: app/Libraries/ImageProcessorService.php
-
-    -
       message: "#^Class League\\\\CommonMark\\\\Extension\\\\Table\\\\TableCaption not found\\.$#"
       count: 1
       path: app/Libraries/Markdown/Indexing/Extension.php
@@ -304,11 +244,6 @@ parameters:
       message: "#^Class App\\\\Libraries\\\\Markdown\\\\StyleBlock\\\\Parser constructor invoked with 2 parameters, 1 required\\.$#"
       count: 1
       path: app/Libraries/Markdown/StyleBlock/StartParser.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\NewForumTopic\\:\\:\\$user\\.$#"
-      count: 3
-      path: app/Libraries/NewForumTopic.php
 
     -
       message: "#^Call to an undefined static method GrahamCampbell\\\\GitHub\\\\Facades\\\\GitHub\\:\\:gitData\\(\\)\\.$#"
@@ -326,11 +261,6 @@ parameters:
       path: app/Libraries/OsuWiki.php
 
     -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\Payments\\\\CentiliSignature\\:\\:\\$request\\.$#"
-      count: 3
-      path: app/Libraries/Payments/CentiliSignature.php
-
-    -
       message: "#^Call to an undefined method App\\\\Libraries\\\\Payments\\\\PaymentProcessor\\:\\:userSearch\\(\\)\\.$#"
       count: 1
       path: app/Libraries/Payments/PaymentProcessor.php
@@ -339,16 +269,6 @@ parameters:
       message: "#^Variable \\$order might not be defined\\.$#"
       count: 2
       path: app/Libraries/Payments/PaymentProcessor.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\Payments\\\\PaypalSignature\\:\\:\\$request\\.$#"
-      count: 2
-      path: app/Libraries/Payments/PaypalSignature.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\Payments\\\\XsollaSignature\\:\\:\\$request\\.$#"
-      count: 3
-      path: app/Libraries/Payments/XsollaSignature.php
 
     -
       message: "#^Call to an undefined method App\\\\Libraries\\\\ProfileCover\\:\\:delete\\(\\)\\.$#"
@@ -376,31 +296,6 @@ parameters:
       path: app/Libraries/UserVerification.php
 
     -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\ValidationErrors\\:\\:\\$keyBase\\.$#"
-      count: 3
-      path: app/Libraries/ValidationErrors.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Libraries\\\\ValidationErrors\\:\\:\\$prefix\\.$#"
-      count: 3
-      path: app/Libraries/ValidationErrors.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Mail\\\\UserNotificationDigest\\:\\:\\$user\\.$#"
-      count: 3
-      path: app/Mail/UserNotificationDigest.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$baseDifficultyRatings\\.$#"
-      count: 1
-      path: app/Models/Beatmap.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$baseMaxCombo\\.$#"
-      count: 1
-      path: app/Models/Beatmap.php
-
-    -
       message: "#^Class App\\\\Models\\\\Score not found\\.$#"
       count: 1
       path: app/Models/Beatmap.php
@@ -409,16 +304,6 @@ parameters:
       message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
       count: 1
       path: app/Models/Beatmap.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap\\.$#"
-      count: 6
-      path: app/Models/BeatmapDiscussion.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap_discussion_id\\.$#"
-      count: 1
-      path: app/Models/BeatmapDiscussion.php
 
     -
       message: "#^Relation 'beatmapset' is not found in App\\\\Models\\\\BeatmapDiscussion model\\.$#"
@@ -441,11 +326,6 @@ parameters:
       path: app/Models/BeatmapDiscussionVote.php
 
     -
-      message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$topic\\.$#"
-      count: 1
-      path: app/Models/Beatmapset.php
-
-    -
       message: "#^Relation 'user' is not found in App\\\\Models\\\\FavouriteBeatmapset model\\.$#"
       count: 1
       path: app/Models/Beatmapset.php
@@ -466,34 +346,9 @@ parameters:
       path: app/Models/Chat/Channel.php
 
     -
-      message: "#^Access to an undefined property App\\\\Models\\\\Event\\:\\:\\$details\\.$#"
-      count: 2
-      path: app/Models/Event.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Event\\:\\:\\$type\\.$#"
-      count: 2
-      path: app/Models/Event.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Follow\\:\\:\\$notifiable\\.$#"
-      count: 1
-      path: app/Models/Follow.php
-
-    -
       message: "#^Anonymous function has an unused use \\$topic\\.$#"
       count: 1
       path: app/Models/Forum/Post.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\Topic\\:\\:\\$firstPost\\.$#"
-      count: 2
-      path: app/Models/Forum/Topic.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\TopicVote\\:\\:\\$params\\.$#"
-      count: 5
-      path: app/Models/Forum/TopicVote.php
 
     -
       message: "#^Caught class App\\\\Models\\\\Forum\\\\Exception not found\\.$#"
@@ -506,49 +361,9 @@ parameters:
       path: app/Models/NewsPost.php
 
     -
-      message: "#^Access to an undefined property App\\\\Models\\\\OAuth\\\\Token\\:\\:\\$refreshToken\\.$#"
-      count: 1
-      path: app/Models/OAuth/Token.php
-
-    -
       message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
       count: 1
       path: app/Models/ReplayViewCount/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$beatmap_id\\.$#"
-      count: 4
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$pp\\.$#"
-      count: 1
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$rank\\.$#"
-      count: 1
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$replay\\.$#"
-      count: 1
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$replayViewCount\\.$#"
-      count: 1
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$score\\.$#"
-      count: 4
-      path: app/Models/Score/Best/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$user_id\\.$#"
-      count: 3
-      path: app/Models/Score/Best/Model.php
 
     -
       message: "#^Class App\\\\Models\\\\ReplayViewCount not found\\.$#"
@@ -556,84 +371,9 @@ parameters:
       path: app/Models/Score/Best/Model.php
 
     -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$beatmap_id\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count100\\.$#"
-      count: 14
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count300\\.$#"
-      count: 11
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count50\\.$#"
-      count: 11
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countgeki\\.$#"
-      count: 5
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countkatu\\.$#"
-      count: 7
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countmiss\\.$#"
-      count: 6
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$date\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$maxcombo\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$pass\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$rank\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$score\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$user_id\\.$#"
-      count: 1
-      path: app/Models/Score/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\Score\\:\\:\\$performance\\.$#"
-      count: 1
-      path: app/Models/Solo/Score.php
-
-    -
       message: "#^Relation 'user' is not found in App\\\\Models\\\\Solo\\\\Score model\\.$#"
       count: 1
       path: app/Models/Solo/Score.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\Tournament\\:\\:\\$product\\.$#"
-      count: 1
-      path: app/Models/Tournament.php
 
     -
       message: "#^Called 'Model\\:\\:make\\(\\)' which performs unnecessary work, use 'new Model\\(\\)'\\.$#"
@@ -651,46 +391,6 @@ parameters:
       path: app/Models/UserProfileCustomization.php
 
     -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$accuracy\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count100\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count300\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count50\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$level\\.$#"
-      count: 2
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score_index\\.$#"
-      count: 2
-      path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$user_id\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Model.php
-
-    -
       message: "#^Method App\\\\Models\\\\UserStatistics\\\\Model\\:\\:setCreatedAt\\(\\) should return \\$this\\(App\\\\Models\\\\UserStatistics\\\\Model\\) but return statement is missing\\.$#"
       count: 1
       path: app/Models/UserStatistics/Model.php
@@ -699,66 +399,6 @@ parameters:
       message: "#^Result of method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:__construct\\(\\) \\(void\\) is used\\.$#"
       count: 1
       path: app/Models/UserStatistics/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$a_rank_count\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count100\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count300\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count50\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$level\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$max_combo\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$playcount\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$ranked_score\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$replay_popularity\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$s_rank_count\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$total_score\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
-
-    -
-      message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$x_rank_count\\.$#"
-      count: 1
-      path: app/Models/UserStatistics/Spotlight/Model.php
 
     -
       message: "#^Result of method App\\\\Models\\\\UserStatistics\\\\Model\\:\\:__construct\\(\\) \\(void\\) is used\\.$#"
