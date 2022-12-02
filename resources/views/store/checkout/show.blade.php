@@ -55,14 +55,10 @@
                         @foreach($addresses as $a)
                             @include('store.objects.address', [
                                 'data' => $a,
-                                'selected' => (isset($order->address) && $order->address->address_id === $a->address_id),
-                                'modifiable' => true,
                             ])
                         @endforeach
                     </div>
                 @endif
-
-                @include('store.objects.new_address')
             </div>
         @endif
 
