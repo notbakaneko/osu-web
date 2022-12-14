@@ -115,7 +115,7 @@ class OrderItemTest extends TestCase
 
     private function createProductAndOrderItem(int $stock, bool $reserved)
     {
-        $product = factory(Product::class)->create(['stock' => $stock, 'max_quantity' => 5]);
+        $product = Product::factory()->create(['stock' => $stock, 'max_quantity' => 5]);
         $orderItem = factory(OrderItem::class)->create([
             'product_id' => $product->getKey(),
             'quantity' => 2,

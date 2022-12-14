@@ -65,8 +65,8 @@ class BannerFulfillmentTest extends TestCase
         static $customClasses = BannerFulfillment::ALLOWED_TAGGED_NAMES;
         foreach ($customClasses as $customClass) {
             // only need the custom_class
-            $product = factory(Product::class)->create(['custom_class' => $customClass]);
-            $orderItem = factory(OrderItem::class)->create([
+            $product = Product::factory()->create(['custom_class' => $customClass]);
+            factory(OrderItem::class)->create([
                 'product_id' => $product->product_id,
                 'order_id' => $this->order->order_id,
                 'cost' => $product->cost,
@@ -80,15 +80,15 @@ class BannerFulfillmentTest extends TestCase
 
     public function testInvalidBannerCustomClasss()
     {
-        $product = factory(Product::class)->create(['custom_class' => 'invalid-supporter']);
-        $orderItem = factory(OrderItem::class)->create([
+        $product = Product::factory()->create(['custom_class' => 'invalid-supporter']);
+        factory(OrderItem::class)->create([
             'product_id' => $product->product_id,
             'order_id' => $this->order->order_id,
             'cost' => $product->cost,
         ]);
 
         $this->expectException(\App\Libraries\Fulfillments\InvalidFulfillerException::class);
-        $subjects = FulfillmentFactory::createFulfillersFor($this->order);
+        FulfillmentFactory::createFulfillersFor($this->order);
     }
 
     protected function setUp(): void

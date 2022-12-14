@@ -13,7 +13,7 @@ $factory->define(App\Models\Store\OrderItem::class, function (Faker\Generator $f
             return factory(Order::class)->create()->order_id;
         },
         'product_id' => function () {
-            return factory(Product::class)->create()->product_id;
+            return Product::factory()->create()->product_id;
         },
         'quantity' => 1,
         'cost' => 12.0,

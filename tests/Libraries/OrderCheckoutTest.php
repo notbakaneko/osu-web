@@ -71,8 +71,8 @@ class OrderCheckoutTest extends TestCase
 
     public function testShopifyItemDoesNotMix()
     {
-        $product1 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => 1]);
-        $product2 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => null]);
+        $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => 1]);
+        $product2 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => null]);
         $orderItem1 = factory(OrderItem::class)->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
@@ -98,7 +98,7 @@ class OrderCheckoutTest extends TestCase
 
     public function testTotalNonZeroDoesNotAllowFreeCheckout()
     {
-        $product1 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 1]);
+        $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 1]);
         $orderItem1 = factory(OrderItem::class)->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
@@ -119,7 +119,7 @@ class OrderCheckoutTest extends TestCase
 
     public function testTotalZeroOnlyAllowsFreeCheckout()
     {
-        $product1 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 0]);
+        $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 0]);
         $orderItem1 = factory(OrderItem::class)->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
@@ -141,7 +141,7 @@ class OrderCheckoutTest extends TestCase
     {
         $country = Country::inRandomOrder()->first() ?? Country::factory()->create();
 
-        $product = factory(Product::class)->states('child_banners')->create([
+        $product = Product::factory()->tournamentBanner()->create([
             'available_until' => $availableUntil,
             'name' => "{$tournament->name} Support Banner ({$country->name})",
         ]);

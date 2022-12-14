@@ -39,7 +39,7 @@ class FulfillmentFactoryTest extends TestCase
     public function testCustomClassBanner()
     {
         $orderItem = factory(OrderItem::class)->create([
-            'product_id' => factory(Product::class)->create(['custom_class' => 'mwc7-supporter'])->product_id,
+            'product_id' => Product::factory()->create(['custom_class' => 'mwc7-supporter'])->product_id,
         ]);
         $order = $orderItem->order;
 
@@ -51,7 +51,7 @@ class FulfillmentFactoryTest extends TestCase
     public function testCustomClassDoesNotExist()
     {
         $orderItem = factory(OrderItem::class)->create([
-            'product_id' => factory(Product::class)->create(['custom_class' => 'derp-derp'])->product_id,
+            'product_id' => Product::factory()->create(['custom_class' => 'derp-derp'])->product_id,
         ]);
         $order = $orderItem->order;
 

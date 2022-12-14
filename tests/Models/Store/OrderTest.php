@@ -15,7 +15,7 @@ class OrderTest extends TestCase
     public function testContainsSupporterTag()
     {
         $order = factory(Order::class)->create();
-        $product = factory(Product::class)->create();
+        $product = Product::factory()->create();
         factory(OrderItem::class)->create(['order_id' => $order, 'product_id' => $product]);
         factory(OrderItem::class)->states('supporter_tag')->create(['order_id' => $order]);
 
@@ -49,8 +49,8 @@ class OrderTest extends TestCase
 
     public function testSwitchOrderItemReservation()
     {
-        $product1 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5]);
-        $product2 = factory(Product::class)->create(['stock' => 5, 'max_quantity' => 5]);
+        $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5]);
+        $product2 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5]);
         $orderItem = factory(OrderItem::class)->create([
             'product_id' => $product1->product_id,
             'quantity' => 2,

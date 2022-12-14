@@ -28,8 +28,8 @@ class ProductSeeder extends Seeder
         $this->product_ids = [];
         $this->count = 0;
 
-        $master_tshirt = factory(Product::class)->states('master_tshirt')->create();
-        $child_shirts = factory(Product::class, 7)->states('child_tshirt')->create([
+        $master_tshirt = Product::factory()->masterTshirt()->create();
+        Product::factory()->count(7)->childTshirt()->create([
             'master_product_id' => $master_tshirt->product_id,
         ])->each(function ($s) {
             $this->product_ids[] = $s->product_id;
@@ -69,7 +69,7 @@ class ProductSeeder extends Seeder
         $countries = Country::limit(6)->get()->toArray();
         $master_country = array_shift($countries);
 
-        $master = factory(Product::class)->states('child_banners')->create([
+        $master = Product::factory()->tournamentBanner()->create([
             'name' => "{$tournament->name} Support Banner ({$master_country['name']})",
             'description' => ':)',
             'header_description' => "# {$tournament->name} Support Banners\nYayifications",
@@ -85,7 +85,7 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($countries as $country) {
-            $product = factory(Product::class)->states('child_banners')->create([
+            $product = Product::factory()->tournamentBanner()->create([
                 'name' => "{$tournament->name} Support Banner ({$country['name']})",
                 'master_product_id' => $master->product_id,
             ]);
