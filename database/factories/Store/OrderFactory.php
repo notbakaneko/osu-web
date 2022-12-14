@@ -3,51 +3,63 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-$factory->define(App\Models\Store\Order::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' => function () {
-            return App\Models\User::factory()->create(['user_sig' => ''])->user_id;
-        },
-    ];
-});
+declare(strict_types=1);
 
-$factory->state(App\Models\Store\Order::class, 'paid', function (Faker\Generator $faker) use ($factory) {
-    $date = Carbon\Carbon::now();
+namespace Database\Factories\Store;
 
-    return [
-        'paid_at' => $date,
-        'status' => 'paid',
-        'transaction_id' => "test-{$date->timestamp}",
-    ];
-});
+use App\Models\Store\Order;
+use App\Models\Store\OrderItem;
+use App\Models\User;
+use Carbon\Carbon;
+use Database\Factories\Factory;
 
-$factory->state(App\Models\Store\Order::class, 'incart', function (Faker\Generator $faker) {
-    return [
-        'status' => 'incart',
-    ];
-});
+class OrderItemFactory extends Factory
+{
+    protected $model = OrderItem::class;
 
-$factory->state(App\Models\Store\Order::class, 'processing', function (Faker\Generator $faker) {
-    return [
-        'status' => 'processing',
-    ];
-});
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::factory()->simple(),
+        ];
+    }
 
-$factory->state(App\Models\Store\Order::class, 'checkout', function (Faker\Generator $faker) {
-    return [
-        'status' => 'checkout',
-    ];
-});
+    public function paid()
+    {
+        $date = Carbon::now();
 
-$factory->state(App\Models\Store\Order::class, 'shipped', function (Faker\Generator $faker) {
-    return [
-        'status' => 'shipped',
-    ];
-});
+        return $this->state([
+            'paid_at' => $date,
+            'status' => 'paid',
+            'transaction_id' => "test-{$date->timestamp}",
+        ]);
+    }
 
-$factory->state(App\Models\Store\Order::class, 'shopify', function (Faker\Generator $faker) {
-    return [
-        // Doesn't need to be a gid for tests.
-        'transaction_id' => App\Models\Store\Order::PROVIDER_SHOPIFY.'-'.now()->timestamp,
-    ];
-});
+    public function shopify()
+    {
+        return $this->state([
+            // Doesn't need to be a gid for tests.
+            'transaction_id' => Order::PROVIDER_SHOPIFY.'-'.Carbon::now()->timestamp,
+        ]);
+    }
+
+    public function incart()
+    {
+        return $this->state(['status' => Order::STATUS_INCART]);
+    }
+
+    public function processing()
+    {
+        return $this->state(['status' => Order::STATUS_PAYMENT_REQUESTED]);
+    }
+
+    public function checkout()
+    {
+        return $this->state(['status' => Order::STATUS_PAYMENT_APPROVED]);
+    }
+
+    public function shipped()
+    {
+        return $this->state(['status' => Order::STATUS_SHIPPED]);
+    }
+}

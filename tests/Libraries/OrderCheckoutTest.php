@@ -22,8 +22,8 @@ class OrderCheckoutTest extends TestCase
     {
         $tournament = Tournament::factory()->create();
         $product = $this->createTournamentProduct($tournament, Carbon::now()->addDays(1));
-        $orderItem = factory(OrderItem::class)->create([
-            'product_id' => $product->product_id,
+        $orderItem = OrderItem::factory()->create([
+            'product_id' => $product->getKey(),
             'extra_data' => [
                 'tournament_id' => $tournament->getKey(),
             ],
@@ -39,8 +39,8 @@ class OrderCheckoutTest extends TestCase
     {
         $tournament = Tournament::factory()->create();
         $product = $this->createTournamentProduct($tournament);
-        $orderItem = factory(OrderItem::class)->create([
-            'product_id' => $product->product_id,
+        $orderItem = OrderItem::factory()->create([
+            'product_id' => $product->getKey(),
             'extra_data' => [
                 'tournament_id' => $tournament->getKey(),
             ],
@@ -56,8 +56,8 @@ class OrderCheckoutTest extends TestCase
     {
         $tournament = Tournament::factory()->create();
         $product = $this->createTournamentProduct($tournament, Carbon::now()->subDays(1));
-        $orderItem = factory(OrderItem::class)->create([
-            'product_id' => $product->product_id,
+        $orderItem = OrderItem::factory()->create([
+            'product_id' => $product->getKey(),
             'extra_data' => [
                 'tournament_id' => $tournament->getKey(),
             ],
@@ -73,12 +73,12 @@ class OrderCheckoutTest extends TestCase
     {
         $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => 1]);
         $product2 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'shopify_id' => null]);
-        $orderItem1 = factory(OrderItem::class)->create([
+        $orderItem1 = OrderItem::factory()->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
         ]);
 
-        $orderItem2 = factory(OrderItem::class)->create([
+        $orderItem2 = OrderItem::factory()->create([
             'product_id' => $product2->product_id,
             'quantity' => 1,
         ]);
@@ -99,7 +99,7 @@ class OrderCheckoutTest extends TestCase
     public function testTotalNonZeroDoesNotAllowFreeCheckout()
     {
         $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 1]);
-        $orderItem1 = factory(OrderItem::class)->create([
+        $orderItem1 = OrderItem::factory()->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
             'cost' => $product1->cost,
@@ -120,7 +120,7 @@ class OrderCheckoutTest extends TestCase
     public function testTotalZeroOnlyAllowsFreeCheckout()
     {
         $product1 = Product::factory()->create(['stock' => 5, 'max_quantity' => 5, 'cost' => 0]);
-        $orderItem1 = factory(OrderItem::class)->create([
+        $orderItem1 = OrderItem::factory()->create([
             'product_id' => $product1->product_id,
             'quantity' => 1,
             'cost' => $product1->cost,
@@ -147,7 +147,7 @@ class OrderCheckoutTest extends TestCase
         ]);
 
         $type_mappings_json = [
-            $product->product_id => [
+            $product->getKey() => [
                 'country' => $country->acronym,
                 'tournament_id' => $tournament->tournament_id,
             ],

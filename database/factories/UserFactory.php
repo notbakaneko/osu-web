@@ -74,6 +74,15 @@ class UserFactory extends Factory
         return $this->has(UserAccountHistory::factory()->silence(), 'accountHistories');
     }
 
+    public function simple()
+    {
+        $this->state([
+            'user_interests' => '',
+            'user_occ' => '',
+            'user_sig' => '',
+        ]);
+    }
+
     public function supporter()
     {
         return $this->state(['osu_subscriber' => true, 'osu_subscriptionexpiry' => now()->addMonthsNoOverflow(1)]);
