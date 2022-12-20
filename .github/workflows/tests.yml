@@ -95,7 +95,7 @@ jobs:
           -e ES_HOST=http://elasticsearch:9200
           -e REDIS_HOST=redis
           -e SCHEMA=test
-          --entrypoint sh pppy/osu-elastic-indexer -c "exec dotnet osu.ElasticIndexer.dll queue --force-version --wait"
+          --entrypoint sh pppy/osu-elastic-indexer -c "exec dotnet osu.ElasticIndexer.dll queue --wait"
 
       osu-notification-server:
         env:
@@ -145,6 +145,9 @@ jobs:
           php artisan es:create-search-blacklist
           php artisan es:index-documents --yes
           php artisan es:index-wiki --create-only --yes
+
+      - name: Set score indexer schema version
+        run: php artisan es:index-scores:set-schema --schema=test
 
       - name: Generate docs
         run: php artisan scribe:generate
