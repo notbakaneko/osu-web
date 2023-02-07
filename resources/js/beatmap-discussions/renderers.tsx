@@ -50,7 +50,7 @@ function paragraphDecorator(reactNode: React.ReactNode) {
 }
 
 export function paragraphRenderer(astProps: ReactMarkdownProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>) {
-  return <div className='beatmapset-discussion-message'>{astProps.children.map(paragraphDecorator)}</div>;
+  return <div>{astProps.children.map(paragraphDecorator)}</div>;
 }
 
 export function transformLinkUri(uri: string) {
