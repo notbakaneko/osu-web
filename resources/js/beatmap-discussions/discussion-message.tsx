@@ -5,7 +5,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import autolink from './plugins/autolink';
 import disableConstructs from './plugins/disable-constructs';
-import { linkRenderer, paragraphRenderer, transformLinkUri } from './renderers';
+import { imageRenderer, linkRenderer, paragraphRenderer, transformLinkUri } from './renderers';
 
 interface Props {
   markdown: string;
@@ -16,6 +16,7 @@ const DiscussionMessage = (props: Props) => (
     className='beatmapset-discussion-message'
     components={{
       a: linkRenderer,
+      img: imageRenderer,
       p: paragraphRenderer,
     }}
     remarkPlugins={[autolink, disableConstructs]}

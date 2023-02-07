@@ -49,6 +49,15 @@ function paragraphDecorator(reactNode: React.ReactNode) {
   return reactNode;
 }
 
+export function imageRenderer(astProps: ReactMarkdownProps & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) {
+  // FIXME: need to proxy image
+  return (
+    <a href={astProps.src} rel='nofollow noreferrer' target='_blank'>
+      <img {...astProps.node.properties} />
+    </a>
+  );
+}
+
 export function paragraphRenderer(astProps: ReactMarkdownProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>) {
   return <div>{astProps.children.map(paragraphDecorator)}</div>;
 }
