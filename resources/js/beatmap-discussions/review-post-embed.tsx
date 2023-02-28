@@ -7,7 +7,6 @@ import * as React from 'react';
 import { format, formatTimestamp, makeUrl, startingPost } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import { BeatmapsContext } from './beatmaps-context';
 import { DiscussionsContext } from './discussions-context';
 
 interface Props {
@@ -18,8 +17,7 @@ interface Props {
 
 export const ReviewPostEmbed = ({ data }: Props) => {
   const bn = 'beatmap-discussion-review-post-embed-preview';
-  const discussions = React.useContext(DiscussionsContext);
-  const beatmaps = React.useContext(BeatmapsContext);
+  const { beatmaps, discussions } = React.useContext(DiscussionsContext);
   const discussion = discussions[data.discussion_id];
 
   if (!discussion) {

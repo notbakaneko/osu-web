@@ -2,7 +2,6 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { Discussion } from 'beatmap-discussions/discussion'
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
 import { BeatmapsetsContext } from 'beatmap-discussions/beatmapsets-context'
 import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
@@ -109,36 +108,38 @@ export class Main extends React.PureComponent
     beatmapsets = @beatmapsets()
 
     el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-      el DiscussionsContext.Provider, value: @discussions(),
+      el DiscussionsContext.Provider,
+        value:
+          beatmaps: beatmaps
+          discussions: @discussions()
         el BeatmapsetsContext.Provider, value: beatmapsets,
-          el BeatmapsContext.Provider, value: beatmaps,
-            div className: 'modding-profile-list modding-profile-list--index',
-              if @props.discussions.length == 0
-                div className: 'modding-profile-list__empty', trans('beatmap_discussions.index.none_found')
-              else
-                for discussion in @props.discussions when discussion?
-                  div
-                    className: 'modding-profile-list__row'
-                    key: discussion.id,
+          div className: 'modding-profile-list modding-profile-list--index',
+            if @props.discussions.length == 0
+              div className: 'modding-profile-list__empty', trans('beatmap_discussions.index.none_found')
+            else
+              for discussion in @props.discussions when discussion?
+                div
+                  className: 'modding-profile-list__row'
+                  key: discussion.id,
 
-                    a
-                      className: 'modding-profile-list__thumbnail'
-                      href: makeUrl(discussion: discussion),
+                  a
+                    className: 'modding-profile-list__thumbnail'
+                    href: makeUrl(discussion: discussion),
 
-                      el BeatmapsetCover,
-                        beatmapset: beatmapsets[discussion.beatmapset_id]
-                        size: 'list'
-
-                    el Discussion,
-                      discussion: discussion
-                      users: @users()
-                      currentBeatmap: beatmaps[discussion.beatmap_id]
-                      currentUser: currentUser
+                    el BeatmapsetCover,
                       beatmapset: beatmapsets[discussion.beatmapset_id]
-                      isTimelineVisible: false
-                      visible: false
-                      showDeleted: true
-                      preview: true
+                      size: 'list'
+
+                  el Discussion,
+                    discussion: discussion
+                    users: @users()
+                    currentBeatmap: beatmaps[discussion.beatmap_id]
+                    currentUser: currentUser
+                    beatmapset: beatmapsets[discussion.beatmapset_id]
+                    isTimelineVisible: false
+                    visible: false
+                    showDeleted: true
+                    preview: true
 
 
   users: =>

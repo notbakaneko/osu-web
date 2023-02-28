@@ -2,7 +2,6 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
 import NewReview from 'beatmap-discussions/new-review'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import { BackToTop } from 'components/back-to-top'
@@ -138,44 +137,44 @@ export class Main extends React.PureComponent
 
       else
         el DiscussionsContext.Provider,
-          value: @discussions()
-          el BeatmapsContext.Provider,
-            value: @beatmaps()
-            el ReviewEditorConfigContext.Provider,
-              value: @state.reviewsConfig
+          value:
+            beatmaps: @beatmaps()
+            discussions: @discussions()
+          el ReviewEditorConfigContext.Provider,
+            value: @state.reviewsConfig
 
-              if @state.currentMode == 'reviews'
-                el NewReview,
-                  beatmapset: @state.beatmapset
-                  beatmaps: @beatmaps()
-                  currentBeatmap: @currentBeatmap()
-                  currentUser: @state.currentUser
-                  pinned: @state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-              else
-                el NewDiscussion,
-                  beatmapset: @state.beatmapset
-                  currentUser: @state.currentUser
-                  currentBeatmap: @currentBeatmap()
-                  currentDiscussions: @currentDiscussions()
-                  innerRef: @newDiscussionRef
-                  mode: @state.currentMode
-                  pinned: @state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-                  autoFocus: @focusNewDiscussion
-
-              el Discussions,
+            if @state.currentMode == 'reviews'
+              el NewReview,
                 beatmapset: @state.beatmapset
+                beatmaps: @beatmaps()
+                currentBeatmap: @currentBeatmap()
+                currentUser: @state.currentUser
+                pinned: @state.pinnedNewDiscussion
+                setPinned: @setPinnedNewDiscussion
+                stickTo: @modeSwitcherRef
+            else
+              el NewDiscussion,
+                beatmapset: @state.beatmapset
+                currentUser: @state.currentUser
                 currentBeatmap: @currentBeatmap()
                 currentDiscussions: @currentDiscussions()
-                currentFilter: @state.currentFilter
-                currentUser: @state.currentUser
+                innerRef: @newDiscussionRef
                 mode: @state.currentMode
-                readPostIds: @state.readPostIds
-                showDeleted: @state.showDeleted
-                users: @users()
+                pinned: @state.pinnedNewDiscussion
+                setPinned: @setPinnedNewDiscussion
+                stickTo: @modeSwitcherRef
+                autoFocus: @focusNewDiscussion
+
+            el Discussions,
+              beatmapset: @state.beatmapset
+              currentBeatmap: @currentBeatmap()
+              currentDiscussions: @currentDiscussions()
+              currentFilter: @state.currentFilter
+              currentUser: @state.currentUser
+              mode: @state.currentMode
+              readPostIds: @state.readPostIds
+              showDeleted: @state.showDeleted
+              users: @users()
 
       el BackToTop
 

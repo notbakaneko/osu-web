@@ -1,7 +1,6 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
 import { BeatmapsetsContext } from 'beatmap-discussions/beatmapsets-context'
 import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
@@ -155,56 +154,58 @@ export class Main extends React.PureComponent
     profileOrder = @state.profileOrder
 
     el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-      el DiscussionsContext.Provider, value: @discussions(),
+      el DiscussionsContext.Provider,
+        value:
+          beatmaps: @beatmaps()
+          discussions: @discussions()
         el BeatmapsetsContext.Provider, value: @beatmapsets(),
-          el BeatmapsContext.Provider, value: @beatmaps(),
-            el UserProfileContainer,
-              user: @state.user,
-              el HeaderV4,
-                backgroundImage: @props.user.cover.url
-                links: headerLinks(@props.user, 'modding')
-                # add space for warning banner when user is blocked
-                modifiers:
-                  restricted: core.currentUserModel.blocks.has(@props.user.id) || @props.user.is_restricted
-                theme: 'users'
+          el UserProfileContainer,
+            user: @state.user,
+            el HeaderV4,
+              backgroundImage: @props.user.cover.url
+              links: headerLinks(@props.user, 'modding')
+              # add space for warning banner when user is blocked
+              modifiers:
+                restricted: core.currentUserModel.blocks.has(@props.user.id) || @props.user.is_restricted
+              theme: 'users'
+
+            div
+              className: 'osu-page osu-page--generic-compact'
 
               div
-                className: 'osu-page osu-page--generic-compact'
+                className: 'js-switchable-mode-page--scrollspy js-switchable-mode-page--page'
+                'data-page-id': 'main'
+                el Cover, user: @props.user, currentMode: @props.user.playmode, coverUrl: @props.user.cover.url
+                if !@props.user.is_bot
+                  el React.Fragment, null,
+                    el ProfileTournamentBanner, banner: @state.user.active_tournament_banner
 
+                    div className: 'profile-detail',
+                      el Badges, badges: @state.user.badges
+                      el Stats, user: @props.user
+
+                el DetailBar, user: @props.user
+
+              div
+                className: 'hidden-xs page-extra-tabs page-extra-tabs--profile-page js-switchable-mode-page--scrollspy-offset'
                 div
-                  className: 'js-switchable-mode-page--scrollspy js-switchable-mode-page--page'
-                  'data-page-id': 'main'
-                  el Cover, user: @props.user, currentMode: @props.user.playmode, coverUrl: @props.user.cover.url
-                  if !@props.user.is_bot
-                    el React.Fragment, null,
-                      el ProfileTournamentBanner, banner: @state.user.active_tournament_banner
+                  className: 'page-mode page-mode--profile-page-extra'
+                  ref: @tabs
+                  for m in profileOrder
+                    a
+                      className: 'page-mode__item'
+                      key: m
+                      'data-page-id': m
+                      onClick: @tabClick
+                      href: "##{m}"
+                      el ProfilePageExtraTab,
+                        page: m
+                        currentPage: @state.currentPage
 
-                      div className: 'profile-detail',
-                        el Badges, badges: @state.user.badges
-                        el Stats, user: @props.user
-
-                  el DetailBar, user: @props.user
-
-                div
-                  className: 'hidden-xs page-extra-tabs page-extra-tabs--profile-page js-switchable-mode-page--scrollspy-offset'
-                  div
-                    className: 'page-mode page-mode--profile-page-extra'
-                    ref: @tabs
-                    for m in profileOrder
-                      a
-                        className: 'page-mode__item'
-                        key: m
-                        'data-page-id': m
-                        onClick: @tabClick
-                        href: "##{m}"
-                        el ProfilePageExtraTab,
-                          page: m
-                          currentPage: @state.currentPage
-
-                div
-                  className: 'user-profile-pages'
-                  ref: @pages
-                  @extraPage name for name in profileOrder
+              div
+                className: 'user-profile-pages'
+                ref: @pages
+                @extraPage name for name in profileOrder
 
 
   extraPage: (name) =>
