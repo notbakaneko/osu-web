@@ -3,7 +3,6 @@
 
 import UserListPopup, { createTooltip } from 'components/user-list-popup';
 import { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
-import UserJson from 'interfaces/user-json';
 import { route } from 'laroute';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -14,6 +13,7 @@ import { onError } from 'utils/ajax';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
 import { hideLoadingOverlay, showLoadingOverlay } from 'utils/loading-overlay';
+import DiscussionsStateContext from './discussions-state-context';
 
 const voteTypes = ['up', 'down'] as const;
 type VoteType = typeof voteTypes[number];
@@ -21,11 +21,13 @@ type VoteType = typeof voteTypes[number];
 interface Props {
   cannotVote: boolean;
   discussion: BeatmapsetDiscussionJsonForShow;
-  users: Partial<Record<number | string, UserJson>>;
 }
 
 @observer
 export default class DiscussionVoteButtons extends React.Component<Props> {
+  static readonly contextType = DiscussionsStateContext;
+  declare context: React.ContextType<typeof DiscussionsStateContext>;
+
   private readonly tooltips: Partial<Record<VoteType, JQuery>> = {};
   @observable private voteXhr: JQuery.jqXHR<BeatmapsetDiscussionJsonForShow> | null = null;
 
@@ -68,7 +70,7 @@ export default class DiscussionVoteButtons extends React.Component<Props> {
       ? trans(`beatmaps.discussions.votes.none.${type}`)
       : `${trans(`beatmaps.discussions.votes.latest.${type}`)}:`;
 
-    const users = this.props.discussion.votes.voters[type].map((id) => this.props.users[id] ?? { id });
+    const users = this.props.discussion.votes.voters[type].map((id) => this.context.getUser(id, false) ?? { id });
 
     return renderToStaticMarkup(<UserListPopup count={count} title={title} users={users} />);
   }

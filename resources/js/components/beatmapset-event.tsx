@@ -1,11 +1,11 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import DiscussionsStateContext from 'beatmap-discussions/discussions-state-context';
 import BeatmapsetCover from 'components/beatmapset-cover';
 import TimeWithTooltip from 'components/time-with-tooltip';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetEventJson from 'interfaces/beatmapset-event-json';
-import UserJson from 'interfaces/user-json';
 import { route } from 'laroute';
 import { escape, kebabCase } from 'lodash';
 import { deletedUser } from 'models/user';
@@ -23,10 +23,12 @@ interface Props {
   event: BeatmapsetEventJson;
   mode: EventViewMode;
   time?: string;
-  users: Partial<Record<string, UserJson>>;
 }
 
 export default class BeatmapsetEvent extends React.PureComponent<Props> {
+  static readonly contextType = DiscussionsStateContext;
+  declare context: React.ContextType<typeof DiscussionsStateContext>;
+
   private get beatmapsetId(): number | undefined {
     return this.props.event.beatmapset?.id;
   }
@@ -127,7 +129,7 @@ export default class BeatmapsetEvent extends React.PureComponent<Props> {
         url = makeUrl({ discussion: this.discussion });
         text = firstPostMessage != null ? previewMessage(firstPostMessage) : '[no preview]';
 
-        const discussionUser = this.props.users[this.discussion.user_id];
+        const discussionUser = this.context.getUser(this.discussion.user_id, false);
 
         if (discussionUser != null) {
           discussionUserLink = linkHtml(route('users.show', { user: discussionUser.id }), discussionUser.username);
@@ -146,7 +148,7 @@ export default class BeatmapsetEvent extends React.PureComponent<Props> {
     }
 
     if (this.props.event.user_id != null) {
-      const userData = this.props.users[this.props.event.user_id];
+      const userData = this.context.getUser(this.props.event.user_id, false);
 
       if (userData == null) {
         user = escape(deletedUser.username);

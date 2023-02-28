@@ -31,6 +31,7 @@ import { classWithModifiers } from 'utils/css';
 import { InputEventType, makeTextAreaHandler } from 'utils/input-handler';
 import { trans } from 'utils/lang';
 import DiscussionMessageLengthCounter from './discussion-message-length-counter';
+import DiscussionsStateContext from './discussions-state-context';
 import { UserCard } from './user-card';
 
 const bn = 'beatmap-discussion-post';
@@ -44,11 +45,13 @@ interface Props {
   resolvedSystemPostId: number;
   type: string;
   user: UserJson;
-  users: Partial<Record<number, UserJson>>;
 }
 
 @observer
 export default class Post extends React.Component<Props> {
+  static readonly contextType = DiscussionsStateContext;
+  declare context: React.ContextType<typeof DiscussionsStateContext>;
+
   @observable private canSave = true; // this isn't computed because Editor's onChange doesn't provide anything to react to.
   @observable private editing = false;
   private readonly handleTextareaKeyDown;
@@ -175,6 +178,10 @@ export default class Post extends React.Component<Props> {
     this.message = this.props.post.message;
   };
 
+  private getUser(userId: number) {
+    return this.context.discussionsContext?.users[userId] ?? deletedUser;
+  }
+
   @action
   private readonly handleEditorChange = () => {
     this.canSave = this.reviewEditorRef.current?.canSave ?? false;
@@ -198,11 +205,9 @@ export default class Post extends React.Component<Props> {
 
   private renderDeletedBy() {
     if (this.deleteModel.deleted_at == null) return null;
-    const user = (
-      this.deleteModel.deleted_by_id != null
-        ? this.props.users[this.deleteModel.deleted_by_id]
-        : null
-    ) ?? deletedUser;
+    const user = this.deleteModel.deleted_by_id != null
+      ? this.getUser(this.deleteModel.deleted_by_id)
+      : deletedUser;
 
     return (
       <span className={`${bn}__info`}>
@@ -228,7 +233,7 @@ export default class Post extends React.Component<Props> {
       return null;
     }
 
-    const lastEditor = this.props.users[this.props.post.last_editor_id] ?? deletedUser.toJson();
+    const lastEditor = this.getUser(this.props.post.last_editor_id) ?? deletedUser.toJson();
 
     return (
       <span className={`${bn}__info`}>

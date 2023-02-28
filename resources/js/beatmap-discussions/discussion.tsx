@@ -5,7 +5,6 @@ import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForBundle, BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetDiscussionPostJson from 'interfaces/beatmapset-discussion-post-json';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import UserJson from 'interfaces/user-json';
 import { findLast } from 'lodash';
 import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -233,7 +232,6 @@ export class Discussion extends React.Component<Props> {
         resolvedSystemPostId={this.resolvedSystemPostId}
         type={type}
         user={user}
-        users={this.context.discussionsContext?.users ?? {}}
       />
     );
   }
@@ -261,7 +259,6 @@ export class Discussion extends React.Component<Props> {
           <DiscussionVoteButtons
             cannotVote={this.isOwner(this.props.discussion) || (user?.is_bot ?? false) || !this.canBeRepliedTo}
             discussion={this.props.discussion}
-            users={this.context.discussionsContext?.users ?? {}}
           />
           <button
             className={`${bn}__action ${bn}__action--with-line`}
