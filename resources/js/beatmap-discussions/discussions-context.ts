@@ -7,7 +7,7 @@ import UserJson from 'interfaces/user-json';
 import { makeObservable, observable } from 'mobx';
 import { createContext } from 'react';
 
-class DiscussionsContextValue {
+export class DiscussionsContextValue {
   @observable beatmaps: Partial<Record<number, BeatmapExtendedJson>> = {};
   @observable discussions: Partial<Record<number, BeatmapsetDiscussionJsonForBundle | BeatmapsetDiscussionJsonForShow>> = {};
   @observable users: Partial<Record<number, UserJson>> = {};
@@ -18,5 +18,5 @@ class DiscussionsContextValue {
 }
 
 // TODO: needs discussions need flattening / normalization
-// TODO: combine with DiscussionsState?
+// TODO: combine with DiscussionsState after beatmap-discussions/main is refactored into using observables.
 export const DiscussionsContext = createContext(new DiscussionsContextValue());

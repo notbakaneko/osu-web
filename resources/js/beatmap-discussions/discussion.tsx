@@ -33,7 +33,6 @@ interface PropsBase {
   parentDiscussion?: BeatmapsetDiscussionJson | null;
   readPostIds?: Set<number>;
   showDeleted: boolean;
-  users: Partial<Record<number | string, UserJson>>;
 }
 
 // preview version is used on pages other than the main discussions page.
@@ -112,7 +111,7 @@ export class Discussion extends React.Component<Props> {
 
     this.lastResolvedState = false;
 
-    const user = this.props.users[this.props.discussion.user_id] ?? deletedUser.toJson();
+    const user = this.getUser(this.props.discussion.user_id);
     const group = badgeGroup({
       beatmapset: this.props.beatmapset,
       currentBeatmap: this.props.currentBeatmap,
@@ -163,6 +162,10 @@ export class Discussion extends React.Component<Props> {
     );
   }
 
+  private getUser(userId: number) {
+    return this.context.discussionsContext?.users[userId] ?? deletedUser.toJson();
+  }
+
   @action
   private readonly handleCollapseClick = () => {
     this.context.discussionCollapsed.set(this.props.discussion.id, !this.collapsed);
@@ -211,7 +214,7 @@ export class Discussion extends React.Component<Props> {
   }
 
   private renderPost(post: BeatmapsetDiscussionPostJson, type: 'discussion' | 'reply') {
-    const user = this.props.users[post.user_id] ?? deletedUser.toJson();
+    const user = this.getUser(post.user_id);
 
     if (post.system) {
       return (
@@ -230,7 +233,7 @@ export class Discussion extends React.Component<Props> {
         resolvedSystemPostId={this.resolvedSystemPostId}
         type={type}
         user={user}
-        users={this.props.users}
+        users={this.context.discussionsContext?.users ?? {}}
       />
     );
   }
@@ -238,7 +241,7 @@ export class Discussion extends React.Component<Props> {
   private renderPostButtons() {
     if (this.props.preview) return null;
 
-    const user = this.props.users[this.props.discussion.user_id];
+    const user = this.getUser(this.props.discussion.user_id);
 
     return (
       <div className={`${bn}__top-actions`}>
@@ -258,7 +261,7 @@ export class Discussion extends React.Component<Props> {
           <DiscussionVoteButtons
             cannotVote={this.isOwner(this.props.discussion) || (user?.is_bot ?? false) || !this.canBeRepliedTo}
             discussion={this.props.discussion}
-            users={this.props.users}
+            users={this.context.discussionsContext?.users ?? {}}
           />
           <button
             className={`${bn}__action ${bn}__action--with-line`}

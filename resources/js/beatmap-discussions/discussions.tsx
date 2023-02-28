@@ -17,6 +17,7 @@ import { trans } from 'utils/lang';
 import CurrentDiscussions, { Filter } from './current-discussions';
 import { Discussion } from './discussion';
 import DiscussionMode from './discussion-mode';
+import { DiscussionsContext } from './discussions-context';
 import DiscussionsState from './discussions-state';
 import DiscussionsStateContext from './discussions-state-context';
 
@@ -71,6 +72,9 @@ interface Props {
 
 @observer
 export class Discussions extends React.Component<Props> {
+  static readonly contextType = DiscussionsContext;
+  declare context: React.ContextType<typeof DiscussionsContext>;
+
   @observable private discussionsState = new DiscussionsState();
   @observable private sort: Record<DiscussionMode, Sort> = {
     general: 'updated_at',
@@ -82,6 +86,17 @@ export class Discussions extends React.Component<Props> {
   @computed
   private get currentSort() {
     return this.sort[this.props.mode];
+  }
+
+  // FIXME: workaround to passing context is being able to use it as context instance in other classes.
+  @computed
+  private get discussionsStateProxy() {
+    // this.context not available before or during init.
+    if (this.discussionsState.discussionsContext == null) {
+      this.discussionsState.discussionsContext = this.context;
+    }
+
+    return this.discussionsState;
   }
 
   @computed
@@ -184,7 +199,6 @@ export class Discussions extends React.Component<Props> {
           parentDiscussion={parentDiscussion}
           readPostIds={this.props.readPostIds}
           showDeleted={this.props.showDeleted}
-          users={this.props.users}
         />
       </div>
     );
@@ -215,7 +229,7 @@ export class Discussions extends React.Component<Props> {
 
         {this.isTimelineVisible && <div className={`${bn}__timeline-line hidden-xs`} />}
 
-        <DiscussionsStateContext.Provider value={this.discussionsState}>
+        <DiscussionsStateContext.Provider value={this.discussionsStateProxy}>
           {this.sortedDiscussions.map(this.renderDiscussionPage)}
         </DiscussionsStateContext.Provider>
 
