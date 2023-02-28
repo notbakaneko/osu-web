@@ -140,6 +140,8 @@ export class Main extends React.PureComponent
           value:
             beatmaps: @beatmaps()
             discussions: @discussions()
+            users: @users()
+
           el ReviewEditorConfigContext.Provider,
             value: @state.reviewsConfig
 
