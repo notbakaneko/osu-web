@@ -3,7 +3,7 @@
 
 import { Discussion } from 'beatmap-discussions/discussion'
 import { BeatmapsetsContext } from 'beatmap-discussions/beatmapsets-context'
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
+import { DiscussionsContext, DiscussionsContextValue } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import BeatmapsetCover from 'components/beatmapset-cover'
 import { deletedUser } from 'models/user'
@@ -17,6 +17,8 @@ el = React.createElement
 export class Main extends React.PureComponent
   constructor: (props) ->
     super props
+
+    @discussionsContextValue = new DiscussionsContextValue()
 
     @eventId = "beatmapset-discussions-history-#{nextVal()}"
     @cache = {}
@@ -42,6 +44,14 @@ export class Main extends React.PureComponent
     $(window).off ".#{@eventId}"
 
     $(window).stop()
+
+
+  contextValue: =>
+    @discussionsContextValue.beatmaps = @beatmaps()
+    @discussionsContextValue.discussions = @discussions()
+    @discussionsContextValue.users = @users()
+
+    @discussionsContextValue
 
 
   discussionUpdate: (_e, options) =>
@@ -108,10 +118,7 @@ export class Main extends React.PureComponent
     beatmapsets = @beatmapsets()
 
     el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-      el DiscussionsContext.Provider,
-        value:
-          beatmaps: beatmaps
-          discussions: @discussions()
+      el DiscussionsContext.Provider, value: @contextValue(),
         el BeatmapsetsContext.Provider, value: beatmapsets,
           div className: 'modding-profile-list modding-profile-list--index',
             if @props.discussions.length == 0

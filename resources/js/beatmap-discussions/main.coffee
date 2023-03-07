@@ -1,7 +1,7 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
+import { DiscussionsContext, DiscussionsContextValue } from 'beatmap-discussions/discussions-context'
 import NewReview from 'beatmap-discussions/new-review'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import { BackToTop } from 'components/back-to-top'
@@ -10,6 +10,7 @@ import { deletedUser } from 'models/user'
 import core from 'osu-core-singleton'
 import * as React from 'react'
 import { div } from 'react-dom-factories'
+import { runInAction } from 'mobx'
 import * as BeatmapHelper from 'utils/beatmap-helper'
 import { defaultFilter, defaultMode, makeUrl, parseUrl, stateFromDiscussion } from 'utils/beatmapset-discussion-helper'
 import { nextVal } from 'utils/seq'
@@ -25,6 +26,8 @@ el = React.createElement
 export class Main extends React.PureComponent
   constructor: (props) ->
     super props
+
+    @discussionsContextValue = new DiscussionsContextValue()
 
     @eventId = "beatmap-discussions-#{nextVal()}"
     @modeSwitcherRef = React.createRef()
@@ -103,6 +106,15 @@ export class Main extends React.PureComponent
     @disposers.forEach (disposer) => disposer?()
 
 
+  contextValue: =>
+    runInAction () =>
+      @discussionsContextValue.beatmaps = @beatmaps()
+      @discussionsContextValue.discussions = @discussions()
+      @discussionsContextValue.users = @users()
+
+    @discussionsContextValue
+
+
   render: =>
     @cache = {}
 
@@ -137,10 +149,7 @@ export class Main extends React.PureComponent
 
       else
         el DiscussionsContext.Provider,
-          value:
-            beatmaps: @beatmaps()
-            discussions: @discussions()
-            users: @users()
+          value: @contextValue(),
 
           el ReviewEditorConfigContext.Provider,
             value: @state.reviewsConfig

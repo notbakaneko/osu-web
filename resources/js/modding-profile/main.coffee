@@ -2,7 +2,7 @@
 # See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapsetsContext } from 'beatmap-discussions/beatmapsets-context'
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
+import { DiscussionsContext, DiscussionsContextValue } from 'beatmap-discussions/discussions-context'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
 import HeaderV4 from 'components/header-v4'
 import { NotificationBanner } from 'components/notification-banner'
@@ -37,6 +37,8 @@ pagesOffset = document.getElementsByClassName("js-switchable-mode-page--scrollsp
 export class Main extends React.PureComponent
   constructor: (props) ->
     super props
+
+    @discussionsContextValue = new DiscussionsContextValue()
 
     @disposers = new Set
     @eventId = "users-modding-history-index-#{nextVal()}"
@@ -88,6 +90,14 @@ export class Main extends React.PureComponent
     $(window).stop()
     Timeout.clear @modeScrollTimeout
     @disposers.forEach (disposer) => disposer?()
+
+
+  contextValue: =>
+    @discussionsContextValue.beatmaps = @beatmaps()
+    @discussionsContextValue.discussions = @discussions()
+    @discussionsContextValue.users = @users()
+
+    @discussionsContextValue
 
 
   discussionUpdate: (_e, options) =>
@@ -154,11 +164,7 @@ export class Main extends React.PureComponent
     profileOrder = @state.profileOrder
 
     el ReviewEditorConfigContext.Provider, value: @props.reviewsConfig,
-      el DiscussionsContext.Provider,
-        value:
-          beatmaps: @beatmaps()
-          discussions: @discussions()
-          users: @users()
+      el DiscussionsContext.Provider, value: @contextValue(),
         el BeatmapsetsContext.Provider, value: @beatmapsets(),
           el UserProfileContainer,
             user: @state.user,

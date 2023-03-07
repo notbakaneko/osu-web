@@ -5,6 +5,7 @@ import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForBundle, BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetDiscussionPostJson from 'interfaces/beatmapset-discussion-post-json';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
+import UserJson from 'interfaces/user-json';
 import { findLast } from 'lodash';
 import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -32,6 +33,8 @@ interface PropsBase {
   parentDiscussion?: BeatmapsetDiscussionJson | null;
   readPostIds?: Set<number>;
   showDeleted: boolean;
+  // deprecated, only exists for beatmap-discussions-history, everything else should use context.
+  users?: Partial<Record<number, UserJson>>;
 }
 
 // preview version is used on pages other than the main discussions page.
@@ -162,7 +165,7 @@ export class Discussion extends React.Component<Props> {
   }
 
   private getUser(userId: number) {
-    return this.context.discussionsContext?.users[userId] ?? deletedUser.toJson();
+    return this.props.users?.[userId] ?? this.context.discussionsContext?.users[userId] ?? deletedUser.toJson();
   }
 
   @action
