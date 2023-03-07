@@ -1,6 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
+import { DiscussionsContext, DiscussionsContextValue } from 'beatmap-discussions/discussions-context';
 import BeatmapsetEvents, { Props as BeatmapsetEventsProps } from 'components/beatmapset-events';
 import BeatmapsetPanel, { Props as BeatmapsetPanelProps } from 'components/beatmapset-panel';
 import BlockButton from 'components/block-button';
@@ -23,7 +24,6 @@ import { WikiSearch } from 'components/wiki-search';
 import GameMode from 'interfaces/game-mode';
 import { keyBy } from 'lodash';
 import { observable } from 'mobx';
-import { deletedUser } from 'models/user';
 import NotificationWidget from 'notification-widget/main';
 import core from 'osu-core-singleton';
 import QuickSearch from 'quick-search/main';
@@ -56,14 +56,16 @@ core.reactTurbolinks.register('beatmap-discussion-events', () => {
   const props: BeatmapsetEventsProps = {
     events: parseJson('json-events'),
     mode: 'list',
-    users: keyBy(parseJson('json-users'), 'id'),
   };
 
-  // TODO: move to store?
-  // eslint-disable-next-line id-blacklist
-  props.users.null = props.users.undefined = deletedUser.toJson();
+  const value = new DiscussionsContextValue();
+  value.users = keyBy(parseJson('json-users'), 'id');
 
-  return <BeatmapsetEvents {...props} />;
+  return (
+    <DiscussionsContext.Provider value={value}>
+      <BeatmapsetEvents {...props} />
+    </DiscussionsContext.Provider>
+  );
 });
 
 core.reactTurbolinks.register('beatmapset-panel', (container) => {
