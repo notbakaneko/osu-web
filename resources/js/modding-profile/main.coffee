@@ -158,6 +158,7 @@ export class Main extends React.PureComponent
         value:
           beatmaps: @beatmaps()
           discussions: @discussions()
+          users: @users()
         el BeatmapsetsContext.Provider, value: @beatmapsets(),
           el UserProfileContainer,
             user: @state.user,
