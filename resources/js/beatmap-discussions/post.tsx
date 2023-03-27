@@ -279,7 +279,7 @@ export default class Post extends React.Component<Props> {
       <div className={`${bn}__message-container`}>
         {this.isReview ? (
           <DiscussionsContext.Consumer>
-            {(discussions) => (
+            {(store) => (
               <BeatmapsContext.Consumer>
                 {(beatmaps) => (
                   <Editor
@@ -288,7 +288,7 @@ export default class Post extends React.Component<Props> {
                     beatmapset={this.props.beatmapset}
                     currentBeatmap={this.props.beatmap}
                     discussion={this.props.discussion}
-                    discussions={discussions}
+                    discussions={store.discussions}
                     document={document}
                     editing={this.editing}
                     onChange={this.handleEditorChange}

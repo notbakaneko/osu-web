@@ -91,11 +91,11 @@ export default class NewReview extends React.Component<Props> {
                 {placeholder == null ? (
                   <DiscussionsContext.Consumer>
                     {
-                      (discussions) => (<Editor
+                      (store) => (<Editor
                         beatmaps={this.props.beatmaps}
                         beatmapset={this.props.beatmapset}
                         currentBeatmap={this.props.currentBeatmap}
-                        discussions={discussions}
+                        discussions={store.discussions}
                         onFocus={this.handleFocus}
                       />)
                     }

@@ -1,7 +1,7 @@
 # Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 # See the LICENCE file in the repository root for full licence text.
 
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context'
+import { DiscussionsContext, DiscussionStore } from 'beatmap-discussions/discussions-context'
 import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context'
 import NewReview from 'beatmap-discussions/new-review'
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context'
@@ -26,6 +26,8 @@ el = React.createElement
 export class Main extends React.PureComponent
   constructor: (props) ->
     super props
+
+    @store = new DiscussionStore()
 
     @eventId = "beatmap-discussions-#{nextVal()}"
     @modeSwitcherRef = React.createRef()
@@ -64,6 +66,8 @@ export class Main extends React.PureComponent
     @state.selectedUserId = query.user
     # FIXME: update url handler to recognize this instead
     @focusNewDiscussion = currentUrl().hash == '#new'
+
+    @store.discussions = @discussions()
 
 
   componentDidMount: =>
@@ -138,7 +142,7 @@ export class Main extends React.PureComponent
 
       else
         el DiscussionsContext.Provider,
-          value: @discussions()
+          value: @store
           el BeatmapsContext.Provider,
             value: @beatmaps()
             el ReviewEditorConfigContext.Provider,
