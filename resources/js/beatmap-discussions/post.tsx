@@ -1,7 +1,6 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context';
 import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
 import Editor from 'beatmap-discussions/editor';
 import { ReviewPost } from 'beatmap-discussions/review-post';
@@ -280,21 +279,17 @@ export default class Post extends React.Component<Props> {
         {this.isReview ? (
           <DiscussionsContext.Consumer>
             {(store) => (
-              <BeatmapsContext.Consumer>
-                {(beatmaps) => (
-                  <Editor
-                    ref={this.reviewEditorRef}
-                    beatmaps={beatmaps}
-                    beatmapset={this.props.beatmapset}
-                    currentBeatmap={this.props.beatmap}
-                    discussion={this.props.discussion}
-                    discussions={store.discussions}
-                    document={document}
-                    editing={this.editing}
-                    onChange={this.handleEditorChange}
-                  />
-                )}
-              </BeatmapsContext.Consumer>
+              <Editor
+                ref={this.reviewEditorRef}
+                beatmaps={store.beatmaps}
+                beatmapset={this.props.beatmapset}
+                currentBeatmap={this.props.beatmap}
+                discussion={this.props.discussion}
+                discussions={store.discussions}
+                document={document}
+                editing={this.editing}
+                onChange={this.handleEditorChange}
+              />
             )}
           </DiscussionsContext.Consumer>
         ) : (

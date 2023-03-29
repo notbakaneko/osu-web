@@ -15,7 +15,6 @@ import { trans } from 'utils/lang';
 import Editor from './editor';
 
 interface Props {
-  beatmaps: BeatmapExtendedJson[];
   beatmapset: BeatmapsetExtendedJson;
   currentBeatmap: BeatmapExtendedJson;
   currentUser: UserJson;
@@ -92,7 +91,7 @@ export default class NewReview extends React.Component<Props> {
                   <DiscussionsContext.Consumer>
                     {
                       (store) => (<Editor
-                        beatmaps={this.props.beatmaps}
+                        beatmaps={store.beatmaps}
                         beatmapset={this.props.beatmapset}
                         currentBeatmap={this.props.currentBeatmap}
                         discussions={store.discussions}

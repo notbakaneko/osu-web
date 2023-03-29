@@ -1,9 +1,9 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context';
 import { BeatmapsetsContext } from 'beatmap-discussions/beatmapsets-context';
 import { Discussion } from 'beatmap-discussions/discussion';
+import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
 import BeatmapsetCover from 'components/beatmapset-cover';
 import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import { BeatmapsetDiscussionJsonForBundle } from 'interfaces/beatmapset-discussion-json';
@@ -31,16 +31,16 @@ export default class Discussions extends React.Component<Props> {
           ) : (
             <BeatmapsetsContext.Consumer>
               {(beatmapsets) => (
-                <BeatmapsContext.Consumer>
-                  {(beatmaps) => (
+                <DiscussionsContext.Consumer>
+                  {(store) => (
                     <>
-                      {this.props.discussions.map((discussion) => this.renderDiscussion(discussion, beatmapsets, beatmaps))}
+                      {this.props.discussions.map((discussion) => this.renderDiscussion(discussion, beatmapsets, store.beatmaps))}
                       <a className='modding-profile-list__show-more' href={route('beatmapsets.discussions.index', { user: this.props.user.id })}>
                         {trans('users.show.extra.discussions.show_more')}
                       </a>
                     </>
                   )}
-                </BeatmapsContext.Consumer>
+                </DiscussionsContext.Consumer>
               )}
             </BeatmapsetsContext.Consumer>
           )}
