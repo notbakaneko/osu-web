@@ -180,21 +180,6 @@ export class Main extends React.PureComponent
       el BackToTop
 
 
-  beatmaps: =>
-    return @cache.beatmaps if @cache.beatmaps?
-
-    hasDiscussion = {}
-    for discussion in @state.beatmapset.discussions
-      hasDiscussion[discussion.beatmap_id] = true if discussion?
-
-    @cache.beatmaps ?=
-      _(@state.beatmapset.beatmaps)
-      .filter (beatmap) ->
-        !_.isEmpty(beatmap) && (!beatmap.deleted_at? || hasDiscussion[beatmap.id]?)
-      .keyBy 'id'
-      .value()
-
-
   checkNew: =>
     @nextTimeout ?= @checkNewTimeoutDefault
 
@@ -328,16 +313,6 @@ export class Main extends React.PureComponent
     reviews = byMode.reviews
 
     @cache.currentDiscussions = {general, generalAll, timeline, reviews, timelineAllUsers, byFilter, countsByBeatmap, countsByPlaymode, totalHype, unresolvedIssues}
-
-
-  discussions: =>
-    # skipped discussions
-    # - not privileged (deleted discussion)
-    # - deleted beatmap
-    @cache.discussions ?= _ @state.beatmapset.discussions
-                            .filter (d) -> !_.isEmpty(d)
-                            .keyBy 'id'
-                            .value()
 
 
   discussionStarters: =>
@@ -510,14 +485,6 @@ export class Main extends React.PureComponent
       mode: @state.currentMode
       filter: @state.currentFilter
       user: @state.selectedUserId
-
-
-  users: =>
-    if !@cache.users?
-      @cache.users = _.keyBy @state.beatmapset.related_users, 'id'
-      @cache.users[null] = @cache.users[undefined] = deletedUser.toJson()
-
-    @cache.users
 
 
   ujsDiscussionUpdate: (_e, data) =>
