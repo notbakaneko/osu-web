@@ -124,7 +124,7 @@ export class Main extends React.PureComponent
         events: @state.beatmapset.events
         mode: @state.currentMode
         selectedUserId: @state.selectedUserId
-        users: @users()
+        users: @store.users
 
       el ModeSwitcher,
         innerRef: @modeSwitcherRef
@@ -137,7 +137,7 @@ export class Main extends React.PureComponent
       if @state.currentMode == 'events'
         el Events,
           events: @state.beatmapset.events
-          users: @users()
+          users: @store.users
           discussions: @discussions()
 
       else
@@ -176,7 +176,7 @@ export class Main extends React.PureComponent
               mode: @state.currentMode
               readPostIds: @state.readPostIds
               showDeleted: @state.showDeleted
-              users: @users()
+              users: @store.users
 
       el BackToTop
 
@@ -346,7 +346,7 @@ export class Main extends React.PureComponent
       .filter (discussion) -> discussion.message_type != 'hype'
       .map 'user_id'
       .uniq()
-      .map (user_id) => @users()[user_id]
+      .map (user_id) => @store.users[user_id]
       .orderBy (user) -> user.username.toLocaleLowerCase()
       .value()
 
