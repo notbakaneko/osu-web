@@ -67,7 +67,6 @@ export class Main extends React.PureComponent
     @focusNewDiscussion = currentUrl().hash == '#new'
 
     @store.updateWithBeatmapset(@state.beatmapset)
-    # @store.discussions = @discussions()
 
 
   componentDidMount: =>
@@ -113,13 +112,13 @@ export class Main extends React.PureComponent
 
     el React.Fragment, null,
       el Header,
-        beatmaps: @groupedBeatmaps()
+        beatmaps: @store.groupedBeatmaps
         beatmapset: @state.beatmapset
         currentBeatmap: @currentBeatmap()
         currentDiscussions: @currentDiscussions()
         currentFilter: @state.currentFilter
         currentUser: @state.currentUser
-        discussions: @discussions()
+        discussions: @store.discussions
         discussionStarters: @discussionStarters()
         events: @state.beatmapset.events
         mode: @state.currentMode
@@ -138,7 +137,7 @@ export class Main extends React.PureComponent
         el Events,
           events: @state.beatmapset.events
           users: @store.users
-          discussions: @discussions()
+          discussions: @store.discussions
 
       else
         el DiscussionsContext.Provider,
@@ -251,7 +250,7 @@ export class Main extends React.PureComponent
       for own _filter, modes of byFilter
         modes[mode] = {}
 
-    for own _id, d of @discussions()
+    for own _id, d of @store.discussions
       if !d.deleted_at?
         totalHype++ if d.message_type == 'hype'
 
@@ -316,7 +315,7 @@ export class Main extends React.PureComponent
         byFilter[filter][mode][d.id] = d
 
       if filters.pending && d.parent_id?
-        parentDiscussion = @discussions()[d.parent_id]
+        parentDiscussion = @store.discussions[d.parent_id]
 
         if parentDiscussion? && parentDiscussion.message_type == 'review'
           byFilter.pending.reviews[parentDiscussion.id] = parentDiscussion
@@ -342,7 +341,7 @@ export class Main extends React.PureComponent
 
 
   discussionStarters: =>
-    _ @discussions()
+    _ @store.discussions
       .filter (discussion) -> discussion.message_type != 'hype'
       .map 'user_id'
       .uniq()
@@ -362,7 +361,7 @@ export class Main extends React.PureComponent
 
 
   jumpTo: (_e, {id, postId}) =>
-    discussion = @discussions()[id]
+    discussion = @store.discussions[id]
 
     return if !discussion?
 
@@ -470,7 +469,7 @@ export class Main extends React.PureComponent
       newState.beatmapset.current_user_attributes.is_watching = watching
 
     if playmode?
-      beatmap = BeatmapHelper.findDefault items: @groupedBeatmaps().get(playmode)
+      beatmap = BeatmapHelper.findDefault items: @store.groupedBeatmaps.get(playmode)
       beatmapId = beatmap?.id
 
     if beatmapId? && beatmapId != @currentBeatmap().id
