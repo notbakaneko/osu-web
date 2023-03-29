@@ -221,7 +221,7 @@ export class Main extends React.PureComponent
 
 
   currentBeatmap: =>
-    @beatmaps()[@state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @groupedBeatmaps())
+    @beatmaps()[@state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @store.groupedBeatmaps)
 
 
   currentDiscussions: =>

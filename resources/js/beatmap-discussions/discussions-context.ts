@@ -8,12 +8,20 @@ import { isEmpty, keyBy } from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { deletedUser } from 'models/user';
 import { createContext } from 'react';
+import { group } from 'utils/beatmap-helper';
 
 export class DiscussionStore {
   @observable beatmaps: Partial<Record<number, BeatmapExtendedJson>> = {};
   @observable discussions: Partial<Record<number, BeatmapsetDiscussionJsonForBundle | BeatmapsetDiscussionJsonForShow>> = {};
 
   @observable private beatmapset: BeatmapsetWithDiscussionsJson | null = null;
+
+  @computed
+  get groupedBeatmaps() {
+    // TODO: un-undefine values
+    const values = Object.values(this.beatmaps) as BeatmapExtendedJson[];
+    return group(values);
+  }
 
   @computed
   get users() {
