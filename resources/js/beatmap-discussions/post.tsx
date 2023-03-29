@@ -50,6 +50,9 @@ interface Props {
 
 @observer
 export default class Post extends React.Component<Props> {
+  static readonly contextType = DiscussionsContext;
+  declare context: React.ContextType<typeof DiscussionsContext>;
+
   @observable private canSave = true; // this isn't computed because Editor's onChange doesn't provide anything to react to.
   @observable private editing = false;
   private readonly handleTextareaKeyDown;
@@ -277,21 +280,17 @@ export default class Post extends React.Component<Props> {
     return (
       <div className={`${bn}__message-container`}>
         {this.isReview ? (
-          <DiscussionsContext.Consumer>
-            {(store) => (
-              <Editor
-                ref={this.reviewEditorRef}
-                beatmaps={store.beatmaps}
-                beatmapset={this.props.beatmapset}
-                currentBeatmap={this.props.beatmap}
-                discussion={this.props.discussion}
-                discussions={store.discussions}
-                document={document}
-                editing={this.editing}
-                onChange={this.handleEditorChange}
-              />
-            )}
-          </DiscussionsContext.Consumer>
+          <Editor
+            ref={this.reviewEditorRef}
+            beatmaps={this.context.beatmaps}
+            beatmapset={this.props.beatmapset}
+            currentBeatmap={this.props.beatmap}
+            discussion={this.props.discussion}
+            discussions={this.context.discussions}
+            document={document}
+            editing={this.editing}
+            onChange={this.handleEditorChange}
+          />
         ) : (
           <>
             <TextareaAutosize

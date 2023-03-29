@@ -25,6 +25,9 @@ interface Props {
 
 @observer
 export default class NewReview extends React.Component<Props> {
+  static readonly contextType = DiscussionsContext;
+  declare context: React.ContextType<typeof DiscussionsContext>;
+
   private readonly disposers = new Set<((() => void) | undefined)>();
   @observable private mounted = false;
   @observable private stickToHeight: number | undefined;
@@ -88,17 +91,13 @@ export default class NewReview extends React.Component<Props> {
                   </span>
                 </div>
                 {placeholder == null ? (
-                  <DiscussionsContext.Consumer>
-                    {
-                      (store) => (<Editor
-                        beatmaps={store.beatmaps}
-                        beatmapset={this.props.beatmapset}
-                        currentBeatmap={this.props.currentBeatmap}
-                        discussions={store.discussions}
-                        onFocus={this.handleFocus}
-                      />)
-                    }
-                  </DiscussionsContext.Consumer>
+                  <Editor
+                    beatmaps={this.context.beatmaps}
+                    beatmapset={this.props.beatmapset}
+                    currentBeatmap={this.props.currentBeatmap}
+                    discussions={this.context.discussions}
+                    onFocus={this.handleFocus}
+                  />
                 ) : <div className='beatmap-discussion-new__login-required'>{placeholder}</div>}
               </div>
             </div>
