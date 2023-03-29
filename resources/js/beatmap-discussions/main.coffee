@@ -205,7 +205,7 @@ export class Main extends React.PureComponent
 
 
   currentBeatmap: =>
-    @beatmaps()[@state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @store.groupedBeatmaps)
+    @store.beatmaps[@state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @store.groupedBeatmaps)
 
 
   currentDiscussions: =>
@@ -240,7 +240,7 @@ export class Main extends React.PureComponent
         totalHype++ if d.message_type == 'hype'
 
         if d.can_be_resolved && !d.resolved
-          beatmap = @beatmaps()[d.beatmap_id]
+          beatmap = @store.beatmaps[d.beatmap_id]
 
           if !d.beatmap_id? || (beatmap? && !beatmap.deleted_at?)
             unresolvedIssues++
@@ -326,7 +326,7 @@ export class Main extends React.PureComponent
 
 
   groupedBeatmaps: (discussionSet) =>
-    @cache.groupedBeatmaps ?= BeatmapHelper.group _.values(@beatmaps())
+    @cache.groupedBeatmaps ?= BeatmapHelper.group _.values(@store.beatmaps)
 
 
   jumpToDiscussionByHash: =>
