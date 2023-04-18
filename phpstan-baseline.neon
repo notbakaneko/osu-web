@@ -1,0 +1,2331 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Result of method Illuminate\\\\Console\\\\Command\\:\\:error\\(\\) \\(void\\) is used\\.$#"
+			count: 1
+			path: app/Console/Commands/BeatmapLeadersRefresh.php
+
+		-
+			message: "#^Result of method Illuminate\\\\Console\\\\Command\\:\\:info\\(\\) \\(void\\) is used\\.$#"
+			count: 1
+			path: app/Console/Commands/EsIndexScoresQueue.php
+
+		-
+			message: "#^Result of method Illuminate\\\\Console\\\\Command\\:\\:error\\(\\) \\(void\\) is used\\.$#"
+			count: 1
+			path: app/Console/Commands/EsIndexScoresSetSchema.php
+
+		-
+			message: "#^Access to protected property App\\\\Models\\\\Chat\\\\UserChannel\\:\\:\\$hidden\\.$#"
+			count: 1
+			path: app/Console/Commands/FixMissingUserChannels.php
+
+		-
+			message: "#^Parameter \\#3 \\$value of method Illuminate\\\\Database\\\\Query\\\\Builder\\:\\:having\\(\\) expects string\\|null, int given\\.$#"
+			count: 1
+			path: app/Console/Commands/FixMissingUserChannels.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Chat\\\\UserChannel\\:\\:\\$user_id \\(int\\) does not accept string\\.$#"
+			count: 1
+			path: app/Console/Commands/FixMissingUserChannels.php
+
+		-
+			message: "#^Property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden \\(array\\) does not accept true\\.$#"
+			count: 1
+			path: app/Console/Commands/FixMissingUserChannels.php
+
+		-
+			message: "#^Parameter \\#1 \\$database of method Illuminate\\\\Database\\\\Console\\\\Migrations\\\\FreshCommand\\:\\:runSeeder\\(\\) expects string, null given\\.$#"
+			count: 1
+			path: app/Console/Commands/MigrateFreshAllCommand.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\UserNotification\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Console/Commands/NotificationsSendMail.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserNotification\\:\\:\\$notification\\.$#"
+			count: 1
+			path: app/Console/Commands/UserNotificationsCleanup.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
+			count: 1
+			path: app/Console/Commands/UserRecalculateRankCounts.php
+
+		-
+			message: "#^Class App\\\\Models\\\\UserStatistics not found\\.$#"
+			count: 1
+			path: app/Console/Commands/UserRecalculateRankCounts.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$duration\\.$#"
+			count: 1
+			path: app/Events/Fulfillments/SupporterTagEvent.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$targetId\\.$#"
+			count: 1
+			path: app/Events/Fulfillments/SupporterTagEvent.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$username\\.$#"
+			count: 1
+			path: app/Events/Fulfillments/SupporterTagEvent.php
+
+		-
+			message: "#^Method App\\\\Events\\\\NotificationEventBase\\:\\:__construct\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: app/Events/NewPrivateNotificationEvent.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$username_clean\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Method App\\\\Exceptions\\\\Handler\\:\\:render\\(\\) should return Illuminate\\\\Http\\\\Response but returns Symfony\\\\Component\\\\HttpFoundation\\\\Response\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Exceptions\\\\Handler\\:\\:\\$dontReport is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Foundation\\\\Exceptions\\\\Handler\\:\\:\\$dontReport\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Exceptions\\\\Handler\\:\\:isOAuthServerException\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Method App\\\\Hashing\\\\OsuHashManager\\:\\:createBcryptDriver\\(\\) should return Illuminate\\\\Hashing\\\\BcryptHasher but returns App\\\\Hashing\\\\OsuHasher\\.$#"
+			count: 1
+			path: app/Hashing/OsuHashManager.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Session\\\\Store\\:\\:destroyUserSession\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Account/SessionsController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Session\\\\Store\\:\\:isCurrentSession\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Account/SessionsController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Session\\\\Store\\:\\:currentUserSessions\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/AccountController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Session\\\\Store\\:\\:getIdWithoutKeyPrefix\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/AccountController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/Admin/Forum/ForumCoversController.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Artist and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Http/Controllers/ArtistTracksController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussionPost\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<App\\\\Models\\\\BeatmapDiscussionPost\\>\\:\\:\\$beatmapset\\.$#"
+			count: 3
+			path: app/Http/Controllers/BeatmapDiscussionPostsController.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Beatmapset and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapDiscussionPostsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapDiscussionsController.php
+
+		-
+			message: "#^Parameter \\#3 \\$user of static method App\\\\Libraries\\\\BeatmapsetDiscussion\\\\Review\\:\\:create\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapDiscussionsController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapPack\\:\\:\\$beatmapsets\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapPacksController.php
+
+		-
+			message: "#^Unsafe access to private constant App\\\\Http\\\\Controllers\\\\BeatmapPacksController\\:\\:PER_PAGE through static\\:\\:\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapPacksController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<App\\\\Models\\\\Beatmap\\>\\:\\:\\$user\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsController.php
+
+		-
+			message: "#^Relation 'beatmapset' is not found in App\\\\Models\\\\Beatmap model\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsController.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Beatmapset and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsController.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Http\\\\Controllers\\\\BeatmapsController\\:\\:baseScoreQuery\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Http/Controllers/BeatmapsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 2
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Elasticsearch\\\\SearchParams\\:\\:getSort\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Beatmapset\\:\\:love\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Beatmapset\\:\\:nominate\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Beatmapset\\:\\:removeFromLoved\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of class App\\\\Jobs\\\\BeatmapsetDelete constructor expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Relation 'allBeatmaps' is not found in App\\\\Models\\\\Beatmapset model\\.$#"
+			count: 1
+			path: app/Http/Controllers/BeatmapsetsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/BlocksController.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<1, max\\> and 1 is always true\\.$#"
+			count: 1
+			path: app/Http/Controllers/ChangelogController.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Http\\\\Controllers\\\\ChangelogController\\:\\:changelogEntryMessageIncludes\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Http/Controllers/ChangelogController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 2
+			path: app/Http/Controllers/Chat/ChannelsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Chat\\\\Channel\\:\\:removeUser\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Chat/ChannelsController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Chat\\\\Message\\>\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Chat/ChatController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\Models\\\\Chat\\\\Message\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/ChatController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/ContestEntriesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Contest\\:\\:vote\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/ContestEntriesController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Contest\\:\\:assertVoteRequirement\\(\\) expects App\\\\Models\\\\User\\|null, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/ContestsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Models\\\\Forum\\\\Forum\\:\\:markAsRead\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Forum/ForumsController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method App\\\\Models\\\\Forum\\\\Forum\\:\\:markAllAsRead\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Forum/ForumsController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\Topic\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<App\\\\Models\\\\Forum\\\\Topic\\>\\:\\:\\$firstPost\\.$#"
+			count: 3
+			path: app/Http/Controllers/Forum/TopicsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 2
+			path: app/Http/Controllers/Forum/TopicsController.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of class App\\\\Libraries\\\\NewForumTopic constructor expects App\\\\Models\\\\User\\|null, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Forum/TopicsController.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Http\\\\Controllers\\\\Forum\\\\TopicsController\\:\\:nextUrl\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Http/Controllers/Forum/TopicsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/FriendsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/HomeController.php
+
+		-
+			message: "#^Called 'first' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: app/Http/Controllers/HomeController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\LegacyMatch\\\\LegacyMatch\\>\\:\\:getWithHasMore\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/MatchesController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Multiplayer\\\\Room\\>\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Multiplayer/RoomsController.php
+
+		-
+			message: "#^Parameter \\#2 \\$data of function hash expects string, App\\\\Casts\\\\PresentString given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Multiplayer/RoomsController.php
+
+		-
+			message: "#^Call to an undefined method Laravel\\\\Passport\\\\Token\\:\\:validate\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/Passport/AuthorizationController.php
+
+		-
+			message: "#^Dead catch \\- App\\\\Exceptions\\\\InvalidSignatureException is never thrown in the try block\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/CentiliController.php
+
+		-
+			message: "#^Dead catch \\- App\\\\Exceptions\\\\ValidationException is never thrown in the try block\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/CentiliController.php
+
+		-
+			message: "#^Dead catch \\- App\\\\Exceptions\\\\InvalidSignatureException is never thrown in the try block\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/PaypalController.php
+
+		-
+			message: "#^Dead catch \\- App\\\\Exceptions\\\\ValidationException is never thrown in the try block\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/PaypalController.php
+
+		-
+			message: "#^Dead catch \\- Illuminate\\\\Database\\\\QueryException is never thrown in the try block\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/PaypalController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_email\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/XsollaController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/XsollaController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$username\\.$#"
+			count: 1
+			path: app/Http/Controllers/Payments/XsollaController.php
+
+		-
+			message: "#^Parameter \\#2 \\$total of class Illuminate\\\\Pagination\\\\LengthAwarePaginator constructor expects int, float given\\.$#"
+			count: 1
+			path: app/Http/Controllers/RankingController.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:saveOrExplode\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/ScorePinsController.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\ReplayFile\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Controllers/ScoresController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\ScoreToken\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<App\\\\Models\\\\Solo\\\\ScoreToken\\>\\:\\:\\$created_at_json\\.$#"
+			count: 1
+			path: app/Http/Controllers/Solo/ScoresController.php
+
+		-
+			message: "#^Variable \\$order might not be defined\\.$#"
+			count: 1
+			path: app/Http/Controllers/Store/CheckoutController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/Store/Controller.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 2
+			path: app/Http/Controllers/Store/NotificationRequestsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Controllers/Store/ProductsController.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 4
+			path: app/Http/Controllers/StoreController.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 2
+			path: app/Http/Controllers/StoreController.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of class App\\\\Libraries\\\\Search\\\\ForumSearchRequestParams constructor expects App\\\\Models\\\\User\\|null, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/UsersController.php
+
+		-
+			message: "#^Variable \\$query might not be defined\\.$#"
+			count: 1
+			path: app/Http/Controllers/UsersController.php
+
+		-
+			message: "#^Variable \\$transformer might not be defined\\.$#"
+			count: 1
+			path: app/Http/Controllers/UsersController.php
+
+		-
+			message: "#^Method Illuminate\\\\Session\\\\Store\\:\\:migrate\\(\\) invoked with 2 parameters, 0\\-1 required\\.$#"
+			count: 1
+			path: app/Http/Middleware/AutologinFromLegacyCookie.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\HttpFoundation\\\\Request\\:\\:is\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Middleware/DatadogMetrics.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: true$#"
+			count: 1
+			path: app/Http/Middleware/LegacyInterOpAuth.php
+
+		-
+			message: "#^Cannot call method gatherMiddleware\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Middleware/RequireScopes.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_lang\\.$#"
+			count: 1
+			path: app/Http/Middleware/SetLocaleApi.php
+
+		-
+			message: "#^Method Illuminate\\\\Cache\\\\RateLimiter\\:\\:hit\\(\\) invoked with 3 parameters, 1\\-2 required\\.$#"
+			count: 1
+			path: app/Http/Middleware/ThrottleRequests.php
+
+		-
+			message: "#^Called 'first' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: app/Http/Middleware/UpdateUserLastvisit.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$topic\\.$#"
+			count: 1
+			path: app/Jobs/BeatmapsetDelete.php
+
+		-
+			message: "#^Relation 'notification' is not found in App\\\\Models\\\\UserNotification model\\.$#"
+			count: 1
+			path: app/Jobs/MarkNotificationsRead.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$user\\.$#"
+			count: 1
+			path: app/Jobs/Notifications/BeatmapOwnerChange.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Jobs\\\\Notifications\\\\BroadcastNotificationBase\\:\\:applyDeliverySettings\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Jobs/Notifications/BroadcastNotificationBase.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Jobs\\\\Notifications\\\\BroadcastNotificationBase\\:\\:excludeBotUserIds\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Jobs/Notifications/BroadcastNotificationBase.php
+
+		-
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: app/Libraries/AcceptHttpLanguage/Parser.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\ApidocRouteHelper\\:\\:keyFor\\(\\) through static\\:\\:\\.$#"
+			count: 3
+			path: app/Libraries/ApidocRouteHelper.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\ApidocRouteHelper\\:\\:requiresAuthentication\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/ApidocRouteHelper.php
+
+		-
+			message: "#^Property App\\\\Libraries\\\\BeatmapsetDiscussion\\\\Discussion\\:\\:\\$beatmapset is never read, only written\\.$#"
+			count: 1
+			path: app/Libraries/BeatmapsetDiscussion/Discussion.php
+
+		-
+			message: "#^Unsafe access to private constant App\\\\Libraries\\\\BeatmapsetDiscussionsBundle\\:\\:DISCUSSION_WITHS through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/BeatmapsetDiscussionsBundle.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Libraries\\\\ChangeUsername\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Libraries/ChangeUsername.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\ChangeUsername\\:\\:isDirty\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/ChangeUsername.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Redis\\:\\:transaction\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Chat.php
+
+		-
+			message: "#^mkdir\\(\\)\\: File exists$#"
+			count: 1
+			path: app/Libraries/CleanHTML.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(array\\|Queryable\\)\\: Unexpected token \"\\\\n     \\*\", expected variable at offset 158$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/HasSearch.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between 0\\|int\\<5, max\\> and false will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Hit.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$indices$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Indexing.php
+
+		-
+			message: "#^Call to an undefined method Elasticsearch\\\\Common\\\\Exceptions\\\\ElasticsearchException\\:\\:getMessage\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Search.php
+
+		-
+			message: "#^Parameter \\#1 \\$exception of method Sentry\\\\State\\\\Hub\\:\\:captureException\\(\\) expects Throwable, Elasticsearch\\\\Common\\\\Exceptions\\\\ElasticsearchException given\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Search.php
+
+		-
+			message: "#^Parameter \\#3 \\$currentPage of class App\\\\Libraries\\\\Elasticsearch\\\\SearchPaginator constructor expects int\\|null, float given\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Search.php
+
+		-
+			message: "#^Access to property \\$field on an unknown class App\\\\Libraries\\\\Elasticsearch\\\\Utils\\\\Sort\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Utils/SearchAfterParam.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$sort contains unknown class App\\\\Libraries\\\\Elasticsearch\\\\Utils\\\\Sort\\.$#"
+			count: 1
+			path: app/Libraries/Elasticsearch/Utils/SearchAfterParam.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\ForumDefaultTopicCover\\:\\:delete\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/ForumDefaultTopicCover.php
+
+		-
+			message: "#^Access to property \\$duration on an unknown class App\\\\Libraries\\\\Fulfillments\\\\ExtraDataSupporterTag\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/ApplySupporterTag.php
+
+		-
+			message: "#^Access to property \\$targetId on an unknown class App\\\\Libraries\\\\Fulfillments\\\\ExtraDataSupporterTag\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/ApplySupporterTag.php
+
+		-
+			message: "#^PHPDoc tag @throws with type App\\\\Libraries\\\\Fulfillments\\\\Illuminate\\\\Database\\\\Eloquent\\\\ModelNotFoundException is not subtype of Throwable$#"
+			count: 2
+			path: app/Libraries/Fulfillments/ApplySupporterTag.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$extraData contains unknown class App\\\\Libraries\\\\Fulfillments\\\\ExtraDataSupporterTag\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/ApplySupporterTag.php
+
+		-
+			message: "#^Property App\\\\Libraries\\\\Fulfillments\\\\ApplySupporterTag\\:\\:\\$amount \\(int\\) does not accept float\\|null\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/ApplySupporterTag.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$countryAcronym\\.$#"
+			count: 2
+			path: app/Libraries/Fulfillments/BannerFulfillment.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$tournamentId\\.$#"
+			count: 2
+			path: app/Libraries/Fulfillments/BannerFulfillment.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between string and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/FulfillmentFactory.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Libraries\\\\Fulfillments\\\\OrderFulfiller\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/OrderFulfiller.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Fulfillments\\\\OrderFulfiller\\:\\:isDirty\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/OrderFulfiller.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$exception with type App\\\\Libraries\\\\Fulfillments\\\\Exception is not subtype of native type Exception\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/OrderFulfiller.php
+
+		-
+			message: "#^Parameter \\$exception of method App\\\\Libraries\\\\Fulfillments\\\\OrderFulfiller\\:\\:throwValidationFailed\\(\\) has invalid type App\\\\Libraries\\\\Fulfillments\\\\Exception\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/OrderFulfiller.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$duration\\.$#"
+			count: 2
+			path: app/Libraries/Fulfillments/SupporterTagFulfillment.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$message\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/SupporterTagFulfillment.php
+
+		-
+			message: "#^Variable \\$history might not be defined\\.$#"
+			count: 1
+			path: app/Libraries/Fulfillments/UsernameChangeFulfillment.php
+
+		-
+			message: "#^Part \\$version \\(App\\\\Libraries\\\\Ip\\:\\:V4\\|App\\\\Libraries\\\\Ip\\:\\:V6\\) of encapsed string cannot be cast to string\\.$#"
+			count: 1
+			path: app/Libraries/Ip2Asn.php
+
+		-
+			message: "#^Variable \\$asn might not be defined\\.$#"
+			count: 1
+			path: app/Libraries/Ip2Asn.php
+
+		-
+			message: "#^Class League\\\\CommonMark\\\\Extension\\\\Table\\\\TableCaption not found\\.$#"
+			count: 1
+			path: app/Libraries/Markdown/Indexing/Extension.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Markdown\\\\Indexing\\\\Renderers\\\\BlockRenderer\\:\\:inTightList\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/Markdown/Indexing/Renderers/BlockRenderer.php
+
+		-
+			message: "#^Parameter \\#1 \\$node of method League\\\\CommonMark\\\\Extension\\\\CommonMark\\\\Renderer\\\\Block\\\\ListItemRenderer\\:\\:render\\(\\) expects League\\\\CommonMark\\\\Extension\\\\CommonMark\\\\Node\\\\Block\\\\ListItem, League\\\\CommonMark\\\\Node\\\\Node given\\.$#"
+			count: 1
+			path: app/Libraries/Markdown/Osu/Renderers/ListItemRenderer.php
+
+		-
+			message: "#^Parameter \\#1 \\$node of method League\\\\CommonMark\\\\Extension\\\\Table\\\\TableRenderer\\:\\:render\\(\\) expects League\\\\CommonMark\\\\Extension\\\\Table\\\\Table, League\\\\CommonMark\\\\Node\\\\Node given\\.$#"
+			count: 1
+			path: app/Libraries/Markdown/Osu/Renderers/TableRenderer.php
+
+		-
+			message: "#^Call to an undefined method League\\\\CommonMark\\\\Node\\\\Node\\:\\:getClassName\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Markdown/StyleBlock/Renderer.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\NotificationsBundle\\:\\:stackKey\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/NotificationsBundle.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap\\.$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\Topic\\:\\:\\$firstPost\\.$#"
+			count: 2
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$beatmap$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$comment$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$post$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: app/Libraries/OsuAuthorize.php
+
+		-
+			message: "#^Call to an undefined static method GrahamCampbell\\\\GitHub\\\\Facades\\\\GitHub\\:\\:gitData\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/OsuWiki.php
+
+		-
+			message: "#^Call to an undefined static method GrahamCampbell\\\\GitHub\\\\Facades\\\\GitHub\\:\\:repo\\(\\)\\.$#"
+			count: 2
+			path: app/Libraries/OsuWiki.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\CentiliPaymentProcessor\\:\\:getPaymentDate\\(\\) has invalid return type App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/CentiliPaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\CentiliPaymentProcessor\\:\\:getPaymentDate\\(\\) should return App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon but returns Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/CentiliPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between 0 and 0 will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/CentiliPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Store\\\\Order and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/CentiliPaymentProcessor.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Libraries\\\\Payments\\\\PaymentProcessor\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Payments\\\\PaymentProcessor\\:\\:isDirty\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Payments\\\\PaymentProcessor\\:\\:userSearch\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\PaymentProcessor\\:\\:getPaymentDate\\(\\) has invalid return type App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Parameter \\#1 \\$message of static method Illuminate\\\\Log\\\\Logger\\:\\:debug\\(\\) expects string, array given\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Variable \\$order might not be defined\\.$#"
+			count: 2
+			path: app/Libraries/Payments/PaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\PaypalPaymentProcessor\\:\\:getPaymentDate\\(\\) has invalid return type App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\PaypalPaymentProcessor\\:\\:getPaymentDate\\(\\) should return App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon but returns Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between 0 and 0 will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Store\\\\Order and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between string and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/PaypalPaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\XsollaPaymentProcessor\\:\\:getPaymentDate\\(\\) has invalid return type App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/XsollaPaymentProcessor.php
+
+		-
+			message: "#^Method App\\\\Libraries\\\\Payments\\\\XsollaPaymentProcessor\\:\\:getPaymentDate\\(\\) should return App\\\\Libraries\\\\Payments\\\\Carbon\\\\Carbon but returns Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Libraries/Payments/XsollaPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between 0 and 0 will always evaluate to false\\.$#"
+			count: 1
+			path: app/Libraries/Payments/XsollaPaymentProcessor.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Store\\\\Order and null will always evaluate to false\\.$#"
+			count: 2
+			path: app/Libraries/Payments/XsollaPaymentProcessor.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\ProfileCover\\:\\:delete\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/ProfileCover.php
+
+		-
+			message: "#^Argument of an invalid type Illuminate\\\\Routing\\\\RouteCollectionInterface supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: app/Libraries/RouteScopesHelper.php
+
+		-
+			message: "#^Unsafe access to private property App\\\\Libraries\\\\RouteScopesHelper\\:\\:\\$requireScopesPrefix through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/RouteScopesHelper.php
+
+		-
+			message: "#^Cannot call method getActionMethod\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: app/Libraries/RouteSection.php
+
+		-
+			message: "#^Property App\\\\Libraries\\\\Score\\\\BeatmapScores\\:\\:\\$rawParams is never read, only written\\.$#"
+			count: 1
+			path: app/Libraries/Score/BeatmapScores.php
+
+		-
+			message: "#^Binary operation \"\\+\" between 1 and string results in an error\\.$#"
+			count: 1
+			path: app/Libraries/Score/UserRankCache.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Libraries\\\\Search\\\\ArtistTrackSearchParams\\:\\:\\$bpmInput\\.$#"
+			count: 2
+			path: app/Libraries/Search/ArtistTrackSearchParamsFromRequest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Libraries\\\\Search\\\\ArtistTrackSearchParams\\:\\:\\$lengthInput\\.$#"
+			count: 2
+			path: app/Libraries/Search/ArtistTrackSearchParamsFromRequest.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Search\\\\BeatmapsetQueryParser\\:\\:makeDateRangeOption\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Search\\\\BeatmapsetQueryParser\\:\\:makeFloatRangeOption\\(\\) through static\\:\\:\\.$#"
+			count: 7
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Search\\\\BeatmapsetQueryParser\\:\\:makeIntOption\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Search\\\\BeatmapsetQueryParser\\:\\:makeIntRangeOption\\(\\) through static\\:\\:\\.$#"
+			count: 3
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Search\\\\BeatmapsetQueryParser\\:\\:makeTextOption\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Variable \\$endTimeFunction in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: app/Libraries/Search/BeatmapsetQueryParser.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 2
+			path: app/Libraries/Session/Store.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$sessionId$#"
+			count: 1
+			path: app/Libraries/Session/Store.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\TransactionState\\:\\:uniqueIn\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/TransactionState.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\TransactionState\\:\\:uniqueModels\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Libraries/TransactionState.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\ConnectionInterface\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: app/Libraries/TransactionStateManager.php
+
+		-
+			message: "#^Cannot call method getName\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: app/Libraries/User/FindForProfilePage.php
+
+		-
+			message: "#^Cannot call method parameters\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: app/Libraries/User/FindForProfilePage.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\User\\\\FindForProfilePage\\:\\:fromAuth\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/User/FindForProfilePage.php
+
+		-
+			message: "#^Variable \\$message might not be defined\\.$#"
+			count: 1
+			path: app/Libraries/User/ForceReactivation.php
+
+		-
+			message: "#^Relation 'channel' is not found in App\\\\Models\\\\Chat\\\\UserChannel model\\.$#"
+			count: 1
+			path: app/Libraries/UserChannelList.php
+
+		-
+			message: "#^Called 'first' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: app/Libraries/UserVerification.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$document with type League\\\\CommonMark\\\\Block\\\\Element\\\\Document is not subtype of native type League\\\\CommonMark\\\\Node\\\\Block\\\\Document\\.$#"
+			count: 1
+			path: app/Libraries/Wiki/MainPageRenderer.php
+
+		-
+			message: "#^Parameter \\$document of method App\\\\Libraries\\\\Wiki\\\\MainPageRenderer\\:\\:addClasses\\(\\) has invalid type League\\\\CommonMark\\\\Block\\\\Element\\\\Document\\.$#"
+			count: 1
+			path: app/Libraries/Wiki/MainPageRenderer.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Libraries\\\\Wiki\\\\WikiSitemap\\:\\:arraySet\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Libraries/Wiki/WikiSitemap.php
+
+		-
+			message: "#^Comparison operation \"\\<\" between \\(array\\|float\\|int\\) and int\\<1, max\\> results in an error\\.$#"
+			count: 1
+			path: app/Libraries/WikiRedirect.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Listeners\\\\Fulfillments\\\\PaymentSubscribers\\:\\:sendPaymentCompletedMail\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Listeners/Fulfillments/PaymentSubscribers.php
+
+		-
+			message: "#^Method App\\\\Mail\\\\BeatmapsetUpdateNotice\\:\\:build\\(\\) should return \\$this\\(App\\\\Mail\\\\BeatmapsetUpdateNotice\\) but empty return statement found\\.$#"
+			count: 2
+			path: app/Mail/BeatmapsetUpdateNotice.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Achievement.php
+
+		-
+			message: "#^Using nullsafe property access on non\\-nullable type App\\\\Models\\\\ArtistAlbum\\. Use \\-\\> instead\\.$#"
+			count: 2
+			path: app/Models/ArtistTrack.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$baseDifficultyRatings\\.$#"
+			count: 1
+			path: app/Models/Beatmap.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$baseMaxCombo\\.$#"
+			count: 1
+			path: app/Models/Beatmap.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Score not found\\.$#"
+			count: 1
+			path: app/Models/Beatmap.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
+			count: 1
+			path: app/Models/Beatmap.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Beatmap.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap\\.$#"
+			count: 6
+			path: app/Models/BeatmapDiscussion.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap_discussion_id\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussion.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\BeatmapDiscussion\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussion.php
+
+		-
+			message: "#^Relation 'beatmapset' is not found in App\\\\Models\\\\BeatmapDiscussion model\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussion.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\BeatmapDiscussion\\:\\:getValidBeatmapsetStatus\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussion.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\BeatmapDiscussionPost\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussionPost.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\BeatmapDiscussionPost\\>\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussionPost.php
+
+		-
+			message: "#^Relation 'user' is not found in App\\\\Models\\\\BeatmapDiscussionPost model\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussionPost.php
+
+		-
+			message: "#^Using nullsafe property access on non\\-nullable type App\\\\Models\\\\BeatmapDiscussion\\. Use \\-\\> instead\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussionPost.php
+
+		-
+			message: "#^Relation 'beatmapDiscussion' is not found in App\\\\Models\\\\BeatmapDiscussionVote model\\.$#"
+			count: 1
+			path: app/Models/BeatmapDiscussionVote.php
+
+		-
+			message: "#^Relation 'user' is not found in App\\\\Models\\\\BeatmapDiscussionVote model\\.$#"
+			count: 2
+			path: app/Models/BeatmapDiscussionVote.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Models/BeatmapMirror.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$descriptionPost\\.$#"
+			count: 2
+			path: app/Models/Beatmapset.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Beatmapset.php
+
+		-
+			message: "#^Parameter \\#1 \\$query of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Beatmapset\\>\\:\\:union\\(\\) expects Closure\\|Illuminate\\\\Database\\\\Query\\\\Builder, Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Beatmapset\\> given\\.$#"
+			count: 1
+			path: app/Models/Beatmapset.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Beatmapset\\:\\:\\$favourite_count \\(int\\) does not accept Illuminate\\\\Database\\\\Query\\\\Expression\\.$#"
+			count: 1
+			path: app/Models/Beatmapset.php
+
+		-
+			message: "#^Relation 'user' is not found in App\\\\Models\\\\FavouriteBeatmapset model\\.$#"
+			count: 1
+			path: app/Models/Beatmapset.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: app/Models/BeatmapsetEvent.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between 'id' and 'id' will always evaluate to false\\.$#"
+			count: 1
+			path: app/Models/BeatmapsetEvent.php
+
+		-
+			message: "#^Variable \\$beatmapsetId might not be defined\\.$#"
+			count: 1
+			path: app/Models/BeatmapsetEvent.php
+
+		-
+			message: "#^Variable \\$stream in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: app/Models/Build.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Redis\\:\\:transaction\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Chat/Channel.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Chat/Channel.php
+
+		-
+			message: "#^Static method Redis\\:\\:client\\(\\) invoked with 0 parameters, 1\\-2 required\\.$#"
+			count: 1
+			path: app/Models/Chat/Channel.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Chat/Message.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Chat/UserChannel.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Comment.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Comment\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Comment.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Comment\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Comment.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Contest\\:\\:\\$extra_options \\(App\\\\Models\\\\json\\|null\\) does not accept array\\<mixed, mixed\\>\\.$#"
+			count: 1
+			path: app/Models/Contest.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Count\\:\\:currentRankStart\\(\\) should return static\\(App\\\\Models\\\\Count\\) but returns App\\\\Models\\\\Count\\.$#"
+			count: 1
+			path: app/Models/Count.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Count\\:\\:lastMailUserNotificationIdSent\\(\\) should return static\\(App\\\\Models\\\\Count\\) but returns App\\\\Models\\\\Count\\.$#"
+			count: 1
+			path: app/Models/Count.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Count\\:\\:totalUsers\\(\\) should return static\\(App\\\\Models\\\\Count\\) but returns App\\\\Models\\\\Count\\.$#"
+			count: 1
+			path: app/Models/Count.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Country.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Event\\:\\:userParams\\(\\) through static\\:\\:\\.$#"
+			count: 4
+			path: app/Models/Event.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Follow\\:\\:\\$notifiable\\.$#"
+			count: 1
+			path: app/Models/Follow.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Follow\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Follow.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Forum\\\\FeatureVote\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Forum/FeatureVote.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Forum\\\\ForumTrack\\:\\:\\$mark_time \\(int\\) does not accept Carbon\\\\Carbon\\.$#"
+			count: 1
+			path: app/Models/Forum/Forum.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Forum\\\\Topic and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Models/Forum/Forum.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Forum\\\\PollVote\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Forum/PollVote.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Forum\\\\Post\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Forum/Post.php
+
+		-
+			message: "#^Anonymous function has an unused use \\$topic\\.$#"
+			count: 1
+			path: app/Models/Forum/Post.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Forum\\\\Post\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Forum/Post.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Forum\\\\Post\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Forum/Post.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\Topic\\:\\:\\$firstPost\\.$#"
+			count: 2
+			path: app/Models/Forum/Topic.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\User and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Models/Forum/Topic.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Forum\\\\TopicPoll\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicPoll.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Models\\\\Forum\\\\TopicPoll\\:\\:isDirty\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicPoll.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Forum\\\\TopicVote\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicVote.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Models\\\\Forum\\\\TopicVote\\:\\:isDirty\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicVote.php
+
+		-
+			message: "#^Caught class App\\\\Models\\\\Forum\\\\Exception not found\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicWatch.php
+
+		-
+			message: "#^Throwing object of an unknown class App\\\\Models\\\\Forum\\\\Exception\\.$#"
+			count: 1
+			path: app/Models/Forum/TopicWatch.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\GithubUser\\>\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Models/GithubUser.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Group.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/LegacyMatch/Game.php
+
+		-
+			message: "#^Using nullsafe property access on non\\-nullable type App\\\\Models\\\\Beatmap\\. Use \\-\\> instead\\.$#"
+			count: 1
+			path: app/Models/LegacyMatch/Game.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\LegacyMatch\\\\LegacyMatch\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/LegacyMatch/LegacyMatch.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\LegacyMatch\\\\LegacyMatch\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/LegacyMatch/LegacyMatch.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: mixed$#"
+			count: 1
+			path: app/Models/Log.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Model\\:\\:lockSelf\\(\\) should return \\$this\\(App\\\\Models\\\\Model\\) but returns App\\\\Models\\\\Model\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<App\\\\Models\\\\Model\\>\\|null\\.$#"
+			count: 1
+			path: app/Models/Model.php
+
+		-
+			message: "#^PHPDoc tag @property has invalid value \\(bool expired\\)\\: Unexpected token \"expired\", expected variable at offset 484$#"
+			count: 1
+			path: app/Models/Multiplayer/PlaylistItem.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_column expects array, App\\\\Models\\\\Multiplayer\\\\json\\|null given\\.$#"
+			count: 2
+			path: app/Models/Multiplayer/PlaylistItem.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Multiplayer\\\\PlaylistItem\\:\\:\\$allowed_mods \\(App\\\\Models\\\\Multiplayer\\\\json\\|null\\) does not accept array\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/PlaylistItem.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Multiplayer\\\\PlaylistItem\\:\\:\\$required_mods \\(App\\\\Models\\\\Multiplayer\\\\json\\|null\\) does not accept array\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/PlaylistItem.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\PlaylistItemUserHighScore\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/PlaylistItemUserHighScore.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\PlaylistItemUserHighScore\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Multiplayer/PlaylistItemUserHighScore.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$max_difficulty\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/Room.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$min_difficulty\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/Room.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\Room\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/Room.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\Room\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Multiplayer/Room.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_column expects array, App\\\\Models\\\\Multiplayer\\\\json given\\.$#"
+			count: 2
+			path: app/Models/Multiplayer/Score.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_column expects array, App\\\\Models\\\\Multiplayer\\\\json\\|null given\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/Score.php
+
+		-
+			message: "#^Parameter \\#2 \\$cursorOrStatic of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\>\\:\\:cursorSort\\(\\) expects array\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\>, \\$this\\(App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\) given\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/UserScoreAggregate.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Multiplayer/UserScoreAggregate.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Multiplayer/UserScoreAggregate.php
+
+		-
+			message: "#^Parameter \\#2 \\$cursorOrStatic of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\NewsPost\\>\\:\\:cursorSort\\(\\) expects array\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\NewsPost\\>, \\$this\\(App\\\\Models\\\\NewsPost\\) given\\.$#"
+			count: 2
+			path: app/Models/NewsPost.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\NewsPost\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/NewsPost.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\NewsPost\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/NewsPost.php
+
+		-
+			message: "#^Variable \\$rootHash might not be defined\\.$#"
+			count: 1
+			path: app/Models/NewsPost.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\OAuth\\\\Client\\:\\:\\$scopes\\.$#"
+			count: 1
+			path: app/Models/OAuth/Client.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\OAuth\\\\Client\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/OAuth/Client.php
+
+		-
+			message: "#^Method App\\\\Models\\\\OAuth\\\\Client\\:\\:newFactory\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\Factory but returns null\\.$#"
+			count: 1
+			path: app/Models/OAuth/Client.php
+
+		-
+			message: "#^Parameter \\#1 \\$array of function array_flatten expects array, Illuminate\\\\Support\\\\Collection\\<int, mixed\\>\\|null given\\.$#"
+			count: 1
+			path: app/Models/OAuth/Client.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\OAuth\\\\Token\\:\\:\\$refreshToken\\.$#"
+			count: 1
+			path: app/Models/OAuth/Token.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$user\\.$#"
+			count: 3
+			path: app/Models/OAuth/Token.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Models/OAuth/Token.php
+
+		-
+			message: "#^Method App\\\\Models\\\\OAuth\\\\Token\\:\\:getResourceOwner\\(\\) should return App\\\\Models\\\\User\\|null but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			count: 1
+			path: app/Models/OAuth/Token.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/RankHighest.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Score\\\\Best not found\\.$#"
+			count: 1
+			path: app/Models/ReplayViewCount/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$beatmap_id\\.$#"
+			count: 4
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$pp\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$rank\\.$#"
+			count: 2
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$replay\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$replayViewCount\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$score\\.$#"
+			count: 2
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:\\$user_id\\.$#"
+			count: 3
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\ReplayFile\\:\\:delete\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Called 'first' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Class App\\\\Models\\\\ReplayViewCount not found\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<0, max\\> and \\(array\\|float\\|int\\) results in an error\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:macroAccurateRankCounts\\(\\) should return array but returns Closure\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:cursorSortExecOrder\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Score\\\\Best\\\\Model\\:\\:cursorSortExecWhere\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Using nullsafe method call on non\\-nullable type App\\\\Models\\\\User\\. Use \\-\\> instead\\.$#"
+			count: 1
+			path: app/Models/Score/Best/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$beatmap_id\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count100\\.$#"
+			count: 14
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count300\\.$#"
+			count: 11
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$count50\\.$#"
+			count: 11
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countgeki\\.$#"
+			count: 5
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countkatu\\.$#"
+			count: 7
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$countmiss\\.$#"
+			count: 6
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$date_json\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$maxcombo\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$pass\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$rank\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$score\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Score/Model.php
+
+		-
+			message: "#^Call to an undefined static method static\\(App\\\\Models\\\\Season\\)\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Season.php
+
+		-
+			message: "#^Call to method max\\(\\) on an unknown class App\\\\Models\\\\Collection\\.$#"
+			count: 1
+			path: app/Models/Season.php
+
+		-
+			message: "#^Call to method min\\(\\) on an unknown class App\\\\Models\\\\Collection\\.$#"
+			count: 1
+			path: app/Models/Season.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\Score\\:\\:\\$performance\\.$#"
+			count: 1
+			path: app/Models/Solo/Score.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\Score\\:\\:\\$pp\\.$#"
+			count: 1
+			path: app/Models/Solo/Score.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:default\\(\\)\\.$#"
+			count: 1
+			path: app/Models/Solo/Score.php
+
+		-
+			message: "#^Cannot call method assertCompleted\\(\\) on stdClass\\.$#"
+			count: 1
+			path: app/Models/Solo/Score.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Solo/Score.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$created_at_json\\.$#"
+			count: 1
+			path: app/Models/Solo/ScoreData.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Solo\\\\ScoreDataStatistics\\:\\:fields\\(\\) through static\\:\\:\\.$#"
+			count: 3
+			path: app/Models/Solo/ScoreDataStatistics.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/Solo/ScoreToken.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Spotlight\\:\\:createBeatmapsetTable\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: app/Models/Spotlight.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Spotlight\\:\\:createBestScoresTable\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Spotlight.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Spotlight\\:\\:createUserStatsTable\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Spotlight.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Models/Store/Address.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:guessType\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Store/ExtraDataBase.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: app/Models/Store/Order.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\Store\\\\Order\\:\\:orderItemParams\\(\\) through static\\:\\:\\.$#"
+			count: 1
+			path: app/Models/Store/Order.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\Store\\\\OrderItem\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/Store/OrderItem.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 4
+			path: app/Models/Store/Product.php
+
+		-
+			message: "#^Right side of && is always true\\.$#"
+			count: 1
+			path: app/Models/Store/Product.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$duration\\.$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$targetId\\.$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Store\\\\ExtraDataBase\\:\\:\\$username\\.$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^Method App\\\\Models\\\\SupporterTag\\:\\:getDuration\\(\\) should return int but returns float\\.$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^Method App\\\\Models\\\\SupporterTag\\:\\:getMinimumDonation\\(\\) should return int but returns float\\.$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^PHPDoc tag @throws with type App\\\\Models\\\\App\\\\Exceptions\\\\InvariantException is not subtype of Throwable$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^PHPDoc tag @throws with type App\\\\Models\\\\Exception is not subtype of Throwable$#"
+			count: 1
+			path: app/Models/SupporterTag.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Tournament\\:\\:\\$product\\.$#"
+			count: 1
+			path: app/Models/Tournament.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\:\\:default\\(\\)\\.$#"
+			count: 2
+			path: app/Models/User.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\HigherOrderCollectionProxy\\<string, Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:revokeRecursive\\(\\)\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Call to function file_get_contents\\(\\) on a separate line has no effect\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Called 'Model\\:\\:make\\(\\)' which performs unnecessary work, use 'new Model\\(\\)'\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:previousUsernames\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Collection but returns Illuminate\\\\Support\\\\Collection\\<int, mixed\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Property App\\\\Models\\\\User\\:\\:\\$osu_playmode \\(string\\|null\\) does not accept int\\|null\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Relation 'beatmaps' is not found in App\\\\Models\\\\Beatmapset model\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Relation 'beatmapsetNominations' is not found in App\\\\Models\\\\Beatmapset model\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Using nullsafe property access on non\\-nullable type App\\\\Models\\\\Rank\\. Use \\-\\> instead\\.$#"
+			count: 2
+			path: app/Models/User.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/UserAchievement.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Build\\>\\:\\:last\\(\\)\\.$#"
+			count: 1
+			path: app/Models/UserClient.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/UserGroup.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: app/Models/UserGroupEvent.php
+
+		-
+			message: "#^Unsafe call to private method App\\\\Models\\\\UserGroupEvent\\:\\:log\\(\\) through static\\:\\:\\.$#"
+			count: 8
+			path: app/Models/UserGroupEvent.php
+
+		-
+			message: "#^Access to undefined constant static\\(App\\\\Models\\\\UserNotificationOption\\)\\:\\:MAX_FIELD_LENGTHS\\.$#"
+			count: 1
+			path: app/Models/UserNotificationOption.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: mixed$#"
+			count: 1
+			path: app/Models/UserReport.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$accuracy\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count100\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count300\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count50\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$level\\.$#"
+			count: 2
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score_exp\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score_index\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score_index_exp\\.$#"
+			count: 2
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Method App\\\\Models\\\\UserStatistics\\\\Model\\:\\:setCreatedAt\\(\\) should return \\$this\\(App\\\\Models\\\\UserStatistics\\\\Model\\) but return statement is missing\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$a_rank_count\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count100\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count300\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$count50\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$level\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$max_combo\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$playcount\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$ranked_score\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$replay_popularity\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$s_rank_count\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$total_score\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Spotlight\\\\Model\\:\\:\\$x_rank_count\\.$#"
+			count: 1
+			path: app/Models/UserStatistics/Spotlight/Model.php
+
+		-
+			message: "#^Comparison operation \"\\<\" between \\(array\\|float\\|int\\) and int\\<1, max\\> results in an error\\.$#"
+			count: 1
+			path: app/Models/Wiki/Image.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Wiki\\\\PageSearchResult\\:\\:\\$hit is never written, only read\\.$#"
+			count: 1
+			path: app/Models/Wiki/PageSearchResult.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$router$#"
+			count: 1
+			path: app/Providers/RouteServiceProvider.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\ArtistAlbum and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Transformers/ArtistTrackTransformer.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between App\\\\Models\\\\Beatmapset and null will always evaluate to false\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapCompactTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapDiscussion\\:\\:\\$beatmap\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapDiscussionTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$deleted_at_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmap\\:\\:\\$last_update_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$beatmapsetNominationsCurrent\\.$#"
+			count: 2
+			path: app/Transformers/BeatmapsetCompactTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$pack_tags\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetCompactTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BeatmapsetEvent\\:\\:\\$beatmapDiscussion\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetEventTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$approved_date_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$deleted_at_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$last_update_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Beatmapset\\:\\:\\$submit_date_json\\.$#"
+			count: 1
+			path: app/Transformers/BeatmapsetTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\BuildPropagationHistory\\:\\:\\$label\\.$#"
+			count: 1
+			path: app/Transformers/BuildHistoryChartTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Build\\:\\:\\$defaultChangelogEntries\\.$#"
+			count: 1
+			path: app/Transformers/BuildTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Build\\:\\:\\$defaultChangelogs\\.$#"
+			count: 1
+			path: app/Transformers/BuildTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Chat\\\\Message\\:\\:\\$timestamp_json\\.$#"
+			count: 1
+			path: app/Transformers/Chat/MessageTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Comment\\:\\:\\$created_at_json\\.$#"
+			count: 1
+			path: app/Transformers/CommentTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Comment\\:\\:\\$deleted_at_json\\.$#"
+			count: 1
+			path: app/Transformers/CommentTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Comment\\:\\:\\$edited_at_json\\.$#"
+			count: 1
+			path: app/Transformers/CommentTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Comment\\:\\:\\$updated_at_json\\.$#"
+			count: 1
+			path: app/Transformers/CommentTransformer.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Commentable\\:\\:getKey\\(\\)\\.$#"
+			count: 1
+			path: app/Transformers/CommentableMetaTransformer.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Libraries\\\\Commentable\\:\\:getMorphClass\\(\\)\\.$#"
+			count: 1
+			path: app/Transformers/CommentableMetaTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\ContestEntry\\:\\:\\$votes_count\\.$#"
+			count: 1
+			path: app/Transformers/ContestEntryTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Follow\\:\\:\\$notifiable\\.$#"
+			count: 1
+			path: app/Transformers/FollowCommentTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Follow\\:\\:\\$notifiable\\.$#"
+			count: 1
+			path: app/Transformers/FollowModdingTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Forum\\\\Topic\\:\\:\\$firstPost\\.$#"
+			count: 1
+			path: app/Transformers/Forum/PollTransformer.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 2
+			path: app/Transformers/LegacyMatch/EventTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\LegacyMatch\\\\Game\\:\\:\\$end_time_json\\.$#"
+			count: 1
+			path: app/Transformers/LegacyMatch/GameTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\LegacyMatch\\\\Game\\:\\:\\$start_time_json\\.$#"
+			count: 1
+			path: app/Transformers/LegacyMatch/GameTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Multiplayer\\\\Room\\:\\:\\$currentPlaylistItem\\.$#"
+			count: 1
+			path: app/Transformers/Multiplayer/RoomTransformer.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<App\\\\Models\\\\Multiplayer\\\\PlaylistItemUserHighScore\\>\\:\\:getWithHasMore\\(\\)\\.$#"
+			count: 1
+			path: app/Transformers/Multiplayer/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Multiplayer\\\\Score\\:\\:\\$attempts\\.$#"
+			count: 1
+			path: app/Transformers/Multiplayer/UserScoreAggregateTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Multiplayer\\\\UserScoreAggregate\\:\\:\\$user\\.$#"
+			count: 1
+			path: app/Transformers/Multiplayer/UserScoreAggregateTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserNotification\\:\\:\\$notification\\.$#"
+			count: 1
+			path: app/Transformers/NotificationTransformer.php
+
+		-
+			message: "#^Variable \\$isRead might not be defined\\.$#"
+			count: 1
+			path: app/Transformers/NotificationTransformer.php
+
+		-
+			message: "#^Variable \\$notification might not be defined\\.$#"
+			count: 7
+			path: app/Transformers/NotificationTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\OAuth\\\\Client\\:\\:\\$scopes\\.$#"
+			count: 1
+			path: app/Transformers/OAuth/ClientTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$best\\.$#"
+			count: 1
+			path: app/Transformers/Score/CurrentUserAttributesTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$best\\.$#"
+			count: 2
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$date_json\\.$#"
+			count: 1
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$perfect\\.$#"
+			count: 1
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Score\\\\Model\\:\\:\\$score_id\\.$#"
+			count: 1
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\Score\\:\\:\\$created_at_json\\.$#"
+			count: 1
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Solo\\\\Score\\:\\:\\$pp\\.$#"
+			count: 2
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Cannot call method jsonSerialize\\(\\) on stdClass\\.$#"
+			count: 1
+			path: app/Transformers/ScoreTransformer.php
+
+		-
+			message: "#^Instantiated class App\\\\Transformers\\\\DeletedUser not found\\.$#"
+			count: 1
+			path: app/Transformers/UserContestEntryTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserRelation\\:\\:\\$mutual\\.$#"
+			count: 1
+			path: app/Transformers/UserRelationTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$a_rank_count\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count100\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count300\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$count50\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$countMiss\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$max_combo\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$playcount\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$rank_score_exp\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$ranked_score\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$replay_popularity\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$s_rank_count\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$sh_rank_count\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$total_score\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$total_seconds_played\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$x_rank_count\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\UserStatistics\\\\Model\\:\\:\\$xh_rank_count\\.$#"
+			count: 1
+			path: app/Transformers/UserStatisticsTransformer.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Cookie\\\\CookieJar\\:\\:queueForget\\(\\)\\.$#"
+			count: 2
+			path: app/helpers.php
