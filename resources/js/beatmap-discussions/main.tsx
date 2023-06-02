@@ -10,7 +10,6 @@ import { route } from 'laroute';
 import { deletedUser } from 'models/user';
 import core from 'osu-core-singleton';
 import * as React from 'react';
-import { div } from 'react-dom-factories';
 import * as BeatmapHelper from 'utils/beatmap-helper';
 import { defaultFilter, defaultMode, makeUrl, parseUrl, stateFromDiscussion } from 'utils/beatmapset-discussion-helper';
 import { nextVal } from 'utils/seq';
@@ -20,27 +19,59 @@ import { Events } from './events';
 import { Header } from './header';
 import { ModeSwitcher } from './mode-switcher';
 import { NewDiscussion } from './new-discussion';
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
-import { DiscussionPage } from './discussion-mode';
+import { DiscussionPage, discussionPages } from './discussion-mode';
 import { Filter } from './current-discussions';
+import { isEmpty, keyBy, maxBy } from 'lodash';
+import moment from 'moment';
+import { findDefault } from 'utils/beatmap-helper';
+import { group } from 'utils/beatmap-helper';
+import GameMode from 'interfaces/game-mode';
 
 const checkNewTimeoutDefault = 10000;
 const checkNewTimeoutMax = 60000;
 
+interface InitialData {
+  beatmapset: BeatmapsetWithDiscussionsJson;
+  reviews_config: {
+    max_blocks: number;
+  };
+}
+
 interface Props {
   container: HTMLElement;
-  initial: {
-    beatmapset: BeatmapsetWithDiscussionsJson;
-    reviews_config: {
-      max_blocks: number;
-    },
-  },
+  initial: InitialData;
+}
+
+interface State {
+  beatmapset: BeatmapsetWithDiscussionsJson;
+  currentMode: DiscussionPage;
+  currentFilter: Filter | null;
+  currentBeatmapId: number | null;
+  focusNewDiscussion: boolean;
+  pinnedNewDiscussion: boolean;
+  readPostIds: Set<number>;
+  readPostIdsArray: number[];
+  selectedUserId: number | null;
+  showDeleted: boolean;
+}
+
+interface UpdateOptions {
+  callback: () => void;
+  mode: DiscussionPage;
+  modeIf: DiscussionPage;
+  beatmapId: number;
+  playmode: GameMode;
+  beatmapset: BeatmapsetWithDiscussionsJson;
+  watching: boolean;
+  filter: Filter;
+  selectedUserId: number;
 }
 
 @observer
-export default class Main extends React.Component<Props> {
+export default class Main extends React.Component<Props, State> {
   @observable private beatmapset = this.props.initial.beatmapset;
 
   @observable private currentMode: DiscussionPage = 'general';
@@ -54,6 +85,7 @@ export default class Main extends React.Component<Props> {
   private reviewsConfig = this.props.initial.reviews_config;
 
   private jumpToDiscussion = false;
+  private nextTimeout;
 
   private readonly eventId = `beatmap-discussions-${nextVal()}`;
   private readonly modeSwitcherRef = React.createRef<HTMLDivElement>()
@@ -65,230 +97,55 @@ export default class Main extends React.Component<Props> {
 
   private readonly disposers = new Set<((() => void) | undefined)>();
 
-  private readonly xhrs = {};
-  private readonly timeouts = {};
+  private xhrCheckNew?: JQuery.jqXHR<InitialData>;
+  private readonly timeouts: Record<string, number> = {};
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = JSON.parse(props.container.dataset.beatmapsetDiscussionState ?? null) as (BeatmapsetWithDiscussionsJson | null); // TODO: probably wrong
-    if (this.state != null) {
-      this.readPostIds = new Set(this.state.readPostIdsArray);
-      this.pinnedNewDiscussion = this.state.pinnedNewDiscussion;
-    } else {
-      this.jumpToDiscussion = true;
-      for (const discussion of props.initial.beatmapset.discussions) {
-        if (discussion.posts != null) {
-          for (const post of discussion.posts) {
-            this.readPostIds.add(post.id);
-          }
-        }
+  @computed
+  private get beatmaps() {
+    const hasDiscussion = new Set<number>();
+    for (const discussion of this.state.beatmapset.discussions) {
+      if (discussion?.beatmap_id != null) {
+        hasDiscussion.add(discussion.beatmap_id);
       }
     }
 
-    // Current url takes priority over saved state.
-    const query = parseUrl(null, props.initial.beatmapset.discussions);
-    if (query != null) {
-      // TODO: maybe die instead?
-      this.currentMode = query.mode;
-      this.currentFilter = query.filter;
-      this.currentBeatmapId = query.beatmapId ?? null; // TODO check if it's supposed to assign on null or skip and use existing value
-      this.selectedUserId = query.user ?? null
-    }
-
-    makeObservable(this);
+    return keyBy(
+      this.state.beatmapset.beatmaps.filter((beatmap) => !isEmpty(beatmap) && (beatmap.deleted_at == null || hasDiscussion.has(beatmap.id))),
+      'id',
+    );
   }
 
-  componentDidMount() {
-    $.subscribe(`playmode:set.${this.eventId}`, this.setCurrentPlaymode);
-
-    $.subscribe(`beatmapsetDiscussions:update.${this.eventId}`, this.update);
-    $.subscribe(`beatmapDiscussion:jump.${this.eventId}`, this.jumpTo);
-    $.subscribe(`beatmapDiscussionPost:markRead.${this.eventId}`, this.markPostRead);
-    $.subscribe(`beatmapDiscussionPost:toggleShowDeleted.${this.eventId}`, this.toggleShowDeleted);
-
-    $(document).on(`ajax:success.${this.eventId}`, '.js-beatmapset-discussion-update', this.ujsDiscussionUpdate);
-    $(document).on(`click.${this.eventId}`, '.js-beatmap-discussion--jump', this.jumpToClick);
-    $(document).on(`turbolinks:before-cache.${this.eventId}`, this.saveStateToContainer);
-
-    if (this.jumpToDiscussion) {
-      this.disposers.add(core.reactTurbolinks.runAfterPageLoad(this.jumpToDiscussionByHash);
-    }
-
-    this.timeouts.checkNew = window.setTimeout(this.checkNew, checkNewTimeoutDefault);
+  @computed
+  private get currentBeatmap() {
+    return this.beatmaps[this.state.currentBeatmapId] ?? findDefault({ group: this.groupedBeatmaps() });
   }
 
-  private readonly jumpToDiscussionByHash = () => {
-    const target = parseUrl(null, this.state.beatmapset.discussions)
-
-    if (target.discussionId != null) {
-      this.jumpTo(null, { id: target.discussionId, postId: target.postId });
-    }
-  };
-
-  private readonly saveStateToContainer = () => {
-    // This is only so it can be stored with JSON.stringify.
-    this.state.readPostIdsArray = Array.from(this.state.readPostIds)
-    this.props.container.dataset.beatmapsetDiscussionState = JSON.stringify(this.state)
+  @computed
+  private get discussions() {
+    // skipped discussions
+    // - not privileged (deleted discussion)
+    // - deleted beatmap
+    return keyBy(this.state.beatmapset.discussions.filter((discussion) => !isEmpty(discussion)), 'id');
   }
 
-  private readonly setCurrentPlaymode = (e, { mode }) => {
-    this.update(e, { playmode: mode });
-  };
+  @computed
+  private get presentDiscussions() {
+    return Object.values(this.discussions).filter((discussion) => discussion.deleted_at == null);
+  }
 
-  @action
-  private readonly setPinnedNewDiscussion = (pinned: boolean) => {
-    this.pinnedNewDiscussion = pinned
-  };
+  private get totalHype() {
+    return this.presentDiscussions.filter((discussion) => discussion.message_type === 'hype');
+  }
 
-  @action
-  private readonly toggleShowDeleted = () => {
-    this.showDeleted = !this.showDeleted;
-  };
-}
+  private get unresolvedDiscussions() {
+    return this.presentDiscussions.filter((discussion) => discussion.can_be_resolved && !discussion.resolved)
+  }
 
+  private get currentDiscussions() {
 
-  componentDidUpdate: (_prevProps, prevState) =>
-    return if prevState.currentBeatmapId == this.state.currentBeatmapId &&
-      prevState.currentFilter == this.state.currentFilter &&
-      prevState.currentMode == this.state.currentMode &&
-      prevState.selectedUserId == this.state.selectedUserId &&
-      prevState.showDeleted == this.state.showDeleted
-
-    Turbolinks.controller.advanceHistory @urlFromState()
+  }
 
 
-  componentWillUnmount: =>
-    $.unsubscribe ".${@eventId}"
-    $(document).off ".${@eventId}"
-
-    Timeout.clear(timeout) for _name, timeout of @timeouts
-    xhr?.abort() for _name, xhr of @xhr
-    @disposers.forEach (disposer) => disposer?()
-
-
-  render: =>
-    @cache = {}
-
-    el React.Fragment, null,
-      el Header,
-        beatmaps: @groupedBeatmaps()
-        beatmapset: this.state.beatmapset
-        currentBeatmap: @currentBeatmap()
-        currentDiscussions: @currentDiscussions()
-        currentFilter: this.state.currentFilter
-        currentUser: this.state.currentUser
-        discussions: @discussions()
-        discussionStarters: @discussionStarters()
-        events: this.state.beatmapset.events
-        mode: this.state.currentMode
-        selectedUserId: this.state.selectedUserId
-        users: @users()
-
-      el ModeSwitcher,
-        innerRef: @modeSwitcherRef
-        mode: this.state.currentMode
-        beatmapset: this.state.beatmapset
-        currentBeatmap: @currentBeatmap()
-        currentDiscussions: @currentDiscussions()
-        currentFilter: this.state.currentFilter
-
-      if this.state.currentMode == 'events'
-        el Events,
-          events: this.state.beatmapset.events
-          users: @users()
-          discussions: @discussions()
-
-      else
-        el DiscussionsContext.Provider,
-          value: @discussions()
-          el BeatmapsContext.Provider,
-            value: @beatmaps()
-            el ReviewEditorConfigContext.Provider,
-              value: this.state.reviewsConfig
-
-              if this.state.currentMode == 'reviews'
-                el NewReview,
-                  beatmapset: this.state.beatmapset
-                  beatmaps: @beatmaps()
-                  currentBeatmap: @currentBeatmap()
-                  currentUser: this.state.currentUser
-                  innerRef: @newDiscussionRef
-                  pinned: this.state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-              else
-                el NewDiscussion,
-                  beatmapset: this.state.beatmapset
-                  currentUser: this.state.currentUser
-                  currentBeatmap: @currentBeatmap()
-                  currentDiscussions: @currentDiscussions()
-                  innerRef: @newDiscussionRef
-                  mode: this.state.currentMode
-                  pinned: this.state.pinnedNewDiscussion
-                  setPinned: @setPinnedNewDiscussion
-                  stickTo: @modeSwitcherRef
-                  autoFocus: @focusNewDiscussion
-
-              el Discussions,
-                beatmapset: this.state.beatmapset
-                currentBeatmap: @currentBeatmap()
-                currentDiscussions: @currentDiscussions()
-                currentFilter: this.state.currentFilter
-                currentUser: this.state.currentUser
-                mode: this.state.currentMode
-                readPostIds: this.state.readPostIds
-                showDeleted: this.state.showDeleted
-                users: @users()
-
-      el BackToTop
-
-
-  beatmaps: =>
-    return @cache.beatmaps if @cache.beatmaps?
-
-    hasDiscussion = {}
-    for discussion in this.state.beatmapset.discussions
-      hasDiscussion[discussion.beatmap_id] = true if discussion?
-
-    @cache.beatmaps ?=
-      _(this.state.beatmapset.beatmaps)
-      .filter (beatmap) ->
-        !_.isEmpty(beatmap) && (!beatmap.deleted_at? || hasDiscussion[beatmap.id]?)
-      .keyBy 'id'
-      .value()
-
-
-  checkNew: =>
-    @nextTimeout ?= @checkNewTimeoutDefault
-
-    Timeout.clear @timeouts.checkNew
-    @xhr.checkNew?.abort()
-
-    @xhr.checkNew = $.get route('beatmapsets.discussion', beatmapset: this.state.beatmapset.id),
-      format: 'json'
-      last_updated: @lastUpdate()?.unix()
-    .done (data, _textStatus, xhr) =>
-      if xhr.status == 304
-        @nextTimeout *= 2
-        return
-
-      @nextTimeout = @checkNewTimeoutDefault
-
-      @update null, beatmapset: data.beatmapset
-
-    .always =>
-      @nextTimeout = Math.min @nextTimeout, @checkNewTimeoutMax
-
-      @timeouts.checkNew = Timeout.set @nextTimeout, @checkNew
-
-
-  currentBeatmap: =>
-    @beatmaps()[this.state.currentBeatmapId] ? BeatmapHelper.findDefault(group: @groupedBeatmaps())
-
-
-  currentDiscussions: =>
-    return @cache.currentDiscussions if @cache.currentDiscussions?
 
     countsByBeatmap = {}
     countsByPlaymode = {}
@@ -394,169 +251,389 @@ export default class Main extends React.Component<Props> {
     @cache.currentDiscussions = {general, generalAll, timeline, reviews, timelineAllUsers, byFilter, countsByBeatmap, countsByPlaymode, totalHype, unresolvedIssues}
 
 
-  discussions: =>
-    # skipped discussions
-    # - not privileged (deleted discussion)
-    # - deleted beatmap
-    @cache.discussions ?= _ this.state.beatmapset.discussions
-                            .filter (d) -> !_.isEmpty(d)
-                            .keyBy 'id'
-                            .value()
+
+  @computed
+  private get discussionStarters() {
+    const userIds = new Set(Object.values(this.discussions)
+      .filter((discussion) => discussion.message_type != 'hype')
+      .map((discussion) => discussion.user_id)
+    );
+
+    // TODO: sort user.username.toLocaleLowerCase()
+    return [...userIds.values()].map((userId) => this.users[userId]).sort();
+  }
+
+  private get groupedBeatmaps() {
+    return group(Object.values(this.beatmaps));
+  }
+
+  @computed
+  private get lastUpdate() {
+    const maxLastUpdate = Math.max(
+      +this.state.beatmapset.last_updated,
+      +(maxBy(this.state.beatmapset.discussions, 'updated_at')?.updated_at ?? 0),
+      +(maxBy(this.state.beatmapset.events, 'created_at')?.created_at ?? 0),
+    );
+
+    return maxLastUpdate != null ? moment(maxLastUpdate).unix() : null;
+  }
+
+  private get urlFromState() {
+    return makeUrl({
+      beatmap: this.currentBeatmap(),
+      filter: this.state.currentFilter,
+      mode: this.state.currentMode,
+      user: this.state.selectedUserId,
+    });
+  }
+
+  @computed
+  private get users() {
+    const value = keyBy(this.state.beatmapset.related_users, 'id');
+    value.null = value.undefined = deletedUser.toJson();
+
+    return value;
+  }
 
 
-  discussionStarters: =>
-    _ @discussions()
-      .filter (discussion) -> discussion.message_type != 'hype'
-      .map 'user_id'
-      .uniq()
-      .map (user_id) => @users()[user_id]
-      .orderBy (user) -> user.username.toLocaleLowerCase()
-      .value()
+  ujsDiscussionUpdate = (_e: unknown, beatmapset: BeatmapsetWithDiscussionsJson) => {
+    // to allow ajax:complete to be run
+    window.setTimeout(() => this.update(null, { beatmapset }, 0));
+  };
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = JSON.parse(props.container.dataset.beatmapsetDiscussionState ?? null) as (BeatmapsetWithDiscussionsJson | null); // TODO: probably wrong
+    if (this.state != null) {
+      this.state.readPostIds = new Set(this.state.readPostIdsArray);
+      this.pinnedNewDiscussion = this.state.pinnedNewDiscussion;
+    } else {
+      this.jumpToDiscussion = true;
+      for (const discussion of props.initial.beatmapset.discussions) {
+        if (discussion.posts != null) {
+          for (const post of discussion.posts) {
+            this.state.readPostIds.add(post.id);
+          }
+        }
+      }
+    }
+
+    // Current url takes priority over saved state.
+    const query = parseUrl(null, props.initial.beatmapset.discussions);
+    if (query != null) {
+      // TODO: maybe die instead?
+      this.currentMode = query.mode;
+      this.currentFilter = query.filter;
+      this.currentBeatmapId = query.beatmapId ?? null; // TODO check if it's supposed to assign on null or skip and use existing value
+      this.selectedUserId = query.user ?? null
+    }
+
+    makeObservable(this);
+  }
+
+  componentDidMount() {
+    $.subscribe(`playmode:set.${this.eventId}`, this.setCurrentPlaymode);
+
+    $.subscribe(`beatmapsetDiscussions:update.${this.eventId}`, this.update);
+    $.subscribe(`beatmapDiscussion:jump.${this.eventId}`, this.jumpTo);
+    $.subscribe(`beatmapDiscussionPost:markRead.${this.eventId}`, this.markPostRead);
+    $.subscribe(`beatmapDiscussionPost:toggleShowDeleted.${this.eventId}`, this.toggleShowDeleted);
+
+    $(document).on(`ajax:success.${this.eventId}`, '.js-beatmapset-discussion-update', this.ujsDiscussionUpdate);
+    $(document).on(`click.${this.eventId}`, '.js-beatmap-discussion--jump', this.jumpToClick);
+    $(document).on(`turbolinks:before-cache.${this.eventId}`, this.saveStateToContainer);
+
+    if (this.jumpToDiscussion) {
+      this.disposers.add(core.reactTurbolinks.runAfterPageLoad(this.jumpToDiscussionByHash));
+    }
+
+    this.timeouts.checkNew = window.setTimeout(this.checkNew, checkNewTimeoutDefault);
+  }
 
 
-  groupedBeatmaps: (discussionSet) =>
-    @cache.groupedBeatmaps ?= BeatmapHelper.group _.values(@beatmaps())
+  componentDidUpdate(_prevProps, prevState) {
+    if (prevState.currentBeatmapId == this.state.currentBeatmapId
+      && prevState.currentFilter == this.state.currentFilter
+      && prevState.currentMode == this.state.currentMode
+      && prevState.selectedUserId == this.state.selectedUserId
+      && prevState.showDeleted == this.state.showDeleted) {
+      return;
+    }
 
+    Turbolinks.controller.advanceHistory(this.urlFromState());
+  }
 
+  componentWillUnmount() {
+    $.unsubscribe(`.${this.eventId}`);
+    $(document).off(`.${this.eventId}`);
 
+    Object.values(this.timeouts).forEach(window.clearTimeout);
 
-  jumpTo: (_e, {id, postId}) =>
-    discussion = @discussions()[id]
+    this.xhrCheckNew?.abort();
+    this.disposers.forEach((disposer) => disposer?.());
+  }
 
-    return if !discussion?
+  render() {
+    return (
+      <>
+        <Header
+          beatmaps={this.groupedBeatmaps()}
+          beatmapset={this.state.beatmapset}
+          currentBeatmap={this.currentBeatmap}
+          currentDiscussions={this.currentDiscussions}
+          currentFilter={this.state.currentFilter}
+          currentUser={this.state.currentUser}
+          discussions={this.discussions}
+          discussionStarters={this.discussionStarters}
+          events={this.state.beatmapset.events}
+          mode={this.state.currentMode}
+          selectedUserId={this.state.selectedUserId}
+          users={this.users}
+        />
+        <ModeSwitcher
+          innerRef={this.modeSwitcherRef}
+          mode={this.state.currentMode}
+          beatmapset={this.state.beatmapset}
+          currentBeatmap={this.currentBeatmap}
+          currentDiscussions={this.currentDiscussions}
+          currentFilter={this.state.currentFilter}
+        />
+        {this.state.currentMode === 'events' ? (
+          <Events
+            events={this.state.beatmapset.events}
+            users={this.users}
+            discussions={this.discussions}
+          />
+        ) : (
+          <DiscussionsContext.Provider value={this.discussions}>
+            <BeatmapsContext.Provider value={this.beatmaps}>
+              <ReviewEditorConfigContext.Provider value={this.reviewsConfig}>
+                {this.state.currentMode === 'reviews' ? (
+                  <NewReview
+                    beatmapset={this.state.beatmapset}
+                    beatmaps={this.beatmaps}
+                    currentBeatmap={this.currentBeatmap}
+                    innerRef={this.newDiscussionRef}
+                    pinned={this.state.pinnedNewDiscussion}
+                    setPinned={this.setPinnedNewDiscussion}
+                    stickTo={this.modeSwitcherRef}
+                  />
+                ) : (
+                  <NewDiscussion
+                    beatmapset={this.state.beatmapset}
+                    currentBeatmap={this.currentBeatmap}
+                    currentDiscussions={this.currentDiscussions}
+                    innerRef={this.newDiscussionRef}
+                    mode={this.state.currentMode}
+                    pinned={this.state.pinnedNewDiscussion}
+                    setPinned={this.setPinnedNewDiscussion}
+                    stickTo={this.modeSwitcherRef}
+                    autoFocus={this.focusNewDiscussion}
+                  />
+                )}
+                <Discussions
+                  beatmapset={this.state.beatmapset}
+                  currentBeatmap={this.currentBeatmap}
+                  currentDiscussions={this.currentDiscussions}
+                  currentFilter={this.state.currentFilter}
+                  mode={this.state.currentMode}
+                  readPostIds={this.state.readPostIds}
+                  showDeleted={this.state.showDeleted}
+                  users={this.users}
+                />
+              </ReviewEditorConfigContext.Provider>
+            </BeatmapsContext.Provider>
+          </DiscussionsContext.Provider>
+        )}
+        <BackToTop />
+      </>
+    )
+  }
 
-    newState = stateFromDiscussion(discussion)
+  private readonly checkNew = () => {
+    this.nextTimeout ??= checkNewTimeoutDefault;
 
-    newState.filter =
-      if @currentDiscussions().byFilter[this.state.currentFilter][newState.mode][id]?
-        this.state.currentFilter
-      else
-        defaultFilter
+    window.clearTimeout(this.timeouts.checkNew);
+    this.xhrCheckNew?.abort();
 
-    if this.state.selectedUserId? && this.state.selectedUserId != discussion.user_id
-      newState.selectedUserId = null
+    this.xhrCheckNew = $.get(route('beatmapsets.discussion', { beatmapset: this.state.beatmapset.id }), {
+      format: 'json',
+      last_updated: this.lastUpdate,
+    });
 
-    newState.callback = =>
-      $.publish 'beatmapset-discussions:highlight', discussionId: discussion.id
+    this.xhrCheckNew.done((data, _textStatus, xhr) => {
+      if (xhr.status === 304) {
+        this.nextTimeout *= 2;
+        return;
+      }
 
-      attribute = if postId? then "data-post-id='${postId}'" else "data-id='${id}'"
-      target = $(".js-beatmap-discussion-jump[${attribute}]")
+        this.nextTimeout = checkNewTimeoutDefault;
+        this.update(null, { beatmapset: data.beatmapset });
+    })
+    .always(() => {
+      this.nextTimeout = Math.min(this.nextTimeout, checkNewTimeoutMax);
 
-      return if target.length == 0
+      this.timeouts.checkNew = window.setTimeout(this.checkNew, this.nextTimeout);
+    });
+  }
 
-      offsetTop = target.offset().top - @modeSwitcherRef.current.getBoundingClientRect().height
-      offsetTop -= @newDiscussionRef.current.getBoundingClientRect().height if this.state.pinnedNewDiscussion
+  private readonly jumpTo = (_e: unknown, { id, postId }: { id: number, postId?: number }) => {
+    const discussion = this.discussions[id];
 
-      $(window).stop().scrollTo core.stickyHeader.scrollOffset(offsetTop), 500
+    if (discussion == null) return;
 
-    @update null, newState
+    const newState = stateFromDiscussion(discussion)
 
+    newState.filter = this.currentDiscussions().byFilter[this.state.currentFilter][newState.mode][id] != null
+      ? this.state.currentFilter
+      : defaultFilter
 
-  jumpToClick: (e) =>
-    url = e.currentTarget.getAttribute('href')
-    { discussionId, postId } = parseUrl(url, this.state.beatmapset.discussions)
+    if (this.state.selectedUserId != null && this.state.selectedUserId !== discussion.user_id) {
+      newState.selectedUserId = null; // unsets userid
+    }
 
-    return if !discussionId?
+    newState.callback = () => {
+      $.publish('beatmapset-discussions:highlight', { discussionId: discussion.id });
 
-    e.preventDefault()
-    @jumpTo null, { id: discussionId, postId }
+      const attribute = postId != null ? `data-post-id='${postId}'` : `data-id='${id}'`;
+      const target = $(`.js-beatmap-discussion-jump[${attribute}]`);
 
+      if (target.length === 0) return;
 
-  lastUpdate: =>
-    lastUpdate = _.max [
-      this.state.beatmapset.last_updated
-      _.maxBy(this.state.beatmapset.discussions, 'updated_at')?.updated_at
-      _.maxBy(this.state.beatmapset.events, 'created_at')?.created_at
-    ]
+      let offsetTop = target.offset().top - this.modeSwitcherRef.current.getBoundingClientRect().height;
+      if (this.state.pinnedNewDiscussion) {
+        offsetTop -= this.newDiscussionRef.current.getBoundingClientRect().height
+      }
 
-    moment(lastUpdate) if lastUpdate?
+      $(window).stop().scrollTo(core.stickyHeader.scrollOffset(offsetTop), 500);
+    }
 
+    this.update(null, newState)
+  }
 
-  markPostRead: (_e, {id}) =>
-    return if this.state.readPostIds.has(id)
+  private readonly jumpToClick = (e: React.SyntheticEvent<HTMLLinkElement>) => {
+    const url = e.currentTarget.getAttribute('href');
+    const parsedUrl = parseUrl(url, this.state.beatmapset.discussions);
 
-    newSet = new Set(this.state.readPostIds)
-    if Array.isArray(id)
-      newSet.add(i) for i in id
-    else
-      newSet.add(id)
+    if (parsedUrl == null) return;
 
-    @setState readPostIds: newSet
+    const { discussionId, postId } = parsedUrl;
 
+    if (discussionId == null) return
 
-  update: (_e, options) =>
-    {
-      callback
-      mode
-      modeIf
-      beatmapId
-      playmode
-      beatmapset
-      watching
-      filter
-      selectedUserId
-    } = options
-    newState = {}
+    e.preventDefault();
+    this.jumpTo(null, { id: discussionId, postId });
+  }
 
-    if beatmapset?
-      newState.beatmapset = beatmapset
+  private readonly jumpToDiscussionByHash = () => {
+    const target = parseUrl(null, this.state.beatmapset.discussions)
 
-    if watching?
-      newState.beatmapset ?= _.assign {}, this.state.beatmapset
-      newState.beatmapset.current_user_attributes.is_watching = watching
+    if (target.discussionId != null) {
+      this.jumpTo(null, { id: target.discussionId, postId: target.postId });
+    }
+  };
 
-    if playmode?
-      beatmap = BeatmapHelper.findDefault items: @groupedBeatmaps().get(playmode)
-      beatmapId = beatmap?.id
+  @action
+  private readonly markPostRead = (_event: unknown, { id }: { id: number | number[] }) => {
+    if (Array.isArray(id)) {
+      id.forEach(this.state.readPostIds.add);
+    } else {
+      this.state.readPostIds.add(id);
+    }
 
-    if beatmapId? && beatmapId != @currentBeatmap().id
-      newState.currentBeatmapId = beatmapId
+    // setState
+  }
 
-    if filter?
-      if this.state.currentMode == 'events'
-        newState.currentMode = @lastMode ? defaultMode(newState.currentBeatmapId)
+  private readonly saveStateToContainer = () => {
+    // This is only so it can be stored with JSON.stringify.
+    this.state.readPostIdsArray = Array.from(this.state.readPostIds)
+    this.props.container.dataset.beatmapsetDiscussionState = JSON.stringify(this.state)
+  }
 
-      if filter != this.state.currentFilter
-        newState.currentFilter = filter
+  private readonly setCurrentPlaymode = (e, { mode }) => {
+    this.update(e, { playmode: mode });
+  };
 
-    if mode? && mode != this.state.currentMode
-      if !modeIf? || modeIf == this.state.currentMode
-        newState.currentMode = mode
+  @action
+  private readonly setPinnedNewDiscussion = (pinned: boolean) => {
+    this.pinnedNewDiscussion = pinned
+  };
 
-      # switching to events:
-      # - record last filter, to be restored when setMode is called
-      # - record last mode, to be restored when setFilter is called
-      # - set filter to total
-      if mode == 'events'
-        @lastMode = this.state.currentMode
-        @lastFilter = this.state.currentFilter
-        newState.currentFilter = 'total'
-      # switching from events:
-      # - restore whatever last filter set or default to total
-      else if this.state.currentMode == 'events'
-        newState.currentFilter = @lastFilter ? 'total'
+  @action
+  private readonly toggleShowDeleted = () => {
+    this.showDeleted = !this.showDeleted;
+  };
 
-    newState.selectedUserId = selectedUserId if selectedUserId != undefined # need to setState if null
+  @action
+  private readonly update = (_e: unknown, options: Partial<UpdateOptions>) => {
+    const {
+      beatmapId,
+      beatmapset,
+      callback,
+      filter,
+      mode,
+      modeIf,
+      playmode,
+      selectedUserId,
+      watching,
+    } = options;
 
-    @setState newState, callback
+    const newState: Partial<State> = {}
 
+    if (beatmapset != null) {
+      newState.beatmapset = beatmapset;
+    }
 
-  urlFromState: =>
-    makeUrl
-      beatmap: @currentBeatmap()
-      mode: this.state.currentMode
-      filter: this.state.currentFilter
-      user: this.state.selectedUserId
+    if (watching != null) {
+      newState.beatmapset ??= Object.assign({}, this.state.beatmapset);
+      newState.beatmapset.current_user_attributes.is_watching = watching;
+    }
 
+    if (playmode != null) {
+      const beatmap = BeatmapHelper.findDefault({ items: this.groupedBeatmaps.get(playmode) });
+      beatmapId = beatmap?.id;
+    }
 
-  users: =>
-    if !@cache.users?
-      @cache.users = _.keyBy this.state.beatmapset.related_users, 'id'
-      @cache.users[null] = @cache.users[undefined] = deletedUser.toJson()
+    if (beatmapId != null && beatmapId != this.currentBeatmap.id) {
+      newState.currentBeatmapId = beatmapId;
+    }
 
-    @cache.users
+    if (filter != null) {
+      if (this.state.currentMode === 'events') {
+        newState.currentMode = this.lastMode ?? defaultMode(newState.currentBeatmapId);
+      }
 
+      if (filter !== this.state.currentFilter) {
+        newState.currentFilter = filter;
+      }
+    }
 
-  ujsDiscussionUpdate: (_e, data) =>
-    # to allow ajax:complete to be run
-    Timeout.set 0, => @update(null, beatmapset: data)
+    if (mode != null && mode !== this.state.currentMode) {
+      if (modeIf == null || modeIf === this.state.currentMode) {
+        newState.currentMode = mode;
+      }
+
+      // switching to events:
+      // - record last filter, to be restored when setMode is called
+      // - record last mode, to be restored when setFilter is called
+      // - set filter to total
+      if (mode === 'events') {
+        this.lastMode = this.state.currentMode;
+        this.lastFilter = this.state.currentFilter;
+        newState.currentFilter = 'total';
+      } else if (this.state.currentMode === 'events') {
+        // switching from events:
+        // - restore whatever last filter set or default to total
+        newState.currentFilter = this.lastFilter ?? 'total'
+      }
+    }
+
+    // need to setState if null
+    if (selectedUserId !== undefined) {
+      newState.selectedUserId = selectedUserId
+    }
+
+    this.setState(newState, callback);
+  };
+}
