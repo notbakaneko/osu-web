@@ -5,6 +5,8 @@ import BeatmapListItem from 'components/beatmap-list-item';
 import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetJson from 'interfaces/beatmapset-json';
 import UserJson from 'interfaces/user-json';
+import { action, makeObservable } from 'mobx';
+import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import * as React from 'react';
 import { blackoutToggle } from 'utils/blackout';
@@ -26,6 +28,7 @@ interface State {
   showingSelector: boolean;
 }
 
+@observer
 export default class BeatmapList extends React.PureComponent<Props, State> {
   private readonly eventId = `beatmapset-discussions-show-beatmap-list-${nextVal()}`;
 
@@ -35,6 +38,8 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
     this.state = {
       showingSelector: false,
     };
+
+    makeObservable(this);
   }
 
   componentDidMount() {
@@ -114,6 +119,7 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
     this.hideSelector();
   };
 
+  @action
   private selectBeatmap = (e: React.MouseEvent<HTMLElement>) => {
     if (e.button !== 0) return;
     e.preventDefault();
