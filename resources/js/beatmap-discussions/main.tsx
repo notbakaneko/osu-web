@@ -22,13 +22,14 @@ import { NewDiscussion } from './new-discussion';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
-import { DiscussionPage, discussionPages } from './discussion-mode';
+import DiscussionMode, { DiscussionPage, discussionPages } from './discussion-mode';
 import { Filter } from './current-discussions';
 import { isEmpty, keyBy, maxBy } from 'lodash';
 import moment from 'moment';
 import { findDefault } from 'utils/beatmap-helper';
 import { group } from 'utils/beatmap-helper';
 import GameMode from 'interfaces/game-mode';
+import { switchNever } from 'utils/switch-never';
 
 const checkNewTimeoutDefault = 10000;
 const checkNewTimeoutMax = 60000;
@@ -69,6 +70,60 @@ interface UpdateOptions {
   filter: Filter;
   selectedUserId: number;
 }
+
+type DiscussionsAlias = BeatmapsetWithDiscussionsJson['discussions'];
+
+export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId: number) {
+  console.log(mode);
+  switch (mode) {
+    case 'general':
+      return discussions.filter((discussion) => discussion.beatmap_id === beatmapId);
+    case 'generalAll':
+      return discussions.filter((discussion) => discussion.beatmap_id == null);
+    case 'reviews':
+      return discussions.filter((discussion) => discussion.message_type === 'review');
+    case 'timeline':
+      return discussions.filter((discussion) => discussion.beatmap_id === beatmapId && discussion.timestamp != null);
+    default:
+      switchNever(mode);
+      throw new Error('missing valid mode');
+  }
+}
+
+export function filterDiscussionsByFilter(discussions: DiscussionsAlias, filter: Filter) {
+  console.log(filter);
+  switch (filter) {
+    case 'deleted':
+      return discussions.filter((discussion) => discussion.deleted_at != null);
+    case 'hype':
+      return discussions.filter((discussion) => discussion.message_type === 'hype');
+    case 'mapperNotes':
+      return discussions.filter((discussion) => discussion.message_type === 'mapper_note');
+    case 'mine': {
+      const userId = core.currentUserOrFail.id;
+      return discussions.filter((discussion) => discussion.user_id === userId);
+    }
+    case 'pending':
+      // TODO:
+      // pending reviews
+      // if (discussion.parent_id != null) {
+      //   const parentDiscussion = discussions[discussion.parent_id];
+      //   if (parentDiscussion != null && parentDiscussion.message_type == 'review') return true;
+      // }
+
+      return discussions.filter((discussion) => discussion.can_be_resolved && !discussion.resolved);
+    case 'praises':
+      return discussions.filter((discussion) => discussion.message_type === 'praise' || discussion.message_type === 'hype');
+    case 'resolved':
+      return discussions.filter((discussion) => discussion.can_be_resolved && discussion.resolved);
+    case 'total':
+      return discussions;
+    default:
+      switchNever(filter);
+      throw new Error('missing valid filter');
+  }
+}
+
 
 @observer
 export default class Main extends React.Component<Props, State> {
@@ -117,7 +172,7 @@ export default class Main extends React.Component<Props, State> {
 
   @computed
   private get currentBeatmap() {
-    return this.beatmaps[this.state.currentBeatmapId] ?? findDefault({ group: this.groupedBeatmaps() });
+    return this.beatmaps[this.state.currentBeatmapId] ?? findDefault({ group: this.groupedBeatmaps });
   }
 
   @computed
@@ -129,135 +184,50 @@ export default class Main extends React.Component<Props, State> {
   }
 
   @computed
+  get nonNullDiscussions() {
+    console.log('nonNullDiscussions');
+    return Object.values(this.discussions).filter((discussion) => discussion != null);
+  }
+
+  @computed
   private get presentDiscussions() {
     return Object.values(this.discussions).filter((discussion) => discussion.deleted_at == null);
   }
 
-  private get totalHype() {
-    return this.presentDiscussions.filter((discussion) => discussion.message_type === 'hype');
+  @computed
+  get totalHype() {
+    return this.presentDiscussions
+      .reduce((sum, discussion) => discussion.message_type === 'hype'
+        ? sum++
+        : sum,
+      0);
   }
 
+  @computed
+  get unresolvedIssues() {
+    return this.presentDiscussions
+      .reduce((sum, discussion) => {
+        if (discussion.can_be_resolved && !discussion.resolved) {
+          if (discussion.beatmap_id == null) return sum++;
+
+          const beatmap = this.beatmaps[discussion.beatmap_id];
+          if (beatmap != null && beatmap.deleted_at == null) return sum++;
+        }
+
+        return sum;
+      }, 0);
+  }
+
+  @computed
   private get unresolvedDiscussions() {
     return this.presentDiscussions.filter((discussion) => discussion.can_be_resolved && !discussion.resolved)
   }
 
-  private get currentDiscussions() {
-
-  }
-
-
-
-    countsByBeatmap = {}
-    countsByPlaymode = {}
-    totalHype = 0
-    unresolvedIssues = 0
-    byMode =
-      timeline: []
-      general: []
-      generalAll: []
-      reviews: []
-    byFilter =
-      deleted: {}
-      hype: {}
-      mapperNotes: {}
-      mine: {}
-      pending: {}
-      praises: {}
-      resolved: {}
-      total: {}
-    timelineAllUsers = []
-
-    for own mode, _items of byMode
-      for own _filter, modes of byFilter
-        modes[mode] = {}
-
-    for own _id, d of @discussions()
-      if !d.deleted_at?
-        totalHype++ if d.message_type == 'hype'
-
-        if d.can_be_resolved && !d.resolved
-          beatmap = @beatmaps()[d.beatmap_id]
-
-          if !d.beatmap_id? || (beatmap? && !beatmap.deleted_at?)
-            unresolvedIssues++
-
-          if beatmap?
-            countsByBeatmap[beatmap.id] ?= 0
-            countsByBeatmap[beatmap.id]++
-
-            if !beatmap.deleted_at?
-              countsByPlaymode[beatmap.mode] ?= 0
-              countsByPlaymode[beatmap.mode]++
-
-      if d.message_type == 'review'
-        mode = 'reviews'
-      else
-        if d.beatmap_id?
-          if d.beatmap_id == @currentBeatmap().id
-            if d.timestamp?
-              mode = 'timeline'
-              timelineAllUsers.push d
-            else
-              mode = 'general'
-          else
-            mode = null
-        else
-          mode = 'generalAll'
-
-      # belongs to different beatmap, excluded
-      continue unless mode?
-
-      # skip if filtering users
-      continue if this.state.selectedUserId? && d.user_id != this.state.selectedUserId
-
-      filters = total: true
-
-      if d.deleted_at?
-        filters.deleted = true
-      else if d.message_type == 'hype'
-        filters.hype = true
-        filters.praises = true
-      else if d.message_type == 'praise'
-        filters.praises = true
-      else if d.can_be_resolved
-        if d.resolved
-          filters.resolved = true
-        else
-          filters.pending = true
-
-      if d.user_id == this.state.currentUser.id
-        filters.mine = true
-
-      if d.message_type == 'mapper_note'
-        filters.mapperNotes = true
-
-      # the value should always be true
-      for own filter, _isSet of filters
-        byFilter[filter][mode][d.id] = d
-
-      if filters.pending && d.parent_id?
-        parentDiscussion = @discussions()[d.parent_id]
-
-        if parentDiscussion? && parentDiscussion.message_type == 'review'
-          byFilter.pending.reviews[parentDiscussion.id] = parentDiscussion
-
-      byMode[mode].push d
-
-    timeline = byMode.timeline
-    general = byMode.general
-    generalAll = byMode.generalAll
-    reviews = byMode.reviews
-
-    @cache.currentDiscussions = {general, generalAll, timeline, reviews, timelineAllUsers, byFilter, countsByBeatmap, countsByPlaymode, totalHype, unresolvedIssues}
-
-
-
   @computed
   private get discussionStarters() {
     const userIds = new Set(Object.values(this.discussions)
-      .filter((discussion) => discussion.message_type != 'hype')
-      .map((discussion) => discussion.user_id)
-    );
+      .filter((discussion) => discussion.message_type !== 'hype')
+      .map((discussion) => discussion.user_id));
 
     // TODO: sort user.username.toLocaleLowerCase()
     return [...userIds.values()].map((userId) => this.users[userId]).sort();
@@ -280,26 +250,21 @@ export default class Main extends React.Component<Props, State> {
 
   private get urlFromState() {
     return makeUrl({
-      beatmap: this.currentBeatmap(),
-      filter: this.state.currentFilter,
+      beatmap: this.currentBeatmap ?? undefined,
+      filter: this.state.currentFilter ?? undefined,
       mode: this.state.currentMode,
-      user: this.state.selectedUserId,
+      user: this.state.selectedUserId ?? undefined,
     });
   }
 
   @computed
   private get users() {
     const value = keyBy(this.state.beatmapset.related_users, 'id');
+    // eslint-disable-next-line id-blacklist
     value.null = value.undefined = deletedUser.toJson();
 
     return value;
   }
-
-
-  ujsDiscussionUpdate = (_e: unknown, beatmapset: BeatmapsetWithDiscussionsJson) => {
-    // to allow ajax:complete to be run
-    window.setTimeout(() => this.update(null, { beatmapset }, 0));
-  };
 
   constructor(props: Props) {
     super(props);
@@ -448,7 +413,7 @@ export default class Main extends React.Component<Props, State> {
         )}
         <BackToTop />
       </>
-    )
+    );
   }
 
   private readonly checkNew = () => {
@@ -468,14 +433,25 @@ export default class Main extends React.Component<Props, State> {
         return;
       }
 
-        this.nextTimeout = checkNewTimeoutDefault;
-        this.update(null, { beatmapset: data.beatmapset });
-    })
-    .always(() => {
+      this.nextTimeout = checkNewTimeoutDefault;
+      this.update(null, { beatmapset: data.beatmapset });
+    }).always(() => {
       this.nextTimeout = Math.min(this.nextTimeout, checkNewTimeoutMax);
 
       this.timeouts.checkNew = window.setTimeout(this.checkNew, this.nextTimeout);
     });
+  };
+
+  private discussionsByBeatmap(beatmapId: number) {
+    return computed(() => this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId)));
+  }
+
+  private discussionsByFilter(filter: Filter, mode: DiscussionMode, beatmapId: number) {
+    return computed(() => filterDiscussionsByFilter(this.discussionsByMode(mode, beatmapId), filter)).get();
+  }
+
+  private discussionsByMode(mode: DiscussionMode, beatmapId: number) {
+    return computed(() => filterDiscusionsByMode(this.nonNullDiscussions, mode, beatmapId)).get();
   }
 
   private readonly jumpTo = (_e: unknown, { id, postId }: { id: number, postId?: number }) => {
@@ -509,8 +485,8 @@ export default class Main extends React.Component<Props, State> {
       $(window).stop().scrollTo(core.stickyHeader.scrollOffset(offsetTop), 500);
     }
 
-    this.update(null, newState)
-  }
+    this.update(null, newState);
+  };
 
   private readonly jumpToClick = (e: React.SyntheticEvent<HTMLLinkElement>) => {
     const url = e.currentTarget.getAttribute('href');
@@ -520,11 +496,11 @@ export default class Main extends React.Component<Props, State> {
 
     const { discussionId, postId } = parsedUrl;
 
-    if (discussionId == null) return
+    if (discussionId == null) return;
 
     e.preventDefault();
     this.jumpTo(null, { id: discussionId, postId });
-  }
+  };
 
   private readonly jumpToDiscussionByHash = () => {
     const target = parseUrl(null, this.state.beatmapset.discussions)
@@ -543,13 +519,13 @@ export default class Main extends React.Component<Props, State> {
     }
 
     // setState
-  }
+  };
 
   private readonly saveStateToContainer = () => {
     // This is only so it can be stored with JSON.stringify.
     this.state.readPostIdsArray = Array.from(this.state.readPostIds)
     this.props.container.dataset.beatmapsetDiscussionState = JSON.stringify(this.state)
-  }
+  };
 
   private readonly setCurrentPlaymode = (e, { mode }) => {
     this.update(e, { playmode: mode });
@@ -635,5 +611,10 @@ export default class Main extends React.Component<Props, State> {
     }
 
     this.setState(newState, callback);
+  };
+
+  private readonly ujsDiscussionUpdate = (_e: unknown, beatmapset: BeatmapsetWithDiscussionsJson) => {
+    // to allow ajax:complete to be run
+    window.setTimeout(() => this.update(null, { beatmapset }, 0));
   };
 }
