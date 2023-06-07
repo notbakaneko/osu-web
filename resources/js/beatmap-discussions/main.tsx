@@ -120,7 +120,6 @@ export default class Main extends React.Component<Props> {
           currentBeatmap={this.discussionsState.currentBeatmap}
           currentDiscussions={this.discussionsState.currentDiscussions}
           currentFilter={this.discussionsState.currentFilter}
-          currentUser={core.currentUser} // TODO: remove after component converted
           discussionStarters={this.discussionsState.discussionStarters}
           discussions={this.discussionsState.discussions}
           events={this.discussionsState.beatmapset.events}

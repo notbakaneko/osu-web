@@ -1,7 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
+import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
 import GameMode from 'interfaces/game-mode';
 import { isEmpty, keyBy, maxBy } from 'lodash';
@@ -117,7 +117,7 @@ export default class DiscussionsState {
     // skipped discussions
     // - not privileged (deleted discussion)
     // - deleted beatmap
-    return keyBy(this.beatmapset.discussions.filter((discussion) => !isEmpty(discussion)), 'id') as Partial<Record<number, BeatmapsetWithDiscussionsJson['discussions'][number]>>;
+    return keyBy(this.beatmapset.discussions.filter((discussion) => !isEmpty(discussion)), 'id') as Partial<Record<number, BeatmapsetDiscussionJsonForShow>>; // TODO need some typing to handle the not for show variant
   }
 
   @computed
