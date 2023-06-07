@@ -249,7 +249,7 @@ export default class Main extends React.Component<Props> {
     $(window).stop().scrollTo(core.stickyHeader.scrollOffset(offsetTop), 500);
   };
 
-  private readonly jumpToClick = (e: React.SyntheticEvent<HTMLLinkElement>) => {
+  private readonly jumpToClick = (e: JQuery.TriggeredEvent<Document, unknown, HTMLElement, HTMLElement>) => {
     const url = e.currentTarget.getAttribute('href');
     const parsedUrl = parseUrl(url, this.discussionsState.beatmapset.discussions);
 
