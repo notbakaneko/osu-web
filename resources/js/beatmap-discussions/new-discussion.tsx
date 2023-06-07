@@ -25,9 +25,9 @@ import { InputEventType, makeTextAreaHandler } from 'utils/input-handler';
 import { joinComponents, trans } from 'utils/lang';
 import { hideLoadingOverlay, showLoadingOverlay } from 'utils/loading-overlay';
 import { present } from 'utils/string';
-import CurrentDiscussions from './current-discussions';
 import DiscussionMessageLengthCounter from './discussion-message-length-counter';
 import DiscussionMode from './discussion-mode';
+import DiscussionsState from './discussions-state';
 import { hypeExplanationClass } from './nominations';
 
 const bn = 'beatmap-discussion-new';
@@ -42,7 +42,7 @@ interface Props {
   autoFocus: boolean;
   beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
   currentBeatmap: BeatmapExtendedJson;
-  currentDiscussions: CurrentDiscussions;
+  discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
   mode: DiscussionMode;
   pinned: boolean;

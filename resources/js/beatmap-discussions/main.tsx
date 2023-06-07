@@ -118,10 +118,10 @@ export default class Main extends React.Component<Props> {
           beatmaps={this.discussionsState.groupedBeatmaps}
           beatmapset={this.discussionsState.beatmapset}
           currentBeatmap={this.discussionsState.currentBeatmap}
-          currentDiscussions={this.discussionsState.currentDiscussions}
           currentFilter={this.discussionsState.currentFilter}
           discussionStarters={this.discussionsState.discussionStarters}
           discussions={this.discussionsState.discussions}
+          discussionsState={this.discussionsState}
           events={this.discussionsState.beatmapset.events}
           mode={this.discussionsState.currentMode}
           selectedUserId={this.discussionsState.selectedUserId}
@@ -130,8 +130,8 @@ export default class Main extends React.Component<Props> {
         <ModeSwitcher
           beatmapset={this.discussionsState.beatmapset}
           currentBeatmap={this.discussionsState.currentBeatmap}
-          currentDiscussions={this.discussionsState.currentDiscussions}
           currentFilter={this.discussionsState.currentFilter}
+          discussionsState={this.discussionsState}
           innerRef={this.modeSwitcherRef}
           mode={this.discussionsState.currentMode}
         />
@@ -160,7 +160,7 @@ export default class Main extends React.Component<Props> {
                     autoFocus={this.focusNewDiscussion}
                     beatmapset={this.discussionsState.beatmapset}
                     currentBeatmap={this.discussionsState.currentBeatmap}
-                    currentDiscussions={this.discussionsState.currentDiscussions}
+                    discussionsState={this.discussionsState}
                     innerRef={this.newDiscussionRef}
                     mode={this.discussionsState.currentMode}
                     pinned={this.discussionsState.pinnedNewDiscussion}
@@ -172,8 +172,8 @@ export default class Main extends React.Component<Props> {
                 <Discussions
                   beatmapset={this.discussionsState.beatmapset}
                   currentBeatmap={this.discussionsState.currentBeatmap}
-                  currentDiscussions={this.discussionsState.currentDiscussions}
                   currentFilter={this.discussionsState.currentFilter}
+                  discussionsState={this.discussionsState}
                   mode={this.discussionsState.currentMode}
                   readPostIds={this.discussionsState.readPostIds}
                   showDeleted={this.discussionsState.showDeleted}

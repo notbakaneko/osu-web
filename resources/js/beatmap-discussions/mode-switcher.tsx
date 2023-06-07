@@ -9,14 +9,15 @@ import * as React from 'react';
 import { makeUrl } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import CurrentDiscussions, { Filter } from './current-discussions';
+import { Filter } from './current-discussions';
 import { DiscussionPage, discussionPages } from './discussion-mode';
+import DiscussionsState from './discussions-state';
 
 interface Props {
   beatmapset: BeatmapsetJson;
   currentBeatmap: BeatmapJson;
-  currentDiscussions: CurrentDiscussions;
   currentFilter: Filter;
+  discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
   mode: DiscussionPage;
 }

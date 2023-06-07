@@ -14,7 +14,7 @@ import * as React from 'react';
 import { canModeratePosts } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import CurrentDiscussions, { Filter } from './current-discussions';
+import { Filter } from './current-discussions';
 import { Discussion } from './discussion';
 import DiscussionMode from './discussion-mode';
 import DiscussionsState from './discussions-state';
@@ -61,8 +61,8 @@ interface Props {
   // TODO: most of these can move to context/store after main is converted to typescript.
   beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
   currentBeatmap: BeatmapExtendedJson;
-  currentDiscussions: CurrentDiscussions;
   currentFilter: Filter;
+  discussionsState: DiscussionsState;
   mode: DiscussionMode;
   readPostIds: Set<number>;
   showDeleted: boolean;
@@ -71,7 +71,6 @@ interface Props {
 
 @observer
 export class Discussions extends React.Component<Props> {
-  @observable private discussionsState = new DiscussionsState();
   @observable private sort: Record<DiscussionMode, Sort> = {
     general: 'updated_at',
     generalAll: 'updated_at',
