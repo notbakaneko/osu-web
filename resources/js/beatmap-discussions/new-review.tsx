@@ -15,7 +15,7 @@ import { trans } from 'utils/lang';
 import Editor from './editor';
 
 interface Props {
-  beatmaps: BeatmapExtendedJson[];
+  beatmaps: Partial<Record<number, BeatmapExtendedJson>>;
   beatmapset: BeatmapsetExtendedJson;
   currentBeatmap: BeatmapExtendedJson;
   currentUser: UserJson;
