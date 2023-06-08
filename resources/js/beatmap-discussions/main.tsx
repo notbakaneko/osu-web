@@ -212,6 +212,7 @@ export default class Main extends React.Component<Props> {
     });
   };
 
+  @action
   private readonly jumpTo = (_event: unknown, { id, postId }: { id: number; postId?: number }) => {
     const discussion = this.discussionsState.discussions[id];
 
@@ -231,7 +232,7 @@ export default class Main extends React.Component<Props> {
       this.discussionsState.selectedUserId = null;
     }
 
-    $.publish('beatmapset-discussions:highlight', { discussionId: discussion.id });
+    this.discussionsState.highlightedDiscussionId = discussion.id;
 
     const attribute = postId != null ? `data-post-id='${postId}'` : `data-id='${id}'`;
     const target = $(`.js-beatmap-discussion-jump[${attribute}]`);
