@@ -119,6 +119,18 @@ export default class DiscussionsState {
   }
 
   @computed
+  get currentBeatmapDiscussionsCurrentMode() {
+    if (this.currentMode === 'events') return [];
+    return this.currentDiscussionsByMode(this.currentMode);
+  }
+
+  @computed
+  get currentBeatmapDiscussionsCurrentModeWithFilter() {
+    if (this.currentMode === 'events') return [];
+    return this.currentDiscussionsByModeWithFilter(this.currentMode, this.currentFilter);
+  }
+
+  @computed
   get discussions() {
     // skipped discussions
     // - not privileged (deleted discussion)
@@ -272,6 +284,10 @@ export default class DiscussionsState {
 
   currentDiscussionsByMode(mode: DiscussionMode) {
     return this.discussionsByFilter(this.currentFilter, mode, this.currentBeatmapId);
+  }
+
+  currentDiscussionsByModeWithFilter(mode: DiscussionMode, filter: Filter) {
+    return this.discussionsByFilter(filter, mode, this.currentBeatmapId);
   }
 
   discussionsByBeatmap(beatmapId: number) {

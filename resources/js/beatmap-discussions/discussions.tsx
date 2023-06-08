@@ -59,14 +59,14 @@ type Sort = 'created_at' | 'updated_at' | 'timeline';
 
 interface Props {
   // TODO: most of these can move to context/store after main is converted to typescript.
-  beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
-  currentBeatmap: BeatmapExtendedJson;
-  currentFilter: Filter;
+  // beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
+  // currentBeatmap: BeatmapExtendedJson;
+  // currentFilter: Filter;
   discussionsState: DiscussionsState;
-  mode: DiscussionMode;
-  readPostIds: Set<number>;
-  showDeleted: boolean;
-  users: Record<number, UserJson>;
+  // mode: DiscussionMode;
+  // readPostIds: Set<number>;
+  // showDeleted: boolean;
+  // users: Record<number, UserJson>;
 }
 
 @observer
@@ -78,19 +78,52 @@ export class Discussions extends React.Component<Props> {
     timeline: 'timeline',
   };
 
+  private get beatmapset() {
+    return this.discussionsState.beatmapset;
+  }
+
+  private get currentBeatmap() {
+    return this.discussionsState.currentBeatmap;
+  }
+
+  private get currentFilter() {
+    return this.discussionsState.currentFilter;
+  }
+
+  private get discussionsState() {
+    return this.props.discussionsState;
+  }
+
+  private get mode() {
+    return this.discussionsState.currentMode;
+  }
+
+  private get readPostIds() {
+    return this.discussionsState.readPostIds;
+  }
+
+  private get showDeleted() {
+    return this.discussionsState.showDeleted;
+  }
+
+  private get users() {
+    return this.discussionsState.users;
+  }
+
   @computed
   private get currentSort() {
-    return this.sort[this.props.mode];
+    if (this.props.discussionsState.currentMode === 'events') return 'timeline'; // just return any valid mode.
+    return this.sort[this.props.discussionsState.currentMode];
   }
 
   @computed
   private get isTimelineVisible() {
-    return this.props.mode === 'timeline' && this.currentSort === 'timeline';
+    return this.props.discussionsState.currentMode === 'timeline' && this.currentSort === 'timeline';
   }
 
   @computed
   private get sortedDiscussions() {
-    return this.props.currentDiscussions[this.props.mode].slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
+    return this.props.discussionsState.currentBeatmapDiscussionsCurrentMode.slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
       const mapperNoteCompare =
         // no sticky for timeline sort
         this.currentSort !== 'timeline'
@@ -148,7 +181,8 @@ export class Discussions extends React.Component<Props> {
 
   @action
   private readonly handleChangeSort = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-    this.sort[this.props.mode] = e.currentTarget.dataset.sortPreset as Sort;
+    if (this.discussionsState.currentMode === 'events') return;
+    this.sort[this.discussionsState.currentMode] = e.currentTarget.dataset.sortPreset as Sort;
   };
 
   @action
@@ -164,11 +198,12 @@ export class Discussions extends React.Component<Props> {
   };
 
   private readonly renderDiscussionPage = (discussion: BeatmapsetDiscussionJsonForShow) => {
-    const visible = this.props.currentDiscussions.byFilter[this.props.currentFilter][this.props.mode][discussion.id] != null;
+    // TODO: check if check if necessary?
+    const visible = this.discussionsState.currentBeatmapDiscussionsCurrentMode[discussion.id] != null;
 
     if (!visible) return null;
 
-    const parentDiscussion = discussion.parent_id != null ? this.props.currentDiscussions.byFilter.total.reviews[discussion.parent_id] : null;
+    const parentDiscussion = discussion.parent_id != null ? this.discussionsState.currentDiscussionsByMode('reviews')[discussion.parent_id] : null;
 
     return (
       <div
@@ -176,21 +211,21 @@ export class Discussions extends React.Component<Props> {
         className={`${bn}__discussion`}
       >
         <Discussion
-          beatmapset={this.props.beatmapset}
-          currentBeatmap={this.props.currentBeatmap}
+          beatmapset={this.beatmapset}
+          currentBeatmap={this.currentBeatmap}
           discussion={discussion}
           isTimelineVisible={this.isTimelineVisible}
           parentDiscussion={parentDiscussion}
-          readPostIds={this.props.readPostIds}
-          showDeleted={this.props.showDeleted}
-          users={this.props.users}
+          readPostIds={this.readPostIds}
+          showDeleted={this.showDeleted}
+          users={this.users}
         />
       </div>
     );
   };
 
   private renderDiscussions() {
-    const discussions = this.props.currentDiscussions[this.props.mode];
+    const discussions = this.discussionsState.currentBeatmapDiscussionsCurrentMode;
 
     if (discussions.length === 0) {
       return (
@@ -200,7 +235,7 @@ export class Discussions extends React.Component<Props> {
       );
     }
 
-    if (size(this.props.currentDiscussions.byFilter[this.props.currentFilter][this.props.mode]) === 0) {
+    if (this.discussionsState.currentBeatmapDiscussionsCurrentModeWithFilter.length === 0) {
       return (
         <div className={`${bn}__discussions ${bn}__discussions--empty`}>
           {trans('beatmaps.discussions.empty.hidden')}
@@ -249,7 +284,7 @@ export class Discussions extends React.Component<Props> {
         type='button'
       >
         <span className={`${bn}__toolbar-link-content`}>
-          <span className={this.props.showDeleted ? 'fas fa-check-square' : 'far fa-square'} />
+          <span className={this.discussionsState.showDeleted ? 'fas fa-check-square' : 'far fa-square'} />
         </span>
         <span className={`${bn}__toolbar-link-content`}>
           {trans('beatmaps.discussions.show_deleted')}
@@ -259,7 +294,7 @@ export class Discussions extends React.Component<Props> {
   }
 
   private renderSortOptions() {
-    const presets: Sort[] = this.props.mode === 'timeline'
+    const presets: Sort[] = this.props.discussionsState.currentMode === 'timeline'
       ? ['timeline', 'updated_at']
       : ['created_at', 'updated_at'];
 
@@ -292,7 +327,8 @@ export class Discussions extends React.Component<Props> {
     );
   }
 
+  @action
   private readonly toggleShowDeleted = () => {
-    $.publish('beatmapDiscussionPost:toggleShowDeleted');
+    this.discussionsState.showDeleted = !this.discussionsState.showDeleted;
   };
 }
