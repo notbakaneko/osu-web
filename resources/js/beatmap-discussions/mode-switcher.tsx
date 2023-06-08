@@ -5,6 +5,7 @@ import StringWithComponent from 'components/string-with-component';
 import BeatmapJson from 'interfaces/beatmap-json';
 import BeatmapsetJson from 'interfaces/beatmapset-json';
 import { snakeCase, size } from 'lodash';
+import { observable } from 'mobx';
 import * as React from 'react';
 import { makeUrl } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
@@ -24,7 +25,8 @@ interface Props {
 
 const selectedClassName = 'page-mode-link--is-active';
 
-export class ModeSwitcher extends React.PureComponent<Props> {
+@observable
+export class ModeSwitcher extends React.Component<Props> {
   private scrollerRef = React.createRef<HTMLUListElement>();
 
   componentDidMount() {
@@ -66,7 +68,7 @@ export class ModeSwitcher extends React.PureComponent<Props> {
           {this.renderModeText(mode)}
           {mode !== 'events' && (
             <span className='page-mode-link__badge'>
-              {size(this.props.currentDiscussions.byFilter[this.props.currentFilter][mode])}
+              {this.props.discussionsState.currentDiscussionsByMode(mode).length}
             </span>
           )}
           <span className='page-mode-link__stripe' />

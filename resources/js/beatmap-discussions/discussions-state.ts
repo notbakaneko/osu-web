@@ -270,6 +270,10 @@ export default class DiscussionsState {
     makeObservable(this);
   }
 
+  currentDiscussionsByMode(mode: DiscussionMode) {
+    return this.discussionsByFilter(this.currentFilter, mode, this.currentBeatmapId);
+  }
+
   discussionsByBeatmap(beatmapId: number) {
     return computed(() => this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId))).get();
   }
