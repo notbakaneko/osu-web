@@ -28,7 +28,7 @@ export interface UpdateOptions {
   watching: boolean;
 }
 
-export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): BeatmapsetDiscussionJson[];
+export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): DiscussionsAlias;
 export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId?: number) {
   console.log(mode);
   switch (mode) {
@@ -186,7 +186,7 @@ export default class DiscussionsState {
   @computed
   get nonNullDiscussions() {
     console.log('nonNullDiscussions');
-    return Object.values(this.discussions).filter((discussion) => discussion != null) as BeatmapsetDiscussionJson[];
+    return Object.values(this.discussions).filter((discussion) => discussion != null) as DiscussionsAlias;
   }
 
   @computed
