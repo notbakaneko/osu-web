@@ -33,7 +33,7 @@ import { joinComponents, trans, transExists } from 'utils/lang';
 import { pageChange } from 'utils/page-change';
 import { presence } from 'utils/string';
 import { wikiUrl } from 'utils/url';
-import CurrentDiscussions from './current-discussions';
+import DiscussionsState from './discussions-state';
 
 const bn = 'beatmap-discussion-nomination';
 const flashClass = 'js-flash-border--on';
@@ -42,8 +42,8 @@ const nominatorsVisibleBeatmapStatuses = Object.freeze(new Set(['wip', 'pending'
 
 interface Props {
   beatmapset: BeatmapsetWithDiscussionsJson;
-  currentDiscussions: CurrentDiscussions;
   discussions: Partial<Record<number, BeatmapsetDiscussionJsonForShow>>;
+  discussionsState: DiscussionsState;
   events: BeatmapsetEventJson[];
   users: Partial<Record<number, UserJson>>;
 }
@@ -63,7 +63,7 @@ function formatDate(date: string | null) {
 }
 
 @observer
-export class Nominations extends React.PureComponent<Props> {
+export class Nominations extends React.Component<Props> {
   private hypeFocusTimeout: number | undefined;
   @observable private showBeatmapsOwnerEditor = false;
   @observable private showLoveBeatmapDialog = false;
