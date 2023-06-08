@@ -4,10 +4,12 @@
 import mapperGroup from 'beatmap-discussions/mapper-group';
 import SelectOptions, { OptionRenderProps } from 'components/select-options';
 import UserJson from 'interfaces/user-json';
+import { observable } from 'mobx';
 import * as React from 'react';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { groupColour } from 'utils/css';
 import { trans } from 'utils/lang';
+import DiscussionsState from './discussions-state';
 
 const allUsers = Object.freeze({
   id: null,
@@ -26,9 +28,7 @@ interface Option {
 }
 
 interface Props {
-  ownerId: number;
-  selectedUser?: UserJson | null;
-  users: UserJson[];
+  discussionsState: DiscussionsState;
 }
 
 function mapUserProperties(user: UserJson): Option {
@@ -39,15 +39,20 @@ function mapUserProperties(user: UserJson): Option {
   };
 }
 
+@observable
 export class UserFilter extends React.Component<Props> {
+  private get ownerId() {
+    return this.props.discussionsState.beatmapset.user_id;
+  }
+
   private get selected() {
-    return this.props.selectedUser != null
-      ? mapUserProperties(this.props.selectedUser)
+    return this.props.discussionsState.selectedUser != null
+      ? mapUserProperties(this.props.discussionsState.selectedUser)
       : noSelection;
   }
 
   private get options() {
-    return [allUsers, ...this.props.users.map(mapUserProperties)];
+    return [allUsers, ...Object.values(this.props.discussionsState.users).map(mapUserProperties)];
   }
 
   render() {
@@ -67,7 +72,7 @@ export class UserFilter extends React.Component<Props> {
   };
 
   private isOwner(user?: Option) {
-    return user != null && user.id === this.props.ownerId;
+    return user != null && user.id === this.ownerId;
   }
 
   private readonly renderOption = ({ cssClasses, children, onClick, option }: OptionRenderProps<Option>) => {
