@@ -28,7 +28,8 @@ export interface UpdateOptions {
   watching: boolean;
 }
 
-export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId: number) {
+export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): BeatmapsetDiscussionJson[];
+export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId?: number) {
   console.log(mode);
   switch (mode) {
     case 'general':
@@ -113,11 +114,35 @@ export default class DiscussionsState {
   }
 
   @computed
+  get currentBeatmapDiscussions() {
+    return this.discussionsByBeatmap(this.currentBeatmapId);
+  }
+
+  @computed
   get discussions() {
     // skipped discussions
     // - not privileged (deleted discussion)
     // - deleted beatmap
     return keyBy(this.beatmapset.discussions.filter((discussion) => !isEmpty(discussion)), 'id') as Partial<Record<number, BeatmapsetDiscussionJsonForShow>>; // TODO need some typing to handle the not for show variant
+  }
+
+  @computed
+  get discussionsCountByPlaymode() {
+    const counts: Record<GameMode, number> = {
+      fruits: 0,
+      mania: 0,
+      osu: 0,
+      taiko: 0,
+    };
+
+    for (const discussion of this.nonNullDiscussions) {
+      const mode = discussion.beatmap?.mode;
+      if (mode != null) {
+        counts[mode]++;
+      }
+    }
+
+    return counts;
   }
 
   @computed
@@ -143,6 +168,10 @@ export default class DiscussionsState {
     );
 
     return maxLastUpdate != null ? moment(maxLastUpdate).unix() : null;
+  }
+
+  get selectedUser() {
+    return this.selectedUserId != null ? this.users[this.selectedUserId] : null;
   }
 
   @computed
@@ -242,7 +271,7 @@ export default class DiscussionsState {
   }
 
   discussionsByBeatmap(beatmapId: number) {
-    return computed(() => this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId)));
+    return computed(() => this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId))).get();
   }
 
   discussionsByFilter(filter: Filter, mode: DiscussionMode, beatmapId: number) {
