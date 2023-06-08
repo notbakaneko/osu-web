@@ -6,7 +6,6 @@ import Modal from 'components/modal';
 import BeatmapsetEventJson from 'interfaces/beatmapset-event-json';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
 import GameMode from 'interfaces/game-mode';
-import UserJson from 'interfaces/user-json';
 import { route } from 'laroute';
 import { forEachRight, map, uniq } from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
@@ -17,12 +16,14 @@ import { onError } from 'utils/ajax';
 import { isUserFullNominator } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
+import DiscussionsState from './discussions-state';
 
 interface Props {
-  beatmapset: BeatmapsetWithDiscussionsJson;
-  currentHype: number;
-  unresolvedIssues: number;
-  users: Partial<Record<number, UserJson>>;
+  // beatmapset: BeatmapsetWithDiscussionsJson;
+  // currentHype: number;
+  discussionsState: DiscussionsState;
+  // unresolvedIssues: number;
+  // users: Partial<Record<number, UserJson>>;
 }
 
 const bn = 'nomination-dialog';
@@ -35,18 +36,26 @@ export class Nominator extends React.Component<Props> {
   @observable private visible = false;
   private xhr?: JQuery.jqXHR<BeatmapsetWithDiscussionsJson>;
 
+  private get beatmapset() {
+    return this.props.discussionsState.beatmapset;
+  }
+
+  private get currentHype() {
+    return this.props.discussionsState.totalHype;
+  }
+
   private get mapCanBeNominated() {
-    if (this.props.beatmapset.hype == null) {
+    if (this.beatmapset.hype == null) {
       return false;
     }
 
-    return this.props.beatmapset.status === 'pending' && this.props.currentHype >= this.props.beatmapset.hype.required;
+    return this.beatmapset.status === 'pending' && this.currentHype >= this.beatmapset.hype.required;
   }
 
   private get nominationEvents() {
     const nominations: BeatmapsetEventJson[] = [];
 
-    forEachRight(this.props.beatmapset.events, (event) => {
+    forEachRight(this.beatmapset.events, (event) => {
       if (event.type === 'nomination_reset') {
         return false;
       }
@@ -61,9 +70,17 @@ export class Nominator extends React.Component<Props> {
 
   @computed
   private get playmodes() {
-    return this.props.beatmapset.nominations.legacy_mode
+    return this.beatmapset.nominations.legacy_mode
       ? null
-      : Object.keys(this.props.beatmapset.nominations.required) as GameMode[];
+      : Object.keys(this.beatmapset.nominations.required) as GameMode[];
+  }
+
+  private get unresolvedIssues() {
+    return this.props.discussionsState.unresolvedIssues;
+  }
+
+  private get users() {
+    return this.props.discussionsState.users;
   }
 
   private get userCanNominate() {
@@ -71,7 +88,7 @@ export class Nominator extends React.Component<Props> {
       return false;
     }
 
-    const nominationModes = this.playmodes ?? uniq(this.props.beatmapset.beatmaps.map((bm) => bm.mode));
+    const nominationModes = this.playmodes ?? uniq(this.beatmapset.beatmaps.map((bm) => bm.mode));
 
     return nominationModes.some((mode) => this.userCanNominateMode(mode));
   }
@@ -84,8 +101,8 @@ export class Nominator extends React.Component<Props> {
   private get userIsOwner() {
     const userId = core.currentUserOrFail.id;
 
-    return userId === this.props.beatmapset.user_id
-      || this.props.beatmapset.beatmaps.some((beatmap) => beatmap.deleted_at == null && userId === beatmap.user_id);
+    return userId === this.beatmapset.user_id
+      || this.beatmapset.beatmaps.some((beatmap) => beatmap.deleted_at == null && userId === beatmap.user_id);
   }
 
   private get userNominatableModes() {
@@ -93,7 +110,7 @@ export class Nominator extends React.Component<Props> {
       return {};
     }
 
-    return this.props.beatmapset.current_user_attributes.nomination_modes ?? {};
+    return this.beatmapset.current_user_attributes.nomination_modes ?? {};
   }
 
   constructor(props: Props) {
@@ -119,7 +136,7 @@ export class Nominator extends React.Component<Props> {
 
   private hasFullNomination(mode: GameMode) {
     return this.nominationEvents.some((event) => {
-      const user = event.user_id != null ? this.props.users[event.user_id] : null;
+      const user = event.user_id != null ? this.users[event.user_id] : null;
 
       return event.type === 'nominate' && event.comment != null
         ? event.comment.modes.includes(mode) && isUserFullNominator(user, mode)
@@ -138,7 +155,7 @@ export class Nominator extends React.Component<Props> {
 
     this.loading = true;
 
-    const url = route('beatmapsets.nominate', { beatmapset: this.props.beatmapset.id });
+    const url = route('beatmapsets.nominate', { beatmapset: this.beatmapset.id });
     const params = {
       data: {
         playmodes: this.playmodes != null && this.playmodes.length === 1 ? this.playmodes : this.selectedModes,
@@ -156,12 +173,12 @@ export class Nominator extends React.Component<Props> {
   };
 
   private nominationCountMet(mode: GameMode) {
-    if (this.props.beatmapset.nominations.legacy_mode || this.props.beatmapset.nominations.required[mode] === 0) {
+    if (this.beatmapset.nominations.legacy_mode || this.beatmapset.nominations.required[mode] === 0) {
       return false;
     }
 
-    const req = this.props.beatmapset.nominations.required[mode];
-    const curr = this.props.beatmapset.nominations.current[mode] ?? 0;
+    const req = this.beatmapset.nominations.required[mode];
+    const curr = this.beatmapset.nominations.current[mode] ?? 0;
 
     if (!req) {
       return false;
@@ -176,9 +193,9 @@ export class Nominator extends React.Component<Props> {
     }
 
     let tooltipText: string | undefined;
-    if (this.props.unresolvedIssues > 0) {
+    if (this.unresolvedIssues > 0) {
       tooltipText = trans('beatmaps.nominations.unresolved_issues');
-    } else if (this.props.beatmapset.nominations.nominated) {
+    } else if (this.beatmapset.nominations.nominated) {
       tooltipText = trans('beatmaps.nominations.already_nominated');
     } else if (!this.userCanNominate) {
       tooltipText = trans('beatmaps.nominations.cannot_nominate');
@@ -276,12 +293,12 @@ export class Nominator extends React.Component<Props> {
     let req: number;
     let curr: number;
 
-    if (this.props.beatmapset.nominations.legacy_mode) {
-      req = this.props.beatmapset.nominations.required;
-      curr = this.props.beatmapset.nominations.current;
+    if (this.beatmapset.nominations.legacy_mode) {
+      req = this.beatmapset.nominations.required;
+      curr = this.beatmapset.nominations.current;
     } else {
-      req = this.props.beatmapset.nominations.required[mode] ?? 0;
-      curr = this.props.beatmapset.nominations.current[mode] ?? 0;
+      req = this.beatmapset.nominations.required[mode] ?? 0;
+      curr = this.beatmapset.nominations.current[mode] ?? 0;
     }
 
     return (curr === req - 1) && !this.hasFullNomination(mode);

@@ -121,10 +121,7 @@ export class Nominations extends React.Component<Props> {
             <div className={`${bn}__item`}>{this.renderDisqualifyButton()}</div>
             <div className={`${bn}__item`}>
               <Nominator
-                beatmapset={this.props.beatmapset}
-                currentHype={this.props.currentDiscussions.totalHype}
-                unresolvedIssues={this.props.currentDiscussions.unresolvedIssues}
-                users={this.props.users}
+                discussionsState={this.props.discussionsState}
               />
             </div>
           </div>
