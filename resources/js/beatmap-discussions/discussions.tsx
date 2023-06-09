@@ -200,6 +200,7 @@ export class Discussions extends React.Component<Props> {
           beatmapset={this.beatmapset}
           currentBeatmap={this.currentBeatmap}
           discussion={discussion}
+          discussionsState={this.discussionsState}
           isTimelineVisible={this.isTimelineVisible}
           parentDiscussion={parentDiscussion}
           readPostIds={this.readPostIds}

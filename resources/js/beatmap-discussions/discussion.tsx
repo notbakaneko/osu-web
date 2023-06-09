@@ -18,6 +18,7 @@ import { classWithModifiers, groupColour } from 'utils/css';
 import { trans } from 'utils/lang';
 import { DiscussionType, discussionTypeIcons } from './discussion-type';
 import DiscussionVoteButtons from './discussion-vote-buttons';
+import DiscussionsState from './discussions-state';
 import DiscussionsStateContext from './discussions-state-context';
 import { NewReply } from './new-reply';
 import Post from './post';
@@ -29,6 +30,7 @@ const bn = 'beatmap-discussion';
 interface PropsBase {
   beatmapset: BeatmapsetExtendedJson;
   currentBeatmap: BeatmapExtendedJson | null;
+  discussionsState: DiscussionsState;
   isTimelineVisible: boolean;
   parentDiscussion?: BeatmapsetDiscussionJson | null;
   readonly: boolean;
@@ -64,18 +66,20 @@ function DiscussionTypeIcon({ type }: { type: DiscussionType | 'resolved' }) {
 
 @observer
 export class Discussion extends React.Component<Props> {
-  static contextType = DiscussionsStateContext;
   static defaultProps = {
     preview: false,
     readonly: false,
   };
 
-  declare context: React.ContextType<typeof DiscussionsStateContext>;
   private lastResolvedState = false;
 
   constructor(props: Props) {
     super(props);
     makeObservable(this);
+  }
+
+  private get discussionsState() {
+    return this.props.discussionsState;
   }
 
   @computed
@@ -87,12 +91,12 @@ export class Discussion extends React.Component<Props> {
 
   @computed
   private get collapsed() {
-    return this.context.discussionCollapsed.get(this.props.discussion.id) ?? this.context.discussionDefaultCollapsed;
+    return this.discussionsState.discussionCollapsed.get(this.props.discussion.id) ?? this.discussionsState.discussionDefaultCollapsed;
   }
 
   @computed
   private get highlighted() {
-    return this.context.highlightedDiscussionId === this.props.discussion.id;
+    return this.discussionsState.highlightedDiscussionId === this.props.discussion.id;
   }
 
   @computed
@@ -167,13 +171,13 @@ export class Discussion extends React.Component<Props> {
 
   @action
   private readonly handleCollapseClick = () => {
-    this.context.discussionCollapsed.set(this.props.discussion.id, !this.collapsed);
+    this.discussionsState.discussionCollapsed.set(this.props.discussion.id, !this.collapsed);
   };
 
   @action
   private readonly handleSetHighlight = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.defaultPrevented) return;
-    this.context.highlightedDiscussionId = this.props.discussion.id;
+    this.discussionsState.highlightedDiscussionId = this.props.discussion.id;
   };
 
   private isOwner(object: { user_id: number }) {
