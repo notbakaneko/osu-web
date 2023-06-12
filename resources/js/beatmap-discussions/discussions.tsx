@@ -197,15 +197,10 @@ export class Discussions extends React.Component<Props> {
         className={`${bn}__discussion`}
       >
         <Discussion
-          beatmapset={this.beatmapset}
-          currentBeatmap={this.currentBeatmap}
           discussion={discussion}
           discussionsState={this.discussionsState}
           isTimelineVisible={this.isTimelineVisible}
           parentDiscussion={parentDiscussion}
-          readPostIds={this.readPostIds}
-          showDeleted={this.showDeleted}
-          users={this.users}
         />
       </div>
     );
