@@ -158,6 +158,7 @@ export default class Main extends React.Component<Props> {
     );
   }
 
+  @action
   private readonly checkNew = () => {
     window.clearTimeout(this.timeouts.checkNew);
     this.xhrCheckNew?.abort();
