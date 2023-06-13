@@ -3,7 +3,7 @@
 
 import StringWithComponent from 'components/string-with-component';
 import { snakeCase } from 'lodash';
-import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { makeUrl } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
@@ -18,7 +18,7 @@ interface Props {
 
 const selectedClassName = 'page-mode-link--is-active';
 
-@observable
+@observer
 export class ModeSwitcher extends React.Component<Props> {
   private scrollerRef = React.createRef<HTMLUListElement>();
 

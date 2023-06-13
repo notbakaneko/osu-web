@@ -4,7 +4,7 @@
 import mapperGroup from 'beatmap-discussions/mapper-group';
 import SelectOptions, { OptionRenderProps } from 'components/select-options';
 import UserJson from 'interfaces/user-json';
-import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { groupColour } from 'utils/css';
@@ -39,7 +39,7 @@ function mapUserProperties(user: UserJson): Option {
   };
 }
 
-@observable
+@observer
 export class UserFilter extends React.Component<Props> {
   private get ownerId() {
     return this.props.discussionsState.beatmapset.user_id;
