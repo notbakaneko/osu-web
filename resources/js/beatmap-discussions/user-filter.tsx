@@ -76,6 +76,9 @@ export class UserFilter extends React.Component<Props> {
   }
 
   private readonly renderOption = ({ cssClasses, children, onClick, option }: OptionRenderProps<Option>) => {
+    // TODO: exclude null/undefined user from discussionsState
+    if (option.id < 0) return;
+
     const group = this.isOwner(option) ? mapperGroup : option.groups?.[0];
     const style = groupColour(group);
 
@@ -87,7 +90,7 @@ export class UserFilter extends React.Component<Props> {
 
     return (
       <a
-        key={option?.id}
+        key={option.id}
         className={cssClasses}
         href={makeUrl(urlOptions)}
         onClick={onClick}
