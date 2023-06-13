@@ -1,11 +1,8 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForBundle, BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetDiscussionPostJson from 'interfaces/beatmapset-discussion-post-json';
-import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import UserJson from 'interfaces/user-json';
 import { findLast } from 'lodash';
 import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -27,15 +24,10 @@ import { UserCard } from './user-card';
 const bn = 'beatmap-discussion';
 
 interface PropsBase {
-  beatmapset: BeatmapsetExtendedJson;
-  currentBeatmap: BeatmapExtendedJson | null;
   discussionsState: DiscussionsState;
   isTimelineVisible: boolean;
   parentDiscussion?: BeatmapsetDiscussionJson | null;
   readonly: boolean;
-  readPostIds?: Set<number>;
-  showDeleted: boolean;
-  users: Partial<Record<number | string, UserJson>>;
 }
 
 // preview version is used on pages other than the main discussions page.
@@ -72,20 +64,19 @@ export class Discussion extends React.Component<Props> {
 
   private lastResolvedState = false;
 
-  constructor(props: Props) {
-    super(props);
-    makeObservable(this);
+  private get beatmapset() {
+    return this.props.discussionsState.beatmapset;
   }
 
-  private get discussionsState() {
-    return this.props.discussionsState;
+  private get currentBeatmap() {
+    return this.props.discussionsState.currentBeatmap;
   }
 
   @computed
   private get canBeRepliedTo() {
-    return !downloadLimited(this.props.beatmapset)
-      && (!this.props.beatmapset.discussion_locked || canModeratePosts())
-      && (this.props.discussion.beatmap_id == null || this.props.currentBeatmap?.deleted_at == null);
+    return !downloadLimited(this.beatmapset)
+      && (!this.beatmapset.discussion_locked || canModeratePosts())
+      && (this.props.discussion.beatmap_id == null || this.currentBeatmap?.deleted_at == null);
   }
 
   @computed
@@ -93,9 +84,17 @@ export class Discussion extends React.Component<Props> {
     return this.discussionsState.discussionCollapsed.get(this.props.discussion.id) ?? this.discussionsState.discussionDefaultCollapsed;
   }
 
+  private get discussionsState() {
+    return this.props.discussionsState;
+  }
+
   @computed
   private get highlighted() {
     return this.discussionsState.highlightedDiscussionId === this.props.discussion.id;
+  }
+
+  private get readPostIds() {
+    return this.props.discussionsState.readPostIds;
   }
 
   @computed
@@ -105,6 +104,19 @@ export class Discussion extends React.Component<Props> {
 
     const systemPost = findLast(this.props.discussion.posts, (post) => post != null && post.system && post.message.type === 'resolved');
     return systemPost?.id ?? -1;
+  }
+
+  private get showDeleted() {
+    return this.props.discussionsState.showDeleted;
+  }
+
+  private get users() {
+    return this.discussionsState.users;
+  }
+
+  constructor(props: Props) {
+    super(props);
+    makeObservable(this);
   }
 
   render() {
@@ -117,10 +129,10 @@ export class Discussion extends React.Component<Props> {
 
     this.lastResolvedState = false;
 
-    const user = this.props.users[this.props.discussion.user_id] ?? deletedUser.toJson();
+    const user = this.users[this.props.discussion.user_id] ?? deletedUser.toJson();
     const group = badgeGroup({
-      beatmapset: this.props.beatmapset,
-      currentBeatmap: this.props.currentBeatmap,
+      beatmapset: this.beatmapset,
+      currentBeatmap: this.currentBeatmap,
       discussion: this.props.discussion,
       user,
     });
@@ -184,11 +196,11 @@ export class Discussion extends React.Component<Props> {
   }
 
   private isRead(post: BeatmapsetDiscussionPostJson) {
-    return this.props.readPostIds?.has(post.id) || this.isOwner(post) || this.props.preview;
+    return this.readPostIds?.has(post.id) || this.isOwner(post) || this.props.preview;
   }
 
   private isVisible(object: BeatmapsetDiscussionJson | BeatmapsetDiscussionPostJson) {
-    return object != null && (this.props.showDeleted || object.deleted_at == null);
+    return object != null && (this.showDeleted || object.deleted_at == null);
   }
 
   private postFooter() {
@@ -206,8 +218,8 @@ export class Discussion extends React.Component<Props> {
         </div>
         {this.canBeRepliedTo && (
           <NewReply
-            beatmapset={this.props.beatmapset}
-            currentBeatmap={this.props.currentBeatmap}
+            beatmapset={this.beatmapset}
+            currentBeatmap={this.currentBeatmap}
             discussion={this.props.discussion}
           />
         )}
@@ -216,7 +228,7 @@ export class Discussion extends React.Component<Props> {
   }
 
   private renderPost(post: BeatmapsetDiscussionPostJson, type: 'discussion' | 'reply') {
-    const user = this.props.users[post.user_id] ?? deletedUser.toJson();
+    const user = this.users[post.user_id] ?? deletedUser.toJson();
 
     if (post.system) {
       return (
@@ -227,8 +239,8 @@ export class Discussion extends React.Component<Props> {
     return (
       <Post
         key={post.id}
-        beatmap={this.props.currentBeatmap}
-        beatmapset={this.props.beatmapset}
+        beatmap={this.currentBeatmap}
+        beatmapset={this.beatmapset}
         discussion={this.props.discussion}
         post={post}
         read={this.isRead(post)}
@@ -236,7 +248,7 @@ export class Discussion extends React.Component<Props> {
         resolvedSystemPostId={this.resolvedSystemPostId}
         type={type}
         user={user}
-        users={this.props.users}
+        users={this.users}
       />
     );
   }
@@ -244,7 +256,7 @@ export class Discussion extends React.Component<Props> {
   private renderPostButtons() {
     if (this.props.preview) return null;
 
-    const user = this.props.users[this.props.discussion.user_id];
+    const user = this.users[this.props.discussion.user_id];
 
     return (
       <div className={`${bn}__top-actions`}>
@@ -264,7 +276,7 @@ export class Discussion extends React.Component<Props> {
           <DiscussionVoteButtons
             cannotVote={this.isOwner(this.props.discussion) || (user?.is_bot ?? false) || !this.canBeRepliedTo}
             discussion={this.props.discussion}
-            users={this.props.users}
+            users={this.users}
           />
           <button
             className={`${bn}__action ${bn}__action--with-line`}
