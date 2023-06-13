@@ -11,7 +11,6 @@ import Modal from 'components/modal';
 import StringWithComponent from 'components/string-with-component';
 import TimeWithTooltip from 'components/time-with-tooltip';
 import UserLink from 'components/user-link';
-import { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetEventJson from 'interfaces/beatmapset-event-json';
 import { BeatmapsetNominationsInterface } from 'interfaces/beatmapset-json';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
@@ -41,11 +40,7 @@ export const hypeExplanationClass = 'js-hype--explanation';
 const nominatorsVisibleBeatmapStatuses = Object.freeze(new Set(['wip', 'pending', 'ranked', 'qualified']));
 
 interface Props {
-  // beatmapset: BeatmapsetWithDiscussionsJson;
-  // discussions: Partial<Record<number, BeatmapsetDiscussionJsonForShow>>;
   discussionsState: DiscussionsState;
-  // events: BeatmapsetEventJson[];
-  // users: Partial<Record<number, UserJson>>;
 }
 
 type XhrType = 'delete' | 'discussionLock' | 'removeFromLoved';

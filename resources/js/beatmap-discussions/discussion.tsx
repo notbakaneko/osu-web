@@ -19,7 +19,6 @@ import { trans } from 'utils/lang';
 import { DiscussionType, discussionTypeIcons } from './discussion-type';
 import DiscussionVoteButtons from './discussion-vote-buttons';
 import DiscussionsState from './discussions-state';
-import DiscussionsStateContext from './discussions-state-context';
 import { NewReply } from './new-reply';
 import Post from './post';
 import SystemPost from './system-post';

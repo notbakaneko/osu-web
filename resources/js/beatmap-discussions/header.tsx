@@ -38,17 +38,7 @@ import { Subscribe } from './subscribe';
 import { UserFilter } from './user-filter';
 
 interface Props {
-  // beatmaps: Map<GameMode, BeatmapExtendedJson[]>;
-  // beatmapset: BeatmapsetWithDiscussionsJson;
-  // currentBeatmap: BeatmapExtendedJson;
-  // currentFilter: Filter;
-  // discussions: Partial<Record<number, BeatmapsetDiscussionJsonForShow>>;
   discussionsState: DiscussionsState;
-  // discussionStarters: UserJson[];
-  events: BeatmapsetEventJson[];
-  // mode: DiscussionPage;
-  // selectedUserId: number | null;
-  // users: Partial<Record<number, UserJson>>;
 }
 
 const statTypes: Filter[] = ['mine', 'mapperNotes', 'resolved', 'pending', 'praises', 'deleted', 'total'];
@@ -65,10 +55,6 @@ export class Header extends React.Component<Props> {
 
   private get currentBeatmap() {
     return this.discussionsState.currentBeatmap;
-  }
-
-  private get discussions() {
-    return this.discussionsState.discussions;
   }
 
   private get discussionsState() {
@@ -146,11 +132,7 @@ export class Header extends React.Component<Props> {
         </div>
         <div className={`${bn}__content ${bn}__content--nomination`}>
           <Nominations
-            beatmapset={this.beatmapset}
-            discussions={this.discussions}
             discussionsState={this.discussionsState}
-            events={this.props.events}
-            users={this.users}
           />
         </div>
       </div>

@@ -9,10 +9,8 @@ import UserAvatar from 'components/user-avatar';
 import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import { BeatmapsetDiscussionPostStoreResponseJson } from 'interfaces/beatmapset-discussion-post-responses';
-import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
 import { route } from 'laroute';
-import { action, autorun, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 import { disposeOnUnmount, observer } from 'mobx-react';
 import core from 'osu-core-singleton';
 import * as React from 'react';
@@ -26,7 +24,6 @@ import { joinComponents, trans } from 'utils/lang';
 import { hideLoadingOverlay, showLoadingOverlay } from 'utils/loading-overlay';
 import { present } from 'utils/string';
 import DiscussionMessageLengthCounter from './discussion-message-length-counter';
-import DiscussionMode from './discussion-mode';
 import DiscussionsState from './discussions-state';
 import { hypeExplanationClass } from './nominations';
 
@@ -40,13 +37,8 @@ interface DiscussionsCache {
 
 interface Props {
   autoFocus: boolean;
-  // beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
-  // currentBeatmap: BeatmapExtendedJson;
   discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
-  // mode: DiscussionMode;
-  // pinned: boolean;
-  // setPinned: (flag: boolean) => void;
   stickTo: React.RefObject<HTMLElement>;
 }
 

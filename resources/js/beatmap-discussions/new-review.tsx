@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
-import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import core from 'osu-core-singleton';
@@ -15,13 +13,8 @@ import DiscussionsState from './discussions-state';
 import Editor from './editor';
 
 interface Props {
-  // beatmaps: Partial<Record<number, BeatmapExtendedJson>>;
-  // beatmapset: BeatmapsetExtendedJson;
-  // currentBeatmap: BeatmapExtendedJson;
   discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
-  // pinned?: boolean;
-  // setPinned?: (sticky: boolean) => void;
   stickTo?: React.RefObject<HTMLDivElement>;
 }
 

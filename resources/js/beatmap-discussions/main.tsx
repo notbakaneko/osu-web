@@ -115,25 +115,11 @@ export default class Main extends React.Component<Props> {
     return (
       <>
         <Header
-          beatmaps={this.discussionsState.groupedBeatmaps}
-          beatmapset={this.discussionsState.beatmapset}
-          currentBeatmap={this.discussionsState.currentBeatmap}
-          currentFilter={this.discussionsState.currentFilter}
-          discussionStarters={this.discussionsState.discussionStarters}
-          discussions={this.discussionsState.discussions}
           discussionsState={this.discussionsState}
-          events={this.discussionsState.beatmapset.events}
-          mode={this.discussionsState.currentMode}
-          selectedUserId={this.discussionsState.selectedUserId}
-          users={this.discussionsState.users}
         />
         <ModeSwitcher
-          beatmapset={this.discussionsState.beatmapset}
-          currentBeatmap={this.discussionsState.currentBeatmap}
-          currentFilter={this.discussionsState.currentFilter}
           discussionsState={this.discussionsState}
           innerRef={this.modeSwitcherRef}
-          mode={this.discussionsState.currentMode}
         />
         {this.discussionsState.currentMode === 'events' ? (
           <Events
@@ -147,37 +133,21 @@ export default class Main extends React.Component<Props> {
               <ReviewEditorConfigContext.Provider value={this.reviewsConfig}>
                 {this.discussionsState.currentMode === 'reviews' ? (
                   <NewReview
-                    beatmaps={this.discussionsState.beatmaps}
-                    beatmapset={this.discussionsState.beatmapset}
-                    currentBeatmap={this.discussionsState.currentBeatmap}
+                    discussionsState={this.discussionsState}
                     innerRef={this.newDiscussionRef}
-                    pinned={this.discussionsState.pinnedNewDiscussion}
-                    setPinned={this.setPinnedNewDiscussion}
                     stickTo={this.modeSwitcherRef}
                   />
                 ) : (
                   <NewDiscussion
                     autoFocus={this.focusNewDiscussion}
-                    beatmapset={this.discussionsState.beatmapset}
-                    currentBeatmap={this.discussionsState.currentBeatmap}
                     discussionsState={this.discussionsState}
                     innerRef={this.newDiscussionRef}
-                    mode={this.discussionsState.currentMode}
-                    pinned={this.discussionsState.pinnedNewDiscussion}
-                    setPinned={this.setPinnedNewDiscussion}
                     stickTo={this.modeSwitcherRef}
 
                   />
                 )}
                 <Discussions
-                  beatmapset={this.discussionsState.beatmapset}
-                  currentBeatmap={this.discussionsState.currentBeatmap}
-                  currentFilter={this.discussionsState.currentFilter}
                   discussionsState={this.discussionsState}
-                  mode={this.discussionsState.currentMode}
-                  readPostIds={this.discussionsState.readPostIds}
-                  showDeleted={this.discussionsState.showDeleted}
-                  users={this.discussionsState.users}
                 />
               </ReviewEditorConfigContext.Provider>
             </BeatmapsContext.Provider>
@@ -291,11 +261,6 @@ export default class Main extends React.Component<Props> {
 
   private readonly setCurrentPlaymode = (_event: unknown, { mode }: { mode: GameMode }) => {
     this.discussionsState.update({ playmode: mode });
-  };
-
-  @action
-  private readonly setPinnedNewDiscussion = (pinned: boolean) => {
-    this.discussionsState.pinnedNewDiscussion = pinned;
   };
 
   @action

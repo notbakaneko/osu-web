@@ -2,23 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import IconExpand from 'components/icon-expand';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
-import UserJson from 'interfaces/user-json';
-import { size } from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { canModeratePosts } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import { Filter } from './current-discussions';
 import { Discussion } from './discussion';
 import DiscussionMode from './discussion-mode';
 import DiscussionsState from './discussions-state';
-import DiscussionsStateContext from './discussions-state-context';
 
 const bn = 'beatmap-discussions';
 
@@ -58,15 +51,7 @@ const sortPresets = {
 type Sort = 'created_at' | 'updated_at' | 'timeline';
 
 interface Props {
-  // TODO: most of these can move to context/store after main is converted to typescript.
-  // beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
-  // currentBeatmap: BeatmapExtendedJson;
-  // currentFilter: Filter;
   discussionsState: DiscussionsState;
-  // mode: DiscussionMode;
-  // readPostIds: Set<number>;
-  // showDeleted: boolean;
-  // users: Record<number, UserJson>;
 }
 
 @observer
@@ -78,52 +63,24 @@ export class Discussions extends React.Component<Props> {
     timeline: 'timeline',
   };
 
-  private get beatmapset() {
-    return this.discussionsState.beatmapset;
-  }
-
-  private get currentBeatmap() {
-    return this.discussionsState.currentBeatmap;
-  }
-
-  private get currentFilter() {
-    return this.discussionsState.currentFilter;
-  }
-
   private get discussionsState() {
     return this.props.discussionsState;
   }
 
-  private get mode() {
-    return this.discussionsState.currentMode;
-  }
-
-  private get readPostIds() {
-    return this.discussionsState.readPostIds;
-  }
-
-  private get showDeleted() {
-    return this.discussionsState.showDeleted;
-  }
-
-  private get users() {
-    return this.discussionsState.users;
-  }
-
   @computed
   private get currentSort() {
-    if (this.props.discussionsState.currentMode === 'events') return 'timeline'; // just return any valid mode.
-    return this.sort[this.props.discussionsState.currentMode];
+    if (this.discussionsState.currentMode === 'events') return 'timeline'; // just return any valid mode.
+    return this.sort[this.discussionsState.currentMode];
   }
 
   @computed
   private get isTimelineVisible() {
-    return this.props.discussionsState.currentMode === 'timeline' && this.currentSort === 'timeline';
+    return this.discussionsState.currentMode === 'timeline' && this.currentSort === 'timeline';
   }
 
   @computed
   private get sortedDiscussions() {
-    return this.props.discussionsState.currentBeatmapDiscussionsCurrentMode.slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
+    return this.discussionsState.currentBeatmapDiscussionsCurrentMode.slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
       const mapperNoteCompare =
         // no sticky for timeline sort
         this.currentSort !== 'timeline'
@@ -274,7 +231,7 @@ export class Discussions extends React.Component<Props> {
   }
 
   private renderSortOptions() {
-    const presets: Sort[] = this.props.discussionsState.currentMode === 'timeline'
+    const presets: Sort[] = this.discussionsState.currentMode === 'timeline'
       ? ['timeline', 'updated_at']
       : ['created_at', 'updated_at'];
 

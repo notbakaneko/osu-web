@@ -19,11 +19,7 @@ import { trans } from 'utils/lang';
 import DiscussionsState from './discussions-state';
 
 interface Props {
-  // beatmapset: BeatmapsetWithDiscussionsJson;
-  // currentHype: number;
   discussionsState: DiscussionsState;
-  // unresolvedIssues: number;
-  // users: Partial<Record<number, UserJson>>;
 }
 
 const bn = 'nomination-dialog';
