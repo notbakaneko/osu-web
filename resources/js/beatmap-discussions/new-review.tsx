@@ -11,12 +11,14 @@ import * as React from 'react';
 import { downloadLimited } from 'utils/beatmapset-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
+import DiscussionsState from './discussions-state';
 import Editor from './editor';
 
 interface Props {
-  beatmaps: Partial<Record<number, BeatmapExtendedJson>>;
-  beatmapset: BeatmapsetExtendedJson;
-  currentBeatmap: BeatmapExtendedJson;
+  // beatmaps: Partial<Record<number, BeatmapExtendedJson>>;
+  // beatmapset: BeatmapsetExtendedJson;
+  // currentBeatmap: BeatmapExtendedJson;
+  discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
   pinned?: boolean;
   setPinned?: (sticky: boolean) => void;
@@ -29,6 +31,18 @@ export default class NewReview extends React.Component<Props> {
   @observable private mounted = false;
   @observable private stickToHeight: number | undefined;
 
+  private get beatmaps() {
+    return this.props.discussionsState.beatmaps;
+  }
+
+  private get beatmapset() {
+    return this.props.discussionsState.beatmapset;
+  }
+
+  private get currentBeatmap() {
+    return this.props.discussionsState.currentBeatmap;
+  }
+
   @computed
   private get cssTop() {
     if (this.mounted && this.props.pinned && this.stickToHeight != null) {
@@ -37,7 +51,7 @@ export default class NewReview extends React.Component<Props> {
   }
 
   private get noPermissionText() {
-    if (downloadLimited(this.props.beatmapset)) {
+    if (downloadLimited(this.beatmapset)) {
       return trans('beatmaps.discussions.message_placeholder_locked');
     }
 
@@ -92,9 +106,9 @@ export default class NewReview extends React.Component<Props> {
                   <DiscussionsContext.Consumer>
                     {
                       (discussions) => (<Editor
-                        beatmaps={this.props.beatmaps}
-                        beatmapset={this.props.beatmapset}
-                        currentBeatmap={this.props.currentBeatmap}
+                        beatmaps={this.beatmaps}
+                        beatmapset={this.beatmapset}
+                        currentBeatmap={this.currentBeatmap}
                         discussions={discussions}
                         onFocus={this.handleFocus}
                       />)
