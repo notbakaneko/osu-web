@@ -12,8 +12,8 @@ import { BeatmapsetDiscussionPostStoreResponseJson } from 'interfaces/beatmapset
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
 import { route } from 'laroute';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { observer } from 'mobx-react';
+import { action, autorun, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { disposeOnUnmount, observer } from 'mobx-react';
 import core from 'osu-core-singleton';
 import * as React from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
@@ -40,11 +40,11 @@ interface DiscussionsCache {
 
 interface Props {
   autoFocus: boolean;
-  beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
-  currentBeatmap: BeatmapExtendedJson;
+  // beatmapset: BeatmapsetExtendedJson & BeatmapsetWithDiscussionsJson;
+  // currentBeatmap: BeatmapExtendedJson;
   discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
-  mode: DiscussionMode;
+  // mode: DiscussionMode;
   pinned: boolean;
   setPinned: (flag: boolean) => void;
   stickTo: React.RefObject<HTMLElement>;
@@ -63,13 +63,25 @@ export class NewDiscussion extends React.Component<Props> {
   @observable private stickToHeight: number | undefined;
   @observable private timestampConfirmed = false;
 
+  private get beatmapset() {
+    return this.props.discussionsState.beatmapset;
+  }
+
+  private get currentBeatmap() {
+    return this.props.discussionsState.currentBeatmap;
+  }
+
+  private get currentMode() {
+    return this.props.discussionsState.currentMode;
+  }
+
   private get canPost() {
     if (core.currentUser == null) return false;
-    if (downloadLimited(this.props.beatmapset)) return false;
+    if (downloadLimited(this.beatmapset)) return false;
 
     return !core.currentUser.is_silenced
-      && (!this.props.beatmapset.discussion_locked || canModeratePosts())
-      && (this.props.currentBeatmap.deleted_at == null || this.props.mode === 'generalAll');
+      && (!this.beatmapset.discussion_locked || canModeratePosts())
+      && (this.currentBeatmap.deleted_at == null || this.currentMode === 'generalAll');
   }
 
   @computed
@@ -80,17 +92,17 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private get isTimeline() {
-    return this.props.mode === 'timeline';
+    return this.currentMode === 'timeline';
   }
 
   private get nearbyDiscussions() {
     const timestamp = this.timestamp;
     if (timestamp == null) return [];
 
-    if (this.nearbyDiscussionsCache == null || (this.nearbyDiscussionsCache.beatmap !== this.props.currentBeatmap || this.nearbyDiscussionsCache.timestamp !== this.timestamp)) {
+    if (this.nearbyDiscussionsCache == null || (this.nearbyDiscussionsCache.beatmap !== this.currentBeatmap || this.nearbyDiscussionsCache.timestamp !== this.timestamp)) {
       this.nearbyDiscussionsCache = {
-        beatmap: this.props.currentBeatmap,
-        discussions: nearbyDiscussions(this.props.currentDiscussions.timelineAllUsers, timestamp),
+        beatmap: this.currentBeatmap,
+        discussions: nearbyDiscussions(this.props.discussionsState.currentBeatmapDiscussionsCurrentMode, timestamp),
         timestamp: this.timestamp,
       };
     }
@@ -99,7 +111,7 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private get storageKey() {
-    return `beatmapset-discussion:store:${this.props.beatmapset.id}:message`;
+    return `beatmapset-discussion:store:${this.beatmapset.id}:message`;
   }
 
   private get storedMessage() {
@@ -110,12 +122,12 @@ export class NewDiscussion extends React.Component<Props> {
     if (core.currentUser == null) return;
 
     if (this.canPost) {
-      return trans(`beatmaps.discussions.message_placeholder.${this.props.mode}`, { version: this.props.currentBeatmap.version });
+      return trans(`beatmaps.discussions.message_placeholder.${this.currentMode}`, { version: this.currentBeatmap.version });
     }
 
     if (core.currentUser.is_silenced) {
       return trans('beatmaps.discussions.message_placeholder_silenced');
-    } else if (this.props.beatmapset.discussion_locked || downloadLimited(this.props.beatmapset)) {
+    } else if (this.beatmapset.discussion_locked || downloadLimited(this.beatmapset)) {
       return trans('beatmaps.discussions.message_placeholder_locked');
     } else {
       return trans('beatmaps.discussions.message_placeholder_deleted_beatmap');
@@ -124,7 +136,7 @@ export class NewDiscussion extends React.Component<Props> {
 
   @computed
   private get timestamp() {
-    return this.props.mode === 'timeline'
+    return this.currentMode === 'timeline'
       ? parseTimestamp(this.message)
       : null;
   }
@@ -133,6 +145,21 @@ export class NewDiscussion extends React.Component<Props> {
     super(props);
     makeObservable(this);
     this.handleKeyDown = makeTextAreaHandler(this.handleKeyDownCallback);
+
+    disposeOnUnmount(this, reaction(() => this.message, (current, prev) => {
+      if (prev !== current) {
+        this.storeMessage();
+      }
+    }));
+
+    disposeOnUnmount(this, reaction(() => this.props.discussionsState.beatmapset, (current, prev) => {
+      // TODO: check if this is still needed.
+      if (prev.id !== current.id) {
+        runInAction(() => {
+          this.message = this.storedMessage;
+        });
+      }
+    }));
   }
 
   componentDidMount() {
@@ -143,14 +170,6 @@ export class NewDiscussion extends React.Component<Props> {
     if (this.props.autoFocus) {
       this.disposers.add(core.reactTurbolinks.runAfterPageLoad(() => this.inputBox.current?.focus()));
     }
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props>) {
-    if (prevProps.beatmapset.id !== this.props.beatmapset.id) {
-      this.message = this.storedMessage;
-      return;
-    }
-    this.storeMessage();
   }
 
   componentWillUnmount() {
@@ -201,7 +220,7 @@ export class NewDiscussion extends React.Component<Props> {
     }
 
     if (type === 'hype') {
-      if (!confirm(trans('beatmaps.hype.confirm', { n: this.props.beatmapset.current_user_attributes.remaining_hype }))) return;
+      if (!confirm(trans('beatmaps.hype.confirm', { n: this.beatmapset.current_user_attributes.remaining_hype }))) return;
     }
 
     showLoadingOverlay();
@@ -209,14 +228,14 @@ export class NewDiscussion extends React.Component<Props> {
 
     const data = {
       beatmap_discussion: {
-        beatmap_id: this.props.mode === 'generalAll' ? undefined : this.props.currentBeatmap.id,
+        beatmap_id: this.currentMode === 'generalAll' ? undefined : this.currentBeatmap.id,
         message_type: type,
         timestamp: this.timestamp,
       },
       beatmap_discussion_post: {
         message: this.message,
       },
-      beatmapset_id: this.props.currentBeatmap.beatmapset_id,
+      beatmapset_id: this.currentBeatmap.beatmapset_id,
     };
 
     this.postXhr = $.ajax(route('beatmapsets.discussions.posts.store'), {
@@ -241,13 +260,13 @@ export class NewDiscussion extends React.Component<Props> {
 
   private problemType() {
     const canDisqualify = core.currentUser?.is_admin || core.currentUser?.is_moderator || core.currentUser?.is_full_bn;
-    const willDisqualify = this.props.beatmapset.status === 'qualified';
+    const willDisqualify = this.beatmapset.status === 'qualified';
 
     if (canDisqualify && willDisqualify) return 'disqualify';
 
     const canReset = core.currentUser?.is_admin || core.currentUser?.is_nat || core.currentUser?.is_bng;
-    const currentNominations = nominationsCount(this.props.beatmapset.nominations, 'current');
-    const willReset = this.props.beatmapset.status === 'pending' && currentNominations > 0;
+    const currentNominations = nominationsCount(this.beatmapset.nominations, 'current');
+    const willReset = this.beatmapset.status === 'pending' && currentNominations > 0;
 
     if (canReset && willReset) return 'nomination_reset';
     if (willDisqualify) return 'problem_warning';
@@ -256,13 +275,13 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private renderBox() {
-    const canHype = this.props.beatmapset.current_user_attributes?.can_hype
-      && this.props.beatmapset.can_be_hyped
-      && this.props.mode === 'generalAll';
+    const canHype = this.beatmapset.current_user_attributes?.can_hype
+      && this.beatmapset.can_be_hyped
+      && this.currentMode === 'generalAll';
 
     const canPostNote = core.currentUser != null
-        && (core.currentUser.id === this.props.beatmapset.user_id
-          || (core.currentUser.id === this.props.currentBeatmap.user_id && ['general', 'timeline'].includes(this.props.mode))
+        && (core.currentUser.id === this.beatmapset.user_id
+          || (core.currentUser.id === this.currentBeatmap.user_id && ['general', 'timeline'].includes(this.currentMode))
           || core.currentUser.is_bng
           || canModeratePosts());
 
@@ -313,7 +332,7 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private renderHype() {
-    if (!(this.props.mode === 'generalAll' && this.props.beatmapset.can_be_hyped)) return null;
+    if (!(this.currentMode === 'generalAll' && this.beatmapset.can_be_hyped)) return null;
 
     return (
       <div className={`${bn}__footer-content ${hypeExplanationClass} js-flash-border`}>
@@ -323,17 +342,17 @@ export class NewDiscussion extends React.Component<Props> {
         <div className={`${bn}__footer-message`}>
           {core.currentUser != null ? (
             <span>
-              {this.props.beatmapset.current_user_attributes.can_hype ? trans('beatmaps.hype.explanation') : this.props.beatmapset.current_user_attributes.can_hype_reason}
-              {(this.props.beatmapset.current_user_attributes.can_hype || this.props.beatmapset.current_user_attributes.remaining_hype <= 0) && (
+              {this.beatmapset.current_user_attributes.can_hype ? trans('beatmaps.hype.explanation') : this.beatmapset.current_user_attributes.can_hype_reason}
+              {(this.beatmapset.current_user_attributes.can_hype || this.beatmapset.current_user_attributes.remaining_hype <= 0) && (
                 <>
                   <StringWithComponent
-                    mappings={{ remaining: this.props.beatmapset.current_user_attributes.remaining_hype }}
+                    mappings={{ remaining: this.beatmapset.current_user_attributes.remaining_hype }}
                     pattern={` ${trans('beatmaps.hype.remaining')}`}
                   />
-                  {this.props.beatmapset.current_user_attributes.new_hype_time != null && (
+                  {this.beatmapset.current_user_attributes.new_hype_time != null && (
                     <StringWithComponent
                       mappings={{
-                        new_time: <TimeWithTooltip dateTime={this.props.beatmapset.current_user_attributes.new_hype_time} relative />,
+                        new_time: <TimeWithTooltip dateTime={this.beatmapset.current_user_attributes.new_hype_time} relative />,
                       }}
                       pattern={` ${trans('beatmaps.hype.new_time')}`}
                     />
@@ -410,7 +429,7 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private renderTimestamp() {
-    if (this.props.mode !== 'timeline') return null;
+    if (this.currentMode !== 'timeline') return null;
 
     const timestamp = this.timestamp != null ? formatTimestamp(this.timestamp) : trans('beatmaps.discussions.new.timestamp_missing');
 
