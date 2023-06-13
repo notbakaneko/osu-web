@@ -45,8 +45,8 @@ interface Props {
   discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
   // mode: DiscussionMode;
-  pinned: boolean;
-  setPinned: (flag: boolean) => void;
+  // pinned: boolean;
+  // setPinned: (flag: boolean) => void;
   stickTo: React.RefObject<HTMLElement>;
 }
 
@@ -86,7 +86,7 @@ export class NewDiscussion extends React.Component<Props> {
 
   @computed
   private get cssTop() {
-    if (this.mounted && this.props.pinned && this.stickToHeight != null) {
+    if (this.mounted && this.pinned && this.stickToHeight != null) {
       return core.stickyHeader.headerHeight + this.stickToHeight;
     }
   }
@@ -108,6 +108,10 @@ export class NewDiscussion extends React.Component<Props> {
     }
 
     return this.nearbyDiscussionsCache?.discussions ?? [];
+  }
+
+  private get pinned() {
+    return this.props.discussionsState.pinnedNewDiscussion;
   }
 
   private get storageKey() {
@@ -179,7 +183,7 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   render() {
-    const cssClasses = classWithModifiers('beatmap-discussion-new-float', { pinned: this.props.pinned });
+    const cssClasses = classWithModifiers('beatmap-discussion-new-float', { pinned: this.pinned });
 
     return (
       <div
@@ -285,7 +289,7 @@ export class NewDiscussion extends React.Component<Props> {
           || core.currentUser.is_bng
           || canModeratePosts());
 
-    const buttonCssClasses = classWithModifiers('btn-circle', { activated: this.props.pinned });
+    const buttonCssClasses = classWithModifiers('btn-circle', { activated: this.pinned });
 
     return (
       <div className='osu-page osu-page--small'>
@@ -297,7 +301,7 @@ export class NewDiscussion extends React.Component<Props> {
               <span
                 className={buttonCssClasses}
                 onClick={this.toggleSticky}
-                title={trans(`beatmaps.discussions.new.${this.props.pinned ? 'unpin' : 'pin'}`)}
+                title={trans(`beatmaps.discussions.new.${this.pinned ? 'unpin' : 'pin'}`)}
               >
                 <span className='btn-circle__content'>
                   <i className='fas fa-thumbtack' />
@@ -452,7 +456,7 @@ export class NewDiscussion extends React.Component<Props> {
 
   @action
   private readonly setSticky = (sticky: boolean) => {
-    this.props.setPinned(sticky);
+    this.props.discussionsState.pinnedNewDiscussion = sticky
     this.updateStickToHeight();
   };
 
@@ -482,7 +486,7 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   private readonly toggleSticky = () => {
-    this.setSticky(!this.props.pinned);
+    this.setSticky(!this.pinned);
   };
 
   @action

@@ -20,8 +20,8 @@ interface Props {
   // currentBeatmap: BeatmapExtendedJson;
   discussionsState: DiscussionsState;
   innerRef: React.RefObject<HTMLDivElement>;
-  pinned?: boolean;
-  setPinned?: (sticky: boolean) => void;
+  // pinned?: boolean;
+  // setPinned?: (sticky: boolean) => void;
   stickTo?: React.RefObject<HTMLDivElement>;
 }
 
@@ -39,15 +39,19 @@ export default class NewReview extends React.Component<Props> {
     return this.props.discussionsState.beatmapset;
   }
 
+  @computed
+  private get cssTop() {
+    if (this.mounted && this.pinned && this.stickToHeight != null) {
+      return core.stickyHeader.headerHeight + this.stickToHeight;
+    }
+  }
+
   private get currentBeatmap() {
     return this.props.discussionsState.currentBeatmap;
   }
 
-  @computed
-  private get cssTop() {
-    if (this.mounted && this.props.pinned && this.stickToHeight != null) {
-      return core.stickyHeader.headerHeight + this.stickToHeight;
-    }
+  private get pinned() {
+    return this.props.discussionsState.pinnedNewDiscussion;
   }
 
   private get noPermissionText() {
@@ -85,7 +89,7 @@ export default class NewReview extends React.Component<Props> {
     const placeholder = this.noPermissionText;
 
     return (
-      <div className={classWithModifiers(floatClass, { pinned: this.props.pinned })} style={{ top: this.cssTop }}>
+      <div className={classWithModifiers(floatClass, { pinned: this.pinned })} style={{ top: this.cssTop }}>
         <div className={`${floatClass}__floatable`}>
           <div ref={this.props.innerRef} className={`${floatClass}__content`}>
             <div className='osu-page osu-page--small'>
@@ -94,9 +98,9 @@ export default class NewReview extends React.Component<Props> {
                   {trans('beatmaps.discussions.review.new')}
                   <span className='page-title__button'>
                     <span
-                      className={classWithModifiers('btn-circle', { activated: this.props.pinned })}
+                      className={classWithModifiers('btn-circle', { activated: this.pinned })}
                       onClick={this.toggleSticky}
-                      title={trans(`beatmaps.discussions.new.${this.props.pinned ? 'unpin' : 'pin'}`)}
+                      title={trans(`beatmaps.discussions.new.${this.pinned ? 'unpin' : 'pin'}`)}
                     >
                       <span className='btn-circle__content'><i className='fas fa-thumbtack' /></span>
                     </span>
@@ -127,12 +131,12 @@ export default class NewReview extends React.Component<Props> {
 
   @action
   private setSticky(sticky: boolean) {
-    this.props.setPinned?.(sticky);
+    this.props.discussionsState.pinnedNewDiscussion = sticky;
     this.updateStickToHeight();
   }
 
   private readonly toggleSticky = () => {
-    this.setSticky(!this.props.pinned);
+    this.setSticky(!this.pinned);
   };
 
   @action
