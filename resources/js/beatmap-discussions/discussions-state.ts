@@ -1,7 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
+import { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
 import GameMode from 'interfaces/game-mode';
 import { isEmpty, keyBy, maxBy } from 'lodash';
@@ -10,10 +10,10 @@ import { deletedUser } from 'models/user';
 import moment from 'moment';
 import core from 'osu-core-singleton';
 import { findDefault, group } from 'utils/beatmap-helper';
-import { parseUrl } from 'utils/beatmapset-discussion-helper';
+import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { switchNever } from 'utils/switch-never';
 import { Filter } from './current-discussions';
-import DiscussionMode, { DiscussionPage } from './discussion-mode';
+import DiscussionMode, { DiscussionPage, isDiscussionPage } from './discussion-mode';
 
 type DiscussionsAlias = BeatmapsetWithDiscussionsJson['discussions'];
 
@@ -280,6 +280,21 @@ export default class DiscussionsState {
     }
 
     makeObservable(this);
+  }
+
+  @action
+  changeDiscussionPage(page?: string) {
+    if (!isDiscussionPage(page)) return;
+
+    const url = makeUrl({
+      beatmap: this.currentBeatmap,
+      filter: this.currentFilter,
+      mode: this.currentMode,
+      user: this.selectedUserId ?? undefined,
+    });
+
+    this.currentMode = page;
+    Turbolinks.controller.advanceHistory(url);
   }
 
   currentDiscussionsByMode(mode: DiscussionMode) {

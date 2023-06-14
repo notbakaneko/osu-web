@@ -111,6 +111,6 @@ export class ModeSwitcher extends React.Component<Props> {
   private readonly switch = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
-    $.publish('beatmapsetDiscussions:update', { mode: e.currentTarget.dataset.mode });
+    this.props.discussionsState.changeDiscussionPage(e.currentTarget.dataset.mode);
   };
 }
