@@ -79,28 +79,6 @@ export default class Main extends React.Component<Props> {
     this.timeouts.checkNew = window.setTimeout(this.checkNew, checkNewTimeoutDefault);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    // TODO: autorun
-    // if (prevState.currentBeatmapId == this.discussionsState.currentBeatmapId
-    //   && prevState.currentFilter == this.discussionsState.currentFilter
-    //   && prevState.currentMode == this.discussionsState.currentMode
-    //   && prevState.selectedUserId == this.discussionsState.selectedUserId
-    //   && prevState.showDeleted == this.discussionsState.showDeleted) {
-    //   return;
-    // }
-
-    // Turbolinks.controller.advanceHistory(this.urlFromState());
-  }
-
-  // private get urlFromState() {
-  //   return makeUrl({
-  //     beatmap: this.currentBeatmap ?? undefined,
-  //     filter: this.currentFilter ?? undefined,
-  //     mode: this.currentMode,
-  //     user: this.selectedUserId ?? undefined,
-  //   });
-  // }
-
   componentWillUnmount() {
     $.unsubscribe(`.${this.eventId}`);
     $(document).off(`.${this.eventId}`);

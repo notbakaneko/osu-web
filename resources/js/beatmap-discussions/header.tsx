@@ -16,6 +16,7 @@ import BeatmapJson from 'interfaces/beatmap-json';
 import GameMode, { gameModes } from 'interfaces/game-mode';
 import { route } from 'laroute';
 import { kebabCase, snakeCase } from 'lodash';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import core from 'osu-core-singleton';
@@ -94,11 +95,10 @@ export class Header extends React.Component<Props> {
     $.publish('playmode:set', [{ mode }]);
   };
 
+  @action
   private onSelectBeatmap = (beatmapId: number) => {
-    $.publish('beatmapsetDiscussions:update', {
-      beatmapId,
-      mode: 'timeline',
-    });
+    this.discussionsState.currentBeatmapId = beatmapId;
+    this.discussionsState.changeDiscussionPage('timeline');
   };
 
   private renderHeaderBottom() {

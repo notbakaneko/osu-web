@@ -8,7 +8,7 @@ import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussion
 import GameMode from 'interfaces/game-mode';
 import { route } from 'laroute';
 import { forEachRight, map, uniq } from 'lodash';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import core from 'osu-core-singleton';
 import * as React from 'react';
@@ -160,10 +160,10 @@ export class Nominator extends React.Component<Props> {
     };
 
     this.xhr = $.ajax(url, params);
-    this.xhr.done((response) => {
-      $.publish('beatmapsetDiscussions:update', { beatmapset: response });
+    this.xhr.done((beatmapset) => runInAction(() => {
+      this.props.discussionsState.beatmapset = beatmapset;
       this.hideNominationModal();
-    })
+    }))
       .fail(onError)
       .always(action(() => this.loading = false));
   };

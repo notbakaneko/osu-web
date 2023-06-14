@@ -4,6 +4,7 @@
 import mapperGroup from 'beatmap-discussions/mapper-group';
 import SelectOptions, { OptionRenderProps } from 'components/select-options';
 import UserJson from 'interfaces/user-json';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
@@ -67,8 +68,9 @@ export class UserFilter extends React.Component<Props> {
     );
   }
 
+  @action
   private readonly handleChange = (option: Option) => {
-    $.publish('beatmapsetDiscussions:update', { selectedUserId: option.id });
+    this.props.discussionsState.selectedUserId = option.id;
   };
 
   private isOwner(user?: Option) {

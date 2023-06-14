@@ -413,4 +413,11 @@ export default class DiscussionsState {
       this.selectedUserId = selectedUserId;
     }
   }
+
+  // This is currently intended to be used as a callback for components that need very few things from state
+  // but need to update the beatmapset after a request.
+  @action
+  readonly updateBeatmapset = (beatmapset: BeatmapsetWithDiscussionsJson) => {
+    this.beatmapset = beatmapset;
+  };
 }

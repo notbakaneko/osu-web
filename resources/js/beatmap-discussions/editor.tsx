@@ -88,7 +88,7 @@ export default class Editor extends React.Component<Props, State> {
   slateEditor: SlateEditor;
   toolbarRef: React.RefObject<EditorToolbar>;
   private readonly initialValue: SlateElement[] = emptyDocTemplate;
-  private xhr?: JQueryXHR | null;
+  private xhr: JQuery.jqXHR<BeatmapsetDiscussionJsonForShow> | null = null;
 
   private get editMode() {
     return this.props.document != null;
@@ -263,9 +263,11 @@ export default class Editor extends React.Component<Props, State> {
         this.xhr = $.ajax(route('beatmapsets.discussion.review', { beatmapset: this.props.beatmapset.id }), {
           data: { document: this.serialize() },
           method: 'POST',
-        })
-          .done((data) => {
-            $.publish('beatmapsetDiscussions:update', { beatmapset: data });
+        });
+
+        this.xhr
+          .done((beatmapset) => {
+            $.publish('beatmapsetDiscussions:update', { beatmapset });
             this.resetInput();
           })
           .fail(onError)

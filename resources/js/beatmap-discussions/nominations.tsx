@@ -17,7 +17,7 @@ import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussion
 import GameMode from 'interfaces/game-mode';
 import UserJson from 'interfaces/user-json';
 import { route } from 'laroute';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import moment from 'moment';
@@ -183,9 +183,9 @@ export class Nominations extends React.Component<Props> {
     );
 
     this.xhr.discussionLock
-      .done((beatmapset) => {
-        $.publish('beatmapsetDiscussions:update', { beatmapset });
-      })
+      .done((beatmapset) => runInAction(() => {
+        this.props.discussionsState.beatmapset = beatmapset;
+      }))
       .fail(onError)
       .always(action(() => {
         this.xhr.discussionLock = undefined;
@@ -204,21 +204,20 @@ export class Nominations extends React.Component<Props> {
     );
 
     this.xhr.discussionLock
-      .done((beatmapset) => {
-        $.publish('beatmapsetDiscussions:update', { beatmapset });
-      })
+      .done((beatmapset) => runInAction(() => {
+        this.props.discussionsState.beatmapset = beatmapset;
+      }))
       .fail(onError)
       .always(action(() => {
         this.xhr.discussionLock = undefined;
       }));
   };
 
+  @action
   private readonly focusHypeInput = () => {
     // switch to generalAll tab, set current filter to praises
-    $.publish('beatmapsetDiscussions:update', {
-      filter: 'praises',
-      mode: 'generalAll',
-    });
+    this.props.discussionsState.changeFilter('praises');
+    this.props.discussionsState.changeDiscussionPage('generalAll');
 
     this.hypeFocusTimeout = window.setTimeout(() => {
       this.focusNewDiscussion(() => {
@@ -232,7 +231,7 @@ export class Nominations extends React.Component<Props> {
     }, 0);
   };
 
-  private focusNewDiscussion(this: void, callback: () => void) {
+  private focusNewDiscussion(this: void, callback?: () => void) {
     const inputBox = $('.js-hype--input');
     inputBox.trigger('focus');
 
@@ -244,14 +243,14 @@ export class Nominations extends React.Component<Props> {
     });
   }
 
+  @action
   private focusNewDiscussionWithModeSwitch = () => {
     // Switch to generalAll tab just in case currently in event tab
     // and thus new discussion box isn't visible.
-    $.publish('beatmapsetDiscussions:update', {
-      callback: this.focusNewDiscussion,
-      mode: 'generalAll',
-      modeIf: 'events',
-    });
+    if (this.props.discussionsState.currentMode === 'events') {
+      this.props.discussionsState.changeDiscussionPage('generalAll');
+      this.focusNewDiscussion();
+    }
   };
 
   @action
@@ -299,9 +298,9 @@ export class Nominations extends React.Component<Props> {
     );
 
     this.xhr.removeFromLoved
-      .done((beatmapset) =>
-        $.publish('beatmapsetDiscussions:update', { beatmapset }),
-      )
+      .done((beatmapset) => runInAction(() => {
+        this.props.discussionsState.beatmapset = beatmapset;
+      }))
       .fail(onError)
       .always(action(() => {
         this.xhr.removeFromLoved = undefined;

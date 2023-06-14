@@ -3,10 +3,8 @@
 
 import BigButton from 'components/big-button';
 import UserAvatar from 'components/user-avatar';
-import BeatmapJson from 'interfaces/beatmap-json';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
 import { BeatmapsetDiscussionPostStoreResponseJson } from 'interfaces/beatmapset-discussion-post-responses';
-import BeatmapsetJson from 'interfaces/beatmapset-json';
 import { route } from 'laroute';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -24,8 +22,6 @@ import DiscussionMessageLengthCounter from './discussion-message-length-counter'
 const bn = 'beatmap-discussion-post';
 
 interface Props {
-  beatmapset: BeatmapsetJson;
-  currentBeatmap: BeatmapJson | null;
   discussion: BeatmapsetDiscussionJson;
 }
 

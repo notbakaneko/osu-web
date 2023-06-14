@@ -243,8 +243,10 @@ export class NewDiscussion extends React.Component<Props> {
       .done((json) => runInAction(() => {
         this.message = '';
         this.timestampConfirmed = false;
-        $.publish('beatmapDiscussionPost:markRead', { id: json.beatmap_discussion_post_ids });
-        $.publish('beatmapsetDiscussions:update', { beatmapset: json.beatmapset });
+        for (const postId of json.beatmap_discussion_post_ids) {
+          this.props.discussionsState.readPostIds.add(postId);
+        }
+        this.props.discussionsState.beatmapset = json.beatmapset;
       }))
       .fail(onError)
       .always(action(() => {
