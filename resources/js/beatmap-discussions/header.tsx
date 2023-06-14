@@ -257,6 +257,6 @@ export class Header extends React.Component<Props> {
 
   private readonly setFilter = (event: React.SyntheticEvent<HTMLElement>) => {
     event.preventDefault();
-    $.publish('beatmapsetDiscussions:update', { filter: event.currentTarget.dataset.type });
+    this.discussionsState.changeFilter(event.currentTarget.dataset.type);
   };
 }

@@ -12,7 +12,7 @@ import core from 'osu-core-singleton';
 import { findDefault, group } from 'utils/beatmap-helper';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { switchNever } from 'utils/switch-never';
-import { Filter } from './current-discussions';
+import { Filter, filters } from './current-discussions';
 import DiscussionMode, { DiscussionPage, isDiscussionPage } from './discussion-mode';
 
 type DiscussionsAlias = BeatmapsetWithDiscussionsJson['discussions'];
@@ -79,6 +79,10 @@ export function filterDiscussionsByFilter(discussions: DiscussionsAlias, filter:
   }
 }
 
+function isFilter(value: unknown): value is Filter {
+  return (filters as readonly unknown[]).includes(value);
+}
+
 export default class DiscussionsState {
   @observable currentBeatmapId: number;
   @observable currentFilter: Filter = 'total';
@@ -92,6 +96,9 @@ export default class DiscussionsState {
   @observable readPostIds = new Set<number>();
   @observable selectedUserId: number | null = null;
   @observable showDeleted = true;
+
+  private previousFilter: Filter = 'total';
+  private previousPage: DiscussionPage = 'general';
 
   @computed
   get beatmaps() {
@@ -293,8 +300,17 @@ export default class DiscussionsState {
       user: this.selectedUserId ?? undefined,
     });
 
+    this.previousPage = this.currentMode;
     this.currentMode = page;
     Turbolinks.controller.advanceHistory(url);
+  }
+
+  @action
+  changeFilter(filter: unknown) {
+    if (!isFilter(filter)) return;
+
+    this.previousFilter = this.currentFilter;
+    this.currentFilter = filter;
   }
 
   currentDiscussionsByMode(mode: DiscussionMode) {
