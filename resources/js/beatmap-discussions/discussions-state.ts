@@ -80,7 +80,7 @@ function isFilter(value: unknown): value is Filter {
 
 export default class DiscussionsState {
   @observable currentBeatmapId: number;
-  @observable currentFilter: Filter = 'total';
+  @observable currentFilter: Filter = 'total'; // TODO: filter should always be total when page is events (also no highlight)
   @observable currentMode: DiscussionPage = 'general';
   @observable discussionCollapsed = new Map<number, boolean>();
   @observable discussionDefaultCollapsed = false;
@@ -291,11 +291,19 @@ export default class DiscussionsState {
     const url = makeUrl({
       beatmap: this.currentBeatmap,
       filter: this.currentFilter,
-      mode: this.currentMode,
+      mode: page,
       user: this.selectedUserId ?? undefined,
     });
 
-    this.previousPage = this.currentMode;
+    if (page === 'events') {
+      // record page and filter when switching to events
+      this.previousPage = this.currentMode;
+      this.previousFilter = this.currentFilter;
+    } else if (this.currentFilter !== this.previousFilter) {
+      // restore previous filter when switching away from events
+      this.currentFilter = this.previousFilter;
+    }
+
     this.currentMode = page;
     Turbolinks.controller.advanceHistory(url);
   }
@@ -304,7 +312,11 @@ export default class DiscussionsState {
   changeFilter(filter: unknown) {
     if (!isFilter(filter)) return;
 
-    this.previousFilter = this.currentFilter;
+    // restore previous page when selecting a filter.
+    if (this.currentMode === 'events') {
+      this.currentMode = this.previousPage;
+    }
+
     this.currentFilter = filter;
   }
 
@@ -354,24 +366,5 @@ export default class DiscussionsState {
     if (watching != null) {
       this.beatmapset.current_user_attributes.is_watching = watching;
     }
-
-    // TODO: all this
-    // if (modeIf == null || modeIf === this.currentMode) {
-    //   this.currentMode = mode;
-    // }
-
-    // // switching to events:
-    // // - record last filter, to be restored when setMode is called
-    // // - record last mode, to be restored when setFilter is called
-    // // - set filter to total
-    // if (mode === 'events') {
-    //   this.lastMode = this.currentMode;
-    //   this.lastFilter = this.currentFilter;
-    //   this.currentFilter = 'total';
-    // } else if (this.currentMode === 'events') {
-    //   // switching from events:
-    //   // - restore whatever last filter set or default to total
-    //   this.currentFilter = this.lastFilter ?? 'total';
-    // }
   }
 }
