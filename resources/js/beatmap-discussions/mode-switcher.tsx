@@ -3,6 +3,7 @@
 
 import StringWithComponent from 'components/string-with-component';
 import { snakeCase } from 'lodash';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { makeUrl } from 'utils/beatmapset-discussion-helper';
@@ -108,6 +109,7 @@ export class ModeSwitcher extends React.Component<Props> {
     $(this.scrollerRef.current).scrollTo(`.${selectedClassName}`, 0, { over: { left: -1 } });
   }
 
+  @action
   private readonly switch = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 

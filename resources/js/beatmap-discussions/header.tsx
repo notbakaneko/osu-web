@@ -16,7 +16,7 @@ import BeatmapJson from 'interfaces/beatmap-json';
 import GameMode, { gameModes } from 'interfaces/game-mode';
 import { route } from 'laroute';
 import { kebabCase, snakeCase } from 'lodash';
-import { action } from 'mobx';
+import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import core from 'osu-core-singleton';
@@ -61,6 +61,12 @@ export class Header extends React.Component<Props> {
     return this.discussionsState.users;
   }
 
+  constructor(props: Props) {
+    super(props);
+
+    makeObservable(this);
+  }
+
   render() {
     return (
       <>
@@ -91,6 +97,7 @@ export class Header extends React.Component<Props> {
   // TODO: does it need to be computed?
   private readonly getCount = (beatmap: BeatmapExtendedJson) => beatmap.deleted_at == null ? this.discussionsState.discussionsByBeatmap(beatmap.id).length : undefined;
 
+  @action
   private onClickMode = (event: React.MouseEvent<HTMLAnchorElement>, mode: GameMode) => {
     event.preventDefault();
     this.discussionsState.changeGameMode(mode);
