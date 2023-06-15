@@ -92,7 +92,7 @@ export class Header extends React.Component<Props> {
 
   private onClickMode = (event: React.MouseEvent<HTMLAnchorElement>, mode: GameMode) => {
     event.preventDefault();
-    $.publish('playmode:set', [{ mode }]);
+    this.discussionsState.changeGameMode(mode);
   };
 
   @action

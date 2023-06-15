@@ -320,6 +320,14 @@ export default class DiscussionsState {
     this.currentFilter = filter;
   }
 
+  @action
+  changeGameMode(mode: GameMode) {
+    const beatmap = findDefault({ items: this.groupedBeatmaps.get(mode) });
+    if (beatmap != null) {
+      this.currentBeatmapId = beatmap.id;
+    }
+  }
+
   currentDiscussionsByMode(mode: DiscussionMode) {
     return this.discussionsByFilter(this.currentFilter, mode, this.currentBeatmapId);
   }

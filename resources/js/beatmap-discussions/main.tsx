@@ -61,8 +61,6 @@ export default class Main extends React.Component<Props> {
   }
 
   componentDidMount() {
-    $.subscribe(`playmode:set.${this.eventId}`, this.setCurrentPlaymode);
-
     $.subscribe(`beatmapsetDiscussions:update.${this.eventId}`, this.update);
     $.subscribe(`beatmapDiscussion:jump.${this.eventId}`, this.jumpTo);
     $.subscribe(`beatmapDiscussionPost:markRead.${this.eventId}`, this.markPostRead);
