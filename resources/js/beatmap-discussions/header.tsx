@@ -88,6 +88,7 @@ export class Header extends React.Component<Props> {
 
   private readonly createLink = (beatmap: BeatmapJson) => makeUrl({ beatmap });
 
+  // TODO: does it need to be computed?
   private readonly getCount = (beatmap: BeatmapExtendedJson) => beatmap.deleted_at == null ? this.discussionsState.discussionsByBeatmap(beatmap.id).length : undefined;
 
   private onClickMode = (event: React.MouseEvent<HTMLAnchorElement>, mode: GameMode) => {
@@ -185,7 +186,7 @@ export class Header extends React.Component<Props> {
           </div>
           <div className='u-relative'>
             <Chart
-              discussions={this.discussionsState.discussionsByFilter(this.discussionsState.currentFilter, 'timeline', this.currentBeatmap.id)}
+              discussions={this.discussionsState.currentDiscussionsByMode('timeline')}
               duration={this.currentBeatmap.total_length * 1000}
             />
             <div className={`${bn}__beatmap-stats`}>

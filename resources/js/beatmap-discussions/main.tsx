@@ -170,7 +170,7 @@ export default class Main extends React.Component<Props> {
     } = stateFromDiscussion(discussion);
 
     // unset filter
-    if (this.discussionsState.discussionsByFilter(this.discussionsState.currentFilter, mode, this.discussionsState.currentBeatmapId).find((d) => d.id === discussion.id) == null) {
+    if (this.discussionsState.currentDiscussionsByMode(mode).find((d) => d.id === discussion.id) == null) {
       this.discussionsState.currentFilter = defaultFilter;
     }
 

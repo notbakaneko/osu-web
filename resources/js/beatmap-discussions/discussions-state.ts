@@ -23,6 +23,7 @@ export interface UpdateOptions {
   watching: boolean;
 }
 
+// FIXME this doesn't make it so the modes with optional beatmapId can pass a beatmapId that gets ignored.
 export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): DiscussionsAlias;
 export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId?: number) {
   console.log(mode);
