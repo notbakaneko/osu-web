@@ -18,13 +18,8 @@ import DiscussionMode, { DiscussionPage, isDiscussionPage } from './discussion-m
 type DiscussionsAlias = BeatmapsetWithDiscussionsJson['discussions'];
 
 export interface UpdateOptions {
-  beatmapId: number;
+
   beatmapset: BeatmapsetWithDiscussionsJson;
-  filter: Filter;
-  mode: DiscussionPage;
-  modeIf: DiscussionPage;
-  playmode: GameMode;
-  selectedUserId: number;
   watching: boolean;
 }
 
@@ -349,15 +344,8 @@ export default class DiscussionsState {
   update(options: Partial<UpdateOptions>) {
     const {
       beatmapset,
-      filter,
-      mode,
-      modeIf, // TODO: remove?
-      playmode,
-      selectedUserId,
       watching,
     } = options;
-
-    let { beatmapId } = options;
 
     if (beatmapset != null) {
       this.beatmapset = beatmapset;
@@ -367,57 +355,23 @@ export default class DiscussionsState {
       this.beatmapset.current_user_attributes.is_watching = watching;
     }
 
-    if (playmode != null) {
-      const beatmap = findDefault({ items: this.groupedBeatmaps.get(playmode) });
-      beatmapId = beatmap?.id;
-    }
+    // TODO: all this
+    // if (modeIf == null || modeIf === this.currentMode) {
+    //   this.currentMode = mode;
+    // }
 
-    if (beatmapId != null && beatmapId !== this.currentBeatmap.id) {
-      this.currentBeatmapId = beatmapId;
-    }
-
-    if (filter != null) {
-      // TODO: this
-      // if (this.currentMode === 'events') {
-      //   this.currentMode = this.lastMode ?? defaultMode(this.currentBeatmapId);
-      // }
-
-      if (filter !== this.currentFilter) {
-        this.currentFilter = filter;
-      }
-    }
-
-    if (mode != null && mode !== this.currentMode) {
-      // TODO: all this
-      // if (modeIf == null || modeIf === this.currentMode) {
-      //   this.currentMode = mode;
-      // }
-
-      // // switching to events:
-      // // - record last filter, to be restored when setMode is called
-      // // - record last mode, to be restored when setFilter is called
-      // // - set filter to total
-      // if (mode === 'events') {
-      //   this.lastMode = this.currentMode;
-      //   this.lastFilter = this.currentFilter;
-      //   this.currentFilter = 'total';
-      // } else if (this.currentMode === 'events') {
-      //   // switching from events:
-      //   // - restore whatever last filter set or default to total
-      //   this.currentFilter = this.lastFilter ?? 'total';
-      // }
-    }
-
-    // need to setState if null
-    if (selectedUserId !== undefined) {
-      this.selectedUserId = selectedUserId;
-    }
+    // // switching to events:
+    // // - record last filter, to be restored when setMode is called
+    // // - record last mode, to be restored when setFilter is called
+    // // - set filter to total
+    // if (mode === 'events') {
+    //   this.lastMode = this.currentMode;
+    //   this.lastFilter = this.currentFilter;
+    //   this.currentFilter = 'total';
+    // } else if (this.currentMode === 'events') {
+    //   // switching from events:
+    //   // - restore whatever last filter set or default to total
+    //   this.currentFilter = this.lastFilter ?? 'total';
+    // }
   }
-
-  // This is currently intended to be used as a callback for components that need very few things from state
-  // but need to update the beatmapset after a request.
-  @action
-  readonly updateBeatmapset = (beatmapset: BeatmapsetWithDiscussionsJson) => {
-    this.beatmapset = beatmapset;
-  };
 }
