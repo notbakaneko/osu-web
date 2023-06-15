@@ -175,6 +175,13 @@ export default class DiscussionsState {
   }
 
   @computed
+  get hasCurrentUserHyped() {
+    const currentUser = core.currentUser; // core.currentUser check below doesn't make the inferrence that it's not nullable after the check.
+    const discussions = Object.values(this.currentDiscussionsByModeWithFilter('generalAll', 'hype'));
+    return currentUser != null && discussions.some((discussion) => discussion?.user_id === currentUser.id);
+  }
+
+  @computed
   get lastUpdate() {
     const maxLastUpdate = Math.max(
       +this.beatmapset.last_updated,

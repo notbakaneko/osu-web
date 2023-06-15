@@ -455,10 +455,6 @@ export class Nominations extends React.Component<Props> {
   private renderHypeButton() {
     if (!this.beatmapset.can_be_hyped || core.currentUser == null || this.userIsOwner) return;
 
-    const currentUser = core.currentUser; // core.currentUser check below doesn't make the inferrence that it's not nullable after the check.
-    const discussions = Object.values(this.props.discussionsState.currentDiscussionsByModeWithFilter('generalAll', 'hype'));
-    const userAlreadyHyped = currentUser != null && discussions.some((discussion) => discussion?.user_id === currentUser.id);
-
     return (
       <BigButton
         disabled={!this.beatmapset.current_user_attributes.can_hype}
@@ -467,7 +463,7 @@ export class Nominations extends React.Component<Props> {
           onClick: this.focusHypeInput,
           title: this.beatmapset.current_user_attributes.can_hype_reason,
         }}
-        text={userAlreadyHyped ? trans('beatmaps.hype.button_done') : trans('beatmaps.hype.button')}
+        text={this.props.discussionsState.hasCurrentUserHyped ? trans('beatmaps.hype.button_done') : trans('beatmaps.hype.button')}
       />
     );
   }
