@@ -53,6 +53,16 @@ export class Header extends React.Component<Props> {
     return this.discussionsState.currentBeatmap;
   }
 
+  @computed
+  private get discussionCounts() {
+    const counts: Partial<Record<Filter, number>> = {};
+    for (const type of statTypes) {
+      counts[type] = filterDiscussionsByFilter(this.discussionsState.currentBeatmapDiscussions, type).length;
+    }
+
+    return counts;
+  }
+
   private get discussionsState() {
     return this.props.discussionsState;
   }
@@ -233,10 +243,6 @@ export class Header extends React.Component<Props> {
       topClasses += ' js-active';
     }
 
-    // TODO: count all at once
-    const discussionsByFilter = filterDiscussionsByFilter(this.discussionsState.currentBeatmapDiscussions, type);
-    const total = discussionsByFilter.length;
-
     return (
       <a
         key={type}
@@ -255,7 +261,7 @@ export class Header extends React.Component<Props> {
             {trans(`beatmaps.discussions.stats.${snakeCase(type)}`)}
           </div>
           <div className={`${bn}__count`}>
-            {total}
+            {this.discussionCounts[type]}
           </div>
         </div>
         <div className={`${bn}__line`} />
