@@ -16,7 +16,7 @@ import BeatmapJson from 'interfaces/beatmap-json';
 import GameMode, { gameModes } from 'interfaces/game-mode';
 import { route } from 'laroute';
 import { kebabCase, snakeCase } from 'lodash';
-import { action, computed, makeObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import core from 'osu-core-singleton';
@@ -55,7 +55,7 @@ export class Header extends React.Component<Props> {
 
   @computed
   private get discussionCounts() {
-    const counts: Partial<Record<Filter, number>> = {};
+    const counts: Partial<Record<Filter, number>> = observable({});
     for (const type of statTypes) {
       counts[type] = filterDiscussionsByFilter(this.discussionsState.currentBeatmapDiscussions, type).length;
     }
@@ -67,13 +67,17 @@ export class Header extends React.Component<Props> {
     return this.props.discussionsState;
   }
 
+  @computed
+  private get timelineDiscussions() {
+    return this.discussionsState.currentDiscussions.timeline;
+  }
+
   private get users() {
     return this.discussionsState.users;
   }
 
   constructor(props: Props) {
     super(props);
-
     makeObservable(this);
   }
 
@@ -203,7 +207,7 @@ export class Header extends React.Component<Props> {
           </div>
           <div className='u-relative'>
             <Chart
-              discussions={this.discussionsState.currentDiscussionsByMode('timeline')}
+              discussions={this.timelineDiscussions}
               duration={this.currentBeatmap.total_length * 1000}
             />
             <div className={`${bn}__beatmap-stats`}>

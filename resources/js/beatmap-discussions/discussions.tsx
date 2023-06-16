@@ -80,7 +80,7 @@ export class Discussions extends React.Component<Props> {
 
   @computed
   private get sortedDiscussions() {
-    return this.discussionsState.currentBeatmapDiscussionsCurrentMode.slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
+    return this.discussionsState.currentBeatmapDiscussionsCurrentModeWithFilter.slice().sort((a: BeatmapsetDiscussionJson, b: BeatmapsetDiscussionJson) => {
       const mapperNoteCompare =
         // no sticky for timeline sort
         this.currentSort !== 'timeline'
@@ -141,12 +141,15 @@ export class Discussions extends React.Component<Props> {
   };
 
   private readonly renderDiscussionPage = (discussion: BeatmapsetDiscussionJsonForShow) => {
+    // TODO: fix
     // TODO: check if check if necessary?
-    const visible = this.discussionsState.currentBeatmapDiscussionsCurrentMode[discussion.id] != null;
+    // const visible = this.discussionsState.currentBeatmapDiscussionsCurrentMode[discussion.id] != null;
 
-    if (!visible) return null;
+    // if (!visible) return null;
 
-    const parentDiscussion = discussion.parent_id != null ? this.discussionsState.currentDiscussionsByMode('reviews')[discussion.parent_id] : null;
+    // const parentDiscussion = discussion.parent_id != null ? this.discussionsState.currentDiscussionsUnfiltered.reviews[discussion.parent_id] : null;
+
+    const parentDiscussion = null;
 
     return (
       <div

@@ -24,14 +24,14 @@ export interface UpdateOptions {
 }
 
 // FIXME this doesn't make it so the modes with optional beatmapId can pass a beatmapId that gets ignored.
-export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): DiscussionsAlias;
-export function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId?: number) {
+function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: 'general' | 'timeline', beatmapId: number): DiscussionsAlias;
+function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionMode, beatmapId?: number) {
   console.log(mode);
   switch (mode) {
     case 'general':
       return discussions.filter((discussion) => discussion.beatmap_id === beatmapId);
     case 'generalAll':
-      return discussions.filter((discussion) => discussion.beatmap_id == null);
+      return discussions.filter((discussion) => discussion.beatmap_id == null && discussion.message_type !== 'review');
     case 'reviews':
       return discussions.filter((discussion) => discussion.message_type === 'review');
     case 'timeline':
@@ -124,13 +124,35 @@ export default class DiscussionsState {
   @computed
   get currentBeatmapDiscussionsCurrentMode() {
     if (this.currentMode === 'events') return [];
-    return this.currentDiscussionsByMode(this.currentMode);
+    return this.currentDiscussionsUnfiltered[this.currentMode];
   }
 
   @computed
   get currentBeatmapDiscussionsCurrentModeWithFilter() {
     if (this.currentMode === 'events') return [];
-    return this.currentDiscussionsByModeWithFilter(this.currentMode, this.currentFilter);
+    return this.currentDiscussions[this.currentMode];
+  }
+
+  @computed
+  get currentDiscussions() {
+    return {
+      general: filterDiscussionsByFilter(this.currentDiscussionsUnfiltered.general, this.currentFilter),
+      generalAll: filterDiscussionsByFilter(this.currentDiscussionsUnfiltered.generalAll, this.currentFilter),
+      reviews: filterDiscussionsByFilter(this.currentDiscussionsUnfiltered.reviews, this.currentFilter),
+      timeline: filterDiscussionsByFilter(this.currentDiscussionsUnfiltered.timeline, this.currentFilter),
+    };
+  }
+
+  @computed
+  get currentDiscussionsUnfiltered() {
+    // we get all the modes at once because the switcher shows the counts for all of them.
+    // Also so computed can and lazy evaluate and cache
+    return {
+      general: this.discussionsByMode('general'),
+      generalAll: this.discussionsByMode('generalAll'),
+      reviews: this.discussionsByMode('reviews'),
+      timeline: this.discussionsByMode('timeline'),
+    };
   }
 
   @computed
@@ -177,7 +199,7 @@ export default class DiscussionsState {
   @computed
   get hasCurrentUserHyped() {
     const currentUser = core.currentUser; // core.currentUser check below doesn't make the inferrence that it's not nullable after the check.
-    const discussions = Object.values(this.currentDiscussionsByModeWithFilter('generalAll', 'hype'));
+    const discussions = filterDiscussionsByFilter(this.currentDiscussionsUnfiltered.generalAll, 'hype');
     return currentUser != null && discussions.some((discussion) => discussion?.user_id === currentUser.id);
   }
 
@@ -207,7 +229,6 @@ export default class DiscussionsState {
 
   @computed
   get nonNullDiscussions() {
-    console.log('nonNullDiscussions');
     return Object.values(this.discussions).filter((discussion) => discussion != null) as DiscussionsAlias;
   }
 
@@ -246,6 +267,7 @@ export default class DiscussionsState {
   }
 
   constructor(public beatmapset: BeatmapsetWithDiscussionsJson, state?: string) {
+    console.log('construct');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const existingState = state == null ? null : JSON.parse(state, (key, value) => {
       if (Array.isArray(value)) {
@@ -336,24 +358,8 @@ export default class DiscussionsState {
     }
   }
 
-  currentDiscussionsByMode(mode: DiscussionMode) {
-    return this.discussionsByFilter(this.currentFilter, mode, this.currentBeatmapId);
-  }
-
-  currentDiscussionsByModeWithFilter(mode: DiscussionMode, filter: Filter) {
-    return this.discussionsByFilter(filter, mode, this.currentBeatmapId);
-  }
-
   discussionsByBeatmap(beatmapId: number) {
-    return computed(() => this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId))).get();
-  }
-
-  discussionsByFilter(filter: Filter, mode: DiscussionMode, beatmapId: number) {
-    return computed(() => filterDiscussionsByFilter(this.discussionsByMode(mode, beatmapId), filter)).get();
-  }
-
-  discussionsByMode(mode: DiscussionMode, beatmapId: number) {
-    return computed(() => filterDiscusionsByMode(this.nonNullDiscussions, mode, beatmapId)).get();
+    return this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId));
   }
 
   toJsonString() {
@@ -382,5 +388,9 @@ export default class DiscussionsState {
     if (watching != null) {
       this.beatmapset.current_user_attributes.is_watching = watching;
     }
+  }
+
+  private discussionsByMode(mode: DiscussionMode) {
+    return filterDiscusionsByMode(this.nonNullDiscussions, mode, this.currentBeatmapId);
   }
 }

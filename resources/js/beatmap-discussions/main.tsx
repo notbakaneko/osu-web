@@ -35,12 +35,13 @@ interface InitialData {
 
 interface Props {
   container: HTMLElement;
+  discussionsState: DiscussionsState;
   initial: InitialData;
 }
 
 @observer
 export default class Main extends React.Component<Props> {
-  @observable private readonly discussionsState: DiscussionsState;
+  // @observable private readonly discussionsState: DiscussionsState;
   private readonly disposers = new Set<((() => void) | undefined)>();
   private readonly eventId = `beatmap-discussions-${nextVal()}`;
   // FIXME: update url handler to recognize this instead
@@ -52,10 +53,14 @@ export default class Main extends React.Component<Props> {
   private readonly timeouts: Record<string, number> = {};
   private xhrCheckNew?: JQuery.jqXHR<InitialData>;
 
+  private get discussionsState() {
+    return this.props.discussionsState;
+  }
+
   constructor(props: Props) {
     super(props);
 
-    this.discussionsState = new DiscussionsState(props.initial.beatmapset, props.container.dataset.beatmapsetDiscussionState);
+    // this.discussionsState = new DiscussionsState(props.initial.beatmapset, props.container.dataset.beatmapsetDiscussionState);
 
     makeObservable(this);
   }
@@ -170,7 +175,8 @@ export default class Main extends React.Component<Props> {
     } = stateFromDiscussion(discussion);
 
     // unset filter
-    if (this.discussionsState.currentDiscussionsByMode(mode).find((d) => d.id === discussion.id) == null) {
+    const currentDiscussionsByMode = this.discussionsState.currentDiscussions[mode];
+    if (currentDiscussionsByMode.find((d) => d.id === discussion.id) == null) {
       this.discussionsState.currentFilter = defaultFilter;
     }
 
