@@ -218,8 +218,6 @@ export class Discussion extends React.Component<Props> {
         </div>
         {this.canBeRepliedTo && (
           <NewReply
-            beatmapset={this.beatmapset}
-            currentBeatmap={this.currentBeatmap}
             discussion={this.props.discussion}
           />
         )}
