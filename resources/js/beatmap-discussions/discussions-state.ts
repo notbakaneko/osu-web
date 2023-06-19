@@ -397,7 +397,7 @@ export default class DiscussionsState {
 
           if (discussion.parent_id != null) {
             const parentDiscussion = this.discussions[discussion.parent_id];
-            if (parentDiscussion != null && parentDiscussion.message_type == 'review') {
+            if (parentDiscussion != null && parentDiscussion.message_type === 'review') {
               reviewsWithPending.add(parentDiscussion);
             }
           }
