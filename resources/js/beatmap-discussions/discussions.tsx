@@ -141,15 +141,7 @@ export class Discussions extends React.Component<Props> {
   };
 
   private readonly renderDiscussionPage = (discussion: BeatmapsetDiscussionJsonForShow) => {
-    // TODO: fix
-    // TODO: check if check if necessary?
-    // const visible = this.discussionsState.currentBeatmapDiscussionsCurrentMode[discussion.id] != null;
-
-    // if (!visible) return null;
-
-    // const parentDiscussion = discussion.parent_id != null ? this.discussionsState.currentDiscussionsUnfiltered.reviews[discussion.parent_id] : null;
-
-    const parentDiscussion = null;
+    const parentDiscussion = this.discussionsState.discussions.get(discussion.parent_id);
 
     return (
       <div
@@ -160,7 +152,7 @@ export class Discussions extends React.Component<Props> {
           discussion={discussion}
           discussionsState={this.discussionsState}
           isTimelineVisible={this.isTimelineVisible}
-          parentDiscussion={parentDiscussion}
+          parentDiscussion={parentDiscussion?.message_type === 'review' ? parentDiscussion : null}
         />
       </div>
     );
