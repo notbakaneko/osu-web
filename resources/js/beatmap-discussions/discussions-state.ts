@@ -88,12 +88,6 @@ export default class DiscussionsState {
   }
 
   @computed
-  get currentBeatmapDiscussionsCurrentMode() {
-    if (this.currentMode === 'events') return [];
-    return this.currentDiscussionsUnfiltered[this.currentMode];
-  }
-
-  @computed
   get currentBeatmapDiscussionsCurrentModeWithFilter() {
     if (this.currentMode === 'events') return [];
     return this.currentDiscussions[this.currentMode];
@@ -132,18 +126,6 @@ export default class DiscussionsState {
   }
 
   @computed
-  get currentDiscussionsUnfiltered() {
-    // we get all the modes at once because the switcher shows the counts for all of them.
-    // Also so computed can and lazy evaluate and cache
-    return {
-      general: filterDiscusionsByMode(this.currentDiscussionsGroupedByFilter.total, 'general', this.currentBeatmapId),
-      generalAll: filterDiscusionsByMode(this.currentDiscussionsGroupedByFilter.total, 'generalAll'),
-      reviews: filterDiscusionsByMode(this.currentDiscussionsGroupedByFilter.total, 'reviews'),
-      timeline: filterDiscusionsByMode(this.currentDiscussionsGroupedByFilter.total, 'timeline', this.currentBeatmapId),
-    };
-  }
-
-  @computed
   get discussions() {
     // skipped discussions
     // - not privileged (deleted discussion)
@@ -151,7 +133,7 @@ export default class DiscussionsState {
 
     // TODO need some typing to handle the not for show variant
     // null part of the key so we can use .get(null)
-    const map = new Map<number | null | undefined, BeatmapsetDiscussionJsonForShow>();
+    const map = new Map<number | null, BeatmapsetDiscussionJsonForShow>();
 
     for (const discussion of this.beatmapset.discussions) {
       if (!isEmpty(discussion)) {

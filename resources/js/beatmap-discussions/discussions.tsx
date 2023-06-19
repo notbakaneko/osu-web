@@ -167,12 +167,15 @@ export class Discussions extends React.Component<Props> {
   };
 
   private renderDiscussions() {
-    const discussions = this.discussionsState.currentBeatmapDiscussionsCurrentMode;
+    const count = this.discussionsState.currentBeatmapDiscussionsCurrentModeWithFilter.length;
 
-    if (discussions.length === 0) {
+    if (count === 0) {
       return (
         <div className={`${bn}__discussions ${bn}__discussions--empty`}>
-          {trans('beatmaps.discussions.empty.empty')}
+          {this.discussionsState.currentDiscussionsGroupedByFilter.total.length > count
+            ? trans('beatmaps.discussions.empty.hidden')
+            : trans('beatmaps.discussions.empty.empty')
+          }
         </div>
       );
     }
