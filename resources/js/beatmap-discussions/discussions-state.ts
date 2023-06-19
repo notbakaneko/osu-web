@@ -41,38 +41,6 @@ function filterDiscusionsByMode(discussions: DiscussionsAlias, mode: DiscussionM
   }
 }
 
-function filterDiscussionsByFilter(discussions: DiscussionsAlias, filter: Filter) {
-  switch (filter) {
-    case 'deleted':
-      return discussions.filter((discussion) => discussion.deleted_at != null);
-    case 'hype':
-      return discussions.filter((discussion) => discussion.message_type === 'hype');
-    case 'mapperNotes':
-      return discussions.filter((discussion) => discussion.message_type === 'mapper_note');
-    case 'mine': {
-      const userId = core.currentUserOrFail.id;
-      return discussions.filter((discussion) => discussion.user_id === userId);
-    }
-    case 'pending':
-      // TODO:
-      // pending reviews
-      // if (discussion.parent_id != null) {
-      //   const parentDiscussion = discussions[discussion.parent_id];
-      //   if (parentDiscussion != null && parentDiscussion.message_type == 'review') return true;
-      // }
-      return discussions.filter((discussion) => discussion.can_be_resolved && !discussion.resolved);
-    case 'praises':
-      return discussions.filter((discussion) => discussion.message_type === 'praise' || discussion.message_type === 'hype');
-    case 'resolved':
-      return discussions.filter((discussion) => discussion.can_be_resolved && discussion.resolved);
-    case 'total':
-      return discussions;
-    default:
-      switchNever(filter);
-      throw new Error('missing valid filter');
-  }
-}
-
 function isFilter(value: unknown): value is Filter {
   return (filters as readonly unknown[]).includes(value);
 }
@@ -157,7 +125,7 @@ export default class DiscussionsState {
     };
 
     for (const filter of filters) {
-      groups[filter] = filterDiscussionsByFilter(this.currentBeatmapDiscussions, filter);
+      groups[filter] = this.filterDiscussionsByFilter(this.currentBeatmapDiscussions, filter);
     }
 
     return groups;
@@ -406,6 +374,48 @@ export default class DiscussionsState {
 
     if (watching != null) {
       this.beatmapset.current_user_attributes.is_watching = watching;
+    }
+  }
+
+  private filterDiscussionsByFilter(discussions: DiscussionsAlias, filter: Filter) {
+    switch (filter) {
+      case 'deleted':
+        return discussions.filter((discussion) => discussion.deleted_at != null);
+      case 'hype':
+        return discussions.filter((discussion) => discussion.message_type === 'hype');
+      case 'mapperNotes':
+        return discussions.filter((discussion) => discussion.message_type === 'mapper_note');
+      case 'mine': {
+        const userId = core.currentUserOrFail.id;
+        return discussions.filter((discussion) => discussion.user_id === userId);
+      }
+      case 'pending': {
+        const reviewsWithPending = new Set<BeatmapsetDiscussionJsonForShow>();
+
+        const filteredDiscussions = discussions.filter((discussion) => {
+          if (!discussion.can_be_resolved || discussion.resolved) return false;
+
+          if (discussion.parent_id != null) {
+            const parentDiscussion = this.discussions[discussion.parent_id];
+            if (parentDiscussion != null && parentDiscussion.message_type == 'review') {
+              reviewsWithPending.add(parentDiscussion);
+            }
+          }
+
+          return true;
+        });
+
+        return [...filteredDiscussions, ...reviewsWithPending.values()];
+      }
+      case 'praises':
+        return discussions.filter((discussion) => discussion.message_type === 'praise' || discussion.message_type === 'hype');
+      case 'resolved':
+        return discussions.filter((discussion) => discussion.can_be_resolved && discussion.resolved);
+      case 'total':
+        return discussions;
+      default:
+        switchNever(filter);
+        throw new Error('missing valid filter');
     }
   }
 }
