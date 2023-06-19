@@ -145,7 +145,7 @@ export default class DiscussionsState {
 
   @computed
   get currentDiscussionsGroupedByFilter() {
-    const groups: Record<Filter, BeatmapsetDiscussionJsonForShow[]> = {
+    const groups: Record<Filter, DiscussionsAlias> = {
       deleted: [],
       hype: [],
       mapperNotes: [],
@@ -254,7 +254,7 @@ export default class DiscussionsState {
 
   @computed
   get presentDiscussions() {
-    return this.nonNullDiscussions.filter((discussion) => discussion.deleted_at == null);
+    return this.nonNullDiscussions.filter((discussion) => discussion.deleted_at == null) as DiscussionsAlias;
   }
 
   @computed
@@ -378,7 +378,7 @@ export default class DiscussionsState {
   }
 
   discussionsByBeatmap(beatmapId: number) {
-    return this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId));
+    return this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId)) as DiscussionsAlias;
   }
 
   toJsonString() {
