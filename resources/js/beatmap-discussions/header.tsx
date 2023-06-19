@@ -28,7 +28,7 @@ import { trans } from 'utils/lang';
 import BeatmapList from './beatmap-list';
 import Chart from './chart';
 import { Filter } from './current-discussions';
-import DiscussionsState, { filterDiscussionsByFilter } from './discussions-state';
+import DiscussionsState from './discussions-state';
 import { Nominations } from './nominations';
 import { Subscribe } from './subscribe';
 import { UserFilter } from './user-filter';
@@ -57,7 +57,7 @@ export class Header extends React.Component<Props> {
   private get discussionCounts() {
     const counts: Partial<Record<Filter, number>> = observable({});
     for (const type of statTypes) {
-      counts[type] = filterDiscussionsByFilter(this.discussionsState.currentBeatmapDiscussions, type).length;
+      counts[type] = this.discussionsState.currentDiscussionsGroupedByFilter[type].length;
     }
 
     return counts;
