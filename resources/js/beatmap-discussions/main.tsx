@@ -7,7 +7,6 @@ import NewReview from 'beatmap-discussions/new-review';
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context';
 import BackToTop from 'components/back-to-top';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
-import GameMode from 'interfaces/game-mode';
 import { route } from 'laroute';
 import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -26,7 +25,7 @@ import { NewDiscussion } from './new-discussion';
 const checkNewTimeoutDefault = 10000;
 const checkNewTimeoutMax = 60000;
 
-interface InitialData {
+export interface InitialData {
   beatmapset: BeatmapsetWithDiscussionsJson;
   reviews_config: {
     max_blocks: number;
@@ -35,13 +34,12 @@ interface InitialData {
 
 interface Props {
   container: HTMLElement;
-  discussionsState: DiscussionsState;
   initial: InitialData;
 }
 
 @observer
 export default class Main extends React.Component<Props> {
-  // @observable private readonly discussionsState: DiscussionsState;
+  @observable private readonly discussionsState: DiscussionsState;
   private readonly disposers = new Set<((() => void) | undefined)>();
   private readonly eventId = `beatmap-discussions-${nextVal()}`;
   // FIXME: update url handler to recognize this instead
@@ -53,14 +51,10 @@ export default class Main extends React.Component<Props> {
   private readonly timeouts: Record<string, number> = {};
   private xhrCheckNew?: JQuery.jqXHR<InitialData>;
 
-  private get discussionsState() {
-    return this.props.discussionsState;
-  }
-
   constructor(props: Props) {
     super(props);
 
-    // this.discussionsState = new DiscussionsState(props.initial.beatmapset, props.container.dataset.beatmapsetDiscussionState);
+    this.discussionsState = new DiscussionsState(props.initial.beatmapset, props.container.dataset.beatmapsetDiscussionState);
 
     makeObservable(this);
   }
