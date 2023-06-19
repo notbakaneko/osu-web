@@ -160,7 +160,7 @@ export default class Main extends React.Component<Props> {
 
   @action
   private readonly jumpTo = (_event: unknown, { id, postId }: { id: number; postId?: number }) => {
-    const discussion = this.discussionsState.discussions[id];
+    const discussion = this.discussionsState.discussions.get(id);
 
     if (discussion == null) return;
 

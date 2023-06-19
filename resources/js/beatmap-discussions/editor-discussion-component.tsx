@@ -2,10 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { EmbedElement } from 'editor';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetJson from 'interfaces/beatmapset-json';
-import { filter } from 'lodash';
 import { Observer } from 'mobx-react';
 import * as React from 'react';
 import { Transforms } from 'slate';
@@ -15,6 +12,7 @@ import { formatTimestamp, makeUrl, nearbyDiscussions, parseTimestamp, timestampR
 import { classWithModifiers } from 'utils/css';
 import { trans, transArray } from 'utils/lang';
 import { linkHtml } from 'utils/url';
+import DiscussionsState from './discussions-state';
 import { DraftsContext } from './drafts-context';
 import EditorBeatmapSelector from './editor-beatmap-selector';
 import EditorIssueTypeSelector from './editor-issue-type-selector';
@@ -32,9 +30,7 @@ interface Cache {
 }
 
 interface Props extends RenderElementProps {
-  beatmaps: BeatmapExtendedJson[];
-  beatmapset: BeatmapsetJson;
-  discussions: Partial<Record<number, BeatmapsetDiscussionJson>>;
+  discussionsState: DiscussionsState;
   editMode?: boolean;
   element: EmbedElement;
   readOnly?: boolean;
@@ -47,6 +43,18 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
   declare context: React.ContextType<typeof SlateContext>;
   tooltipContent = React.createRef<HTMLScriptElement>();
   tooltipEl?: HTMLElement;
+
+  get beatmaps() {
+    return this.props.discussionsState.beatmaps;
+  }
+
+  get beatmapset() {
+    return this.props.discussionsState.beatmapset;
+  }
+
+  get discussions() {
+    return this.props.discussionsState.discussions;
+  }
 
   componentDidMount = () => {
     // reset timestamp to null on clone
@@ -169,7 +177,7 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
     if (this.cache.nearbyDiscussions == null
       || this.cache.nearbyDiscussions.timestamp !== timestamp
       || this.cache.nearbyDiscussions.beatmap_id !== beatmapId) {
-      const relevantDiscussions = filter(this.props.discussions, this.isRelevantDiscussion);
+      const relevantDiscussions = [...this.discussions.values()].filter(this.isRelevantDiscussion);
       this.cache.nearbyDiscussions = {
         beatmap_id: beatmapId,
         discussions: nearbyDiscussions(relevantDiscussions, timestamp),
@@ -303,7 +311,7 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
 
     const disabled = this.props.readOnly || !canEdit;
 
-    const discussion = this.props.element.discussionId != null ? this.props.discussions[this.props.element.discussionId] : null;
+    const discussion = this.discussions.get(this.props.element.discussionId);
     const embedMofidiers = discussion != null
       ? postEmbedModifiers(discussion)
       : this.discussionType() === 'praise' ? 'praise' : null;

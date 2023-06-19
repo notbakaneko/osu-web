@@ -371,9 +371,7 @@ export default class Editor extends React.Component<Props, State> {
         const { element, ...otherProps } = props; // spreading ..props doesn't use the narrower type.
         el = (
           <EditorDiscussionComponent
-            beatmaps={this.sortedBeatmaps()}
-            beatmapset={this.props.beatmapset}
-            discussions={this.props.discussions}
+            discussionsState={this.props.discussionsState}
             editMode={this.editMode}
             element={element}
             readOnly={this.state.posting}

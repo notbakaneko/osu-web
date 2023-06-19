@@ -148,7 +148,18 @@ export default class DiscussionsState {
     // skipped discussions
     // - not privileged (deleted discussion)
     // - deleted beatmap
-    return keyBy(this.beatmapset.discussions.filter((discussion) => !isEmpty(discussion)), 'id') as Partial<Record<number, BeatmapsetDiscussionJsonForShow>>; // TODO need some typing to handle the not for show variant
+
+    // TODO need some typing to handle the not for show variant
+    // null part of the key so we can use .get(null)
+    const map = new Map<number | null | undefined, BeatmapsetDiscussionJsonForShow>();
+
+    for (const discussion of this.beatmapset.discussions) {
+      if (!isEmpty(discussion)) {
+        map.set(discussion.id, discussion);
+      }
+    }
+
+    return map;
   }
 
   @computed
@@ -396,7 +407,7 @@ export default class DiscussionsState {
           if (!discussion.can_be_resolved || discussion.resolved) return false;
 
           if (discussion.parent_id != null) {
-            const parentDiscussion = this.discussions[discussion.parent_id];
+            const parentDiscussion = this.discussions.get(discussion.parent_id);
             if (parentDiscussion != null && parentDiscussion.message_type === 'review') {
               reviewsWithPending.add(parentDiscussion);
             }

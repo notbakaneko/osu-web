@@ -266,7 +266,7 @@ export class Nominations extends React.Component<Props> {
   private parseEventData(event: BeatmapsetEventJson) {
     const user = event.user_id != null ? this.users[event.user_id] : null;
     const discussionId = discussionIdFromEvent(event);
-    const discussion = discussionId != null ? this.discussions[discussionId] : null;
+    const discussion = this.discussions.get(discussionId);
     const post = discussion?.posts[0];
 
     let link: React.ReactNode;
