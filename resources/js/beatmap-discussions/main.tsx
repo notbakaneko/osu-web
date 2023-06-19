@@ -242,10 +242,6 @@ export default class Main extends React.Component<Props> {
     this.props.container.dataset.beatmapsetDiscussionState = this.discussionsState.toJsonString();
   };
 
-  private readonly setCurrentPlaymode = (_event: unknown, { mode }: { mode: GameMode }) => {
-    this.discussionsState.update({ playmode: mode });
-  };
-
   @action
   private readonly toggleShowDeleted = () => {
     this.discussionsState.showDeleted = !this.discussionsState.showDeleted;
