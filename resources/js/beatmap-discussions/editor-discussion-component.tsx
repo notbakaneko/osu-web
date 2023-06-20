@@ -44,14 +44,6 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
   tooltipContent = React.createRef<HTMLScriptElement>();
   tooltipEl?: HTMLElement;
 
-  get beatmaps() {
-    return this.props.discussionsState.beatmaps;
-  }
-
-  get beatmapset() {
-    return this.props.discussionsState.beatmapset;
-  }
-
   get discussions() {
     return this.props.discussionsState.discussions;
   }
@@ -329,8 +321,8 @@ export default class EditorDiscussionComponent extends React.Component<Props> {
               className={`${bn}__selectors`}
               contentEditable={false} // workaround for slatejs 'Cannot resolve a Slate point from DOM point' nonsense
             >
-              <EditorBeatmapSelector {...this.props} disabled={disabled} element={this.props.element} />
-              <EditorIssueTypeSelector {...this.props} disabled={disabled} element={this.props.element} />
+              <EditorBeatmapSelector beatmaps={this.props.discussionsState.sortedBeatmaps} disabled={disabled} element={this.props.element} />
+              <EditorIssueTypeSelector beatmaps={this.props.discussionsState.sortedBeatmaps} disabled={disabled} element={this.props.element} />
               <div
                 className={`${bn}__timestamp`}
                 contentEditable={false} // workaround for slatejs 'Cannot resolve a Slate point from DOM point' nonsense

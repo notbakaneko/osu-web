@@ -1,7 +1,6 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import core from 'osu-core-singleton';
@@ -24,10 +23,6 @@ export default class NewReview extends React.Component<Props> {
   @observable private mounted = false;
   @observable private stickToHeight: number | undefined;
 
-  private get beatmaps() {
-    return this.props.discussionsState.beatmaps;
-  }
-
   private get beatmapset() {
     return this.props.discussionsState.beatmapset;
   }
@@ -37,10 +32,6 @@ export default class NewReview extends React.Component<Props> {
     if (this.mounted && this.pinned && this.stickToHeight != null) {
       return core.stickyHeader.headerHeight + this.stickToHeight;
     }
-  }
-
-  private get currentBeatmap() {
-    return this.props.discussionsState.currentBeatmap;
   }
 
   private get pinned() {
@@ -100,17 +91,10 @@ export default class NewReview extends React.Component<Props> {
                   </span>
                 </div>
                 {placeholder == null ? (
-                  <DiscussionsContext.Consumer>
-                    {
-                      (discussions) => (<Editor
-                        beatmaps={this.beatmaps}
-                        beatmapset={this.beatmapset}
-                        currentBeatmap={this.currentBeatmap}
-                        discussions={discussions}
-                        onFocus={this.handleFocus}
-                      />)
-                    }
-                  </DiscussionsContext.Consumer>
+                  <Editor
+                    discussionsState={this.props.discussionsState}
+                    onFocus={this.handleFocus}
+                  />
                 ) : <div className='beatmap-discussion-new__login-required'>{placeholder}</div>}
               </div>
             </div>

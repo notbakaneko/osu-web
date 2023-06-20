@@ -237,16 +237,14 @@ export class Discussion extends React.Component<Props> {
     return (
       <Post
         key={post.id}
-        beatmap={this.currentBeatmap}
-        beatmapset={this.beatmapset}
         discussion={this.props.discussion}
+        discussionsState={this.props.discussionsState}
         post={post}
         read={this.isRead(post)}
         readonly={this.props.readonly}
         resolvedSystemPostId={this.resolvedSystemPostId}
         type={type}
         user={user}
-        users={this.users}
       />
     );
   }

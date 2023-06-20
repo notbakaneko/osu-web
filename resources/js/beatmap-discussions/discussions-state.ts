@@ -9,7 +9,7 @@ import { action, computed, makeObservable, observable, toJS } from 'mobx';
 import { deletedUser } from 'models/user';
 import moment from 'moment';
 import core from 'osu-core-singleton';
-import { findDefault, group } from 'utils/beatmap-helper';
+import { findDefault, group, sortWithMode } from 'utils/beatmap-helper';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { switchNever } from 'utils/switch-never';
 import { Filter, filters } from './current-discussions';
@@ -133,7 +133,7 @@ export default class DiscussionsState {
 
     // TODO need some typing to handle the not for show variant
     // null part of the key so we can use .get(null)
-    const map = new Map<number | null, BeatmapsetDiscussionJsonForShow>();
+    const map = new Map<number | null | undefined, BeatmapsetDiscussionJsonForShow>();
 
     for (const discussion of this.beatmapset.discussions) {
       if (!isEmpty(discussion)) {
@@ -197,6 +197,13 @@ export default class DiscussionsState {
 
   get selectedUser() {
     return this.selectedUserId != null ? this.users[this.selectedUserId] : null;
+  }
+
+  get sortedBeatmaps() {
+    // TODO
+    // filter to only include beatmaps from the current discussion's beatmapset (for the modding profile page)
+    // const beatmaps = filter(this.props.beatmaps, this.isCurrentBeatmap);
+    return sortWithMode(Object.values(this.beatmaps));
   }
 
   @computed
