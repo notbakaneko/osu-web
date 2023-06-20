@@ -1,8 +1,6 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { BeatmapsContext } from 'beatmap-discussions/beatmaps-context';
-import { DiscussionsContext } from 'beatmap-discussions/discussions-context';
 import NewReview from 'beatmap-discussions/new-review';
 import { ReviewEditorConfigContext } from 'beatmap-discussions/review-editor-config-context';
 import BackToTop from 'components/back-to-top';
@@ -103,30 +101,26 @@ export default class Main extends React.Component<Props> {
             users={this.discussionsState.users}
           />
         ) : (
-          <DiscussionsContext.Provider value={this.discussionsState.discussions}>
-            <BeatmapsContext.Provider value={this.discussionsState.beatmaps}>
-              <ReviewEditorConfigContext.Provider value={this.reviewsConfig}>
-                {this.discussionsState.currentMode === 'reviews' ? (
-                  <NewReview
-                    discussionsState={this.discussionsState}
-                    innerRef={this.newDiscussionRef}
-                    stickTo={this.modeSwitcherRef}
-                  />
-                ) : (
-                  <NewDiscussion
-                    autoFocus={this.focusNewDiscussion}
-                    discussionsState={this.discussionsState}
-                    innerRef={this.newDiscussionRef}
-                    stickTo={this.modeSwitcherRef}
+          <ReviewEditorConfigContext.Provider value={this.reviewsConfig}>
+            {this.discussionsState.currentMode === 'reviews' ? (
+              <NewReview
+                discussionsState={this.discussionsState}
+                innerRef={this.newDiscussionRef}
+                stickTo={this.modeSwitcherRef}
+              />
+            ) : (
+              <NewDiscussion
+                autoFocus={this.focusNewDiscussion}
+                discussionsState={this.discussionsState}
+                innerRef={this.newDiscussionRef}
+                stickTo={this.modeSwitcherRef}
 
-                  />
-                )}
-                <Discussions
-                  discussionsState={this.discussionsState}
-                />
-              </ReviewEditorConfigContext.Provider>
-            </BeatmapsContext.Provider>
-          </DiscussionsContext.Provider>
+              />
+            )}
+            <Discussions
+              discussionsState={this.discussionsState}
+            />
+          </ReviewEditorConfigContext.Provider>
         )}
         <BackToTop />
       </>

@@ -219,6 +219,7 @@ export class Discussion extends React.Component<Props> {
         {this.canBeRepliedTo && (
           <NewReply
             discussion={this.props.discussion}
+            discussionsState={this.props.discussionsState}
           />
         )}
       </div>

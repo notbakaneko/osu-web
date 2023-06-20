@@ -337,7 +337,7 @@ export default class Post extends React.Component<Props> {
       <div className={`${bn}__message-container`}>
         {this.isReview ? (
           <div className={`${bn}__message`}>
-            <ReviewPost post={this.props.post} />
+            <ReviewPost discussionsState={this.props.discussionsState} post={this.props.post} />
           </div>
         ) : (
           <div ref={this.messageBodyRef} className={`${bn}__message`}>
