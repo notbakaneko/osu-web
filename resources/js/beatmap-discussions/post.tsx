@@ -201,7 +201,7 @@ export default class Post extends React.Component<Props> {
   };
 
   private readonly handleMarkRead = () => {
-    $.publish('beatmapDiscussionPost:markRead', { id: this.props.post.id });
+    this.props.discussionsState.markAsRead(this.props.post.id);
   };
 
   @action

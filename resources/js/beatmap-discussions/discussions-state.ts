@@ -349,6 +349,15 @@ export default class DiscussionsState {
     return this.presentDiscussions.filter((discussion) => (discussion.beatmap_id == null || discussion.beatmap_id === beatmapId)) as DiscussionsAlias;
   }
 
+  @action
+  markAsRead(ids: number | number[]) {
+    if (Array.isArray(ids)) {
+      ids.forEach((id) => this.readPostIds.add(id));
+    } else {
+      this.readPostIds.add(ids);
+    }
+  }
+
   toJsonString() {
     return JSON.stringify(toJS(this), (_key, value) => {
       if (value instanceof Set || value instanceof Map) {

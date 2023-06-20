@@ -60,7 +60,6 @@ export default class Main extends React.Component<Props> {
   componentDidMount() {
     $.subscribe(`beatmapsetDiscussions:update.${this.eventId}`, this.update);
     $.subscribe(`beatmapDiscussion:jump.${this.eventId}`, this.jumpTo);
-    $.subscribe(`beatmapDiscussionPost:markRead.${this.eventId}`, this.markPostRead);
     $.subscribe(`beatmapDiscussionPost:toggleShowDeleted.${this.eventId}`, this.toggleShowDeleted);
 
     $(document).on(`ajax:success.${this.eventId}`, '.js-beatmapset-discussion-update', this.ujsDiscussionUpdate);
@@ -213,17 +212,6 @@ export default class Main extends React.Component<Props> {
     if (target?.discussionId != null) {
       this.jumpTo(null, { id: target.discussionId, postId: target.postId });
     }
-  };
-
-  @action
-  private readonly markPostRead = (_event: unknown, { id }: { id: number | number[] }) => {
-    if (Array.isArray(id)) {
-      id.forEach((i) => this.discussionsState.readPostIds.add(i));
-    } else {
-      this.discussionsState.readPostIds.add(id);
-    }
-
-    // setState
   };
 
   private readonly saveStateToContainer = () => {

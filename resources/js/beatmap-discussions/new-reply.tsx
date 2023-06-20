@@ -18,11 +18,13 @@ import { trans } from 'utils/lang';
 import { hideLoadingOverlay, showLoadingOverlay } from 'utils/loading-overlay';
 import { present } from 'utils/string';
 import DiscussionMessageLengthCounter from './discussion-message-length-counter';
+import DiscussionsState from './discussions-state';
 
 const bn = 'beatmap-discussion-post';
 
 interface Props {
   discussion: BeatmapsetDiscussionJson;
+  discussionsState: DiscussionsState;
 }
 
 const actionIcons = {
@@ -157,8 +159,8 @@ export class NewReply extends React.Component<Props> {
       .done((json) => runInAction(() => {
         this.editing = false;
         this.setMessage('');
-        $.publish('beatmapDiscussionPost:markRead', { id: json.beatmap_discussion_post_ids });
-        $.publish('beatmapsetDiscussions:update', { beatmapset: json.beatmapset });
+        this.props.discussionsState.markAsRead(json.beatmap_discussion_post_ids);
+        this.props.discussionsState.update({ beatmapset: json.beatmapset });
       }))
       .fail(onError)
       .always(action(() => {
