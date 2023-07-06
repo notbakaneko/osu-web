@@ -4,20 +4,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
-    'confirm_new' => '',
-    'new' => '',
-    'none' => '',
+    'confirm_new' => 'Skapa ett nytt IRC-lösenord?',
+    'new' => 'Nytt Legacy IRC-lösenord',
+    'none' => 'IRC-lösenord inte angett.',
 
     'form' => [
-        'server_host' => '',
-        'server_port' => '',
-        'token' => '',
-        'username' => '',
+        'server_host' => 'server',
+        'server_port' => 'port',
+        'token' => 'serverlösenord',
+        'username' => 'användarnamn',
     ],
 
     'view' => [
-        'hide' => '',
-        'show' => '',
-        'delete' => '',
+        'hide' => 'Dölj Lösenord',
+        'show' => 'Visa Lösenord',
+        'delete' => 'Ta bort',
     ],
 ];

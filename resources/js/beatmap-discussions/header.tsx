@@ -21,8 +21,8 @@ import { observer } from 'mobx-react';
 import { deletedUser } from 'models/user';
 import core from 'osu-core-singleton';
 import * as React from 'react';
-import { getArtist, getTitle } from 'utils/beatmap-helper';
 import { makeUrl } from 'utils/beatmapset-discussion-helper';
+import { getArtist, getTitle } from 'utils/beatmapset-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
 import BeatmapList from './beatmap-list';
@@ -202,7 +202,9 @@ export class Header extends React.Component<Props> {
               <UserFilter
                 discussionsState={this.discussionsState}
               />
-              <div className={`${bn}__stats`}>{this.renderStats()}</div>
+              <div className={`${bn}__stats`}>
+                {statTypes.map(this.renderType)}
+              </div>
             </div>
           </div>
           <div className='u-relative'>
@@ -212,7 +214,7 @@ export class Header extends React.Component<Props> {
             />
             <div className={`${bn}__beatmap-stats`}>
               <div className={`${bn}__guest`}>
-                {this.currentBeatmap.user_id !== this.beatmapset.user_id ? (
+                {this.currentBeatmap.user_id !== this.beatmapset.user_id && (
                   <span>
                     <StringWithComponent
                       mappings={{
@@ -221,7 +223,7 @@ export class Header extends React.Component<Props> {
                       pattern={trans('beatmaps.discussions.guest')}
                     />
                   </span>
-                ) : null}
+                )}
               </div>
               <BeatmapBasicStats beatmap={this.currentBeatmap} beatmapset={this.beatmapset} />
             </div>
@@ -229,10 +231,6 @@ export class Header extends React.Component<Props> {
         </div>
       </div>
     );
-  }
-
-  private renderStats() {
-    return statTypes.map(this.renderType);
   }
 
   private readonly renderType = (type: Filter) => {

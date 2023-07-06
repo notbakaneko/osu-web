@@ -71,6 +71,11 @@ export default class Post extends React.Component<Props> {
 
   @computed
   private get canEdit() {
+    // no information available (non-discussion pages), return false.
+    if (!('discussion_locked' in this.beatmapset)) {
+      return false;
+    }
+
     return this.isAdmin
       || (!downloadLimited(this.beatmapset)
         && this.isOwn

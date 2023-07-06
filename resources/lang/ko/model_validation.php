@@ -113,9 +113,9 @@ return [
         'exists' => '현재는 유저당 오직 한 개의 API 키만 제공됩니다.',
 
         'attributes' => [
-            'api_key' => '',
-            'app_name' => '',
-            'app_url' => '',
+            'api_key' => 'api key',
+            'app_name' => '애플리케이션 이름',
+            'app_url' => '애플리케이션 URL',
         ],
     ],
 
@@ -134,7 +134,7 @@ return [
     'user' => [
         'contains_username' => '비밀번호는 유저 이름을 포함할 수 없습니다.',
         'email_already_used' => '이미 사용중인 이메일 주소입니다.',
-        'email_not_allowed' => '이메일 주소가 허용되지 않습니다.',
+        'email_not_allowed' => '허용되지 않은 이메일 주소입니다.',
         'invalid_country' => '해당하는 국가가 데이터베이스에 존재하지 않습니다.',
         'invalid_discord' => 'Discord 유저 이름이 올바르지 않습니다.',
         'invalid_email' => "이메일 주소가 잘못되었습니다.",
@@ -175,7 +175,7 @@ return [
 
     'user_report' => [
         'no_ranked_beatmapset' => '랭크된 비트맵은 신고할 수 없습니다.',
-        'not_in_channel' => '',
+        'not_in_channel' => '이 채널에 있지 않습니다.',
         'reason_not_valid' => ':reason 은(는) 이 신고 형식에 맞지 않습니다.',
         'self' => "자기 자신은 신고할 수 없습니다!",
     ],

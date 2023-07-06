@@ -4,27 +4,27 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
-    'new' => '',
-    'none' => '',
+    'new' => 'Nowy klucz starszego API',
+    'none' => 'Brak klucza.',
 
     'docs' => [
-        '_' => '',
-        'github' => '',
+        '_' => 'Dokumentacja jest dostępna na :github.',
+        'github' => 'GitHubie',
     ],
 
     'form' => [
-        'create' => '',
+        'create' => 'Utwórz klucz',
     ],
 
     'view' => [
-        'hide' => '',
-        'show' => '',
-        'delete' => '',
+        'hide' => 'Ukryj klucz',
+        'show' => 'Pokaż klucz',
+        'delete' => 'Usuń',
     ],
 
     'warning' => [
-        'line1' => '',
-        'line2' => "",
-        'line3' => '',
+        'line1' => 'Nie udostępniaj tego innym użytkownikom.',
+        'line2' => "Jest to równoznaczne z upublicznieniem swojego hasła.",
+        'line3' => 'Twoje konto może zostać przejęte.',
     ],
 ];

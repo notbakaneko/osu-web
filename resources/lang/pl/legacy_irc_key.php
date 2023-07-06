@@ -4,20 +4,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
-    'confirm_new' => '',
-    'new' => '',
-    'none' => '',
+    'confirm_new' => 'Czy na pewno chcesz utworzyć nowe hasło IRC?',
+    'new' => 'Nowe hasło starszego IRC',
+    'none' => 'Brak ustawionego hasła IRC.',
 
     'form' => [
-        'server_host' => '',
-        'server_port' => '',
-        'token' => '',
-        'username' => '',
+        'server_host' => 'serwer',
+        'server_port' => 'port',
+        'token' => 'haslo do serwera',
+        'username' => 'nazwa użytkownika',
     ],
 
     'view' => [
-        'hide' => '',
-        'show' => '',
-        'delete' => '',
+        'hide' => 'Ukryj hasło',
+        'show' => 'Pokaż hasło',
+        'delete' => 'Usuń',
     ],
 ];
