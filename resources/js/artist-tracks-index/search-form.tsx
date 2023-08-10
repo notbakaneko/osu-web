@@ -234,8 +234,8 @@ export default class SearchForm extends React.Component<Props> {
       throw new Error('incorrect input field type');
     }
 
-    const param = input.dataset.param as ArtistTrackSearchNumberRangeParam;
-    const range = input.dataset.range as EsRangeField;
+    const param = input.dataset.param as ArtistTrackSearchNumberRangeParam | undefined;
+    const range = input.dataset.range as EsRangeField | undefined;
 
     if (param == null || range == null) {
       throw new Error('missing input field dataset');
@@ -243,7 +243,7 @@ export default class SearchForm extends React.Component<Props> {
 
     const value = presence(input.value);
 
-    if (value != null && input.pattern != null && (RegExp(input.pattern).exec(value)) == null) {
+    if (value != null && (RegExp(input.pattern).exec(value)) == null) {
       return;
     }
 
