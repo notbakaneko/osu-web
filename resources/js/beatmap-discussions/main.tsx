@@ -201,19 +201,18 @@ export default class Main extends React.Component<Props> {
 
   private jumpToAfterRender(discussionId: number, postId?: number) {
     const attribute = postId != null ? `data-post-id='${postId}'` : `data-id='${discussionId}'`;
-    const target = $(`.js-beatmap-discussion-jump[${attribute}]`);
+    const target = document.querySelector(`.js-beatmap-discussion-jump[${attribute}]`);
 
-    if (target.length === 0) return;
-    const offset = target.offset();
+    if (target == null || this.modeSwitcherRef.current == null || this.newDiscussionRef.current == null) return;
 
-    if (offset == null || this.modeSwitcherRef.current == null || this.newDiscussionRef.current == null) return;
-
-    let offsetTop = offset.top - this.modeSwitcherRef.current.getBoundingClientRect().height;
+    let margin = this.modeSwitcherRef.current.getBoundingClientRect().height;
     if (this.discussionsState.pinnedNewDiscussion) {
-      offsetTop -= this.newDiscussionRef.current.getBoundingClientRect().height;
+      margin += this.newDiscussionRef.current.getBoundingClientRect().height;
     }
 
-    $(window).stop().scrollTo(core.stickyHeader.scrollOffset(offsetTop), 500);
+    document.documentElement.style.setProperty('--scroll-margin-top', `${margin}px`);
+
+    target.scrollIntoView(true);
   }
 
   private readonly jumpToClick = (e: JQuery.TriggeredEvent<Document, unknown, HTMLElement, HTMLElement>) => {
