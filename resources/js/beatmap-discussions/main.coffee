@@ -394,7 +394,8 @@ export class Main extends React.PureComponent
       # avoid smooth scrolling to avoid triggering lazy loaded images.
       # FIXME: Safari still has the issue where images just out of view get loaded and push the page down
       # because it doesn't anchor the scroll position.
-      target.scrollIntoView behavior: 'instant', block: 'start', inline: 'nearest'
+      Timeout.set 0, ->
+        target.scrollIntoView behavior: 'instant', block: 'start', inline: 'nearest'
 
     @update null, newState
 
