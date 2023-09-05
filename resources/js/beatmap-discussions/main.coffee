@@ -99,6 +99,8 @@ export class Main extends React.PureComponent
     $.unsubscribe ".#{@eventId}"
     $(document).off ".#{@eventId}"
 
+    document.documentElement.style.removeProperty '--scroll-padding-top'
+
     Timeout.clear(timeout) for _name, timeout of @timeouts
     xhr?.abort() for _name, xhr of @xhr
     @disposers.forEach (disposer) => disposer?()
@@ -385,17 +387,22 @@ export class Main extends React.PureComponent
 
       return unless target? && @modeSwitcherRef.current? && @newDiscussionRef.current?
 
-      margin = @modeSwitcherRef.current.getBoundingClientRect().height
-      margin += @newDiscussionRef.current.getBoundingClientRect().height if @state.pinnedNewDiscussion
+      # margin = @modeSwitcherRef.current.getBoundingClientRect().height
+      # margin += @newDiscussionRef.current.getBoundingClientRect().height if @state.pinnedNewDiscussion
 
-      discussionsElement = document.querySelector('.js-beatmap-discussions')
-      discussionsElement?.style.setProperty '--scroll-margin-top', "#{margin}px"
+      # bottom = @modeSwitcherRef.current.getBoundingClientRect().height
+      bottom = 86
+
+      document.documentElement.style.setProperty '--scroll-padding-top', "#{bottom}px"
+
+      # discussionsElement = document.querySelector('.js-beatmap-discussions')
+      # discussionsElement?.style.setProperty '--scroll-margin-top', "#{margin}px"
 
       # avoid smooth scrolling to avoid triggering lazy loaded images.
       # FIXME: Safari still has the issue where images just out of view get loaded and push the page down
       # because it doesn't anchor the scroll position.
-      Timeout.set 0, ->
-        target.scrollIntoView behavior: 'instant', block: 'start', inline: 'nearest'
+      # Timeout.set 0, ->
+      target.scrollIntoView behavior: 'instant', block: 'start', inline: 'nearest'
 
     @update null, newState
 

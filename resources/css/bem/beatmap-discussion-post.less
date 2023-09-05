@@ -11,8 +11,9 @@
 
   @_content-gutter-base: 15px;
 
-  scroll-margin-top: var(--scroll-margin-top, 36px);
   transition: background-color .1s ease-in-out;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   &--deleted {
     opacity: 0.5;
@@ -109,7 +110,7 @@
   &__content {
     overflow-anchor: none;
     display: flex;
-    padding: 10px @_content-gutter-base;
+    padding: 0 @_content-gutter-base;
     flex-direction: column;
     flex: none;
     min-width: 0;

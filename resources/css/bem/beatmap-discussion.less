@@ -3,14 +3,12 @@
 
 .beatmap-discussion {
   @_top: beatmap-discussion;
-
   @_top-padding-y: 10px;
   @_top-padding-x: 15px;
 
   --base-bg: hsl(var(--hsl-b4));
   .own-layer();
   display: flex;
-  scroll-margin-top: var(--scroll-margin-top, 36px);
 
   &--deleted {
     opacity: 0.5;
@@ -155,7 +153,6 @@
   }
 
   &__top {
-    // overflow-anchor: none;
     background-color: @osu-colour-b3;
     display: grid;
     grid-template-areas: "user actions" "message message";
