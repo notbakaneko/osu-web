@@ -97,7 +97,7 @@ export class BeatmapsetSearchFilters {
     makeObservable(this);
 
     intercept(this, 'query', (change) => {
-      change.newValue = presence((change.newValue as FilterValueType)?.trim());
+      change.newValue = presence(change.newValue?.trim()) ?? null;
 
       return change;
     });
