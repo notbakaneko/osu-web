@@ -17,6 +17,7 @@ use App\Models\UserDonation;
 use Auth;
 use Jenssegers\Agent\Agent;
 use Request;
+use Ds\Collection;
 
 /**
  * @group Home
