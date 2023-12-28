@@ -24,8 +24,8 @@
     "@types/jqueryui": "^1.12.16",
     "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.185",
-    "@types/react": "^17.0.40",
-    "@types/react-dom": "^17.0.13",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
     "@types/react-transition-group": "^4.4.4",
     "@types/timeago": "^1.6.0",
     "@types/unist": "^2.0.6",
@@ -120,6 +120,7 @@
     "webpack-build-notifier": "^2.3.0"
   },
   "resolutions": {
+    "@types/react": "^18.2.45",
     "is-plain-object": "^5.0.0"
   }
 }
