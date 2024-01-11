@@ -94,7 +94,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        php: ['8.2']
+        php: ['8.3']
     name: Tests
     runs-on: ubuntu-latest
     steps:
@@ -120,7 +120,7 @@ jobs:
       - name: Set php version
         uses: shivammathur/setup-php@v2
         with:
-          extensions: redis, swoole
+          extensions: ds, redis, swoole
           tools: composer:v2
           php-version: ${{ matrix.php }}
           coverage: none
