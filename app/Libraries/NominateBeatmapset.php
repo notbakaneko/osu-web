@@ -15,20 +15,29 @@ use App\Models\User;
 
 class NominateBeatmapset
 {
+    private bool $isLegacyNominationMode;
+
+    /** @var string[] */
+    private array $playmodesStr;
+
+
     public function __construct(private Beatmapset $beatmapset, private User $user, private array $playmodes)
     {
+        $this->playmodesStr = $beatmapset->playmodesStr();
     }
 
     public function handle()
     {
         $this->beatmapset->resetMemoized(); // ensure we're not using cached/stale event data
 
-        $this->assertValid();
+        $this->assertValidState();
 
-        if ($this->beatmapset->isLegacyNominationMode()) {
+        $this->isLegacyNominationMode = $this->beatmapset->isLegacyNominationMode();
+
+        if ($this->isLegacyNominationMode) {
             $this->nominateLegacy($this->user);
         } else {
-            $playmodes = array_values(array_intersect($this->beatmapset->playmodesStr(), $this->playmodes));
+            $playmodes = array_values(array_intersect($this->playmodesStr, $this->playmodes));
 
             if (empty($playmodes)) {
                 throw new InvariantException(osu_trans('beatmapsets.nominate.hybrid_requires_modes'));
@@ -53,13 +62,13 @@ class NominateBeatmapset
                 'type' => BeatmapsetEvent::NOMINATE,
                 'user_id' => $this->user->getKey(),
             ];
-            if (!$this->beatmapset->isLegacyNominationMode()) {
+            if (!$this->isLegacyNominationMode) {
                 $eventParams['comment'] = ['modes' => $playmodes];
             }
             $event = $this->beatmapset->events()->create($eventParams);
             $this->beatmapset->beatmapsetNominations()->create([
                 'event_id' => $event->getKey(),
-                'modes' => $this->beatmapset->isLegacyNominationMode() ? null : $playmodes,
+                'modes' => $this->isLegacyNominationMode ? null : $playmodes,
                 'user_id' => $this->user->getKey(),
             ]);
 
@@ -73,7 +82,7 @@ class NominateBeatmapset
         }
     }
 
-    private function assertValid()
+    private function assertValidState()
     {
         if (!$this->beatmapset->isPending()) {
             throw new InvariantException(osu_trans('beatmaps.nominations.incorrect_state'));
@@ -94,9 +103,8 @@ class NominateBeatmapset
         // in legacy mode, we check if a user can nominate for _any_ of the beatmapset's playmodes
         $canNominate = false;
         $canFullNominate = false;
-        $playmodesStr = $this->beatmapset->playmodesStr();
 
-        foreach ($playmodesStr as $mode) {
+        foreach ($this->playmodesStr as $mode) {
             if ($user->isFullBN($mode) || $user->isNAT($mode)) {
                 $canNominate = true;
                 $canFullNominate = true;
@@ -106,7 +114,7 @@ class NominateBeatmapset
         }
 
         if (!$canNominate) {
-            throw new InvariantException(osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => implode(', ', $playmodesStr)]));
+            throw new InvariantException(osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => implode(', ', $this->playmodesStr)]));
         }
 
         if (!$canFullNominate && $this->beatmapset->requiresFullBNNomination()) {
@@ -119,7 +127,7 @@ class NominateBeatmapset
         $currentNominations = $this->beatmapset->currentNominationCount();
         $requiredNominations = $this->beatmapset->requiredNominationCount();
 
-        if ($this->beatmapset->isLegacyNominationMode()) {
+        if ($this->isLegacyNominationMode) {
             return $currentNominations >= $requiredNominations;
         } else {
             $modesSatisfied = 0;
@@ -132,6 +140,7 @@ class NominateBeatmapset
                     $modesSatisfied++;
                 }
             }
+
             return $modesSatisfied >= $this->beatmapset->playmodeCount();
         }
     }
