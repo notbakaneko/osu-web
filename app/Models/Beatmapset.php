@@ -722,25 +722,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
             }
 
             if ($this->isLegacyNominationMode()) {
-                // in legacy mode, we check if a user can nominate for _any_ of the beatmapset's playmodes
-                $canNominate = false;
-                $canFullNominate = false;
-                foreach ($this->playmodesStr() as $mode) {
-                    if ($user->isFullBN($mode) || $user->isNAT($mode)) {
-                        $canNominate = true;
-                        $canFullNominate = true;
-                    } else if ($user->isLimitedBN($mode)) {
-                        $canNominate = true;
-                    }
-                }
-
-                if (!$canNominate) {
-                    throw new InvariantException(osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => implode(', ', $this->playmodesStr())]));
-                }
-
-                if (!$canFullNominate && $this->requiresFullBNNomination()) {
-                    throw new InvariantException(osu_trans('beatmapsets.nominate.full_bn_required'));
-                }
+                $this->nominateLegacy($user);
             } else {
                 $playmodes = array_values(array_intersect($this->playmodesStr(), $playmodes));
 
@@ -1584,5 +1566,28 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
     private function getTitleUnicode()
     {
         return $this->getRawAttribute('title_unicode') ?? $this->title;
+    }
+
+    private function nominateLegacy(User $user)
+    {
+        // in legacy mode, we check if a user can nominate for _any_ of the beatmapset's playmodes
+        $canNominate = false;
+        $canFullNominate = false;
+        foreach ($this->playmodesStr() as $mode) {
+            if ($user->isFullBN($mode) || $user->isNAT($mode)) {
+                $canNominate = true;
+                $canFullNominate = true;
+            } else if ($user->isLimitedBN($mode)) {
+                $canNominate = true;
+            }
+        }
+
+        if (!$canNominate) {
+            throw new InvariantException(osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => implode(', ', $this->playmodesStr())]));
+        }
+
+        if (!$canFullNominate && $this->requiresFullBNNomination()) {
+            throw new InvariantException(osu_trans('beatmapsets.nominate.full_bn_required'));
+        }
     }
 }
