@@ -1040,13 +1040,19 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
             ? $GLOBALS['cfg']['osu']['beatmapset']['required_nominations']
             : $GLOBALS['cfg']['osu']['beatmapset']['required_nominations_hybrid'];
 
-        if ($summary || $this->isLegacyNominationMode()) {
+        if ($this->isLegacyNominationMode()) {
             return $playmodeCount * $baseRequirement;
         }
 
+        if ($summary) {
+            // 2 for main, 1 for others
+            return $baseRequirement + ($playmodeCount - 1);
+        }
+
+        $mainPlaymode = $this->mainRuleset()->legacyName();
         $requiredNominations = [];
         foreach ($this->playmodesStr() as $playmode) {
-            $requiredNominations[$playmode] = $baseRequirement;
+            $requiredNominations[$playmode] = $playmode === $mainPlaymode ? $baseRequirement : 1;
         }
 
         return $requiredNominations;
