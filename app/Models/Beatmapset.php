@@ -1105,6 +1105,28 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         return $this->beatmapsetNominations()->current()->exists();
     }
 
+    public function mainRuleset(): Ruleset
+    {
+        $baseQuery = $this->beatmaps()
+            ->groupBy('playmode')
+            ->select('playmode', DB::raw('count(*) as total'))
+            ->orderBy('total', 'desc')
+            ->orderBy('playmode', 'asc');
+
+        $groups = $baseQuery->get();
+
+        // clear winner in playmode counts exists.
+        if ($groups->count() === 1 || $groups[0]->getRawAttribute('total') > $groups[1]->getRawAttribute('total')) {
+            return Ruleset::from($groups[0]->playmode);
+        }
+
+        // maps by host mapper
+        $groupedHostOnly = $baseQuery->where('user_id', $this->user_id)->get();
+
+        // most playmodes by host mapper; otherwise, pick the first one if no clear winner.
+        return Ruleset::from($groupedHostOnly[0]->playmode);
+    }
+
     /**
      * This will cause additional query if `difficulty_names` column is blank and beatmaps relation isn't preloaded.
      */
