@@ -535,10 +535,10 @@ class BeatmapsetTest extends TestCase
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isQualified());
+        $this->assertFalse($result['result']);
+        $this->assertTrue($beatmapset->fresh()->isPending());
 
-        Bus::assertDispatched(CheckBeatmapsetCovers::class);
+        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
     //end region
@@ -597,12 +597,7 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->beatmapsetFactory();
 
         foreach ($rulesets as $ruleset) {
-            $beatmapset = $beatmapset->has(
-                Beatmap::factory()->state(fn (array $attr, Beatmapset $set) => [
-                    'playmode' => $ruleset->value,
-                    'user_id' => $set->user_id,
-                ])
-            );
+            $beatmapset = $beatmapset->withBeatmaps($ruleset);
         }
 
         return $beatmapset->create();
