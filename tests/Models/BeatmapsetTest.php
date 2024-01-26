@@ -31,7 +31,7 @@ class BeatmapsetTest extends TestCase
     public function testLove()
     {
         $user = User::factory()->create();
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
 
         $notifications = Notification::count();
         $userNotifications = UserNotification::count();
@@ -54,7 +54,7 @@ class BeatmapsetTest extends TestCase
     public function testLoveBeatmapApprovedStates(): void
     {
         $user = User::factory()->create();
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
 
         $specifiedBeatmap = $beatmapset->beatmaps()->first();
         $beatmapset->beatmaps()->saveMany([
@@ -78,14 +78,14 @@ class BeatmapsetTest extends TestCase
 
     public function testMainRulesetSingleBeatmap()
     {
-        $beatmapset = Beatmapset::factory()->owner()->pending()->withBeatmaps(Ruleset::taiko)->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps(Ruleset::taiko)->create();
 
         $this->assertSame(Ruleset::taiko, $beatmapset->mainRuleset());
     }
 
     public function testMainRulesetHybridBeatmapset()
     {
-        $beatmapset = Beatmapset::factory()->owner()->pending()
+        $beatmapset = $this->beatmapsetFactory()
             ->withBeatmaps(Ruleset::osu, 1)
             ->withBeatmaps(Ruleset::taiko, 2)
             ->withBeatmaps(Ruleset::catch, 3)
@@ -99,7 +99,7 @@ class BeatmapsetTest extends TestCase
     {
         $guest = User::factory()->create();
 
-        $beatmapset = Beatmapset::factory()->owner()->pending()
+        $beatmapset = $this->beatmapsetFactory()
             ->withBeatmaps(Ruleset::osu, 1, $guest)
             ->withBeatmaps(Ruleset::taiko, 3, $guest)
             ->withBeatmaps(Ruleset::taiko, 1)
@@ -115,7 +115,7 @@ class BeatmapsetTest extends TestCase
     {
         $guest = User::factory()->create();
 
-        $beatmapset = Beatmapset::factory()->owner()->pending()
+        $beatmapset = $this->beatmapsetFactory()
             ->withBeatmaps(Ruleset::osu, 1)
             ->withBeatmaps(Ruleset::taiko, 1, $guest)
             ->withBeatmaps(Ruleset::taiko, 1)
@@ -131,7 +131,7 @@ class BeatmapsetTest extends TestCase
     // region single-playmode beatmap sets
     public function testNominate()
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $user = User::factory()->withGroup('bng', $beatmapset->playmodesStr())->create();
 
         $notifications = Notification::count();
@@ -150,7 +150,7 @@ class BeatmapsetTest extends TestCase
 
     public function testNominateNATAnyRuleset(): void
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $user = User::factory()->withGroup('nat', [])->create();
 
         $this->expectCountChange(fn () => $beatmapset->nominations, 1);
@@ -162,7 +162,7 @@ class BeatmapsetTest extends TestCase
 
     public function testQualify()
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $user = User::factory()->withGroup('bng', $beatmapset->playmodesStr())->create();
 
         $notifications = Notification::count();
@@ -184,7 +184,7 @@ class BeatmapsetTest extends TestCase
 
     public function testLimitedBNGQualifyingNominationBNGNominated()
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng', $beatmapset->playmodesStr()[0]);
 
         $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
@@ -201,7 +201,7 @@ class BeatmapsetTest extends TestCase
 
     public function testLimitedBNGQualifyingNominationNATNominated()
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $this->fillNominationsExceptLastForMode($beatmapset, 'nat', $beatmapset->playmodesStr()[0]);
 
         $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
@@ -218,7 +218,7 @@ class BeatmapsetTest extends TestCase
 
     public function testLimitedBNGQualifyingNominationLimitedBNGNominated()
     {
-        $beatmapset = $this->beatmapsetFactory()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', $beatmapset->playmodesStr()[0]);
 
         $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
@@ -231,7 +231,7 @@ class BeatmapsetTest extends TestCase
     }
     public function testNominateWithDefaultMetadata()
     {
-        $beatmapset = $this->beatmapsetFactory()->state([
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->state([
             'genre_id' => Genre::UNSPECIFIED,
             'language_id' => Language::UNSPECIFIED,
         ])->create();
@@ -247,7 +247,7 @@ class BeatmapsetTest extends TestCase
      */
     public function testRank(string $state, bool $success): void
     {
-        $beatmapset = $this->beatmapsetFactory()->$state()->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->$state()->create();
 
         $otherUser = User::factory()->create();
 
@@ -280,7 +280,7 @@ class BeatmapsetTest extends TestCase
      */
     public function testRankWithOpenIssue(string $type): void
     {
-        $beatmapset = $this->beatmapsetFactory()
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()
             ->qualified()
             ->has(BeatmapDiscussion::factory()->general()->messageType($type))->create();
 
@@ -589,17 +589,12 @@ class BeatmapsetTest extends TestCase
 
     private function beatmapsetFactory(): BeatmapsetFactory
     {
-        return Beatmapset::factory()
-            ->owner()
-            ->pending()
-            ->has(Beatmap::factory()->state(fn (array $attr, Beatmapset $set) => ['user_id' => $set->user_id]));
+        return Beatmapset::factory()->owner()->pending();
     }
 
     private function createHybridBeatmapset($rulesets = [Ruleset::osu, Ruleset::taiko]): Beatmapset
     {
-        $beatmapset = Beatmapset::factory()
-            ->owner()
-            ->pending();
+        $beatmapset = $this->beatmapsetFactory();
 
         foreach ($rulesets as $ruleset) {
             $beatmapset = $beatmapset->has(

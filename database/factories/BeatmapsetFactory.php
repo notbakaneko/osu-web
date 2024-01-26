@@ -114,12 +114,12 @@ class BeatmapsetFactory extends Factory
                 ->state(['user_id' => User::factory()->withGroup('bng', array_keys(Beatmap::MODES))]));
     }
 
-    public function withBeatmaps(Ruleset $ruleset, int $count = 1, ?User $guestMapper = null)
+    public function withBeatmaps(?Ruleset $ruleset = null, int $count = 1, ?User $guestMapper = null)
     {
         return $this
             ->has(Beatmap::factory()
             ->count($count)
-            ->ruleset($ruleset)
+            ->ruleset($ruleset ?? array_rand_val(Ruleset::cases()))
             ->state(fn (array $attr, Beatmapset $set) => [
                 'user_id' => $guestMapper?->getKey() ?? $set->user_id
             ]));
