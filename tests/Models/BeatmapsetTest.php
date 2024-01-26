@@ -76,6 +76,58 @@ class BeatmapsetTest extends TestCase
         Bus::assertDispatched(CheckBeatmapsetCovers::class);
     }
 
+    public function testMainRulesetSingleBeatmap()
+    {
+        $beatmapset = Beatmapset::factory()->owner()->pending()->withBeatmaps(Ruleset::taiko)->create();
+
+        $this->assertSame(Ruleset::taiko, $beatmapset->mainRuleset());
+    }
+
+    public function testMainRulesetHybridBeatmapset()
+    {
+        $beatmapset = Beatmapset::factory()->owner()->pending()
+            ->withBeatmaps(Ruleset::osu, 1)
+            ->withBeatmaps(Ruleset::taiko, 2)
+            ->withBeatmaps(Ruleset::catch, 3)
+            ->withBeatmaps(Ruleset::mania, 1)
+            ->create();
+
+        $this->assertSame(Ruleset::catch, $beatmapset->mainRuleset());
+    }
+
+    public function testMainRulesetHybridBeatmapsetWithGuestMappers()
+    {
+        $guest = User::factory()->create();
+
+        $beatmapset = Beatmapset::factory()->owner()->pending()
+            ->withBeatmaps(Ruleset::osu, 1, $guest)
+            ->withBeatmaps(Ruleset::taiko, 3, $guest)
+            ->withBeatmaps(Ruleset::taiko, 1)
+            ->withBeatmaps(Ruleset::catch, 2, $guest)
+            ->withBeatmaps(Ruleset::catch, 2)
+            ->withBeatmaps(Ruleset::mania, 1)
+            ->create();
+
+        $this->assertSame(Ruleset::catch, $beatmapset->mainRuleset());
+    }
+
+    public function testMainRulesetHybridBeatmapsetWithGuestMappersSameCount()
+    {
+        $guest = User::factory()->create();
+
+        $beatmapset = Beatmapset::factory()->owner()->pending()
+            ->withBeatmaps(Ruleset::osu, 1)
+            ->withBeatmaps(Ruleset::taiko, 1, $guest)
+            ->withBeatmaps(Ruleset::taiko, 1)
+            ->withBeatmaps(Ruleset::catch, 2, $guest)
+            ->withBeatmaps(Ruleset::catch, 2)
+            ->withBeatmaps(Ruleset::mania, 2, $guest)
+            ->withBeatmaps(Ruleset::mania, 2)
+            ->create();
+
+        $this->assertSame(Ruleset::catch, $beatmapset->mainRuleset());
+    }
+
     // region single-playmode beatmap sets
     public function testNominate()
     {

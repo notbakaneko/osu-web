@@ -5,6 +5,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Ruleset;
 use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
 use App\Models\Beatmapset;
@@ -111,5 +112,16 @@ class BeatmapsetFactory extends Factory
             ->has(BeatmapsetNomination::factory()
                 ->count($count)
                 ->state(['user_id' => User::factory()->withGroup('bng', array_keys(Beatmap::MODES))]));
+    }
+
+    public function withBeatmaps(Ruleset $ruleset, int $count = 1, ?User $guestMapper = null)
+    {
+        return $this
+            ->has(Beatmap::factory()
+            ->count($count)
+            ->ruleset($ruleset)
+            ->state(fn (array $attr, Beatmapset $set) => [
+                'user_id' => $guestMapper?->getKey() ?? $set->user_id
+            ]));
     }
 }
