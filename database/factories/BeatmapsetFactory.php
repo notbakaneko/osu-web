@@ -8,6 +8,7 @@ namespace Database\Factories;
 use App\Enums\Ruleset;
 use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
+use App\Models\BeatmapDiscussionPost;
 use App\Models\Beatmapset;
 use App\Models\BeatmapsetNomination;
 use App\Models\Forum\Topic;
@@ -104,6 +105,22 @@ class BeatmapsetFactory extends Factory
             ]));
     }
 
+    public function withHypes(?int $count = null)
+    {
+        $count ??= $GLOBALS['cfg']['osu']['beatmapset']['required_hype'];
+
+        return $this->has(
+            BeatmapDiscussion::factory()
+                ->state(fn () => [
+                    'user_id' => User::factory(),
+                ])
+                ->general()
+                ->messageType('hype')
+                ->has(BeatmapDiscussionPost::factory())
+                ->count($count)
+            );
+    }
+
     public function withNominations()
     {
         $count = $GLOBALS['cfg']['osu']['beatmapset']['required_nominations'];
@@ -121,7 +138,8 @@ class BeatmapsetFactory extends Factory
             ->count($count)
             ->ruleset($ruleset ?? array_rand_val(Ruleset::cases()))
             ->state(fn (array $attr, Beatmapset $set) => [
-                'user_id' => $guestMapper?->getKey() ?? $set->user_id
+                'approved' => $set->approved,
+                'user_id' => $guestMapper?->getKey() ?? $set->user_id,
             ]));
     }
 }
