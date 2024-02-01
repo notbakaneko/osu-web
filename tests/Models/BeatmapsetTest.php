@@ -9,9 +9,11 @@ namespace Tests\Models;
 
 use App\Enums\Ruleset;
 use App\Exceptions\AuthorizationException;
+use App\Exceptions\InvariantException;
 use App\Jobs\CheckBeatmapsetCovers;
 use App\Jobs\Notifications\BeatmapsetDisqualify;
 use App\Jobs\Notifications\BeatmapsetResetNominations;
+use App\Libraries\NominateBeatmapset;
 use App\Models\Beatmap;
 use App\Models\BeatmapDiscussion;
 use App\Models\Beatmapset;
@@ -182,53 +184,6 @@ class BeatmapsetTest extends TestCase
         Bus::assertDispatched(CheckBeatmapsetCovers::class);
     }
 
-    public function testLimitedBNGQualifyingNominationBNGNominated()
-    {
-        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', $beatmapset->playmodesStr()[0]);
-
-        $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
-
-        priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
-
-        $result = $beatmapset->nominate($nominator, [$beatmapset->playmodesStr()[0]]);
-
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isQualified());
-
-        Bus::assertDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testLimitedBNGQualifyingNominationNATNominated()
-    {
-        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
-        $this->fillNominationsExceptLastForMode($beatmapset, 'nat', $beatmapset->playmodesStr()[0]);
-
-        $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
-
-        priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
-
-        $result = $beatmapset->nominate($nominator, [$beatmapset->playmodesStr()[0]]);
-
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isQualified());
-
-        Bus::assertDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testLimitedBNGQualifyingNominationLimitedBNGNominated()
-    {
-        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', $beatmapset->playmodesStr()[0]);
-
-        $nominator = User::factory()->withGroup('bng_limited', $beatmapset->playmodesStr())->create();
-
-        $this->assertFalse($beatmapset->isQualified());
-        $beatmapset->nominate($nominator);
-        $this->assertFalse($beatmapset->isQualified());
-
-        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
-    }
     public function testNominateWithDefaultMetadata()
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->state([
@@ -240,6 +195,38 @@ class BeatmapsetTest extends TestCase
         $this->expectException(AuthorizationException::class);
         $this->expectExceptionMessage(osu_trans('authorization.beatmap_discussion.nominate.set_metadata'));
         priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
+    }
+
+    /**
+     * @dataProvider qualifyingNominationsDataProvider
+     */
+    public function testQualifyingNominations(string $initialGroup, string $qualifyingGroup, bool $expected)
+    {
+        /** @var Ruleset */
+        $ruleset = array_rand_val(Ruleset::cases());
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps($ruleset)->create();
+        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, $ruleset->legacyName());
+
+        $nominator = User::factory()->withGroup($qualifyingGroup, [$ruleset->legacyName()])->create();
+
+        $this->assertFalse($beatmapset->isQualified());
+
+        priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
+
+        if (!$expected) {
+            $this->expectException(InvariantException::class);
+        }
+
+        (new NominateBeatmapset($beatmapset, $nominator, [$ruleset->legacyName()]))->handle();
+        $beatmapset->refresh();
+
+        $this->assertSame($expected, $beatmapset->isQualified());
+
+        if ($expected) {
+            Bus::assertDispatched(CheckBeatmapsetCovers::class);
+        } else {
+            Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
+        }
     }
 
     /**
@@ -541,6 +528,38 @@ class BeatmapsetTest extends TestCase
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
+    /**
+     * @dataProvider qualifyingNominationsHybridDataProvider
+     */
+    public function testQualifyingNominationsHybrid(string $initialGroup, string $qualifyingGroup, bool $expected)
+    {
+        $nominator = User::factory()->withGroup($qualifyingGroup, ['osu', 'taiko'])->create();
+        $beatmapset = $this->createHybridBeatmapset();
+
+        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, 'osu');
+        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, 'taiko');
+
+        $beatmapset->refresh();
+        $this->assertFalse($beatmapset->isQualified());
+
+        priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
+
+        if (!$expected) {
+            $this->expectException(InvariantException::class);
+        }
+
+        (new NominateBeatmapset($beatmapset, $nominator, ['osu', 'taiko']))->handle();
+        $beatmapset->refresh();
+
+        $this->assertSame($expected, $beatmapset->isQualified());
+
+        if ($expected) {
+            Bus::assertDispatched(CheckBeatmapsetCovers::class);
+        } else {
+            Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
+        }
+    }
+
     //end region
 
     // region disqualification
@@ -576,6 +595,34 @@ class BeatmapsetTest extends TestCase
         return [
             ['pending', false],
             ['qualified', true],
+        ];
+    }
+
+    public static function qualifyingNominationsDataProvider(): array
+    {
+        // existing nominations, qualifying nomination, expected
+        return [
+            'Nomination requires at least one full nominator' => ['bng_limited', 'bng_limited', false],
+
+            // limited bngs can be the qualifying nomination
+            ['bng', 'bng_limited', true],
+            ['nat', 'bng_limited', true],
+
+            ['bng_limited', 'bng', true],
+            ['bng_limited', 'nat', true],
+        ];
+    }
+
+    public static function qualifyingNominationsHybridDataProvider(): array
+    {
+        // existing nominations, qualifying nomination, expected
+        return [
+            'Nomination requires at least one full nominator' => ['bng_limited', 'bng_limited', false],
+            'Limited BNs cannot nominate the hybrid mode #1' => ['bng', 'bng_limited', false],
+            'Limited BNs cannot nominate the hybrid mode #2' => ['nat', 'bng_limited', false],
+
+            ['bng_limited', 'bng', true],
+            ['bng_limited', 'nat', true],
         ];
     }
 
