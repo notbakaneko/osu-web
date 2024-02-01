@@ -205,7 +205,7 @@ class BeatmapsetTest extends TestCase
         /** @var Ruleset */
         $ruleset = array_rand_val(Ruleset::cases());
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps($ruleset)->create();
-        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, $ruleset->legacyName());
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, $initialGroup);
 
         $nominator = User::factory()->withGroup($qualifyingGroup, [$ruleset->legacyName()])->create();
 
@@ -428,7 +428,7 @@ class BeatmapsetTest extends TestCase
         $user = User::factory()->withGroup('bng', ['osu'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
 
         $result = $beatmapset->nominate(User::factory()->withGroup('bng', ['osu'])->create(), ['osu']);
         $this->assertTrue($result['result']);
@@ -468,7 +468,7 @@ class BeatmapsetTest extends TestCase
         $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
 
         $result = $beatmapset->nominate($user, ['osu']);
 
@@ -483,7 +483,7 @@ class BeatmapsetTest extends TestCase
         $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng_limited');
 
         $result = $beatmapset->fresh()->nominate($user, ['osu', 'taiko']);
 
@@ -499,7 +499,7 @@ class BeatmapsetTest extends TestCase
         $user = User::factory()->withGroup('bng', ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng_limited');
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
@@ -514,7 +514,7 @@ class BeatmapsetTest extends TestCase
         $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
@@ -532,7 +532,7 @@ class BeatmapsetTest extends TestCase
         $nominator = User::factory()->withGroup($qualifyingGroup, ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
 
-        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, 'osu');
+        $this->fillNominationsExceptLastForMainRuleset($beatmapset, $initialGroup);
 
         $beatmapset->refresh();
         $this->assertFalse($beatmapset->isQualified());
@@ -645,11 +645,12 @@ class BeatmapsetTest extends TestCase
         return $beatmapset->create();
     }
 
-    private function fillNominationsExceptLastForMode(Beatmapset $beatmapset, string $group, string $playmode): void
+    private function fillNominationsExceptLastForMainRuleset(Beatmapset $beatmapset, string $group): void
     {
-        $count = $beatmapset->requiredNominationCount()[$playmode] - $beatmapset->currentNominationCount()[$playmode] - 1;
+        $mode = $beatmapset->mainRuleset()->legacyName();
+        $count = $beatmapset->requiredNominationCount()[$mode] - 1;
         for ($i = 0; $i < $count; $i++) {
-            $beatmapset->nominate(User::factory()->withGroup($group, [$playmode])->create(), [$playmode]);
+            $beatmapset->nominate(User::factory()->withGroup($group, [$mode])->create(), [$mode]);
         }
     }
 
