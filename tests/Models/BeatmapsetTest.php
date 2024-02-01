@@ -469,7 +469,6 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->createHybridBeatmapset();
 
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'osu');
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'taiko');
 
         $result = $beatmapset->nominate($user, ['osu']);
 
@@ -485,7 +484,6 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->createHybridBeatmapset();
 
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'osu');
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'taiko');
 
         $result = $beatmapset->fresh()->nominate($user, ['osu', 'taiko']);
 
@@ -502,7 +500,6 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->createHybridBeatmapset();
 
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'osu');
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng_limited', 'taiko');
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
@@ -518,7 +515,6 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->createHybridBeatmapset();
 
         $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'osu');
-        $this->fillNominationsExceptLastForMode($beatmapset, 'bng', 'taiko');
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
@@ -537,7 +533,6 @@ class BeatmapsetTest extends TestCase
         $beatmapset = $this->createHybridBeatmapset();
 
         $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, 'osu');
-        $this->fillNominationsExceptLastForMode($beatmapset, $initialGroup, 'taiko');
 
         $beatmapset->refresh();
         $this->assertFalse($beatmapset->isQualified());
