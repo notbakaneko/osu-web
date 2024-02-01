@@ -87,6 +87,9 @@ class NominateBeatmapset
                 (new BeatmapsetNominate($this->beatmapset, $this->user))->dispatch();
             }
         }
+
+        $this->beatmapset->refresh();
+        $this->beatmapset->refreshCache();
     }
 
     private function assertValidState()

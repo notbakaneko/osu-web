@@ -148,28 +148,15 @@ class BeatmapsetTest extends TestCase
         $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 1);
 
         (new NominateBeatmapset($beatmapset, $user, [$ruleset->legacyName()]))->handle();
-        $beatmapset->refresh();
 
         $this->assertTrue($beatmapset->isPending());
-    }
-
-    public function testNominateNATAnyRuleset(): void
-    {
-        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
-        $user = User::factory()->withGroup('nat', [])->create();
-
-        $this->expectCountChange(fn () => $beatmapset->nominations, 1);
-        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 1);
-
-        $beatmapset->nominate($user, $beatmapset->playmodesStr());
-        $beatmapset->refresh();
     }
 
     public static function nominateDataProvider()
     {
         return [
             'bng nominate' => ['bng', ['osu'], Ruleset::osu],
-            'nat does not require ruleset in group' => ['nat', [], Ruleset::osu],
+            'nat defaults to all rulesets' => ['nat', [], Ruleset::osu],
         ];
     }
 
@@ -225,7 +212,6 @@ class BeatmapsetTest extends TestCase
         }
 
         (new NominateBeatmapset($beatmapset, $nominator, [$ruleset->legacyName()]))->handle();
-        $beatmapset->refresh();
 
         $this->assertSame($expected, $beatmapset->isQualified());
 
@@ -533,7 +519,6 @@ class BeatmapsetTest extends TestCase
         }
 
         (new NominateBeatmapset($beatmapset, $nominator, ['osu', 'taiko']))->handle();
-        $beatmapset->refresh();
 
         $this->assertSame($expected, $beatmapset->isQualified());
 

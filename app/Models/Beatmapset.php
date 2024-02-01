@@ -708,9 +708,6 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         try {
             (new NominateBeatmapset($this, $user, $playmodes))->handle();
 
-            $this->refresh();
-            $this->refreshCache();
-
             return [
                 'result' => true,
             ];
