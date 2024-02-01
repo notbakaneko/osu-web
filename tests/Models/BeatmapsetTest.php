@@ -135,18 +135,15 @@ class BeatmapsetTest extends TestCase
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $user = User::factory()->withGroup('bng', $beatmapset->playmodesStr())->create();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $result = $beatmapset->nominate($user, [$beatmapset->playmodesStr()[0]]);
 
         $this->assertTrue($result['result']);
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
     }
 
@@ -166,19 +163,15 @@ class BeatmapsetTest extends TestCase
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
         $user = User::factory()->withGroup('bng', $beatmapset->playmodesStr())->create();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
 
         $this->expectCountChange(fn () => $beatmapset->bssProcessQueues()->count(), 1);
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $beatmapset->qualify($user);
 
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isQualified());
 
         Bus::assertDispatched(CheckBeatmapsetCovers::class);
@@ -235,9 +228,7 @@ class BeatmapsetTest extends TestCase
     public function testRank(string $state, bool $success): void
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->$state()->create();
-
         $otherUser = User::factory()->create();
-
         $beatmap = $beatmapset->beatmaps()->first();
         $beatmap->scoresBest()->create([
             'user_id' => $otherUser->getKey(),
@@ -309,17 +300,15 @@ class BeatmapsetTest extends TestCase
             'user_id' => User::factory()->withGroup('bng', $beatmapset->playmodesStr()),
         ]);
 
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $result = $beatmapset->nominate($user);
 
         $this->assertTrue($result['result']);
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
     }
 
@@ -340,17 +329,15 @@ class BeatmapsetTest extends TestCase
             $beatmapset->nominate(User::factory()->withGroup('bng', ['osu'])->create());
         }
 
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $result = $beatmapset->nominate($user);
 
         $this->assertTrue($result['result']);
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isQualified());
 
         Bus::assertDispatched(CheckBeatmapsetCovers::class);
@@ -360,20 +347,17 @@ class BeatmapsetTest extends TestCase
     {
         $user = User::factory()->create();
         $beatmapset = $this->createHybridBeatmapset();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 0);
+        $this->expectCountChange(fn () => UserNotification::count(), 0);
 
         $result = $beatmapset->nominate($user);
 
         $this->assertFalse($result['result']);
         $this->assertSame($result['message'], osu_trans('beatmapsets.nominate.hybrid_requires_modes'));
 
-        $this->assertSame($notifications, Notification::count());
-        $this->assertSame($userNotifications, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
 
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
@@ -383,20 +367,17 @@ class BeatmapsetTest extends TestCase
     {
         $user = User::factory()->withGroup('bng', ['osu'])->create();
         $beatmapset = $this->createHybridBeatmapset();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 0);
+        $this->expectCountChange(fn () => UserNotification::count(), 0);
 
         $result = $beatmapset->nominate($user, ['taiko']);
 
         $this->assertFalse($result['result']);
         $this->assertSame($result['message'], osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => 'taiko']));
 
-        $this->assertSame($notifications, Notification::count());
-        $this->assertSame($userNotifications, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
 
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
@@ -406,18 +387,15 @@ class BeatmapsetTest extends TestCase
     {
         $user = User::factory()->withGroup('bng', ['osu'])->create();
         $beatmapset = $this->createHybridBeatmapset();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $result = $beatmapset->nominate($user, ['osu']);
 
         $this->assertTrue($result['result']);
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
 
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
@@ -446,18 +424,15 @@ class BeatmapsetTest extends TestCase
     {
         $user = User::factory()->withGroup('bng', ['osu', 'taiko'])->create();
         $beatmapset = $this->createHybridBeatmapset();
-
-        $notifications = Notification::count();
-        $userNotifications = UserNotification::count();
-
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
+
+        $this->expectCountChange(fn () => Notification::count(), 1);
+        $this->expectCountChange(fn () => UserNotification::count(), 1);
 
         $result = $beatmapset->nominate($user, ['osu', 'taiko']);
 
         $this->assertTrue($result['result']);
-        $this->assertSame($notifications + 1, Notification::count());
-        $this->assertSame($userNotifications + 1, UserNotification::count());
         $this->assertTrue($beatmapset->fresh()->isPending());
 
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
