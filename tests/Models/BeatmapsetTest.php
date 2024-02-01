@@ -131,20 +131,26 @@ class BeatmapsetTest extends TestCase
     }
 
     //region single-playmode beatmap sets
-    public function testNominate()
+
+    /**
+     * @dataProvider nominateDataProvider
+     */
+    public function testNominate(string $group, array $groupPlaymodes, Ruleset $ruleset)
     {
-        $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
-        $user = User::factory()->withGroup('bng', $beatmapset->playmodesStr())->create();
+        $beatmapset = $this->beatmapsetFactory()->withBeatmaps($ruleset)->create();
+        $user = User::factory()->withGroup($group, $groupPlaymodes)->create();
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
 
         $this->expectCountChange(fn () => Notification::count(), 1);
         $this->expectCountChange(fn () => UserNotification::count(), 1);
+        $this->expectCountChange(fn () => $beatmapset->nominations, 1);
+        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 1);
 
-        $result = $beatmapset->nominate($user, [$beatmapset->playmodesStr()[0]]);
+        (new NominateBeatmapset($beatmapset, $user, [$ruleset->legacyName()]))->handle();
+        $beatmapset->refresh();
 
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isPending());
+        $this->assertTrue($beatmapset->isPending());
     }
 
     public function testNominateNATAnyRuleset(): void
@@ -157,6 +163,14 @@ class BeatmapsetTest extends TestCase
 
         $beatmapset->nominate($user, $beatmapset->playmodesStr());
         $beatmapset->refresh();
+    }
+
+    public static function nominateDataProvider()
+    {
+        return [
+            'bng nominate' => ['bng', ['osu'], Ruleset::osu],
+            'nat does not require ruleset in group' => ['nat', [], Ruleset::osu],
+        ];
     }
 
     public function testQualify()
