@@ -130,7 +130,7 @@ class BeatmapsetTest extends TestCase
         $this->assertSame(Ruleset::catch, $beatmapset->mainRuleset());
     }
 
-    // region single-playmode beatmap sets
+    //region single-playmode beatmap sets
     public function testNominate()
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps()->create();
@@ -295,9 +295,9 @@ class BeatmapsetTest extends TestCase
         $this->assertNull(Beatmapset::withTrashed()->find($id));
     }
 
-    // endregion
+    //endregion
 
-    // region multi-playmode beatmap sets (aka hybrid)
+    //region multi-playmode beatmap sets (aka hybrid)
     public function testHybridLegacyNominate(): void
     {
         $user = User::factory()->withGroup('bng', ['osu'])->create();
@@ -555,9 +555,9 @@ class BeatmapsetTest extends TestCase
         }
     }
 
-    //end region
+    //endregion
 
-    // region disqualification
+    //region disqualification
 
     /**
      * @dataProvider disqualifyOrResetNominationsDataProvider
@@ -575,7 +575,7 @@ class BeatmapsetTest extends TestCase
         Queue::assertPushed($pushed);
     }
 
-    //end region
+    //endregion
 
     public static function disqualifyOrResetNominationsDataProvider()
     {
