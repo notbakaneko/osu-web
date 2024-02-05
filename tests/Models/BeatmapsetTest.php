@@ -12,6 +12,7 @@ use App\Exceptions\AuthorizationException;
 use App\Exceptions\InvariantException;
 use App\Jobs\CheckBeatmapsetCovers;
 use App\Jobs\Notifications\BeatmapsetDisqualify;
+use App\Jobs\Notifications\BeatmapsetNominate;
 use App\Jobs\Notifications\BeatmapsetResetNominations;
 use App\Libraries\NominateBeatmapset;
 use App\Models\Beatmap;
@@ -491,6 +492,38 @@ class BeatmapsetTest extends TestCase
     }
 
     //endregion
+
+    public function testChangingOwnerDoesNotQualify()
+    {
+        $guest = User::factory()->create();
+        $bngUser1 = User::factory()->withGroup('bng', ['osu', 'taiko'])->create();
+        $bngUser2 = User::factory()->withGroup('bng', ['osu', 'taiko'])->create();
+        $bngLimitedUser = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
+
+        // make taiko tha main ruleset
+        $beatmapset = $this->beatmapsetFactory()
+            ->withBeatmaps(Ruleset::taiko, 1)
+            ->withBeatmaps(Ruleset::taiko, 1)
+            ->withBeatmaps(Ruleset::osu, 1)
+            ->withBeatmaps(Ruleset::osu, 1, $guest)
+            ->create();
+
+        $this->assertSame(Ruleset::taiko, $beatmapset->mainRuleset());
+
+        // valid nomination for taiko and osu
+        (new NominateBeatmapset($beatmapset, $bngLimitedUser, ['taiko']))->handle();
+        (new NominateBeatmapset($beatmapset, $bngUser1, ['osu']))->handle();
+
+        // main ruleset should now be osu
+        $beatmapset->beatmaps()->where('playmode', Ruleset::taiko->value)->first()->setOwner($guest->getKey());
+        $this->assertSame(Ruleset::osu, $beatmapset->mainRuleset());
+
+        // nomination should not trigger qualification
+        (new NominateBeatmapset($beatmapset, $bngUser2, ['osu']))->handle();
+
+        $this->assertFalse($beatmapset->isQualified());
+        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
+    }
 
     public static function disqualifyOrResetNominationsDataProvider()
     {
