@@ -135,29 +135,28 @@ class BeatmapsetTest extends TestCase
     /**
      * @dataProvider nominateDataProvider
      */
-    public function testNominate(string $group, array $groupPlaymodes, Ruleset $ruleset)
+    public function testNominate(string $group, array $groupPlaymodes, Ruleset $ruleset, bool $expected)
     {
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps($ruleset)->create();
         $user = User::factory()->withGroup($group, $groupPlaymodes)->create();
         $otherUser = User::factory()->create();
         $beatmapset->watches()->create(['user_id' => $otherUser->getKey()]);
 
-        $this->expectCountChange(fn () => Notification::count(), 1);
-        $this->expectCountChange(fn () => UserNotification::count(), 1);
-        $this->expectCountChange(fn () => $beatmapset->nominations, 1);
-        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 1);
+        $countChange = $expected ? 1 : 0;
 
-        (new NominateBeatmapset($beatmapset, $user, [$ruleset->legacyName()]))->handle();
+        $this->expectCountChange(fn () => Notification::count(), $countChange);
+        $this->expectCountChange(fn () => UserNotification::count(), $countChange);
+        $this->expectCountChange(fn () => $beatmapset->nominations, $countChange);
+        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), $countChange);
 
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $user, [$ruleset->legacyName()]))->handle(),
+            $expected ? null : InvariantException::class
+        );
+
+        // Assertions that nomination doesn't qualify
         $this->assertTrue($beatmapset->isPending());
-    }
-
-    public static function nominateDataProvider()
-    {
-        return [
-            'bng nominate' => ['bng', ['osu'], Ruleset::osu],
-            'nat defaults to all rulesets' => ['nat', [], Ruleset::osu],
-        ];
+        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
     public function testQualify()
@@ -207,11 +206,10 @@ class BeatmapsetTest extends TestCase
 
         priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
 
-        if (!$expected) {
-            $this->expectException(InvariantException::class);
-        }
-
-        (new NominateBeatmapset($beatmapset, $nominator, [$ruleset->legacyName()]))->handle();
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $nominator, [$ruleset->legacyName()]))->handle(),
+            $expected ? null : InvariantException::class
+        );
 
         $this->assertSame($expected, $beatmapset->isQualified());
 
@@ -285,7 +283,6 @@ class BeatmapsetTest extends TestCase
 
         $this->assertNull(Beatmapset::withTrashed()->find($id));
     }
-
     //endregion
 
     //region multi-playmode beatmap sets (aka hybrid)
@@ -352,14 +349,16 @@ class BeatmapsetTest extends TestCase
 
         $this->expectCountChange(fn () => Notification::count(), 0);
         $this->expectCountChange(fn () => UserNotification::count(), 0);
+        $this->expectCountChange(fn () => $beatmapset->nominations, 0);
+        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 0);
 
-        $result = $beatmapset->nominate($user);
-
-        $this->assertFalse($result['result']);
-        $this->assertSame($result['message'], osu_trans('beatmapsets.nominate.hybrid_requires_modes'));
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $user, []))->handle(),
+            InvariantException::class,
+            osu_trans('beatmapsets.nominate.hybrid_requires_modes')
+        );
 
         $this->assertTrue($beatmapset->fresh()->isPending());
-
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
@@ -372,14 +371,16 @@ class BeatmapsetTest extends TestCase
 
         $this->expectCountChange(fn () => Notification::count(), 0);
         $this->expectCountChange(fn () => UserNotification::count(), 0);
+        $this->expectCountChange(fn () => $beatmapset->nominations, 0);
+        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 0);
 
-        $result = $beatmapset->nominate($user, ['taiko']);
-
-        $this->assertFalse($result['result']);
-        $this->assertSame($result['message'], osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => 'taiko']));
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $user, ['taiko']))->handle(),
+            InvariantException::class,
+            osu_trans('beatmapsets.nominate.incorrect_mode', ['mode' => 'taiko'])
+        );
 
         $this->assertTrue($beatmapset->fresh()->isPending());
-
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
@@ -392,12 +393,12 @@ class BeatmapsetTest extends TestCase
 
         $this->expectCountChange(fn () => Notification::count(), 1);
         $this->expectCountChange(fn () => UserNotification::count(), 1);
+        $this->expectCountChange(fn () => $beatmapset->nominations, 1);
+        $this->expectCountChange(fn () => $beatmapset->beatmapsetNominations()->current()->count(), 1);
 
-        $result = $beatmapset->nominate($user, ['osu']);
+        (new NominateBeatmapset($beatmapset, $user, ['osu']))->handle();
 
-        $this->assertTrue($result['result']);
         $this->assertTrue($beatmapset->fresh()->isPending());
-
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
@@ -408,15 +409,19 @@ class BeatmapsetTest extends TestCase
 
         $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
 
-        $result = $beatmapset->nominate(User::factory()->withGroup('bng', ['osu'])->create(), ['osu']);
-        $this->assertTrue($result['result']);
+        (new NominateBeatmapset(
+            $beatmapset,
+            User::factory()->withGroup('bng', ['osu'])->create(),
+            ['osu']
+        ))->handle();
 
-        $result = $beatmapset->fresh()->nominate($user, ['osu']);
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $user, ['osu']))->handle(),
+            InvariantException::class,
+            osu_trans('beatmaps.nominations.too_many')
+        );
 
-        $this->assertFalse($result['result']);
-        $this->assertSame($result['message'], osu_trans('beatmaps.nominations.too_many'));
-        $this->assertTrue($beatmapset->fresh()->isPending());
-
+        $this->assertTrue($beatmapset->isPending());
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
@@ -430,72 +435,9 @@ class BeatmapsetTest extends TestCase
         $this->expectCountChange(fn () => Notification::count(), 1);
         $this->expectCountChange(fn () => UserNotification::count(), 1);
 
-        $result = $beatmapset->nominate($user, ['osu', 'taiko']);
+        (new NominateBeatmapset($beatmapset, $user, ['osu', 'taiko']))->handle();
 
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isPending());
-
-        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testHybridNominationBNGQualifyingBNGNominatedPartial(): void
-    {
-        $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
-        $beatmapset = $this->createHybridBeatmapset();
-
-        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
-
-        $result = $beatmapset->nominate($user, ['osu']);
-
-        $this->assertTrue($result['result']);
-        $this->assertFalse($beatmapset->fresh()->isQualified());
-
-        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testHybridNominationLimitedBNGQualifyingLimitedBNGNominated(): void
-    {
-        $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
-        $beatmapset = $this->createHybridBeatmapset();
-
-        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng_limited');
-
-        $result = $beatmapset->fresh()->nominate($user, ['osu', 'taiko']);
-
-        $this->assertFalse($result['result']);
-        $this->assertSame($result['message'], osu_trans('beatmapsets.nominate.full_bn_required'));
-        $this->assertTrue($beatmapset->fresh()->isPending());
-
-        Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testHybridNominationLimitedBNGQualifyingBNGNominated(): void
-    {
-        $user = User::factory()->withGroup('bng', ['osu', 'taiko'])->create();
-        $beatmapset = $this->createHybridBeatmapset();
-
-        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng_limited');
-
-        $result = $beatmapset->nominate($user, ['osu', 'taiko']);
-
-        $this->assertTrue($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isQualified());
-
-        Bus::assertDispatched(CheckBeatmapsetCovers::class);
-    }
-
-    public function testHybridNominationBNGQualifyingLimitedBNGNominated(): void
-    {
-        $user = User::factory()->withGroup('bng_limited', ['osu', 'taiko'])->create();
-        $beatmapset = $this->createHybridBeatmapset();
-
-        $this->fillNominationsExceptLastForMainRuleset($beatmapset, 'bng');
-
-        $result = $beatmapset->nominate($user, ['osu', 'taiko']);
-
-        $this->assertFalse($result['result']);
-        $this->assertTrue($beatmapset->fresh()->isPending());
-
+        $this->assertTrue($beatmapset->isPending());
         Bus::assertNotDispatched(CheckBeatmapsetCovers::class);
     }
 
@@ -514,11 +456,10 @@ class BeatmapsetTest extends TestCase
 
         priv_check_user($nominator, 'BeatmapsetNominate', $beatmapset)->ensureCan();
 
-        if (!$expected) {
-            $this->expectException(InvariantException::class);
-        }
-
-        (new NominateBeatmapset($beatmapset, $nominator, ['osu', 'taiko']))->handle();
+        $this->expectExceptionCallable(
+            fn () => (new NominateBeatmapset($beatmapset, $nominator, ['osu', 'taiko']))->handle(),
+            $expected ? null : InvariantException::class
+        );
 
         $this->assertSame($expected, $beatmapset->isQualified());
 
@@ -567,6 +508,17 @@ class BeatmapsetTest extends TestCase
         ];
     }
 
+    public static function nominateDataProvider()
+    {
+        return [
+            'bng nominate same ruleset' => ['bng', ['osu'], Ruleset::osu, true],
+            'bng nominate different ruleset' => ['bng', ['osu'], Ruleset::taiko, false],
+            'nat defaults to all rulesets' => ['nat', [], Ruleset::osu, true],
+            'nat nominate same ruleset' => ['nat', ['osu'], Ruleset::osu, true],
+            'nat nominate different ruleset' => ['nat', ['osu'], Ruleset::taiko, false],
+        ];
+    }
+
     public static function qualifyingNominationsDataProvider(): array
     {
         // existing nominations, qualifying nomination, expected
@@ -590,6 +542,8 @@ class BeatmapsetTest extends TestCase
             'Limited BNs cannot nominate the hybrid mode #1' => ['bng', 'bng_limited', false],
             'Limited BNs cannot nominate the hybrid mode #2' => ['nat', 'bng_limited', false],
 
+            'TODO' => ['bng', 'bng_limited', false, ['osu']],
+
             ['bng_limited', 'bng', true],
             ['bng_limited', 'nat', true],
         ];
@@ -605,7 +559,8 @@ class BeatmapsetTest extends TestCase
 
     private function beatmapsetFactory(): BeatmapsetFactory
     {
-        return Beatmapset::factory()->owner()->pending();
+        // otherwise they start as null without refresh.
+        return Beatmapset::factory()->owner()->pending()->state(['nominations' => 0]);
     }
 
     private function createHybridBeatmapset($rulesets = [Ruleset::osu, Ruleset::taiko]): Beatmapset
