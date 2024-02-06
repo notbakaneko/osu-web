@@ -138,19 +138,29 @@ class NominateBeatmapset
 
     private function shouldQualify()
     {
-        $currentNominations = $this->beatmapset->currentNominationCount();
+        $nominationsByType = $this->beatmapset->nominationsByType();
         $requiredNominations = $this->beatmapset->requiredNominationCount();
 
         if ($this->isLegacyNominationMode) {
-            return $currentNominations >= $requiredNominations;
+            return count(array_filter($nominationsByType['full'], fn ($item) => $item === null))
+                + count(array_filter($nominationsByType['limited'], fn ($item) => $item === null))
+                >= $requiredNominations;
         } else {
             $modesSatisfied = 0;
             foreach ($requiredNominations as $mode => $count) {
-                if ($currentNominations[$mode] > $count) {
+                $fullNominations = count(array_filter($nominationsByType['full'], fn ($item) => $item === $mode));
+                $limitedNominations = count(array_filter($nominationsByType['limited'], fn ($item) => $item === $mode));
+                $totalNominations = $fullNominations + $limitedNominations;
+
+                if ($fullNominations === 0) {
+                    return false;
+                }
+
+                if ($totalNominations > $count) {
                     throw new InvariantException(osu_trans('beatmaps.nominations.too_many'));
                 }
 
-                if ($currentNominations[$mode] === $count) {
+                if ($totalNominations === $count) {
                     $modesSatisfied++;
                 }
             }
