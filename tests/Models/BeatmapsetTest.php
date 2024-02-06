@@ -131,6 +131,47 @@ class BeatmapsetTest extends TestCase
         $this->assertSame(Ruleset::catch, $beatmapset->mainRuleset());
     }
 
+    public function testNominationsByType()
+    {
+        $beatmapset = $this->beatmapsetFactory()
+            ->withBeatmaps(Ruleset::osu)
+            ->withBeatmaps(Ruleset::taiko)
+            ->withBeatmaps(Ruleset::catch)
+            ->withBeatmaps(Ruleset::mania)
+            ->create();
+
+        $userFactory = User::factory()->withGroup('bng', ['osu', 'taiko', 'fruits', 'mania']);
+        $countFilter = fn ($array, $mode) => array_filter($array, fn ($item) => $item === $mode);
+
+        (new NominateBeatmapset($beatmapset, $userFactory->create(), ['osu']))->handle();
+        $this->assertCount(1, $beatmapset->nominationsByType()['full']);
+        $this->assertCount(1, $countFilter($beatmapset->nominationsByType()['full'], 'osu'));
+
+        (new NominateBeatmapset($beatmapset, $userFactory->create(), ['taiko']))->handle();
+        $this->assertCount(2, $beatmapset->nominationsByType()['full']);
+        $this->assertCount(1, $countFilter($beatmapset->nominationsByType()['full'], 'taiko'));
+
+        (new NominateBeatmapset($beatmapset, $userFactory->create(), ['fruits']))->handle();
+        $this->assertCount(3, $beatmapset->nominationsByType()['full']);
+        $this->assertCount(1, $countFilter($beatmapset->nominationsByType()['full'], 'fruits'));
+
+        (new NominateBeatmapset($beatmapset, $userFactory->create(), ['mania']))->handle();
+        $this->assertCount(4, $beatmapset->nominationsByType()['full']);
+        $this->assertCount(1, $countFilter($beatmapset->nominationsByType()['full'], 'mania'));
+
+        $this->assertCount(0, $beatmapset->nominationsByType()['limited']);
+
+        (new NominateBeatmapset(
+            $beatmapset,
+            User::factory()->withGroup('bng_limited', ['osu'])->create(),
+            ['osu']
+        ))->handle();
+
+        $this->assertCount(4, $beatmapset->nominationsByType()['full']);
+        $this->assertCount(1, $beatmapset->nominationsByType()['limited']);
+        $this->assertCount(1, $countFilter($beatmapset->nominationsByType()['limited'], 'osu'));
+    }
+
     //region single-playmode beatmap sets
 
     /**

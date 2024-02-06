@@ -1209,6 +1209,45 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
             });
     }
 
+    public function nominationsByType()
+    {
+        $nominations = $this->beatmapsetNominations()
+            ->current()
+            ->with('user')
+            ->get();
+
+        $result = [
+            'full' => [],
+            'limited' => [],
+        ];
+
+        foreach ($nominations as $nomination) {
+            $userNominationModes = $nomination->user->nominationModes();
+            // no permission
+            if ($userNominationModes === null) {
+                continue;
+            }
+
+            // legacy nomination, only check group
+            if ($nomination->modes === null) {
+                if ($nomination->user->isLimitedBN()) {
+                    $result['limited'][] = null;
+                } else if ($nomination->user->isBNG() || $nomination->user->isNAT()) {
+                    $result['full'][] = null;
+                }
+            } else {
+                foreach ($nomination->modes as $mode) {
+                    $nominationType = $userNominationModes[$mode] ?? null;
+                    if ($nominationType !== null) {
+                        $result[$nominationType][] = $mode;
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
     public function requiresFullBNNomination($mode = null)
     {
         if ($this->isLegacyNominationMode()) {
