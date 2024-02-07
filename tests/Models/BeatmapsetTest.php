@@ -12,7 +12,6 @@ use App\Exceptions\AuthorizationException;
 use App\Exceptions\InvariantException;
 use App\Jobs\CheckBeatmapsetCovers;
 use App\Jobs\Notifications\BeatmapsetDisqualify;
-use App\Jobs\Notifications\BeatmapsetNominate;
 use App\Jobs\Notifications\BeatmapsetResetNominations;
 use App\Libraries\NominateBeatmapset;
 use App\Models\Beatmap;

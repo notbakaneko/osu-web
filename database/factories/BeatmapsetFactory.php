@@ -118,7 +118,7 @@ class BeatmapsetFactory extends Factory
                 ->messageType('hype')
                 ->has(BeatmapDiscussionPost::factory())
                 ->count($count)
-            );
+        );
     }
 
     public function withNominations()

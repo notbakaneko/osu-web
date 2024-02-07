@@ -1043,7 +1043,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
         if ($summary) {
             // 2 for main, 1 for others
-            return $baseRequirement + ($playmodeCount - 1);
+            return $baseRequirement + $playmodeCount - 1;
         }
 
         $mainPlaymode = $this->mainRuleset()->legacyName();
