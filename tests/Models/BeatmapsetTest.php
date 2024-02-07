@@ -236,7 +236,6 @@ class BeatmapsetTest extends TestCase
      */
     public function testQualifyingNominations(string $initialGroup, string $qualifyingGroup, bool $expected)
     {
-        /** @var Ruleset */
         $ruleset = array_rand_val(Ruleset::cases());
         $beatmapset = $this->beatmapsetFactory()->withBeatmaps($ruleset)->create();
         $this->fillNominationsExceptLastForMainRuleset($beatmapset, $initialGroup);
