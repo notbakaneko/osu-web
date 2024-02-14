@@ -15,10 +15,15 @@
   padding: 0 (@slider-callout--width / 2 - @gutter-v2 + 2px);
 
   @media @desktop {
-    padding: 0 ((@slider-callout--width + @callout-extension) / 2 - @gutter-v2-desktop + 2px);
+    padding: 0
+      (
+        (@slider-callout--width + @callout-extension) / 2 - @gutter-v2-desktop +
+          2px
+      );
   }
 
-  &__bigtext { // stupid name
+  &__bigtext {
+    // stupid name
     font-size: @font-size--large;
     font-weight: 600;
   }
@@ -46,7 +51,8 @@
       width: @slider-callout--width + @callout-extension;
     }
 
-    &::after, &::before {
+    &::after,
+    &::before {
       top: 100%;
       left: 50%;
       border: solid transparent;
@@ -101,7 +107,8 @@
     margin: 0 @preset-margin;
   }
 
-  &__subtext { // stupid name
+  &__subtext {
+    // stupid name
     margin-top: 2px;
     color: @osu-colour-c2;
   }
@@ -109,7 +116,8 @@
   .ui-slider {
     background-color: @osu-colour-b3;
     .js-store--disabled & {
-      .ui-slider-handle, .ui-slider-range {
+      .ui-slider-handle,
+      .ui-slider-range {
         background-color: @osu-colour-b1;
       }
     }

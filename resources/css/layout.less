@@ -4,7 +4,9 @@
 // main: compiled.less
 @import "app";
 
-*, ::before, ::after {
+*,
+::before,
+::after {
   box-sizing: border-box;
 }
 
@@ -56,9 +58,10 @@
   --forum-item-background-color: hsl(var(--hsl-b4));
   --forum-item-background-color-hover: hsl(var(--hsl-b3));
 
-
   --navbar-height: @navbar-height;
-  --scroll-padding-top: calc(var(--navbar-height) + 1em + var(--scroll-padding-top-extra, 0px));
+  --scroll-padding-top: calc(
+    var(--navbar-height) + 1em + var(--scroll-padding-top-extra, 0px)
+  );
   --page-gutter: @gutter-v2;
 
   @media @desktop {
@@ -67,7 +70,8 @@
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
