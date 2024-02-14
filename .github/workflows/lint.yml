@@ -49,9 +49,14 @@ jobs:
       - name: Install js dependencies
         run: yarn --frozen-lockfile
 
-      - run: 'yarn lint --max-warnings 89 > /dev/null'
+      - name: Run ESLint
+        run: 'yarn lint --max-warnings 89 > /dev/null'
 
-      - run: ./bin/update_licence.sh -nf
+      - name: Prettier
+        run: yarn prettier
+
+      - name: Run License header check
+        run: ./bin/update_licence.sh -nf
 
       - name: Run PHPCS
         run: ./vendor/bin/phpcs --report=checkstyle --basepath="$PWD" -q | cs2pr
