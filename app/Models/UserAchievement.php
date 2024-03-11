@@ -6,6 +6,7 @@
 namespace App\Models;
 
 use App\Jobs\Notifications\UserAchievementUnlock;
+use ChaseConey\LaravelDatadogHelper\Datadog;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,12 @@ class UserAchievement extends Model
             Event::generate('achievement', compact('achievement', 'user'));
 
             (new UserAchievementUnlock($achievement, $user))->dispatch();
+
+            Datadog::increment(
+                $GLOBALS['cfg']['datadog-helper']['prefix_web'].'.achievement_unlock',
+                1,
+                ['achievement_id' => $achievement->getKey()]
+            );
 
             return true;
         });
