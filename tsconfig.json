@@ -13,7 +13,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es2015",
+    "target": "es2022",
     "useDefineForClassFields": true
   },
   "include": [

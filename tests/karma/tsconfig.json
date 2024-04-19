@@ -11,7 +11,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es2015",
+    "target": "es2022",
   },
   "include": [
     "../../resources/js",
