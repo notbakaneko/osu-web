@@ -12,6 +12,7 @@ use App\Models\Store\Payment;
 use App\Traits\Memoizes;
 use App\Traits\Validatable;
 use DB;
+use Sentry\Severity;
 use Sentry\State\Scope;
 
 abstract class PaymentProcessor implements \ArrayAccess
@@ -176,7 +177,7 @@ abstract class PaymentProcessor implements \ArrayAccess
                 // payment not processed, manually cancelled.
                 app('sentry')->getClient()->captureMessage(
                     static::WARN_CANCEL_MISSING_PAYMENT,
-                    null,
+                    Severity::warning(),
                     (new Scope())->setExtra('order_id', $order->getKey())
                 );
             }
@@ -186,7 +187,7 @@ abstract class PaymentProcessor implements \ArrayAccess
             if ($order->payments->where('cancelled', true)->first() !== null) {
                 app('sentry')->getClient()->captureMessage(
                     static::WARN_PAYMENT_ALREADY_CANCELLED,
-                    null,
+                    Severity::warning(),
                     (new Scope())->setExtra('order_id', $order->getKey())
                 );
             } else {

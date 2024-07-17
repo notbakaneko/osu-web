@@ -9,6 +9,7 @@ namespace App\Libraries\Payments;
 
 use App\Models\Store\Order;
 use Carbon\Carbon;
+use Sentry\Severity;
 use Sentry\State\Scope;
 
 class PaypalPaymentProcessor extends PaymentProcessor
@@ -147,7 +148,7 @@ class PaypalPaymentProcessor extends PaymentProcessor
         if ($capturedId !== $transactionId) {
             app('sentry')->getClient()->captureMessage(
                 'IPN transactionId does not match captured payment id',
-                null,
+                Severity::warning(),
                 (new Scope())
                     ->setExtra('order_id', $order->getKey())
                     ->setExtra('txn_id', $this->getPaymentTransactionId())
