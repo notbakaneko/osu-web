@@ -112,9 +112,9 @@ class Beatmap extends Model implements AfterCommit
         return $this->difficultyAttribs()->noMods()->maxCombo();
     }
 
-    public function beatmapOwners()
+    public function beatmapMappers()
     {
-        return $this->hasMany(BeatmapOwner::class);
+        return $this->hasMany(BeatmapMapper::class);
     }
 
     public function beatmapset()
@@ -376,20 +376,20 @@ class Beatmap extends Model implements AfterCommit
 
     private function getMappers(): Collection
     {
-        $beatmapOwners = $this->beatmapOwners()->pluck('user_id');
+        $beatmapMappers = $this->beatmapMappers()->pluck('user_id');
 
-        $mappers = User::whereIn('user_id', $beatmapOwners)->get();
-        // compatiblity for anything that isn't writing to beatmap_owners yet.
+        $mappers = User::whereIn('user_id', $beatmapMappers)->get();
+        // compatiblity for anything that isn't writing to beatmap_mappers yet.
         if ($mappers->find($this->user_id) === null && $this->user !== null) {
             $mappers->prepend($this->user);
         }
 
         // Add deleted/missing users.
-        if ($beatmapOwners->count() !== $mappers->count()) {
-            $beatmapOwnersSet = new Set($beatmapOwners);
+        if ($beatmapMappers->count() !== $mappers->count()) {
+            $beatmapMappersSet = new Set($beatmapMappers);
             $mappersSet = new Set($mappers->pluck('user_id')->toArray());
 
-            $missingIds = $beatmapOwnersSet->diff($mappersSet);
+            $missingIds = $beatmapMappersSet->diff($mappersSet);
             foreach ($missingIds as $id) {
                 $mappers->push(new DeletedUser(['user_id' => $id]));
             }

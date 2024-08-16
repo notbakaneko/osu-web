@@ -20,7 +20,7 @@ class BeatmapsMigrateOwners extends Command
 
         Beatmap::chunkById(1000, function ($beatmaps) use ($progress) {
             foreach ($beatmaps as $beatmap) {
-                $beatmap->beatmapOwners()->firstOrCreate(['user_id' => $beatmap->user_id]);
+                $beatmap->beatmapMappers()->firstOrCreate(['user_id' => $beatmap->user_id]);
                 $progress->advance();
             }
         });

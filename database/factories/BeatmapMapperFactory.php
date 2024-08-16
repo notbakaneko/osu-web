@@ -8,12 +8,12 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Beatmap;
-use App\Models\BeatmapOwner;
+use App\Models\BeatmapMapper;
 use App\Models\User;
 
-class BeatmapOwnerFactory extends Factory
+class BeatmapMapperFactory extends Factory
 {
-    protected $model = BeatmapOwner::class;
+    protected $model = BeatmapMapper::class;
 
     public function definition(): array
     {

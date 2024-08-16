@@ -11,7 +11,7 @@ namespace App\Models;
  * @property User $user
  * @property int $user_id
  */
-class BeatmapOwner extends Model
+class BeatmapMapper extends Model
 {
     public $incrementing = false;
     public $timestamps = false;

@@ -13,7 +13,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('beatmap_owners', function (Blueprint $table) {
+        Schema::create('beatmap_mappers', function (Blueprint $table) {
             $table->unsignedMediumInteger('beatmap_id');
             $table->unsignedInteger('user_id');
             $table->primary(['beatmap_id', 'user_id']);
@@ -23,6 +23,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('beatmap_owners');
+        Schema::dropIfExists('beatmap_mappers');
     }
 };

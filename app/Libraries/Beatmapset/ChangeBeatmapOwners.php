@@ -10,7 +10,7 @@ namespace App\Libraries\Beatmapset;
 use App\Exceptions\InvariantException;
 use App\Jobs\Notifications\BeatmapOwnerChange;
 use App\Models\Beatmap;
-use App\Models\BeatmapOwner;
+use App\Models\BeatmapMapper;
 use App\Models\BeatmapsetEvent;
 use App\Models\DeletedUser;
 use App\Models\User;
@@ -53,8 +53,8 @@ class ChangeBeatmapOwners
             }
 
             $this->beatmap->fill(['user_id' => $userIds[0]])->saveOrExplode();
-            $this->beatmap->beatmapOwners()->delete();
-            BeatmapOwner::insert($params);
+            $this->beatmap->beatmapMappers()->delete();
+            BeatmapMapper::insert($params);
 
             $this->beatmap->refresh();
 

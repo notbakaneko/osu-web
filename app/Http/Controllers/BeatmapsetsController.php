@@ -399,7 +399,7 @@ class BeatmapsetsController extends Controller
             "{$beatmapRelation}.baseDifficultyRatings",
             "{$beatmapRelation}.baseMaxCombo",
             "{$beatmapRelation}.failtimes",
-            "{$beatmapRelation}.beatmapOwners",
+            "{$beatmapRelation}.beatmapMappers",
             'genre',
             'language',
             'user',

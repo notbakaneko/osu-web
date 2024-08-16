@@ -11,7 +11,7 @@ use App\Exceptions\AuthorizationException;
 use App\Exceptions\InvariantException;
 use App\Jobs\Notifications\BeatmapOwnerChange;
 use App\Models\Beatmap;
-use App\Models\BeatmapOwner;
+use App\Models\BeatmapMapper;
 use App\Models\Beatmapset;
 use App\Models\BeatmapsetEvent;
 use App\Models\User;
@@ -39,7 +39,7 @@ class ChangeBeatmapOwnersTest extends TestCase
 
         $beatmap = Beatmap::factory()
             ->state(['user_id' => $missingUserId])
-            ->has(BeatmapOwner::factory()->state(['user_id' => $missingUserId]))
+            ->has(BeatmapMapper::factory()->state(['user_id' => $missingUserId]))
             ->for(Beatmapset::factory()->pending()->state(['user_id' => $missingUserId]))
             ->create();
 
