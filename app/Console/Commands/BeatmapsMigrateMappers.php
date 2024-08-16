@@ -8,11 +8,11 @@ namespace App\Console\Commands;
 use App\Models\Beatmap;
 use Illuminate\Console\Command;
 
-class BeatmapsMigrateOwners extends Command
+class BeatmapsMigrateMappers extends Command
 {
-    protected $signature = 'beatmaps:migrate-owners';
+    protected $signature = 'beatmaps:migrate-mappers';
 
-    protected $description = 'Migrates beatmap owners to new table.';
+    protected $description = 'Migrates beatmap mappers to new table.';
 
     public function handle()
     {
