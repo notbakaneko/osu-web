@@ -18,7 +18,7 @@ use App\Models\User;
 use Bus;
 use Tests\TestCase;
 
-class ChangeBeatmapOwnersTest extends TestCase
+class ChangeBeatmapMappersTest extends TestCase
 {
     public static function dataProviderForTestUpdateOwnerLoved(): array
     {

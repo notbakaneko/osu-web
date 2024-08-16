@@ -7,7 +7,7 @@ namespace App\Models;
 
 use App\Exceptions\InvariantException;
 use App\Jobs\EsDocument;
-use App\Libraries\Beatmapset\ChangeBeatmapOwners;
+use App\Libraries\Beatmapset\ChangeBeatmapMappers;
 use App\Libraries\Transactions\AfterCommit;
 use DB;
 use Ds\Set;
@@ -313,7 +313,7 @@ class Beatmap extends Model implements AfterCommit
 
     public function setOwner(array $newUserIds, User $source): void
     {
-        (new ChangeBeatmapOwners($this, $newUserIds, $source))->handle();
+        (new ChangeBeatmapMappers($this, $newUserIds, $source))->handle();
     }
 
     public function status()

@@ -16,7 +16,7 @@ use App\Models\DeletedUser;
 use App\Models\User;
 use Ds\Set;
 
-class ChangeBeatmapOwners
+class ChangeBeatmapMappers
 {
     private Set $userIds;
 
