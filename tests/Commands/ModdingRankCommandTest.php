@@ -147,7 +147,7 @@ class ModdingRankCommandTest extends TestCase
     protected function beatmapset(array $rulesets, int $qualifiedDaysAgo = 2): BeatmapsetFactory
     {
         $factory = Beatmapset::factory()
-            ->owner()
+            ->mapper()
             ->qualified(now()->subDays($qualifiedDaysAgo));
 
         foreach ($rulesets as $ruleset) {

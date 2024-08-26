@@ -70,7 +70,7 @@ class BroadcastNotificationTest extends TestCase
             'details' => $details,
         ]);
 
-        $beatmapset = Beatmapset::factory()->owner()->withDiscussion()->create();
+        $beatmapset = Beatmapset::factory()->mapper()->withDiscussion()->create();
         $beatmapset->watches()->create([
             'last_read' => now()->subSeconds(), // make sure last_read isn't the same second the test runs.
             'user_id' => $user->getKey(),

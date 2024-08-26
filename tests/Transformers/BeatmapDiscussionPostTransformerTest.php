@@ -64,7 +64,7 @@ class BeatmapDiscussionPostTransformerTest extends TestCase
         parent::setUp();
 
         $mapper = User::factory()->create();
-        $beatmapset = Beatmapset::factory()->owner($mapper)->withDiscussion()->create();
+        $beatmapset = Beatmapset::factory()->mapper($mapper)->withDiscussion()->create();
 
         $this->beatmapDiscussion = $beatmapset->beatmapDiscussions()->first();
         $this->beatmapDiscussion->beatmapDiscussionPosts()->saveMany(BeatmapDiscussionPost::factory()->count(2)->make());

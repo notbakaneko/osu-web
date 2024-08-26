@@ -174,7 +174,7 @@ class BeatmapsetsControllerTest extends TestCase
      */
     public function testBeatmapsetUpdateDescriptionAsOwner(bool $downloadDisabled, ?string $downloadDisabledUrl, bool $ok)
     {
-        $beatmapset = Beatmapset::factory()->owner()->withDescription()->create([
+        $beatmapset = Beatmapset::factory()->mapper()->withDescription()->create([
             'download_disabled' => $downloadDisabled,
             'download_disabled_url' => $downloadDisabledUrl,
         ]);

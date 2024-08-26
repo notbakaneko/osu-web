@@ -677,7 +677,7 @@ class BeatmapsetTest extends TestCase
     public function testDisqualifyOrResetNominations(string $state, string $pushed)
     {
         $user = User::factory()->withGroup('bng')->create();
-        $beatmapset = Beatmapset::factory()->owner()->withDiscussion()->$state()->create();
+        $beatmapset = Beatmapset::factory()->mapper()->withDiscussion()->$state()->create();
         $discussion = $beatmapset->beatmapDiscussions()->first(); // contents only needed for logging.
 
         Queue::fake();
@@ -850,7 +850,7 @@ class BeatmapsetTest extends TestCase
     private function beatmapsetFactory(): BeatmapsetFactory
     {
         // otherwise they start as null without refresh.
-        return Beatmapset::factory()->owner()->pending()->state(['nominations' => 0]);
+        return Beatmapset::factory()->mapper()->pending()->state(['nominations' => 0]);
     }
 
     private function createHybridBeatmapset(string $mainRuleset = null, array $rulesets = ['osu', 'taiko']): Beatmapset

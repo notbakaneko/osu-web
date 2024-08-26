@@ -63,8 +63,8 @@ class NotificationsSendMailTest extends TestCase
         ]);
 
         $beatmapsets = [
-            Beatmapset::factory()->owner($user)->withDiscussion()->create(),
-            Beatmapset::factory()->owner($user)->withDiscussion()->create(),
+            Beatmapset::factory()->mapper($user)->withDiscussion()->create(),
+            Beatmapset::factory()->mapper($user)->withDiscussion()->create(),
         ];
 
         foreach ($beatmapsets as $beatmapset) {

@@ -241,7 +241,7 @@ class BeatmapDiscussionsControllerTest extends TestCase
 
         $mapper = User::factory()->create();
         $user = User::factory()->create();
-        $beatmapset = Beatmapset::factory()->pending()->owner($mapper)->create();
+        $beatmapset = Beatmapset::factory()->pending()->mapper($mapper)->create();
         // TODO: adding beatmap to beatmapset should probably copy come attributes.
         $beatmap = $beatmapset->beatmaps()->save(Beatmap::factory()->make(['user_id' => $mapper]));
         $this->discussion = BeatmapDiscussion::factory()->timeline()->create([

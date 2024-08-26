@@ -112,7 +112,7 @@ class BeatmapsetEventNominationResetTest extends TestCase
 
     private function createBeatmapsetWithNominators($state)
     {
-        $this->beatmapset = Beatmapset::factory()->owner()->$state()->withDiscussion()->create();
+        $this->beatmapset = Beatmapset::factory()->mapper()->$state()->withDiscussion()->create();
 
         $modes = $this->beatmapset->beatmaps->map->mode->all();
         $nominatorCount = $GLOBALS['cfg']['osu']['beatmapset']['required_nominations'];

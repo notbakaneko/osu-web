@@ -57,7 +57,7 @@ class BeatmapsetFactory extends Factory
         return $this->state(['active' => 0]);
     }
 
-    public function owner(?User $user = null)
+    public function mapper(?User $user = null)
     {
         return $this->state(['user_id' => $user ?? User::factory()]);
     }

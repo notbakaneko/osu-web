@@ -417,7 +417,7 @@ class ReplyTest extends TestCase
     private function beatmapsetFactory(array $beatmapState = [])
     {
         $factory = Beatmapset::factory()
-            ->owner($this->mapper)
+            ->mapper($this->mapper)
             ->has(Beatmap::factory()->state(array_merge([
                 'user_id' => $this->mapper,
             ], $beatmapState)));

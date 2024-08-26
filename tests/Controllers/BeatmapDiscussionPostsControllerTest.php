@@ -24,7 +24,7 @@ class BeatmapDiscussionPostsControllerTest extends TestCase
 
     public function testPostStoreNewDiscussionInactiveBeatmapset()
     {
-        $beatmapset = Beatmapset::factory()->owner()->inactive()->create();
+        $beatmapset = Beatmapset::factory()->mapper()->inactive()->create();
 
         $this
             ->actingAsVerified($this->user)
@@ -328,7 +328,7 @@ class BeatmapDiscussionPostsControllerTest extends TestCase
         $this->mapper = User::factory()->withPlays()->create();
         $this->user = User::factory()->withPlays()->create();
 
-        $this->beatmapset = Beatmapset::factory()->owner($this->mapper)->create();
+        $this->beatmapset = Beatmapset::factory()->mapper($this->mapper)->create();
         $this->beatmap = $this->beatmapset->beatmaps()->save(Beatmap::factory()->make([
             'user_id' => $this->mapper->getKey(),
         ]));

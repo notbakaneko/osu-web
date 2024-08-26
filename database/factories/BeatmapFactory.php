@@ -64,7 +64,7 @@ class BeatmapFactory extends Factory
         ]);
     }
 
-    public function owner(User $user): static
+    public function mapper(User $user): static
     {
         return $this
             ->state(['user_id' => $user])

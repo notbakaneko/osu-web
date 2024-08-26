@@ -59,8 +59,8 @@ class ChangeBeatmapMappersTest extends TestCase
         $users = User::factory()->count(2)->create();
         $owner = User::factory()->create();
         $beatmap = Beatmap::factory()
-            ->for(Beatmapset::factory()->pending()->owner($owner))
-            ->owner($owner)
+            ->for(Beatmapset::factory()->pending()->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 1);
@@ -79,8 +79,8 @@ class ChangeBeatmapMappersTest extends TestCase
         $user = User::factory()->create();
         $owner = User::factory()->create();
         $beatmap = Beatmap::factory()
-            ->for(Beatmapset::factory()->qualified()->owner($owner))
-            ->owner($owner)
+            ->for(Beatmapset::factory()->qualified()->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 0);
@@ -100,8 +100,8 @@ class ChangeBeatmapMappersTest extends TestCase
     {
         $owner = User::factory()->create();
         $beatmap = Beatmap::factory()
-            ->for(Beatmapset::factory()->pending()->owner($owner))
-            ->owner($owner)
+            ->for(Beatmapset::factory()->pending()->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 0);
@@ -129,8 +129,8 @@ class ChangeBeatmapMappersTest extends TestCase
             ->for(Beatmapset::factory()->state([
                 'approved' => $approved,
                 'approved_date' => now(),
-            ])->owner($owner))
-            ->owner($owner)
+            ])->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), $ok ? 1 : 0);
@@ -161,8 +161,8 @@ class ChangeBeatmapMappersTest extends TestCase
             ->for(Beatmapset::factory()->state([
                 'approved' => Beatmapset::STATES['ranked'],
                 'approved_date' => now(),
-            ])->owner($owner))
-            ->owner($owner)
+            ])->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 1);
@@ -182,8 +182,8 @@ class ChangeBeatmapMappersTest extends TestCase
             ->for(Beatmapset::factory()->state([
                 'approved' => Beatmapset::STATES['ranked'],
                 'approved_date' => now(),
-            ])->owner($owner))
-            ->owner($owner)
+            ])->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 0);
@@ -203,8 +203,8 @@ class ChangeBeatmapMappersTest extends TestCase
     {
         $owner = User::factory()->create();
         $beatmap = Beatmap::factory()
-            ->for(Beatmapset::factory()->pending()->owner($owner))
-            ->owner($owner)
+            ->for(Beatmapset::factory()->pending()->mapper($owner))
+            ->mapper($owner)
             ->create();
 
         $this->expectCountChange(fn () => BeatmapsetEvent::count(), 0);
