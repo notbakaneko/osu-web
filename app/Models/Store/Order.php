@@ -91,11 +91,6 @@ class Order extends Model
 
     protected array $macros = ['itemsQuantities'];
 
-    protected static function splitTransactionId($value)
-    {
-        return explode('-', $value, 2);
-    }
-
     public static function pendingForUser(?User $user): ?Builder
     {
         if ($user === null) {
@@ -103,6 +98,29 @@ class Order extends Model
         }
 
         return static::where('user_id', $user->getKey())->paymentRequested();
+    }
+
+    protected static function splitTransactionId($value)
+    {
+        return explode('-', $value, 2);
+    }
+
+    private static function orderItemParams(array $form)
+    {
+        $params = get_params($form, null, [
+            'id:int',
+            'cost:int',
+            'extra_data:array',
+            'extra_info',
+            'product_id:int',
+            'quantity:int',
+        ], ['null_missing' => true]);
+
+        $product = Product::enabled()->find($params['product_id']);
+
+        unset($params['product_id']);
+
+        return [$params, $product];
     }
 
     public function items()
@@ -762,23 +780,5 @@ class Order extends Model
         $params['cc'] = Country::where('name', $matches['country'])->first()->acronym;
 
         return new ExtraDataTournamentBanner($params);
-    }
-
-    private static function orderItemParams(array $form)
-    {
-        $params = get_params($form, null, [
-            'id:int',
-            'cost:int',
-            'extra_data:array',
-            'extra_info',
-            'product_id:int',
-            'quantity:int',
-        ], ['null_missing' => true]);
-
-        $product = Product::enabled()->find($params['product_id']);
-
-        unset($params['product_id']);
-
-        return [$params, $product];
     }
 }
