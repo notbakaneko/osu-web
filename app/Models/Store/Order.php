@@ -231,11 +231,7 @@ class Order extends Model
 
     public function getPaymentProvider()
     {
-        if (!present($this->transaction_id)) {
-            return;
-        }
-
-        return static::splitTransactionId($this->transaction_id)[0];
+        return $this->provider;
     }
 
     /**
