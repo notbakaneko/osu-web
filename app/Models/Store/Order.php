@@ -201,6 +201,27 @@ class Order extends Model
         return $query->with('payments');
     }
 
+    #region Payment provider related ids
+
+    public function getShopifyCheckoutId(): ?string
+    {
+        if ($this->provider !== static::PROVIDER_SHOPIFY) {
+            throw new InvariantException();
+        }
+
+        $gid = static::splitTransactionId($this->transaction_id)[1] ?? null;
+
+        if ($gid === null) {
+            return null;
+        }
+
+        return str_starts_with($gid, 'gid://shopify/')
+            ? $gid
+            : base64_decode($gid);
+    }
+
+    #endregion
+
     public function trackingCodes()
     {
         $codes = [];
