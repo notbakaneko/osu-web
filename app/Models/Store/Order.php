@@ -91,6 +91,15 @@ class Order extends Model
 
     protected array $macros = ['itemsQuantities'];
 
+    public static function decodeShopifyGid(string $value): ?string
+    {
+        $gid = str_starts_with($value, 'gid://shopify/')
+            ? $value
+            : base64_decode($value, true);
+
+        return $gid === false ? null : $gid;
+    }
+
     public static function pendingForUser(?User $user): ?Builder
     {
         if ($user === null) {
@@ -209,9 +218,27 @@ class Order extends Model
             throw new InvariantException();
         }
 
-        return str_starts_with($this->reference, 'gid://shopify/')
-            ? $this->reference
-            : base64_decode($this->reference);
+        // Some gids are base64 encoded.
+        return static::decodeShopifyGid($this->reference);
+    }
+
+    public function getShopifyOrderNumber()
+    {
+        return static::splitTransactionId($this->transaction_id)[1] ?? null;
+    }
+
+    public function setShopifyOrderNumber(string|int $value)
+    {
+        $this->attributes['transaction_id'] = static::PROVIDER_SHOPIFY."-{$value}";
+    }
+
+    public function setTransactionIdAndReference(string $provider, ?string $value = null)
+    {
+        // TODO: remove the attribute setter
+        $transactionId = $value === null ? $provider : "{$provider}-{$value}";
+        $this->attributes['transaction_id'] = $transactionId;
+        $this->provider = $provider;
+        $this->reference = $value;
     }
 
     #endregion

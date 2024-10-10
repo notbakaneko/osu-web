@@ -11,6 +11,7 @@ use App\Models\Store\Order;
 use App\Models\Store\Payment;
 use Carbon\Carbon;
 use Log;
+use Sentry\Severity;
 use Sentry\State\Scope;
 
 class ShopifyController extends Controller
@@ -65,6 +66,12 @@ class ShopifyController extends Controller
                 }
 
                 (new OrderCheckout($order))->completeCheckout();
+                $orderNumber = $this->getOrderNumber();
+                if ($orderNumber !== null) {
+                    $order->setShopifyOrderNumber($orderNumber);
+                    $order->save();
+                }
+
                 break;
             case 'orders/paid':
                 $this->updateOrderPayment($order);
@@ -98,6 +105,20 @@ class ShopifyController extends Controller
                 return get_int($attribute['value']);
             }
         }
+    }
+
+    private function getOrderNumber()
+    {
+        $orderNumber = $this->getParams()['order_number'] ?? null;
+        if ($orderNumber === null) {
+            app('sentry')->getClient()->captureMessage(
+                'Missing order_number in Shopify webhook.',
+                new Severity(Severity::WARNING),
+                (new Scope())->setExtra('order_id', $this->getOrderId())
+            );
+        }
+
+        return $orderNumber;
     }
 
     private function getParams()
@@ -143,7 +164,7 @@ class ShopifyController extends Controller
         $params = $this->getParams();
         $payment = new Payment([
             'provider' => Order::PROVIDER_SHOPIFY,
-            'transaction_id' => $order->getProviderReference(),
+            'transaction_id' => $this->getOrderNumber(),
             'country_code' => array_get($params, 'billing_address.country_code'),
             'paid_at' => Carbon::parse(array_get($params, 'processed_at')),
         ]);
