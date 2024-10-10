@@ -209,15 +209,9 @@ class Order extends Model
             throw new InvariantException();
         }
 
-        $gid = static::splitTransactionId($this->transaction_id)[1] ?? null;
-
-        if ($gid === null) {
-            return null;
-        }
-
-        return str_starts_with($gid, 'gid://shopify/')
-            ? $gid
-            : base64_decode($gid);
+        return str_starts_with($this->reference, 'gid://shopify/')
+            ? $this->reference
+            : base64_decode($this->reference);
     }
 
     #endregion
