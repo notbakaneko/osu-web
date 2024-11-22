@@ -144,6 +144,8 @@ class ScoresController extends Controller
             return $scoreJson;
         }
 
+        set_opengraph($score);
+
         return ext_view('scores.show', compact('score', 'scoreJson'));
     }
 
