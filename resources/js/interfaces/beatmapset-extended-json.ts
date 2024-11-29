@@ -44,7 +44,7 @@ export default BeatmapsetExtendedJson;
 
 interface BeatmapsetJsonForShowOverrideIncludes {
   beatmaps: (WithBeatmapOwners<BeatmapExtendedJson> & Required<Pick<BeatmapExtendedJson, 'failtimes' | 'max_combo'>>)[];
-  converts: (WithBeatmapOwners<BeatmapExtendedJson> & Required<Pick<BeatmapExtendedJson, 'failtimes'>>)[];
+  converts: (BeatmapExtendedJson & Required<Pick<BeatmapExtendedJson, 'failtimes'>>)[];
 }
 
 type BeatmapsetJsonForShowIncludes = Required<Pick<BeatmapsetExtendedJson,

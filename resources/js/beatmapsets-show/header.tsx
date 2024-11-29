@@ -286,12 +286,13 @@ export default class Header extends React.Component<Props> {
 
   private renderBeatmapVersion() {
     const beatmap = this.controller.hoveredBeatmap ?? this.controller.currentBeatmap;
+    const beatmapWithOwners = beatmap.convert ? this.controller.beatmapWithoutConverts(beatmap.id) : beatmap ;
 
     return (
       <span className='beatmapset-header__diff-name'>
         {beatmap.version}
 
-        {hasGuestOwners(beatmap, this.controller.beatmapset) && (
+        {beatmapWithOwners != null && hasGuestOwners(beatmapWithOwners, this.controller.beatmapset) && (
           <span className='beatmapset-header__diff-extra'>
             <StringWithComponent
               mappings={{

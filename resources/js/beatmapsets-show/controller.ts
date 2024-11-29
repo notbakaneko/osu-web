@@ -4,7 +4,7 @@
 import { BeatmapsetJsonForShow } from 'interfaces/beatmapset-extended-json';
 import UserJson from 'interfaces/user-json';
 import { keyBy } from 'lodash';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction, toJS } from 'mobx';
 import { deletedUserJson } from 'models/user';
 import core from 'osu-core-singleton';
 import { find, findDefault, group } from 'utils/beatmap-helper';
@@ -14,7 +14,7 @@ import { currentUrl } from 'utils/turbolinks';
 
 export type ScoreLoadingState = null | 'error' | 'loading' | 'supporter_only' | 'unranked';
 
-type BeatmapJsonForBeatmapsetShow = BeatmapsetJsonForShow['converts'][number];
+type BeatmapJsonForBeatmapsetShow = BeatmapsetJsonForShow['converts' | 'beatmaps'][number];
 
 interface State {
   beatmapId?: BeatmapJsonForBeatmapsetShow['id'];
@@ -102,12 +102,17 @@ export default class Controller {
     $(document).on('turbo:before-cache', this.saveState);
   }
 
+  beatmapWithoutConverts(beatmapId: number) {
+    return this.beatmapset.beatmaps.find((x) => x.id === beatmapId);
+  }
+
   destroy() {
     this.saveState();
     $(document).off('turbo:before-cache', this.saveState);
   }
 
   owners(beatmap: BeatmapJsonForBeatmapsetShow) {
+    beatmap = this.beatmapWithoutConverts(beatmap.id);
     return beatmap.owners.map((mapper) => this.usersById[mapper.id] ?? deletedUserJson);
   }
 

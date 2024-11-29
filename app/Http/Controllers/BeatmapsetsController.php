@@ -406,7 +406,6 @@ class BeatmapsetsController extends Controller
             'beatmaps.owners',
             'converts',
             'converts.failtimes',
-            'converts.owners',
             'current_nominations',
             'current_user_attributes',
             'description',
