@@ -134,7 +134,7 @@ trait BeatmapsetSearch
     private function esTags()
     {
         $tagSet = new Set([$this->tags]);
-        $beatmapTags = $this->beatmaps->flatMap(fn ($beatmap) => Tag::topTags($beatmap->getKey()))->map(fn ($tag) => $tag->name);
+        $beatmapTags = $this->beatmaps->flatMap(fn ($beatmap) => $beatmap->topTags())->map(fn ($tag) => $tag->name);
         $tagSet->add(...$beatmapTags);
 
         return $tagSet->toArray();
