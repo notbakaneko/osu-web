@@ -29,10 +29,8 @@ class BeatmapTagsController extends Controller
 
     public function index($beatmapId)
     {
-        $beatmap = Beatmap::findOrFail($beatmapId);
-
         return [
-            'beatmap_tags' => $beatmap->topTags(),
+            'beatmap_tags' => Beatmap::findOrFail($beatmapId)->topTagsJson(),
         ];
     }
 

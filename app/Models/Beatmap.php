@@ -348,14 +348,30 @@ class Beatmap extends Model implements AfterCommit
         return array_search($this->approved, Beatmapset::STATES, true);
     }
 
-    public function topTags()
+    public function topTagsJson()
     {
-        return cache_remember_mutexed(
-            "beatmap_top_tags:{$this->getKey()}",
+        $tagIds = cache_remember_mutexed(
+            "beatmap_top_tag_ids:{$this->getKey()}",
             $GLOBALS['cfg']['osu']['tags']['beatmap_tags_cache_duration'],
             [],
-            fn () => Tag::topTags($this->getKey()),
+            fn () => Tag::topTagIds($this->getKey())->toArray(),
         );
+
+        $cachedTags = app('tags');
+        $json = [];
+
+        foreach ($tagIds as $tagId) {
+            $tag = $cachedTags->get($tagId['id']);
+            if ($tag !== null) {
+                $json[] = [
+                    ...$tagId,
+                    'description' => $tag->description,
+                    'name' => $tag->name,
+                ];
+            }
+        }
+
+        return $json;
     }
 
     private function getDifficultyrating()
