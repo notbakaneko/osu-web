@@ -5,7 +5,7 @@ import GroupJson from 'interfaces/group-json';
 import { forEach } from 'lodash';
 import { present } from './string';
 
-export type Modifiers = (string | null | undefined)[] | Partial<Record<string, boolean | null | undefined>> | string | null | undefined;
+export type Modifiers = Nullable<(Nullable<string>)[] | Partial<Record<string, Nullable<boolean>>> | string>;
 
 const eachModifier = (modifiersArray: Modifiers[], callback: (modifier: string) => void) => {
   modifiersArray.forEach((modifiers) => {

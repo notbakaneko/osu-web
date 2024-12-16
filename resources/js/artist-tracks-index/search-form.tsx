@@ -13,8 +13,6 @@ import { trans } from 'utils/lang';
 import { presence, present } from 'utils/string';
 import makeLink from './make-link';
 
-type Nullable<T> = T | null | undefined;
-
 type EsRangeField = 'gt' | 'gte' | 'lt' | 'lte';
 
 type EsRange<T> = Partial<Record<EsRangeField, Nullable<T>>>;

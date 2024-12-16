@@ -15,7 +15,7 @@ const directions = ['received', 'given'] as const;
 export type Direction = (typeof directions)[number];
 
 interface Props {
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
   votes: Record<Direction, VoteSummary[]>;
 }
 

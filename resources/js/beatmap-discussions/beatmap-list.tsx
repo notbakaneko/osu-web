@@ -17,7 +17,7 @@ import DiscussionsState from './discussions-state';
 
 interface Props {
   discussionsState: DiscussionsState;
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 @observer

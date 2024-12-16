@@ -92,7 +92,7 @@ export function safeReactMarkdownUrl(url: string | undefined) {
   }
 }
 
-export function updateQueryString(url: string | null, params: Record<string, string | null | undefined>, hash?: string) {
+export function updateQueryString(url: string | null, params: Record<string, Nullable<string>>, hash?: string) {
   const docUrl = currentUrl();
   const urlObj = new URL(url ?? docUrl.href, docUrl.origin);
 

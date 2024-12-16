@@ -27,11 +27,11 @@ function simpleKebab(str: string | number | undefined) {
 export type EventViewMode = 'discussions' | 'profile' | 'list';
 
 interface Props {
-  discussions?: Map<number | null | undefined, BeatmapsetDiscussionJson>;
+  discussions?: Map<Nullable<number>, BeatmapsetDiscussionJson>;
   event: BeatmapsetEventJson;
   mode: EventViewMode;
   time?: string;
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 export default class BeatmapsetEvent extends React.PureComponent<Props> {

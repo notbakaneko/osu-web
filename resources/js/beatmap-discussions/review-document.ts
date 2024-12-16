@@ -30,7 +30,7 @@ function isText(node: UnistNode): node is TextNode {
   return node.type === 'text';
 }
 
-export function parseFromJson(json: string, discussions: Map<number | null | undefined, BeatmapsetDiscussionJson>) {
+export function parseFromJson(json: string, discussions: Map<Nullable<number>, BeatmapsetDiscussionJson>) {
   let srcDoc: BeatmapDiscussionReview;
 
   try {

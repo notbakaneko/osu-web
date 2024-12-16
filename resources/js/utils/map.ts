@@ -12,7 +12,7 @@ export function mapBy<T, K extends keyof T>(array: T[], key: K) {
 }
 
 export function mapByWithNulls<T, K extends keyof T>(array: T[], key: K) {
-  const map = new Map<T[K] | null | undefined, T>();
+  const map = new Map<Nullable<T[K]>, T>();
 
   for (const value of array) {
     map.set(value[key], value);

@@ -9,6 +9,6 @@ import UserJson from 'interfaces/user-json';
 export default interface BeatmapsetDiscussionsStore {
   beatmaps: Map<number, BeatmapExtendedJson>;
   beatmapsets: Map<number, BeatmapsetExtendedJson>;
-  discussions: Map<number | null | undefined, BeatmapsetDiscussionJson>;
-  users: Map<number | null | undefined, UserJson>;
+  discussions: Map<Nullable<number>, BeatmapsetDiscussionJson>;
+  users: Map<Nullable<number>, UserJson>;
 }

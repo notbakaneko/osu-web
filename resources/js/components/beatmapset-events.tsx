@@ -9,7 +9,7 @@ import * as React from 'react';
 export interface Props {
   events: BeatmapsetEventJson[];
   mode: EventViewMode;
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 export default class BeatmapsetEvents extends React.PureComponent<Props> {

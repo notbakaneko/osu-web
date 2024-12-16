@@ -10,9 +10,9 @@ import React from 'react';
 import { trans } from 'utils/lang';
 
 interface Props {
-  discussions: Map<number | null | undefined, BeatmapsetDiscussionJson>;
+  discussions: Map<Nullable<number>, BeatmapsetDiscussionJson>;
   events: BeatmapsetEventJson[];
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 export class Events extends React.PureComponent<Props> {

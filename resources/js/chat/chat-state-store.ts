@@ -312,7 +312,7 @@ export default class ChatStateStore implements DispatchListener {
     if (mode == null) return;
 
     let hash = '';
-    const params: Record<'channel_id' | 'sendto', string | null | undefined> = { channel_id: null, sendto: null };
+    const params: Record<'channel_id' | 'sendto', Nullable<string>> = { channel_id: null, sendto: null };
 
     if (typeof channel === 'string') {
       hash = channel;

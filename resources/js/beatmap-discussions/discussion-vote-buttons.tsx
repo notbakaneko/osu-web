@@ -22,7 +22,7 @@ interface Props {
   cannotVote: boolean;
   discussion: BeatmapsetDiscussionJsonForShow;
   discussionsState: DiscussionsState;
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 @observer

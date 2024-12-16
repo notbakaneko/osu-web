@@ -16,7 +16,7 @@ interface Props {
   beatmapset: BeatmapsetExtendedJson;
   discussionsState: DiscussionsState;
   onClose: () => void;
-  users: Map<number | null | undefined, UserJson>;
+  users: Map<Nullable<number>, UserJson>;
 }
 
 @observer
