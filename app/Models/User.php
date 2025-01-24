@@ -325,21 +325,42 @@ class User extends Model implements AfterCommit, AuthenticatableContract, HasLoc
             return 0;
         }
 
-        $years = $lastChange->diffInYears(Carbon::now(), false);
-        $tierCap = max($maxTier - $years, 1);
-        $tier = max(
-            min($this->usernameChangeHistory()->paid()->count(), $maxTier) - $years,
-            1,
+        $changes = $this->usernameChangeHistory()->paid()->count();
+
+        $baseTier = min(
+            $changes,
+            $maxTier,
         );
-        $tier = min($tier, $tierCap);
+
+        $years = $lastChange->diffInYears(Carbon::now(), false);
+        // $tierCap = max($maxTier - $years, 1);
+        $tier = $baseTier - min($years, $maxTier);
+
+        // $tier = \Number::clamp($tier, 1, $tierCap);
+
+        if ($changes > $maxTier) {
+            $changesAfter = $this->usernameChangeHistory()
+            ->where('timestamp', '>', CarbonImmutable::now()->subYears($maxTier))
+            ->paid()
+            ->count();
+
+            $tier += $changesAfter;
+        }
 
         return match ($tier) {
+            0 => 8,
             1 => 8,
             2 => 16,
             3 => 32,
             4 => 64,
             5 => 100,
         };
+
+        $changesAfter = $this->usernameChangeHistory()
+        ->where('timestamp', '>', CarbonImmutable::now()->subYears($maxTier))
+        ->paid()
+        ->count();
+
     }
 
     public function revertUsername($type = 'revert'): UsernameChangeHistory
