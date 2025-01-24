@@ -233,6 +233,31 @@ class UserTest extends TestCase
         $this->assertSame($cost, $user->usernameChangeCost());
     }
 
+
+    public function testUsernameChangeCostWindow()
+    {
+        CarbonImmutable::now();
+
+        $user = User::factory()
+            ->has(UsernameChangeHistory::factory()->count(6))
+            ->create();
+
+        $this->travelTo(CarbonImmutable::now()->addYears(3));
+        $this->assertSame(16, $user->usernameChangeCost());
+
+        $this->travelTo(CarbonImmutable::now()->addYears(2));
+        $this->assertSame(8, $user->usernameChangeCost());
+
+        $user->usernameChangeHistory()->create(['type' => 'paid', 'username' => 'marty', 'timestamp' => CarbonImmutable::now()]);
+        $this->assertSame(16, $user->usernameChangeCost());
+
+        $user->usernameChangeHistory()->create(['type' => 'paid', 'username' => 'mcfly', 'timestamp' => CarbonImmutable::now()]);
+        $this->assertSame(32, $user->usernameChangeCost());
+
+        $this->travelTo(CarbonImmutable::now()->addYears(1));
+        $this->assertSame(16, $user->usernameChangeCost());
+    }
+
     /**
      * @dataProvider dataProviderValidDiscordUsername
      */
