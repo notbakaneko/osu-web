@@ -27,6 +27,7 @@ use App\Traits\Memoizes;
 use App\Traits\Validatable;
 use Cache;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use DB;
 use Ds\Set;
 use Hash;
@@ -317,22 +318,27 @@ class User extends Model implements AfterCommit, AuthenticatableContract, HasLoc
 
     public function usernameChangeCost()
     {
-        $tier = min($this->usernameChangeHistory()->paid()->count(), 5);
+        static $maxTier = 5;
 
-        if ($tier > 1) {
-            $lastChange = $this->usernameChangeHistory()->paid()->last()?->timestamp;
-            if ($lastChange !== null) {
-                $tier = max($tier - $lastChange->diffInYears(Carbon::now(), false), 1);
-            }
+        $lastChange = $this->usernameChangeHistory()->paid()->last()?->timestamp;
+        if ($lastChange === null) {
+            return 0;
         }
 
+        $years = $lastChange->diffInYears(Carbon::now(), false);
+        $tierCap = max($maxTier - $years, 1);
+        $tier = max(
+            min($this->usernameChangeHistory()->paid()->count(), $maxTier) - $years,
+            1,
+        );
+        $tier = min($tier, $tierCap);
+
         return match ($tier) {
-            0 => 0,
             1 => 8,
             2 => 16,
             3 => 32,
             4 => 64,
-            default => 100,
+            5 => 100,
         };
     }
 
