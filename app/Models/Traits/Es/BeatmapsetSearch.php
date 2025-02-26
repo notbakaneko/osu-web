@@ -8,6 +8,9 @@ namespace App\Models\Traits\Es;
 use App\Models\Beatmap;
 use Carbon\Carbon;
 
+/**
+ * @mixin App\Models\Beatmapset
+ */
 trait BeatmapsetSearch
 {
     use BaseDbIndexable;
