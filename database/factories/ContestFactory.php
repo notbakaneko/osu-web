@@ -8,6 +8,9 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Contest;
+use App\Models\ContestEntry;
+use App\Models\ContestJudge;
+use App\Models\ContestScoringCategory;
 use Carbon\Carbon;
 
 class ContestFactory extends Factory
@@ -78,5 +81,18 @@ class ContestFactory extends Factory
             'voting_starts_at' => fn() => Carbon::now()->subMonths(1),
             'voting_ends_at' => fn() => Carbon::now()->addMonths(1),
         ]);
+    }
+
+    public function withEntries(int $count = 2)
+    {
+        \Log::debug('withEntries');
+        return $this->has(ContestEntry::factory()->count($count), 'entries');
+    }
+
+    public function withJudges(int $jugdeCount = 2, $categoryCount = 2): static
+    {
+        return $this->judged()
+            ->has(ContestJudge::factory()->withVotes()->count($jugdeCount))
+            ->has(ContestScoringCategory::factory()->count($categoryCount), 'scoringCategories');
     }
 }
