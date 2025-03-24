@@ -7,7 +7,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Contest;
+use App\Models\ContestEntry;
 use App\Models\ContestJudge;
+use App\Models\User;
 
 class ContestJudgeFactory extends Factory
 {
@@ -15,7 +18,32 @@ class ContestJudgeFactory extends Factory
 
     public function definition(): array
     {
-        // pivot table...
-        return [];
+        return [
+            'contest_id' => Contest::factory()->judged(),
+            'user_id' => User::factory(),
+        ];
+    }
+
+    public function withVotes(): static
+    {
+        \Log::debug('withvotes');
+        return $this->afterCreating(function (ContestJudge $contestJudge) {
+            $contest = $contestJudge->contest;
+            $categories = $contest->scoringCategories;
+
+            foreach ($contest->entries as $entry) {
+                $vote = $entry->judgeVotes()->create([
+                    'comment' => $this->faker->sentence(),
+                    'user_id' => $contestJudge->user_id,
+                ]);
+
+                foreach ($categories as $category) {
+                    $vote->scores()->create([
+                        'contest_scoring_category_id' => $category->getKey(),
+                        'value' => rand(1, $category->max_value),
+                    ]);
+                }
+            }
+        });
     }
 }
