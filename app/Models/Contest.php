@@ -417,12 +417,6 @@ class Contest extends Model
         return route('contests.show', $this->id);
     }
 
-    public function setExtraOption($key, $value): void
-    {
-        $this->extra_options = array_merge($this->extra_options ?? [], [$key => $value]);
-        $this->resetMemoized();
-    }
-
     public function getForcedWidth()
     {
         return $this->extra_options['forced_width'] ?? null;
