@@ -85,7 +85,6 @@ class ContestFactory extends Factory
 
     public function withEntries(int $count = 2)
     {
-        \Log::debug('withEntries');
         return $this->has(ContestEntry::factory()->count($count), 'entries');
     }
 
