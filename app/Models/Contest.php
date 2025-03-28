@@ -12,6 +12,7 @@ use App\Transformers\ContestTransformer;
 use App\Transformers\UserContestEntryTransformer;
 use Cache;
 use Exception;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Carbon\Carbon|null $entry_ends_at
  * @property mixed $thumbnail_shape
  * @property \Carbon\Carbon|null $entry_starts_at
- * @property json|null $extra_options
+ * @property array|null $extra_options
  * @property string $header_url
  * @property int $id
  * @property mixed $link_icon
@@ -51,7 +52,7 @@ class Contest extends Model
     protected $casts = [
         'entry_ends_at' => 'datetime',
         'entry_starts_at' => 'datetime',
-        'extra_options' => 'array',
+        'extra_options' => AsArrayObject::class,
         'show_votes' => 'boolean',
         'visible' => 'boolean',
         'voting_ends_at' => 'datetime',
@@ -85,7 +86,7 @@ class Contest extends Model
 
     public function assertVoteRequirement(?User $user): void
     {
-        $requirement = $this->getExtraOptions()['requirement'] ?? null;
+        $requirement = $this->extra_options['requirement'] ?? null;
 
         if ($requirement === null) {
             return;
@@ -137,7 +138,7 @@ class Contest extends Model
 
     public function isBestOf(): bool
     {
-        return isset($this->getExtraOptions()['best_of']);
+        return isset($this->extra_options['best_of']);
     }
 
     public function isJudge(User $user): bool
@@ -149,7 +150,7 @@ class Contest extends Model
 
     public function isJudged(): bool
     {
-        return $this->getExtraOptions()['judged'] ?? false;
+        return $this->extra_options['judged'] ?? false;
     }
 
     public function isJudgingActive(): bool
@@ -159,12 +160,12 @@ class Contest extends Model
 
     public function isScoreStandardised(): bool
     {
-        return $this->getExtraOptions()['is_score_standardised'] ?? false;
+        return $this->extra_options['is_score_standardised'] ?? false;
     }
 
     public function isSubmittedBeatmaps(): bool
     {
-        return $this->isBestOf() || ($this->getExtraOptions()['submitted_beatmaps'] ?? false);
+        return $this->isBestOf() || ($this->extra_options['submitted_beatmaps'] ?? false);
     }
 
     public function isSubmissionOpen()
@@ -219,7 +220,7 @@ class Contest extends Model
     public function hasThumbnails(): bool
     {
         return $this->type === 'art' ||
-            ($this->type === 'external' && isset($this->getExtraOptions()['thumbnail_shape']));
+            ($this->type === 'external' && isset($this->extra_options['thumbnail_shape']));
     }
 
     public function getThumbnailShapeAttribute(): ?string
@@ -228,22 +229,22 @@ class Contest extends Model
             return null;
         }
 
-        return $this->getExtraOptions()['thumbnail_shape'] ?? 'square';
+        return $this->extra_options['thumbnail_shape'] ?? 'square';
     }
 
     public function getUnmaskedAttribute()
     {
-        return $this->getExtraOptions()['unmasked'] ?? false;
+        return $this->extra_options['unmasked'] ?? false;
     }
 
     public function getShowNamesAttribute()
     {
-        return $this->getExtraOptions()['show_names'] ?? false;
+        return $this->extra_options['show_names'] ?? false;
     }
 
     public function getLinkIconAttribute()
     {
-        return $this->getExtraOptions()['link_icon'] ?? 'download';
+        return $this->extra_options['link_icon'] ?? 'download';
     }
 
     public function currentPhaseEndDate()
@@ -316,7 +317,7 @@ class Contest extends Model
                 return [];
             }
 
-            $options = $this->getExtraOptions()['best_of'];
+            $options = $this->extra_options['best_of'];
             $query->forBestOf($user, $options['mode'] ?? 'osu', $options['variant'] ?? null);
         }
 
@@ -422,25 +423,18 @@ class Contest extends Model
         $this->resetMemoized();
     }
 
-    public function getExtraOptions()
-    {
-        return $this->memoize(__FUNCTION__, function () {
-            return $this->extra_options;
-        });
-    }
-
     public function getForcedWidth()
     {
-        return $this->getExtraOptions()['forced_width'] ?? null;
+        return $this->extra_options['forced_width'] ?? null;
     }
 
     public function getForcedHeight()
     {
-        return $this->getExtraOptions()['forced_height'] ?? null;
+        return $this->extra_options['forced_height'] ?? null;
     }
 
     public function showEntryUser(): bool
     {
-        return $this->show_votes || ($this->getExtraOptions()['show_entry_user'] ?? false);
+        return $this->show_votes || ($this->extra_options['show_entry_user'] ?? false);
     }
 }
