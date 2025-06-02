@@ -161,7 +161,7 @@ class Token extends PassportToken implements SessionVerificationInterface
 
     public function validate(): void
     {
-        static $scopesRequireDelegation = new Set(['chat.write', 'chat.write_manage', 'delegate']);
+        static $scopesRequireDelegation = new Set(['chat.write', 'chat.write_manage', 'delegate', 'forum.write_manage']);
 
         $scopes = $this->scopeSet();
         if ($scopes->isEmpty()) {

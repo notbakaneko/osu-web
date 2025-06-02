@@ -43,6 +43,8 @@ class TokenTest extends TestCase
         return [
             'chat.write requires delegation' => [['chat.write'], InvalidScopeException::class],
             'chat.write delegation' => [['chat.write', 'delegate'], null],
+            'forum.write_manage requires delegation' => [['forum.write_manage'], InvalidScopeException::class],
+            'forum.write_manage delegation' => [['delegate', 'forum.write_manage'], null],
         ];
     }
 
