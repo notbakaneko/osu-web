@@ -217,7 +217,7 @@ class BeatmapsetSearch extends RecordSearch
 
         if ($this->excludes->featuredArtist !== null) {
             $trackIds = ArtistTrack::where('artist_id', $this->excludes->featuredArtist)->pluck('id');
-            $this->nestedMustNot->should(['terms' => ['track_id' => $trackIds]]);
+            $this->query->mustNot(['terms' => ['track_id' => $trackIds]]);
         }
     }
 
