@@ -53,6 +53,7 @@ class TopicsController extends Controller
 
         $this->middleware('require-scopes:public', ['only' => ['index', 'show']]);
         $this->middleware('require-scopes:forum.write', ['only' => ['reply', 'store', 'update']]);
+        $this->middleware('require-scopes:forum.write_manage', ['only' => ['lock', 'pin']]);
     }
 
     public function create()
