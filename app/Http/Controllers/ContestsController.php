@@ -56,8 +56,8 @@ class ContestsController extends Controller
             abort(404);
         }
 
-        if ($contest->isVotingStarted() && isset($contest->getExtraOptions()['children'])) {
-            $contestIds = $contest->getExtraOptions()['children'];
+        if ($contest->isVotingStarted() && isset($contest->extra_options['children'])) {
+            $contestIds = $contest->extra_options['children'];
             $contests = Contest::whereIn('id', $contestIds)
                 ->orderByField('id', $contestIds)
                 ->get();

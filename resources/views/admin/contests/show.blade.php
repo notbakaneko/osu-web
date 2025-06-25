@@ -80,10 +80,10 @@
                 <div class="admin-contest__description">{!! markdown($contest->description_voting) !!}</div>
             </div>
 
-            @if ($contest->getExtraOptions() !== null)
+            @if ($contest->extra_options !== null)
                 <div>
                     <div class="admin-contest__title">Extra Options</div>
-                    <div><pre>{{json_encode($contest->getExtraOptions(), JSON_PRETTY_PRINT)}}</pre></div>
+                    <div><pre>{{json_encode($contest->extra_options, JSON_PRETTY_PRINT)}}</pre></div>
                 </div>
             @endif
 
