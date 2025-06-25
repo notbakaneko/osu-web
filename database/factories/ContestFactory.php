@@ -12,6 +12,7 @@ use App\Models\ContestEntry;
 use App\Models\ContestJudge;
 use App\Models\ContestScoringCategory;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class ContestFactory extends Factory
 {
@@ -83,9 +84,16 @@ class ContestFactory extends Factory
         ]);
     }
 
-    public function withEntries(int $count = 2)
+    public function withEntries(int $count = 2): static
     {
         return $this->has(ContestEntry::factory()->count($count), 'entries');
+    }
+
+    public function withHosts(Collection $users): static
+    {
+        return $this->state(fn (array $attr) => [
+            'extra_options' => [...$attr['extra_options'] ?? [], 'host_user_ids' => $users->pluck('user_id')],
+        ]);
     }
 
     public function withJudges(int $jugdeCount = 2, $categoryCount = 2): static
