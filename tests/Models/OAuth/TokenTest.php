@@ -33,7 +33,7 @@ class TokenTest extends TestCase
     {
         return Passport::scopes()
             ->pluck('id')
-            ->filter(fn ($id) => !in_array($id, ['chat.write', 'chat.write_manage', 'delegate'], true))
+            ->filter(fn ($id) => !in_array($id, ['chat.write', 'chat.write_manage', 'forum.write_manage', 'delegate'], true))
             ->map(fn ($id) => [['delegate', $id]])
             ->values();
     }
