@@ -25,6 +25,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Testing\Fakes\MailFake;
 use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
@@ -50,7 +51,7 @@ class TestCase extends BaseTestCase
     {
         $data = [];
 
-        foreach (Passport::scopes()->pluck('id') as $scope) {
+        foreach (static::allPassportScopeIds() as $scope) {
             // just skip over any scopes that require special conditions for now.
             if (in_array($scope, ['chat.read', 'chat.write', 'chat.write_manage', 'delegate'], true)) {
                 continue;
@@ -85,6 +86,16 @@ class TestCase extends BaseTestCase
             fn ($file) => [basename($file, $suffix), $path],
             glob("{$path}/*{$suffix}"),
         );
+    }
+
+    protected static function chatScopes()
+    {
+        return static::allPassportScopeIds()->filter(fn ($scope) => str_starts_with($scope, 'chat.'));
+    }
+
+    protected static function allPassportScopeIds(): Collection
+    {
+        return Passport::scopes()->pluck('id');
     }
 
     protected static function reindexScores()
@@ -233,7 +244,7 @@ class TestCase extends BaseTestCase
 
     protected function createAllowedScopesDataProvider(array $allowedScopes)
     {
-        $data = Passport::scopes()->pluck('id')->map(function ($scope) use ($allowedScopes) {
+        $data = static::allPassportScopeIds()->map(function ($scope) use ($allowedScopes) {
             return [[$scope], in_array($scope, $allowedScopes, true)];
         })->all();
 
