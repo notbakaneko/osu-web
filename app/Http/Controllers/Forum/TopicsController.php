@@ -46,6 +46,7 @@ class TopicsController extends Controller
         $this->middleware('auth', ['only' => [
             'create',
             'lock',
+            'pin',
             'preview',
             'reply',
             'store',
@@ -181,6 +182,22 @@ class TopicsController extends Controller
         return ext_view('forum.topics.replace_button', compact('topic', 'type', 'state'), 'js');
     }
 
+    /**
+     * Lock Topic
+     *
+     * Locks a Topic
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * _empty response_
+     *
+     * @urlParam topic integer required Topic id.
+     * @bodyParam lock bool required
+     *
+     * @response 204
+     */
     public function lock($id)
     {
         $topic = Topic::withTrashed()->findOrFail($id);
@@ -191,6 +208,10 @@ class TopicsController extends Controller
         $state = get_bool(Request::input('lock'));
         $this->logModerate($state ? 'LOG_LOCK' : 'LOG_UNLOCK', [$topic->topic_title], $topic);
         $topic->lock($state);
+
+        if (is_api_request()) {
+            return response()->noContent();
+        }
 
         return ext_view('forum.topics.replace_button', compact('topic', 'type', 'state'), 'js');
     }
@@ -212,6 +233,22 @@ class TopicsController extends Controller
         }
     }
 
+    /**
+     * Pin Topic
+     *
+     * Pins a Topic
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * _empty response_
+     *
+     * @urlParam topic integer required Topic id.
+     * @bodyParam pin integer required
+     *
+     * @response 204
+     */
     public function pin($id)
     {
         $topic = Topic::withTrashed()->findOrFail($id);
@@ -229,6 +266,10 @@ class TopicsController extends Controller
                 $topic
             );
         });
+
+        if (is_api_request()) {
+            return response()->noContent();
+        }
 
         return ext_view('forum.topics.replace_button', compact('topic', 'type', 'state'), 'js');
     }
