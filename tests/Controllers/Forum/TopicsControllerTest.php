@@ -7,16 +7,45 @@ declare(strict_types=1);
 
 namespace Tests\Controllers\Forum;
 
+use App\Exceptions\InvalidScopeException;
 use App\Models\Forum\Authorize;
 use App\Models\Forum\Forum;
 use App\Models\Forum\Post;
 use App\Models\Forum\Topic;
 use App\Models\Forum\TopicTrack;
+use App\Models\OAuth\Client;
 use App\Models\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class TopicsControllerTest extends TestCase
 {
+    public static function dataProviderForTestLockClientCredentials(): array
+    {
+        // $groups, $forumGroup, $expectException, $success
+        return [
+            [[], null, true, false],
+            [['gmt'], null, true, false],
+            [['gmt'], 'gmt', true, false],
+            [['bot'], null, false, false],
+            [['gmt', 'bot'], null, false, false],
+            [['gmt', 'bot'], 'gmt', false, true],
+        ];
+    }
+
+    public static function dataProviderForTestPinClientCredentials(): array
+    {
+        // $groups, $forumGroup, $expectException, $success
+        return [
+            [[], null, true, false],
+            [['gmt'], null, true, false],
+            [['gmt'], 'gmt', true, false],
+            [['bot'], null, false, false],
+            [['gmt', 'bot'], null, false, false],
+            [['gmt', 'bot'], 'gmt', false, true],
+        ];
+    }
+
     public function testDestroy(): void
     {
         $user = User::factory()->create();
@@ -67,18 +96,115 @@ class TopicsControllerTest extends TestCase
             ->assertSuccessful();
     }
 
+    public function testLock(): void
+    {
+        $user = User::factory()->withGroup('gmt')->create();
+        $topic = Topic::factory()->create();
+
+        $this
+            ->actingAsVerified($user)
+            ->post(route('forum.topics.lock', $topic), ['lock' => true])
+            ->assertSuccessful();
+
+        $this->assertTrue($topic->fresh()->isLocked());
+    }
+
+    public function testLockAuthCode(): void
+    {
+        $user = User::factory()->withGroup('gmt')->create();
+        $client = Client::factory()->create(['user_id' => $user]);
+        $topic = Topic::factory()->create();
+
+        $this
+            ->actAsScopedUser($user, ['forum.write_manage'], $client)
+            ->post(route('api.forum.topics.lock', $topic), ['lock' => true])
+            ->assertStatus(403);
+    }
+
+    #[DataProvider('dataProviderForTestLockClientCredentials')]
+    public function testLockClientCredentials(array $groups, ?string $forumGroup, bool $expectException, bool $success): void
+    {
+        $user = User::factory();
+        foreach ($groups as $group) {
+            $user = $user->withGroup($group);
+        }
+        $user = $user->create();
+        $client = Client::factory()->create(['user_id' => $user]);
+
+        $topic = Topic::factory()->create();
+        if ($forumGroup !== null) {
+            $topic->forum->update(['moderator_groups' => [app('groups')->byIdentifier($forumGroup)->getKey()]]);
+        }
+
+        if ($expectException) {
+            $this->expectException(InvalidScopeException::class);
+        }
+
+        $subject = $this
+            ->actAsScopedUser(null, ['delegate', 'forum.write_manage'], $client)
+            ->post(route('api.forum.topics.lock', $topic), ['lock' => true]);
+
+        if ($success) {
+            $subject->assertSuccessful();
+        } else {
+            $subject->assertStatus(403);
+        }
+    }
+
     public function testPin(): void
     {
-        $moderator = User::factory()->withGroup('gmt')->create();
+        $user = User::factory()->withGroup('gmt')->create();
         $topic = Topic::factory()->create();
         $typeInt = Topic::TYPES['sticky'];
 
         $this
-            ->actingAsVerified($moderator)
+            ->actingAsVerified($user)
             ->post(route('forum.topics.pin', $topic), ['pin' => $typeInt])
             ->assertSuccessful();
 
         $this->assertSame($typeInt, $topic->fresh()->topic_type);
+    }
+
+    public function testPinAuthCode(): void
+    {
+        $user = User::factory()->withGroup('gmt')->create();
+        $client = Client::factory()->create(['user_id' => $user]);
+        $topic = Topic::factory()->create();
+
+        $this
+            ->actAsScopedUser($user, ['forum.write_manage'], $client)
+            ->post(route('api.forum.topics.pin', $topic), ['pin' => Topic::TYPES['sticky']])
+            ->assertStatus(403);
+    }
+
+    #[DataProvider('dataProviderForTestPinClientCredentials')]
+    public function testPinClientCredentials(array $groups, ?string $forumGroup, bool $expectException, bool $success): void
+    {
+        $user = User::factory();
+        foreach ($groups as $group) {
+            $user = $user->withGroup($group);
+        }
+        $user = $user->create();
+        $client = Client::factory()->create(['user_id' => $user]);
+
+        $topic = Topic::factory()->create();
+        if ($forumGroup !== null) {
+            $topic->forum->update(['moderator_groups' => [app('groups')->byIdentifier($forumGroup)->getKey()]]);
+        }
+
+        if ($expectException) {
+            $this->expectException(InvalidScopeException::class);
+        }
+
+        $subject = $this
+            ->actAsScopedUser(null, ['delegate', 'forum.write_manage'], $client)
+            ->post(route('api.forum.topics.pin', $topic), ['pin' => Topic::TYPES['sticky']]);
+
+        if ($success) {
+            $subject->assertSuccessful();
+        } else {
+            $subject->assertStatus(403);
+        }
     }
 
     public function testReply(): void
