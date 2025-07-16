@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Database\Factories\Forum;
 
+use App\Models\Forum\Authorize;
 use App\Models\Forum\Forum;
 use Database\Factories\Factory;
 
@@ -28,5 +29,12 @@ class ForumFactory extends Factory
     public function closed(): static
     {
         return $this->state(['forum_type' => 0]);
+    }
+
+    public function moderatorGroups(array $groups): static
+    {
+        return $this->state([
+            'moderator_groups' => array_map(fn ($group) => app('groups')->byIdentifier($group)->getKey(), $groups),
+        ]);
     }
 }

@@ -20,29 +20,28 @@ use Tests\TestCase;
 
 class TopicsControllerTest extends TestCase
 {
-    public static function dataProviderForTestLockClientCredentials(): array
+    public static function dataProviderForClientCredentialsGroupTests(): array
     {
-        // $groups, $forumGroup, $expectException, $success
+        // $groups, $forumGroups, $expectException, $success
         return [
-            [[], null, true, false],
-            [['gmt'], null, true, false],
-            [['gmt'], 'gmt', true, false],
-            [['bot'], null, false, false],
-            [['gmt', 'bot'], null, false, false],
-            [['gmt', 'bot'], 'gmt', false, true],
-        ];
-    }
+            [[], [], true, false],
 
-    public static function dataProviderForTestPinClientCredentials(): array
-    {
-        // $groups, $forumGroup, $expectException, $success
-        return [
-            [[], null, true, false],
-            [['gmt'], null, true, false],
-            [['gmt'], 'gmt', true, false],
-            [['bot'], null, false, false],
-            [['gmt', 'bot'], null, false, false],
-            [['gmt', 'bot'], 'gmt', false, true],
+            // standalone group
+            [['bot'], [], false, false],
+            [['loved'], [], true, false],
+            [['loved'], ['loved'], true, false],
+            [['gmt'], [], true, false],
+            [['gmt'], ['gmt'], true, false],
+
+            // with bot group, bot needs to be last for the factory.
+            [['loved', 'bot'], [], false, false],
+            [['loved', 'bot'], [], false, false],
+            [['loved', 'bot'], ['loved'], false, true],
+            [['loved', 'bot'], ['gmt'], false, false],
+            [['gmt', 'bot'], [], false, false],
+            [['gmt', 'bot'], ['loved'], false, false],
+            [['gmt', 'bot'], ['gmt'], false, true],
+
         ];
     }
 
@@ -112,7 +111,7 @@ class TopicsControllerTest extends TestCase
     public function testLockAuthCode(): void
     {
         $user = User::factory()->withGroup('gmt')->create();
-        $client = Client::factory()->create(['user_id' => $user]);
+        $client = Client::factory()->create();
         $topic = Topic::factory()->create();
 
         $this
@@ -121,33 +120,25 @@ class TopicsControllerTest extends TestCase
             ->assertStatus(403);
     }
 
-    #[DataProvider('dataProviderForTestLockClientCredentials')]
-    public function testLockClientCredentials(array $groups, ?string $forumGroup, bool $expectException, bool $success): void
+    #[DataProvider('dataProviderForClientCredentialsGroupTests')]
+    public function testLockClientCredentials(array $groups, array $forumGroups, bool $expectException, bool $success): void
     {
-        $user = User::factory();
-        foreach ($groups as $group) {
-            $user = $user->withGroup($group);
-        }
-        $user = $user->create();
+        $user = User::factory()->withGroups($groups)->create();
         $client = Client::factory()->create(['user_id' => $user]);
-
-        $topic = Topic::factory()->create();
-        if ($forumGroup !== null) {
-            $topic->forum->update(['moderator_groups' => [app('groups')->byIdentifier($forumGroup)->getKey()]]);
-        }
+        $topic = Topic::factory()->for(Forum::factory()->moderatorGroups($forumGroups))->create();
 
         if ($expectException) {
             $this->expectException(InvalidScopeException::class);
         }
 
-        $subject = $this
+        $response = $this
             ->actAsScopedUser(null, ['delegate', 'forum.write_manage'], $client)
             ->post(route('api.forum.topics.lock', $topic), ['lock' => true]);
 
         if ($success) {
-            $subject->assertSuccessful();
+            $response->assertSuccessful();
         } else {
-            $subject->assertStatus(403);
+            $response->assertStatus(403);
         }
     }
 
@@ -168,7 +159,7 @@ class TopicsControllerTest extends TestCase
     public function testPinAuthCode(): void
     {
         $user = User::factory()->withGroup('gmt')->create();
-        $client = Client::factory()->create(['user_id' => $user]);
+        $client = Client::factory()->create();
         $topic = Topic::factory()->create();
 
         $this
@@ -177,33 +168,25 @@ class TopicsControllerTest extends TestCase
             ->assertStatus(403);
     }
 
-    #[DataProvider('dataProviderForTestPinClientCredentials')]
-    public function testPinClientCredentials(array $groups, ?string $forumGroup, bool $expectException, bool $success): void
+    #[DataProvider('dataProviderForClientCredentialsGroupTests')]
+    public function testPinClientCredentials(array $groups, array $forumGroups, bool $expectException, bool $success): void
     {
-        $user = User::factory();
-        foreach ($groups as $group) {
-            $user = $user->withGroup($group);
-        }
-        $user = $user->create();
+        $user = User::factory()->withGroups($groups)->create();
         $client = Client::factory()->create(['user_id' => $user]);
-
-        $topic = Topic::factory()->create();
-        if ($forumGroup !== null) {
-            $topic->forum->update(['moderator_groups' => [app('groups')->byIdentifier($forumGroup)->getKey()]]);
-        }
+        $topic = Topic::factory()->for(Forum::factory()->moderatorGroups($forumGroups))->create();
 
         if ($expectException) {
             $this->expectException(InvalidScopeException::class);
         }
 
-        $subject = $this
+        $response = $this
             ->actAsScopedUser(null, ['delegate', 'forum.write_manage'], $client)
             ->post(route('api.forum.topics.pin', $topic), ['pin' => Topic::TYPES['sticky']]);
 
         if ($success) {
-            $subject->assertSuccessful();
+            $response->assertSuccessful();
         } else {
-            $subject->assertStatus(403);
+            $response->assertStatus(403);
         }
     }
 
@@ -350,6 +333,60 @@ class TopicsControllerTest extends TestCase
                 'forum.topics.show',
                 Topic::orderBy('topic_id', 'DESC')->first(),
             ));
+    }
+
+    public function testStoreAuthCode(): void
+    {
+        $forum = Forum::factory()->create();
+        $user = User::factory()->withPlays($GLOBALS['cfg']['osu']['forum']['minimum_plays'])->create();
+        $client = Client::factory()->create();
+        Authorize::factory()->post()->create([
+            'forum_id' => $forum,
+            'group_id' => app('groups')->byIdentifier('default'),
+        ]);
+
+        $this->expectCountChange(fn () => Post::count(), 1);
+        $this->expectCountChange(fn () => Topic::count(), 1);
+        $this->expectCountChange(fn () => TopicTrack::count(), 1);
+
+        $this
+            ->actAsScopedUser($user, ['forum.write'], $client)
+            ->post(route('api.forum.topics.store', ['forum_id' => $forum]), [
+                'title' => 'Test post',
+                'body' => 'This is test post',
+            ])
+            ->assertSuccessful();
+    }
+
+    #[DataProvider('dataProviderForClientCredentialsGroupTests')]
+    public function testStoreClientCredentials(array $groups, array $forumGroups, bool $expectException, bool $success): void
+    {
+        $user = User::factory()->withGroups($groups)->create();
+        $client = Client::factory()->create(['user_id' => $user]);
+        $forum = Forum::factory()->moderatorGroups($forumGroups)->create();
+
+        if ($expectException) {
+            $this->expectException(InvalidScopeException::class);
+        }
+
+        $countChange = $success ? 1 : 0;
+
+        $this->expectCountChange(fn () => Post::count(), $countChange);
+        $this->expectCountChange(fn () => Topic::count(), $countChange);
+        $this->expectCountChange(fn () => TopicTrack::count(), $countChange);
+
+        $response = $this
+            ->actAsScopedUser(null, ['delegate', 'forum.write'], $client)
+            ->post(route('api.forum.topics.store', ['forum_id' => $forum]), [
+                'title' => 'Test post',
+                'body' => 'This is test post',
+            ]);
+
+        if ($success) {
+            $response->assertSuccessful();
+        } else {
+            $response->assertStatus(403);
+        }
     }
 
     public function testStoreWithoutPlays(): void

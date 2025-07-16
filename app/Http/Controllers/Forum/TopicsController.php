@@ -17,6 +17,7 @@ use App\Models\Forum\TopicCover;
 use App\Models\Forum\TopicPoll;
 use App\Models\Forum\TopicWatch;
 use App\Models\UserProfileCustomization;
+use App\Transformers\Forum\PostTransformer;
 use App\Transformers\Forum\TopicCoverTransformer;
 use App\Transformers\Forum\TopicTransformer;
 use Auth;
@@ -194,7 +195,7 @@ class TopicsController extends Controller
      * _empty response_
      *
      * @urlParam topic integer required Topic id.
-     * @bodyParam lock bool required
+     * @queryParam lock bool required
      *
      * @response 204
      */
@@ -245,7 +246,7 @@ class TopicsController extends Controller
      * _empty response_
      *
      * @urlParam topic integer required Topic id.
-     * @bodyParam pin integer required
+     * @queryParam pin integer required Type of pin, 0 to unpin, 1 for sticky, 2 for announcement. Example: 1
      *
      * @response 204
      */
@@ -306,7 +307,7 @@ class TopicsController extends Controller
             : TopicWatch::lookup($topic, $user);
 
         if (is_api_request()) {
-            return json_item($post, 'Forum\Post', ['body']);
+            return json_item($post, new PostTransformer(), ['body']);
         } else {
             return [
                 'posts' => view('forum.topics._posts', [
@@ -637,8 +638,8 @@ class TopicsController extends Controller
 
         if (is_api_request()) {
             return [
-                'topic' => json_item($topic, 'Forum\Topic'),
-                'post' => json_item($post, 'Forum\Post', ['body']),
+                'topic' => json_item($topic, new TopicTransformer()),
+                'post' => json_item($post, new PostTransformer(), ['body']),
             ];
         } else {
             return ujs_redirect(route('forum.topics.show', $topic));
@@ -679,7 +680,7 @@ class TopicsController extends Controller
             }
 
             if (is_api_request()) {
-                return json_item($topic, 'Forum\Topic');
+                return json_item($topic, new TopicTransformer());
             } else {
                 return response(null, 204);
             }
