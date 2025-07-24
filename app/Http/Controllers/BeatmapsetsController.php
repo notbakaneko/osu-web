@@ -64,6 +64,19 @@ class BeatmapsetsController extends Controller
         ]);
     }
 
+    /**
+     * Lookup Beatmapset
+     *
+     * Finds a [Beatmapset](#beatmapset) by a [Beatmap](#beatmap) ID.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [Beatmapset](#beatmapset).
+     *
+     * @queryParam beatmap_id integer required ID of the a [Beatmap](#beatmap) inside the [Beatmapset](#beatmapset).
+     */
     public function lookup()
     {
         $beatmapId = get_int(request('beatmap_id'));
@@ -77,6 +90,19 @@ class BeatmapsetsController extends Controller
         return $this->show($beatmap->beatmapset_id);
     }
 
+    /**
+     * Get Beatmapset
+     *
+     * Gets [Beatmapset](#beatmapset) data for the specified beatmapset ID.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Returns [Beatmapset](#beatmapset).
+     *
+     * @urlParam beatmapset integer required ID of the [Beatmapset](#beatmapset).
+     */
     public function show($id)
     {
         $beatmapset = $this->findBeatmapset($id);
@@ -168,6 +194,19 @@ class BeatmapsetsController extends Controller
         return $beatmapset->defaultDiscussionJson();
     }
 
+    /**
+     * Download Beatmapset
+     *
+     * Gets the download for the Beatmapset file.
+     *
+     * ---
+     *
+     * ### Response Format
+     *
+     * Redirects to the download for the Beatmapset file.
+     *
+     * @urlParam beatmapset integer required ID of the [Beatmapset](#beatmapset).
+     */
     public function download($id)
     {
         if (!is_api_request() && !from_app_url()) {
