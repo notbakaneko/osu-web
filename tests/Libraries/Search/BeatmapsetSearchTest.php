@@ -53,8 +53,17 @@ class BeatmapsetSearchTest extends TestCase
         $this->refresh();
         $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
 
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => "title=best"]);
-        $this->searchAndAssert([$beatmapsets[3]], ['q' => "-title=best"]);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => 'title=best']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => 'title="best beatmap"']);
+        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'title="the beatmap"']);
+        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'title=""best beatmap""']);
+        $this->searchAndAssert([], ['q' => 'title=""the beatmap""']);
+
+        $this->searchAndAssert([$beatmapsets[3]], ['q' => '-title=best']);
+        $this->searchAndAssert([$beatmapsets[3]], ['q' => '-title="best beatmap"']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[3]], ['q' => '-title="the beatmap"']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[3]], ['q' => '-title=""best beatmap""']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2], $beatmapsets[3]], ['q' => '-title=""the beatmap""']);
     }
 
     protected function setUp(): void
