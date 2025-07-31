@@ -39,6 +39,26 @@ class BeatmapsetSearchTest extends TestCase
         ]))->response()->ids());
     }
 
+    public function testTitleFilter()
+    {
+        $beatmapsetFactory = Beatmapset::factory()->ranked()->withBeatmaps();
+        $beatmapsets = [
+            $beatmapsetFactory->create(['title' => 'best']),
+            $beatmapsetFactory->create(['title' => 'the best beatmap']),
+            $beatmapsetFactory->create(['title_unicode' => 'the best beatmapよ']),
+            $beatmapsetFactory->create(['artist' => 'the best artist']),
+        ];
+        $this->refresh();
+        $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
+
+        $this->assertEqualsCanonicalizing([$beatmapsets[0]->getKey(), $beatmapsets[1]->getKey(), $beatmapsets[2]->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
+            'q' => "title=best"
+        ]))->response()->ids());
+        $this->assertEqualsCanonicalizing([$beatmapsets[3]->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
+            'q' => "-title=best"
+        ]))->response()->ids());
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
