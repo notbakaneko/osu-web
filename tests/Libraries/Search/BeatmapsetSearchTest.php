@@ -14,6 +14,7 @@ use App\Models\Beatmap;
 use App\Models\Beatmapset;
 use App\Models\BeatmapTag;
 use Carbon\CarbonImmutable;
+use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -39,6 +40,31 @@ class BeatmapsetSearchTest extends TestCase
 
         $this->searchAndAssert([$beatmapsets[1], $beatmapsets[3]], ['q' => 'keys=7']);
         $this->searchAndAssert([$beatmapsets[2]], ['q' => '-keys=7']);
+    }
+
+    public function testRankedFilter()
+    {
+        $factory = Beatmapset::factory()->withBeatmaps();
+        $beatmapsets = [
+            $factory->ranked(new DateTime('2022-02-25'))->state(['approved' => Beatmapset::STATES['approved']])->create(),
+            $factory->ranked(new DateTime('2023-02-26'))->state(['approved' => Beatmapset::STATES['loved']])->create(),
+            $factory->ranked(new DateTime('2024-02-27'))->create(),
+        ];
+
+        $this->refresh();
+        $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
+
+        $this->searchAndAssert([$beatmapsets[2]], ['q' => 'ranked=2024']);
+        $this->searchAndAssert([$beatmapsets[2]], ['q' => 'ranked>2023']);
+        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'ranked>=2023']);
+        $this->searchAndAssert([$beatmapsets[0]], ['q' => 'ranked<2023']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => 'ranked<=2023']);
+
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => '-ranked=2024']);
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => '-ranked>2023']);
+        $this->searchAndAssert([$beatmapsets[0]], ['q' => '-ranked>=2023']);
+        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => '-ranked<2023']);
+        $this->searchAndAssert([$beatmapsets[2]], ['q' => '-ranked<=2023']);
     }
 
     public function testTitleFilter()
