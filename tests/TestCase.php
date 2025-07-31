@@ -53,7 +53,7 @@ class TestCase extends BaseTestCase
         Es::getClient()->deleteByQuery([
             'body' => ['query' => ['match_all' => new \stdClass()]],
             'index' => Beatmapset::esIndexName(),
-            'refresh' => true
+            'refresh' => true,
         ]);
     }
 

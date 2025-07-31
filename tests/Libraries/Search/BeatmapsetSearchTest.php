@@ -6,16 +6,11 @@
 namespace Tests\Libraries\Search;
 
 use App\Libraries\Elasticsearch\Es;
-use App\Libraries\Search\BeatmapsetQueryParser;
 use App\Libraries\Search\BeatmapsetSearch;
-use App\Libraries\Search\BeatmapsetSearchParams;
 use App\Libraries\Search\BeatmapsetSearchRequestParams;
 use App\Models\Beatmap;
 use App\Models\Beatmapset;
-use App\Models\BeatmapTag;
-use Carbon\CarbonImmutable;
 use DateTime;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class BeatmapsetSearchTest extends TestCase
