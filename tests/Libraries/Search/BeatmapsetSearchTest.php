@@ -38,8 +38,8 @@ class BeatmapsetSearchTest extends TestCase
         $this->refresh();
         $this->assertCount(4, new BeatmapsetSearch()->response()->ids());
 
-        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[3]], ['q' => 'keys=7']);
-        $this->searchAndAssert([$beatmapsets[2]], ['q' => '-keys=7']);
+        $this->searchAndAssert($beatmapsets, [1, 3], ['q' => 'keys=7']);
+        $this->searchAndAssert($beatmapsets, [2], ['q' => '-keys=7']);
     }
 
     public function testRankedFilter()
@@ -54,17 +54,17 @@ class BeatmapsetSearchTest extends TestCase
         $this->refresh();
         $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
 
-        $this->searchAndAssert([$beatmapsets[2]], ['q' => 'ranked=2024']);
-        $this->searchAndAssert([$beatmapsets[2]], ['q' => 'ranked>2023']);
-        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'ranked>=2023']);
-        $this->searchAndAssert([$beatmapsets[0]], ['q' => 'ranked<2023']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => 'ranked<=2023']);
+        $this->searchAndAssert($beatmapsets, [2], ['q' => 'ranked=2024']);
+        $this->searchAndAssert($beatmapsets, [2], ['q' => 'ranked>2023']);
+        $this->searchAndAssert($beatmapsets, [1, 2], ['q' => 'ranked>=2023']);
+        $this->searchAndAssert($beatmapsets, [0], ['q' => 'ranked<2023']);
+        $this->searchAndAssert($beatmapsets, [0, 1], ['q' => 'ranked<=2023']);
 
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => '-ranked=2024']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1]], ['q' => '-ranked>2023']);
-        $this->searchAndAssert([$beatmapsets[0]], ['q' => '-ranked>=2023']);
-        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => '-ranked<2023']);
-        $this->searchAndAssert([$beatmapsets[2]], ['q' => '-ranked<=2023']);
+        $this->searchAndAssert($beatmapsets, [0, 1], ['q' => '-ranked=2024']);
+        $this->searchAndAssert($beatmapsets, [0, 1], ['q' => '-ranked>2023']);
+        $this->searchAndAssert($beatmapsets, [0], ['q' => '-ranked>=2023']);
+        $this->searchAndAssert($beatmapsets, [1, 2], ['q' => '-ranked<2023']);
+        $this->searchAndAssert($beatmapsets, [2], ['q' => '-ranked<=2023']);
     }
 
     public function testTitleFilter()
@@ -79,17 +79,17 @@ class BeatmapsetSearchTest extends TestCase
         $this->refresh();
         $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
 
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => 'title=best']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => 'title="best beatmap"']);
-        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'title="the beatmap"']);
-        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[2]], ['q' => 'title=""best beatmap""']);
-        $this->searchAndAssert([], ['q' => 'title=""the beatmap""']);
+        $this->searchAndAssert($beatmapsets, [0, 1, 2], ['q' => 'title=best']);
+        $this->searchAndAssert($beatmapsets, [1, 2], ['q' => 'title="best beatmap"']);
+        $this->searchAndAssert($beatmapsets, [1, 2], ['q' => 'title="the beatmap"']);
+        $this->searchAndAssert($beatmapsets, [1, 2], ['q' => 'title=""best beatmap""']);
+        $this->searchAndAssert($beatmapsets, [], ['q' => 'title=""the beatmap""']);
 
-        $this->searchAndAssert([$beatmapsets[3]], ['q' => '-title=best']);
-        $this->searchAndAssert([$beatmapsets[3]], ['q' => '-title="best beatmap"']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[3]], ['q' => '-title="the beatmap"']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[3]], ['q' => '-title=""best beatmap""']);
-        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2], $beatmapsets[3]], ['q' => '-title=""the beatmap""']);
+        $this->searchAndAssert($beatmapsets, [3], ['q' => '-title=best']);
+        $this->searchAndAssert($beatmapsets, [0, 3], ['q' => '-title="best beatmap"']);
+        $this->searchAndAssert($beatmapsets, [0, 3], ['q' => '-title="the beatmap"']);
+        $this->searchAndAssert($beatmapsets, [0, 3], ['q' => '-title=""best beatmap""']);
+        $this->searchAndAssert($beatmapsets, [0, 1, 2, 3], ['q' => '-title=""the beatmap""']);
     }
 
     protected function setUp(): void
@@ -109,9 +109,9 @@ class BeatmapsetSearchTest extends TestCase
         Es::getClient()->indices()->refresh();
     }
 
-    private function searchAndAssert(array $expects, array $searchParams): void
+    private function searchAndAssert(array $beatmapsets, array $expects, array $searchParams): void
     {
-        $beatmapsetIds = array_map(fn (Beatmapset $beatmapset) => $beatmapset->getKey(), $expects);
+        $beatmapsetIds = array_map(fn (int $index) => $beatmapsets[$index]->getKey(), $expects);
 
         $this->assertEqualsCanonicalizing($beatmapsetIds, new BeatmapsetSearch(new BeatmapsetSearchRequestParams($searchParams))->response()->ids());
     }
