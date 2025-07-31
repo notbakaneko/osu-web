@@ -29,12 +29,16 @@ class BeatmapsetSearchTest extends TestCase
             $beatmapsetFactory->withBeatmaps('osu')->create(),
             $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 7]))->create(),
             $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 4]))->create(),
+            $beatmapsetFactory
+                ->has($beatmapFactory->state(['diff_size' => 4]))
+                ->has($beatmapFactory->state(['diff_size' => 7]))
+                ->create(),
         ];
         $this->refresh();
-        $this->assertCount(3, new BeatmapsetSearch()->response()->ids());
+        $this->assertCount(4, new BeatmapsetSearch()->response()->ids());
 
-        $this->searchAndAssert([$beatmapsets[1]], ['q' => "keys=7"]);
-        $this->searchAndAssert([$beatmapsets[2]], ['q' => "-keys=7"]);
+        $this->searchAndAssert([$beatmapsets[1], $beatmapsets[3]], ['q' => 'keys=7']);
+        $this->searchAndAssert([$beatmapsets[2]], ['q' => '-keys=7']);
     }
 
     public function testTitleFilter()
