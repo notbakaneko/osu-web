@@ -25,18 +25,16 @@ class BeatmapsetSearchTest extends TestCase
         $beatmapFactory = Beatmap::factory()->ruleset('mania')->state(['approved' => Beatmapset::STATES['ranked']]);
 
         // TODO: map with 7 and 4 key
-        $beatmapsetFactory->withBeatmaps('osu')->create();
-        $beatmap1 = $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 7]))->create();
-        $beatmap2 = $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 4]))->create();
+        $beatmapsets = [
+            $beatmapsetFactory->withBeatmaps('osu')->create(),
+            $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 7]))->create(),
+            $beatmapsetFactory->has($beatmapFactory->state(['diff_size' => 4]))->create(),
+        ];
         $this->refresh();
         $this->assertCount(3, new BeatmapsetSearch()->response()->ids());
 
-        $this->assertSame([(string) $beatmap1->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
-            'q' => "keys=7"
-        ]))->response()->ids());
-        $this->assertSame([(string) $beatmap2->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
-            'q' => "-keys=7"
-        ]))->response()->ids());
+        $this->searchAndAssert([$beatmapsets[1]], ['q' => "keys=7"]);
+        $this->searchAndAssert([$beatmapsets[2]], ['q' => "-keys=7"]);
     }
 
     public function testTitleFilter()
@@ -51,12 +49,8 @@ class BeatmapsetSearchTest extends TestCase
         $this->refresh();
         $this->assertCount(count($beatmapsets), new BeatmapsetSearch()->response()->ids());
 
-        $this->assertEqualsCanonicalizing([$beatmapsets[0]->getKey(), $beatmapsets[1]->getKey(), $beatmapsets[2]->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
-            'q' => "title=best"
-        ]))->response()->ids());
-        $this->assertEqualsCanonicalizing([$beatmapsets[3]->getKey()], new BeatmapsetSearch(new BeatmapsetSearchRequestParams([
-            'q' => "-title=best"
-        ]))->response()->ids());
+        $this->searchAndAssert([$beatmapsets[0], $beatmapsets[1], $beatmapsets[2]], ['q' => "title=best"]);
+        $this->searchAndAssert([$beatmapsets[3]], ['q' => "-title=best"]);
     }
 
     protected function setUp(): void
@@ -74,5 +68,12 @@ class BeatmapsetSearchTest extends TestCase
     private function refresh(): void
     {
         Es::getClient()->indices()->refresh();
+    }
+
+    private function searchAndAssert(array $expects, array $searchParams): void
+    {
+        $beatmapsetIds = array_map(fn (Beatmapset $beatmapset) => $beatmapset->getKey(), $expects);
+
+        $this->assertEqualsCanonicalizing($beatmapsetIds, new BeatmapsetSearch(new BeatmapsetSearchRequestParams($searchParams))->response()->ids());
     }
 }
