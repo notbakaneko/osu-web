@@ -471,7 +471,7 @@ class BeatmapsetSearch extends RecordSearch
         if ($include) {
             $this->query->must($subQuery);
         } else {
-            $this->nestedMustNot->should($subQuery);
+            $this->query->mustNot($subQuery);
         }
     }
 
