@@ -29,9 +29,7 @@ class TransactionStateManager
 
     public function begin(Connection $connection)
     {
-        $name = $connection->getName();
-
-        $this->push($name, new TransactionState($connection));
+        $this->states[$connection->getName()] ??= new TransactionState($connection);
     }
 
     public function commit()
@@ -57,11 +55,6 @@ class TransactionStateManager
             }
             $this->resetStates();
         }
-    }
-
-    private function push(string $name, $item)
-    {
-        $this->states[$name] ??= $item;
     }
 
     private function resetStates(): void
