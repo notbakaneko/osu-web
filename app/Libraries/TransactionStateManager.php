@@ -16,7 +16,7 @@ class TransactionStateManager
         $this->resetStates();
     }
 
-    public function isCompleted()
+    public function isCompleted(): bool
     {
         foreach ($this->states as $_name => $state) {
             if (!$state->isCompleted()) {
@@ -32,7 +32,7 @@ class TransactionStateManager
         $this->states[$connection->getName()] ??= new TransactionState($connection);
     }
 
-    public function commit()
+    public function commit(): void
     {
         if ($this->isCompleted()) {
             foreach ($this->states as $_name => $state) {
@@ -42,12 +42,12 @@ class TransactionStateManager
         }
     }
 
-    public function current(string $name)
+    public function current(string $name): TransactionState
     {
         return $this->states[$name] ?? $this->states[''];
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         if ($this->isCompleted()) {
             foreach ($this->states as $_name => $state) {

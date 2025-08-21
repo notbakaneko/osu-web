@@ -17,28 +17,28 @@ class TransactionState
         $this->connection = $connection;
     }
 
-    public function isReal()
+    public function isReal(): bool
     {
         return $this->connection !== null;
     }
 
-    public function isCompleted()
+    public function isCompleted(): bool
     {
         // TODO: throw if null connection instead since it should only run with actual transactions?
         return $this->connection ? $this->connection->transactionLevel() === 0 : true;
     }
 
-    public function addCommittable($committable)
+    public function addCommittable($committable): void
     {
         $this->commits[] = $committable;
     }
 
-    public function addRollbackable($rollbackable)
+    public function addRollbackable($rollbackable): void
     {
         $this->rollbacks[] = $rollbackable;
     }
 
-    public function commit()
+    public function commit(): void
     {
         foreach ($this->uniqueCommits() as $commit) {
             $commit->afterCommit();
@@ -47,7 +47,7 @@ class TransactionState
         $this->clear();
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         foreach ($this->uniqueRollbacks() as $rollback) {
             $rollback->afterRollback();
@@ -56,23 +56,23 @@ class TransactionState
         $this->clear();
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->commits = [];
         $this->rollbacks = [];
     }
 
-    private function uniqueCommits()
+    private function uniqueCommits(): array
     {
         return static::uniqueModels($this->commits);
     }
 
-    private function uniqueRollbacks()
+    private function uniqueRollbacks(): array
     {
         return static::uniqueModels($this->rollbacks);
     }
 
-    private static function uniqueModels(array $models)
+    private static function uniqueModels(array $models): array
     {
         $array = [];
 
@@ -85,7 +85,7 @@ class TransactionState
         return $array;
     }
 
-    private static function uniqueIn($model, $array)
+    private static function uniqueIn($model, $array): bool
     {
         // use model's uniqueness test if model is persisted and has a primary key.
         // otherwise use a reference comparison.
