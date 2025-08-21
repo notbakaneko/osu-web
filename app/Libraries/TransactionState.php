@@ -5,16 +5,14 @@
 
 namespace App\Libraries;
 
-use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\Connection;
 
 class TransactionState
 {
-    private $connection;
-
     private $commits = [];
     private $rollbacks = [];
 
-    public function __construct(?ConnectionInterface $connection = null)
+    public function __construct(private ?Connection $connection = null)
     {
         $this->connection = $connection;
     }

@@ -21,7 +21,7 @@ class TransactionStateServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Event::listen(TransactionBeginning::class, function ($event) {
+        Event::listen(TransactionBeginning::class, function (TransactionBeginning $event) {
             resolve(TransactionStateManager::class)->begin($event->connection);
         });
 

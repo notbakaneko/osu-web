@@ -5,7 +5,7 @@
 
 namespace App\Libraries;
 
-use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\Connection;
 
 class TransactionStateManager
 {
@@ -27,7 +27,7 @@ class TransactionStateManager
         return true;
     }
 
-    public function begin(ConnectionInterface $connection)
+    public function begin(Connection $connection)
     {
         $name = $connection->getName();
 
