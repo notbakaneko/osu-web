@@ -616,6 +616,7 @@ class BeatmapsetSearch extends RecordSearch
             }
         }
 
+        // Tag exclusion excludes only if all the beatmaps of the beatmapset match.
         if ($excludeTags !== null) {
             $tags = array_reject_null($excludeTags);
             // "geometric grid snap" - exclude if all words are matched in any tag
@@ -624,7 +625,7 @@ class BeatmapsetSearch extends RecordSearch
             foreach ($tags as $tag) {
                 $value = mb_trim($tag, '"');
                 if (static::isExactTag($tag)) {
-                    $this->nestedMustNot->should([
+                    $this->nested->mustNot([
                         'term' => [
                             'beatmaps.top_tags.raw' => [
                                 'case_insensitive' => true,
@@ -633,7 +634,7 @@ class BeatmapsetSearch extends RecordSearch
                         ],
                     ]);
                 } else if (static::isQuoted($tag)) {
-                    $this->nestedMustNot->should([
+                    $this->nested->mustNot([
                         'match_phrase' => [
                             'beatmaps.top_tags' => [
                                 'query' => $value,
@@ -641,7 +642,7 @@ class BeatmapsetSearch extends RecordSearch
                         ],
                     ]);
                 } else {
-                    $this->nestedMustNot->should([
+                    $this->nested->mustNot([
                         'match' => [
                             'beatmaps.top_tags' => [
                                 'query' => $value,
