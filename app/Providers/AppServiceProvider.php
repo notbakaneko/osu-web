@@ -81,6 +81,13 @@ class AppServiceProvider extends ServiceProvider
         Scribe::normalizeEndpointUrlUsing(fn ($url) => $url);
 
         \Hash::extend('osubcrypt', fn () => new OsuBcryptHasher());
+
+        \Octane::tick('swoole_stats', function () {
+            \Datadog::gauge(
+                $GLOBALS['cfg']['datadog-helper']['prefix_web'].'.swoole_connection_num',
+                app(\Swoole\Http\Server::class)->stats()['connection_num'],
+            );
+        });
     }
 
     /**
