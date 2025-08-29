@@ -16,31 +16,6 @@
             <div class="download-page-header__choice">
                 <div class="download-page-header__action-description">
                     <h3 class="download-page-header__action-title">
-                        {{ osu_trans('home.download.action_title') }}
-                    </h3>
-                </div>
-
-                <div>
-                    <a class="btn-osu-big btn-osu-big--download" href="{{ osu_url('installer') }}">
-                        <span class="btn-osu-big__text-top">{{ osu_trans('home.download.action') }}</span>
-                        <span class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</span>
-                    </a>
-
-                    <div class="download-page-header__extra-links">
-                        <a class="download-page-header__extra-link" href="{{ osu_url('installer-mirror') }}">
-                            {{ osu_trans('home.download.mirror') }}
-                        </a>
-                        <span class="download-page-header__extra-link download-page-header__extra-link--separator"></span>
-                        <a class="download-page-header__extra-link" href="{{ osu_url('osx') }}">
-                            {{ osu_trans('home.download.macos-fallback') }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="download-page-header__separator">{{ osu_trans('home.download.or') }}</div>
-            <div class="download-page-header__choice">
-                <div class="download-page-header__action-description">
-                    <h3 class="download-page-header__action-title">
                         {{ osu_trans('home.download.action_lazer_title') }}
                     </h3>
 
@@ -71,6 +46,31 @@
                     <div class="download-page-header__extra-links">
                         <a class="download-page-header__extra-link" href="{{ osu_url('lazer_dl_other') }}">
                             {{ osu_trans('home.download.other_os') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="download-page-header__separator">{{ osu_trans('home.download.or') }}</div>
+            <div class="download-page-header__choice">
+                <div class="download-page-header__action-description">
+                    <h3 class="download-page-header__action-title">
+                        {{ osu_trans('home.download.action_title') }}
+                    </h3>
+                </div>
+
+                <div>
+                    <a class="btn-osu-big btn-osu-big--download" href="{{ osu_url('installer') }}">
+                        <span class="btn-osu-big__text-top">{{ osu_trans('home.download.action') }}</span>
+                        <span class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</span>
+                    </a>
+
+                    <div class="download-page-header__extra-links">
+                        <a class="download-page-header__extra-link" href="{{ osu_url('installer-mirror') }}">
+                            {{ osu_trans('home.download.mirror') }}
+                        </a>
+                        <span class="download-page-header__extra-link download-page-header__extra-link--separator"></span>
+                        <a class="download-page-header__extra-link" href="{{ osu_url('osx') }}">
+                            {{ osu_trans('home.download.macos-fallback') }}
                         </a>
                     </div>
                 </div>
