@@ -82,6 +82,10 @@ return [
     ],
 
     'download' => [
+        'download' => 'Download',
+        'tagline_1' => 'let\'s get you',
+        'tagline_2' => 'started!',
+
         'action' => 'Download osu!',
         'action_lazer' => 'Download osu!(lazer)',
         'action_lazer_description' => 'the next major update to osu!',
@@ -95,7 +99,6 @@ return [
         'os_version_or_later' => ':os_version or later',
         'other_os' => 'other platforms',
         'quick_start_guide' => 'quick start guide',
-        'tagline' => "let's get<br>you started!",
         'video-guide' => 'video guide',
 
         'help' => [

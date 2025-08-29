@@ -12,6 +12,7 @@ use App\Libraries\Search\AllSearch;
 use App\Libraries\Search\QuickSearch;
 use App\Models\BeatmapDownload;
 use App\Models\Beatmapset;
+use App\Models\Build;
 use App\Models\Forum\Post;
 use App\Models\Multiplayer\Room;
 use App\Models\NewsPost;
@@ -68,24 +69,50 @@ class HomeController extends Controller
             'windows_x64' => osu_trans('home.download.os_version_or_later', ['os_version' => 'Windows 8.1']).' (x64)',
         ];
 
-        $agent = new Agent(Request::server());
+        $platform = request('platform');
+        if (!array_key_exists($platform, $lazerPlatformNames)) {
+            $platform = null;
+        }
 
-        $platform = match (true) {
-            // Try matching most likely platform first
-            $agent->is('Windows') => 'windows_x64',
-            // iPadOS detection apparently doesn't work on newer version
-            // and detected as macOS instead.
-            ($agent->isiOS() || $agent->isiPadOS()) => $platform = 'ios',
-            // FIXME: Figure out a way to differentiate Intel and Apple Silicon.
-            $agent->is('OS X') => 'macos_as',
-            $agent->isAndroidOS() => 'android',
-            $agent->is('Linux') => 'linux_x64',
-            default => 'windows_x64',
-        };
+        if ($platform === null) {
+            $agent = new Agent(Request::server());
+
+            $platform = match (true) {
+                // Try matching most likely platform first
+                $agent->is('Windows') => 'windows_x64',
+                // iPadOS detection apparently doesn't work on newer version
+                // and detected as macOS instead.
+                ($agent->isiOS() || $agent->isiPadOS()) => $platform = 'ios',
+                // FIXME: Figure out a way to differentiate Intel and Apple Silicon.
+                $agent->is('OS X') => 'macos_as',
+                $agent->isAndroidOS() => 'android',
+                $agent->is('Linux') => 'linux_x64',
+                default => 'windows_x64',
+            };
+        }
+
+        $version = Build::where(['stream_id' => 7, 'test_build' => false])
+            ->orderBy('build_id', 'desc')
+            ->first()
+            ?->version;
+
+        $items = [];
+        foreach ($lazerPlatformNames as $key => $value) {
+            $items[] = ['id' => $key, 'text' => $value];
+        }
+
+        $selectOptions = [
+            'currentItem' => ['id' => $platform, 'text' => $lazerPlatformNames[$platform]],
+            'items' => $items,
+            'modifiers' => 'download',
+            'type' => 'download',
+        ];
 
         return ext_view('home.download', [
             'lazerUrl' => osu_url("lazer_dl.{$platform}"),
             'lazerPlatformName' => $lazerPlatformNames[$platform],
+            'selectOptions' => $selectOptions,
+            'version' => $version,
         ]);
     }
 
