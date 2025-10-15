@@ -9,6 +9,58 @@
 @endcomponent
 
 <div class="osu-page osu-page--generic-compact">
+    <div class="download-page">
+        <div class="download-page__header">
+            <div class="download-page__banner">
+                header
+                <h2 class="download-page__tagline">{{ strtr(osu_trans('home.download.tagline'), ['<br>' => ' ']) }}</h2>
+            </div>
+            after banner
+        </div>
+
+        <div class="download-page__guide">
+            <div class="download-page__video">
+                video
+            </div>
+            <div class="download-page__guide-content">
+                <div class="download-page__steps">
+                    <div class="download-page__step">
+                        <span class="download-page__step-number">1</span>
+                        <div class="download-page__text download-page__text--title">
+                            {{ osu_trans("home.download.steps.download.title") }}
+                        </div>
+                        <div class="download-page__text download-page__text--description">
+                            {{ osu_trans("home.download.steps.download.description") }}
+                        </div>
+                    </div>
+                    <div class="download-page__step">
+                        <span class="download-page__step-number">2</span>
+                        <div class="download-page__text download-page__text--title">
+                            {{ osu_trans('home.download.steps.register.title') }}
+                        </div>
+                        <div class="download-page__text download-page__text--description">
+                            {{ osu_trans('home.download.steps.register.description') }}
+                        </div>
+                    </div>
+                    <div class="download-page__step">
+                        <span class="download-page__step-number">3</span>
+                        <div class="download-page__text download-page__text--title">
+                            {{ osu_trans("home.download.steps.beatmaps.title") }}
+                        </div>
+                        <div class="download-page__text download-page__text--description">
+                            {!! osu_trans('home.download.steps.beatmaps.description._', [
+                                'browse' => link_to(
+                                    route('beatmapsets.index'),
+                                    osu_trans('home.download.steps.beatmaps.description.browse')
+                                )
+                            ]) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="download-page-header">
         <h2 class="download-page-header__tagline">{{ strtr(osu_trans('home.download.tagline'), ['<br>' => ' ']) }}</h2>
 
