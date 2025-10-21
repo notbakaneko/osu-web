@@ -82,6 +82,9 @@ return [
     ],
 
     'download' => [
+        'download' => 'Download',
+
+
         'action' => 'Download osu!',
         'action_lazer' => 'Download osu!(lazer)',
         'action_lazer_description' => 'the next major update to osu!',

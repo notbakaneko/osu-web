@@ -5,9 +5,47 @@
   @number-width: 30px;
   @number-margin-right: 5px;
 
+  @button-width: 420px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  &__banner {
+    .at2x-simple("~@images/headers/download_2.png");
+    background-size: cover;
+    height: 420px;
+
+    border-radius: 0 0 @border-radius--extra @border-radius--extra;
+  }
+
+  &__banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    padding: 40px;
+  }
+
+  &__banner-tail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 40px;
+  }
+
+  &__button {
+    width: @button-width;
+
+    &--main {
+      @media @mobile {
+        width: 100%;
+      }
+    }
+  }
 
   &__guide {
     .default-box-shadow();
@@ -25,11 +63,11 @@
 
   &__header {
     .default-box-shadow();
+
     display: flex;
     flex-direction: column;
     gap: 10px;
     background: hsl(var(--hsl-b4));
-    padding: @border-radius--extra;
     border-radius: 0 0 @border-radius--extra @border-radius--extra;
   }
 
@@ -45,26 +83,20 @@
   &__video {
     background: hsl(var(--hsl-b6));
     border-radius: @border-radius--extra;
-    height: 300px;
   }
 
   &__step {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    // @media @desktop {
-    //   max-width: 220px;
-    // }
   }
 
   &__steps {
     display: grid;
-    // flex-direction: column;
     grid-auto-flow: row;
     gap: 40px;
 
     @media @desktop {
-      // flex-direction: row;
       grid-auto-columns: minmax(0, 1fr);
       grid-auto-flow: column;
       justify-content: space-between;
@@ -72,8 +104,10 @@
   }
 
   &__step-number {
-    .circle(@number-width);
     .center-content();
+    width: 60px;
+    height: 24px;
+    border-radius: $height;
 
     border: solid #fff 2px;
     color: #fff;

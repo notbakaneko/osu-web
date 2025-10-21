@@ -12,16 +12,70 @@
     <div class="download-page">
         <div class="download-page__header">
             <div class="download-page__banner">
-                header
-                <h2 class="download-page__tagline">{{ strtr(osu_trans('home.download.tagline'), ['<br>' => ' ']) }}</h2>
+                <div class="download-page__banner-content">
+                    <h2 class="download-page__tagline">{{ strtr(osu_trans('home.download.tagline'), ['<br>' => ' ']) }}</h2>
+                    <div class="download-page__button download-page__button--main">
+                        <a
+                            class="btn-osu-big btn-osu-big--download btn-osu-big--full btn-osu-big--download-lazer"
+                            href="{{ $lazerUrl }}"
+                        >
+                            <div class="btn-osu-big__text-bottom">
+                                {{ osu_trans('home.download.download') }}
+                            </div>
+                            <div>
+                                <div class="btn-osu-big__text-top">
+                                    osu!
+                                </div>
+                                <div class="btn-osu-big__text-bottom">
+                                    {{ osu_trans('home.download.for_os', ['os' => $lazerPlatformName]) }}
+                                </div>
+                            </div>
+                            <div class="btn-osu-big__text-bottom">
+                                version
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="download-page__other-platforms">
+                        <div class="select-options">
+                            <div class="select-options__select">
+                                <a class="select-options__option" href="{{ osu_url('lazer_dl_other') }}">
+                                    {{ osu_trans('home.download.other_os') }}
+                                    <div class="select-options__decoration"><span class="fas fa-chevron-down"></span></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            after banner
+            <div class="download-page__banner-tail">
+                <div>
+                    if you're looking for the older one
+                </div>
+                <div class="download-page__button">
+                    <a class="btn-osu-big btn-osu-big--download btn-osu-big--full" href="{{ osu_url('installer') }}">
+                        <span class="btn-osu-big__text-top">osu!Classic</span>
+                        <span class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</span>
+                    </a>
+
+                    <div class="download-page-header__extra-links">
+                        <a class="download-page-header__extra-link" href="{{ osu_url('installer-mirror') }}">
+                            {{ osu_trans('home.download.mirror') }}
+                        </a>
+                        <span class="download-page-header__extra-link download-page-header__extra-link--separator"></span>
+                        <a class="download-page-header__extra-link" href="{{ osu_url('osx') }}">
+                            {{ osu_trans('home.download.macos-fallback') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="download-page__guide">
-            <div class="download-page__video">
-                video
-            </div>
+            <iframe
+                class="download-page__video u-embed-wide"
+                src="https://youtube.com/embed/videoseries?list={{ $GLOBALS['cfg']['osu']['urls']['youtube-tutorial-playlist'] }}"
+            ></iframe>
             <div class="download-page__guide-content">
                 <div class="download-page__steps">
                     <div class="download-page__step">
@@ -58,149 +112,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="download-page-header">
-        <h2 class="download-page-header__tagline">{{ strtr(osu_trans('home.download.tagline'), ['<br>' => ' ']) }}</h2>
-
-        <div class="download-page-header__choices">
-            <div class="download-page-header__choice">
-                <div class="download-page-header__action-description">
-                    <h3 class="download-page-header__action-title">
-                        {{ osu_trans('home.download.action_lazer_title') }}
-                    </h3>
-
-                    <div>
-                        <div>
-                            {{ osu_trans('home.download.action_lazer_description') }}
-                        </div>
-                        @if (($lazerInfoUrl = osu_url('lazer_info')) !== null)
-                            <a href="{{ $lazerInfoUrl }}">
-                                {{ osu_trans('home.download.action_lazer_info') }}
-                            </a>
-                        @endif
-                    </div>
-                </div>
-                <div>
-                    <a
-                        class="btn-osu-big btn-osu-big--download btn-osu-big--download-lazer"
-                        href="{{ $lazerUrl }}"
-                    >
-                        <span class="btn-osu-big__text-top">
-                            {{ osu_trans('home.download.action_lazer') }}
-                        </span>
-                        <span class="btn-osu-big__text-bottom">
-                            {{ osu_trans('home.download.for_os', ['os' => $lazerPlatformName]) }}
-                        </span>
-                    </a>
-
-                    <div class="download-page-header__extra-links">
-                        <a class="download-page-header__extra-link" href="{{ osu_url('lazer_dl_other') }}">
-                            {{ osu_trans('home.download.other_os') }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="download-page-header__separator">{{ osu_trans('home.download.or') }}</div>
-            <div class="download-page-header__choice">
-                <div class="download-page-header__action-description">
-                    <h3 class="download-page-header__action-title">
-                        {{ osu_trans('home.download.action_title') }}
-                    </h3>
-                </div>
-
-                <div>
-                    <a class="btn-osu-big btn-osu-big--download" href="{{ osu_url('installer') }}">
-                        <span class="btn-osu-big__text-top">{{ osu_trans('home.download.action') }}</span>
-                        <span class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</span>
-                    </a>
-
-                    <div class="download-page-header__extra-links">
-                        <a class="download-page-header__extra-link" href="{{ osu_url('installer-mirror') }}">
-                            {{ osu_trans('home.download.mirror') }}
-                        </a>
-                        <span class="download-page-header__extra-link download-page-header__extra-link--separator"></span>
-                        <a class="download-page-header__extra-link" href="{{ osu_url('osx') }}">
-                            {{ osu_trans('home.download.macos-fallback') }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="user-profile-pages user-profile-pages--no-tabs">
-        <div class="page-extra">
-            <h2 class="title title--page-extra">
-                {{ osu_trans('home.download.quick_start_guide') }}
-            </h2>
-            <div class="download-page">
-                <div class="download-page__steps">
-                    <div class="download-page__step">
-                        <div class="download-page__text download-page__text--title">
-                            <span class="download-page__step-number">1</span>
-                            {{ osu_trans("home.download.steps.download.title") }}
-                        </div>
-                        <div class="download-page__text download-page__text--description">
-                            {{ osu_trans("home.download.steps.download.description") }}
-                        </div>
-                    </div>
-                    <div class="download-page__step">
-                        <div class="download-page__text download-page__text--title">
-                            <span class="download-page__step-number">2</span>
-                            {{ osu_trans('home.download.steps.register.title') }}
-                        </div>
-                        <div class="download-page__text download-page__text--description">
-                            {{ osu_trans('home.download.steps.register.description') }}
-                        </div>
-                    </div>
-                    <div class="download-page__step">
-                        <div class="download-page__text download-page__text--title">
-                            <span class="download-page__step-number">3</span>
-                            {{ osu_trans("home.download.steps.beatmaps.title") }}
-                        </div>
-                        <div class="download-page__text download-page__text--description">
-                            {!! osu_trans('home.download.steps.beatmaps.description._', [
-                                'browse' => link_to(
-                                    route('beatmapsets.index'),
-                                    osu_trans('home.download.steps.beatmaps.description.browse')
-                                )
-                            ]) !!}
-                        </div>
-                    </div>
-                </div>
-
-                @if ($GLOBALS['cfg']['services']['enchant']['id'] !== null)
-                    <div class="download-page__help">
-                        {!! osu_trans('home.download.help._', [
-                            'support_button' => link_to(
-                                '#',
-                                osu_trans('home.download.help.support_button'),
-                                [
-                                    'class' => 'js-enchant--show',
-                                    'role' => 'button',
-                                ],
-                            ),
-                            'help_forum_link' => link_to(
-                                route('forum.forums.show', ['forum' => $GLOBALS['cfg']['osu']['forum']['help_forum_id']]),
-                                osu_trans('home.download.help.help_forum_link')
-                            )
-                        ]) !!}
-                    </div>
-
-                    @include('objects._enchant')
-                @endif
-            </div>
-        </div>
-
-        <div class="page-extra">
-            <h2 class="title title--page-extra">
-                {{ osu_trans('home.download.video-guide') }}
-            </h2>
-            <iframe
-                class="u-embed-wide"
-                src="https://youtube.com/embed/videoseries?list={{ $GLOBALS['cfg']['osu']['urls']['youtube-tutorial-playlist'] }}"
-            ></iframe>
         </div>
     </div>
 </div>
