@@ -37,14 +37,7 @@
                     </div>
 
                     <div class="download-page__other-platforms">
-                        <div class="select-options">
-                            <div class="select-options__select">
-                                <a class="select-options__option" href="{{ osu_url('lazer_dl_other') }}">
-                                    {{ osu_trans('home.download.other_os') }}
-                                    <div class="select-options__decoration"><span class="fas fa-chevron-down"></span></div>
-                                </a>
-                            </div>
-                        </div>
+                        @include('objects._basic_select_options', compact('selectOptions'))
                     </div>
                 </div>
             </div>
@@ -54,8 +47,10 @@
                 </div>
                 <div class="download-page__button">
                     <a class="btn-osu-big btn-osu-big--download btn-osu-big--full" href="{{ osu_url('installer') }}">
-                        <span class="btn-osu-big__text-top">osu!Classic</span>
-                        <span class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</span>
+                        <div>
+                            <div class="btn-osu-big__text-top">osu!Classic</div>
+                            <div class="btn-osu-big__text-bottom">{{ osu_trans('home.download.os.windows') }}</div>
+                        </div>
                     </a>
 
                     <div class="download-page-header__extra-links">
