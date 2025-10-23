@@ -106,6 +106,27 @@
                         </div>
                     </div>
                 </div>
+
+                @if ($GLOBALS['cfg']['services']['enchant']['id'] !== null)
+                    <div class="download-page__help">
+                        {!! osu_trans('home.download.help._', [
+                            'support_button' => link_to(
+                                '#',
+                                osu_trans('home.download.help.support_button'),
+                                [
+                                    'class' => 'js-enchant--show',
+                                    'role' => 'button',
+                                ],
+                            ),
+                            'help_forum_link' => link_to(
+                                route('forum.forums.show', ['forum' => $GLOBALS['cfg']['osu']['forum']['help_forum_id']]),
+                                osu_trans('home.download.help.help_forum_link')
+                            )
+                        ]) !!}
+                    </div>
+
+                    @include('objects._enchant')
+                @endif
             </div>
         </div>
     </div>
