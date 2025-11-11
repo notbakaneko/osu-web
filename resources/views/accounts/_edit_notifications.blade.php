@@ -124,7 +124,9 @@
                             >
                                 @include('objects._switch', ['locals' => [
                                     'additionalClass'=> 'js-account-edit__input',
-                                    'checked' => $notificationOptions[$name]->details[$mode] ?? BroadcastNotificationBase::DELIVERY_MODE_DEFAULTS[$mode],
+                                    'checked' => $notificationOptions[$name]->details[$mode]
+                                        ?? UserNotificationOption::DELIVERY_MODE_DEFAULTS[$name][$mode]
+                                        ?? BroadcastNotificationBase::DELIVERY_MODE_DEFAULTS[$mode],
                                     'defaultValue' => '0',
                                     'modifiers' => ['grid'],
                                     'name' => "user_notification_option[{$name}][details][{$mode}]",

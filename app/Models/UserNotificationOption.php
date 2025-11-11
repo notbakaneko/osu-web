@@ -5,6 +5,7 @@
 
 namespace App\Models;
 
+use App\Jobs\Notifications\NewsPostNew;
 use App\Traits\Validatable;
 
 /**
@@ -32,6 +33,11 @@ class UserNotificationOption extends Model
     const FORUM_TOPIC_REPLY = Notification::FORUM_TOPIC_REPLY;
     const MAPPING = 'mapping';
 
+    // lookup used by settings page, doesn't include overrides with no configurable options.
+    const DELIVERY_MODE_DEFAULTS = [
+        Notification::NEWS_POST_NEW => NewsPostNew::DELIVERY_MODE_DEFAULTS,
+    ];
+
     const HAS_DELIVERY_MODES = [
         Notification::BEATMAP_OWNER_CHANGE,
         self::MAPPING,
@@ -40,6 +46,7 @@ class UserNotificationOption extends Model
         Notification::CHANNEL_TEAM,
         Notification::COMMENT_NEW,
         self::FORUM_TOPIC_REPLY,
+        Notification::NEWS_POST_NEW,
     ];
 
     const SUPPORTS_NOTIFICATIONS = [

@@ -6,6 +6,7 @@
 namespace App\Models;
 
 use App\Exceptions\GitHubNotFoundException;
+use App\Jobs\Notifications\NewsPostNew;
 use App\Libraries\Commentable;
 use App\Libraries\Markdown\OsuMarkdown;
 use App\Libraries\OsuWiki;
@@ -339,6 +340,7 @@ class NewsPost extends Model implements Commentable, Wiki\WikiObject
             osuExtensionConfig: ['relative_url_root' => route('news.show', $this->slug)]
         ))->load($rawPage)->toArray();
 
+        $shouldNotify = $this->published_at === null;
         $this->version = static::pageVersion();
         $this->published_at = $this->pagePublishedAt();
         $this->tumblr_id = $this->pageTumblrId();
@@ -382,6 +384,15 @@ class NewsPost extends Model implements Commentable, Wiki\WikiObject
     public function previewText()
     {
         return first_paragraph($this->bodyHtml());
+    }
+
+    public function save(array $options = [])
+    {
+        if ($this->isDirty('published_at') && $this->getOriginal('published_at') === null) {
+            $this->getConnection()->afterCommit(fn () => new NewsPostNew($this)->dispatch());
+        }
+
+        return parent::save($options);
     }
 
     public function title()

@@ -93,6 +93,7 @@ return [
             'forum_topic_reply' => 'topic reply',
             'mail' => 'mail',
             'mapping' => 'beatmap mapper',
+            'news_post_new' => 'new posts',
             'push' => 'push',
         ],
     ],
