@@ -12,6 +12,7 @@ use App\Libraries\Markdown\OsuMarkdown;
 use App\Libraries\OsuWiki;
 use App\Traits\Memoizes;
 use Carbon\Carbon;
+use Ds\Set;
 use Exception;
 
 /**
@@ -38,6 +39,21 @@ class NewsPost extends Model implements Commentable, Wiki\WikiObject
     const DASHBOARD_LIMIT = 8;
     // also for number of large posts in user dashboard
     const LANDING_LIMIT = 4;
+
+    const SERIES = [
+        'community_choice',
+        'community_contributors',
+        'fa_releases',
+        'fanart_contests',
+        'lazer_updates',
+        'mappers_guild_updates',
+        'mapping_mentorship',
+        'merch_runs',
+        'pp_updates',
+        'project_loved',
+        'the_followpoint',
+        'world_cups',
+    ];
 
     const SORTS = [
         'published_asc' => [
@@ -298,7 +314,10 @@ class NewsPost extends Model implements Commentable, Wiki\WikiObject
 
     public function series(): ?string
     {
-        return presence(snake_case($this->page['header']['series'] ?? ''));
+        static $allSeries = new Set(static::SERIES);
+
+        $series = snake_case($this->page['header']['series'] ?? '');
+        return $allSeries->contains($series) ? $series : null;
     }
 
     public function sync($force = false)
