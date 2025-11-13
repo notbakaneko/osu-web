@@ -29,6 +29,7 @@ class NewsPostNew extends BroadcastNotificationBase
         return [
             'cover_url' => $this->newsPost->notificationCover(),
             'news_post_id' => $this->newsPost->getKey(),
+            'series' => $this->newsPost->series(),
             'slug' => $this->newsPost->slug,
             'title' => $this->newsPost->title(),
         ];
@@ -36,7 +37,26 @@ class NewsPostNew extends BroadcastNotificationBase
 
     public function getListeningUserIds(): array
     {
-        return UserNotificationOption::where('name', static::NOTIFICATION_OPTION_NAME)->pluck('user_id')->all();
+        $ids = [];
+
+        $series = $this->newsPost->series();
+
+        UserNotificationOption
+            ::where(['name' => Notification::NEWS_POST_NEW])
+            ->whereNotNull('details')
+            ->chunkById(1000, function ($options) use (&$ids, $series) {
+                foreach ($options as $option) {
+                    $details = $option['details'];
+                    if (
+                        !isset($details['series'])
+                        || in_array($series, $details['series'], true)
+                    ) {
+                        $ids[] = $option->user_id;
+                    }
+                }
+            });
+
+        return $ids;
     }
 
     public function getNotifiable()
