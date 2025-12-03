@@ -38,12 +38,13 @@ class NegativeBoostTest extends TestCase
         parent::setUpBeforeClass();
     }
 
-    #[DataProvider('dataProvider')]
-    public function testSearch(array $params, array $expected): void
-    {
-        $this->assertEquals(
-            array_map(fn (int $index) => static::$beatmapsets[$index]->getKey(), $expected),
-            new BeatmapsetSearch(new BeatmapsetSearchRequestParams($params))->response()->ids()
-        );
-    }
+    // #[\Override]
+    // #[DataProvider('dataProvider')]
+    // public function testSearch(array $params, array $expected): void
+    // {
+    //     $this->assertEquals(
+    //         array_map(fn (int $index) => static::$beatmapsets[$index]->getKey(), $expected),
+    //         new BeatmapsetSearch(new BeatmapsetSearchRequestParams($params))->response()->ids()
+    //     );
+    // }
 }

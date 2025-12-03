@@ -26,6 +26,7 @@ use Tests\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     protected static iterable $beatmapsets = [];
+    protected ?array $defaultExpectedSort = ['approved_date', 'id'];
 
     abstract public static function dataProvider(): array;
 
@@ -76,10 +77,34 @@ abstract class TestCase extends BaseTestCase
     #[DataProvider('dataProvider')]
     public function testSearch(array $params, array $expected): void
     {
-        $this->assertEqualsCanonicalizing(
-            array_map(fn (int $index) => static::$beatmapsets[$index]->getKey(), $expected),
-            new BeatmapsetSearch(new BeatmapsetSearchRequestParams($params))->response()->ids()
+        $expectedIds = array_map(fn (int $index) => static::$beatmapsets[$index]->getKey(), $expected);
+        $search = new BeatmapsetSearch(new BeatmapsetSearchRequestParams($params));
+        $sorts = $search->getParams()->sorts;
+        // \Log::debug(get_class_basename(get_class($this)), [count($search->getParams()->sorts)]);
+        // \Log::debug(get_class_basename(get_class($this)), $search->getParams()->sorts);
+        // \Log::debug(get_class_basename(get_class($this)), array_map(fn ($sort) => $sort->toArray(), $search->getParams()->sorts));
+
+        $assert = 'assertEqualsCanonicalizing';
+
+        if ($this->defaultExpectedSort !== null) {
+            $fields = array_map(fn ($sort) => $sort->field, $search->getParams()->sorts);
+            // \Log::debug(get_class_basename(get_class($this)), $fields);
+            if ($fields[0] !== '_score') {
+                $assert = 'assertEquals';
+            }
+
+            $this->assertSame($this->defaultExpectedSort, $fields);
+        }
+
+        $this->$assert(
+            $expectedIds,
+            $search->response()->ids(),
         );
+
+        // $this->assertEqualsCanonicalizing(
+        //     array_map(fn (int $index) => static::$beatmapsets[$index]->getKey(), $expected),
+        //     new BeatmapsetSearch(new BeatmapsetSearchRequestParams($params))->response()->ids()
+        // );
     }
 
     protected function setUp(): void

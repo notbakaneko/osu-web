@@ -12,16 +12,18 @@ use App\Models\Beatmapset;
 
 class ConvertsFilterTest extends TestCase
 {
+    protected ?array $defaultExpectedSort = ['approved_date', 'id'];
+
     public static function dataProvider(): array
     {
         return [
-            [['q' => 'cs=4'], [1, 2]],
-            [['m' => 0, 'q' => 'cs=4'], [1]],
-            [['m' => 3, 'q' => 'cs=4'], [2]],
+            [['q' => 'cs=4'], [2, 1], ['approved_date', 'id']],
+            [['m' => 0, 'q' => 'cs=4'], [1], ['approved_date', 'id']],
+            [['m' => 3, 'q' => 'cs=4'], [2], ['approved_date', 'id']],
 
-            [['c' => 'converts', 'q' => 'cs=4',], [0, 1, 2]],
-            [['c' => 'converts', 'm' => 0, 'q' => 'cs=4',], [1]],
-            [['c' => 'converts', 'm' => 3, 'q' => 'cs=4'], [0, 2]],
+            [['c' => 'converts', 'q' => 'cs=4',], [2, 1, 0], ['approved_date', 'id']],
+            [['c' => 'converts', 'm' => 0, 'q' => 'cs=4',], [1], ['approved_date', 'id']],
+            [['c' => 'converts', 'm' => 3, 'q' => 'cs=4'], [2, 0], ['approved_date', 'id']],
         ];
     }
 
