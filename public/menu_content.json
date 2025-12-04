@@ -1,0 +1,46 @@
+{
+  "images": [
+    {
+      "image": "https://assets.ppy.sh/main-menu/2024-autumn-fanart-voting@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-27-autumn-2024-fanart-voting",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-04T18:00:00+00:00"
+    },
+    {
+      "image": "https://assets.ppy.sh/main-menu/project-loved-2@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-22-project-loved-seven-years-september-2024",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-02T17:11:00+00:00"
+    },
+    {
+      "image": "https://assets.ppy.sh/main-menu/banner_OWC2024_Registrations2@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-26-osu-world-cup-2024-registrations-now-open",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-10T23:59:00+00:00"
+    },
+    {
+      "image": "https://assets.ppy.sh/main-menu/banner_OWC2024_Registrations2@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-26-osu-world-cup-2024-registrations-now-open",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-10T23:59:00+00:00"
+    },
+    {
+      "image": "https://assets.ppy.sh/main-menu/banner_OWC2024_Registrations2@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-26-osu-world-cup-2024-registrations-now-open",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-10T23:59:00+00:00"
+    },
+    {
+      "image": "https://assets.ppy.sh/main-menu/banner_OWC2024_Registrations2@2x.png",
+      "url": "https://osu.ppy.sh/home/news/2024-09-26-osu-world-cup-2024-registrations-now-open",
+      "IsCurrent": true,
+      "begins": null,
+      "expires": "2025-10-10T23:59:00+00:00"
+    }
+  ]
+}

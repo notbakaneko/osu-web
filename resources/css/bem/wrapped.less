@@ -1,0 +1,420 @@
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
+// See the LICENCE file in the repository root for full licence text.
+
+.wrapped {
+  @_max-height: 1000px;
+  @_transition: all ease-in-out 200ms;
+  // --content-left: 292px;
+  --content-left: 200px; // --page-gutter
+  --gap: 80px;
+  --header-height: 70px;
+
+  --list-item-width: 140px;
+  --list-item-selected-width: 140px;
+
+  --mark-opacity: 1;
+  --page-gutter: 200px;
+
+  --page-mark-height: 68px;
+  --page-mark-top: 200px;
+
+  --switcher-icon-height: 40px;
+  --switcher-icon-height-active: 80px;
+  --switcher-icon-width-active: 120px;
+
+  --text-title-size: 24px;
+  --text-regular-size: 20px;
+
+  // how far off the top the page header is
+  --top-summary: 40px;
+
+  --avatar-padding: 5px;
+  --user-height: var(--header-height);
+
+  background-color: hsl(var(--hsl-pink-4));
+  position: relative;
+  margin: 60px 0;
+  height: 100%;
+  width: 100%;
+  min-height: 600px;
+  max-height: @_max-height;
+  display: flex;
+  flex-direction: column;
+
+  &--summary {
+    --avatar-padding: 8px;
+    --header-height: 115px;
+    --mark-offset: -300px;
+    --mark-opacity: 0;
+  }
+
+  @media @mobile {
+    // --page-gutter: 20px;
+    --header-height: 70px;
+    --avatar-padding: 5px;
+  }
+
+  @media @narrow {
+    --avatar-padding: 0px;
+    --mark-opacity: 0;
+    --user-height: 32px;
+    margin-top: 10px;
+    margin-bottom: 0;
+
+    display: grid;
+    grid-template-rows: auto 40px;
+  }
+
+  &__save {
+    // button for testing
+    position: fixed;
+    bottom: 0;
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: #333;
+    background-image: var(--url, "~@images/wrapped/1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__container {
+    position: relative;
+    flex: 1;
+    max-height: @_max-height;
+    // overflow-y: scroll;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    position: relative;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+    height: 100%;
+    // width: 100%;
+    overflow-x: hidden;
+
+    padding-left: var(--content-left);
+    padding-top: calc(var(--page-mark-height) + var(--page-mark-top) + 40px);
+
+    &--grid {
+      display: grid;
+      grid-auto-flow: column;
+    }
+
+    &--summary {
+      display: grid;
+      gap: 80px;
+      grid-template-rows: auto auto;
+      padding-top: calc(var(--top-summary) + var(--header-height) + 80px)
+    }
+  }
+
+  &__header {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--page-gutter);
+
+    height: var(--header-height);
+    width: 100%;
+    top: calc(var(--header-height) / -2);
+    left: 0;
+
+    transition: @_transition;
+
+    &--summary {
+      top: var(--top-summary);
+    }
+
+    @media @narrow {
+      flex-direction: row-reverse;
+      top: 0;
+    }
+  }
+
+  &__mapper {
+    --border-radius: 20px; // also sets on beatmap-cover
+    position: relative;
+    flex: none;
+    border-radius: var(--border-radius);
+    transform-style: preserve-3d;
+    height: var(--list-item-width);
+    width: var(--list-item-width);
+
+    &--beatmap {
+      --list-item-width: 160px;
+      --list-item-selected-width: 280px;
+    }
+
+    &--selected {
+      &::before {
+        content: "";
+        position: absolute;
+        inset: -4px -4px -20px -4px;
+        background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%);
+        filter: blur(0);
+        transform: translate3d(0, 0, -1px);
+        border-radius: inherit;
+        pointer-events: none;
+      }
+
+      width: var(--list-item-selected-width);
+    }
+  }
+
+  // TODO: change?
+  &__mapper-details {
+
+  }
+
+  &__mappers {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    width: max-content; // prevent shrinking
+  }
+
+  &__page-mark {
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    left: var(--mark-offset, -100px);
+    top: var(--page-mark-top);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("~@images/wrapped/thing.svg");
+    // width: calc(var(--page-gutter) - 20px);
+    // height: var(--page-mark-height);
+    // scale svg down a bit to have more space in the middle of the page.
+    width: 286px;
+    height: 68px;
+
+    opacity: var(--mark-opacity);
+    transition: all ease-in-out 200ms;
+  }
+
+  &__page-number {
+    .center-content();
+    .default-text-shadow();
+    width: 70px;
+    height: 70px;
+
+    position: absolute;
+    // left: calc(var(--page-gutter) - 70px);
+    left: 217px;
+    bottom: 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  &__page-title {
+    .center-content();
+    .default-text-shadow();
+    // attempt to vertically align with page number
+    position: absolute;
+    top: -3px;
+    left: calc(var(--page-gutter) + 100px);
+    font-size: 52px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  // per-page stuff
+  &__favourite-mapper {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__favourite-mapper-avatar {
+    width: 70px;
+  }
+
+  &__favourite-mapper-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__favourite-mapper-username {
+    font-size: var(--text-title-size);
+    font-weight: bold;
+  }
+
+  &__favourite-mapper-counts {
+    font-size: var(--text-regular-size);
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: black;
+  }
+
+  &__stats {
+    display: flex;
+    gap: var(--gap);
+    color: black;
+  }
+
+  &__stat-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    color: #fff;
+  }
+
+  &__stat-title {
+    white-space: nowrap; // always single line.
+    line-height: 1;
+    width: fit-content; // don't stretch background fill
+    font-size: 24px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%), #D9D9D9;
+  }
+
+  &__stat-value {
+    // .default-text-shadow();
+    display: inline-block;
+    line-height: 1;
+    font-size: 52px;
+    margin: 0 16px;
+    color: white;
+    background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    // text-shadow colours the text :|
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  &__text {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  &__switcher {
+    position: absolute;
+    height: var(--switcher-icon-height-active);
+    width: 100%;
+    // note: calc(padding - x) if using padding for parent
+    // TODO: back switch always show even if screen is too short?
+    bottom: calc(-1 * calc(var(--switcher-icon-height-active) / 2));
+
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+    @media @narrow {
+      flex: 1;
+      position: static;
+      bottom: unset;
+      height: unset;
+      gap: 2px;
+    }
+  }
+
+  &__switcher-item {
+    position: relative;
+    overflow: hidden;
+    width: var(--switcher-icon-height);
+    height: $width;
+    border-radius: $width;
+    background-color: black;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+
+    &--active {
+      width: var(--switcher-icon-width-active);
+      height: var(--switcher-icon-height-active);
+      border: 8px solid white;
+    }
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    @media @narrow {
+      --switcher-icon-width-active: 32px;
+      --switcher-icon-height-active: 8px;
+      --switcher-icon-height: 8px;
+
+      position: static;
+      bottom: unset;
+    }
+  }
+
+  &__top-stats {
+    position: relative;
+    display: flex;
+    gap: 80px;
+    padding-bottom: 40px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100vw;
+      height: 4px;
+      bottom: 0;
+      left: calc(-1 * var(--content-left));
+      background: #ff99c7;
+    }
+  }
+
+  &__bottom-stats {
+    display: flex;
+    gap: 80px;
+
+    padding: 20px 0;
+  }
+
+  &__logo {
+    height: 70px;
+
+    // needs to be smaller for narrower screens or it might clip into username
+    @media @narrow {
+      height: 50px;
+    }
+  }
+
+  &__user {
+    background: rgba(0, 0, 0, 0.3);
+    height: var(--user-height);
+    border-radius: $height;
+    padding: 0 $height 0 var(--avatar-padding);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    transition: @_transition;
+  }
+
+  &__user-avatar {
+    .circle(calc(var(--user-height) - 2 * var(--avatar-padding)));
+
+    background-color: #333;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+
+    transition: @_transition;
+  }
+}
