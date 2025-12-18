@@ -5,32 +5,50 @@ import BeatmapsetCover from 'components/beatmapset-cover';
 import FlagCountry from 'components/flag-country';
 import UserAvatar from 'components/user-avatar';
 import { toPng } from 'html-to-image';
+import { intersection } from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { classWithModifiers, Modifiers, urlPresence } from 'utils/css';
 import { formatNumber, htmlElementOrNull } from 'utils/html';
 import { getInt } from 'utils/math';
+import { switchNever } from 'utils/switch-never';
 import Data, { FavouriteMapper, sampleBeatmapset } from './data';
 
-interface Page {
-  background: string;
-}
+// interface Page {
+//   background: string;
+// }
 
-const pageData = [
-  { background: '/images/wrapped/1.png', type: 'favourite_mappers' },
-  { background: '/images/wrapped/1.png', type: 'summary' },
-  { background: '/images/wrapped/2.png', type: 'stats' },
-  { background: '/images/wrapped/3.png', type: 'beatmaps' },
+// const pageData = [
+//   { background: '/images/wrapped/1.png', type: 'favourite_mappers' },
+//   { background: '/images/wrapped/1.png', type: 'summary' },
+//   { background: '/images/wrapped/2.png', type: 'stats' },
+//   { background: '/images/wrapped/3.png', type: 'beatmaps' },
 
-  { background: '/images/wrapped/2.png', type: 'mapping' },
-  { background: '/images/wrapped/2.png', title: 'Daily Challenges', type: 'daily_challenge' },
-];
+//   { background: '/images/wrapped/2.png', type: 'mapping' },
+//   { background: '/images/wrapped/2.png', title: 'Daily Challenges', type: 'daily_challenge' },
+// ];
+
+// // type Keys = keyof Data;
+// // const pageKeys: (Keys | 'summary' | 'stats')[] = ['summary', 'favorite_artists', 'favorite_mappers', 'mapping'];
 
 type Props = Data;
-// type Keys = keyof Data;
-// const pageKeys: (Keys | 'summary' | 'stats')[] = ['summary', 'favorite_artists', 'favorite_mappers', 'mapping'];
 
+/* eslint-disable sort-keys */
+const pageTypeMapping = {
+  summary: 'summary',
+  daily_challenge: 'grid',
+  statistics: 'grid',
+  top_plays: 'beatmaps',
+  favorite_mappers: 'mappers',
+  favorite_artists: 'beatmaps',
+  mapping: 'grid',
+} as const;
+/* eslint-enable sort-keys */
+
+type DisplayType = 'beatmaps' | 'mappers' | 'grid' | 'summary';
+type PageType = keyof typeof pageTypeMapping;
+const listTypes = new Set<DisplayType>(['beatmaps', 'mappers']) as Set<unknown>;
 
 function favouriteMapper(props: FavouriteMapper) {
   return (
@@ -53,37 +71,34 @@ function renderSummaryTopStats(title: string, value: number, modifiers?: Modifie
   );
 }
 
-const listTypes = new Set(['beatmaps', 'favourite_mappers']);
-
 @observer
 export default class WrappedShow extends React.Component<Props> {
-  private readonly pages = pageData;
+  private readonly availablePages: PageType[];
+  // private readonly pages = pageData;
   private readonly ref = React.createRef<HTMLDivElement>();
   @observable private selectedIndex = 0;
   @observable private selectedListIndex = 0;
 
   get currentList() {
-    switch (this.selectedPage.type) {
-      case 'beatmaps':
-        return this.props.top_plays;
-      case 'favourite_mappers':
-        return this.props.favorite_mappers;
-    }
-
-    return [];
+    if (this.selectedPageType === 'summary' || this.selectedPageType === 'statistics') return [];
+    return (
+      this.selectedPageType in this.props
+      && Array.isArray(this.props[this.selectedPageType])
+    ) ? this.props[this.selectedPageType].slice(0, 10) : [];
   }
 
   get hasList() {
-    return listTypes.has(this.selectedPage.type);
+    return listTypes.has(pageTypeMapping[this.selectedPageType]);
   }
 
   get isSummaryPage() {
-    return this.selectedPage.type === 'summary';
+    return this.selectedPageType === 'summary';
   }
 
   get pageTitle() {
     // TODO: actual titles
-    return this.selectedPage.title ?? this.selectedPage.type;
+    // return this.selectedPage.title ?? this.selectedPageType;
+    return this.selectedPageType;
   }
 
   get selectedFavouriteMapper() {
@@ -94,12 +109,24 @@ export default class WrappedShow extends React.Component<Props> {
     return this.props.top_plays[this.selectedListIndex];
   }
 
-  get selectedPage() {
-    return this.pages[this.selectedIndex];
+  // get selectedPage() {
+  //   return this.pages[this.selectedIndex];
+  // }
+
+  get selectedPageType() {
+    return this.availablePages[this.selectedIndex];
   }
 
   constructor(props: Props) {
     super(props);
+
+    this.availablePages = [
+      'summary',
+      'statistics',
+      ...intersection(Object.keys(pageTypeMapping), Object.keys(props)) as PageType[],
+    ];
+
+    console.log(this.availablePages);
 
     document.addEventListener('keydown', this.handleKeyDown);
 
@@ -114,7 +141,7 @@ export default class WrappedShow extends React.Component<Props> {
     return (
       <div
         className={classWithModifiers('wrapped', { summary: this.isSummaryPage })}
-        style={{ '--url': `url("${this.pages[this.selectedIndex].background}")` } as React.CSSProperties}
+        style={{ '--url': `url("${this.backgroundForPage(this.selectedPageType, this.selectedIndex)}")` } as React.CSSProperties}
       >
         <div
           ref={this.ref}
@@ -130,11 +157,16 @@ export default class WrappedShow extends React.Component<Props> {
           </div>
         </div>
         <div className='wrapped__switcher'>
-          {this.pages.map((page, index) => this.renderSwitcher(page, index))}
+          {this.availablePages.map((page, index) => this.renderSwitcher(page, index))}
         </div>
         <button className='wrapped__save' onClick={this.handleSaveAsImage}>Save</button>
       </div>
     );
+  }
+
+  private backgroundForPage(page: PageType, index: number) {
+    // TODO: actual from data
+    return `/images/wrapped/${index % 3 + 1}.png`;
   }
 
   // @action doesn't work for some reason?
@@ -142,21 +174,21 @@ export default class WrappedShow extends React.Component<Props> {
     switch (e.key) {
       case 'ArrowDown':
       case 'ArrowRight':
-        if (this.hasList && this.currentList.length > 0) {
+        if (!e.shiftKey && this.hasList && this.currentList.length > 0) {
           if (this.selectedListIndex < this.currentList.length - 1) {
             this.selectedListIndex++;
             return;
           }
         }
 
-        if (this.selectedIndex < this.pages.length - 1) {
+        if (this.selectedIndex < this.availablePages.length - 1) {
           this.selectedIndex++;
           this.selectedListIndex = 0;
         }
         return;
       case 'ArrowLeft':
       case 'ArrowUp':
-        if (this.hasList && this.currentList.length > 0) {
+        if (!e.shiftKey && this.hasList && this.currentList.length > 0) {
           if (this.selectedListIndex > 0) {
             this.selectedListIndex--;
             return;
@@ -207,7 +239,7 @@ export default class WrappedShow extends React.Component<Props> {
     const index = getInt(element.dataset.index);
     if (index == null) return;
 
-    if (index >= 0 && index < this.pages.length) {
+    if (index >= 0 && index < this.availablePages.length) {
       this.selectedIndex = index;
     }
   };
@@ -276,9 +308,14 @@ export default class WrappedShow extends React.Component<Props> {
     ));
   }
 
+  private renderFavouriteArtists() {
+    return;
+  }
+
+
   private renderHeader() {
     return (
-      <div className={classWithModifiers('wrapped__header', { summary: this.selectedPage.type === 'summary' })}>
+      <div className={classWithModifiers('wrapped__header', { summary: this.selectedPageType === 'summary' })}>
         <div className='wrapped__user'>
           <span
             className='wrapped__user-avatar'
@@ -335,13 +372,7 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderPage() {
-    const layouts: Record<string, string> = {
-      beatmaps: 'beatmaps',
-      favourite_mappers: 'beatmaps',
-      summary: 'summary',
-    };
-
-    const layout = layouts[this.selectedPage.type] ?? 'grid';
+    const layout = pageTypeMapping[this.selectedPageType] ?? 'grid';
 
     return (
       <div className={classWithModifiers('wrapped__content', layout)}>
@@ -351,17 +382,24 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderPageActual() {
-    switch (this.selectedPage.type) {
-      case 'beatmaps':
-        return this.renderBeatmaps();
+    switch (this.selectedPageType) {
       case 'daily_challenge':
         return this.renderDailyChallenge();
-      case 'favourite_mappers':
+      case 'favorite_artists':
+        return this.renderFavouriteArtists();
+      case 'favorite_mappers':
         return this.renderMappers();
       case 'mapping':
         return this.renderBeatmaps();
-      case 'stats':
+      case 'summary':
+        return this.renderSummary();
+      case 'statistics':
+        return this.renderStats();
+      case 'top_plays':
         return this.renderBeatmaps();
+      default:
+        switchNever(this.selectedPageType);
+        return <></>;
     }
 
     return this.renderSummary();
@@ -370,7 +408,6 @@ export default class WrappedShow extends React.Component<Props> {
   private renderStats() {
     return;
   }
-
 
   private renderSummary() {
     return (
@@ -400,7 +437,7 @@ export default class WrappedShow extends React.Component<Props> {
     );
   }
 
-  private renderSwitcher(page: Page, index: number) {
+  private renderSwitcher(page: PageType, index: number) {
     return (
       <div
         key={index}
@@ -408,7 +445,7 @@ export default class WrappedShow extends React.Component<Props> {
         data-index={index}
         onClick={this.handleSwitcherOnClick}
       >
-        <img src={page.background} />
+        <img src={this.backgroundForPage(page, index)} />
       </div>
     );
   }
