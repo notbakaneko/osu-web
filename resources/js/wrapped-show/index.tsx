@@ -80,11 +80,14 @@ export default class WrappedShow extends React.Component<Props> {
   @observable private selectedListIndex = 0;
 
   get currentList() {
-    if (this.selectedPageType === 'summary' || this.selectedPageType === 'statistics') return [];
-    return (
-      this.selectedPageType in this.props
-      && Array.isArray(this.props[this.selectedPageType])
-    ) ? this.props[this.selectedPageType].slice(0, 10) : [];
+    switch (this.selectedPageType) {
+      case 'favorite_artists':
+      case 'favorite_mappers':
+      case 'top_plays':
+        return this.props[this.selectedPageType].slice(0, 10);
+    }
+
+    return [];
   }
 
   get hasList() {
