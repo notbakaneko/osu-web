@@ -4,6 +4,7 @@
 .wrapped {
   @_max-height: 1000px;
   @_transition: all ease-in-out 200ms;
+  --bg-gradient: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%);
   // --content-left: 292px;
   --content-left: 200px; // --page-gutter
   --gap: 80px;
@@ -142,6 +143,23 @@
     }
   }
 
+  &__list {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    width: max-content; // prevent shrinking
+  }
+
+  &__list-details {
+
+  }
+
+  &__list-details-title {
+    display: flex;
+    position: relative;
+    margin-bottom: 40px;
+  }
+
   &__mapper {
     --border-radius: 20px; // also sets on beatmap-cover
     position: relative;
@@ -161,7 +179,7 @@
         content: "";
         position: absolute;
         inset: -4px -4px -20px -4px;
-        background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%);
+        background: var(--bg-gradient);
         filter: blur(0);
         transform: translate3d(0, 0, -1px);
         border-radius: inherit;
@@ -170,18 +188,6 @@
 
       width: var(--list-item-selected-width);
     }
-  }
-
-  // TODO: change?
-  &__mapper-details {
-
-  }
-
-  &__mappers {
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-    width: max-content; // prevent shrinking
   }
 
   &__page-mark {
@@ -285,7 +291,7 @@
     font-weight: bold;
     padding: 8px 16px;
     border-radius: 100px;
-    background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%), #D9D9D9;
+    background: var(--bg-gradient), #D9D9D9;
   }
 
   &__stat-value {
@@ -295,7 +301,7 @@
     font-size: 52px;
     margin: 0 16px;
     color: white;
-    background: linear-gradient(235.9deg, #FFFFFF 23.33%, #FFE599 67.87%);
+    background: var(--bg-gradient);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -305,6 +311,26 @@
 
   &__text {
     font-size: 32px;
+    font-weight: bold;
+
+    &--bottom {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+
+  &__rank {
+    --rank-colour: #fff;
+    .center-content();
+    position: relative;
+    width: 100px;
+    height: 48px;
+    margin-right: 20px;
+    margin-left: -$width - $margin-right;
+    border-radius: 100px;
+    color: #000;
+    background: linear-gradient(235.9deg, #fff 23.33%, var(--rank-colour) 67.87%);
+    font-size: 40px;
     font-weight: bold;
   }
 

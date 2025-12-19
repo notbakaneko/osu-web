@@ -36,10 +36,10 @@ type Props = Data;
 
 /* eslint-disable sort-keys */
 const pageTypeMapping = {
+  top_plays: 'beatmaps',
   summary: 'summary',
   daily_challenge: 'grid',
   statistics: 'grid',
-  top_plays: 'beatmaps',
   favorite_mappers: 'mappers',
   favorite_artists: 'beatmaps',
   mapping: 'grid',
@@ -49,6 +49,8 @@ const pageTypeMapping = {
 type DisplayType = 'beatmaps' | 'mappers' | 'grid' | 'summary';
 type PageType = keyof typeof pageTypeMapping;
 const listTypes = new Set<DisplayType>(['beatmaps', 'mappers']) as Set<unknown>;
+
+const rankColours = ['#ffe599', '#bab9b8', '#fd9a68'];
 
 function favouriteMapper(props: FavouriteMapper) {
   return (
@@ -153,7 +155,10 @@ export default class WrappedShow extends React.Component<Props> {
           {/* pseudo elements won't show up in saved image */}
           <div className='wrapped__background' />
           {this.renderHeader()}
-          {this.renderPage()}
+
+          <div className={classWithModifiers('wrapped__content', pageTypeMapping[this.selectedPageType])}>
+            {this.renderPage()}
+          </div>
           <div className='wrapped__page-mark'>
             <span className='wrapped__page-number'>{this.selectedIndex}</span>
             <span className='wrapped__page-title'>{this.pageTitle}</span>
@@ -249,10 +254,9 @@ export default class WrappedShow extends React.Component<Props> {
 
   private renderBeatmaps() {
     const selectedItem = this.selectedTopPlay;
-
     return (
       <>
-        <div className={classWithModifiers('wrapped__mappers', 'beatmap')}>
+        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
           {this.props.top_plays.map((play, index) => (
             <div
               key={play.id}
@@ -268,26 +272,32 @@ export default class WrappedShow extends React.Component<Props> {
             </div>
           ))}
         </div>
-        <div className='wrapped__mapper-details'>
-          {/* <div className={classWithModifiers('wrapped__text')}>{selectedMapper.mapper.username}</div>
+        <div className='wrapped__list-details'>
+          <div className={classWithModifiers('wrapped__list-details-title')}>
+            <div
+              className='wrapped__rank'
+              style={{ '--rank-colour': rankColours[this.selectedListIndex] ?? '' } as React.CSSProperties}
+            >
+              {`#${this.selectedListIndex + 1}`}
+            </div>
+            <div className={classWithModifiers('wrapped__text', 'top')}>Beatmap name goes here</div>
+            <div className={classWithModifiers('wrapped__text', 'bottom')}>{selectedItem.beatmap_id}</div>
+          </div>
+
           <div className='wrapped__stats'>
             <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.score_count)}</div>
+              <div className={classWithModifiers('wrapped__stat-title')}>Accuracy</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.accuracy)}</div>
             </div>
             <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Best pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.pp_best)}</div>
+              <div className={classWithModifiers('wrapped__stat-title')}>pp</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.pp)}</div>
             </div>
             <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.pp_avg)}</div>
+              <div className={classWithModifiers('wrapped__stat-title')}>Score</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.total_score)}</div>
             </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.score_avg)}</div>
-            </div>
-          </div> */}
+          </div>
         </div>
       </>
     );
@@ -333,11 +343,11 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderMappers() {
-    const selectedMapper = this.selectedFavouriteMapper;
+    const selectedItem = this.selectedFavouriteMapper;
 
     return (
       <>
-        <div className='wrapped__mappers'>
+        <div className='wrapped__list'>
           {this.props.favorite_mappers.map((mapper, index) => (
             <div
               key={mapper.mapper.id}
@@ -349,24 +359,34 @@ export default class WrappedShow extends React.Component<Props> {
             </div>
           ))}
         </div>
-        <div className='wrapped__mapper-details'>
-          <div className={classWithModifiers('wrapped__text')}>{selectedMapper.mapper.username}</div>
+        <div className='wrapped__list-details'>
+          <div className={classWithModifiers('wrapped__list-details-title')}>
+            <div
+              className='wrapped__rank'
+              style={{ '--rank-colour': rankColours[this.selectedListIndex] ?? '' } as React.CSSProperties}
+            >
+              {`#${this.selectedListIndex + 1}`}
+            </div>
+            <div className={classWithModifiers('wrapped__text', 'top')}>{selectedItem.mapper.username}</div>
+          </div>
+
+
           <div className='wrapped__stats'>
             <div className='wrapped__stat'>
               <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.score_count)}</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_count)}</div>
             </div>
             <div className='wrapped__stat'>
               <div className={classWithModifiers('wrapped__stat-title')}>Best pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.pp_best)}</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_best)}</div>
             </div>
             <div className='wrapped__stat'>
               <div className={classWithModifiers('wrapped__stat-title')}>Average pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.pp_avg)}</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_avg)}</div>
             </div>
             <div className='wrapped__stat'>
               <div className={classWithModifiers('wrapped__stat-title')}>Average score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedMapper.scores.score_avg)}</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_avg)}</div>
             </div>
           </div>
         </div>
@@ -375,16 +395,6 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderPage() {
-    const layout = pageTypeMapping[this.selectedPageType] ?? 'grid';
-
-    return (
-      <div className={classWithModifiers('wrapped__content', layout)}>
-        {this.renderPageActual()}
-      </div>
-    );
-  }
-
-  private renderPageActual() {
     switch (this.selectedPageType) {
       case 'daily_challenge':
         return this.renderDailyChallenge();
@@ -404,8 +414,6 @@ export default class WrappedShow extends React.Component<Props> {
         switchNever(this.selectedPageType);
         return <></>;
     }
-
-    return this.renderSummary();
   }
 
   private renderStats() {
