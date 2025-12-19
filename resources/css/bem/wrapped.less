@@ -151,7 +151,6 @@
   }
 
   &__list-details {
-
   }
 
   &__list-details-title {
@@ -270,8 +269,11 @@
   }
 
   &__stats {
-    display: flex;
-    gap: var(--gap);
+    display: grid;
+    // just making the total width + gap 320px
+    // 300px should be enough to fit the largest numbers currently...
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 20px;
     color: black;
   }
 
@@ -299,8 +301,8 @@
     display: inline-block;
     line-height: 1;
     font-size: 52px;
-    margin: 0 16px;
-    color: white;
+    margin-left: 16px;
+    color: #fff;
     background: var(--bg-gradient);
     background-clip: text;
     -webkit-background-clip: text;
@@ -313,9 +315,19 @@
     font-size: 32px;
     font-weight: bold;
 
+    &--top {
+      margin-top: -10px;
+    }
+
     &--bottom {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: normal;
+    }
+
+    &--container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 

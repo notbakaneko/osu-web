@@ -9,8 +9,10 @@ import { intersection } from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { getArtist, getTitle } from 'utils/beatmapset-helper';
 import { classWithModifiers, Modifiers, urlPresence } from 'utils/css';
 import { formatNumber, htmlElementOrNull } from 'utils/html';
+import { trans } from 'utils/lang';
 import { getInt } from 'utils/math';
 import { switchNever } from 'utils/switch-never';
 import Data, { FavouriteMapper, sampleBeatmapset } from './data';
@@ -249,59 +251,9 @@ export default class WrappedShow extends React.Component<Props> {
 
     if (index >= 0 && index < this.availablePages.length) {
       this.selectedIndex = index;
+      this.selectedListIndex = 0;
     }
   };
-
-  private renderBeatmaps() {
-    const selectedItem = this.selectedTopPlay;
-    return (
-      <>
-        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
-          {this.props.top_plays.map((play, index) => (
-            <div
-              key={play.id}
-              className={classWithModifiers('wrapped__mapper', 'beatmap', { selected: this.selectedListIndex === index })}
-              data-index={index}
-              onClick={this.handleSelectMapper}
-            >
-              <BeatmapsetCover
-                beatmapset={sampleBeatmapset}
-                modifiers='full'
-                size='card'
-              />
-            </div>
-          ))}
-        </div>
-        <div className='wrapped__list-details'>
-          <div className={classWithModifiers('wrapped__list-details-title')}>
-            <div
-              className='wrapped__rank'
-              style={{ '--rank-colour': rankColours[this.selectedListIndex] ?? '' } as React.CSSProperties}
-            >
-              {`#${this.selectedListIndex + 1}`}
-            </div>
-            <div className={classWithModifiers('wrapped__text', 'top')}>Beatmap name goes here</div>
-            <div className={classWithModifiers('wrapped__text', 'bottom')}>{selectedItem.beatmap_id}</div>
-          </div>
-
-          <div className='wrapped__stats'>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Accuracy</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.accuracy)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.pp)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.total_score)}</div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
 
   private renderDailyChallenge() {
     const keyMapping = {
@@ -322,6 +274,7 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderFavouriteArtists() {
+    // TODO:
     return;
   }
 
@@ -338,6 +291,20 @@ export default class WrappedShow extends React.Component<Props> {
           {this.props.user.username}
         </div>
         <img className='wrapped__logo' src='/images/wrapped/logo.svg' />
+      </div>
+    );
+  }
+
+  private renderListDetailsTitle(content: React.ReactNode) {
+    return (
+      <div className={classWithModifiers('wrapped__list-details-title')}>
+        <div
+          className='wrapped__rank'
+          style={{ '--rank-colour': rankColours[this.selectedListIndex] ?? '' } as React.CSSProperties}
+        >
+          {`#${this.selectedListIndex + 1}`}
+        </div>
+        {content}
       </div>
     );
   }
@@ -360,18 +327,28 @@ export default class WrappedShow extends React.Component<Props> {
           ))}
         </div>
         <div className='wrapped__list-details'>
-          <div className={classWithModifiers('wrapped__list-details-title')}>
-            <div
-              className='wrapped__rank'
-              style={{ '--rank-colour': rankColours[this.selectedListIndex] ?? '' } as React.CSSProperties}
-            >
-              {`#${this.selectedListIndex + 1}`}
-            </div>
-            <div className={classWithModifiers('wrapped__text', 'top')}>{selectedItem.mapper.username}</div>
-          </div>
-
-
+          {this.renderListDetailsTitle(
+            <div className={classWithModifiers('wrapped__text')}>{selectedItem.mapper.username}</div>,
+          )}
           <div className='wrapped__stats'>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_count)}</div>
+            </div>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Best pp</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_best)}</div>
+            </div>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Average pp</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_avg)}</div>
+            </div>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Average score</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_avg)}</div>
+            </div>
+
+            {/* TODO: duplicated to take up space */}
             <div className='wrapped__stat'>
               <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
               <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_count)}</div>
@@ -394,6 +371,11 @@ export default class WrappedShow extends React.Component<Props> {
     );
   }
 
+  private renderMapping() {
+    // TODO:
+    return;
+  }
+
   private renderPage() {
     switch (this.selectedPageType) {
       case 'daily_challenge':
@@ -403,13 +385,13 @@ export default class WrappedShow extends React.Component<Props> {
       case 'favorite_mappers':
         return this.renderMappers();
       case 'mapping':
-        return this.renderBeatmaps();
+        return this.renderMapping();
       case 'summary':
         return this.renderSummary();
       case 'statistics':
         return this.renderStats();
       case 'top_plays':
-        return this.renderBeatmaps();
+        return this.renderTopPlays();
       default:
         switchNever(this.selectedPageType);
         return <></>;
@@ -417,6 +399,7 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderStats() {
+    // TODO
     return;
   }
 
@@ -440,8 +423,7 @@ export default class WrappedShow extends React.Component<Props> {
           </div>
           <div className='wrapped__stat'>
             <div className={classWithModifiers('wrapped__stat-title')}>Your Top Maps</div>
-            <div className={classWithModifiers('wrapped__stat-items')}>
-            </div>
+            <div className={classWithModifiers('wrapped__stat-items')} />
           </div>
         </div>
       </>
@@ -458,6 +440,60 @@ export default class WrappedShow extends React.Component<Props> {
       >
         <img src={this.backgroundForPage(page, index)} />
       </div>
+    );
+  }
+
+  private renderTopPlays() {
+    const selectedItem = this.selectedTopPlay;
+    const beatmapset = sampleBeatmapset;
+    return (
+      <>
+        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
+          {this.props.top_plays.map((play, index) => (
+            <div
+              key={play.id}
+              className={classWithModifiers('wrapped__mapper', 'beatmap', { selected: this.selectedListIndex === index })}
+              data-index={index}
+              onClick={this.handleSelectMapper}
+            >
+              <BeatmapsetCover
+                beatmapset={sampleBeatmapset}
+                modifiers='full'
+                size='card'
+              />
+            </div>
+          ))}
+        </div>
+        <div className='wrapped__list-details'>
+          {this.renderListDetailsTitle(
+            <div className={classWithModifiers('wrapped__text', 'container')}>
+              <div className={classWithModifiers('wrapped__text', 'top')}>
+                {getTitle(beatmapset)}
+                <a className='beatmapset-panel__main-link u-ellipsis-overflow'>
+                  {trans('beatmapsets.show.details.by_artist', { artist: getArtist(beatmapset) })}
+                </a>
+              </div>
+              <div className={classWithModifiers('wrapped__text', 'bottom')}>
+                {selectedItem.beatmap_id}
+              </div>
+            </div>,
+          )}
+          <div className='wrapped__stats'>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Accuracy</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.accuracy)}</div>
+            </div>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>pp</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.pp)}</div>
+            </div>
+            <div className='wrapped__stat'>
+              <div className={classWithModifiers('wrapped__stat-title')}>Score</div>
+              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.total_score)}</div>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 }
