@@ -10,6 +10,7 @@
   --gap: 80px;
   --header-height: 70px;
 
+  --list-item-height: 140px;
   --list-item-width: 140px;
   --list-item-selected-width: 140px;
 
@@ -145,25 +146,23 @@
     width: max-content; // prevent shrinking
   }
 
-  &__list-details {
-  }
-
   &__list-details-title {
     display: flex;
     position: relative;
     margin-bottom: 40px;
   }
 
-  &__mapper {
+  &__list-item {
     --border-radius: 20px; // also sets on beatmap-cover
     position: relative;
     flex: none;
     border-radius: var(--border-radius);
     transform-style: preserve-3d;
-    height: var(--list-item-width);
+    height: var(--list-item-height);
     width: var(--list-item-width);
 
     &--beatmap {
+      --list-item-height: 160px;
       --list-item-width: 160px;
       --list-item-selected-width: 280px;
     }
@@ -182,6 +181,12 @@
 
       width: var(--list-item-selected-width);
     }
+
+    &--summary-beatmap {
+      --list-item-height: 60px;
+      --list-item-width: 260px;
+    }
+
   }
 
   &__page-mark {
@@ -238,21 +243,21 @@
   }
 
   &__favourite-mapper-avatar {
-    width: 70px;
+    width: 60px;
   }
 
-  &__favourite-mapper-text {
+  &__summary-list-item-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  &__favourite-mapper-username {
+  &__summary-list-item-title {
     font-size: var(--text-title-size);
     font-weight: bold;
   }
 
-  &__favourite-mapper-counts {
+  &__summary-list-item-value {
     font-size: var(--text-regular-size);
   }
 
@@ -392,6 +397,12 @@
       position: static;
       bottom: unset;
     }
+  }
+
+  &__top-plays {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
   }
 
   &__top-stats {

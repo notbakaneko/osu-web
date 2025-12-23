@@ -15,7 +15,7 @@ import { formatNumber, htmlElementOrNull } from 'utils/html';
 import { trans } from 'utils/lang';
 import { getInt } from 'utils/math';
 import { switchNever } from 'utils/switch-never';
-import Data, { FavouriteMapper, sampleBeatmapset } from './data';
+import Data, { FavouriteMapper, sampleBeatmapset, TopPlay } from './data';
 
 // interface Page {
 //   background: string;
@@ -58,9 +58,33 @@ function favouriteMapper(props: FavouriteMapper) {
   return (
     <div className='wrapped__favourite-mapper'>
       <div className='wrapped__favourite-mapper-avatar'><UserAvatar modifiers='full-circle' user={props.mapper} /></div>
-      <div className='wrapped__favourite-mapper-text'>
-        <div className='wrapped__favourite-mapper-username'>{props.mapper.username}</div>
-        <div className='wrapped__favourite-mapper-counts'>{props.scores.score_count} plays</div>
+      <div className='wrapped__summary-list-item-text'>
+        <div className='wrapped__summary-list-item-title'>{props.mapper.username}</div>
+        <div className='wrapped__summary-list-item-value'>{formatNumber(props.scores.score_count)} plays</div>
+      </div>
+    </div>
+  );
+}
+
+function topPlay(props: TopPlay) {
+  const beatmapset = sampleBeatmapset;
+  return (
+    <div className={classWithModifiers('wrapped__top-plays', 'summary-beatmap')}>
+      <div className={classWithModifiers('wrapped__list-item', 'summary-beatmap')}
+      >
+        <BeatmapsetCover
+          beatmapset={beatmapset}
+          modifiers='full'
+          size='card'
+        />
+      </div>
+      <div className='wrapped__summary-list-item-text'>
+        <div className='wrapped__summary-list-item-title'>
+          {getTitle(beatmapset)}
+        </div>
+        <div className='wrapped__summary-list-item-value'>
+          {beatmapset.id}
+        </div>
       </div>
     </div>
   );
@@ -70,7 +94,7 @@ function WrappedStat(props: { modifiers?: Modifiers; title: string; value: numbe
   return (
     <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
       <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
-      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{props.value}</div>
+      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{formatNumber(props.value)}</div>
     </div>
   );
 }
@@ -331,7 +355,7 @@ export default class WrappedShow extends React.Component<Props> {
           {this.props.favorite_mappers.map((mapper, index) => (
             <div
               key={mapper.mapper.id}
-              className={classWithModifiers('wrapped__mapper', { selected: this.selectedListIndex === index })}
+              className={classWithModifiers('wrapped__list-item', { selected: this.selectedListIndex === index })}
               data-index={index}
               onClick={this.handleSelectMapper}
             >
@@ -427,6 +451,7 @@ export default class WrappedShow extends React.Component<Props> {
             {this.props.favorite_mappers.map(favouriteMapper)}
           </WrappedStatItems>
           <WrappedStatItems title='Your Top Maps'>
+            {this.props.top_plays.map(topPlay)}
           </WrappedStatItems>
         </div>
       </>
@@ -455,7 +480,7 @@ export default class WrappedShow extends React.Component<Props> {
           {this.props.top_plays.map((play, index) => (
             <div
               key={play.id}
-              className={classWithModifiers('wrapped__mapper', 'beatmap', { selected: this.selectedListIndex === index })}
+              className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
               data-index={index}
               onClick={this.handleSelectMapper}
             >
