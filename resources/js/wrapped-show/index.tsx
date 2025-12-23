@@ -38,17 +38,17 @@ type Props = Data;
 
 /* eslint-disable sort-keys */
 const pageTypeMapping = {
-  top_plays: 'beatmaps',
   summary: 'summary',
-  daily_challenge: 'grid',
-  statistics: 'grid',
+  top_plays: 'beatmaps',
+  daily_challenge: 'plain',
+  statistics: 'plain',
   favorite_mappers: 'mappers',
   favorite_artists: 'beatmaps',
-  mapping: 'grid',
+  mapping: 'plain',
 } as const;
 /* eslint-enable sort-keys */
 
-type DisplayType = 'beatmaps' | 'mappers' | 'grid' | 'summary';
+type DisplayType = 'beatmaps' | 'mappers' | 'plain' | 'summary';
 type PageType = keyof typeof pageTypeMapping;
 const listTypes = new Set<DisplayType>(['beatmaps', 'mappers']) as Set<unknown>;
 
@@ -66,11 +66,22 @@ function favouriteMapper(props: FavouriteMapper) {
   );
 }
 
-function renderSummaryTopStats(title: string, value: number, modifiers?: Modifiers) {
+function WrappedStat(props: { modifiers?: Modifiers; title: string; value: number }) {
   return (
-    <div className={classWithModifiers('wrapped__stat', modifiers)}>
-      <div className={classWithModifiers('wrapped__stat-title', modifiers)}>{title}</div>
-      <div className={classWithModifiers('wrapped__stat-value', modifiers)}>{formatNumber(value)}</div>
+    <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
+      <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
+      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{props.value}</div>
+    </div>
+  );
+}
+
+function WrappedStatItems(props: { children?: React.ReactNode; title: string }) {
+  return (
+    <div className='wrapped__stat'>
+      <div className={classWithModifiers('wrapped__stat-title')}>{props.title}</div>
+      <div className={classWithModifiers('wrapped__stat-items')}>
+        {props.children}
+      </div>
     </div>
   );
 }
@@ -266,11 +277,13 @@ export default class WrappedShow extends React.Component<Props> {
 
     type KeyMappingType = keyof typeof keyMapping;
 
-    return Object.keys(keyMapping).map((key: KeyMappingType) => (
-      <React.Fragment key={key}>
-        {renderSummaryTopStats(keyMapping[key], this.props.daily_challenge[key])}
-      </React.Fragment>
-    ));
+    return (
+      <div className='wrapped__stats'>
+        {Object.keys(keyMapping).map((key: KeyMappingType) => (
+          <WrappedStat key={key} title={keyMapping[key]} value={this.props.daily_challenge[key]} />
+        ))}
+      </div>
+    );
   }
 
   private renderFavouriteArtists() {
@@ -331,40 +344,16 @@ export default class WrappedShow extends React.Component<Props> {
             <div className={classWithModifiers('wrapped__text')}>{selectedItem.mapper.username}</div>,
           )}
           <div className='wrapped__stats'>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_count)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Best pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_best)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_avg)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_avg)}</div>
-            </div>
+            <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
+            <WrappedStat title='Best pp' value={selectedItem.scores.pp_best} />
+            <WrappedStat title='Average pp' value={selectedItem.scores.pp_avg} />
+            <WrappedStat title='Average score' value={selectedItem.scores.score_avg} />
 
             {/* TODO: duplicated to take up space */}
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Plays</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_count)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Best pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_best)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.pp_avg)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Average score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.scores.score_avg)}</div>
-            </div>
+            <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
+            <WrappedStat title='Best pp' value={selectedItem.scores.pp_best} />
+            <WrappedStat title='Average pp' value={selectedItem.scores.pp_avg} />
+            <WrappedStat title='Average score' value={selectedItem.scores.score_avg} />
           </div>
         </div>
       </>
@@ -400,31 +389,45 @@ export default class WrappedShow extends React.Component<Props> {
 
   private renderStats() {
     // TODO
-    return;
+    this.props.medals;
+
+    const keys = {
+      medals: 'Medals',
+    };
+
+    for (const key of Object.keys(keys) as (keyof typeof keys)[]) {
+      const value = this.props[key];
+    }
+
+    return (
+      <div className='wrapped__stats'>
+        <WrappedStat title='Accuracy' value={4224} />
+        <WrappedStat title='Accuracy' value={4234} />
+        <WrappedStat title='pp' value={343243} />
+        <WrappedStat title='Score' value={2423423} />
+        <WrappedStat title='Score' value={2423423} />
+        <WrappedStat title='Score' value={2423423} />
+      </div>
+    );
   }
 
   private renderSummary() {
     return (
       <>
         <div className='wrapped__top-stats'>
-          {renderSummaryTopStats('medals', this.props.medals)}
-          {renderSummaryTopStats('replays', this.props.replays)}
-          {renderSummaryTopStats('Beatmaps Played', 378)}
-          {renderSummaryTopStats('Daily Challenge Streak', 372)}
-          {renderSummaryTopStats('Higest Score', 382739393)}
-          {renderSummaryTopStats('Made up stat', 454)}
+          <WrappedStat title='medals' value={this.props.medals} />
+          <WrappedStat title='replays' value={this.props.replays} />
+          <WrappedStat title='Beatmaps Played' value={378} />
+          <WrappedStat title='Daily Challenge Streak' value={372} />
+          <WrappedStat title='Higest Score' value={382739393} />
+          <WrappedStat title='Made up stat' value={454} />
         </div>
         <div className='wrapped__bottom-stats'>
-          <div className='wrapped__stat'>
-            <div className={classWithModifiers('wrapped__stat-title')}>Your Top Mappers</div>
-            <div className={classWithModifiers('wrapped__stat-items')}>
-              {this.props.favorite_mappers.map(favouriteMapper)}
-            </div>
-          </div>
-          <div className='wrapped__stat'>
-            <div className={classWithModifiers('wrapped__stat-title')}>Your Top Maps</div>
-            <div className={classWithModifiers('wrapped__stat-items')} />
-          </div>
+          <WrappedStatItems title='Your Top Mappers'>
+            {this.props.favorite_mappers.map(favouriteMapper)}
+          </WrappedStatItems>
+          <WrappedStatItems title='Your Top Maps'>
+          </WrappedStatItems>
         </div>
       </>
     );
@@ -479,18 +482,9 @@ export default class WrappedShow extends React.Component<Props> {
             </div>,
           )}
           <div className='wrapped__stats'>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Accuracy</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.accuracy)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>pp</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.pp)}</div>
-            </div>
-            <div className='wrapped__stat'>
-              <div className={classWithModifiers('wrapped__stat-title')}>Score</div>
-              <div className={classWithModifiers('wrapped__stat-value')}>{formatNumber(selectedItem.total_score)}</div>
-            </div>
+            <WrappedStat title='Accuracy' value={selectedItem.accuracy} />
+            <WrappedStat title='pp' value={selectedItem.pp} />
+            <WrappedStat title='Score' value={selectedItem.total_score} />
           </div>
         </div>
       </>
