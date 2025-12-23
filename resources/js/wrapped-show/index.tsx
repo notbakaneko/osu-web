@@ -99,11 +99,11 @@ function WrappedStat(props: { modifiers?: Modifiers; title: string; value: numbe
   );
 }
 
-function WrappedStatItems(props: { children?: React.ReactNode; title: string }) {
+function WrappedStatItems(props: { children?: React.ReactNode; modifiers?: Modifiers; title: string }) {
   return (
     <div className='wrapped__stat'>
-      <div className={classWithModifiers('wrapped__stat-title')}>{props.title}</div>
-      <div className={classWithModifiers('wrapped__stat-items')}>
+      <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
+      <div className={classWithModifiers('wrapped__stat-items', props.modifiers)}>
         {props.children}
       </div>
     </div>
@@ -190,7 +190,9 @@ export default class WrappedShow extends React.Component<Props> {
           className='wrapped__container'
         >
           {/* pseudo elements won't show up in saved image */}
+          {/* gradient separated from content background so it's not effected by the padding, etc */}
           <div className='wrapped__background' />
+          <div className='wrapped__background wrapped__background--gradient' />
           {this.renderHeader()}
 
           <div className={classWithModifiers('wrapped__content', pageTypeMapping[this.selectedPageType])}>
@@ -447,10 +449,10 @@ export default class WrappedShow extends React.Component<Props> {
           <WrappedStat title='Made up stat' value={454} />
         </div>
         <div className='wrapped__bottom-stats'>
-          <WrappedStatItems title='Your Top Mappers'>
+          <WrappedStatItems modifiers='summary' title='Your Top Mappers'>
             {this.props.favorite_mappers.map(favouriteMapper)}
           </WrappedStatItems>
-          <WrappedStatItems title='Your Top Maps'>
+          <WrappedStatItems modifiers='summary' title='Your Top Maps'>
             {this.props.top_plays.map(topPlay)}
           </WrappedStatItems>
         </div>

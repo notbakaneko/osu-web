@@ -84,13 +84,16 @@
     background-size: cover;
     height: 100%;
     width: 100%;
+
+    &--gradient {
+      background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+    }
   }
 
   &__container {
     position: relative;
     flex: 1;
     max-height: @_max-height;
-    // overflow-y: scroll;
   }
 
   &__content {
@@ -99,19 +102,21 @@
     gap: 40px;
 
     position: relative;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+    // background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
     height: 100%;
-    // width: 100%;
-    overflow-x: hidden;
 
     padding-left: var(--content-left);
     padding-top: calc(var(--page-mark-height) + var(--page-mark-top) + 40px);
+    padding-right: var(--gap);
+    // let everything scroll horizontally,
+    // it feels weird to vertical scroll with horizontal switcher.
+    overflow-x: scroll;
 
     &--summary {
       display: grid;
-      gap: 80px;
+      gap: 40px;
       grid-template-rows: auto auto;
-      padding-top: calc(var(--top-summary) + var(--header-height) + 80px)
+      padding-top: calc(var(--top-summary) + var(--header-height) + 80px);
     }
   }
 
@@ -266,6 +271,7 @@
     flex-direction: column;
     gap: 10px;
     color: black;
+    white-space: nowrap;
   }
 
   &__stats {
@@ -283,6 +289,15 @@
     gap: 20px;
     margin-top: 20px;
     color: #fff;
+
+    &--summary {
+      display: grid;
+      grid-auto-flow: column dense;
+      grid-template-rows: repeat(5, 1fr);
+
+      gap: 10px 80px;
+      margin-top: 10px;
+    }
   }
 
   &__stat-title {
@@ -409,12 +424,13 @@
     position: relative;
     display: flex;
     gap: 80px;
+    // padding-left: var(--content-left);
     padding-bottom: 40px;
 
     &::after {
       content: "";
       position: absolute;
-      width: 100vw;
+      width: calc(100% + var(--content-left) + var(--gap)); // extend for extra space on the sides
       height: 4px;
       bottom: 0;
       left: calc(-1 * var(--content-left));
@@ -425,8 +441,10 @@
   &__bottom-stats {
     display: flex;
     gap: 80px;
-
-    padding: 20px 0;
+    // let it overflow horizontally
+    // overflow-x: scroll;
+    // padding-left: var(--content-left);
+    margin-bottom: 40px; // don't overlap switcher.
   }
 
   &__logo {
