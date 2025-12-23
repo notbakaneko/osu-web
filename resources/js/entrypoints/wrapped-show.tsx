@@ -5,9 +5,11 @@ import core from 'osu-core-singleton';
 import React from 'react';
 import { parseJson } from 'utils/json';
 import WrappedShow from 'wrapped-show';
-import { sampleData } from 'wrapped-show/data';
+import sampleData from 'wrapped-show/sums/summary-8447637.json';
+
+const userId = 8447637;
 
 core.reactTurbolinks.register('wrapped-show', () => (
   // <WrappedShow {...parseJson('json-wrapped-show')} />
-  <WrappedShow {...sampleData} />
+  <WrappedShow user_id={userId} {...sampleData} />
 ));
