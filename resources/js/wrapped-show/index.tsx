@@ -77,8 +77,9 @@ function TopPlay(props: { beatmap?: BeatmapForWrappedJson; play: TopPlay }) {
   );
 }
 
-function WrappedStat(props: { modifiers?: Modifiers; title: string; value: number }) {
-  return (
+function WrappedStat(props: { modifiers?: Modifiers; skippable?: boolean; title: string; value: number }) {
+  const skippable = props.skippable ?? false;
+  return skippable && props.value === 0 ? null : (
     <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
       <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
       <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{formatNumber(props.value)}</div>
@@ -323,15 +324,16 @@ export default class WrappedShow extends React.Component<Props> {
 
 
   private renderHeader() {
+    const summary = this.selectedPageType === 'summary';
     return (
-      <div className={classWithModifiers('wrapped__header', { summary: this.selectedPageType === 'summary' })}>
+      <div className={classWithModifiers('wrapped__header', { summary })}>
         <div className='wrapped__user'>
           <span
             className='wrapped__user-avatar'
             style={{ backgroundImage: urlPresence(this.user.avatar_url) }}
           />
           {this.isSummaryPage && <FlagCountry country={this.user.country} modifiers={['flat', 'large']} />}
-          {this.user.username}
+          <span className={classWithModifiers('wrapped__username', { summary })}>{this.user.username}</span>
         </div>
         <img className='wrapped__logo' src='/images/wrapped/logo.svg' />
       </div>
@@ -447,15 +449,15 @@ export default class WrappedShow extends React.Component<Props> {
     return (
       <>
         <div className='wrapped__top-stats'>
-          <WrappedStat title='medals' value={summary.medals} />
-          <WrappedStat title='replays' value={summary.replays} />
-          <WrappedStat title='Beatmaps Played' value={378} />
-          <WrappedStat title='Daily Challenge Streak' value={372} />
-          <WrappedStat title='Higest Score' value={382739393} />
-          <WrappedStat title='Made up stat' value={454} />
+          <WrappedStat title='Beatmaps Played' value={summary.scores.playcount.playcount} />
+          <WrappedStat title='pp' value={Math.round(summary.scores.pp)} />
+          <WrappedStat title='Highest Score' value={summary.scores.score} />
+          <WrappedStat title='Medals' value={summary.medals} />
+          <WrappedStat skippable title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
+          <WrappedStat skippable title='Replays Watched' value={summary.replays} />
         </div>
         <div className='wrapped__bottom-stats'>
-          <WrappedStatItems modifiers='summary' title='Your Top Mappers'>
+          <WrappedStatItems modifiers='summary' title='Your Favourite Mappers'>
             {summary.favourite_mappers.map((value) =>
               <FavouriteMapper key={value.mapper_id} mapper={value} user={this.users.get(value.mapper_id)} />,
             )}
