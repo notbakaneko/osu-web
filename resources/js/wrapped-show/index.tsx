@@ -39,6 +39,16 @@ type DisplayType = 'beatmaps' | 'mappers' | 'plain' | 'summary';
 type PageType = keyof typeof pageTypeMapping;
 const listTypes = new Set<DisplayType>(['beatmaps', 'mappers']) as Set<unknown>;
 
+const pageTitles: Record<PageType, string> = {
+  daily_challenge: 'Daily Challenge',
+  favourite_artists: 'Favourite Artists',
+  favourite_mappers: 'Favourite Mappers',
+  mapping: 'Beatmapping',
+  statistics: 'Statistics',
+  summary: 'Summary',
+  top_plays: 'Top Plays',
+};
+
 const rankColours = ['#ffe599', '#bab9b8', '#fd9a68'];
 
 function FavouriteMapper(props: { mapper: FavouriteMapper; user?: UserJson }) {
@@ -77,12 +87,15 @@ function TopPlay(props: { beatmap?: BeatmapForWrappedJson; play: TopPlay }) {
   );
 }
 
-function WrappedStat(props: { modifiers?: Modifiers; skippable?: boolean; title: string; value: number }) {
+function WrappedStat(props: { modifiers?: Modifiers; skippable?: boolean; title: string; value: number | string }) {
   const skippable = props.skippable ?? false;
+
   return skippable && props.value === 0 ? null : (
     <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
       <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
-      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{formatNumber(props.value)}</div>
+      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>
+        {typeof props.value === 'string' ? props.value : formatNumber(props.value)}
+      </div>
     </div>
   );
 }
@@ -129,9 +142,7 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   get pageTitle() {
-    // TODO: actual titles
-    // return this.selectedPage.title ?? this.selectedPageType;
-    return this.selectedPageType;
+    return pageTitles[this.selectedPageType];
   }
 
   get selectedFavouriteMapper() {
@@ -141,10 +152,6 @@ export default class WrappedShow extends React.Component<Props> {
   get selectedTopPlay() {
     return this.props.summary.top_plays[this.selectedListIndex];
   }
-
-  // get selectedPage() {
-  //   return this.pages[this.selectedIndex];
-  // }
 
   get selectedPageType() {
     return this.availablePages[this.selectedIndex];
@@ -178,10 +185,15 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   render() {
+    const style = {
+      '--bg-filter': this.selectedPageType === 'statistics' ? 'blur(2px)' : undefined,
+      '--bg-url': `url("${this.backgroundForPage(this.selectedPageType, this.selectedIndex)}")`,
+    } as React.CSSProperties;
+
     return (
       <div
         className={classWithModifiers('wrapped', { summary: this.isSummaryPage })}
-        style={{ '--url': `url("${this.backgroundForPage(this.selectedPageType, this.selectedIndex)}")` } as React.CSSProperties}
+        style={style}
       >
         <div
           ref={this.ref}
@@ -211,6 +223,11 @@ export default class WrappedShow extends React.Component<Props> {
 
   private backgroundForPage(page: PageType, index: number) {
     // TODO: actual from data
+    switch (page) {
+      case 'statistics':
+        return this.user.cover?.url;
+    }
+
     return `/images/wrapped/${index % 3 + 1}.png`;
   }
 
@@ -411,7 +428,7 @@ export default class WrappedShow extends React.Component<Props> {
       case 'summary':
         return this.renderSummary();
       case 'statistics':
-        return this.renderStats();
+        return this.renderStatistics();
       case 'top_plays':
         return this.renderTopPlays();
       default:
@@ -420,25 +437,30 @@ export default class WrappedShow extends React.Component<Props> {
     }
   }
 
-  private renderStats() {
-    // TODO
-
-    const keys = {
-      medals: 'Medals',
-    };
-
-    for (const key of Object.keys(keys) as (keyof typeof keys)[]) {
-      const value = this.props.summary[key];
-    }
+  private renderStatistics() {
+    const summary = this.props.summary;
 
     return (
       <div className='wrapped__stats'>
-        <WrappedStat title='Accuracy' value={4224} />
-        <WrappedStat title='Accuracy' value={4234} />
-        <WrappedStat title='pp' value={343243} />
-        <WrappedStat title='Score' value={2423423} />
-        <WrappedStat title='Score' value={2423423} />
-        <WrappedStat title='Score' value={2423423} />
+        <WrappedStat
+          title='Plays Percentile'
+          value={formatNumber(summary.scores.playcount.top_percent, 2, { style: 'percent' })}
+        />
+        <WrappedStat title='Beatmaps Played' value={summary.scores.playcount.playcount} />
+        <WrappedStat title='Position' value={summary.scores.playcount.pos} />
+
+        <WrappedStat title='pp' value={Math.round(summary.scores.pp)} />
+        <WrappedStat title='Accuracy' value={formatNumber(summary.scores.acc, 2, { style: 'percent' })} />
+        <WrappedStat title='Combo' value={summary.scores.combo} />
+        <WrappedStat title='Highest Score' value={summary.scores.score} />
+
+        <WrappedStat title='Medals' value={summary.medals} />
+        <WrappedStat title='Replays Watched' value={summary.replays} />
+
+        <WrappedStat title='Daily Challenges Cleared' value={summary.daily_challenge.cleared} />
+        <WrappedStat title='Top 10% Placements' value={summary.daily_challenge.top_10p} />
+        <WrappedStat title='Top 50% Placements' value={summary.daily_challenge.top_50p} />
+        <WrappedStat title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
       </div>
     );
   }
