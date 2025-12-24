@@ -2,7 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import BeatmapsetCover from 'components/beatmapset-cover';
+import DifficultyBadge from 'components/difficulty-badge';
 import FlagCountry from 'components/flag-country';
+import StringWithComponent from 'components/string-with-component';
 import UserAvatar from 'components/user-avatar';
 import { toPng } from 'html-to-image';
 import UserJson from 'interfaces/user-json';
@@ -10,10 +12,11 @@ import { intersection } from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { hasGuestOwners } from 'utils/beatmap-helper';
 import { getArtist, getTitle } from 'utils/beatmapset-helper';
 import { classWithModifiers, Modifiers, urlPresence } from 'utils/css';
 import { formatNumber, htmlElementOrNull } from 'utils/html';
-import { trans } from 'utils/lang';
+import { trans, transArray } from 'utils/lang';
 import { mapBy } from 'utils/map';
 import { getInt } from 'utils/math';
 import { switchNever } from 'utils/switch-never';
@@ -63,6 +66,27 @@ function FavouriteMapper(props: { mapper: FavouriteMapper; user?: UserJson }) {
   );
 }
 
+function Mappers(props: { beatmap: BeatmapForWrappedJson }) {
+  if (props.beatmap.beatmapset == null) return null;
+
+  const translationKey = hasGuestOwners(props.beatmap, props.beatmap.beatmapset)
+    ? 'mapped_by_guest'
+    : 'mapped_by';
+
+  return (
+    <StringWithComponent
+      mappings={{
+        mapper: (
+          <span className={classWithModifiers('wrapped__text', 'difficulty')}>
+            {transArray(props.beatmap.owners.map((owner) => owner.username))}
+          </span>
+        ),
+      }}
+      pattern={trans(`beatmapsets.show.details.${translationKey}`)}
+    />
+  );
+}
+
 function TopPlay(props: { beatmap?: BeatmapForWrappedJson; play: TopPlay }) {
   const beatmapset = props.beatmap?.beatmapset;
   return (
@@ -87,15 +111,34 @@ function TopPlay(props: { beatmap?: BeatmapForWrappedJson; play: TopPlay }) {
   );
 }
 
-function WrappedStat(props: { modifiers?: Modifiers; skippable?: boolean; title: string; value: number | string }) {
-  const skippable = props.skippable ?? false;
+interface WrappedStatProps {
+  modifiers?: Modifiers;
+  percent?: boolean;
+  round?: boolean;
+  skippable?: boolean;
+  title: string;
+  value: number | string;
+}
 
-  return skippable && props.value === 0 ? null : (
+function WrappedStat(props: WrappedStatProps) {
+  if ((props.skippable ?? false) && props.value === 0) {
+    return null;
+  }
+
+  const value = typeof props.value === 'number' && (props.round ?? false)
+    ? Math.round(props.value)
+    : props.value;
+
+  const text = typeof value !== 'number'
+    ? value
+    : props.percent ?? false
+      ? formatNumber(value, 2, { style: 'percent' })
+      : formatNumber(value);
+
+  return (
     <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
       <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
-      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>
-        {typeof props.value === 'string' ? props.value : formatNumber(props.value)}
-      </div>
+      <div className={classWithModifiers('wrapped__stat-value', props.modifiers)}>{text}</div>
     </div>
   );
 }
@@ -187,7 +230,7 @@ export default class WrappedShow extends React.Component<Props> {
   render() {
     const style = {
       '--bg-filter': this.selectedPageType === 'statistics' ? 'blur(2px)' : undefined,
-      '--bg-url': `url("${this.backgroundForPage(this.selectedPageType, this.selectedIndex)}")`,
+      '--bg-url': `url("${this.backgroundForPage(this.selectedPageType)}")`,
     } as React.CSSProperties;
 
     return (
@@ -221,14 +264,20 @@ export default class WrappedShow extends React.Component<Props> {
     );
   }
 
-  private backgroundForPage(page: PageType, index: number) {
+  private backgroundForPage(page: PageType, index?: number) {
     // TODO: actual from data
     switch (page) {
       case 'statistics':
         return this.user.cover?.url;
+      case 'top_plays': {
+        const beatmap = index == null
+          ? this.beatmaps.get(this.selectedTopPlay.beatmap_id)
+          : this.beatmaps.get(this.props.summary.top_plays[index].beatmap_id);
+        return beatmap?.beatmapset?.covers.cover;
+      }
     }
 
-    return `/images/wrapped/${index % 3 + 1}.png`;
+    return `/images/wrapped/${(index ?? 0) % 3 + 1}.png`;
   }
 
   // @action doesn't work for some reason?
@@ -295,8 +344,9 @@ export default class WrappedShow extends React.Component<Props> {
     if (index == null) return;
 
     if (index >= 0 && index < this.currentList.length) {
+      e.preventDefault();
       this.selectedListIndex = index;
-      this.scrollSelectedListElementIntoView();
+      this.scrollSelectedListElementIntoView(element);
     }
   };
 
@@ -443,24 +493,26 @@ export default class WrappedShow extends React.Component<Props> {
     return (
       <div className='wrapped__stats'>
         <WrappedStat
+          modifiers='fancy'
+          percent
           title='Plays Percentile'
-          value={formatNumber(summary.scores.playcount.top_percent, 2, { style: 'percent' })}
+          value={summary.scores.playcount.top_percent}
         />
-        <WrappedStat title='Beatmaps Played' value={summary.scores.playcount.playcount} />
-        <WrappedStat title='Position' value={summary.scores.playcount.pos} />
+        <WrappedStat modifiers='fancy' title='Beatmaps Played' value={summary.scores.playcount.playcount} />
+        <WrappedStat modifiers='fancy' title='Position' value={summary.scores.playcount.pos} />
 
-        <WrappedStat title='pp' value={Math.round(summary.scores.pp)} />
-        <WrappedStat title='Accuracy' value={formatNumber(summary.scores.acc, 2, { style: 'percent' })} />
-        <WrappedStat title='Combo' value={summary.scores.combo} />
-        <WrappedStat title='Highest Score' value={summary.scores.score} />
+        <WrappedStat modifiers='fancy' round title='pp' value={summary.scores.pp} />
+        <WrappedStat modifiers='fancy' percent title='Accuracy' value={summary.scores.acc} />
+        <WrappedStat modifiers='fancy' title='Combo' value={summary.scores.combo} />
+        <WrappedStat modifiers='fancy' title='Highest Score' value={summary.scores.score} />
 
-        <WrappedStat title='Medals' value={summary.medals} />
-        <WrappedStat title='Replays Watched' value={summary.replays} />
+        <WrappedStat modifiers='fancy' title='Medals' value={summary.medals} />
+        <WrappedStat modifiers='fancy' title='Replays Watched' value={summary.replays} />
 
-        <WrappedStat title='Daily Challenges Cleared' value={summary.daily_challenge.cleared} />
-        <WrappedStat title='Top 10% Placements' value={summary.daily_challenge.top_10p} />
-        <WrappedStat title='Top 50% Placements' value={summary.daily_challenge.top_50p} />
-        <WrappedStat title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
+        <WrappedStat modifiers='fancy' title='Daily Challenges Cleared' value={summary.daily_challenge.cleared} />
+        <WrappedStat modifiers='fancy' title='Top 10% Placements' value={summary.daily_challenge.top_10p} />
+        <WrappedStat modifiers='fancy' title='Top 50% Placements' value={summary.daily_challenge.top_50p} />
+        <WrappedStat modifiers='fancy' title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
       </div>
     );
   }
@@ -471,20 +523,20 @@ export default class WrappedShow extends React.Component<Props> {
     return (
       <>
         <div className='wrapped__top-stats'>
-          <WrappedStat title='Beatmaps Played' value={summary.scores.playcount.playcount} />
-          <WrappedStat title='pp' value={Math.round(summary.scores.pp)} />
-          <WrappedStat title='Highest Score' value={summary.scores.score} />
-          <WrappedStat title='Medals' value={summary.medals} />
-          <WrappedStat skippable title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
-          <WrappedStat skippable title='Replays Watched' value={summary.replays} />
+          <WrappedStat modifiers='fancy' title='Beatmaps Played' value={summary.scores.playcount.playcount} />
+          <WrappedStat modifiers='fancy' title='pp' value={Math.round(summary.scores.pp)} />
+          <WrappedStat modifiers='fancy' title='Highest Score' value={summary.scores.score} />
+          <WrappedStat modifiers='fancy' title='Medals' value={summary.medals} />
+          <WrappedStat modifiers='fancy' skippable title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
+          <WrappedStat modifiers='fancy' skippable title='Replays Watched' value={summary.replays} />
         </div>
         <div className='wrapped__bottom-stats'>
-          <WrappedStatItems modifiers='summary' title='Your Favourite Mappers'>
+          <WrappedStatItems modifiers={['fancy', 'summary']} title='Your Favourite Mappers'>
             {summary.favourite_mappers.map((value) =>
               <FavouriteMapper key={value.mapper_id} mapper={value} user={this.users.get(value.mapper_id)} />,
             )}
           </WrappedStatItems>
-          <WrappedStatItems modifiers='summary' title='Your Top Plays'>
+          <WrappedStatItems modifiers={['fancy', 'summary']} title='Your Top Plays'>
             {summary.top_plays.map((value) => <TopPlay key={value.id} beatmap={this.beatmaps.get(value.beatmap_id)} play={value} />)}
           </WrappedStatItems>
         </div>
@@ -500,7 +552,7 @@ export default class WrappedShow extends React.Component<Props> {
         data-index={index}
         onClick={this.handleSwitcherOnClick}
       >
-        <img src={this.backgroundForPage(page, index)} />
+        <img src={this.backgroundForPage(page, 0)} />
       </div>
     );
   }
@@ -535,19 +587,28 @@ export default class WrappedShow extends React.Component<Props> {
               <div className={classWithModifiers('wrapped__text', 'container')}>
                 <div className={classWithModifiers('wrapped__text', 'top')}>
                   {title}
-                  <a className='beatmapset-panel__main-link u-ellipsis-overflow'>
-                    {trans('beatmapsets.show.details.by_artist', { artist })}
-                  </a>
+                  <span className={classWithModifiers('wrapped__text', 'artist')}>
+                    {` ${trans('beatmapsets.show.details.by_artist', { artist })}`}
+                  </span>
                 </div>
                 <div className={classWithModifiers('wrapped__text', 'bottom')}>
-                  {selectedItem.beatmap_id}
+                  <DifficultyBadge rating={selectedBeatmap.difficulty_rating} />
+                  <span className={classWithModifiers('wrapped__text', 'difficulty')}>{selectedBeatmap.version}</span>
+                  {' '}
+                  <Mappers beatmap={selectedBeatmap} />
                 </div>
               </div>,
             )}
             <div className='wrapped__stats'>
-              <WrappedStat title='Accuracy' value={selectedItem.accuracy} />
-              <WrappedStat title='pp' value={selectedItem.pp} />
+              <WrappedStat title='Rank' value={selectedItem.rank} />
+              <WrappedStat round title='pp' value={selectedItem.pp} />
               <WrappedStat title='Score' value={selectedItem.total_score} />
+              <WrappedStat percent title='Accuracy' value={selectedItem.accuracy} />
+              <WrappedStat title='Max Combo' value={selectedItem.max_combo} />
+              <WrappedStat title='Great' value={selectedItem.statistics.great} />
+              <WrappedStat title='Ok' value={selectedItem.statistics.ok} />
+              <WrappedStat title='Meh' value={selectedItem.statistics.meh} />
+              <WrappedStat title='Miss' value={selectedItem.statistics.miss} />
             </div>
           </div>
         )}
@@ -556,7 +617,7 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   // boxing the primitive for observe is annoying so just use querySelector.
-  private scrollSelectedListElementIntoView() {
-    document.querySelector('.wrapped__list-item--selected')?.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+  private scrollSelectedListElementIntoView(element?: HTMLElement) {
+    (element ?? document.querySelector('.wrapped__list-item--selected'))?.scrollIntoView({ behavior: 'smooth', inline: 'center' });
   }
 }

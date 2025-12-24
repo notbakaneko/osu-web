@@ -1,8 +1,9 @@
 import BeatmapJson from 'interfaces/beatmap-json';
 import BeatmapsetJson from 'interfaces/beatmapset-json';
 import UserJson from 'interfaces/user-json';
+import WithBeatmapOwners from 'interfaces/with-beatmap-owners';
 
-export type BeatmapForWrappedJson = BeatmapJson & Required<Pick<BeatmapJson, 'beatmapset'>>;
+export type BeatmapForWrappedJson = WithBeatmapOwners<BeatmapJson> & Required<Pick<BeatmapJson, 'beatmapset'>>;
 
 export default interface WrappedData {
   related_beatmaps: BeatmapForWrappedJson[];
@@ -97,6 +98,7 @@ export interface TopPlay {
   statistics: {
     great: number;
     meh: number;
+    miss: number;
     ok: number;
   };
   total_score: number;
