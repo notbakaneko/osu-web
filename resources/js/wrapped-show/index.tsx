@@ -113,7 +113,7 @@ export default class WrappedShow extends React.Component<Props> {
       case 'favourite_artists':
       case 'favourite_mappers':
       case 'top_plays':
-        return this.props.summary[this.selectedPageType].slice(0, 10);
+        return this.props.summary[this.selectedPageType];
     }
 
     return [];
@@ -151,7 +151,7 @@ export default class WrappedShow extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    // console.log(props);
+
     const user = this.users.get(props.user_id);
     if (user == null) {
       throw new Error('missing user');
@@ -165,14 +165,14 @@ export default class WrappedShow extends React.Component<Props> {
       ...intersection(Object.keys(pageTypeMapping), Object.keys(props.summary)) as PageType[],
     ];
 
-    console.log(this.availablePages);
+    // console.log(this.availablePages);
 
     document.addEventListener('keydown', this.handleKeyDown);
 
     makeObservable(this);
   }
 
-  componentWillUnmount(): void {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
@@ -220,12 +220,15 @@ export default class WrappedShow extends React.Component<Props> {
       case 'ArrowRight':
         if (!e.shiftKey && this.hasList && this.currentList.length > 0) {
           if (this.selectedListIndex < this.currentList.length - 1) {
+            e.preventDefault();
             this.selectedListIndex++;
+            this.scrollSelectedListElementIntoView();
             return;
           }
         }
 
         if (this.selectedIndex < this.availablePages.length - 1) {
+          e.preventDefault();
           this.selectedIndex++;
           this.selectedListIndex = 0;
         }
@@ -234,12 +237,15 @@ export default class WrappedShow extends React.Component<Props> {
       case 'ArrowUp':
         if (!e.shiftKey && this.hasList && this.currentList.length > 0) {
           if (this.selectedListIndex > 0) {
+            e.preventDefault();
             this.selectedListIndex--;
+            this.scrollSelectedListElementIntoView();
             return;
           }
         }
 
         if (this.selectedIndex > 0) {
+          e.preventDefault();
           this.selectedIndex--;
           this.selectedListIndex = 0;
         }
@@ -272,6 +278,7 @@ export default class WrappedShow extends React.Component<Props> {
 
     if (index >= 0 && index < this.currentList.length) {
       this.selectedListIndex = index;
+      this.scrollSelectedListElementIntoView();
     }
   };
 
@@ -522,5 +529,10 @@ export default class WrappedShow extends React.Component<Props> {
         )}
       </>
     );
+  }
+
+  // boxing the primitive for observe is annoying so just use querySelector.
+  private scrollSelectedListElementIntoView() {
+    document.querySelector('.wrapped__list-item--selected')?.scrollIntoView({ behavior: 'smooth', inline: 'center' });
   }
 }
