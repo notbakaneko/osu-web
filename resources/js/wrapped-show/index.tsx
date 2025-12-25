@@ -267,6 +267,7 @@ export default class WrappedShow extends React.Component<Props> {
   private backgroundForPage(page: PageType, index?: number) {
     // TODO: actual from data
     switch (page) {
+      case 'daily_challenge':
       case 'statistics':
         return this.user.cover?.url;
       case 'top_plays': {
@@ -365,21 +366,12 @@ export default class WrappedShow extends React.Component<Props> {
   };
 
   private renderDailyChallenge() {
-    const keyMapping = {
-      cleared: 'Cleared',
-      top_10p: 'Top 10 Percent Placements',
-      top_50p: 'Top 50 Percent Placements',
-      // eslint-disable-next-line sort-keys
-      highest_streak: 'Longest Streak',
-    };
-
-    type KeyMappingType = keyof typeof keyMapping;
-
     return (
       <div className='wrapped__stats'>
-        {Object.keys(keyMapping).map((key: KeyMappingType) => (
-          <WrappedStat key={key} title={keyMapping[key]} value={this.props.summary.daily_challenge[key]} />
-        ))}
+        <WrappedStat modifiers='fancy' title='Cleared' value={this.props.summary.daily_challenge.cleared} />
+        <WrappedStat modifiers='fancy' title='Top 10% Placements' value={this.props.summary.daily_challenge.top_10p} />
+        <WrappedStat modifiers='fancy' title='Top 50% Placements' value={this.props.summary.daily_challenge.top_50p} />
+        <WrappedStat modifiers='fancy' title='Longest Streak' value={this.props.summary.daily_challenge.highest_streak} />
       </div>
     );
   }
