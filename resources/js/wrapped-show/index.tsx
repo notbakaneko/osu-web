@@ -270,6 +270,12 @@ export default class WrappedShow extends React.Component<Props> {
       case 'daily_challenge':
       case 'statistics':
         return this.user.cover?.url;
+      case 'favourite_mappers': {
+        const beatmap = index == null
+          ? this.beatmaps.get(this.selectedFavouriteMapper.scores.score_best_beatmap_id)
+          : this.beatmaps.get(this.props.summary.favourite_mappers[index].scores.score_best_beatmap_id);
+        return beatmap?.beatmapset?.covers.cover;
+      }
       case 'top_plays': {
         const beatmap = index == null
           ? this.beatmaps.get(this.selectedTopPlay.beatmap_id)
@@ -381,6 +387,39 @@ export default class WrappedShow extends React.Component<Props> {
     return;
   }
 
+  private renderFavouriteMappers() {
+    const selectedItem = this.selectedFavouriteMapper;
+    const mapper = this.users.get(selectedItem.mapper_id);
+
+    return (
+      <>
+        <div className='wrapped__list'>
+          {this.props.summary.favourite_mappers.map((item, index) => (
+            <div
+              key={item.mapper_id}
+              className={classWithModifiers('wrapped__list-item', { selected: this.selectedListIndex === index })}
+              data-index={index}
+              onClick={this.handleSelectMapper}
+            >
+              <UserAvatar modifiers='wrapped' user={this.users.get(item.mapper_id)} />
+            </div>
+          ))}
+        </div>
+        <div className='wrapped__list-details'>
+          {this.renderListDetailsTitle(
+            <div className={classWithModifiers('wrapped__text')}>{mapper?.username}</div>,
+          )}
+          <div className='wrapped__stats'>
+            <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
+            <WrappedStat round title='Best pp' value={selectedItem.scores.pp_best} />
+            <WrappedStat title='Best Score' value={selectedItem.scores.score_best} />
+            <WrappedStat round title='Average pp' value={selectedItem.scores.pp_avg} />
+            <WrappedStat round title='Average Score' value={selectedItem.scores.score_avg} />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   private renderHeader() {
     const summary = this.selectedPageType === 'summary';
@@ -413,45 +452,6 @@ export default class WrappedShow extends React.Component<Props> {
     );
   }
 
-  private renderMappers() {
-    const selectedItem = this.selectedFavouriteMapper;
-    const mapper = this.users.get(selectedItem.mapper_id);
-
-    return (
-      <>
-        <div className='wrapped__list'>
-          {this.props.summary.favourite_mappers.map((item, index) => (
-            <div
-              key={item.mapper_id}
-              className={classWithModifiers('wrapped__list-item', { selected: this.selectedListIndex === index })}
-              data-index={index}
-              onClick={this.handleSelectMapper}
-            >
-              <UserAvatar modifiers='wrapped' user={this.users.get(item.mapper_id)} />
-            </div>
-          ))}
-        </div>
-        <div className='wrapped__list-details'>
-          {this.renderListDetailsTitle(
-            <div className={classWithModifiers('wrapped__text')}>{mapper?.username}</div>,
-          )}
-          <div className='wrapped__stats'>
-            <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
-            <WrappedStat title='Best pp' value={selectedItem.scores.pp_best} />
-            <WrappedStat title='Average pp' value={selectedItem.scores.pp_avg} />
-            <WrappedStat title='Average score' value={selectedItem.scores.score_avg} />
-
-            {/* TODO: duplicated to take up space */}
-            <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
-            <WrappedStat title='Best pp' value={selectedItem.scores.pp_best} />
-            <WrappedStat title='Average pp' value={selectedItem.scores.pp_avg} />
-            <WrappedStat title='Average score' value={selectedItem.scores.score_avg} />
-          </div>
-        </div>
-      </>
-    );
-  }
-
   private renderMapping() {
     // TODO:
     return;
@@ -464,7 +464,7 @@ export default class WrappedShow extends React.Component<Props> {
       case 'favourite_artists':
         return this.renderFavouriteArtists();
       case 'favourite_mappers':
-        return this.renderMappers();
+        return this.renderFavouriteMappers();
       case 'mapping':
         return this.renderMapping();
       case 'summary':
