@@ -214,10 +214,16 @@ export default class WrappedShow extends React.Component<Props> {
 
     this.user = user;
 
+    const keys = new Set(Object.keys(props.summary));
+    // remove mapping page if all 0.
+    if (Object.values(props.summary.mapping).every((value) => value === 0)) {
+      keys.delete('mapping');
+    }
+
     this.availablePages = [
       'summary',
       'statistics',
-      ...intersection(Object.keys(pageTypeMapping), Object.keys(props.summary)) as PageType[],
+      ...intersection(Object.keys(pageTypeMapping), [...keys.values()]) as PageType[],
     ];
 
     // console.log(this.availablePages);
@@ -498,8 +504,19 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderMapping() {
-    // TODO:
-    return;
+    const mapping = this.props.summary.mapping;
+
+    return (
+      <div className='wrapped__stats'>
+        <WrappedStat modifiers='fancy' skippable title='Betmaps Ranked' value={mapping.ranked} />
+        <WrappedStat modifiers='fancy' skippable title='Betmaps Nominated' value={mapping.nominations} />
+        <WrappedStat modifiers='fancy' skippable title='Betmaps Loved' value={mapping.loved} />
+        <WrappedStat modifiers='fancy' skippable title='Betmaps Made' value={mapping.created} />
+        <WrappedStat modifiers='fancy' skippable title='Guest Beatmaps' value={mapping.guest} />
+        <WrappedStat modifiers='fancy' skippable title='Kudosu Received' value={mapping.kudosu} />
+        <WrappedStat modifiers='fancy' skippable title='Beatmap Discussions' value={mapping.discussions} />
+      </div>
+    );
   }
 
   private renderPage() {
