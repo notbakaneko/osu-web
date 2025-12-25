@@ -215,10 +215,20 @@ export default class WrappedShow extends React.Component<Props> {
     this.user = user;
 
     const keys = new Set(Object.keys(props.summary));
-    // remove mapping page if all 0.
+    // remove some pages if all 0.
     if (Object.values(props.summary.mapping).every((value) => value === 0)) {
       keys.delete('mapping');
     }
+    if (props.summary.favourite_artists.length === 0) {
+      keys.delete('favourite_artists');
+    }
+    if (props.summary.favourite_mappers.length === 0) {
+      keys.delete('favourite_mappers');
+    }
+    if (props.summary.top_plays.length === 0) {
+      keys.delete('top_plays');
+    }
+
 
     this.availablePages = [
       'summary',
@@ -283,24 +293,25 @@ export default class WrappedShow extends React.Component<Props> {
       case 'favourite_artists': {
         const beatmap = index == null
           ? this.beatmaps.get(this.selectedFavouriteArtist.scores.score_best_beatmap_id)
-          : this.beatmaps.get(this.props.summary.favourite_artists[index].scores.score_best_beatmap_id);
+          : this.beatmaps.get(this.props.summary.favourite_artists[index]?.scores.score_best_beatmap_id);
         return beatmap?.beatmapset?.covers.cover;
       }
       case 'favourite_mappers': {
         const beatmap = index == null
           ? this.beatmaps.get(this.selectedFavouriteMapper.scores.score_best_beatmap_id)
-          : this.beatmaps.get(this.props.summary.favourite_mappers[index].scores.score_best_beatmap_id);
+          : this.beatmaps.get(this.props.summary.favourite_mappers[index]?.scores.score_best_beatmap_id);
         return beatmap?.beatmapset?.covers.cover;
       }
       case 'top_plays': {
         const beatmap = index == null
           ? this.beatmaps.get(this.selectedTopPlay.beatmap_id)
-          : this.beatmaps.get(this.props.summary.top_plays[index].beatmap_id);
+          : this.beatmaps.get(this.props.summary.top_plays[index]?.beatmap_id);
         return beatmap?.beatmapset?.covers.cover;
       }
     }
 
-    return `/images/wrapped/${(index ?? 0) % 3 + 1}.png`;
+    return this.user.cover?.url;
+    // return `/images/wrapped/${(index ?? 0) % 3 + 1}.png`;
   }
 
   // @action doesn't work for some reason?
