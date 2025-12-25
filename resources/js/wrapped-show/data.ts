@@ -27,6 +27,8 @@ export interface FavouriteArtist {
     pp_avg: number;
     pp_best: number;
     score_avg: number;
+    score_best: number;
+    score_best_beatmap_id: number;
     score_count: number;
   };
 }

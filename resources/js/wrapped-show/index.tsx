@@ -188,6 +188,10 @@ export default class WrappedShow extends React.Component<Props> {
     return pageTitles[this.selectedPageType];
   }
 
+  get selectedFavouriteArtist() {
+    return this.props.summary.favourite_artists[this.selectedListIndex];
+  }
+
   get selectedFavouriteMapper() {
     return this.props.summary.favourite_mappers[this.selectedListIndex];
   }
@@ -270,6 +274,12 @@ export default class WrappedShow extends React.Component<Props> {
       case 'daily_challenge':
       case 'statistics':
         return this.user.cover?.url;
+      case 'favourite_artists': {
+        const beatmap = index == null
+          ? this.beatmaps.get(this.selectedFavouriteArtist.scores.score_best_beatmap_id)
+          : this.beatmaps.get(this.props.summary.favourite_artists[index].scores.score_best_beatmap_id);
+        return beatmap?.beatmapset?.covers.cover;
+      }
       case 'favourite_mappers': {
         const beatmap = index == null
           ? this.beatmaps.get(this.selectedFavouriteMapper.scores.score_best_beatmap_id)
@@ -383,8 +393,43 @@ export default class WrappedShow extends React.Component<Props> {
   }
 
   private renderFavouriteArtists() {
-    // TODO:
-    return;
+    const selectedItem = this.selectedFavouriteArtist;
+    const selectedBeatmap = this.beatmaps.get(selectedItem.scores.score_best_beatmap_id);
+
+    return (
+      <>
+        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
+          {this.props.summary.favourite_artists.map((item, index) => (
+            <div
+              key={index}
+              className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
+              data-index={index}
+              onClick={this.handleSelectMapper}
+            >
+              <BeatmapsetCover
+                beatmapset={this.beatmaps.get(item.scores.score_best_beatmap_id)?.beatmapset}
+                modifiers='full'
+                size='card'
+              />
+            </div>
+          ))}
+        </div>
+        {selectedBeatmap != null && (
+          <div className='wrapped__list-details'>
+            {this.renderListDetailsTitle(
+              <div className={classWithModifiers('wrapped__text')}>{selectedItem.artist.name}</div>,
+            )}
+            <div className='wrapped__stats'>
+              <WrappedStat title='Plays' value={selectedItem.scores.score_count} />
+              <WrappedStat round title='Best pp' value={selectedItem.scores.pp_best} />
+              <WrappedStat title='Best Score' value={selectedItem.scores.score_best} />
+              <WrappedStat round title='Average pp' value={selectedItem.scores.pp_avg} />
+              <WrappedStat round title='Average Score' value={selectedItem.scores.score_avg} />
+            </div>
+          </div>
+        )}
+      </>
+    );
   }
 
   private renderFavouriteMappers() {
