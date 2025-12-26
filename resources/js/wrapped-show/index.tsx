@@ -145,7 +145,7 @@ function WrappedStat(props: WrappedStatProps) {
 
 function WrappedStatItems(props: { children?: React.ReactNode; modifiers?: Modifiers; title: string }) {
   return (
-    <div className='wrapped__stat'>
+    <div className={classWithModifiers('wrapped__stat', props.modifiers)}>
       <div className={classWithModifiers('wrapped__stat-title', props.modifiers)}>{props.title}</div>
       <div className={classWithModifiers('wrapped__stat-items', props.modifiers)}>
         {props.children}
@@ -415,21 +415,23 @@ export default class WrappedShow extends React.Component<Props> {
 
     return (
       <>
-        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
-          {this.props.summary.favourite_artists.map((item, index) => (
-            <div
-              key={index}
-              className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
-              data-index={index}
-              onClick={this.handleSelectMapper}
-            >
-              <BeatmapsetCover
-                beatmapset={this.beatmaps.get(item.scores.score_best_beatmap_id)?.beatmapset}
-                modifiers='full'
-                size='card'
-              />
-            </div>
-          ))}
+        <div className='wrapped__list-container'>
+          <div className={classWithModifiers('wrapped__list', 'beatmap')}>
+            {this.props.summary.favourite_artists.map((item, index) => (
+              <div
+                key={index}
+                className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
+                data-index={index}
+                onClick={this.handleSelectMapper}
+              >
+                <BeatmapsetCover
+                  beatmapset={this.beatmaps.get(item.scores.score_best_beatmap_id)?.beatmapset}
+                  modifiers='full'
+                  size='card'
+                />
+              </div>
+            ))}
+          </div>
         </div>
         {selectedBeatmap != null && (
           <div className='wrapped__list-details'>
@@ -455,17 +457,19 @@ export default class WrappedShow extends React.Component<Props> {
 
     return (
       <>
-        <div className='wrapped__list'>
-          {this.props.summary.favourite_mappers.map((item, index) => (
-            <div
-              key={item.mapper_id}
-              className={classWithModifiers('wrapped__list-item', { selected: this.selectedListIndex === index })}
-              data-index={index}
-              onClick={this.handleSelectMapper}
-            >
-              <UserAvatar modifiers='wrapped' user={this.users.get(item.mapper_id)} />
-            </div>
-          ))}
+        <div className='wrapped__list-container'>
+          <div className='wrapped__list'>
+            {this.props.summary.favourite_mappers.map((item, index) => (
+              <div
+                key={item.mapper_id}
+                className={classWithModifiers('wrapped__list-item', { selected: this.selectedListIndex === index })}
+                data-index={index}
+                onClick={this.handleSelectMapper}
+              >
+                <UserAvatar modifiers='wrapped' user={this.users.get(item.mapper_id)} />
+              </div>
+            ))}
+          </div>
         </div>
         <div className='wrapped__list-details'>
           {this.renderListDetailsTitle(
@@ -492,7 +496,11 @@ export default class WrappedShow extends React.Component<Props> {
             className='wrapped__user-avatar'
             style={{ backgroundImage: urlPresence(this.user.avatar_url) }}
           />
-          {this.isSummaryPage && <FlagCountry country={this.user.country} modifiers={['flat', 'large']} />}
+          {this.isSummaryPage && (
+            <span className='wrapped__user-flag'>
+              <FlagCountry country={this.user.country} modifiers={['flat', 'large']} />
+            </span>
+          )}
           <span className={classWithModifiers('wrapped__username', { summary })}>{this.user.username}</span>
         </div>
         <img className='wrapped__logo' src='/images/wrapped/logo.svg' />
@@ -573,11 +581,6 @@ export default class WrappedShow extends React.Component<Props> {
 
         <WrappedStat modifiers='fancy' title='Medals' value={summary.medals} />
         <WrappedStat modifiers='fancy' title='Replays Watched' value={summary.replays} />
-
-        <WrappedStat modifiers='fancy' title='Daily Challenges Cleared' value={summary.daily_challenge.cleared} />
-        <WrappedStat modifiers='fancy' title='Top 10% Placements' value={summary.daily_challenge.top_10p} />
-        <WrappedStat modifiers='fancy' title='Top 50% Placements' value={summary.daily_challenge.top_50p} />
-        <WrappedStat modifiers='fancy' title='Daily Challenge Streak' value={summary.daily_challenge.highest_streak} />
       </div>
     );
   }
@@ -630,21 +633,23 @@ export default class WrappedShow extends React.Component<Props> {
 
     return (
       <>
-        <div className={classWithModifiers('wrapped__list', 'beatmap')}>
-          {this.props.summary.top_plays.map((play, index) => (
-            <div
-              key={play.id}
-              className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
-              data-index={index}
-              onClick={this.handleSelectMapper}
-            >
-              <BeatmapsetCover
-                beatmapset={this.beatmaps.get(play.beatmap_id)?.beatmapset}
-                modifiers='full'
-                size='card'
-              />
-            </div>
-          ))}
+        <div className='wrapped__list-container'>
+          <div className={classWithModifiers('wrapped__list', 'beatmap')}>
+            {this.props.summary.top_plays.map((play, index) => (
+              <div
+                key={play.id}
+                className={classWithModifiers('wrapped__list-item', 'beatmap', { selected: this.selectedListIndex === index })}
+                data-index={index}
+                onClick={this.handleSelectMapper}
+              >
+                <BeatmapsetCover
+                  beatmapset={this.beatmaps.get(play.beatmap_id)?.beatmapset}
+                  modifiers='full'
+                  size='card'
+                />
+              </div>
+            ))}
+          </div>
         </div>
         {selectedBeatmap != null && (
           <div className='wrapped__list-details'>
@@ -670,10 +675,10 @@ export default class WrappedShow extends React.Component<Props> {
               <WrappedStat title='Score' value={selectedItem.total_score} />
               <WrappedStat percent title='Accuracy' value={selectedItem.accuracy} />
               <WrappedStat title='Max Combo' value={selectedItem.max_combo} />
-              <WrappedStat title='Great' value={selectedItem.statistics.great} />
-              <WrappedStat title='Ok' value={selectedItem.statistics.ok} />
-              <WrappedStat title='Meh' value={selectedItem.statistics.meh} />
-              <WrappedStat title='Miss' value={selectedItem.statistics.miss} />
+              <WrappedStat title='Great' value={selectedItem.statistics.great ?? 0} />
+              <WrappedStat title='Ok' value={selectedItem.statistics.ok ?? 0} />
+              <WrappedStat title='Meh' value={selectedItem.statistics.meh ?? 0} />
+              <WrappedStat title='Miss' value={selectedItem.statistics.miss ?? 0} />
             </div>
           </div>
         )}
