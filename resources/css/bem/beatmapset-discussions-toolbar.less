@@ -1,0 +1,39 @@
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
+// See the LICENCE file in the repository root for full licence text.
+
+.beatmapset-discussions-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &__group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px;
+
+    @media @mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__item {
+    .reset-input();
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: none;
+
+    &--link {
+      .link-plain();
+      .default-border-radius();
+      font-size: @font-size--normal;
+      color: white;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: hsl(var(--hsl-b3));
+      }
+    }
+  }
+}
