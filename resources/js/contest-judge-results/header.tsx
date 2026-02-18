@@ -23,11 +23,15 @@ interface Props {
   state: State;
 }
 
+export function displayTitle(entry: ContestEntryJsonForResults) {
+  return `${entry.title} (${entry.user.username})`;
+}
+
 function entryToOption(entry: ContestEntryJsonForResults) {
   return {
     contest_id: entry.contest_id,
     id: entry.id,
-    text: entry.title,
+    text: displayTitle(entry),
   };
 }
 

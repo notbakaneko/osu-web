@@ -8,7 +8,7 @@ import { route } from 'laroute';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { trans } from 'utils/lang';
-import Header from './header';
+import Header, { displayTitle } from './header';
 import State from './state';
 import Vote from './vote';
 
@@ -28,7 +28,7 @@ export default class Main extends React.Component<Props> {
       { title: trans('contest.index.nav_title'), url: route('contests.index') },
       { title: trans('contest.index.nav_title'), url: route('contests.show', { contest: this.resultsState.contest.id }) },
       {
-        title: selectedEntry.title,
+        title: displayTitle(selectedEntry),
         url: route('contests.entries.judge-results', { contest: this.resultsState.contest.id, contest_entry: selectedEntry.id }),
       },
     ];
