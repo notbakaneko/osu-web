@@ -22,6 +22,7 @@ import { Header } from './header';
 import { ModeSwitcher } from './mode-switcher';
 import { NewDiscussion } from './new-discussion';
 import Refresh from './refresh';
+import Toolbar from './toolbar';
 
 const beatmapsetJsonId = 'json-beatmapset';
 
@@ -96,6 +97,7 @@ export default class Main extends React.Component<Props> {
             discussionsState={this.discussionsState}
             innerRef={this.modeSwitcherRef}
           />
+          <Toolbar discussionsState={this.discussionsState} store={this.store} />
           {this.discussionsState.currentPage === 'events' ? (
             <Events
               discussions={this.store.discussions}
@@ -122,6 +124,7 @@ export default class Main extends React.Component<Props> {
 
                 />
               )}
+              {/* TODO: do discussions need context? */}
               <Discussions
                 discussionsState={this.discussionsState}
                 store={this.store}
