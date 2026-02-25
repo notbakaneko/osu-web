@@ -22,6 +22,7 @@ import { Header } from './header';
 import { ModeSwitcher } from './mode-switcher';
 import { NewDiscussion } from './new-discussion';
 import Refresh from './refresh';
+import Toolbar from './toolbar';
 
 const beatmapsetJsonId = 'json-beatmapset';
 
@@ -91,42 +92,46 @@ export default class Main extends React.Component<Props> {
           discussionsState={this.discussionsState}
           store={this.store}
         />
-        <ModeSwitcher
-          discussionsState={this.discussionsState}
-          innerRef={this.modeSwitcherRef}
-        />
-        {this.discussionsState.currentPage === 'events' ? (
-          <Events
-            discussions={this.store.discussions}
-            events={this.discussionsState.beatmapset.events}
-            users={this.store.users}
+        <div className='osu-page osu-page--small osu-page--full'>
+          <ModeSwitcher
+            discussionsState={this.discussionsState}
+            innerRef={this.modeSwitcherRef}
           />
-        ) : (
-          <ReviewEditorConfigContext.Provider value={this.props.reviewsConfig}>
-            {this.discussionsState.currentPage === 'reviews' ? (
-              <NewReview
+          <Toolbar discussionsState={this.discussionsState} store={this.store} />
+          {this.discussionsState.currentPage === 'events' ? (
+            <Events
+              discussions={this.store.discussions}
+              events={this.discussionsState.beatmapset.events}
+              users={this.store.users}
+            />
+          ) : (
+            <ReviewEditorConfigContext.Provider value={this.props.reviewsConfig}>
+              {this.discussionsState.currentPage === 'reviews' ? (
+                <NewReview
+                  discussionsState={this.discussionsState}
+                  innerRef={this.newDiscussionRef}
+                  onFocus={this.handleNewDiscussionFocus}
+                  stickTo={this.modeSwitcherRef}
+                  store={this.store}
+                />
+              ) : (
+                <NewDiscussion
+                  autoFocus={this.focusNewDiscussion}
+                  discussionsState={this.discussionsState}
+                  innerRef={this.newDiscussionRef}
+                  onFocus={this.handleNewDiscussionFocus}
+                  stickTo={this.modeSwitcherRef}
+
+                />
+              )}
+              {/* TODO: do discussions need context? */}
+              <Discussions
                 discussionsState={this.discussionsState}
-                innerRef={this.newDiscussionRef}
-                onFocus={this.handleNewDiscussionFocus}
-                stickTo={this.modeSwitcherRef}
                 store={this.store}
               />
-            ) : (
-              <NewDiscussion
-                autoFocus={this.focusNewDiscussion}
-                discussionsState={this.discussionsState}
-                innerRef={this.newDiscussionRef}
-                onFocus={this.handleNewDiscussionFocus}
-                stickTo={this.modeSwitcherRef}
-
-              />
-            )}
-            <Discussions
-              discussionsState={this.discussionsState}
-              store={this.store}
-            />
-          </ReviewEditorConfigContext.Provider>
-        )}
+            </ReviewEditorConfigContext.Provider>
+          )}
+        </div>
         <div className='floating-toolbar'>
           {this.discussionsState.beatmapset.deleted_at == null && <Refresh worker={this.discussionsStateWorker} />}
           <BackToTop />

@@ -13,7 +13,6 @@ import { trans } from 'utils/lang';
 import { Discussion } from './discussion';
 import DiscussionsState from './discussions-state';
 import Sort, { sortPresets } from './sort';
-import Toolbar from './toolbar';
 
 const bn = 'beatmap-discussions';
 
@@ -67,28 +66,23 @@ export class Discussions extends React.Component<Props> {
 
   render() {
     return (
-      <div className='osu-page osu-page--small osu-page--full'>
-        <Toolbar discussionsState={this.props.discussionsState} store={this.props.store} />
-        <div className={`${bn} js-beatmap-discussions`}>
-          <div className='page-title'>
-            {trans('beatmaps.discussions.title')}
-          </div>
-          <div className={`${bn}__toolbar`}>
-            <div className={`${bn}__toolbar-content ${bn}__toolbar-content--left`}>
-              <div className={`${bn}__toolbar-item`}>
-                {this.renderSortOptions()}
-              </div>
-            </div>
-            <div className={`${bn}__toolbar-content ${bn}__toolbar-content--right`}>
-              {/* {this.renderUserFilterToggles()}
-              {this.renderShowDeletedToggle()} */}
-              {this.renderExpandCollapseAllButton('collapse')}
-              {this.renderExpandCollapseAllButton('expand')}
-            </div>
-          </div>
-
-          {this.renderDiscussions()}
+      <div className={`${bn} js-beatmap-discussions`}>
+        <div className='page-title'>
+          {trans('beatmaps.discussions.title')}
         </div>
+        <div className={`${bn}__toolbar`}>
+          <div className={`${bn}__toolbar-content ${bn}__toolbar-content--left`}>
+            <div className={`${bn}__toolbar-item`}>
+              {this.renderSortOptions()}
+            </div>
+          </div>
+          <div className={`${bn}__toolbar-content ${bn}__toolbar-content--right`}>
+            {this.renderShowDeletedToggle()}
+            {this.renderExpandCollapseAllButton('collapse')}
+            {this.renderExpandCollapseAllButton('expand')}
+          </div>
+        </div>
+        {this.renderDiscussions()}
       </div>
     );
   }
@@ -216,51 +210,8 @@ export class Discussions extends React.Component<Props> {
     );
   }
 
-  private renderUserFilterToggles() {
-    if (this.discussionsState.selectedUserId == null) return null;
-
-    return (
-      <>
-        <button
-          className={`${bn}__toolbar-item ${bn}__toolbar-item--link`}
-          onClick={this.toggleIncludeReplies}
-          type='button'
-        >
-          <span className={`${bn}__toolbar-link-content`}>
-            <span className={this.discussionsState.selectedUserIncludeReplies ? 'fas fa-check-square' : 'far fa-square'} />
-          </span>
-          <span className={`${bn}__toolbar-link-content`}>
-            {trans('beatmaps.discussions.include_replies')}
-          </span>
-        </button>
-        <button
-          className={`${bn}__toolbar-item ${bn}__toolbar-item--link`}
-          onClick={this.toggleShowOtherReplies}
-          type='button'
-        >
-          <span className={`${bn}__toolbar-link-content`}>
-            <span className={this.discussionsState.showOtherReplies ? 'fas fa-check-square' : 'far fa-square'} />
-          </span>
-          <span className={`${bn}__toolbar-link-content`}>
-            {trans('beatmaps.discussions.show_other_replies')}
-          </span>
-        </button>
-      </>
-    );
-  }
-
-  @action
-  private readonly toggleIncludeReplies = () => {
-    this.discussionsState.selectedUserIncludeReplies = !this.discussionsState.selectedUserIncludeReplies;
-  };
-
   @action
   private readonly toggleShowDeleted = () => {
     this.discussionsState.showDeleted = !this.discussionsState.showDeleted;
-  };
-
-  @action
-  private readonly toggleShowOtherReplies = () => {
-    this.discussionsState.showOtherReplies = !this.discussionsState.showOtherReplies;
   };
 }
