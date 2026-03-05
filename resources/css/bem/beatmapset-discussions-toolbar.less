@@ -4,15 +4,15 @@
 .beatmapset-discussions-toolbar {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   background-color: hsl(var(--hsl-b4));
-  padding: 5px;
+  padding: 10px;
 
   &__group {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: 5px;
+    gap: 10px;
 
     @media @mobile {
       &--fill {
@@ -39,5 +39,11 @@
         background-color: hsl(var(--hsl-b3));
       }
     }
+  }
+
+  &__type-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 }
