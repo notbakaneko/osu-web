@@ -1,13 +1,11 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import IconExpand from 'components/icon-expand';
 import BeatmapsetDiscussionJson, { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
 import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
 import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { canModeratePosts } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
 import { Discussion } from './discussion';
@@ -76,15 +74,6 @@ export class Discussions extends React.Component<Props> {
               {this.renderSortOptions()}
             </div>
           </div>
-          <div className={`${bn}__toolbar-content ${bn}__toolbar-content--right`}>
-            {this.renderExpandCollapseAllButton('collapse')}
-            {this.renderExpandCollapseAllButton('expand')}
-          </div>
-        </div>
-        <div className={`${bn}__toolbar-content ${bn}__toolbar-content--right`}>
-          {this.renderShowDeletedToggle()}
-          {this.renderExpandCollapseAllButton('collapse')}
-          {this.renderExpandCollapseAllButton('expand')}
         </div>
         {this.renderDiscussions()}
       </div>
@@ -95,12 +84,6 @@ export class Discussions extends React.Component<Props> {
   private readonly handleChangeSort = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     if (this.discussionsState.currentPage === 'events') return;
     this.discussionsState.sort[this.discussionsState.currentPage] = e.currentTarget.dataset.sortPreset as Sort;
-  };
-
-  @action
-  private readonly handleExpandClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-    this.discussionsState.discussionDefaultCollapsed = e.currentTarget.dataset.type === 'collapse';
-    this.discussionsState.discussionCollapsed.clear();
   };
 
   private readonly renderDiscussionPage = (discussion: BeatmapsetDiscussionJsonForShow) => {
@@ -145,41 +128,6 @@ export class Discussions extends React.Component<Props> {
     );
   }
 
-  private renderExpandCollapseAllButton(type: 'collapse' | 'expand') {
-    return (
-      <button
-        className={`${bn}__toolbar-item ${bn}__toolbar-item--link`}
-        data-type={type}
-        onClick={this.handleExpandClick}
-        type='button'
-      >
-        <IconExpand expand={type === 'expand'} parentClass={`${bn}__toolbar-link-content`} />
-        <span className={`${bn}__toolbar-link-content`}>
-          {trans(`beatmaps.discussions.collapse.all-${type}`)}
-        </span>
-      </button>
-    );
-  }
-
-  private renderShowDeletedToggle() {
-    if (!canModeratePosts()) return null;
-
-    return (
-      <button
-        className={`${bn}__toolbar-item ${bn}__toolbar-item--link`}
-        onClick={this.toggleShowDeleted}
-        type='button'
-      >
-        <span className={`${bn}__toolbar-link-content`}>
-          <span className={this.discussionsState.showDeleted ? 'fas fa-check-square' : 'far fa-square'} />
-        </span>
-        <span className={`${bn}__toolbar-link-content`}>
-          {trans('beatmaps.discussions.show_deleted')}
-        </span>
-      </button>
-    );
-  }
-
   private renderSortOptions() {
     const presets: Sort[] = this.discussionsState.currentPage === 'timeline'
       ? ['timeline', 'updated_at']
@@ -213,9 +161,4 @@ export class Discussions extends React.Component<Props> {
       />
     );
   }
-
-  @action
-  private readonly toggleShowDeleted = () => {
-    this.discussionsState.showDeleted = !this.discussionsState.showDeleted;
-  };
 }
