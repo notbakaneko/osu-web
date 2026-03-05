@@ -17,6 +17,7 @@
   }
 
   .with-active(@color) {
+    --line-colour: @color;
     &:hover,
     &:focus,
     &:active,
@@ -103,34 +104,7 @@
     .default-border-radius();
     width: 2px;
     margin-left: 10px;
-
-    .@{top}--deleted & {
-      background-color: @color-deleted;
-    }
-
-    .@{top}--mapper-notes & {
-      background-color: @color-mapper-notes;
-    }
-
-    .@{top}--pending & {
-      background-color: @color-pending;
-    }
-
-    .@{top}--praises & {
-      background-color: @color-praises;
-    }
-
-    .@{top}--mine & {
-      background-color: @color-mine;
-    }
-
-    .@{top}--resolved & {
-      background-color: @color-resolved;
-    }
-
-    .@{top}--total & {
-      background-color: @color-total;
-    }
+    background-color: var(--line-colour, initial);
   }
 
   &__title {
