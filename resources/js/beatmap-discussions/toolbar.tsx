@@ -16,11 +16,14 @@ const bn = 'beatmapset-discussions-toolbar';
 
 interface Props {
   discussionsState: DiscussionsState;
+  stickTo: React.RefObject<HTMLElement>;
   store: BeatmapsetDiscussionsStore;
 }
 
 @observer
 export default class Toolbar extends React.Component<Props> {
+  private readonly ref = React.createRef<HTMLDivElement>();
+
   private get discussionsState() {
     return this.props.discussionsState;
   }
@@ -36,23 +39,27 @@ export default class Toolbar extends React.Component<Props> {
 
   render() {
     return (
-      <div className='beatmapset-discussions-toolbar'>
-        <div className='beatmapset-discussions-toolbar__group'>
-          <UserFilter
-            discussionsState={this.discussionsState}
-            store={this.store}
-          />
-          <div className={`${bn}__type-filters`}>
-            <TypeFilters discussionsState={this.discussionsState} />
+      <>
+        <div ref={this.ref} className='beatmapset-discussions-toolbar'>
+          <div className='beatmapset-discussions-toolbar__group beatmapset-discussions-toolbar__group--fill'>
+            <UserFilter
+              discussionsState={this.discussionsState}
+              store={this.store}
+            />
+            <div className={`${bn}__type-filters`}>
+              <TypeFilters discussionsState={this.discussionsState} />
+            </div>
+          </div>
+          <div className='beatmapset-discussions-toolbar__group'>
+            {this.renderUserFilterToggles()}
+            {this.renderShowDeletedToggle()}
+            <div className='beatmapset-discussions-toolbar__group'>
+              {this.renderExpandCollapseAllButton('collapse')}
+              {this.renderExpandCollapseAllButton('expand')}
+            </div>
           </div>
         </div>
-        <div className='beatmapset-discussions-toolbar__group'>
-          {this.renderUserFilterToggles()}
-          {this.renderShowDeletedToggle()}
-          {this.renderExpandCollapseAllButton('collapse')}
-          {this.renderExpandCollapseAllButton('expand')}
-        </div>
-      </div>
+      </>
     );
   }
 
