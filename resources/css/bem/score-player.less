@@ -55,6 +55,20 @@
     font-size: @font-size--large-4;
     font-weight: 300;
     line-height: 1;
+
+    &--legacy {
+      .default-text-shadow();
+      font-family: "osu-score";
+      color: white;
+      letter-spacing: 0.03em;
+      -webkit-text-stroke: 0.075em black;
+      paint-order: stroke fill; // important to make the stroke appear on the outside instead of the inside
+
+      // shift text slightly down to match position of non-legacy score.
+      margin-top: 12px;
+      margin-bottom: -$margin-top;
+    }
+
     @media @desktop {
       font-size: @font-size--extra-large;
     }

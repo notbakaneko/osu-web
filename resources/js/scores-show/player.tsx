@@ -6,6 +6,7 @@ import ScoreValue from 'components/score-value';
 import { ScoreJsonForShow } from 'interfaces/score-json';
 import * as moment from 'moment';
 import * as React from 'react';
+import { classWithModifiers } from 'utils/css';
 import { formatNumber } from 'utils/html';
 import { trans } from 'utils/lang';
 import { displayMods } from 'utils/score-helper';
@@ -39,7 +40,7 @@ export default function Player(props: Props) {
           ))}
         </div>
 
-        <div className='score-player__score'>
+        <div className={classWithModifiers('score-player__score', { legacy: props.score.legacy_score_id != null })}>
           <ScoreValue score={props.score} />
         </div>
       </div>
