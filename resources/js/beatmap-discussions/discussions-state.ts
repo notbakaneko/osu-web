@@ -43,7 +43,7 @@ function reviver(key: string, value: unknown) {
       return new Map(value);
     }
 
-    if (key === 'readPostIds') {
+    if (key === 'readPostIds' || key === 'selectedUserIds') {
       return new Set(value);
     }
   }
@@ -68,7 +68,7 @@ export default class DiscussionsState {
 
   @observable readPostIds = new Set<number>();
   @observable selectedNominatedRulesets: Ruleset[] = [];
-  @observable selectedUserId: number | null = null;
+  @observable selectedUserIds = new Set<number>();
   @observable selectedUserIncludeReplies = false;
   @observable showDeleted = true; // this toggle only affects All and deleted discussion filters, other filters don't show deleted
   @observable showOtherReplies = true;
@@ -209,7 +209,7 @@ export default class DiscussionsState {
 
   // @computed
   get discussionsForSelectedUserByMode() {
-    if (this.selectedUser == null) {
+    if (this.selectedUserIds.size === 0) {
       return this.discussionsByMode;
     }
 
@@ -222,8 +222,8 @@ export default class DiscussionsState {
 
     for (const mode of discussionModes) {
       value[mode] = this.discussionsByMode[mode].filter(
-        (discussion) => discussion.user_id === this.selectedUserId
-        || this.selectedUserIncludeReplies && discussion.posts?.some((post) => post.user_id === this.selectedUserId),
+        (discussion) => this.selectedUserIds.has(discussion.user_id)
+        || this.selectedUserIncludeReplies && discussion.posts?.some((post) => this.selectedUserIds.has(post.user_id)),
       );
     }
 
@@ -342,9 +342,10 @@ export default class DiscussionsState {
     return null;
   }
 
+  // TODO: maybe get rid of this and use the ids directly?
   @computed
-  get selectedUser() {
-    return this.store.users.get(this.selectedUserId);
+  get selectedUsers() {
+    return [...this.selectedUserIds].map((id) => this.store.users.get(id)).filter((user): user is UserJson => user != null);
   }
 
   @computed
@@ -408,7 +409,7 @@ export default class DiscussionsState {
       filter: this.currentFilter,
       mode: this.currentPage,
       postId: this.currentPostId,
-      user: this.selectedUserId ?? undefined,
+      user: [...this.selectedUserIds][0], // TODO: handle multiple users
     });
   }
 
@@ -449,7 +450,9 @@ export default class DiscussionsState {
         this.currentPostId = query.postId;
       }
 
-      this.selectedUserId = query.user ?? null;
+      if (query.user != null) {
+        this.selectedUserIds.add(query.user);
+      }
     }
 
     makeObservable(this);
@@ -521,8 +524,8 @@ export default class DiscussionsState {
     }
 
     // unset user filter if new discussion would have been filtered out.
-    if (this.selectedUserId != null && this.selectedUserId !== discussion.user_id) {
-      this.selectedUserId = null;
+    if (!this.selectedUserIds.has(discussion.user_id)) {
+      this.selectedUserIds.clear();
     }
 
     if (beatmapId != null) {
@@ -578,7 +581,7 @@ export default class DiscussionsState {
       highlightedDiscussionId: this.highlightedDiscussionId,
       pinnedNewDiscussion: this.pinnedNewDiscussion,
       readPostIds: [...this.readPostIds],
-      selectedUserId: this.selectedUserId,
+      selectedUserIds: [...this.selectedUserIds],
       showDeleted: this.showDeleted,
     };
   }

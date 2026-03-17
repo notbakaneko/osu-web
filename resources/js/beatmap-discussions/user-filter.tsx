@@ -49,10 +49,11 @@ export class UserFilter extends React.Component<Props> {
     return this.props.discussionsState.beatmapset.user_id;
   }
 
+  // TODO: support multiple selected users in the future if needed, but for now we only support single selection in the UI
   @computed
   private get selected() {
-    return this.props.discussionsState.selectedUser != null
-      ? mapUserProperties(this.props.discussionsState.selectedUser)
+    return this.props.discussionsState.selectedUsers.length > 0
+      ? mapUserProperties(this.props.discussionsState.selectedUsers[0])
       : noSelection;
   }
 
@@ -101,7 +102,10 @@ export class UserFilter extends React.Component<Props> {
 
   @action
   private readonly handleChange = (option: Option) => {
-    this.props.discussionsState.selectedUserId = option.id;
+    this.props.discussionsState.selectedUserIds.clear();
+    if (option.id != null) {
+      this.props.discussionsState.selectedUserIds.add(option.id);
+    }
   };
 
   private isOwner(user?: Option) {

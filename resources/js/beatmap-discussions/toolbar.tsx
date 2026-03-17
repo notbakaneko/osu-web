@@ -105,7 +105,7 @@ export default class Toolbar extends React.Component<Props> {
   }
 
   private renderUserFilterToggles() {
-    if (this.discussionsState.selectedUserId == null) return null;
+    if (this.discussionsState.selectedUserIds.size === 0) return null;
 
     return (
       <>

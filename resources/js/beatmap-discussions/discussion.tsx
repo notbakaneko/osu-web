@@ -114,11 +114,13 @@ export class Discussion extends React.Component<Props> {
 
   @computed
   private get visibleReplies() {
-    if (this.props.discussionsState?.selectedUserId == null || this.props.discussionsState.showOtherReplies) {
+    if (this.props.discussionsState == null
+      || this.props.discussionsState.selectedUserIds.size === 0
+      || this.props.discussionsState.showOtherReplies) {
       return this.replies;
     }
     // always include system posts for the markers and state changes
-    return this.replies.filter((post) => post.system || this.props.discussionsState?.selectedUserId === post.user_id);
+    return this.replies.filter((post) => post.system || this.props.discussionsState?.selectedUserIds.has(post.user_id));
   }
 
   constructor(props: Props) {
