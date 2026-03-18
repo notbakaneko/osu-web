@@ -455,9 +455,6 @@ export default class DiscussionsState {
           this.selectedUserIds.add(user);
         }
       }
-      if (query.user != null) {
-        this.selectedUserIds.add(query.user);
-      }
     }
 
     makeObservable(this);

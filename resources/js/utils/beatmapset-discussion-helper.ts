@@ -58,7 +58,7 @@ type MakeUrlOptions = {
 
 // This is more for ensuring parseUrl returns the correct non-nullable properties
 type ParsedUrlParams =
-  Omit<MakeUrlOptions, 'beatmap' | 'discussion' | 'post'>
+  Omit<MakeUrlOptions, 'beatmap' | 'discussion' | 'post' | 'user'>
   & Required<Pick<MakeUrlOptions, 'beatmapsetId' | 'filter' | 'mode'>>;
 
 interface PropsFromHrefValue {
@@ -302,6 +302,12 @@ export function parseUrl(urlString?: string | null, discussions?: BeatmapsetDisc
   }
 
   const beatmapId = getInt(beatmapIdString);
+  const users = url.searchParams.getAll('users[]').map(getInt).filter(Number.isFinite) as number[];
+  // TODO: remove compatibility for existing url params
+  const user = getInt(url.searchParams.get('user'));
+  if (user != null) {
+    users.push(user);
+  }
 
   const ret: ParsedUrlParams = {
     beatmapId,
@@ -309,8 +315,7 @@ export function parseUrl(urlString?: string | null, discussions?: BeatmapsetDisc
     filter: isFilter(filter) ? filter : defaultFilter,
     // empty path segments are ''
     mode: isDiscussionPage(mode) ? mode : defaultMode(beatmapId),
-    user: getInt(url.searchParams.get('user')),
-    users: url.searchParams.getAll('users[]').map(getInt).filter(Number.isFinite) as number[],
+    users,
   };
 
   if (url.hash[1] === '/') {

@@ -120,8 +120,6 @@ export class UserFilter extends React.Component<Props> {
     // means it doesn't work on non-beatmapset discussion paths
     if (urlOptions == null) return null;
 
-    // force set and unset.
-    urlOptions.user = undefined;
     urlOptions.users = option.id != null ? [option.id] : undefined;
 
     return (
