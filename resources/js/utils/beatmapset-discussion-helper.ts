@@ -33,6 +33,7 @@ type MakeUrlOptions = {
   filter?: Filter;
   mode?: DiscussionPage;
   user?: number;
+  users?: Iterable<number>;
 } & (
   // enforces mutual exclusivity when passing in as paramaters.
   // doesn't completely discriminate the type during type checks.
@@ -181,6 +182,7 @@ export function makeUrl(options: MakeUrlOptions) {
     filter,
     post,
     user,
+    users,
   } = options;
 
   let {
@@ -231,6 +233,12 @@ export function makeUrl(options: MakeUrlOptions) {
 
   if (user != null) {
     value.searchParams.set('user', user.toString());
+  }
+
+  if (users != null) {
+    for (const userId of users) {
+      value.searchParams.append('users[]', userId.toString());
+    }
   }
 
   return value.toString();
@@ -302,6 +310,7 @@ export function parseUrl(urlString?: string | null, discussions?: BeatmapsetDisc
     // empty path segments are ''
     mode: isDiscussionPage(mode) ? mode : defaultMode(beatmapId),
     user: getInt(url.searchParams.get('user')),
+    users: url.searchParams.getAll('users[]').map(getInt).filter(Number.isFinite) as number[],
   };
 
   if (url.hash[1] === '/') {

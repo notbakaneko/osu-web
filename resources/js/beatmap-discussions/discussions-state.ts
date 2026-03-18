@@ -68,7 +68,7 @@ export default class DiscussionsState {
 
   @observable readPostIds = new Set<number>();
   @observable selectedNominatedRulesets: Ruleset[] = [];
-  @observable selectedUserIds = new Set<number>();
+  @observable readonly selectedUserIds = new Set<number>();
   @observable selectedUserIncludeReplies = false;
   @observable showDeleted = true; // this toggle only affects All and deleted discussion filters, other filters don't show deleted
   @observable showOtherReplies = true;
@@ -409,7 +409,7 @@ export default class DiscussionsState {
       filter: this.currentFilter,
       mode: this.currentPage,
       postId: this.currentPostId,
-      user: [...this.selectedUserIds][0], // TODO: handle multiple users
+      users: this.selectedUserIds,
     });
   }
 
@@ -450,6 +450,11 @@ export default class DiscussionsState {
         this.currentPostId = query.postId;
       }
 
+      if (query.users != null) {
+        for (const user of query.users) {
+          this.selectedUserIds.add(user);
+        }
+      }
       if (query.user != null) {
         this.selectedUserIds.add(query.user);
       }

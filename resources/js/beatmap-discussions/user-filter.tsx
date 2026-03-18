@@ -49,7 +49,7 @@ export class UserFilter extends React.Component<Props> {
     return this.props.discussionsState.beatmapset.user_id;
   }
 
-  // TODO: support multiple selected users in the future if needed, but for now we only support single selection in the UI
+  // TODO: support multiple selected users
   @computed
   private get selected() {
     return this.props.discussionsState.selectedUsers.length > 0
@@ -120,7 +120,9 @@ export class UserFilter extends React.Component<Props> {
     // means it doesn't work on non-beatmapset discussion paths
     if (urlOptions == null) return null;
 
-    urlOptions.user = option.id ?? undefined;
+    // force set and unset.
+    urlOptions.user = undefined;
+    urlOptions.users = option.id != null ? [option.id] : undefined;
 
     return (
       <a
