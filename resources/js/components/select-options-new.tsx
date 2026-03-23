@@ -29,7 +29,7 @@ interface Props {
 }
 
 @observer
-export default class SelectOptions extends React.PureComponent<React.PropsWithChildren<Props>> {
+export default class SelectOptionsNew extends React.PureComponent<React.PropsWithChildren<Props>> {
   static readonly defaultProps = { blackout: true };
 
   private readonly ref = React.createRef<HTMLDivElement>();
