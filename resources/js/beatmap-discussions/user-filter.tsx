@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import mapperGroup from 'beatmap-discussions/mapper-group';
-import SelectOptions, { RenderableOption } from 'components/select-options';
+import SelectOptions from 'components/select-options';
 import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
 import UserJson from 'interfaces/user-json';
 import { action, computed, makeObservable } from 'mobx';
@@ -12,6 +12,7 @@ import * as React from 'react';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { groupColour } from 'utils/css';
 import { trans } from 'utils/lang';
+import { getInt } from 'utils/math';
 import DiscussionsState from './discussions-state';
 
 const allUsers = Object.freeze({
@@ -63,6 +64,11 @@ export class UserFilter extends React.Component<Props> {
       : trans('beatmap_discussions.user_filter.label');
   }
 
+  @computed
+  private get urlOptions() {
+    return parseUrl(this.props.discussionsState.url);
+  }
+
   constructor(props: Props) {
     super(props);
     makeObservable(this);
@@ -71,8 +77,9 @@ export class UserFilter extends React.Component<Props> {
   render() {
     return (
       <SelectOptions
+        href={this.props.discussionsState.url}
         modifiers='beatmap-discussions-user-filter'
-        onClick={this.handleClick}
+        onSelect={this.handleSelect}
         options={this.options}
         selected={this.props.discussionsState.selectedUserIds}
       >
@@ -88,16 +95,17 @@ export class UserFilter extends React.Component<Props> {
   }
 
   @action
-  private readonly handleClick = (id: number | null) => {
+  private readonly handleSelect = (id?: string) => {
+    const userId = getInt(id);
     const selectedUserIds = this.props.discussionsState.selectedUserIds;
 
-    if (id == null) {
+    if (userId == null) {
       selectedUserIds.clear();
       return false;
-    } else if (selectedUserIds.has(id)) {
-      selectedUserIds.delete(id);
+    } else if (selectedUserIds.has(userId)) {
+      selectedUserIds.delete(userId);
     } else {
-      selectedUserIds.add(id);
+      selectedUserIds.add(userId);
     }
 
     return true;
@@ -107,16 +115,23 @@ export class UserFilter extends React.Component<Props> {
     return user != null && user.id === this.ownerId;
   }
 
-  private readonly mapUserProperties = (user: Option): RenderableOption => {
+  private readonly mapUserProperties = (user: Option) => {
     const group = this.getGroup(user);
     const style = groupColour(group);
 
-    const urlOptions = parseUrl();
+    const urlOptions = structuredClone(this.urlOptions);
     // means it doesn't work on non-beatmapset discussion paths
     if (urlOptions != null) {
-
-      // TODO: add existing users onto url.
-      urlOptions.users = user.id != null ? [user.id] : undefined;
+      const uniqueUsers = new Set(urlOptions.users);
+      if (user.id == null) {
+        urlOptions.users = undefined;
+      } else if (uniqueUsers.has(user.id)) {
+        uniqueUsers.delete(user.id);
+        urlOptions.users = [...uniqueUsers];
+      } else {
+        uniqueUsers.add(user.id);
+        urlOptions.users = [...uniqueUsers];
+      }
     }
 
     return {

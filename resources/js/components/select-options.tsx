@@ -1,41 +1,40 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { action, autorun, makeObservable, observable } from 'mobx';
+import { action, autorun, isObservableSet, makeObservable, observable } from 'mobx';
 import { disposeOnUnmount, observer } from 'mobx-react';
 import * as React from 'react';
 import { blackoutToggle } from 'utils/blackout';
 import { classWithModifiers, Modifiers, ModifiersExtended } from 'utils/css';
-import { getInt } from 'utils/math';
 
 const bn = 'select-options';
 
-export interface RenderableOption {
+interface RenderableOption<T> {
   children: string | React.ReactNode;
   href: string;
-  id: string | number | null;
-  modifiers?: Modifiers;
+  id: T | null;
   style?: React.CSSProperties;
 }
 
-interface Props {
+interface Props<T> {
   blackout: boolean;
+  href: string;
   modifiers?: Modifiers;
   // the callback should return the display state the selector should go into after the click, or undefined for the default.
-  onClick?: (id: RenderableOption['id']) => boolean | undefined;
-  options: RenderableOption[];
-  selected: Set<RenderableOption['id']>;
-
+  // the typing of id is to match dataset, so the component doesn't handle the parsing.
+  onSelect?: (id?: string) => boolean | void;
+  options: Iterable<RenderableOption<T>>;
+  selected: RenderableOption<T>['id'] | Set<RenderableOption<T>['id']>;
 }
 
 @observer
-export default class SelectOptions extends React.PureComponent<React.PropsWithChildren<Props>> {
+export default class SelectOptions<T extends string | number> extends React.PureComponent<React.PropsWithChildren<Props<T>>> {
   static readonly defaultProps = { blackout: true };
 
   private readonly ref = React.createRef<HTMLDivElement>();
   @observable private showingSelector = false;
 
-  constructor(props: Props) {
+  constructor(props: Props<T>) {
     super(props);
     makeObservable(this);
     disposeOnUnmount(this, autorun(() => {
@@ -62,7 +61,7 @@ export default class SelectOptions extends React.PureComponent<React.PropsWithCh
     return (
       <div ref={this.ref} className={className}>
         <div className={`${bn}__select`}>
-          <a className={`${bn}__option`} href='#' onClick={this.toggleSelector}>
+          <a className={`${bn}__option`} href={this.props.href} onClick={this.toggleSelector}>
             {this.renderText(this.props.children)}
             <div className={`${bn}__decoration`}>
               <span className='fas fa-chevron-down' />
@@ -71,7 +70,7 @@ export default class SelectOptions extends React.PureComponent<React.PropsWithCh
         </div>
 
         <div className={`${bn}__selector`}>
-          {this.renderOptions()}
+          {[...this.renderOptions()]}
         </div>
       </div>
     );
@@ -90,18 +89,18 @@ export default class SelectOptions extends React.PureComponent<React.PropsWithCh
     if (event.button !== 0) return;
     event.preventDefault();
 
-    const id = getInt(event.currentTarget.dataset.id) ?? null;
-    this.showingSelector = this.props.onClick?.(id) ?? false;
+    const id = event.currentTarget.dataset.id;
+    this.showingSelector = this.props.onSelect?.(id) ?? false;
     if (this.showingSelector) {
       event.currentTarget.blur(); // deactivate element is selector is still open.
     }
   };
 
-  private renderOption(option: RenderableOption, modifiers?: ModifiersExtended) {
+  private renderOption(option: RenderableOption<T>, modifiers?: ModifiersExtended) {
     return (
       <a
         key={option.id}
-        className={classWithModifiers(`${bn}__option`, modifiers, option.modifiers)}
+        className={classWithModifiers(`${bn}__option`, modifiers)}
         data-id={option.id ?? undefined}
         href={option.href}
         onClick={this.optionSelected}
@@ -112,14 +111,17 @@ export default class SelectOptions extends React.PureComponent<React.PropsWithCh
     );
   }
 
-  private renderOptions() {
-    return this.props.options.map((option) => {
-      const selected = this.props.selected.has(option.id);
-      return this.renderOption(option, { selected });
-    });
+  private *renderOptions() {
+    for (const option of this.props.options) {
+      const selected = this.props.selected instanceof Set || isObservableSet(this.props.selected)
+        ? this.props.selected.has(option.id)
+        : this.props.selected === option.id;
+
+      yield this.renderOption(option, { selected });
+    }
   }
 
-  private renderText(children: RenderableOption['children']) {
+  private renderText(children: RenderableOption<T>['children']) {
     return typeof children === 'string' ? (
       <div className='u-ellipsis-overflow'>
         {children}
