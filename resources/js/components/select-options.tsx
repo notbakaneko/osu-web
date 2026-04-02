@@ -13,7 +13,6 @@ interface RenderableOption<T> {
   children: string | React.ReactNode;
   href: string;
   id: T | null;
-  style?: React.CSSProperties;
 }
 
 interface Props<T> {
@@ -92,7 +91,7 @@ export default class SelectOptions<T extends string | number> extends React.Pure
     const id = event.currentTarget.dataset.id;
     this.showingSelector = this.props.onSelect?.(id) ?? false;
     if (this.showingSelector) {
-      event.currentTarget.blur(); // deactivate element is selector is still open.
+      event.currentTarget.blur(); // deactivate element is selector if still open.
     }
   };
 
@@ -104,7 +103,6 @@ export default class SelectOptions<T extends string | number> extends React.Pure
         data-id={option.id ?? undefined}
         href={option.href}
         onClick={this.optionSelected}
-        style={option.style}
       >
         {this.renderText(option.children)}
       </a>

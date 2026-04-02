@@ -21,10 +21,16 @@ interface Props {
 
 function entryToOption(entry: ContestEntryJsonForResults) {
   return {
-    children: <ValueDisplay label={entry.title} modifiers='select-option' value={entry.user.username} />,
+    children: <OptionText entry={entry} />,
     href: route('contests.entries.judge-results', { contest: entry.contest_id, contest_entry: entry.id }),
     id: entry.id,
   };
+}
+
+function OptionText(props: { entry: ContestEntryJsonForResults }) {
+  return (
+    <ValueDisplay label={props.entry.title} modifiers='select-option' value={props.entry.user.username} />
+  );
 }
 
 export default class Header extends React.PureComponent<Props> {
@@ -45,7 +51,7 @@ export default class Header extends React.PureComponent<Props> {
           options={this.options}
           selected={this.props.entry.id}
         >
-          <ValueDisplay label={this.props.entry.title} modifiers='select-option' value={this.props.entry.user.username} />
+          <OptionText entry={this.props.entry} />
         </SelectOptions>
 
         <div className='contest-judge-results-header__values'>
