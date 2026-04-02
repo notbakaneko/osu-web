@@ -77,6 +77,7 @@ export class UserFilter extends React.Component<Props> {
   render() {
     return (
       <SelectOptions
+        blackout={false}
         href={this.props.discussionsState.url}
         modifiers='beatmap-discussions-user-filter'
         onSelect={this.handleSelect}
