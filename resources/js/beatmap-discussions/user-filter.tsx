@@ -7,7 +7,7 @@ import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store'
 import UserJson from 'interfaces/user-json';
 import { action, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
-import { usernameSortAscending } from 'models/user';
+import { deletedUser, usernameSortAscending } from 'models/user';
 import * as React from 'react';
 import { makeUrl, parseUrl } from 'utils/beatmapset-discussion-helper';
 import { groupColour } from 'utils/css';
@@ -59,9 +59,16 @@ export class UserFilter extends React.Component<Props> {
 
   @computed
   private get text() {
-    return this.props.discussionsState.selectedUsers.length > 0
-      ? this.props.discussionsState.selectedUsers.sort(usernameSortAscending).map((user) => user.username).join(', ')
-      : trans('beatmap_discussions.user_filter.label');
+    switch (this.props.discussionsState.selectedUserIds.size) {
+      case 0:
+        return trans('beatmap_discussions.user_filter.label');
+      case 1: {
+        const user = this.props.discussionsState.selectedUsers[0] ?? deletedUser;
+        return <span className='u-group-colour' style={this.styleForUser(user)}>{user.username}</span>;
+      }
+      default:
+        return trans('beatmap_discussions.user_filter.multiple');
+    }
   }
 
   @computed
@@ -84,7 +91,7 @@ export class UserFilter extends React.Component<Props> {
         options={this.options}
         selected={this.props.discussionsState.selectedUserIds}
       >
-        {this.text}
+        <span className='u-ellipsis-overflow'>{this.text}</span>
       </SelectOptions>
     );
   }
@@ -117,9 +124,6 @@ export class UserFilter extends React.Component<Props> {
   }
 
   private readonly mapUserProperties = (user: Option) => {
-    const group = this.getGroup(user);
-    const style = groupColour(group);
-
     const urlOptions = structuredClone(this.urlOptions);
     // means it doesn't work on non-beatmapset discussion paths
     if (urlOptions != null) {
@@ -136,10 +140,13 @@ export class UserFilter extends React.Component<Props> {
     }
 
     return {
-      children: user.username,
+      children: <span className='u-group-colour u-ellipsis-overflow' style={this.styleForUser(user)}>{user.username}</span>,
       href: urlOptions != null ? makeUrl(urlOptions) : '#',
       id: user.id,
-      style,
     };
   };
+
+  private styleForUser(user: Option) {
+    return groupColour(this.getGroup(user));
+  }
 }
