@@ -13,12 +13,8 @@
   --selector-overflow-y: auto;
 
   &--beatmap-discussions-user-filter {
-    --decoration-colour: hsl(var(--hsl-c1));
     --selector-max-height: auto;
     flex: 1;
-    // @media @desktop {
-    //   width: 200px;
-    // }
   }
 
   &--download {
@@ -60,10 +56,6 @@
 
     &--selected {
       background-color: @osu-colour-b3;
-    }
-
-    .@{_top}--beatmap-discussions-user-filter & {
-      --colour: var(--group-colour, hsl(var(--hsl-c1)));
     }
 
     .link-hover({
