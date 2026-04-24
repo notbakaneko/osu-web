@@ -29,7 +29,8 @@ class BeatmapLeader extends Model
     {
         return $query
             ->whereHas('beatmap.beatmapset')
-            ->whereHas('score')
+            // temporarily? disable
+            // ->whereHas('score')
             ->where('ruleset_id', '=', Beatmap::modeInt($ruleset));
     }
 
