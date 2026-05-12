@@ -50,11 +50,9 @@ export class NewDiscussion extends React.Component<Props> {
   private readonly handleKeyDown;
   private readonly inputBox = React.createRef<HTMLTextAreaElement>();
   @observable private message = this.storedMessage;
-  @observable private mounted = false;
   private nearbyDiscussionsCache: DiscussionsCache | null = null;
   @observable private posting: string | null = null;
   private postXhr: JQuery.jqXHR<BeatmapsetDiscussionPostStoreResponseJson> | null = null;
-  @observable private stickToHeight: number | undefined;
   @observable private timestampConfirmed = false;
 
   private get beatmapset() {
@@ -76,13 +74,6 @@ export class NewDiscussion extends React.Component<Props> {
     return !core.currentUser.is_silenced
       && (!this.beatmapset.discussion_locked || canModeratePosts())
       && (this.currentBeatmap.deleted_at == null || this.currentMode === 'generalAll');
-  }
-
-  @computed
-  private get cssTop() {
-    if (this.mounted && this.pinned && this.stickToHeight != null) {
-      return Math.floor(core.stickyHeader.headerHeight + this.stickToHeight);
-    }
   }
 
   private get isTimeline() {
@@ -161,33 +152,23 @@ export class NewDiscussion extends React.Component<Props> {
   }
 
   componentDidMount() {
-    // watching for height changes on the stickTo element to handle horizontal scrollbars when they appear.
-    $(window).on('resize', this.updateStickToHeight);
-    $.subscribe('sticky-toolbar:expand', this.updateStickToHeight);
-    this.disposers.add(core.reactTurbolinks.runAfterPageLoad(action(() => {
-      this.mounted = true;
-      this.updateStickToHeight();
-    })));
-
     if (this.props.autoFocus) {
       this.disposers.add(core.reactTurbolinks.runAfterPageLoad(() => this.inputBox.current?.focus()));
     }
   }
 
   componentWillUnmount() {
-    $(window).off('resize', this.updateStickToHeight);
-    $.unsubscribe('sticky-toolbar:expand', this.updateStickToHeight);
     this.postXhr?.abort();
     this.disposers.forEach((disposer) => disposer?.());
   }
 
   render() {
-    const cssClasses = classWithModifiers('beatmap-discussion-new-float', { pinned: this.pinned });
+    const cssClasses = classWithModifiers('beatmap-discussion-new-float');
 
     return (
       <div
         className={cssClasses}
-        style={{ top: this.cssTop }}
+        // style={{ top: this.cssTop }}
       >
         <div className='beatmap-discussion-new-float__floatable'>
           <div
@@ -459,7 +440,6 @@ export class NewDiscussion extends React.Component<Props> {
   @action
   private readonly setSticky = (sticky: boolean) => {
     this.props.discussionsState.pinnedNewDiscussion = sticky;
-    this.updateStickToHeight();
   };
 
   private storeMessage() {
@@ -496,9 +476,6 @@ export class NewDiscussion extends React.Component<Props> {
   private readonly toggleTimestampConfirmation = () => {
     this.timestampConfirmed = !this.timestampConfirmed;
   };
-
-  @action
-  private readonly updateStickToHeight = () => this.stickToHeight = this.props.stickTo?.current?.getBoundingClientRect().height;
 
   private validPost(type: string): type is DiscussionType {
     if (!(discussionTypes as readonly string[]).includes(type)) return false;

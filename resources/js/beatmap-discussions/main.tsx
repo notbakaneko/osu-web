@@ -8,6 +8,7 @@ import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussion
 import { action, makeObservable, observable, reaction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import core from 'osu-core-singleton';
+import Pinnable from 'pinnable';
 import * as React from 'react';
 import BeatmapsetDiscussionsShowStore from 'stores/beatmapset-discussions-show-store';
 import { parseUrl } from 'utils/beatmapset-discussion-helper';
@@ -127,24 +128,26 @@ export default class Main extends React.Component<Props> {
             />
           ) : (
             <ReviewEditorConfigContext.Provider value={this.props.reviewsConfig}>
-              {this.discussionsState.currentPage === 'reviews' ? (
-                <NewReview
-                  discussionsState={this.discussionsState}
-                  innerRef={this.newDiscussionRef}
-                  onFocus={this.handleNewDiscussionFocus}
-                  stickTo={this.stickyRef}
-                  store={this.store}
-                />
-              ) : (
-                <NewDiscussion
-                  autoFocus={this.focusNewDiscussion}
-                  discussionsState={this.discussionsState}
-                  innerRef={this.newDiscussionRef}
-                  onFocus={this.handleNewDiscussionFocus}
-                  stickTo={this.stickyRef}
+              <Pinnable pinned={this.discussionsState.pinnedNewDiscussion} stickTo={this.stickyRef}>
+                {this.discussionsState.currentPage === 'reviews' ? (
+                  <NewReview
+                    discussionsState={this.discussionsState}
+                    innerRef={this.newDiscussionRef}
+                    onFocus={this.handleNewDiscussionFocus}
+                    stickTo={this.stickyRef}
+                    store={this.store}
+                  />
+                ) : (
+                  <NewDiscussion
+                    autoFocus={this.focusNewDiscussion}
+                    discussionsState={this.discussionsState}
+                    innerRef={this.newDiscussionRef}
+                    onFocus={this.handleNewDiscussionFocus}
+                    stickTo={this.stickyRef}
 
-                />
-              )}
+                  />
+                )}
+              </Pinnable>
               <Discussions
                 discussionsState={this.discussionsState}
                 store={this.store}
