@@ -7,16 +7,14 @@ namespace App\Http\Controllers\Payments;
 
 use App\Exceptions\InvalidSignatureException;
 use App\Exceptions\Store\OrderException;
+use App\Libraries\Payments\XsollaClient;
 use App\Libraries\Payments\XsollaPaymentProcessor;
 use App\Libraries\Payments\XsollaSignature;
 use App\Libraries\Payments\XsollaUserNotFoundException;
 use App\Models\Store\Order;
-use Auth;
 use Exception;
 use Illuminate\Http\Request as HttpRequest;
 use Request;
-use Xsolla\SDK\API\PaymentUI\TokenRequest;
-use Xsolla\SDK\API\XsollaClient;
 
 class XsollaController extends Controller
 {
@@ -31,8 +29,6 @@ class XsollaController extends Controller
 
     public function token()
     {
-        $projectId = $GLOBALS['cfg']['payments']['xsolla']['project_id'];
-        $user = Auth::user();
         $order = Order::whereOrderNumber(request('orderNumber'))
             ->whereCanCheckout()
             ->first();
@@ -41,27 +37,45 @@ class XsollaController extends Controller
             return;
         }
 
-        $tokenRequest = new TokenRequest($projectId, (string) $user->user_id);
-        $tokenRequest
-            ->setSandboxMode($GLOBALS['cfg']['payments']['sandbox'])
-            ->setExternalPaymentId($order->getOrderNumber())
-            ->setUserEmail($user->user_email)
-            ->setUserName($user->username)
-            ->setPurchase($order->getTotal(), 'USD')
-            ->setCustomParameters([
+        $user = \Auth::user();
+        $data = [
+            'custom_parameters' => [
                 'subtotal' => $order->getSubtotal(),
                 'shipping' => $order->shipping,
-                'order_id' => $order['order_id'],
-            ]);
+                'order_id' => $order->getKey(),
+            ],
+            'purchase' => [
+                'checkout' => [
+                    'amount' => $order->getTotal(),
+                    'currency' => 'USD',
+                ],
+            ],
+            'settings' => [
+                'external_id' => $order->getOrderNumber(),
+                'project_id' => $GLOBALS['cfg']['payments']['xsolla']['project_id'],
+            ],
+            'user' => [
+                'id' => [
+                    'value' => (string) $user->getKey(),
+                ],
+                'email' => [
+                    'value' => $user->user_email,
+                ],
+                'name' => [
+                    'value' => $user->username,
+                ],
+            ],
+        ];
 
-        $xsollaClient = XsollaClient::factory([
-            'merchant_id' => $GLOBALS['cfg']['payments']['xsolla']['merchant_id'],
-            'api_key' => $GLOBALS['cfg']['payments']['xsolla']['api_key'],
-        ]);
+        // Xsolla doesn't send this property when not in sandbox mode.
+        if ($GLOBALS['cfg']['payments']['sandbox']) {
+            $data['settings']['mode'] = 'sandbox';
+        }
 
         // This will be used for XPayStationWidget options.
+        $response = new XsollaClient()->getTokenResponse($data);
         return [
-            'access_token' => $xsollaClient->createPaymentUITokenFromRequest($tokenRequest),
+            'access_token' => $response['token'],
             'sandbox' => $GLOBALS['cfg']['payments']['sandbox'],
         ];
     }
