@@ -42,23 +42,28 @@ export default class Nav2
     currentPopup.querySelector('.js-nav2--autofocus')?.focus()
 
 
-  autoMobileNav: (e, {previousTree, target, tree}) =>
+  autoMobileNav: (e, {previousTree, source, target, tree}) =>
+    menus = ['mobile-menu', 'mobile-chat-notification', 'mobile-notification']
+
+
+    @showingMobileNav = menus.some (menu) -> tree.indexOf(menu) != -1
+    if @showingMobileNav
+      Timeout.set 0, => $(@clickMenu.menu(target)).finish().slideDown(150)
+
     if target == 'mobile-menu'
       @clickMenu.show('mobile-nav')
-      Timeout.set 0, => $(@clickMenu.menu('mobile-menu')).finish().slideDown(150)
-
-    @showingMobileNav = tree.indexOf('mobile-menu') != -1
 
     if @showingMobileNav
       document.body.classList.add('js-nav2--active')
       blackoutToggle(this, true)
-    else if previousTree.indexOf('mobile-menu') != -1
+    else
       blackoutToggle(this, false)
-      Timeout.set 0, =>
-        $(@clickMenu.menu('mobile-menu')).finish().slideUp 150, =>
-          # use actual state instead of always removing the class in case
-          # the menu is shown again right after it's closed
-          document.body.classList.toggle('js-nav2--active', @showingMobileNav)
+      if previousTree.indexOf('mobile-menu') != -1
+        Timeout.set 0, =>
+          $(@clickMenu.menu('mobile-menu')).finish().slideUp 150, =>
+            # use actual state instead of always removing the class in case
+            # the menu is shown again right after it's closed
+            document.body.classList.toggle('js-nav2--active', @showingMobileNav)
 
 
   centerPopup: (popup, reference) ->

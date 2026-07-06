@@ -17,6 +17,37 @@
         </div>
 
         <div class="navbar-mobile__header-section navbar-mobile__header-section--buttons">
+            @if (isset($user))
+                <a
+                    class="mobile-menu-tab js-click-menu js-react"
+                    data-click-menu-target="mobile-chat-notification"
+                    data-react="chat-icon"
+                    data-turbo-permanent
+                    data-type='mobile'
+                    id="notification-widget-chat-icon-mobile"
+                    href="{{ route('chat.index') }}"
+                >
+                    <span class="notification-icon notification-icon--mobile">
+                        <i class="fas fa-comment-alt"></i>
+                        <span class="notification-icon__count">...</span>
+                    </span>
+                </a>
+
+                <a
+                    class="mobile-menu-tab js-click-menu js-react"
+                    data-click-menu-target="mobile-notification"
+                    data-react="main-notification-icon"
+                    data-turbo-permanent
+                    data-type='mobile'
+                    id="notification-widget-icon-mobile"
+                    href="{{ route('notifications.index') }}"
+                >
+                    <span class="notification-icon notification-icon--mobile">
+                        <i class="fas fa-inbox"></i>
+                        <span class="notification-icon__count">...</span>
+                    </span>
+                </a>
+            @endif
             <button
                 type="button"
                 class="navbar-mobile__toggle js-click-menu"
@@ -30,9 +61,32 @@
         </div>
     </div>
 
+    @if (isset($user))
+        <div
+            class="mobile-menu mobile-menu--visible js-click-menu js-react"
+            data-click-menu-id="mobile-chat-notification"
+            data-notification-widget="{{ json_encode(['only' => 'channel']) }}"
+            data-react="notification-widget"
+            data-visibility-animation="none"
+            data-turbo-permanent
+            id="notification-widget-chat-mobile"
+        ></div>
+
+        <div
+            class="mobile-menu mobile-menu--visible js-click-menu js-react"
+            data-click-menu-id="mobile-notification"
+            data-notification-widget="{{ json_encode(['excludes' => ['channel']]) }}"
+            data-react="notification-widget"
+            data-visibility-animation="none"
+            data-turbo-permanent
+            id="notification-widget-mobile"
+        ></div>
+    @endif
+
     <div
         class="mobile-menu js-click-menu u-fancy-scrollbar"
         data-click-menu-id="mobile-menu"
+        data-visibility-animation="none"
     >
         <div class="mobile-menu__content">
             <div class="mobile-menu__tabs">
@@ -87,36 +141,6 @@
                     <button class="mobile-menu-tab js-click-menu" data-click-menu-target="mobile-search">
                         <span class="fas fa-search"></span>
                     </button>
-
-                    <a
-                        class="mobile-menu-tab js-click-menu js-react"
-                        data-click-menu-target="mobile-chat-notification"
-                        data-react="chat-icon"
-                        data-turbo-permanent
-                        data-type='mobile'
-                        id="notification-widget-chat-icon-mobile"
-                        href="{{ route('chat.index') }}"
-                    >
-                        <span class="notification-icon notification-icon--mobile">
-                            <i class="fas fa-comment-alt"></i>
-                            <span class="notification-icon__count">...</span>
-                        </span>
-                    </a>
-
-                    <a
-                        class="mobile-menu-tab js-click-menu js-react"
-                        data-click-menu-target="mobile-notification"
-                        data-react="main-notification-icon"
-                        data-turbo-permanent
-                        data-type='mobile'
-                        id="notification-widget-icon-mobile"
-                        href="{{ route('notifications.index') }}"
-                    >
-                        <span class="notification-icon notification-icon--mobile">
-                            <i class="fas fa-inbox"></i>
-                            <span class="notification-icon__count">...</span>
-                        </span>
-                    </a>
                 @endif
             </div>
 
@@ -133,26 +157,6 @@
                     class="mobile-menu__item mobile-menu__item--search js-click-menu js-react"
                     data-click-menu-id="mobile-search"
                     data-react="quick-search"
-                ></div>
-
-                <div
-                    class="mobile-menu__item js-click-menu js-react"
-                    data-click-menu-id="mobile-chat-notification"
-                    data-notification-widget="{{ json_encode(['only' => 'channel']) }}"
-                    data-react="notification-widget"
-                    data-visibility="hidden"
-                    data-turbo-permanent
-                    id="notification-widget-chat-mobile"
-                ></div>
-
-                <div
-                    class="mobile-menu__item js-click-menu js-react"
-                    data-click-menu-id="mobile-notification"
-                    data-notification-widget="{{ json_encode(['excludes' => ['channel']]) }}"
-                    data-react="notification-widget"
-                    data-visibility="hidden"
-                    data-turbo-permanent
-                    id="notification-widget-mobile"
                 ></div>
             @endif
         </div>
