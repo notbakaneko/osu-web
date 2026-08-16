@@ -32,6 +32,11 @@ class WikiSuggestions extends Search
         return $this->response();
     }
 
+    public function useMarkdownHighlightTags()
+    {
+        $this->highlight->markdownTags();
+    }
+
     public function getQuery(): BoolQuery
     {
         $langQuery = (new BoolQuery())
