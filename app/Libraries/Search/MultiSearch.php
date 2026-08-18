@@ -42,7 +42,7 @@ class MultiSearch
     ];
 
     private array $options;
-    private string $query;
+    private ?string $query;
     private array $searches;
 
     public function __construct(private array $request, array $options = [])
