@@ -5,9 +5,8 @@ import { CircularProgress } from 'components/circular-progress';
 import { Spinner } from 'components/spinner';
 import { EmbedElement } from 'editor';
 import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
-import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
+import { HasDiscussionsEditable } from 'interfaces/has-discussions';
 import isHotkey from 'is-hotkey';
 import { route } from 'laroute';
 import { observer } from 'mobx-react';
@@ -21,7 +20,6 @@ import { onError } from 'utils/ajax';
 import { timestampRegex } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import DiscussionsState from './discussions-state';
 import { DraftsContext } from './drafts-context';
 import EditorDiscussionComponent from './editor-discussion-component';
 import {
@@ -44,14 +42,11 @@ interface CacheInterface {
   sortedBeatmaps?: BeatmapExtendedJson[];
 }
 
-interface Props {
-  discussion?: BeatmapsetDiscussionJson;
-  discussionsState: DiscussionsState;
+interface Props extends HasDiscussionsEditable {
   document?: string;
   editing: boolean;
   onChange?: () => void;
   onFocus?: () => void;
-  store: BeatmapsetDiscussionsStore;
 }
 
 interface State {

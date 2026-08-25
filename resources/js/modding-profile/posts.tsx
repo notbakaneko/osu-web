@@ -75,7 +75,6 @@ export default class Posts extends React.Component<Props> {
               discussionsState={null}
               post={post}
               read
-              readonly
               store={this.props.store}
               type='reply'
               user={this.props.store.users.get(post.user_id) ?? deletedUserJson}

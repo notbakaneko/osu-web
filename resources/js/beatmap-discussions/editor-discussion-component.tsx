@@ -3,7 +3,7 @@
 
 import { EmbedElement } from 'editor';
 import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
+import { HasDiscussionsEditable } from 'interfaces/has-discussions';
 import { Observer, observer } from 'mobx-react';
 import * as React from 'react';
 import { Transforms } from 'slate';
@@ -14,7 +14,6 @@ import { classWithModifiers } from 'utils/css';
 import { trans, transArray } from 'utils/lang';
 import { qtipPosition } from 'utils/qtip-helper';
 import { linkHtml } from 'utils/url';
-import DiscussionsState from './discussions-state';
 import { DraftsContext } from './drafts-context';
 import EditorBeatmapSelector from './editor-beatmap-selector';
 import EditorIssueTypeSelector from './editor-issue-type-selector';
@@ -31,12 +30,10 @@ interface Cache {
   };
 }
 
-interface Props extends RenderElementProps {
-  discussionsState: DiscussionsState;
+interface Props extends RenderElementProps, HasDiscussionsEditable {
   editMode?: boolean;
   element: EmbedElement;
   readOnly?: boolean;
-  store: BeatmapsetDiscussionsStore;
 }
 
 @observer
