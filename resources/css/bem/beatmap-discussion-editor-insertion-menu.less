@@ -47,14 +47,14 @@
       height: 30px;
       margin-top: -5px;
       --beatmap-discussion-editor-insertion-menu-buttons-opacity: 1;
-      --beatmap-discussion-editor-insertion-menu-max-width: 150px; // transition needs a fixed value.
+      --beatmap-discussion-editor-insertion-menu-max-width: 180px; // transition needs a fixed value.
     }
 
     @media @mobile {
       height: 30px;
       margin-top: -5px;
       --beatmap-discussion-editor-insertion-menu-buttons-opacity: 1;
-      --beatmap-discussion-editor-insertion-menu-max-width: 150px;
+      --beatmap-discussion-editor-insertion-menu-max-width: 180px;
     }
   }
 
@@ -76,6 +76,10 @@
 
     &:hover {
       filter: none;
+    }
+
+    &--mapper_note:hover {
+      color: @beatmap-discussion--color-mapper-note;
     }
 
     &--paragraph:hover {

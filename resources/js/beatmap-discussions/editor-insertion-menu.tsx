@@ -1,19 +1,19 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import { discussionTypeIcons } from 'beatmap-discussions/discussion-type';
+import { DiscussionType, discussionTypeIcons } from 'beatmap-discussions/discussion-type';
 import Portal from 'components/portal';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
 import { throttle } from 'lodash';
 import * as React from 'react';
 import { Editor as SlateEditor, Element as SlateElement, Node as SlateNode, Point, Text as SlateText, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { trans } from 'utils/lang';
 import { nextVal } from 'utils/seq';
+import DiscussionsState from './discussions-state';
 import { SlateContext } from './slate-context';
 
 interface Props {
-  currentBeatmap: BeatmapExtendedJson | null;
+  discussionsState: DiscussionsState;
 }
 
 export class EditorInsertionMenu extends React.Component<Props> {
@@ -81,6 +81,7 @@ export class EditorInsertionMenu extends React.Component<Props> {
               <i className='fas fa-plus' />
             </div>
             <div className={`${this.bn}__buttons`}>
+              {this.props.discussionsState.canPostNote(this.props.discussionsState.currentBeatmap, 'reviews') && this.insertButton('mapper_note')}
               {this.insertButton('suggestion')}
               {this.insertButton('problem')}
               {this.insertButton('praise')}
@@ -160,13 +161,14 @@ export class EditorInsertionMenu extends React.Component<Props> {
     const ed = this.context;
     const slateNodeElement = this.hoveredBlock?.lastChild;
     const type = event.currentTarget.dataset.discussionType;
-    const beatmapId = this.props.currentBeatmap?.id;
+    const beatmapId = this.props.discussionsState.currentBeatmap.id;
 
     let insertNode: SlateNode | undefined;
     switch (type) {
-      case 'suggestion':
+      case 'mapper_note':
       case 'problem':
       case 'praise':
+      case 'suggestion':
         insertNode = {
           beatmapId,
           children: [{ text: '' }],
@@ -223,20 +225,7 @@ export class EditorInsertionMenu extends React.Component<Props> {
     Transforms.insertNodes(ed, insertNode, { at: insertAt });
   };
 
-  private readonly insertButton = (type: string) => {
-    let icon = 'fas fa-question';
-
-    switch (type) {
-      case 'praise':
-      case 'problem':
-      case 'suggestion':
-        icon = discussionTypeIcons[type];
-        break;
-      case 'paragraph':
-        icon = 'fas fa-indent';
-        break;
-    }
-
+  private insertButton(type: DiscussionType | 'paragraph') {
     return (
       <button
         className={`${this.bn}__menu-button ${this.bn}__menu-button--${type}`}
@@ -245,10 +234,10 @@ export class EditorInsertionMenu extends React.Component<Props> {
         title={trans(`beatmaps.discussions.review.insert-block.${type}`)}
         type='button'
       >
-        <i className={icon} />
+        <i className={discussionTypeIcons[type]} />
       </button>
     );
-  };
+  }
 
   private readonly menuMouseEnter = () => {
     this.mouseOver = true;
@@ -288,5 +277,4 @@ export class EditorInsertionMenu extends React.Component<Props> {
       this.insertRef.current.style.top = `${blockBounds.top + blockBounds.height - 10}px`;
     }
   }
-
 }
