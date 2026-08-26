@@ -3,10 +3,8 @@
 
 
 import DiscussionsState from 'beatmap-discussions/discussions-state';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
-import { BeatmapsetDiscussionJsonForShow } from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
-import WithBeatmapOwners from 'interfaces/with-beatmap-owners';
+import BeatmapsetDiscussionsShowStore from 'stores/beatmapset-discussions-show-store';
+import BeatmapsetDiscussionsStore from './beatmapset-discussions-store';
 
 export interface HasDiscussionsReadOnly {
   discussionsState: null;
@@ -15,5 +13,5 @@ export interface HasDiscussionsReadOnly {
 
 export interface HasDiscussionsEditable {
   discussionsState: DiscussionsState;
-  store: BeatmapsetDiscussionsStore<WithBeatmapOwners<BeatmapExtendedJson>, BeatmapsetDiscussionJsonForShow>;
+  store: BeatmapsetDiscussionsShowStore;
 }
