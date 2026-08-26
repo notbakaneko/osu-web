@@ -77,7 +77,9 @@ export class EditorInsertionMenu extends React.Component<Props> {
           className={`${this.bn}`}
         >
           <div className={`${this.bn}__body`}>
-            <i className='fas fa-plus' />
+            <div className={`${this.bn}__plus`}>
+              <i className='fas fa-plus' />
+            </div>
             <div className={`${this.bn}__buttons`}>
               {this.insertButton('suggestion')}
               {this.insertButton('problem')}
