@@ -36,7 +36,7 @@
     max-width: var(--beatmap-discussion-editor-insertion-menu-max-width);
     height: 20px;
     color: hsl(var(--hsl-f1));
-    will-change: width, height;
+    will-change: width, height, max-width;
     transition: ease-in-out 100ms;
     pointer-events: auto;
     position: relative;
@@ -48,14 +48,14 @@
       height: 30px;
       margin-top: -5px;
       --beatmap-discussion-editor-insertion-menu-buttons-opacity: 1;
-      --beatmap-discussion-editor-insertion-menu-max-width: none;
+      --beatmap-discussion-editor-insertion-menu-max-width: 150px; // transition needs a fixed value.
     }
 
     @media @mobile {
       height: 30px;
       margin-top: -5px;
       --beatmap-discussion-editor-insertion-menu-buttons-opacity: 1;
-      --beatmap-discussion-editor-insertion-menu-max-width: none;
+      --beatmap-discussion-editor-insertion-menu-max-width: 150px;
     }
   }
 
@@ -65,11 +65,13 @@
     white-space: nowrap;
     opacity: var(--beatmap-discussion-editor-insertion-menu-buttons-opacity);
     transition: opacity ease-in-out 100ms;
+    padding: 0 15px;
   }
 
   &__menu-button {
     .reset-input();
-    padding: 5px 10px;
+    width: 30px;
+    height: 30px;
     color: hsl(var(--hsl-f1));
     filter: grayscale(1);
 
