@@ -72,7 +72,6 @@ export default class Posts extends React.Component<Props> {
           <div className='beatmap-discussion__discussion'>
             <Post
               discussion={discussion}
-              discussionsState={null}
               post={post}
               read
               store={this.props.store}

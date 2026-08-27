@@ -229,33 +229,19 @@ export class Discussion extends React.Component<Props> {
       );
     }
 
-    // can't discriminate type without this even though the props are the same.
-    return this.props.discussionsState == null
-      ? (
-        <Post
-          key={post.id}
-          discussion={this.props.discussion}
-          discussionsState={this.props.discussionsState}
-          post={post}
-          read={this.isRead(post)}
-          resolvedStateChangedPostId={this.resolvedStateChangedPostId}
-          store={this.props.store}
-          type={type}
-          user={user}
-        />
-      ) : (
-        <Post
-          key={post.id}
-          discussion={this.props.discussion}
-          discussionsState={this.props.discussionsState}
-          post={post}
-          read={this.isRead(post)}
-          resolvedStateChangedPostId={this.resolvedStateChangedPostId}
-          store={this.props.store}
-          type={type}
-          user={user}
-        />
-      );
+    const sharedProps = {
+      discussion: this.props.discussion,
+      key: post.id,
+      post,
+      read: this.isRead(post),
+      resolvedStateChangedPostId: this.resolvedStateChangedPostId,
+      type,
+      user,
+    };
+
+    return this.props.discussionsState != null
+      ? <Post {...sharedProps} discussionsState={this.props.discussionsState} store={this.props.store} />
+      : <Post {...sharedProps} store={this.props.store} />;
   }
 
   private renderPostButtons() {

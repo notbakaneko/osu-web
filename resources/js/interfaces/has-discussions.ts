@@ -7,7 +7,7 @@ import BeatmapsetDiscussionsShowStore from 'stores/beatmapset-discussions-show-s
 import BeatmapsetDiscussionsStore from './beatmapset-discussions-store';
 
 export interface HasDiscussionsReadOnly {
-  discussionsState: null;
+  discussionsState?: never;
   store: BeatmapsetDiscussionsStore;
 }
 
