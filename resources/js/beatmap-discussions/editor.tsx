@@ -24,6 +24,7 @@ import { DraftsContext } from './drafts-context';
 import EditorDiscussionComponent from './editor-discussion-component';
 import {
   blockCount,
+  discussionPageForNode,
   insideEmbed,
   insideEmptyNode,
   serializeSlateDocument,
@@ -486,11 +487,13 @@ export default class Editor extends React.Component<Props, State> {
             return;
           }
 
-          if (node.beatmapId != null) {
-            const beatmap = this.beatmaps.get(node.beatmapId);
-            if (beatmap == null || beatmap.deleted_at != null) {
-              Transforms.setNodes(editor, { beatmapId: undefined }, { at: path });
-            }
+          const beatmap = node.beatmapId == null ? null : this.beatmaps.get(node.beatmapId) ?? null;
+          if (node.discussionType === 'mapper_note' && !this.props.discussionsState.canPostNote(beatmap, discussionPageForNode(node, beatmap))) {
+            Transforms.setNodes(editor, { discussionType: 'suggestion' }, { at: path });
+          }
+
+          if (node.beatmapId != null && (beatmap == null || beatmap.deleted_at != null)) {
+            Transforms.setNodes(editor, { beatmapId: undefined }, { at: path });
           }
         }
       }
