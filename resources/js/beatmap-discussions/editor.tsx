@@ -5,9 +5,8 @@ import { CircularProgress } from 'components/circular-progress';
 import { Spinner } from 'components/spinner';
 import { EmbedElement } from 'editor';
 import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
-import BeatmapsetDiscussionJson from 'interfaces/beatmapset-discussion-json';
-import BeatmapsetDiscussionsStore from 'interfaces/beatmapset-discussions-store';
 import BeatmapsetWithDiscussionsJson from 'interfaces/beatmapset-with-discussions-json';
+import { HasDiscussionsEditable } from 'interfaces/has-discussions';
 import isHotkey from 'is-hotkey';
 import { route } from 'laroute';
 import { observer } from 'mobx-react';
@@ -18,10 +17,9 @@ import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
 import { DOMRange } from 'slate-react/dist/utils/dom';
 import { onError } from 'utils/ajax';
-import { timestampRegex } from 'utils/beatmapset-discussion-helper';
+import { timestampRegexGlobal } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
-import DiscussionsState from './discussions-state';
 import { DraftsContext } from './drafts-context';
 import EditorDiscussionComponent from './editor-discussion-component';
 import {
@@ -44,14 +42,11 @@ interface CacheInterface {
   sortedBeatmaps?: BeatmapExtendedJson[];
 }
 
-interface Props {
-  discussion?: BeatmapsetDiscussionJson;
-  discussionsState: DiscussionsState;
+interface Props extends HasDiscussionsEditable {
   document?: string;
   editing: boolean;
   onChange?: () => void;
   onFocus?: () => void;
-  store: BeatmapsetDiscussionsStore;
 }
 
 interface State {
@@ -182,10 +177,9 @@ export default class Editor extends React.Component<Props, State> {
       return ranges;
     }
 
-    const regex = RegExp(timestampRegex, 'g');
     let match;
 
-    while ((match = regex.exec(node.text)) !== null) {
+    while ((match = timestampRegexGlobal.exec(node.text)) !== null) {
       ranges.push({
         anchor: { offset: match.index, path },
         focus: { offset: match.index + match[0].length, path },
