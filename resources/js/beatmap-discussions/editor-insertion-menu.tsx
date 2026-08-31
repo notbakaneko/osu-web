@@ -12,6 +12,8 @@ import { nextVal } from 'utils/seq';
 import DiscussionsState from './discussions-state';
 import { SlateContext } from './slate-context';
 
+const bn = 'beatmap-discussion-editor-insertion-menu';
+
 interface Props {
   discussionsState: DiscussionsState;
 }
@@ -19,7 +21,6 @@ interface Props {
 export class EditorInsertionMenu extends React.Component<Props> {
   static readonly contextType = SlateContext;
   declare context: React.ContextType<typeof SlateContext>;
-  private readonly bn = 'beatmap-discussion-editor-insertion-menu';
   private readonly eventId = `editor-insertion-menu-${nextVal()}`;
   private hideInsertMenuTimer?: number;
   private hoveredBlock: HTMLElement | undefined;
@@ -74,13 +75,13 @@ export class EditorInsertionMenu extends React.Component<Props> {
       <Portal>
         <div
           ref={this.insertRef}
-          className={`${this.bn}`}
+          className={bn}
         >
-          <div className={`${this.bn}__body`}>
-            <div className={`${this.bn}__plus`}>
+          <div className={`${bn}__body`}>
+            <div className={`${bn}__plus`}>
               <i className='fas fa-plus' />
             </div>
-            <div className={`${this.bn}__buttons`}>
+            <div className={`${bn}__buttons`}>
               {this.props.discussionsState.canPostNote(this.props.discussionsState.currentBeatmap, 'reviews') && this.insertButton('mapper_note')}
               {this.insertButton('suggestion')}
               {this.insertButton('problem')}
@@ -228,7 +229,7 @@ export class EditorInsertionMenu extends React.Component<Props> {
   private insertButton(type: DiscussionType | 'paragraph') {
     return (
       <button
-        className={`${this.bn}__menu-button ${this.bn}__menu-button--${type}`}
+        className={`${bn}__menu-button ${bn}__menu-button--${type}`}
         data-discussion-type={type}
         onClick={this.insertBlock}
         title={trans(`beatmaps.discussions.review.insert-block.${type}`)}
