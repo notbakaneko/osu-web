@@ -17,7 +17,7 @@ import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
 import { DOMRange } from 'slate-react/dist/utils/dom';
 import { onError } from 'utils/ajax';
-import { timestampRegexGlobal } from 'utils/beatmapset-discussion-helper';
+import { timestampRegex } from 'utils/beatmapset-discussion-helper';
 import { classWithModifiers } from 'utils/css';
 import { trans } from 'utils/lang';
 import { DraftsContext } from './drafts-context';
@@ -179,7 +179,8 @@ export default class Editor extends React.Component<Props, State> {
 
     let match;
 
-    while ((match = timestampRegexGlobal.exec(node.text)) !== null) {
+    const regex = new RegExp(timestampRegex, 'g');
+    while ((match = regex.exec(node.text)) !== null) {
       ranges.push({
         anchor: { offset: match.index, path },
         focus: { offset: match.index + match[0].length, path },
