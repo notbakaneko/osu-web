@@ -169,26 +169,16 @@ export default class Editor extends React.Component<Props, State> {
     this.xhr?.abort();
   }
 
-  decorateTimestamps = (entry: NodeEntry) => {
+  decorateTimestamps = (entry: NodeEntry): TimestampRange[] => {
     const [node, path] = entry;
-    const ranges: TimestampRange[] = [];
 
-    if (!Text.isText(node)) {
-      return ranges;
-    }
-
-    let match;
-
-    const regex = new RegExp(timestampRegex, 'g');
-    while ((match = regex.exec(node.text)) !== null) {
-      ranges.push({
+    return !Text.isText(node)
+      ? []
+      : [...node.text.matchAll(new RegExp(timestampRegex, 'g'))].map((match) => ({
         anchor: { offset: match.index, path },
         focus: { offset: match.index + match[0].length, path },
         timestamp: match[0],
-      });
-    }
-
-    return ranges;
+      }));
   };
 
   onChange = (value: SlateElement[]) => {
