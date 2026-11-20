@@ -40,6 +40,41 @@ class NotificationsBundle
         $this->objectId = get_int($request['object_id'] ?? null);
         $this->objectType = presence($request['type'] ?? null) ?? presence($request['object_type'] ?? null);
         $this->category = presence($request['category'] ?? null);
+        $this->getUserNotifications();
+    }
+
+    public function getUserNotifications(?int $after = null)
+    {
+        $headQuery = $this->user->userNotifications()
+            ->select('notifiable_type', 'notifiable_id', 'category')
+            ->hasPushDelivery()
+            ->groupBy('notifiable_type', 'notifiable_id', 'category')
+            ->orderByRaw('MAX(notification_id) DESC')
+            ->limit(static::STACK_LIMIT);
+
+        $stackQuery = $this->user->userNotifications()
+            ->hasPushDelivery()
+            ->whereColumn('notifiable_type', 'h.notifiable_type')
+            ->whereColumn('notifiable_id', 'h.notifiable_id')
+            ->whereColumn('category', 'h.category')
+            ->orderByDesc('notification_id')
+            ->limit(static::PER_STACK_LIMIT);
+
+        if ($after !== null) {
+            $headQuery->where('notification_id', '<', $after);
+            $stackQuery->where('notification_id', '<', $after);
+        }
+
+        if ($this->unreadOnly) {
+            $headQuery->where('is_read', 0);
+            $stackQuery->where('is_read', 0);
+        }
+
+        return UserNotification::fromSub($headQuery, 'h')
+            ->joinLateral(
+                UserNotification::fromSub($stackQuery, 's'),
+                'u')
+            ->get();
     }
 
     public function toArray(): array
